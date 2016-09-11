@@ -8,6 +8,7 @@
                                    dmenu
                                    emacs
                                    xdg-user-dirs
+				   compton
                     ];
         };
 
@@ -15,7 +16,6 @@
 		xserver = {
 			enable = true;
 			vaapiDrivers = [ pkgs.vaapiIntel ];
-			xrandrHeads = [ "HDMI1" "VGA2" "eDP1" ];
 			synaptics = {
 				enable = true;
 				twoFingerScroll = true;
