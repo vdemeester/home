@@ -1,10 +1,21 @@
 { config, pkgs, ... }:
 
 {
+        environment = {
+                    systemPackages = with pkgs; [
+                                   firefox
+                                   i3status
+                                   dmenu
+                                   emacs
+                                   xdg-user-dirs
+                    ];
+        };
+
 	services = {
 		xserver = {
 			enable = true;
 			vaapiDrivers = [ pkgs.vaapiIntel ];
+			xrandrHeads = [ "HDMI1" "VGA2" "eDP1" ];
 			synaptics = {
 				enable = true;
 				twoFingerScroll = true;

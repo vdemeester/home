@@ -6,10 +6,6 @@
 				wget
 				git
 				vim
-				firefox
-				emacs
-				i3status
-				dmenu
 		];
 	};
 }
