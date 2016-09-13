@@ -9,6 +9,7 @@
 		[ # Include the results of the hardware scan.
 			./hardware-configuration.nix
 			./keyboard.nix
+                        ./acpi.nix
 			./network.nix
 			./gui.nix
 			./users.nix
