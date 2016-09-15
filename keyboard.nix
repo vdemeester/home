@@ -4,6 +4,7 @@
 	services = {
 		xserver =  {
 			layout = "fr";
+			xkbVariant = "oss";
 			inputClassSections = [
 					''
 					Identifier      "TypeMatrix"
@@ -17,7 +18,7 @@
 					''
 					''
 					Identifier      "ErgoDox"
-					#MatchIsKeyboard "on"
+					MatchIsKeyboard "on"
 					#MatchVendor     "ErgoDox_EZ"
 					#MatchProduct    "ErgoDox_EZ"
                                         MatchUSBID      "feed:1307"
