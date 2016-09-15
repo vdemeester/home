@@ -11,6 +11,7 @@
 			./keyboard.nix
                         ./acpi.nix
 			./network.nix
+			./audio.nix
 			./gui.nix
 			./users.nix
 			./packages.nix
