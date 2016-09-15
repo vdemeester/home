@@ -3,12 +3,13 @@
 {
         environment = {
                     systemPackages = with pkgs; [
-                                   firefox
-                                   i3status
-                                   dmenu
-                                   emacs
-                                   xdg-user-dirs
-				   compton
+				firefox
+				i3status
+				dmenu
+				emacs
+				xdg-user-dirs
+				compton
+				termite
                     ];
         };
 
