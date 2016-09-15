@@ -9,6 +9,8 @@
 				emacs
 				xdg-user-dirs
 				compton
+				libnotify
+				dunst
 				termite
                     ];
         };
