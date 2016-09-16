@@ -1,12 +1,14 @@
 { config, pkgs, ... }:
 
 {
-  networking.networkmanager.enable = true;
+	networking.networkmanager.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    networkmanagerapplet
-  ];
+	environment.systemPackages = with pkgs; [
+		networkmanagerapplet
+	];
 
-  services.openssh.enable = true;
+	services.openssh.enable = true;
 
+	services.avahi.enable = true;
+	service.avahi.nssmdns = true;
 }
