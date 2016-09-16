@@ -10,5 +10,5 @@
 	services.openssh.enable = true;
 
 	services.avahi.enable = true;
-	service.avahi.nssmdns = true;
+	services.avahi.nssmdns = true;
 }
