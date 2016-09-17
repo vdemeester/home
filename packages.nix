@@ -21,6 +21,7 @@
 				aspell
 				aspellDicts.en
 				aspellDicts.fr
+				direnv
 		];
 	};
         
