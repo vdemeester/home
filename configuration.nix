@@ -15,6 +15,7 @@
 			./gui.nix
 			./users.nix
 			./packages.nix
+			./local-configuration.nix
 		];
 
 	boot.loader.gummiboot.enable = true;

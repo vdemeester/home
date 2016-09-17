@@ -11,9 +11,13 @@
 		systemPackages = with pkgs; [
 				wget
 				git
+				haskellPackages.git-annex
 				vim
 				tmux
 				htop
+				tree
+				lsof
+				psmisc
 		];
 	};
 }
