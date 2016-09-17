@@ -18,6 +18,10 @@
 				tree
 				lsof
 				psmisc
+				aspell
+				aspellDicts.en
+				aspellDicts.fr
 		];
 	};
+        
 }
