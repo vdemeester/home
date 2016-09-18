@@ -39,7 +39,7 @@
 			};
 			displayManager = {
 				sessionCommands = ''
-xss-lock -- slimlock &
+xss-lock -- ${pkgs.slim}/bin/slimlock &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 '';
