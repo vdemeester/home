@@ -7,6 +7,7 @@
 			support32Bit = true;
 		};
 	};
+	sound.enableMediaKeys = true;
 
 	environment.systemPackages = with pkgs; [
 		pavucontrol
