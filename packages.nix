@@ -13,7 +13,10 @@
 				aspellDicts.en
 				aspellDicts.fr
 				direnv
+				gptfdisk
 				git
+				gnumake
+				gnupg
 				haskellPackages.git-annex
 				htop
 				lsof
@@ -24,5 +27,4 @@
 				wget
 		];
 	};
-        
 }
