@@ -10,6 +10,7 @@
 			./audio.nix
 			./gui.nix
 			./virtualisation.nix
+			./security.nix
 			./users.nix
 			./packages.nix
 			./local-configuration.nix

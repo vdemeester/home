@@ -17,6 +17,7 @@
 				termite
 				xdg-user-dirs
 				xorg.xbacklight
+				xss-lock
                     ];
         };
 
@@ -38,6 +39,7 @@
 			};
 			displayManager = {
 				sessionCommands = ''
+xss-lock -- slimlock &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 '';
