@@ -13,6 +13,7 @@
 				aspellDicts.en
 				aspellDicts.fr
 				direnv
+				file
 				gptfdisk
 				git
 				gnumake
