@@ -3,21 +3,27 @@
 {
         environment = {
                     systemPackages = with pkgs; [
-				firefox
-				i3status
-				dmenu
-				emacs
-				xdg-user-dirs
 				compton
-				libnotify
+				dmenu
 				dunst
+				emacs
+				firefox
+				gnome3.defaultIconTheme
+				gnome3.gnome_themes_standard
+				# adapta-gtk-theme # wait for 16.09 on this one
+				i3status
+				libnotify
+				pythonPackages.udiskie
 				termite
+				xdg-user-dirs
+				xorg.xbacklight
                     ];
         };
 
 	services = {
 		xserver = {
 			enable = true;
+			enableTCP = false;
 			vaapiDrivers = [ pkgs.vaapiIntel ];
 			synaptics = {
 				enable = true;
@@ -31,8 +37,19 @@
 				default = "i3";
 			};
 			displayManager = {
-				sessionCommands = "${pkgs.networkmanagerapplet}/bin/nm-applet &";
+				sessionCommands = ''
+${pkgs.networkmanagerapplet}/bin/nm-applet &
+${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
+'';
 			};
+		};
+		unclutter.enable = true;
+		redshift = {
+			enable = true;
+			brightness.day = "0.95";
+			brightness.night = "0.7";
+			latitude = "48.3";
+			longitude = "7.5";
 		};
 	};
 
