@@ -40,7 +40,7 @@
 			};
 			displayManager = {
 				sessionCommands = ''
-xmodmap ~/.Xmodmap &
+${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 xss-lock -- ${pkgs.slim}/bin/slimlock &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
