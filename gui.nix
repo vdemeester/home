@@ -16,6 +16,7 @@
 				pythonPackages.udiskie
 				termite
 				xdg-user-dirs
+				xlibs.xmodmap
 				xorg.xbacklight
 				xss-lock
                     ];
@@ -39,11 +40,13 @@
 			};
 			displayManager = {
 				sessionCommands = ''
+xmodmap ~/.Xmodmap &
 xss-lock -- ${pkgs.slim}/bin/slimlock &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 '';
 			};
+			xkbOptions = "compose:caps";
 		};
 		unclutter.enable = true;
 		redshift = {
