@@ -4,7 +4,7 @@
         environment = {
                     systemPackages = with pkgs; [
 				compton
-				dmenu
+				dmenu2
 				dunst
 				emacs
 				firefox
