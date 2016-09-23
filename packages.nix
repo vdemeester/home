@@ -12,6 +12,7 @@
 				aspell
 				aspellDicts.en
 				aspellDicts.fr
+				cryptsetup
 				direnv
 				file
 				gptfdisk
