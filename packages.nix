@@ -22,6 +22,8 @@
 				haskellPackages.git-annex
 				htop
 				lsof
+				msmtp
+				offlineimap
 				psmisc
 				tmux
 				tree
