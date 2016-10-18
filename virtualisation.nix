@@ -5,8 +5,7 @@
 		docker = {
 			enable = true;
 			socketActivation = false;
-			# storageDriver = "overlay2"; # use it when docker 1.12 is here
-			storageDriver = "overlay";
+			storageDriver = "overlay2";
 			extraOptions = "--label=type=desktop";
 		};
 		virtualbox.host.enable = true;
