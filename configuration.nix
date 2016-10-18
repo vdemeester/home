@@ -16,8 +16,9 @@
 			./local-configuration.nix
 		];
 
-	boot.loader.gummiboot.enable = true;
+	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
+	boot.kernelPackages = pkgs.linuxPackages_4_8;
 
 	i18n = {
 		consoleFont = "Lat2-Terminus16";
@@ -28,7 +29,7 @@
 	time.timeZone = "Europe/Paris";
 
 	system = {
-		stateVersion = "16.03";	
+		stateVersion = "16.09";	
 		autoUpgrade = {
 			enable = true;
 			dates = "13:00";

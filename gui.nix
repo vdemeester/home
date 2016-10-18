@@ -22,11 +22,11 @@
                     ];
         };
 
+	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	services = {
 		xserver = {
 			enable = true;
 			enableTCP = false;
-			vaapiDrivers = [ pkgs.vaapiIntel ];
 			synaptics = {
 				enable = true;
 				twoFingerScroll = true;
@@ -68,7 +68,7 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 		    dejavu_fonts
 		    ubuntu_font_family
 		    unifont
-		    google-fonts
+		    # google-fonts
 		    symbola
 		    fira
 		    fira-code

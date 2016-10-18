@@ -15,6 +15,7 @@
 				cryptsetup
 				direnv
 				file
+				gcc
 				gptfdisk
 				git
 				gnumake
