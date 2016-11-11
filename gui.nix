@@ -8,6 +8,7 @@
 				dunst
 				emacs
 				firefox
+				google-chrome
 				gnome3.defaultIconTheme
 				gnome3.gnome_themes_standard
 				# adapta-gtk-theme # wait for 16.09 on this one
