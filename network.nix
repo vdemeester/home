@@ -10,6 +10,9 @@
 	services.openssh.enable = true;
 	services.openssh.startWhenNeeded = true;
 
-	services.avahi.enable = true;
-	services.avahi.nssmdns = true;
+	services.avahi = {
+		enable = true;
+		nssmdns = true;
+		publish.enable = true;
+	};
 }

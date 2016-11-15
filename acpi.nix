@@ -11,4 +11,7 @@
 			enable = true;
 		};
 	};
+	powerManagement = {
+	        enable = true;
+	};
 }
