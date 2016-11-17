@@ -3,7 +3,6 @@
 {
         environment = {
                     systemPackages = with pkgs; [
-				compton
 				dmenu2
 				dunst
 				emacs
@@ -28,11 +27,7 @@
 		xserver = {
 			enable = true;
 			enableTCP = false;
-			synaptics = {
-				enable = true;
-				twoFingerScroll = true;
-				tapButtons = true;
-			};
+			libinput.enable = true;
 			windowManager = {
 				i3 = {
 					enable = true;
@@ -41,7 +36,7 @@
 			};
 			displayManager = {
 				sessionCommands = ''
-compton &
+xrandr --dpi 128 &
 ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 #xss-lock -- ${pkgs.slim}/bin/slimlock &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &

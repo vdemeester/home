@@ -25,6 +25,13 @@
 					Driver          "evdev"
 					Option          "XkbLayout"     "fr"
 					Option          "XkbVariant"    "bepo"
+					''				
+					''
+					Identifier "evdev touchpad off"
+					MatchIsTouchpad "on"
+					MatchDevicePath "/dev/input/event*"
+					Driver "evdev"
+					Option "Ignore" "true"
 					''
 			];
 		};
