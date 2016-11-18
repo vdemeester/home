@@ -23,4 +23,5 @@
 					''
 			];
 	};
+	services.acpid.enable = true;
 }
