@@ -1,5 +1,5 @@
-local-configuration.nix
 hardware-configuration.nix
+configuration.nix
 result
 .tramp*
 *~
