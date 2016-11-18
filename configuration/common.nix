@@ -37,6 +37,11 @@
 
 	nix = {
 		useSandbox = true;
+		# if hydra is down, don't wait forever
+		extraOptions = ''
+		    connect-timeout = 20
+		'';
+		nixPath = pkgs.lib.mkBefore [ "" ];
 	};
 	nixpkgs = {
 		config = {
