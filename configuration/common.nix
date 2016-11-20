@@ -41,7 +41,6 @@
 		extraOptions = ''
 		    connect-timeout = 20
 		'';
-		nixPath = pkgs.lib.mkBefore [ "" ];
 	};
 	nixpkgs = {
 		config = {
