@@ -12,6 +12,7 @@
 				gnome3.gnome_themes_standard
 				# adapta-gtk-theme # wait for 16.09 on this one
 				i3status
+				i3lock
 				libnotify
 				pythonPackages.udiskie
 				termite
@@ -38,7 +39,6 @@
 				sessionCommands = ''
 xrandr --dpi 128 &
 ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
-#xss-lock -- ${pkgs.slim}/bin/slimlock &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 '';
