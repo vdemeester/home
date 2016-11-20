@@ -14,6 +14,8 @@
 				aspellDicts.fr
 				cryptsetup
 				direnv
+				dobi
+				doctl
 				file
 				gcc
 				gptfdisk
@@ -22,8 +24,10 @@
 				gnupg
 				haskellPackages.git-annex
 				htop
+				iotop
 				lsof
 				msmtp
+				netcat
 				offlineimap
 				psmisc
 				tmux
