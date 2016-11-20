@@ -8,5 +8,5 @@
 			../hardware/dell-latitude-e6540.nix
 		];
 
-	networking.hostName = "wakasu";
+	networking.hostName = "honshu";
 }
