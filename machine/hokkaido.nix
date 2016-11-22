@@ -6,7 +6,7 @@
 			../hardware-configuration.nix
 			../configuration/custom-packages.nix
 			../configuration/common.nix
-			../hardware/thinkpad-x220-configuration.nix
+			../hardware/thinkpad-x220.nix
 		];
 
 	networking.hostName = "hokkaido";

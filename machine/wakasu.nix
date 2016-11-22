@@ -6,7 +6,7 @@
 			../hardware-configuration.nix
 			../configuration/custom-packages.nix
 			../configuration/common.nix
-			../hardware/thinkpad-t460s-configuration.nix
+			../hardware/thinkpad-t460s.nix
 		];
 
 	networking.hostName = "wakasu";
