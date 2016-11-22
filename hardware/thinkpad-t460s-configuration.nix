@@ -17,9 +17,6 @@
 	        linuxPackages_4_8.tp_smapi
 	];
 	services = {
-		xserver {
-			displayManager.xserverArgs = [ "-dpi 128" ];
-		};
 		acpid = {
 			enable = true;
 			lidEventCommands = ''
@@ -56,6 +53,7 @@ DISK_DEVICES="nvme0n1p3"
 		};
 	};
 	services.xserver = {
+		dpi = 128;
 			synaptics.enable = false;
 
 			 config = ''
