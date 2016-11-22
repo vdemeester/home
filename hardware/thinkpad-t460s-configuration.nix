@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+	imports =
+		[
+			./thinkpad.nix
+		];
         boot = {
                 kernelParams = [
       		        # Kernel GPU Savings Options (NOTE i915 chipset only)
@@ -13,12 +17,8 @@
       		"sierra_net" "cdc_mbim" "cdc_ncm"
     	];
 };
-        environment.systemPackages = with pkgs; [
-	        linuxPackages_4_8.tp_smapi
-	];
 	services = {
 		acpid = {
-			enable = true;
 			lidEventCommands = ''
 if grep -q closed /proc/acpi/button/lid/LID/state; then
 	date >> /tmp/i3lock.log
@@ -27,7 +27,6 @@ fi
 '';
 		};
 		tlp = {
-			enable = true;
 			extraConfig = ''
 # CPU optimizations
 CPU_SCALING_GOVERNOR_ON_AC=performance
@@ -54,39 +53,5 @@ DISK_DEVICES="nvme0n1p3"
 	};
 	services.xserver = {
 		dpi = 128;
-			synaptics.enable = false;
-
-			 config = ''
-      			 Section "InputClass"
-			         Identifier     "Enable libinput for TrackPoint"
-				 MatchIsPointer "on"
-				 Driver         "libinput"
-				 Option         "ScrollMethod" "button"
-				 Option         "ScrollButton" "8"
-			 EndSection
-    			 '';
-			inputClassSections = [
-					''
-					Identifier "evdev touchpad off"
-					MatchIsTouchpad "on"
-					MatchDevicePath "/dev/input/event*"
-					Driver "evdev"
-					Option "Ignore" "true"
-					''
-			];
-	};
-	
-	boot.extraModprobeConfig = ''
-	options snd_hda_intel power_save=1
-	'';
-	systemd.services.tune-powermanagement = {
-    	        description = "Tune Powermanagement";
-    		serviceConfig.Type = "oneshot";
-    		serviceConfig.RemainAfterExit = true;
-    		wantedBy = [ "multi-user.target" ];
-    		unitConfig.RequiresMountsFor = "/sys";
-    		script = ''
-      		echo '1500' > '/proc/sys/vm/dirty_writeback_centisecs'
-    		'';
 	};
 }

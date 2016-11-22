@@ -5,7 +5,7 @@
 
 {
 	imports =
-		[ # Include the results of the hardware scan.
+		[
 			./keyboard.nix
                         ./acpi.nix
 			./network.nix
