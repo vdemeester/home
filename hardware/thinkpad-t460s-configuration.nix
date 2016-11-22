@@ -18,7 +18,7 @@
 	];
 	services = {
 		xserver {
-			displayManager.xserverArgs = [ "-dpi 128" ]
+			displayManager.xserverArgs = [ "-dpi 128" ];
 		};
 		acpid = {
 			enable = true;
