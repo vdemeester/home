@@ -17,6 +17,9 @@
 	        linuxPackages_4_8.tp_smapi
 	];
 	services = {
+		xserver {
+			displayManager.xserverArgs = [ "-dpi 128" ]
+		};
 		acpid = {
 			enable = true;
 			lidEventCommands = ''

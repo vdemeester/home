@@ -38,7 +38,7 @@
 			};
 			displayManager = {
 				sessionCommands = ''
-xrandr --dpi 128 &
+# xrandr --dpi 128 &
 ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
