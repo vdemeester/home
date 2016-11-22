@@ -77,7 +77,6 @@ DISK_DEVICES="nvme0n1p3"
 	
 	boot.extraModprobeConfig = ''
 	options snd_hda_intel power_save=1
-	#options i915 enable_rc6=1 i915_enable_fbc=1 lvds_downclock=1
 	'';
 	systemd.services.tune-powermanagement = {
     	        description = "Tune Powermanagement";
