@@ -15,6 +15,7 @@
 				i3lock
 				libnotify
 				pythonPackages.udiskie
+				scrot
 				termite
 				xdg-user-dirs
 				xlibs.xmodmap
