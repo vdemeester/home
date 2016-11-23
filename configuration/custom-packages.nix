@@ -10,11 +10,11 @@
 					repo = "sbrpkgs";
 				};
 			pinnedPkgs = import (fetchNixPkgs {
-				rev = "8e0a7940b2e18996dd18905b444b65f08d5917fa";
-				sha256 = "05wg6sa7hi95zppkr3lj8sgxfisz7m8293wbgav3glvmv80jhwif";
+				rev = "f12c7d67a0187070c7656d7add056a69136824fa";
+				sha256 = "0qsx5zkwmwaj7ds52j24k60ppd6fy578p34bpqd623i415x7k40p";
 			}) {};
 		in {
-			inherit (pinnedPkgs) doctl dobi vndr;
+			inherit (pinnedPkgs) doctl dobi vndr docker;
 		};
 	};
 }
