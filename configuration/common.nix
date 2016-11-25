@@ -23,6 +23,7 @@
 		consoleFont = "Lat2-Terminus16";
 		consoleKeyMap = "fr";
 		defaultLocale = "en_US.UTF-8";
+		supportedLocales = [ "en_US.iso8859-1" "fr_FR.UTF8" "fr_FR.iso8859-1" "fr_FR.iso8859-15" ];
 	};
 
 	time.timeZone = "Europe/Paris";
