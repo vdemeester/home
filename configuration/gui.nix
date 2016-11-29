@@ -37,7 +37,15 @@
 				default = "i3";
 			};
 			displayManager = {
-				sessionCommands = ''
+			slim = {
+				enable = true;
+				defaultUser = "vincent";
+				theme = pkgs.fetchurl {
+					url = "https://github.com/vdemeester/slim-themes/raw/master/docker-key-theme-0.1.tar.xz";
+					sha256 = "13bm7k3p6k7yq47nba08bn48cfv536k4ipnwwp1q1l2ydlp85r9d";
+				};
+			};
+			sessionCommands = ''
 # xrandr --dpi 128 &
 ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
@@ -57,20 +65,20 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 	};
 
 	fonts = {
-	      enableFontDir = true;
-	      enableGhostscriptFonts = true;
-	      fonts = with pkgs; [
-	      	    corefonts
-		    inconsolata
-		    dejavu_fonts
-		    ubuntu_font_family
-		    unifont
-		    # google-fonts
-		    symbola
-		    fira
-		    fira-code
-		    fira-mono
-		    font-droid
-	      ];
+		enableFontDir = true;
+		enableGhostscriptFonts = true;
+		fonts = with pkgs; [
+			corefonts
+			inconsolata
+			dejavu_fonts
+			ubuntu_font_family
+			unifont
+			# google-fonts
+			symbola
+			fira
+			fira-code
+			fira-mono
+			font-droid
+		];
 	};
 }
