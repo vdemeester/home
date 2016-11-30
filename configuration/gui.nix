@@ -37,15 +37,11 @@
 				default = "i3";
 			};
 			displayManager = {
-			slim = {
-				enable = true;
-				defaultUser = "vincent";
-				theme = pkgs.fetchurl {
-					url = "https://github.com/vdemeester/slim-themes/raw/master/docker-key-theme-0.1.tar.xz";
-					sha256 = "13bm7k3p6k7yq47nba08bn48cfv536k4ipnwwp1q1l2ydlp85r9d";
+				slim = {
+					enable = true;
+					defaultUser = "vincent";
 				};
-			};
-			sessionCommands = ''
+				sessionCommands = ''
 # xrandr --dpi 128 &
 ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
