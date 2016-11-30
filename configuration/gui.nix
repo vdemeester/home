@@ -1,28 +1,28 @@
 { config, pkgs, ... }:
 
 {
-        environment = {
-                    systemPackages = with pkgs; [
-				dmenu2
-				dunst
-				emacs
-				firefox
-				# google-chrome
-				gnome3.defaultIconTheme
-				gnome3.gnome_themes_standard
-				# adapta-gtk-theme # wait for 16.09 on this one
-				i3status
-				i3lock
-				libnotify
-				pythonPackages.udiskie
-				scrot
-				termite
-				xdg-user-dirs
-				xlibs.xmodmap
-				xorg.xbacklight
-				xss-lock
-                    ];
-        };
+	environment = {
+	systemPackages = with pkgs; [
+		dmenu2
+		dunst
+		emacs
+		firefox
+		# google-chrome
+		gnome3.defaultIconTheme
+		gnome3.gnome_themes_standard
+		# adapta-gtk-theme # wait for 16.09 on this one
+		i3status
+		i3lock
+		libnotify
+		pythonPackages.udiskie
+		scrot
+		termite
+		xdg-user-dirs
+		xlibs.xmodmap
+		xorg.xbacklight
+		xss-lock
+		];
+	};
 
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	services = {
