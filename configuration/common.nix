@@ -6,9 +6,11 @@
 {
 	imports =
 		[
+			./system.nix
 			./keyboard.nix
                         ./acpi.nix
 			./network.nix
+			./network-gui.nix
 			./audio.nix
 			./gui.nix
 			./virtualisation.nix
