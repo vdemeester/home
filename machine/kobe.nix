@@ -16,7 +16,7 @@
 	services.openssh.enable = true;
 
 	# Enable the "SSH phone home" service for SSH reverse tunneling
-	services.ssh-phone-home = {
+	services.ssh-tunnel = {
 		enable = true;
 		localUser = "vincent";
 		remoteHostname = "95.85.58.158";
