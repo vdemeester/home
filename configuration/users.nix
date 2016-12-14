@@ -13,6 +13,8 @@
 				extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" "input" "audio" "video" ];
 				shell = "/run/current-system/sw/bin/zsh";
 				initialPassword = "changeMe";
+				openssh.authorizedKeys.keys =
+					with import ../ssh-keys.nix; [ honshu wakasu ];
 			};
 		};
 	};
