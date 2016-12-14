@@ -14,7 +14,7 @@
 				shell = "/run/current-system/sw/bin/zsh";
 				initialPassword = "changeMe";
 				openssh.authorizedKeys.keys =
-					with import ../ssh-keys.nix; [ honshu wakasu hokkaido ];
+					with import ../ssh-keys.nix; [ honshu wakasu hokkaido kobe ];
 			};
 		};
 	};
