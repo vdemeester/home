@@ -9,8 +9,22 @@
 			../configuration/network.nix
 			# ../configuration/docker.nix
 			../configuration/custom-packages.nix
+			../service/ssh-tunnel.nix
 		];
 
+	# Enable the OpenSSH daemon.
+	services.openssh.enable = true;
+
+	# Enable the "SSH phone home" service for SSH reverse tunneling
+	services.ssh-phone-home = {
+		enable = true;
+		localUser = "vincent";
+		remoteHostname = "95.85.58.158";
+		remotePort = 22;
+		remoteUser = "vincent";
+		bindPort = 2222;
+	};
+	
 	networking.hostName = "kobe";
 
 }
