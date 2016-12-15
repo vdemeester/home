@@ -7,7 +7,7 @@
 			../configuration/users.nix
 			../configuration/system.nix
 			../configuration/network.nix
-			# ../configuration/docker.nix
+			../configuration/docker.nix
 			../configuration/custom-packages.nix
 			../service/ssh-tunnel.nix
 		];
