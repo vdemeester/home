@@ -14,6 +14,8 @@
 
 	# Enable the OpenSSH daemon.
 	services.openssh.enable = true;
+	users.users.root.openssh.authorizedKeys.keys =
+		with import ../ssh-keys.nix; [ wakasu hokkaido ];
 
 	services.ssh-tunnel = {
 		enable = true;
