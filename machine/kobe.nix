@@ -15,7 +15,6 @@
 	# Enable the OpenSSH daemon.
 	services.openssh.enable = true;
 
-	# Enable the "SSH phone home" service for SSH reverse tunneling
 	services.ssh-tunnel = {
 		enable = true;
 		localUser = "vincent";
@@ -24,7 +23,6 @@
 		remoteUser = "vincent";
 		bindPort = 2222;
 	};
-	
 	networking.hostName = "kobe";
 
 }
