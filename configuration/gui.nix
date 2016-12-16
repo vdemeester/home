@@ -42,7 +42,7 @@
 					defaultUser = "vincent";
 				};
 				sessionCommands = ''
-# xrandr --dpi 128 &
+${pkgs.xss-lock}/bin/xss-lock i3lock -- -i $HOME/.background-image 
 ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
