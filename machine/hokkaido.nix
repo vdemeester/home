@@ -12,6 +12,9 @@
 
 	networking.hostName = "hokkaido";
 
+	services.openssh.enable = true;
+	services.openssh.forwardX11 = true;
+
 	services.ssh-tunnel = {
 		enable = true;
 		localUser = "vincent";
