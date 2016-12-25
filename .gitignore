@@ -2,3 +2,4 @@ hardware-configuration.nix
 result
 .tramp*
 *~
+hostname
