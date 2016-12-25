@@ -6,6 +6,7 @@
 			../hardware-configuration.nix
 			../configuration/custom-packages.nix
 			../configuration/common.nix
+			../profiles/ssh.nix
 			../profiles/laptop.nix
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
