@@ -17,7 +17,7 @@
 	users.users.root.openssh.authorizedKeys.keys =
 		with import ../ssh-keys.nix; [ wakasu hokkaido ];
 
-	virtualisation.docker.extraOptions = "--label=type=server -H 0.0.0.0:2375";
+	virtualisation.docker.extraOptions = "--label=type=server -H unix:///var/run/docker.sock -H 0.0.0.0:2375";
 	networking.firewall.allowedTCPPorts = [ 2375 ];
 
 	services.ssh-tunnel = {
