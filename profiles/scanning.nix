@@ -2,7 +2,10 @@
 
 {
 	environment.systemPackages = with pkgs; [
-		acpi
-		lm_sensors
+		saneFrontends
+		simple-scan
 	];
+	hardware.sane = {
+		enable = true;
+	};
 }

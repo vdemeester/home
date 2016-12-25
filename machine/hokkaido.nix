@@ -6,7 +6,10 @@
 			../hardware-configuration.nix
 			../configuration/custom-packages.nix
 			../configuration/common.nix
-			../profiles/audio.nix
+			../profiles/laptop.nix
+			../profiles/virtualization.nix
+			../profiles/dockerization.nix
+			../location/docker.nix
 			../hardware/thinkpad-x220.nix
 			../service/ssh-tunnel.nix
 		];

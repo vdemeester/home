@@ -1,6 +1,10 @@
+# Docker configuration
 { config, pkgs, ...}:
 
 {
+	environment.systemPackages = with pkgs; [
+		python27Packages.docker_compose
+	];
 	virtualisation = {
 		docker = {
 			enable = true;
@@ -11,5 +15,4 @@
 		};
 	};
 	networking.firewall.trustedInterfaces = [ "docker0" ];
-
 }

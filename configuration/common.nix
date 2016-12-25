@@ -6,14 +6,7 @@
 {
 	imports =
 		[
-			./system.nix
-			./keyboard.nix
-                        ./acpi.nix
-			./network.nix
-			./network-gui.nix
-			./gui.nix
-			./virtualisation.nix
-			./security.nix
+			# ./security.nix
 			./users.nix
 			./packages.nix
 		];

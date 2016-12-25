@@ -2,9 +2,6 @@
 
 {
 	environment = {
-		variables = {
-			EDITOR = pkgs.lib.mkOverride 0 "vim";
-		};
 		systemPackages = with pkgs; [
 				aspell
 				aspellDicts.en
@@ -13,24 +10,13 @@
 				direnv
 				dobi
 				doctl
-				file
 				gcc
-				gptfdisk
-				git
 				gnumake
 				gnupg
+				gptfdisk
 				haskellPackages.git-annex
-				htop
-				iotop
-				lsof
 				msmtp
-				netcat
 				offlineimap
-				psmisc
-				tmux
-				tree
-				vim
-				wget
 		];
 	};
 }

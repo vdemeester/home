@@ -6,7 +6,11 @@
 			../hardware-configuration.nix
 			../configuration/custom-packages.nix
 			../configuration/common.nix
-			../profiles/audio.nix
+			../profiles/laptop.nix
+			../profiles/virtualization.nix
+			../profiles/dockerization.nix
+			../location/docker.nix
+			../location/home.nix
 			../hardware/thinkpad-t460s.nix
 		];
 
