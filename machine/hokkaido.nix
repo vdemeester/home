@@ -6,11 +6,10 @@
 			../hardware-configuration.nix
 			../configuration/custom-packages.nix
 			../configuration/common.nix
+			../profiles/audio.nix
 			../hardware/thinkpad-x220.nix
 			../service/ssh-tunnel.nix
 		];
-
-	networking.hostName = "hokkaido";
 
 	services.openssh.enable = true;
 	services.openssh.forwardX11 = true;

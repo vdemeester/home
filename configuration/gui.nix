@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports =
+    [
+      <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
+    ];
 	environment = {
 	systemPackages = with pkgs; [
 		dmenu2
@@ -25,7 +29,18 @@
 	};
 
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
+	hardware.sane = {
+		enable = true;
+		brscan4.enable = true;
+		brscan4.netDevices = {
+      			docker = { model = "MFC-9330CDW"; ip = "192.168.1.57"; };
+    		};
+	};
 	services = {
+		printing = {
+			enable = true;
+			drivers = [ pkgs.gutenprint ];
+		};
 		xserver = {
 			enable = true;
 			enableTCP = false;
@@ -42,7 +57,7 @@
 					defaultUser = "vincent";
 				};
 				sessionCommands = ''
-${pkgs.xss-lock}/bin/xss-lock i3lock -- -i $HOME/.background-image 
+${pkgs.xss-lock}/bin/xss-lock i3lock -- -i $HOME/.background-image &
 ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &

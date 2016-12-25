@@ -10,7 +10,7 @@ Thanks to @FaustXVI 👼
 When installing nixos:
 
 - clone this repository in `/etc/nixos`
-- create a `configuration.nix` either by linking it from a known
-  machine (in `machine/`) or by doing your own.
+- create a `hostname` with the hostname you want
+- create a `machine/${hostname}.nix` file with the thing you want (look at other ones)
 - run `nixos-generate-configuration` to have the
   `hardware-configuration.nix` generated.

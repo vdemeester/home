@@ -6,10 +6,9 @@
 			../hardware-configuration.nix
 			../configuration/custom-packages.nix
 			../configuration/common.nix
+			../profiles/audio.nix
 			../hardware/dell-latitude-e6540.nix
 		];
-
-	networking.hostName = "honshu";
 
 	services = {
 		xserver = {

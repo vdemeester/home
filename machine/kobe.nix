@@ -28,6 +28,4 @@
 		remoteUser = "vincent";
 		bindPort = 2222;
 	};
-	networking.hostName = "kobe";
-
 }

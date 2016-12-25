@@ -6,10 +6,9 @@
 			../hardware-configuration.nix
 			../configuration/custom-packages.nix
 			../configuration/common.nix
+			../profiles/audio.nix
 			../hardware/thinkpad-t460s.nix
 		];
-
-	networking.hostName = "wakasu";
 
 	services.xserver.displayManager.slim.theme = pkgs.fetchurl {
 						url = "https://github.com/vdemeester/slim-themes/raw/master/docker-key-theme-0.1.tar.xz";

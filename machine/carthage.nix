@@ -7,7 +7,6 @@
   ];
 
   boot.cleanTmpDir = true;
-  networking.hostName = "carthage";
   networking.firewall.allowPing = true;
   services.openssh.enable = true;
   users.users.root.openssh.authorizedKeys.keys = [
