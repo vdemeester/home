@@ -20,12 +20,4 @@
 	];
 	time.timeZone = "Europe/Paris";
 
-	system = {
-		stateVersion = "16.09";	
-		autoUpgrade = {
-			enable = true;
-			dates = "13:00";
-		};
-	};
-
 }
