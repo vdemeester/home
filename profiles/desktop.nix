@@ -116,6 +116,7 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 			ubuntu_font_family
 			unifont
 			# google-fonts
+			emojione
 			symbola
 			fira
 			fira-code
