@@ -12,7 +12,7 @@
 
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
-	boot.kernelPackages = pkgs.linuxPackages_4_8;
+	boot.kernelPackages = pkgs.linuxPackages_4_1;
 
 	environment.systemPackages = with pkgs; [
 		dmenu2
@@ -38,9 +38,12 @@
 	services = {
 		avahi = {
 			enable = true;
+			ipv4 = true;
+			ipv6 = true;
 			nssmdns = true;
 			publish = {
 				enable = true;
+				userServices = true;
 			};
 		};
 		xserver = {

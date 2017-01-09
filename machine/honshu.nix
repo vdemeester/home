@@ -14,9 +14,52 @@
 			../hardware/dell-latitude-e6540.nix
 		];
 
+  hardware.pulseaudio = {
+    enable = true;
+    support32Bit = true;
+    package = pkgs.pulseaudioFull;
+    configFile = pkgs.writeText "default.pa" ''
+        load-module module-udev-detect
+        load-module module-jackdbus-detect channels=2
+        load-module module-bluetooth-policy
+        load-module module-bluetooth-discover
+        load-module module-esound-protocol-unix
+        load-module module-native-protocol-unix
+        load-module module-always-sink
+        load-module module-console-kit
+        load-module module-systemd-login
+        load-module module-intended-roles
+        load-module module-position-event-sounds
+        load-module module-filter-heuristics
+        load-module module-filter-apply
+        load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
+      '';
+  };
+
+  security.pam.loginLimits = [
+    { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
+    { domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
+    { domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
+];
+	hardware.bluetooth.enable = true;
+#boot.blacklistedKernelModules = [ "radeon" ];
+#boot.kernelParams = [ "nomodeset" "video=vesafb:off" "modprobe.blacklist=radeon" ];
+
+# environment.systemPackages = with pkgs; [
+#  	linuxPackages_4_1.ati_drivers_x11
+#]; 
+#  system.activationScripts.drifix = ''
+#    mkdir -p /usr/lib/dri
+#    ln -sf /run/opengl-driver/lib/dri/fglrx_dri.so /usr/lib/dri/fglrx_dri.so
+#  '';
 	services = {
+	printing = {
+		enable = true;
+		drivers = [ pkgs.gutenprint ];
+	};
 		xserver = {
 			enable = true;
+			#videoDrivers = [ "ati_unfree" ];
 			videoDrivers = [ "intel" ];
 			monitorSection = ''
 EndSection
@@ -29,9 +72,10 @@ Section "Monitor"
 EndSection
 Section "Monitor"
 	Identifier "eDP1"
-	Option "RightOf" "HDMI1"
-	Option "DPMS" "true"
+	Option "Ignore" "true"
 				'';
+#	Option "RightOf" "HDMI1"
+#	Option "DPMS" "true"
 			deviceSection = ''
 				Option "Monitor-HDMI1" "HDMI1"
 				Option "Monitor-eDP1" "eDP1"
