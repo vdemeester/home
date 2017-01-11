@@ -12,8 +12,9 @@
 			../profiles/dockerization.nix
 			../location/home.nix
 			../hardware/dell-latitude-e6540.nix
+			../service/ssh-tunnel.nix
 		];
-
+	
   hardware.pulseaudio = {
     enable = true;
     support32Bit = true;
@@ -53,6 +54,14 @@
 #    ln -sf /run/opengl-driver/lib/dri/fglrx_dri.so /usr/lib/dri/fglrx_dri.so
 #  '';
 	services = {
+	ssh-tunnel = {
+		enable = true;
+		localUser = "vincent";
+		remoteHostname = "95.85.58.158";
+		remotePort = 22;
+		remoteUser = "vincent";
+		bindPort = 2224;
+	};
 	printing = {
 		enable = true;
 		drivers = [ pkgs.gutenprint ];
