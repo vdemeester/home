@@ -10,6 +10,7 @@
 			../profiles/laptop.nix
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
+			../profiles/office.nix
 			../location/home.nix
 			../hardware/dell-latitude-e6540.nix
 			../service/ssh-tunnel.nix
