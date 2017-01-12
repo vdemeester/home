@@ -43,10 +43,27 @@
 	};
 
 	system = {
-		stateVersion = "16.09";	
+		stateVersion = "16.09";
 		autoUpgrade = {
 			enable = true;
 			dates = "13:00";
 		};
+	};
+	systemd.services.nixos-update = {
+		description = "NixOS Upgrade";
+		unitConfig.X-StopOnRemoval = false;
+		serviceConfig.Type = "oneshot";
+
+		environment = config.nix.envVars //
+		{ inherit (config.environment.sessionVariables) NIX_PATH;
+			HOME = "/root";
+		};
+		path = [ pkgs.gnutar pkgs.xz pkgs.git config.nix.package.out ];
+		script = ''
+			cd /etc/nixos/
+			git pull --autostash --rebase
+			nix-channel --update nixos
+		'';
+		startAt = "12:00";
 	};
 }
