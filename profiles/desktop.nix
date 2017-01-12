@@ -6,6 +6,7 @@
 	imports = [
 		./printing.nix
 		./scanning.nix
+		./avahi.nix
 	];
 
 	time.timeZone = "Europe/Paris";
@@ -36,16 +37,6 @@
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	services = {
-		avahi = {
-			enable = true;
-			ipv4 = true;
-			ipv6 = true;
-			nssmdns = true;
-			publish = {
-				enable = true;
-				userServices = true;
-			};
-		};
 		xserver = {
 			enable = true;
 			enableTCP = false;

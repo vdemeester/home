@@ -8,6 +8,7 @@
 			../configuration/users.nix
 			../profiles/server.nix
 			../profiles/dockerization.nix
+			../profiles/avahi.nix
 			../location/docker.nix
 			../service/ssh-tunnel.nix
 		];
