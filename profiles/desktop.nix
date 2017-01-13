@@ -34,6 +34,12 @@
 		xlibs.xmodmap
 		xorg.xbacklight
 		xss-lock
+		ape
+		tuck
+		clasp
+		keybase
+		ipfs
+		mpv
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	services = {
