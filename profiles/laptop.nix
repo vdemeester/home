@@ -16,7 +16,7 @@
 	];
 
 	services.xserver.displayManager.sessionCommands = ''
-${pkgs.xss-lock}/bin/xss-lock i3lock -- -i $HOME/.background-image &
+${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock -- -i $HOME/.background-image &
 ${pkgs.networkmanagerapplet}/bin/nm-applet &
 	'';
 
