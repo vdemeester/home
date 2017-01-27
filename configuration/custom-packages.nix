@@ -20,7 +20,7 @@
 				sha256 = "0hm42619239vhk2nzlprcibv0pc93vyldwn47a00i5hv581f25rg";
 			}) {};
 		in {
-			inherit (pinnedPkgs) keybase ipfs mpv docker-machine;
+			inherit (pinnedPkgs) keybase ipfs mpv docker-machine docker tini docker-proxy containerd runc;
 			inherit (sbrPkgs) dobi vndr ape tuck clasp;
 		};
 	};
