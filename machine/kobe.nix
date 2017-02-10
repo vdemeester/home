@@ -37,23 +37,4 @@
 	environment.systemPackages = with pkgs; [
 		ape
 	];
-	# ape – sync git mirrors
-	systemd.user.services.ape = {
-		description = "Ape - sync git mirrors";
-		wantedBy = [ "multi-user.target" ];
-		serviceConfig = {
-			Type = "oneshot";
-			ExecStart = "${pkgs.ape}/bin/ape up /home/vincent/mirrors/";
-			Environment = "PATH=/run/current-system/sw/bin/";
-		};
-	};
-	systemd.user.timers.ape = {
-		description = "Ape hourly";
-		wantedBy = [ "timers.target" ];
-		timerConfig = {
-			OnCalendar = "hourly";
-			Persistent = "true";
-		};
-	};
-	systemd.user.timers.ape.enable = true;
 }
