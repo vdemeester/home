@@ -125,4 +125,23 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 			font-droid
 		];
 	};
+	# Auto refresh nix-channel each day
+	systemd.user.services.channel-update = {
+		description = "Update nix-channel daily";
+		wantedBy = [ "multi-user.target" ];
+		serviceConfig = {
+			Type = "oneshot";
+			ExecStart = "nix-channel --update";
+			Environment = "PATH=/run/current-system/sw/bin";
+		};
+	};
+	systemd.user.timers.channel-update = {
+		description = "Update nix-channel daily";
+		wantedBy = [ "timers.target" ];
+		timerConfig = {
+			OnCalendar = "daily";
+			Persistent = "true";
+		};
+	};
+	systemd.user.timers.channel-update.enable = true;
 }
