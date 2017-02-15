@@ -10,14 +10,14 @@
 			pinnedPkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs";
-				rev = "557fd03926e174e20e3f6153fc79a652cc1452d6";
-				sha256 = "1vibkh19acn1yjx31c5fajaj5lyxx4gsb5i7c6iwbc5zzhbh5lvm";
+				rev = "f53900d142744344d31cc7fa40fc0e2db9c97ba6";
+				sha256 = "05j997n5vagqnr1zvgv65z9p2d4r2qxxfg8q87ycq36ax20gc7iz";
 			}) {};
 			sbrPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
 				repo = "sbrpkgs";
-				rev = "4e0d1dd6ac0555a5086e9a312de21ca2506dc28b";
-				sha256 = "0hm42619239vhk2nzlprcibv0pc93vyldwn47a00i5hv581f25rg";
+				rev = "ba773ea628067f3069b918240704fe695ab2e55a";
+				sha256 = "049h37lm82i96wkrwirnfnxmfywd3rq281g35znshkj0lqwayahz";
 			}) {};
 		in {
 			inherit (pinnedPkgs) keybase ipfs mpv docker-machine docker tini docker-proxy containerd runc doctl vndr;
