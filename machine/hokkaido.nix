@@ -18,6 +18,34 @@
 	services.openssh.enable = true;
 	services.openssh.forwardX11 = true;
 
+	environment.etc."synergy-server.conf" = { text = ''
+section: screens
+	hokkaido:
+	wakasu:
+end
+section: links
+	hokkaido:
+		left = wakasu
+	wakasu:
+		right = hokkaido
+end
+section: options
+	keystroke(super+shift+left) = switchInDirection(left)
+	keystroke(super+shift+right) = switchInDirection(right)
+end
+''; };
+
+	services.synergy = {
+		server = {
+			enable = true;
+			autoStart = false;
+			screenName = "hokkaido";
+			address = "0.0.0.0";
+		};
+	};
+
+	networking.firewall.allowedTCPPorts = [ 24800 ];
+	
 	services.ssh-tunnel = {
 		enable = true;
 		localUser = "vincent";
