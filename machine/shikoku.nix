@@ -11,26 +11,32 @@
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
 			../profiles/office.nix
+			../profiles/gaming.nix
+			../profiles/synergy-server.nix
 			../location/home.nix
-			#../hardware/dell-latitude-e6540.nix
 			../service/ssh-tunnel.nix
 		];
 
-#	boot = {
-#		loader = {
-#			grub = {
-#				enable = true;
-#				version = 2;
-#				device = "/dev/sdc";
-#				extraEntries = ''
-#				menuentry "Windows 10" {
-#					insmod ntfs
-#					search --no-floppy --fs-uuid --set EE62F055662F023CD
-#					chainloarder +1
-#				}
-#				'';
-#			};
-#		};
-#	};
-	
+	services = {
+		xserver = {
+			videoDrivers = [ "nvidia" ];
+		};
+	};
+
+	environment.etc."synergy-server.conf" = { text = ''
+section: screens
+	shikoku:
+	wakasu:
+end
+section: links
+	shikoku:
+		left = wakasu
+	wakasu:
+		right = shikoku
+end
+section: options
+	keystroke(super+shift+left) = switchInDirection(left)
+	keystroke(super+shift+right) = switchInDirection(right)
+end
+''; };
 }

@@ -10,6 +10,7 @@
 			../profiles/laptop.nix
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
+			../profiles/synergy-server.nix
 			../location/docker.nix
 			../hardware/thinkpad-x220.nix
 			../service/ssh-tunnel.nix
@@ -34,17 +35,6 @@ section: options
 	keystroke(super+shift+right) = switchInDirection(right)
 end
 ''; };
-
-	services.synergy = {
-		server = {
-			enable = true;
-			autoStart = false;
-			screenName = "hokkaido";
-			address = "0.0.0.0";
-		};
-	};
-
-	networking.firewall.allowedTCPPorts = [ 24800 ];
 	
 	services.ssh-tunnel = {
 		enable = true;
