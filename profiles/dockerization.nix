@@ -12,7 +12,7 @@
 			# experimental = true;
 			socketActivation = false;
 			storageDriver = "overlay2";
-			extraOptions = "--label=type=desktop";
+			extraOptions = "--label=type=desktop --experimental --init";
 		};
 	};
 	networking.firewall.trustedInterfaces = [ "docker0" ];
