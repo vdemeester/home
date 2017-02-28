@@ -26,5 +26,5 @@
 
 	virtualisation.virtualbox.guest.enable = true;
 
-	service.xserver.xkbVariant = "bepo";
+	services.xserver.xkbVariant = "bepo";
 }
