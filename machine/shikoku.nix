@@ -17,11 +17,14 @@
 			../service/ssh-tunnel.nix
 		];
 
+	services.openssh.enable = true;
 	services = {
 		xserver = {
 			videoDrivers = [ "nvidia" ];
 		};
 	};
+
+	hardware.bluetooth.enable = true;
 
 	environment.etc."synergy-server.conf" = { text = ''
 section: screens

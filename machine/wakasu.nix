@@ -14,6 +14,7 @@
 			../hardware/thinkpad-t460s.nix
 		];
 
+	services.openssh.enable = true;
 	services.synergy.client = {
 		enable = true;
 		autoStart = false;
