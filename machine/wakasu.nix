@@ -7,6 +7,7 @@
 			../configuration/custom-packages.nix
 			../configuration/common.nix
 			../profiles/laptop.nix
+			../profiles/ssh.nix
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
 			../location/docker.nix
@@ -14,7 +15,6 @@
 			../hardware/thinkpad-t460s.nix
 		];
 
-	services.openssh.enable = true;
 	services.synergy.client = {
 		enable = true;
 		autoStart = false;

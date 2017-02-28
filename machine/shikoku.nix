@@ -17,7 +17,6 @@
 			../service/ssh-tunnel.nix
 		];
 
-	services.openssh.enable = true;
 	services = {
 		xserver = {
 			videoDrivers = [ "nvidia" ];
