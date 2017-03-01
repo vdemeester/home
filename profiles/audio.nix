@@ -10,6 +10,10 @@
 	};
 	sound.enableMediaKeys = true;
 
+	# spotify
+	networking.firewall.allowedTCPPorts = [ 57621 ];
+	networking.firewall.allowedUDPPorts = [ 57621 ];
+	
 	environment.systemPackages = with pkgs; [
 		apulse       # allow alsa application to use pulse
 		pavucontrol  # pulseaudio volume control
