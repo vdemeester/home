@@ -10,17 +10,17 @@
 			pinnedPkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs";
-				rev = "f53900d142744344d31cc7fa40fc0e2db9c97ba6";
-				sha256 = "05j997n5vagqnr1zvgv65z9p2d4r2qxxfg8q87ycq36ax20gc7iz";
+				rev = "614afce3a88bf845e1116f0f2958b4c111ca238e";
+				sha256 = "131qs7kfv5xr6maz6sjmziv90652bxn3hyap79nsxxij8irwv6vj";
 			}) {};
 			sbrPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
 				repo = "sbrpkgs";
-				rev = "ba773ea628067f3069b918240704fe695ab2e55a";
-				sha256 = "049h37lm82i96wkrwirnfnxmfywd3rq281g35znshkj0lqwayahz";
+				rev = "74e49a9213f52b44638845532e8bc01b9409833b";
+				sha256 = "0zcwc7xhr2ml896miibafaa3arqrp40hxl3pf984ybls80hh0fy7";
 			}) {};
 		in {
-			inherit (pinnedPkgs) keybase ipfs mpv docker-machine docker tini docker-proxy containerd runc doctl vndr;
+			inherit (pinnedPkgs) keybase ipfs mpv docker-machine docker tini docker-proxy containerd runc doctl vndr emacs;
 			inherit (sbrPkgs) dobi ape tuck clasp;
 		};
 	};
