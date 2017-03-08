@@ -41,6 +41,7 @@
 		keybase
 		ipfs
 		mpv
+		ledger
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	services = {

@@ -9,18 +9,18 @@
 				};
 			pinnedPkgs = import (fetchNixPkgs {
 				owner = "NixOS";
-				repo = "nixpkgs";
-				rev = "614afce3a88bf845e1116f0f2958b4c111ca238e";
-				sha256 = "131qs7kfv5xr6maz6sjmziv90652bxn3hyap79nsxxij8irwv6vj";
+				repo = "nixpkgs-channels";
+				rev = "2839b101f927be5daab7948421de00a6f6c084ae";
+				sha256 = "0a863cc5462gn1vws87d4qn45zk22m64ri1ip67w0b1a9bmymqdh";
 			}) {};
 			sbrPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
 				repo = "sbrpkgs";
-				rev = "74e49a9213f52b44638845532e8bc01b9409833b";
-				sha256 = "0zcwc7xhr2ml896miibafaa3arqrp40hxl3pf984ybls80hh0fy7";
+				rev = "73dc08ef1e4ec0fd5ae7bbadd7d4bdac2412d953";
+				sha256 = "13g8l66gallqk3gp9ah481zsd569c1rf2ck4kgma652v6wgpxdmz";
 			}) {};
 		in {
-			inherit (pinnedPkgs) keybase ipfs mpv docker-machine docker tini docker-proxy containerd runc doctl vndr emacs;
+			inherit (pinnedPkgs) keybase ipfs mpv docker-machine docker tini docker-proxy containerd runc doctl vndr emacs ledger-cli;
 			inherit (sbrPkgs) dobi ape tuck clasp;
 		};
 	};
