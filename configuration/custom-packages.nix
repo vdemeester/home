@@ -10,8 +10,8 @@
 			pinnedPkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs-channels";
-				rev = "2839b101f927be5daab7948421de00a6f6c084ae";
-				sha256 = "0a863cc5462gn1vws87d4qn45zk22m64ri1ip67w0b1a9bmymqdh";
+				rev = "73a6832ad86755ae4dfb7717b4d1e37b2691fb4f";
+				sha256 = "0dfjkm5gvy5v6dmfh47isfh73j39k3wzw4r1mhvgcm3620vhvzd9";
 			}) {};
 			sbrPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
