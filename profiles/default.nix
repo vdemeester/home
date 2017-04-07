@@ -31,8 +31,14 @@
 	};
 	nix = {
 		useSandbox = true;
+		gc = {
+			automatic = true;
+			dates = "00:30";
+			options = "--delete-older-than 30d";
+		};
 		# if hydra is down, don't wait forever
 		extraOptions = ''
+		    gc-keep-output = true
 		    connect-timeout = 20
 		'';
 	};
@@ -43,7 +49,7 @@
 	};
 
 	system = {
-		stateVersion = "16.09";
+		stateVersion = "17.03";
 		autoUpgrade = {
 			enable = true;
 			dates = "13:00";

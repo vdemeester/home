@@ -13,7 +13,7 @@
 
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
-	boot.kernelPackages = pkgs.linuxPackages_4_8;
+	boot.kernelPackages = pkgs.linuxPackages_4_10;
 	boot.tmpOnTmpfs = true;
 
 	environment.systemPackages = with pkgs; [
@@ -39,7 +39,7 @@
 		tuck
 		clasp
 		keybase
-		ipfs
+		# ipfs # something is failing on 17.03
 		mpv
 		ledger
 	];

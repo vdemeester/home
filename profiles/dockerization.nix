@@ -10,9 +10,9 @@
 		docker = {
 			enable = true;
 			# experimental = true;
-			socketActivation = false;
+			liveRestore = false;
 			storageDriver = "overlay2";
-			extraOptions = "--label=type=desktop --experimental --init";
+			extraOptions = "--label=type=desktop --experimental --init --debug";
 		};
 	};
 	networking.firewall.trustedInterfaces = [ "docker0" ];

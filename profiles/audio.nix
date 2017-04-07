@@ -8,7 +8,8 @@
 			package = pkgs.pulseaudioFull;
 		};
 	};
-	sound.enableMediaKeys = true;
+	sound.mediaKeys.enable = true;
+	
 
 	# spotify
 	networking.firewall.allowedTCPPorts = [ 57621 57622 ];

@@ -2,7 +2,7 @@
 
 {
 	environment.systemPackages = with pkgs; [
-		linuxPackages_4_8.tp_smapi
+		linuxPackages_4_10.tp_smapi
 	];
 	boot = {
 		kernelParams = [
