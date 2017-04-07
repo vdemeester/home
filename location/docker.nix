@@ -8,7 +8,7 @@
 	hardware.sane = {
 		brscan4.enable = true;
 		brscan4.netDevices = {
-      			docker = { model = "MFC-9330CDW"; ip = "192.168.1.57"; };
+      			docker = { model = "MFC-9330CDW"; ip = "10.0.0.28"; };
     		};
 	};
 }
