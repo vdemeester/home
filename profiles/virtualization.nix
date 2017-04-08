@@ -4,6 +4,10 @@
 {
 	virtualisation = {
 		virtualbox.host.enable = true;
+		libvirtd = {
+			enable = true;
+			enableKVM = true;
+		};
 	};
 	networking.firewall.trustedInterfaces = [ "vboxnet0" ];
 	environment = {
