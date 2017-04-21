@@ -40,6 +40,6 @@ DISK_DEVICES="nvme0n1p3"
 		};
 	};
 	services.xserver = {
-		dpi = 128;
+		dpi = 144;
 	};
 }
