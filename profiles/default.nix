@@ -50,16 +50,16 @@
 
 	system = {
 		stateVersion = "17.03";
-		autoUpgrade = {
-			enable = true;
-			dates = "13:00";
-		};
+	#	autoUpgrade = {
+	#		enable = true;
+	#		dates = "13:00";
+	#	};
 	};
 	systemd.services.nixos-update = {
 		description = "NixOS Upgrade";
 		unitConfig.X-StopOnRemoval = false;
 		serviceConfig.Type = "oneshot";
-
+	
 		environment = config.nix.envVars //
 		{ inherit (config.environment.sessionVariables) NIX_PATH;
 			HOME = "/root";
@@ -70,6 +70,7 @@
 			git pull --autostash --rebase
 			nix-channel --update nixos
 		'';
-		startAt = "12:00";
+		#startAt = "12:00";
+		startAt = "weekly";
 	};
 }

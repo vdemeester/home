@@ -49,6 +49,7 @@
 			enable = true;
 			enableTCP = false;
 			libinput.enable = true;
+			synaptics.enable = false;
 			layout = "fr";
 			xkbVariant = "oss";
 			inputClassSections = [
@@ -99,14 +100,14 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 			};
 			xkbOptions = "compose:caps";
 		};
-		unclutter.enable = true;
-		redshift = {
-			enable = true;
-			brightness.day = "0.95";
-			brightness.night = "0.7";
-			latitude = "48.3";
-			longitude = "7.5";
-		};
+		# unclutter.enable = true;
+		#redshift = {
+		#	enable = true;
+		#	brightness.day = "0.95";
+		#	brightness.night = "0.7";
+		#	latitude = "48.3";
+		#	longitude = "7.5";
+		#};
 	};
 	fonts = {
 		enableFontDir = true;
@@ -127,22 +128,22 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 		];
 	};
 	# Auto refresh nix-channel each day
-	systemd.user.services.channel-update = {
-		description = "Update nix-channel daily";
-		wantedBy = [ "multi-user.target" ];
-		serviceConfig = {
-			Type = "oneshot";
-			ExecStart = "nix-channel --update";
-			Environment = "PATH=/run/current-system/sw/bin";
-		};
-	};
-	systemd.user.timers.channel-update = {
-		description = "Update nix-channel daily";
-		wantedBy = [ "timers.target" ];
-		timerConfig = {
-			OnCalendar = "daily";
-			Persistent = "true";
-		};
-	};
-	systemd.user.timers.channel-update.enable = true;
+	#systemd.user.services.channel-update = {
+	#	description = "Update nix-channel daily";
+	#	wantedBy = [ "multi-user.target" ];
+	#	serviceConfig = {
+	#		Type = "oneshot";
+	#		ExecStart = "nix-channel --update";
+	#		Environment = "PATH=/run/current-system/sw/bin";
+	#	};
+	#};
+	#systemd.user.timers.channel-update = {
+	#	description = "Update nix-channel daily";
+	#	wantedBy = [ "timers.target" ];
+	#	timerConfig = {
+	#		OnCalendar = "daily";
+	#		Persistent = "true";
+	#	};
+	#};
+	#systemd.user.timers.channel-update.enable = true;
 }
