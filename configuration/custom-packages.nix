@@ -7,11 +7,12 @@
 				fetchFromGitHub {
 					inherit sha256 rev owner repo;
 				};
+			# nixos-unstable
 			pinnedPkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs-channels";
-				rev = "0a6a06346a3c928a3115dfd700993c5c06b0a1e9";
-				sha256 = "1gk9phpqj9nchkgv22blq8ggwdfyqsr3i55vwpjd8m4qcr5x62zw";
+				rev = "c90998d5cf8b8d7983f5f547546ee9ef2ad11688";
+				sha256 = "0n4mcpanicgwfmvsay3nccwf59b1v8g91pn96797xy7cq8l9v1zk";
 			}) {};
 			sbrPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
