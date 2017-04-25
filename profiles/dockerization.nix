@@ -2,13 +2,15 @@
 { config, pkgs, ...}:
 
 {
+	imports = [
+		../service/docker.nix
+	];
 	environment.systemPackages = with pkgs; [
 		python27Packages.docker_compose
 		docker-machine
-		docker-edge
 	];
 	virtualisation = {
-		docker = {
+		docker-edge = {
 			enable = true;
 			# experimental = true;
 			liveRestore = false;
