@@ -5,6 +5,7 @@
 	environment.systemPackages = with pkgs; [
 		python27Packages.docker_compose
 		docker-machine
+		docker-edge
 	];
 	virtualisation = {
 		docker = {
