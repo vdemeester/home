@@ -28,12 +28,12 @@
 	environment.etc."synergy-server.conf" = { text = ''
 section: screens
 	shikoku:
-	wakasu:
+	hokkaido:
 end
 section: links
 	shikoku:
-		left = wakasu
-	wakasu:
+		left = hokkaido
+	hokkaido:
 		right = shikoku
 end
 section: options

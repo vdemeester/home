@@ -127,23 +127,43 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 			font-droid
 		];
 	};
+	# Auto commit some repositories
+	systemd.user.services.ggasy = {
+		description = "Auto commit some git annex repository";
+		wantedBy = [ "multi-user.target" ];
+		serviceConfig = {
+			Type = "oneshot";
+			ExecStart = "/run/current-system/sw/bin/git-annex sync";
+			WorkingDirectory="/home/vincent/desktop/org/";
+			Environment = "PATH=/run/current-system/sw/bin";
+		};
+	};
+	systemd.user.timers.ggasy = {
+		description = "Auto commit hourly";
+		wantedBy = [ "timers.target" ];
+		timerConfig = {
+			OnCalendar = "hourly";
+			Persistent = "true";
+		};
+	};
+	systemd.user.timers.ggasy.enable = true;
 	# Auto refresh nix-channel each day
-	#systemd.user.services.channel-update = {
-	#	description = "Update nix-channel daily";
-	#	wantedBy = [ "multi-user.target" ];
-	#	serviceConfig = {
-	#		Type = "oneshot";
-	#		ExecStart = "nix-channel --update";
-	#		Environment = "PATH=/run/current-system/sw/bin";
-	#	};
-	#};
-	#systemd.user.timers.channel-update = {
-	#	description = "Update nix-channel daily";
-	#	wantedBy = [ "timers.target" ];
-	#	timerConfig = {
-	#		OnCalendar = "daily";
-	#		Persistent = "true";
-	#	};
-	#};
-	#systemd.user.timers.channel-update.enable = true;
+	systemd.user.services.channel-update = {
+		description = "Update nix-channel daily";
+		wantedBy = [ "multi-user.target" ];
+		serviceConfig = {
+			Type = "oneshot";
+			ExecStart = "/run/current-system/sw/bin/nix-channel --update";
+			Environment = "PATH=/run/current-system/sw/bin";
+		};
+	};
+	systemd.user.timers.channel-update = {
+		description = "Update nix-channel daily";
+		wantedBy = [ "timers.target" ];
+		timerConfig = {
+			OnCalendar = "daily";
+			Persistent = "true";
+		};
+	};
+	systemd.user.timers.channel-update.enable = true;
 }
