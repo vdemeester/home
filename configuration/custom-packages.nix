@@ -8,6 +8,12 @@
 					inherit sha256 rev owner repo;
 				};
 			# nixos-unstable
+			dockerPkgs = import (fetchNixPkgs {
+				owner = "vdemeester";
+				repo = "nixpkgs";
+				rev = "7f59fc657c1015bcefd39a5c957ec9b934a51419";
+				sha256 = "01c0qzik6n07pxk0slqky5iy5cn7xz3qhh726vsiiahfqjkjq4cp";
+			}) {};
 			pinnedPkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs-channels";
@@ -21,7 +27,8 @@
 				sha256 = "13g8l66gallqk3gp9ah481zsd569c1rf2ck4kgma652v6wgpxdmz";
 			}) {};
 		in {
-			inherit (pinnedPkgs) keybase ipfs mpv docker-machine docker docker-edge tini docker-proxy containerd runc doctl vndr emacs ledger-cli;
+			inherit (dockerPkgs) docker docker-edge docker-proxy containerd runc tini;
+			inherit (pinnedPkgs) keybase ipfs mpv docker-machine doctl vndr emacs ledger-cli;
 			inherit (sbrPkgs) dobi ape tuck clasp;
 		};
 	};
