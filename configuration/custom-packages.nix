@@ -11,8 +11,8 @@
 			dockerPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
 				repo = "nixpkgs";
-				rev = "0a4ebf12e008eaafa14065038bffdb466d4357b0";
-				sha256 = "0l5pyibyg4m5clk4vcf49k69dprr0g802ay0mxfm33yssl1ybvmp";
+				rev = "398f6ed7d3b385cf11d95f4d83f5012300112444";
+				sha256 = "0sag7j6p26f04sbvz8i5naa0nibw9iczbjhw42zz7i9aj0aa0cq0";
 			}) {};
 			pinnedPkgs = import (fetchNixPkgs {
 				owner = "NixOS";
