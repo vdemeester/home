@@ -69,27 +69,7 @@
 	};
 		xserver = {
 			enable = true;
-			#videoDrivers = [ "ati_unfree" ];
 			videoDrivers = [ "intel" ];
-			monitorSection = ''
-EndSection
-Section "Monitor"
-	Identifier "HDMI1"
-	Modeline "2560x1080_60.00"  230.00  2560 2720 2992 3424  1080 1083 1093 1120 -hsync +vsync
-	Option "PreferredMode" "2560x1080_60.00"
-	Option  "Primary" "true"
-	Option "DPMS" "true"
-EndSection
-Section "Monitor"
-	Identifier "eDP1"
-	Option "Ignore" "true"
-				'';
-#	Option "RightOf" "HDMI1"
-#	Option "DPMS" "true"
-			deviceSection = ''
-				Option "Monitor-HDMI1" "HDMI1"
-				Option "Monitor-eDP1" "eDP1"
-'';
 			exportConfiguration = true;
 			displayManager.slim.theme = pkgs.fetchurl {
 						url = "https://github.com/vdemeester/slim-themes/raw/master/docker-penguins-theme-0.1.tar.xz";
