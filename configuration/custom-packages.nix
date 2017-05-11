@@ -14,21 +14,21 @@
 				rev = "398f6ed7d3b385cf11d95f4d83f5012300112444";
 				sha256 = "0sag7j6p26f04sbvz8i5naa0nibw9iczbjhw42zz7i9aj0aa0cq0";
 			}) {};
-			pinnedPkgs = import (fetchNixPkgs {
+			unstablePkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs-channels";
-				rev = "c90998d5cf8b8d7983f5f547546ee9ef2ad11688";
-				sha256 = "0n4mcpanicgwfmvsay3nccwf59b1v8g91pn96797xy7cq8l9v1zk";
+				rev = "0afb6d789c8bf74825e8cdf6a5d3b9ab8bde4f2d";
+				sha256 = "147vhzrnwcy0v77kgbap31698qbda8rn09n5fnjp740svmkjpaiz";
 			}) {};
 			sbrPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
 				repo = "sbrpkgs";
-				rev = "73dc08ef1e4ec0fd5ae7bbadd7d4bdac2412d953";
-				sha256 = "13g8l66gallqk3gp9ah481zsd569c1rf2ck4kgma652v6wgpxdmz";
+				rev = "62699b6f1233b97aa79227e391f16531eecabf6b";
+				sha256 = "02zklicpvn54xlicbxh20bbcxxpmh5kr1s06rdr3wxagfyxhmw0g";
 			}) {};
 		in {
 			inherit (dockerPkgs) docker docker-edge docker-proxy containerd runc tini;
-			inherit (pinnedPkgs) keybase ipfs mpv docker-machine doctl vndr emacs ledger-cli;
+			inherit (unstablePkgs) keybase ipfs mpv docker-machine doctl vndr emacs ledger-cli firefox;
 			inherit (sbrPkgs) dobi ape tuck clasp;
 		};
 	};
