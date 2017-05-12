@@ -127,6 +127,18 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 			font-droid
 		];
 	};
+
+	# Polkit.
+	security.polkit.extraConfig = ''
+	polkit.addRule(function(action, subject) {
+		if ((action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
+		action.id == "org.freedesktop.udisks2.encrypted-unlock-system"
+		) &&
+		subject.local && subject.active && subject.isInGroup("users")) {
+			return polkit.Result.YES;
+		}
+	});
+	'';
 	# Auto commit some repositories
 	systemd.user.services.ggasy = {
 		description = "Auto commit some git annex repository";
