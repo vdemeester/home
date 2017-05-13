@@ -42,6 +42,8 @@
 		# ipfs # something is failing on 17.03
 		mpv
 		ledger
+		offlineimap
+		mu
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	services = {
