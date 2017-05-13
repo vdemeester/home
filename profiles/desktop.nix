@@ -52,7 +52,7 @@
 			enableTCP = false;
 			libinput.enable = true;
 			synaptics.enable = false;
-			layout = "fr,fr(bepo)";
+			layout = "fr(bepo),fr";
 			xkbVariant = "oss";
 			xkbOptions = "grp:win_space_toggle,grp_led:caps,compose:caps";
 			inputClassSections = [
