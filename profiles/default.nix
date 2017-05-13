@@ -40,6 +40,7 @@
 		extraOptions = ''
 		    gc-keep-output = true
 		    connect-timeout = 20
+		    build-cores = 0
 		'';
 	};
 	nixpkgs = {
@@ -59,7 +60,7 @@
 		description = "NixOS Upgrade";
 		unitConfig.X-StopOnRemoval = false;
 		serviceConfig.Type = "oneshot";
-	
+
 		environment = config.nix.envVars //
 		{ inherit (config.environment.sessionVariables) NIX_PATH;
 			HOME = "/root";
