@@ -52,8 +52,9 @@
 			enableTCP = false;
 			libinput.enable = true;
 			synaptics.enable = false;
-			layout = "fr";
+			layout = "fr,fr(bepo)";
 			xkbVariant = "oss";
+			xkbOptions = "grp:win_space_toggle,grp_led:caps,compose:caps";
 			inputClassSections = [
 					''
 Identifier      "TypeMatrix"
@@ -100,7 +101,6 @@ ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 				'';
 			};
-			xkbOptions = "compose:caps";
 		};
 		# unclutter.enable = true;
 		#redshift = {
