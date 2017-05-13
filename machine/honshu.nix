@@ -16,28 +16,6 @@
 			../service/ssh-tunnel.nix
 		];
 	
-  hardware.pulseaudio = {
-    enable = true;
-    support32Bit = true;
-    package = pkgs.pulseaudioFull;
-    configFile = pkgs.writeText "default.pa" ''
-        load-module module-udev-detect
-        load-module module-jackdbus-detect channels=2
-        load-module module-bluetooth-policy
-        load-module module-bluetooth-discover
-        load-module module-esound-protocol-unix
-        load-module module-native-protocol-unix
-        load-module module-always-sink
-        load-module module-console-kit
-        load-module module-systemd-login
-        load-module module-intended-roles
-        load-module module-position-event-sounds
-        load-module module-filter-heuristics
-        load-module module-filter-apply
-        load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
-      '';
-  };
-
   security.pam.loginLimits = [
     { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
     { domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
