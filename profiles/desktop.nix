@@ -43,7 +43,7 @@
 		mpv
 		ledger
 		offlineimap
-		mu
+		notmuch
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	services = {
@@ -54,7 +54,7 @@
 			synaptics.enable = false;
 			layout = "fr(bepo),fr";
 			xkbVariant = "oss";
-			xkbOptions = "grp:win_space_toggle,grp_led:caps,compose:caps";
+			xkbOptions = "grp:menu_toggle,grp_led:caps,compose:caps";
 			inputClassSections = [
 					''
 Identifier      "TypeMatrix"
