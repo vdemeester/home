@@ -44,6 +44,7 @@
 		ledger
 		offlineimap
 		notmuch
+		pythonPackages.afew
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	services = {
