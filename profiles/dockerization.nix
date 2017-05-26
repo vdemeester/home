@@ -15,7 +15,7 @@
 			# experimental = true;
 			liveRestore = false;
 			storageDriver = "overlay2";
-			extraOptions = "--label=type=desktop --experimental --init";
+			extraOptions = "--label=type=desktop --experimental --init --debug";
 		};
 	};
 	networking.firewall.trustedInterfaces = [ "docker0" ];
