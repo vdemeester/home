@@ -15,6 +15,8 @@
 			../hardware/dell-latitude-e6540.nix
 			../service/ssh-tunnel.nix
 		];
+
+time.timeZone = "Europe/Paris";      
 	
   security.pam.loginLimits = [
     { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }

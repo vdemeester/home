@@ -15,6 +15,8 @@
 			../service/ssh-tunnel.nix
 		];
 
+	time.timeZone = "Europe/Paris";
+
 	services.openssh.enable = true;
 	services.openssh.forwardX11 = true;
 

@@ -21,6 +21,7 @@
 	#	screenName = "wakasu";
 	#	serverAddress = "hokkaido.local";
 	#};
+	time.timeZone = "America/Los_Angeles";
 
 	services.xserver.displayManager.slim.theme = pkgs.fetchurl {
 						url = "https://github.com/vdemeester/slim-themes/raw/master/docker-key-theme-0.1.tar.xz";

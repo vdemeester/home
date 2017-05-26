@@ -17,6 +17,8 @@
 			../service/ssh-tunnel.nix
 		];
 
+	time.timeZone = "Europe/Paris";
+
 	services = {
 		xserver = {
 			videoDrivers = [ "nvidia" ];
