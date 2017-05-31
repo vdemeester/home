@@ -42,4 +42,7 @@ DISK_DEVICES="nvme0n1p3"
 	services.xserver = {
 		dpi = 144;
 	};
+	variables.QT_DEVICE_PIXEL_RATIO = "2";
+	variables.GDK_SCALE = "2";
+	variables.GDK_DPI_SCALE = "0.5";
 }
