@@ -45,6 +45,6 @@ DISK_DEVICES="nvme0n1p3"
 	environment = {
 		variables.QT_DEVICE_PIXEL_RATIO = "2";
 		variables.GDK_SCALE = "2";
-		variables.GDK_DPI_SCALE = "0.5";
+		variables.GDK_DPI_SCALE = "0.75";
 	};
 }
