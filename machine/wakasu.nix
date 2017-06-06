@@ -21,7 +21,15 @@
 	#	screenName = "wakasu";
 	#	serverAddress = "hokkaido.local";
 	#};
-	time.timeZone = "America/Los_Angeles";
+
+	security.pam.loginLimits = [
+		{ domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
+		{ domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
+		{ domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
+	];
+	hardware.bluetooth.enable = true;
+	
+	time.timeZone = "Europe/Paris";
 
 	services.xserver.displayManager.slim.theme = pkgs.fetchurl {
 						url = "https://github.com/vdemeester/slim-themes/raw/master/docker-key-theme-0.1.tar.xz";
