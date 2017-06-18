@@ -28,7 +28,7 @@
 			}) {};
 		in {
 			inherit (dockerPkgs) docker docker-edge docker-proxy containerd runc tini;
-			inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli firefox youtube-dl;
+			inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli firefox youtube-dl go;
 			inherit (sbrPkgs) dobi ape tuck clasp;
 		};
 	};
