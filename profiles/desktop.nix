@@ -32,7 +32,11 @@
 		xdg_utils
 		xlibs.xmodmap
 		xorg.xbacklight
+		xorg.xdpyinfo
+		xorg.xhost
+		xorg.xinit
 		xss-lock
+		xorg.xmessage
 		ape
 		tuck
 		clasp
@@ -43,6 +47,7 @@
 		offlineimap
 		notmuch
 		pythonPackages.afew
+		unzip
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	services = {
