@@ -10,6 +10,7 @@
 			../profiles/ssh.nix
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
+			../profiles/dev.nix
 			../location/docker.nix
 			../location/home.nix
 			../hardware/thinkpad-t460s.nix

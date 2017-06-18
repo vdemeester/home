@@ -8,6 +8,7 @@
 			../configuration/common.nix
 			../profiles/ssh.nix
 			../profiles/laptop.nix
+			../profiles/dev.nix
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
 			../profiles/office.nix
