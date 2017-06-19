@@ -32,12 +32,16 @@
 section: screens
 	shikoku:
 	honshu:
+	wakasu:
 end
 section: links
 	shikoku:
-		left = honshu
+		left = wakasu
 	honshu:
+		right = wakasu
+        wakasu:
 		right = shikoku
+		left = honshu
 end
 section: options
 	keystroke(super+shift+left) = switchInDirection(left)
