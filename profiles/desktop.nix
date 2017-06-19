@@ -124,7 +124,6 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 			dejavu_fonts
 			ubuntu_font_family
 			unifont
-			google-fonts
 			emojione
 			symbola
 			fira
