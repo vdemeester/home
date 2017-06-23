@@ -24,6 +24,7 @@
 		# adapta-gtk-theme # wait for 16.09 on this one
 		i3status
 		i3lock
+		rofi
 		libnotify
 		pythonPackages.udiskie
 		scrot
