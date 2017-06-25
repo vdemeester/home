@@ -119,7 +119,7 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 	fonts = {
 		enableFontDir = true;
 		enableGhostscriptFonts = true;
-		fonts = with pkgs; [
+		fonts = with pkgs; [		
 			corefonts
 			inconsolata
 			dejavu_fonts
@@ -131,6 +131,7 @@ ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 			fira-code
 			fira-mono
 			font-droid
+			hasklig
 		];
 	};
 

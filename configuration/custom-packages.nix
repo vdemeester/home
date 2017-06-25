@@ -7,13 +7,13 @@
 				fetchFromGitHub {
 					inherit sha256 rev owner repo;
 				};
-			# nixos-unstable
 			dockerPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
 				repo = "nixpkgs";
 				rev = "398f6ed7d3b385cf11d95f4d83f5012300112444";
 				sha256 = "0sag7j6p26f04sbvz8i5naa0nibw9iczbjhw42zz7i9aj0aa0cq0";
 			}) {};
+			# nixos-unstable
 			unstablePkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs-channels";
@@ -28,7 +28,7 @@
 			}) {};
 		in {
 			inherit (dockerPkgs) docker docker-edge docker-proxy containerd runc tini;
-			inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli firefox youtube-dl go;
+			inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli firefox youtube-dl go hasklig;
 			inherit (sbrPkgs) dobi ape tuck clasp;
 		};
 	};
