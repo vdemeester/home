@@ -24,6 +24,17 @@
 	hardware.bluetooth.enable = true;
 	hardware.trackpoint.enable = false;
 
+	environment.systemPackages = with pkgs; [
+		autorandr
+	];
+
+	services.udev = {
+		extraRules = ''
+ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/vincent/.Xauthority", RUN+="${pkgs.bash}/bin/bash /home/vincent/bin/autorandr.sh"
+'';
+	};
+	# ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/vincent/.Xauthority", RUN+="/usr/bin/su vincent -c ${pkgs.autorandr}/bin/autorandr -c"
+
 	time.timeZone = "Europe/Paris";
 
 	services.xserver.displayManager.slim.theme = pkgs.fetchurl {
