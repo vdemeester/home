@@ -4,9 +4,10 @@
 
 {
 	environment.systemPackages = with pkgs; [
-		go
 		jq
 		grc
 		dobi
+		platinum-searcher
+		ripgrep
 	];
 }
