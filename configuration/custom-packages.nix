@@ -8,10 +8,10 @@
 					inherit sha256 rev owner repo;
 				};
 			dockerPkgs = import (fetchNixPkgs {
-				owner = "vdemeester";
+				owner = "NixOS";
 				repo = "nixpkgs";
-				rev = "398f6ed7d3b385cf11d95f4d83f5012300112444";
-				sha256 = "0sag7j6p26f04sbvz8i5naa0nibw9iczbjhw42zz7i9aj0aa0cq0";
+				rev = "37f59d2e7284e275eafb627cbe4764dc0c30c79e";
+				sha256 = "1n9w1w827wxxd9yimm879nawzdxp1fbb8007inqmj2rrz2p29qbl";
 			}) {};
 			# nixos-unstable
 			unstablePkgs = import (fetchNixPkgs {
