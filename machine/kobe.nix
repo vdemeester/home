@@ -18,7 +18,7 @@
 	# Enable the OpenSSH daemon.
 	services.openssh.enable = true;
 	users.users.root.openssh.authorizedKeys.keys =
-		with import ../ssh-keys.nix; [ wakasu hokkaido ];
+		with import ../ssh-keys.nix; [ wakasu ];
 
 	virtualisation.docker.extraOptions = "--label=type=server -H unix:///var/run/docker.sock -H 0.0.0.0:2375";
 	networking.firewall.allowedTCPPorts = [ 2375 ];
