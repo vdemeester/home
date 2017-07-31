@@ -28,7 +28,7 @@ time.timeZone = "Europe/Paris";
 #boot.kernelParams = [ "nomodeset" "video=vesafb:off" "modprobe.blacklist=radeon" ];
 
 # environment.systemPackages = with pkgs; [
-#  	linuxPackages_4_1.ati_drivers_x11
+#  	linuxPackages_4_12.ati_drivers_x11
 #]; 
 #  system.activationScripts.drifix = ''
 #    mkdir -p /usr/lib/dri
