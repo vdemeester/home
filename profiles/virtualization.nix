@@ -1,11 +1,14 @@
 # Virtualization configuration
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
 	virtualisation = {
 		virtualbox.host.enable = true;
+		libvirtd = {
+			enable = true;
+			enableKVM = true;
+		};
 	};
-	boot.kernelModules = lib.mkBefore [ "kvm-intel" ];
 	networking.firewall.trustedInterfaces = [ "vboxnet0" ];
 	environment = {
 		systemPackages = with pkgs; [
