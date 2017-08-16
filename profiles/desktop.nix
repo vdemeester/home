@@ -25,6 +25,8 @@
 		i3status
 		i3lock
 		rofi
+		rofi-pass
+		pass
 		libnotify
 		pythonPackages.udiskie
 		scrot
