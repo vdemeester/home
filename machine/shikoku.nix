@@ -7,7 +7,8 @@
 			../configuration/custom-packages.nix
 			../configuration/common.nix
 			../profiles/ssh.nix
-			../profiles/laptop.nix
+			../profiles/desktop.nix
+			../profiles/audio.nix
 			../profiles/dev.nix
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
@@ -34,6 +35,30 @@ xrandr --output HDMI-0 --off --output DP-4 --auto --dpi 96 &
 			};
 		};
 	};
+
+systemd.network = {
+  enable = true;
+  netdevs.br0.netdevConfig = {
+    Name = "br0";
+    Kind = "bridge";
+  };
+  networks = {
+    br0.extraConfig = ''
+      [Match]
+      Name = br0
+
+      [Network]
+      DHCP = both
+    '';
+   enp0s31f6.extraConfig = ''
+     [Match]
+     Name=enp0s31f6
+
+     [Network]
+     Bridge=br0
+   '';
+  };
+};
 
 	hardware.bluetooth.enable = true;
 
