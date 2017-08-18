@@ -23,7 +23,7 @@
 		gnome3.gnome_themes_standard
 		# adapta-gtk-theme # wait for 16.09 on this one
 		i3status
-		i3lock
+		i3lock-color
 		rofi
 		rofi-pass
 		pass
@@ -106,6 +106,7 @@ Option          "XkbVariant"    "bepo"
 				sessionCommands = ''
 ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
+${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.background-image --tiling --line-use-inside &
 				'';
 			};
 		};
