@@ -17,18 +17,18 @@
 			unstablePkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs-channels";
-				rev = "0d4431cfe90b2242723ccb1ccc90714f2f68a609";
-				sha256 = "0iil6dx91widz66avnbs4m8lhygmadhyma1m2kbq57iwj73yql3w";
+				rev = "129f8d7e999b1a1f0fceaecadca30211e34d85a6";
+				sha256 = "1sz6xm7xgyyp7an5gh4ck6lwgxil0rkgwg0f11awv13p67z9v763";
 			}) {};
 			sbrPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
 				repo = "sbrpkgs";
-				rev = "62699b6f1233b97aa79227e391f16531eecabf6b";
-				sha256 = "02zklicpvn54xlicbxh20bbcxxpmh5kr1s06rdr3wxagfyxhmw0g";
+				rev = "faaef6ef32138cc79b39212d9aba4f20d0fecb60";
+				sha256 = "191hxpyx71bzvbrzsil8nzadr09j1dma9s19cnh39hkdi1x87ih6";
 			}) {};
 		in {
 			inherit (dockerPkgs) docker docker-edge docker-proxy containerd runc tini;
-			inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli firefox youtube-dl go hasklig;
+			inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli firefox youtube-dl go hasklig i3lock-color;
 			inherit (sbrPkgs) dobi ape tuck clasp;
 		};
 	};
