@@ -106,7 +106,7 @@ Option          "XkbVariant"    "bepo"
 				sessionCommands = ''
 ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
-${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.background-image --tiling --line-use-inside &
+${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.background-lock --tiling --line-use-inside &
 				'';
 			};
 		};
