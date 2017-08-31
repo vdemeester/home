@@ -7,28 +7,28 @@
 				fetchFromGitHub {
 					inherit sha256 rev owner repo;
 				};
-			dockerPkgs = import (fetchNixPkgs {
+			masterUnstablePkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs";
-				rev = "37f59d2e7284e275eafb627cbe4764dc0c30c79e";
-				sha256 = "1n9w1w827wxxd9yimm879nawzdxp1fbb8007inqmj2rrz2p29qbl";
+				rev = "91054336ce8fcaedb5d98a4b53f177b52f63d0d6";
+				sha256 = "0wq05wgkpjipxrdiixrk1grhbalvszw7pd63s6f40m14z3kk6df2";
 			}) {};
 			# nixos-unstable
 			unstablePkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs-channels";
-				rev = "129f8d7e999b1a1f0fceaecadca30211e34d85a6";
-				sha256 = "1sz6xm7xgyyp7an5gh4ck6lwgxil0rkgwg0f11awv13p67z9v763";
+				rev = "96457d26dded05bcba8e9fbb9bf0255596654aab";
+				sha256 = "0qv8c60n9vyn1wsviwyxz6d0ayd1cy92jz9f59wgklss059kpzdp";
 			}) {};
 			sbrPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
 				repo = "sbrpkgs";
-				rev = "faaef6ef32138cc79b39212d9aba4f20d0fecb60";
-				sha256 = "191hxpyx71bzvbrzsil8nzadr09j1dma9s19cnh39hkdi1x87ih6";
+				rev = "df281994c5e438c25af6c054ebfbd19333f3e132";
+				sha256 = "0636k102vw1pmbcch75xvhjlkfk9553bcf6rba5i69m7b5bdsfd0";
 			}) {};
 		in {
-			inherit (dockerPkgs) docker docker-edge docker-proxy containerd runc tini;
-			inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli firefox youtube-dl go hasklig i3lock-color;
+			inherit (masterUnstablePkgs) docker docker-edge docker-proxy containerd runc tini;
+			inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli firefox google-chrome-stable youtube-dl go hasklig i3lock-color;
 			inherit (sbrPkgs) dobi ape tuck clasp;
 		};
 	};
