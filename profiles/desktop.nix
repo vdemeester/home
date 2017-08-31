@@ -21,7 +21,6 @@
 		firefox
 		gnome3.defaultIconTheme
 		gnome3.gnome_themes_standard
-		# adapta-gtk-theme # wait for 16.09 on this one
 		i3status
 		i3lock-color
 		rofi
@@ -44,12 +43,8 @@
 		tuck
 		clasp
 		keybase
-		# ipfs # something is failing on 17.03
 		mpv
 		ledger
-		offlineimap
-		notmuch
-		pythonPackages.afew
 		unzip
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
