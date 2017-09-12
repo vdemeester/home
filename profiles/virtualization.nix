@@ -20,6 +20,8 @@ dynamic_ownership = 0
 	environment = {
 		systemPackages = with pkgs; [
 			vagrant
+			runc
+			containerd
 		];
 	};
 }
