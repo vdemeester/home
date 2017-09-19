@@ -9,5 +9,8 @@
 		dobi
 		platinum-searcher
 		ripgrep
+		certstrap
+		runc
+		containerd
 	];
 }

@@ -16,6 +16,7 @@
 
 	environment.systemPackages = with pkgs; [
 		dmenu2
+		rofi
 		dunst
 		emacs
 		firefox
