@@ -47,6 +47,7 @@
 		mpv
 		ledger
 		unzip
+		peco
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	services = {
