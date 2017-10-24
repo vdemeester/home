@@ -26,7 +26,7 @@
 			videoDrivers = [ "nvidia" ];
 			displayManager = {
 				sessionCommands = ''
-xrandr --output HDMI-0 --auto --left-of DP-5 --output DP-5 --auto &
+xrandr --output DP-2 --auto --left-of DP-4 --output DP-4 --auto &
 '';
 				slim.theme = pkgs.fetchurl {
 					url = "https://github.com/vdemeester/slim-themes/raw/master/docker-nuage-theme-0.1.tar.xz";
