@@ -48,8 +48,10 @@
 		ledger
 		unzip
 		peco
+		networkmanagerapplet
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
+	networking.networkmanager.enable = true;
 	services = {
 		xserver = {
 			enable = true;
@@ -101,6 +103,7 @@ Option          "XkbVariant"    "bepo"
 					defaultUser = "vincent";
 				};
 				sessionCommands = ''
+${pkg.networkmanagerapplet}/bin/nm-applet &
 ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
 ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
 ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.background-lock --tiling &

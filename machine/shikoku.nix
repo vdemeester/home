@@ -36,30 +36,6 @@ xrandr --output DP-2 --auto --left-of DP-4 --output DP-4 --auto &
 		};
 	};
 
-systemd.network = {
-  enable = true;
-  netdevs.br0.netdevConfig = {
-    Name = "br0";
-    Kind = "bridge";
-  };
-  networks = {
-    br0.extraConfig = ''
-      [Match]
-      Name = br0
-
-      [Network]
-      DHCP = both
-    '';
-   enp0s31f6.extraConfig = ''
-     [Match]
-     Name=enp0s31f6
-
-     [Network]
-     Bridge=br0
-   '';
-  };
-};
-
 	hardware.bluetooth.enable = true;
 
 	environment.etc."synergy-server.conf" = { text = ''
