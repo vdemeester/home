@@ -6,7 +6,7 @@
 	environment.systemPackages = with pkgs; [
 		jq
 		grc
-		dobi
+		#dobi
 		platinum-searcher
 		ripgrep
 		certstrap

@@ -8,7 +8,7 @@
 				aspellDicts.fr
 				cryptsetup
 				direnv
-				dobi
+				#dobi
 				doctl
 				gcc
 				gnumake
