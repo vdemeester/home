@@ -24,16 +24,6 @@ time.timeZone = "Europe/Paris";
     { domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
 ];
 	hardware.bluetooth.enable = true;
-#boot.blacklistedKernelModules = [ "radeon" ];
-#boot.kernelParams = [ "nomodeset" "video=vesafb:off" "modprobe.blacklist=radeon" ];
-
-# environment.systemPackages = with pkgs; [
-#  	linuxPackages_4_12.ati_drivers_x11
-#]; 
-#  system.activationScripts.drifix = ''
-#    mkdir -p /usr/lib/dri
-#    ln -sf /run/opengl-driver/lib/dri/fglrx_dri.so /usr/lib/dri/fglrx_dri.so
-#  '';
 	services = {
 	ssh-tunnel = {
 		enable = true;
@@ -55,7 +45,22 @@ time.timeZone = "Europe/Paris";
 						url = "https://github.com/vdemeester/slim-themes/raw/master/docker-penguins-theme-0.1.tar.xz";
 						sha256 = "1s0cfj1l9ay7y0ib68dnpdfkr1zwgr0b1s990ch786lxlajwwxpq";
 						};
-
+			monitorSection = ''
+	Modeline "2560x1080_60.00"  230.00  2560 2720 2992 3424  1080 1083 1093 1120 -hsync +vsync
+			'';
+			deviceSection = ''
+	Option "ModeValidation" "AllowNonEditModes"
+			'';
+			config = ''
+	Section "Monitor"
+		Identifier "eDP1"
+		Option	   "ignore"	"true"
+	EndSection
+	Section "Monitor"
+		Modeline "2560x1080_60.00"  230.00  2560 2720 2992 3424  1080 1083 1093 1120 -hsync +vsync
+		Identifier "HDMI1"
+	EndSection
+			'';
 		};
 };
 }
