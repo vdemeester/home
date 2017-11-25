@@ -10,15 +10,15 @@
 			masterUnstablePkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs";
-				rev = "91054336ce8fcaedb5d98a4b53f177b52f63d0d6";
-				sha256 = "0wq05wgkpjipxrdiixrk1grhbalvszw7pd63s6f40m14z3kk6df2";
+				rev = "9c048f4fb66adc33c6b379f2edefcb615fd53de6";
+				sha256 = "18xbnfzj753bphzmgp74rn9is4n5ir4mvb4gp9lgpqrbfyy5dl2j";
 			}) {};
 			# nixos-unstable
 			unstablePkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs-channels";
-				rev = "799435b7cab97a39893a104999b3bc589e1172b1";
-				sha256 = "1x61hpkagydrf05y0sa1ynmi8z3sm2377f4f6yiqlj9yvkg57jv3";
+				rev = "9c048f4fb66adc33c6b379f2edefcb615fd53de6";
+				sha256 = "18xbnfzj753bphzmgp74rn9is4n5ir4mvb4gp9lgpqrbfyy5dl2j";
 			}) {};
 			sbrPkgs = import (fetchNixPkgs {
 				owner = "vdemeester";
