@@ -21,6 +21,9 @@
 		{ domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
 		{ domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
 	];
+
+	boot.loader.systemd-boot.enable = true;
+
 	hardware.bluetooth.enable = true;
 	hardware.trackpoint.enable = false;
 

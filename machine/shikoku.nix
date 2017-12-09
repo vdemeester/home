@@ -20,6 +20,7 @@
 		];
 
 	time.timeZone = "Europe/Paris";
+	boot.loader.systemd-boot.enable = true;
 
 	services = {
 		xserver = {

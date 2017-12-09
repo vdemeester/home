@@ -15,7 +15,8 @@
 
 	time.timeZone = "Europe/Paris";
 
-	boot.loader.grub.device = "/dev/sda/";
+	boot.loader.systemd-boot.enable = false;
+	boot.loader.grub.device = "/dev/sda";
 	boot.initrd.checkJournalingFS = false;
 
 	boot.kernel.sysctl."vm.overcommit_memory" = "1";

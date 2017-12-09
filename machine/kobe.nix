@@ -14,6 +14,7 @@
 		];
 
 	time.timeZone = "Europe/Paris";
+	boot.loader.systemd-boot.enable = true;
 
 	# Enable the OpenSSH daemon.
 	services.openssh.enable = true;

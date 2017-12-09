@@ -16,6 +16,7 @@
 		];
 
 	time.timeZone = "Europe/Paris";
+	boot.loader.systemd-boot.enable = true;
 
 	services.openssh.enable = true;
 	services.openssh.forwardX11 = true;
