@@ -11,6 +11,7 @@
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
 			../profiles/dev.nix
+			../profiles/dev.python.nix
 			../location/docker.nix
 			../location/home.nix
 			../hardware/thinkpad-t460s.nix
