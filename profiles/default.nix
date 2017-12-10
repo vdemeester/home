@@ -3,6 +3,7 @@
 {
 	programs = {
 		 zsh.enable = true;
+		 fish.enable = true;
 	};
 	environment = {
 		variables = {
@@ -21,6 +22,7 @@
 				vim
 				wget
 				zsh
+				fish
 		];
 	};
 	i18n = {

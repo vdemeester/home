@@ -11,6 +11,7 @@
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
 			../profiles/dev.nix
+			../profiles/dev.python.nix
 			../location/docker.nix
 			../location/home.nix
 			../hardware/thinkpad-t460s.nix
@@ -21,6 +22,9 @@
 		{ domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
 		{ domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
 	];
+
+	boot.loader.systemd-boot.enable = true;
+
 	hardware.bluetooth.enable = true;
 	hardware.trackpoint.enable = false;
 

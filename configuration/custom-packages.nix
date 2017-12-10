@@ -28,7 +28,7 @@
 			}) {};
 		in {
 			inherit (masterUnstablePkgs) docker docker-edge docker-proxy containerd runc tini;
-			inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli youtube-dl go hasklig i3lock-color certstrap;
+			inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli youtube-dl go hasklig i3lock-color certstrap pipenv;
 			#inherit (unstablePkgs) keybase ipfs mpv docker-compose docker-machine doctl vndr emacs ledger-cli firefox google-chrome-stable youtube-dl go hasklig i3lock-color certstrap;
 			inherit (sbrPkgs) dobi ape tuck clasp;
 		};

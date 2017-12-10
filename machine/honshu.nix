@@ -17,13 +17,15 @@
 			../service/ssh-tunnel.nix
 		];
 
-time.timeZone = "Europe/Paris";      
+	time.timeZone = "Europe/Paris";
+	boot.loader.systemd-boot.enable = true;
+
+	security.pam.loginLimits = [
+    		{ domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
+		{ domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
+		{ domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
+	];
 	
-  security.pam.loginLimits = [
-    { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
-    { domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
-    { domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
-];
 	hardware.bluetooth.enable = true;
 	services = {
 	openssh = {
