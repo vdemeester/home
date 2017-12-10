@@ -8,6 +8,7 @@
 			../configuration/common.nix
 			../profiles/desktop.nix
 			../profiles/dev.nix
+			../profiles/dev.python.nix
 			../profiles/dockerization.nix
 			../location/home.nix
 			../profiles/avahi.nix
