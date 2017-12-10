@@ -26,6 +26,10 @@ time.timeZone = "Europe/Paris";
 ];
 	hardware.bluetooth.enable = true;
 	services = {
+	openssh = {
+		enable = true;
+		forwardX11 = true;
+	};
 	ssh-tunnel = {
 		enable = true;
 		localUser = "vincent";
