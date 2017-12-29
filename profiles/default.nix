@@ -35,7 +35,7 @@
 		useSandbox = true;
 		gc = {
 			automatic = true;
-			dates = "00:30";
+			dates = "monthly";
 			options = "--delete-older-than 30d";
 		};
 		# if hydra is down, don't wait forever
