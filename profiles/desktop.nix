@@ -11,7 +11,6 @@
 	];
 
 	boot.loader.efi.canTouchEfiVariables = true;
-	#boot.kernelPackages = pkgs.linuxPackages_4_12;
 	boot.tmpOnTmpfs = true;
 
 	environment.systemPackages = with pkgs; [
