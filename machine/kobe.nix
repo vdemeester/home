@@ -9,6 +9,7 @@
 			../profiles/server.nix
 			../profiles/dockerization.nix
 			../profiles/avahi.nix
+			../profiles/gitconfig.nix
 			../location/docker.nix
 			../service/ssh-tunnel.nix
 		];
