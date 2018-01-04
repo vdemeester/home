@@ -24,6 +24,16 @@
 	];
 
 	boot.loader.systemd-boot.enable = true;
+	boot.loader.efi.canTouchEfiVariables = true;
+
+	boot.initrd.luks.devices = [
+		{
+			name = "root";
+			device = "/dev/disk/by-uuid/e511e87f-a3b1-472a-bebb-c6cdd5154a16";
+			preLVM = true;
+			allowDiscards = true;
+		}
+	];
 
 	hardware.bluetooth.enable = true;
 	hardware.trackpoint.enable = false;
