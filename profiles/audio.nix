@@ -19,6 +19,7 @@
 		apulse       # allow alsa application to use pulse
 		pavucontrol  # pulseaudio volume control
 		pasystray    # systray application
+		playerctl
 	];
 
 	# We assume xserver runs when pulseaudio does
