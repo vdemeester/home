@@ -40,6 +40,7 @@
 
 	environment.systemPackages = with pkgs; [
 		autorandr
+		zoom-us
 	];
 
 	time.timeZone = "Europe/Paris";

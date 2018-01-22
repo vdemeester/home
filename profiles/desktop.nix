@@ -170,26 +170,6 @@ ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.b
 		}
 	});
 	'';
-	# Auto commit some repositories
-	systemd.user.services.ggasy = {
-		description = "Auto commit some git annex repository";
-		wantedBy = [ "multi-user.target" ];
-		serviceConfig = {
-			Type = "oneshot";
-			ExecStart = "/run/current-system/sw/bin/git-annex sync";
-			WorkingDirectory="/home/vincent/desktop/org/";
-			Environment = "PATH=/run/current-system/sw/bin";
-		};
-	};
-	systemd.user.timers.ggasy = {
-		description = "Auto commit hourly";
-		wantedBy = [ "timers.target" ];
-		timerConfig = {
-			OnCalendar = "hourly";
-			Persistent = "true";
-		};
-	};
-	systemd.user.timers.ggasy.enable = true;
 	# Auto refresh nix-channel each day
 	systemd.user.services.channel-update = {
 		description = "Update nix-channel daily";
