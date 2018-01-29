@@ -10,8 +10,8 @@
 			dockerUnstablePkgs = import (fetchNixPkgs {
 				owner = "NixOS";
 				repo = "nixpkgs-channels";
-				rev = "a6dca0427221d7c249a9b6f1581cf0d73baf51da";
-				sha256 = "15fcl29a97f68j1pjywmrjm31rdh1a21jz9airlsbzpl4lc3zhfi";
+				rev = "8ecadc12502d59fc8117ca0ed41ede010448fca4";
+				sha256 = "102wvwixvnbkr547ay6psvv1x31001mb5y17ibkplyikb91xi2ak";
 			}) {};
 			# nixos-unstable
 			unstablePkgs = import (fetchNixPkgs {

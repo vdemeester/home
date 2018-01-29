@@ -14,6 +14,7 @@
 			../profiles/dev.python.nix
 			../location/docker.nix
 			../location/home.nix
+			../service/containerd.nix
 			../hardware/thinkpad-t460s.nix
 		];
 
@@ -34,6 +35,13 @@
 			allowDiscards = true;
 		}
 	];
+
+	virtualisation = {
+		containerd = {
+			enable = true;
+			#extraOptions = "--label=type=desktop --experimental --init --debug";
+		};
+	};
 
 	hardware.bluetooth.enable = true;
 	hardware.trackpoint.enable = false;

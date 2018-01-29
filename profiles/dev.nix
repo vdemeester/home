@@ -11,9 +11,7 @@
 		jq
 		grc
 		platinum-searcher
-		ripgrep
+		#ripgrep
 		certstrap
-		runc
-		containerd
 	];
 }
