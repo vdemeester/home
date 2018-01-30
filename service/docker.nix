@@ -102,7 +102,7 @@ in
   config = mkIf cfg.enable (mkMerge [{
       environment.systemPackages = [ pkgs.docker-edge ];
       users.extraGroups.docker.gid = config.ids.gids.docker;
-      systemd.packages = [ pkgs.docker ];
+      systemd.packages = [ pkgs.docker-edge ];
 
       systemd.services.docker = {
         wantedBy = optional cfg.enableOnBoot "multi-user.target";

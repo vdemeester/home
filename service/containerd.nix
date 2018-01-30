@@ -72,6 +72,7 @@ in
           ];
           */
         };
+        path = [ pkgs.containerd ];
       };
 
       

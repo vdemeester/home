@@ -9,7 +9,8 @@
 			../profiles/laptop.nix
 			../profiles/ssh.nix
 			../profiles/virtualization.nix
-			../profiles/dockerization.nix
+			# ../profiles/dockerization.nix
+			../service/docker.nix
 			../profiles/dev.nix
 			../profiles/dev.python.nix
 			../location/docker.nix
@@ -36,12 +37,19 @@
 		}
 	];
 
+	# FIXME(vdemeester) remove when containerd module is merged upstream
 	virtualisation = {
 		containerd = {
 			enable = true;
-			#extraOptions = "--label=type=desktop --experimental --init --debug";
+		};
+		docker-edge = {
+			enable = true;
+			liveRestore = false;
+			storageDriver = "overlay2";
+			extraOptions = "--label=type=desktop --experimental --init --debug --add-runtime docker-runc=${pkgs.runc}/bin/runc --default-runtime=docker-runc --containerd=/run/containerd/containerd.sock";
 		};
 	};
+	networking.firewall.trustedInterfaces = [ "docker0" ];
 
 	hardware.bluetooth.enable = true;
 	hardware.trackpoint.enable = false;
@@ -49,6 +57,9 @@
 	environment.systemPackages = with pkgs; [
 		autorandr
 		zoom-us
+		# FIXME(vdemeester) remove when containerd module is merged upstream
+		python27Packages.docker_compose
+		docker-machine
 	];
 
 	time.timeZone = "Europe/Paris";
