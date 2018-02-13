@@ -50,5 +50,4 @@
 		url = "https://github.com/vdemeester/slim-themes/raw/master/docker-key-theme-0.1.tar.xz";
 		sha256 = "127893l1nzqya0g68k8841g5lm3hlnx7b3b3h06axvplc54a1jd8";
 	};
-	networking.firewall.allowedTCPPorts = [ 8080 8000 ];
 }
