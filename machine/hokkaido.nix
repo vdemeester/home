@@ -10,7 +10,9 @@
 			../profiles/gitconfig.nix
 			../profiles/dockerization.nix
 			../profiles/avahi.nix
+			../profiles/syncthing.nix
 			../location/docker.nix
+			../service/containerd.nix
 			../service/ssh-tunnel.nix
 		];
 
