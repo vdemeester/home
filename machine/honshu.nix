@@ -29,30 +29,30 @@
 	
 	hardware.bluetooth.enable = true;
 	services = {
-	openssh = {
-		enable = true;
-		forwardX11 = true;
-	};
-	ssh-tunnel = {
-		enable = true;
-		localUser = "vincent";
-		remoteHostname = "95.85.58.158";
-		remotePort = 22;
-		remoteUser = "vincent";
-		bindPort = 2224;
-	};
-	printing = {
-		enable = true;
-		drivers = [ pkgs.gutenprint ];
-	};
+		openssh = {
+			enable = true;
+			forwardX11 = true;
+		};
+		ssh-tunnel = {
+			enable = true;
+			localUser = "vincent";
+			remoteHostname = "95.85.58.158";
+			remotePort = 22;
+			remoteUser = "vincent";
+			bindPort = 2224;
+		};
+		printing = {
+			enable = true;
+			drivers = [ pkgs.gutenprint ];
+		};
 		xserver = {
 			enable = true;
 			videoDrivers = [ "intel" ];
 			exportConfiguration = true;
 			displayManager.slim.theme = pkgs.fetchurl {
-						url = "https://github.com/vdemeester/slim-themes/raw/master/docker-penguins-theme-0.1.tar.xz";
-						sha256 = "1s0cfj1l9ay7y0ib68dnpdfkr1zwgr0b1s990ch786lxlajwwxpq";
-						};
+				url = "https://github.com/vdemeester/slim-themes/raw/master/docker-penguins-theme-0.1.tar.xz";
+				sha256 = "1s0cfj1l9ay7y0ib68dnpdfkr1zwgr0b1s990ch786lxlajwwxpq";
+			};
 			monitorSection = ''
 	Modeline "2560x1080_60.00"  230.00  2560 2720 2992 3424  1080 1083 1093 1120 -hsync +vsync
 			'';
@@ -70,5 +70,5 @@
 	EndSection
 			'';
 		};
-};
+	};
 }
