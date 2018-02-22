@@ -20,6 +20,8 @@
 
 	services.openssh.enable = true;
 
+	networking.firewall.allowedTCPPorts = [ 80 443 ];
+
 	services.ssh-tunnel = {
 		enable = true;
 		localUser = "vincent";
