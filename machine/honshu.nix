@@ -45,6 +45,8 @@
 			enable = true;
 			drivers = [ pkgs.gutenprint ];
 		};
+		xrdp.enable = true;
+		xrdp.defaultWindowManager = "${pkgs.i3}/bin/i3";
 		xserver = {
 			enable = true;
 			videoDrivers = [ "intel" ];
