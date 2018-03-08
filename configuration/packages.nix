@@ -13,6 +13,7 @@
 				gcc
 				gnumake
 				gnupg
+				pinentry
 				gptfdisk
 				haskellPackages.git-annex
 				msmtp
