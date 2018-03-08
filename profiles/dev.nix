@@ -11,7 +11,7 @@
 		jq
 		grc
 		platinum-searcher
-		#ripgrep
-		certstrap
+		ripgrep
+    gnumake
 	];
 }

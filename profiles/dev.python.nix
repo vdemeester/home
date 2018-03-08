@@ -3,6 +3,10 @@
 { configs, pkgs, ...}:
 
 {
+	imports = 
+		[
+			./dev.nix
+		];
 	environment.systemPackages = with pkgs; [
 		python3
 		pipenv
