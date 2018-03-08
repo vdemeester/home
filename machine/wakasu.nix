@@ -10,7 +10,6 @@
 			../profiles/ssh.nix
 			../profiles/virtualization.nix
 			../profiles/dockerization.nix
-			../service/docker.nix
 			../profiles/dev.go.nix
 			../profiles/dev.python.nix
 			../location/docker.nix

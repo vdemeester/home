@@ -2,6 +2,10 @@
 { configs, pkgs, ...}:
 
 {
+	imports = 
+	[
+		./dev.nix
+	];
 	nixpkgs.config = {
 		packageOverrides = self: with self; let
 			fetchNixPkgs = { rev, sha256, owner, repo }:
@@ -18,10 +22,6 @@
 			inherit (goPkgs) go_1_9 gotools golint godef gocode gotests gopkgs gomodifytags go-outline go-symbols goconvey delve vndr dep;
 		};
 	};
-	imports = 
-	[
-		./dev.nix
-	];
   environment.systemPackages = with pkgs; [
     go_1_9
     gcc
