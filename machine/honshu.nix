@@ -73,4 +73,5 @@
 			'';
 		};
 	};
+	networking.firewall.allowedTCPPorts = [ 3389 2375 ];
 }
