@@ -32,7 +32,7 @@
 				sha256 = "0636k102vw1pmbcch75xvhjlkfk9553bcf6rba5i69m7b5bdsfd0";
 			}) {};
 		in {
-			inherit (unstablePkgs) keybase mpv emacs ledger-cli youtube-dl i3lock-color pipenv;
+			inherit (unstablePkgs) keybase mpv emacs ledger-cli youtube-dl i3lock-color pipenv syncthing;
 			inherit (sbrPkgs) ape tuck clasp;
 		};
 	};

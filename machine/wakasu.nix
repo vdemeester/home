@@ -4,7 +4,6 @@
 	imports =
 		[ # Include the results of the hardware scan.
 			../hardware-configuration.nix
-			#../configuration/custom-packages.nix
 			../profiles/laptop.nix
 			../profiles/ssh.nix
 			../profiles/virtualization.nix
