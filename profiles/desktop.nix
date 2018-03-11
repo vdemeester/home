@@ -13,6 +13,29 @@
 	boot.loader.efi.canTouchEfiVariables = true;
 	boot.tmpOnTmpfs = true;
 
+	nixpkgs.config = {
+		packageOverrides = self: with self; let
+			fetchNixPkgs = { rev, sha256, owner, repo }:
+				fetchFromGitHub {
+					inherit sha256 rev owner repo;
+				};
+			unstablePkgs = import (fetchNixPkgs {
+				owner = "NixOS";
+				repo = "nixpkgs-channels";
+				rev = "9c048f4fb66adc33c6b379f2edefcb615fd53de6";
+				sha256 = "18xbnfzj753bphzmgp74rn9is4n5ir4mvb4gp9lgpqrbfyy5dl2j";
+			}) {};
+			sbrPkgs = import (fetchNixPkgs {
+				owner = "vdemeester";
+				repo = "sbrpkgs";
+				rev = "df281994c5e438c25af6c054ebfbd19333f3e132";
+				sha256 = "0636k102vw1pmbcch75xvhjlkfk9553bcf6rba5i69m7b5bdsfd0";
+			}) {};
+		in {
+			inherit (unstablePkgs) keybase mpv emacs ledger-cli youtube-dl i3lock-color pipenv;
+			inherit (sbrPkgs) ape tuck clasp;
+		};
+	};
 	environment.systemPackages = with pkgs; [
 		dmenu2
 		rofi
@@ -48,6 +71,8 @@
 		unzip
 		peco
 		networkmanagerapplet
+    gnupg
+    pinentry
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	networking.networkmanager.enable = true;

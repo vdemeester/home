@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+	imports =
+		[
+			./users.nix
+		];
 	programs = {
 		 zsh.enable = true;
 		 fish.enable = true;
@@ -10,8 +14,12 @@
 			EDITOR = pkgs.lib.mkOverride 0 "vim";
 		};
 		systemPackages = with pkgs; [
+				aspell
+				aspellDicts.en
+				aspellDicts.fr
+				cryptsetup
+				direnv
 				file
-				git
 				htop
 				iotop
 				lsof
@@ -29,7 +37,6 @@
 		consoleFont = "Lat2-Terminus16";
 		consoleKeyMap = "fr";
 		defaultLocale = "en_US.UTF-8";
-		# supportedLocales = [ "en_US/ISO-8859-1" "fr_FR/ISO-8859-1" "fr_FR@euro/ISO-8859-15" ];
 	};
 	nix = {
 		useSandbox = true;
@@ -53,10 +60,6 @@
 
 	system = {
 		stateVersion = "17.09";
-	#	autoUpgrade = {
-	#		enable = true;
-	#		dates = "13:00";
-	#	};
 	};
 	systemd.services.nixos-update = {
 		description = "NixOS Upgrade";
@@ -73,7 +76,6 @@
 			git pull --autostash --rebase
 			nix-channel --update nixos
 		'';
-		#startAt = "12:00";
 		startAt = "weekly";
 	};
 }
