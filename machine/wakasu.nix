@@ -36,11 +36,6 @@
 	hardware.bluetooth.enable = true;
 	hardware.trackpoint.enable = false;
 
-	environment.systemPackages = with pkgs; [
-		autorandr
-		zoom-us
-	];
-
 	time.timeZone = "Europe/Paris";
 
 	services.xserver.displayManager.slim.theme = pkgs.fetchurl {
