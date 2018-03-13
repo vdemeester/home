@@ -9,7 +9,10 @@
 				discovery.enable = true;
 				publish.enable = true;
 			};
-			tcp.enable = true;
+			tcp = {
+				enable = true;
+				anonymousClients.allowedIpRanges = [ "127.0.0.1" ];
+			};
 			package = pkgs.pulseaudioFull;
 		};
 	};

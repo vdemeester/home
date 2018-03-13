@@ -35,6 +35,10 @@
 	];
 
 	hardware.bluetooth.enable = true;
+	hardware.bluetooth.extraConfig = "
+[general]
+Enable=Source,Sink,Media,Socket
+";
 	hardware.trackpoint.enable = false;
 
 	time.timeZone = "Europe/Paris";
