@@ -10,6 +10,7 @@
 			../profiles/dockerization.nix
 			../profiles/dev.go.nix
 			../profiles/dev.python.nix
+			../profiles/mopidy.nix
 			../location/docker.nix
 			../location/home.nix
 			../hardware/thinkpad-t460s.nix

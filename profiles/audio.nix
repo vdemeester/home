@@ -5,11 +5,15 @@
 		pulseaudio = {
 			enable = true;
 			support32Bit = true;
+			zeroconf = {
+				discovery.enable = true;
+				publish.enable = true;
+			};
+			tcp.enable = true;
 			package = pkgs.pulseaudioFull;
 		};
 	};
 	sound.mediaKeys.enable = true;
-	
 
 	# spotify
 	networking.firewall.allowedTCPPorts = [ 57621 57622 ];
