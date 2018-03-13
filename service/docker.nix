@@ -85,6 +85,15 @@ in
           '';
       };
 
+    package = mkOption {
+      default = pkgs.docker;
+      type = types.package;
+      example = pkgs.docker-edge;
+      description = ''
+        Docker package to be used in the module.
+      '';
+    };
+
     extraOptions =
       mkOption {
         type = types.separatedString " ";
@@ -100,9 +109,9 @@ in
   ###### implementation
 
   config = mkIf cfg.enable (mkMerge [{
-      environment.systemPackages = [ pkgs.docker-edge ];
+      environment.systemPackages = [ cfg.package ];
       users.extraGroups.docker.gid = config.ids.gids.docker;
-      systemd.packages = [ pkgs.docker-edge ];
+      systemd.packages = [ cfg.package ];
 
       systemd.services.docker = {
         wantedBy = optional cfg.enableOnBoot "multi-user.target";
