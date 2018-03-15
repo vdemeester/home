@@ -20,7 +20,7 @@
 
 	services.openssh.enable = true;
 
-	networking.firewall.allowedTCPPorts = [ 80 443 ];
+	networking.firewall.allowedTCPPorts = [ 80 443 2375 ];
 
 	virtualisation.docker = {
 		enable = true;
