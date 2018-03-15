@@ -8,7 +8,7 @@
 			../configuration/users.nix
 			../profiles/server.nix
 			../profiles/gitconfig.nix
-			../profiles/dockerization.nix
+			# ../profiles/dockerization.nix
 			../profiles/avahi.nix
 			../profiles/syncthing.nix
 			../location/docker.nix
@@ -22,6 +22,12 @@
 
 	networking.firewall.allowedTCPPorts = [ 80 443 ];
 
+  services.virtualisation.docker = {
+    enable = true;
+    package = pkgs.docker-edge;
+    storageDriver = "overlay2";
+    extraOptions = "--experimental";
+  };
 	services.ssh-tunnel = {
 		enable = true;
 		localUser = "vincent";
