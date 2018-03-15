@@ -8,7 +8,7 @@
 			./gitconfig.nix
 		];
 	environment.systemPackages = with pkgs; [
-    git
+		git
 		jq
 		grc
 		platinum-searcher

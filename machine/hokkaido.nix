@@ -4,10 +4,10 @@
 	imports =
 		[ # Include the results of the hardware scan.
 			../hardware-configuration.nix
-			../configuration/custom-packages.nix
-			../configuration/users.nix
 			../profiles/server.nix
 			../profiles/gitconfig.nix
+			../profiles/dev.nix
+			../profiles/dev.nix
 			# ../profiles/dockerization.nix
 			../profiles/avahi.nix
 			../profiles/syncthing.nix
@@ -22,12 +22,12 @@
 
 	networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  services.virtualisation.docker = {
-    enable = true;
-    package = pkgs.docker-edge;
-    storageDriver = "overlay2";
-    extraOptions = "--experimental";
-  };
+	virtualisation.docker = {
+		enable = true;
+		package = pkgs.docker-edge;
+		storageDriver = "overlay2";
+		extraOptions = "--experimental --host=tcp://0.0.0.0:2375";
+	};
 	services.ssh-tunnel = {
 		enable = true;
 		localUser = "vincent";
