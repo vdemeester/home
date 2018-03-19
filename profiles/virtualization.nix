@@ -16,6 +16,7 @@ dynamic_ownership = 0
 '';
 		};
 	};
+	nixpkgs.config.virtualbox.enableExtensionPack = true;
 	networking.firewall.trustedInterfaces = [ "vboxnet0" ];
 	environment = {
 		systemPackages = with pkgs; [

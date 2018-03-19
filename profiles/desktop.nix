@@ -134,14 +134,6 @@ ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.b
 				'';
 			};
 		};
-		# unclutter.enable = true;
-		#redshift = {
-		#	enable = true;
-		#	brightness.day = "0.95";
-		#	brightness.night = "0.7";
-		#	latitude = "48.3";
-		#	longitude = "7.5";
-		#};
 	};
 	fonts = {
 		enableFontDir = true;

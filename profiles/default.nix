@@ -51,6 +51,10 @@
 		    connect-timeout = 20
 		    build-cores = 0
 		'';
+#    nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-17.09/nixexprs.tar.xz"
+#                "nixos-config=/etc/nixos/configuration.nix"
+#                "-overlays=https://github.com/knedlsepp/nixpkgs-overlays/archive/master.tar.gz"
+#    ];
 	};
 	nixpkgs = {
 		config = {
