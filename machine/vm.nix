@@ -6,7 +6,6 @@
 			../hardware-configuration.nix
 			../profiles/desktop.nix
 			../profiles/ssh.nix
-			../profiles/virtualization.nix
 			../profiles/dockerization.nix
 		];
 
@@ -23,6 +22,4 @@
 	};
 
 	virtualisation.virtualbox.guest.enable = true;
-
-	services.xserver.xkbVariant = "bepo";
 }
