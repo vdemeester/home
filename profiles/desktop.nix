@@ -4,6 +4,7 @@
 
 {
 	imports = [
+		./default.nix
 		./printing.nix
 		./scanning.nix
 		./avahi.nix
@@ -35,6 +36,7 @@
 			inherit (unstablePkgs) keybase mpv emacs ledger-cli youtube-dl i3lock-color pipenv syncthing;
 			inherit (sbrPkgs) ape tuck clasp;
 		};
+		allowUnfree = true;
 	};
 	environment.systemPackages = with pkgs; [
 		dmenu2
