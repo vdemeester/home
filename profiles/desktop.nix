@@ -33,12 +33,13 @@
 				sha256 = "0636k102vw1pmbcch75xvhjlkfk9553bcf6rba5i69m7b5bdsfd0";
 			}) {};
 		in {
-			inherit (unstablePkgs) keybase mpv emacs ledger-cli youtube-dl i3lock-color pipenv syncthing;
+			inherit (unstablePkgs) keybase mpv emacs ledger-cli youtube-dl i3lock-color pipenv syncthing iosevka fira-code;
 			inherit (sbrPkgs) ape tuck clasp;
 		};
 		allowUnfree = true;
 	};
 	environment.systemPackages = with pkgs; [
+    nix-repl
 		dmenu2
 		rofi
 		dunst
@@ -152,6 +153,7 @@ ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.b
 			fira-code
 			fira-mono
 			font-droid
+			iosevka
 			hasklig
 		];
 	};
