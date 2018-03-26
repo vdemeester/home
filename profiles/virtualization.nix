@@ -6,7 +6,6 @@
 		virtualbox.host.enable = true;
 		libvirtd = {
 			enable = true;
-			enableKVM = true;
 			qemuVerbatimConfig = ''
 namespaces = []
 dynamic_ownership = 0

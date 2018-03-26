@@ -47,7 +47,6 @@
 		};
 		# if hydra is down, don't wait forever
 		extraOptions = ''
-		    gc-keep-output = true
 		    connect-timeout = 20
 		    build-cores = 0
 		'';
@@ -63,7 +62,7 @@
 	};
 
 	system = {
-		stateVersion = "17.09";
+		stateVersion = "18.03";
 	};
 	systemd.services.nixos-update = {
 		description = "NixOS Upgrade";

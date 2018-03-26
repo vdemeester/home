@@ -17,23 +17,23 @@
 	nixpkgs.config = {
 		packageOverrides = self: with self; let
 			fetchNixPkgs = { rev, sha256, owner, repo }:
-				fetchFromGitHub {
-					inherit sha256 rev owner repo;
-				};
-			unstablePkgs = import (fetchNixPkgs {
-				owner = "NixOS";
-				repo = "nixpkgs-channels";
-				rev = "9c048f4fb66adc33c6b379f2edefcb615fd53de6";
-				sha256 = "18xbnfzj753bphzmgp74rn9is4n5ir4mvb4gp9lgpqrbfyy5dl2j";
-			}) {};
-			sbrPkgs = import (fetchNixPkgs {
-				owner = "vdemeester";
-				repo = "sbrpkgs";
-				rev = "df281994c5e438c25af6c054ebfbd19333f3e132";
-				sha256 = "0636k102vw1pmbcch75xvhjlkfk9553bcf6rba5i69m7b5bdsfd0";
-			}) {};
-		in {
-			inherit (unstablePkgs) keybase mpv emacs ledger-cli youtube-dl i3lock-color pipenv syncthing iosevka fira-code;
+		fetchFromGitHub {
+			inherit sha256 rev owner repo;
+		};
+    unstablePkgs = import (fetchNixPkgs {
+      owner = "NixOS";
+      repo = "nixpkgs-channels";
+      rev = "9c048f4fb66adc33c6b379f2edefcb615fd53de6";
+      sha256 = "18xbnfzj753bphzmgp74rn9is4n5ir4mvb4gp9lgpqrbfyy5dl2j";
+    }) {};
+		sbrPkgs = import (fetchNixPkgs {
+			owner = "vdemeester";
+			repo = "sbrpkgs";
+			rev = "df281994c5e438c25af6c054ebfbd19333f3e132";
+			sha256 = "0636k102vw1pmbcch75xvhjlkfk9553bcf6rba5i69m7b5bdsfd0";
+		}) {};
+	in {
+      inherit (unstablePkgs) iosevka fira-code;
 			inherit (sbrPkgs) ape tuck clasp;
 		};
 		allowUnfree = true;
@@ -89,34 +89,34 @@
 			xkbVariant = "oss";
 			xkbOptions = "grp:menu_toggle,grp_led:caps,compose:caps";
 			inputClassSections = [
-					''
-Identifier      "TypeMatrix"
-MatchIsKeyboard "on"
-MatchVendor     "TypeMatrix.com"
-MatchProduct    "USB Keyboard"
-Driver          "evdev"
-Option          "XbkModel"      "tm2030USB"
-Option          "XkbLayout"     "fr"
-Option          "XkbVariant"    "bepo"
-					''
-					''
-Identifier      "ErgoDox"
-MatchIsKeyboard "on"
-#MatchVendor     "ErgoDox_EZ"
-#MatchProduct    "ErgoDox_EZ"
-MatchUSBID      "feed:1307"
-Driver          "evdev"
-Option          "XkbLayout"     "fr"
-Option          "XkbVariant"    "bepo"
-					''
-#					''
-#Identifier "evdev touchpad off"
-#MatchIsTouchpad "on"
-#MatchDevicePath "/dev/input/event*"
-#Driver "evdev"
-#Option "Ignore" "true"
-#					''
-			];
+			''
+        Identifier      "TypeMatrix"
+        MatchIsKeyboard "on"
+        MatchVendor     "TypeMatrix.com"
+        MatchProduct    "USB Keyboard"
+        Driver          "evdev"
+        Option          "XbkModel"      "tm2030USB"
+        Option          "XkbLayout"     "fr"
+        Option          "XkbVariant"    "bepo"
+			''
+		''
+      Identifier      "ErgoDox"
+      MatchIsKeyboard "on"
+      #MatchVendor     "ErgoDox_EZ"
+      #MatchProduct    "ErgoDox_EZ"
+      MatchUSBID      "feed:1307"
+      Driver          "evdev"
+      Option          "XkbLayout"     "fr"
+      Option          "XkbVariant"    "bepo"
+		''
+    #					''
+    #Identifier "evdev touchpad off"
+    #MatchIsTouchpad "on"
+    #MatchDevicePath "/dev/input/event*"
+    #Driver "evdev"
+    #Option "Ignore" "true"
+    #					''
+	];
 			windowManager = {
 				i3 = {
 					enable = true;
@@ -130,10 +130,10 @@ Option          "XkbVariant"    "bepo"
 					defaultUser = "vincent";
 				};
 				sessionCommands = ''
-${pkgs.networkmanagerapplet}/bin/nm-applet &
-${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
-${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
-${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.background-lock --tiling &
+          ${pkgs.networkmanagerapplet}/bin/nm-applet &
+          ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
+          ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
+          ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.background-lock --tiling &
 				'';
 			};
 		};
@@ -149,6 +149,7 @@ ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.b
 			unifont
 			emojione
 			symbola
+      feh
 			fira
 			fira-code
 			fira-mono
@@ -160,36 +161,36 @@ ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.b
 
 	# Polkit.
 	security.polkit.extraConfig = ''
-	polkit.addRule(function(action, subject) {
+	  polkit.addRule(function(action, subject) {
 		if ((action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
 		action.id == "org.freedesktop.udisks2.encrypted-unlock-system"
 		) &&
 		subject.local && subject.active && subject.isInGroup("users")) {
-			return polkit.Result.YES;
+		return polkit.Result.YES;
 		}
 		var YES = polkit.Result.YES;
 		var permission = {
-			// required for udisks1:
-			"org.freedesktop.udisks.filesystem-mount": YES,
-			"org.freedesktop.udisks.luks-unlock": YES,
-			"org.freedesktop.udisks.drive-eject": YES,
-			"org.freedesktop.udisks.drive-detach": YES,
-			// required for udisks2:
-			"org.freedesktop.udisks2.filesystem-mount": YES,
-			"org.freedesktop.udisks2.encrypted-unlock": YES,
-			"org.freedesktop.udisks2.eject-media": YES,
-			"org.freedesktop.udisks2.power-off-drive": YES,
-			// required for udisks2 if using udiskie from another seat (e.g. systemd):
-			"org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
-			"org.freedesktop.udisks2.filesystem-unmount-others": YES,
-			"org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
-			"org.freedesktop.udisks2.eject-media-other-seat": YES,
-			"org.freedesktop.udisks2.power-off-drive-other-seat": YES
+		// required for udisks1:
+		"org.freedesktop.udisks.filesystem-mount": YES,
+		"org.freedesktop.udisks.luks-unlock": YES,
+		"org.freedesktop.udisks.drive-eject": YES,
+		"org.freedesktop.udisks.drive-detach": YES,
+		// required for udisks2:
+		"org.freedesktop.udisks2.filesystem-mount": YES,
+		"org.freedesktop.udisks2.encrypted-unlock": YES,
+		"org.freedesktop.udisks2.eject-media": YES,
+		"org.freedesktop.udisks2.power-off-drive": YES,
+		// required for udisks2 if using udiskie from another seat (e.g. systemd):
+		"org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
+		"org.freedesktop.udisks2.filesystem-unmount-others": YES,
+		"org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
+		"org.freedesktop.udisks2.eject-media-other-seat": YES,
+		"org.freedesktop.udisks2.power-off-drive-other-seat": YES
 		};
 		if (subject.isInGroup("wheel")) {
-			return permission[action.id];
+		return permission[action.id];
 		}
-	});
+	  });
 	'';
 	# Auto refresh nix-channel each day
 	systemd.user.services.channel-update = {
