@@ -3,7 +3,6 @@
 
 {
 	virtualisation = {
-		virtualbox.host.enable = true;
 		libvirtd = {
 			enable = true;
 			qemuVerbatimConfig = ''
@@ -14,14 +13,5 @@ dynamic_ownership = 0
 dynamic_ownership = 0
 '';
 		};
-	};
-	nixpkgs.config.virtualbox.enableExtensionPack = true;
-	networking.firewall.trustedInterfaces = [ "vboxnet0" ];
-	environment = {
-		systemPackages = with pkgs; [
-			vagrant
-			runc
-			containerd
-		];
 	};
 }
