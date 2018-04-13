@@ -6,7 +6,7 @@
 			../hardware-configuration.nix
 			../profiles/laptop.nix
 			../profiles/ssh.nix
-			../profiles/virtualization.nix
+			# ../profiles/virtualization.nix
 			../profiles/dockerization.nix
 			../profiles/dev.go.nix
 			../profiles/dev.python.nix
@@ -42,10 +42,13 @@
 	};
 
 	hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  /*
 	hardware.bluetooth.extraConfig = "
 [general]
 Enable=Source,Sink,Media,Socket
 ";
+  */
 	hardware.trackpoint.enable = false;
 
 	time.timeZone = "Europe/Paris";

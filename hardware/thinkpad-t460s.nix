@@ -40,7 +40,7 @@ DISK_DEVICES="nvme0n1p3"
 		};
 	};
 	services.xserver = {
-		dpi = 144;
+		dpi = 128;
 	};
 	#environment = {
 	#	variables.QT_DEVICE_PIXEL_RATIO = "2";
