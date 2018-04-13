@@ -29,7 +29,6 @@
 				tree
 				vim
 				wget
-				zsh
 				fish
 		];
 	};
