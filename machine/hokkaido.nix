@@ -8,10 +8,8 @@
 			../profiles/gitconfig.nix
 			../profiles/dev.nix
 			../profiles/dev.nix
-			# ../profiles/dockerization.nix
 			../profiles/avahi.nix
 			../profiles/syncthing.nix
-			#../location/docker.nix
 			../service/ssh-tunnel.nix
 		];
 
