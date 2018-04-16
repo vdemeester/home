@@ -11,7 +11,7 @@
 			# ../profiles/dockerization.nix
 			../profiles/avahi.nix
 			../profiles/syncthing.nix
-			../location/docker.nix
+			#../location/docker.nix
 			../service/ssh-tunnel.nix
 		];
 
@@ -21,7 +21,7 @@
 	services.openssh.enable = true;
 
 	networking.enableIPv6 = false;
-	networking.firewall.allowedTCPPorts = [ 80 443 2375 ];
+	networking.firewall.allowedTCPPorts = [ 80 443 2375 8384 ];
 
 	virtualisation.docker = {
 		enable = true;
@@ -36,5 +36,15 @@
 		remotePort = 22;
 		remoteUser = "vincent";
 		bindPort = 2223;
+	};
+	fileSystems."/data/nyan" = {
+		device = "/dev/disk/by-uuid/9d4ee0b8-bffb-4a18-8c23-cca3bf5b4487";
+		fsType = "ext4";
+		options = ["relatime"];
+	};
+	fileSystems."/data/toshito" = {
+		device = "/dev/disk/by-uuid/57b0853e-6650-41d6-b42a-93f2fd182d2a";
+		fsType = "ext4";
+		options = ["relatime"];
 	};
 }
