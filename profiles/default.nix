@@ -5,10 +5,6 @@
     [
     ./users.nix
   ];
-  programs = {
-    zsh.enable = true;
-    fish.enable = true;
-  };
   environment = {
     variables = {
       EDITOR = pkgs.lib.mkOverride 0 "vim";

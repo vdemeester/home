@@ -11,6 +11,11 @@
 		./syncthing.nix
 	];
 
+  programs = {
+    zsh.enable = true;
+    fish.enable = true;
+  };
+  
 	boot.loader.efi.canTouchEfiVariables = true;
 	boot.tmpOnTmpfs = true;
 

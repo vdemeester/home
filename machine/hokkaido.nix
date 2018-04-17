@@ -7,10 +7,10 @@
 			../profiles/server.nix
 			../profiles/gitconfig.nix
 			../profiles/dev.nix
-			../profiles/dev.nix
 			../profiles/avahi.nix
 			../profiles/syncthing.nix
 			../service/ssh-tunnel.nix
+      ../location/home.nix
 		];
 
 	time.timeZone = "Europe/Paris";
