@@ -31,15 +31,8 @@
       rev = "9c048f4fb66adc33c6b379f2edefcb615fd53de6";
       sha256 = "18xbnfzj753bphzmgp74rn9is4n5ir4mvb4gp9lgpqrbfyy5dl2j";
     }) {};
-		sbrPkgs = import (fetchNixPkgs {
-			owner = "vdemeester";
-			repo = "sbrpkgs";
-			rev = "df281994c5e438c25af6c054ebfbd19333f3e132";
-			sha256 = "0636k102vw1pmbcch75xvhjlkfk9553bcf6rba5i69m7b5bdsfd0";
-		}) {};
 	in {
       inherit (unstablePkgs) iosevka fira-code;
-			inherit (sbrPkgs) ape tuck clasp;
 		};
 		allowUnfree = true;
 	};
@@ -81,6 +74,8 @@
 		networkmanagerapplet
     gnupg
     pinentry
+    # overlay ?
+    envbox
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	networking.networkmanager.enable = true;

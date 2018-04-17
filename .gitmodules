@@ -1,0 +1,3 @@
+[submodule "pkgs/home-manager"]
+	path = pkgs/home-manager
+	url = git@github.com:rycee/home-manager.git

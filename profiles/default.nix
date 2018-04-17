@@ -56,6 +56,13 @@
 */
   };
   nixpkgs = {
+    overlays = [
+      (import ../overlays/sbr.overlay.nix)
+      # add third-party packages from outside the nixpkgs tree
+      (self: super: {
+        home-manager = import ../pkgs/home-manager { inherit pkgs; };
+      })
+    ];
     config = {
       allowUnfree = true;
     };
