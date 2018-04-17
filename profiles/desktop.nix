@@ -156,6 +156,8 @@
 			font-droid
 			iosevka
 			hasklig
+      source-code-pro
+      font-droid
 		];
 	};
 
