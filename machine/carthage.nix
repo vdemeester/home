@@ -2,8 +2,8 @@
 	imports = [
 		../hardware-configuration.nix
 		../cloud/digitalocean/networking.nix # generated at runtime by nixos-infect
-		../configuration/users.nix
-		../configuration/custom-packages.nix
+		../profiles/server.nix
+		../profiles/gitconfig.nix
 	];
 
 	environment = {
