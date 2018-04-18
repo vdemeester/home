@@ -45,15 +45,6 @@
       connect-timeout = 20
       build-cores = 0
     '';
-/*
-    nixPath = [
-      "/nix/var/nix/profiles/per-user/root/channels/nixos"
-      "nixpkgs-unstable=/nix/var/nix/profiles/per-user/root/channels/nixpkgs"
-      #"sbrpkgs=/etc/nixos/pkgsets/sbr"
-      "nixos-config=/etc/nixos/configuration.nix"
-      "/nix/var/nix/profiles/per-user/root/channels"
-    ];
-*/
   };
   nixpkgs = {
     overlays = [
