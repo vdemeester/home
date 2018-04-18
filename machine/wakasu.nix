@@ -6,7 +6,7 @@
 			../hardware-configuration.nix
 			../profiles/laptop.nix
 			../profiles/ssh.nix
-			# ../profiles/virtualization.nix
+      ../profiles/yubikey.nix
 			../profiles/dockerization.nix
 			../profiles/dev.go.nix
 			../profiles/dev.python.nix
