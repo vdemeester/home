@@ -10,9 +10,9 @@
 			../profiles/dockerization.nix
 			../profiles/dev.go.nix
 			../profiles/dev.python.nix
-			../profiles/mopidy.nix
 			../location/docker.nix
 			../location/home.nix
+      ../pkgs/home-manager/nixos
 			../hardware/thinkpad-t460s.nix
 		];
 
@@ -22,9 +22,12 @@
 		{ domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
 	];
 
+  home-manager.users.vincent = import ../home/configuration.nix {
+    inherit pkgs; prefix = config.users.users.vincent.home;
+  };
+  
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
-
 	boot.initrd.luks.devices = [
 		{
 			name = "root";

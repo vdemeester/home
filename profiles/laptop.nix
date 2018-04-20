@@ -9,8 +9,6 @@
 	];
 
 	environment.systemPackages = with pkgs; [
-		acpi
-		autorandr
 		lm_sensors
 		powertop
 	];
