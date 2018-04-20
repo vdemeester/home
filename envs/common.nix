@@ -1,9 +1,9 @@
 { pkgs, prefix, ...}:
 
 {
-  home.packages = with pkgs; [
-    jq
-    htop
-    pass
+  home.packages = [
+    pkgs.jq
+    pkgs.htop
+    pkgs.pass
   ];
 }
