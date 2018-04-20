@@ -22,8 +22,10 @@
 		{ domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
 	];
 
-  home-manager.users.vincent = import ../envs/wakasu.nix {
-    inherit pkgs; prefix = config.users.users.vincent.home;
+  home-manager.users.vincent = {...}: {
+    imports = [
+      ../envs/wakasu.nix
+    ];
   };
   
 	boot.loader.systemd-boot.enable = true;
