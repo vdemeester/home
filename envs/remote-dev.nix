@@ -2,8 +2,7 @@
 
 {
   imports = [
-    ./common.nix
-    ./laptop.nix
+    ./base.nix
     ./dev.nix
   ];
 }
