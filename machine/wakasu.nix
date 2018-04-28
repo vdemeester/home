@@ -23,9 +23,7 @@
   ];
 
   home-manager.users.vincent = {...}: {
-    imports = [
-      ../envs/wakasu.nix
-    ];
+    imports = [ ../envs/wakasu.nix ];
   };
 
   boot.loader.systemd-boot.enable = true;
