@@ -1,7 +1,7 @@
-{...}:
+{ pkgs, prefix, ...}:
 
 {
-  imports = [
-    ./base.nix
-  ];
+  programs.bash = {
+    enable = true;
+  };
 }

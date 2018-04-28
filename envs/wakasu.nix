@@ -1,9 +1,7 @@
-{...}:
+{ pkgs, prefix, ...}:
 
 {
-  imports = [
-    ./base.nix
-    ./desktop.nix
-    ./laptop.nix
-  ];
+  programs.autorandr = {
+    enable = true;
+  };
 }
