@@ -9,7 +9,6 @@
 		./scanning.nix
 		./avahi.nix
 		./syncthing.nix
-		../pkgs/home-manager/nixos
 	];
 
   programs = {
@@ -38,6 +37,10 @@
 		allowUnfree = true;
 	};
 	environment.systemPackages = with pkgs; [
+    cryptsetup
+    aspell
+    aspellDicts.en
+    aspellDicts.fr
     nix-repl
 		dmenu2
 		rofi

@@ -1,19 +1,15 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
+  imports = [
     ./users.nix
+    ../pkgs/home-manager/nixos
   ];
   environment = {
     variables = {
       EDITOR = pkgs.lib.mkOverride 0 "vim";
     };
     systemPackages = with pkgs; [
-      aspell
-      aspellDicts.en
-      aspellDicts.fr
-      cryptsetup
       direnv
       file
       htop
@@ -25,7 +21,6 @@
       tree
       vim
       wget
-      fish
     ];
   };
   i18n = {
