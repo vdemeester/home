@@ -11,12 +11,9 @@
     longitude = "7.5";
     tray = true;
   };
-  programs.fish = {
-    enable = true;
-    shellAbbrs = {
-      gs = "git status";
-    };
-  };
+  xdg.configFile."fish/conf.d/docker.fish".text = ''
+    set -gx TESTKIT_AWS_KEYNAME "vdemeester-wakasu"
+  '';
   home.packages = with pkgs; [
     slack
     vscode
