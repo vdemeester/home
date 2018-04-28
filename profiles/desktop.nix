@@ -56,7 +56,6 @@
 		libnotify
 		pythonPackages.udiskie
 		scrot
-		termite
 		xlibs.xmodmap
 		xorg.xbacklight
 		xorg.xdpyinfo
