@@ -1,3 +1,6 @@
 [submodule "pkgs/home-manager"]
 	path = pkgs/home-manager
 	url = git@github.com:rycee/home-manager.git
+[submodule "pkgs/nix-beautify"]
+	path = pkgs/nix-beautify
+	url = https://github.com/nixcloud/nix-beautify
