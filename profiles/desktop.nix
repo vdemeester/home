@@ -46,7 +46,6 @@
 		rofi
 		dunst
 		emacs
-		firefox
 		gnome3.defaultIconTheme
 		gnome3.gnome_themes_standard
 		i3status
@@ -58,8 +57,6 @@
 		pythonPackages.udiskie
 		scrot
 		termite
-		xdg-user-dirs
-		xdg_utils
 		xlibs.xmodmap
 		xorg.xbacklight
 		xorg.xdpyinfo
@@ -83,6 +80,7 @@
 	];
 	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
 	networking.networkmanager.enable = true;
+  networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
 	services = {
 		xserver = {
 			enable = true;
