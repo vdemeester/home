@@ -9,6 +9,7 @@
 		./scanning.nix
 		./avahi.nix
 		./syncthing.nix
+		../pkgs/home-manager/nixos
 	];
 
   programs = {

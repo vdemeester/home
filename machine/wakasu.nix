@@ -12,7 +12,6 @@
     ../profiles/dev.python.nix
     ../location/docker.nix
     ../location/home.nix
-    ../pkgs/home-manager/nixos
     ../hardware/thinkpad-t460s.nix
   ];
 
