@@ -21,6 +21,10 @@
 	networking.enableIPv6 = false;
 	networking.firewall.allowedTCPPorts = [ 80 443 2375 8384 ];
 
+  home-manager.users.vincent = {...}: {
+    imports = [ ../envs/hokkaido.nix ];
+  };
+
 	virtualisation.docker = {
 		enable = true;
 		package = pkgs.docker-edge;
@@ -35,6 +39,7 @@
 		remoteUser = "vincent";
 		bindPort = 2223;
 	};
+
 	fileSystems."/data/nyan" = {
 		device = "/dev/disk/by-uuid/9d4ee0b8-bffb-4a18-8c23-cca3bf5b4487";
 		fsType = "ext4";
