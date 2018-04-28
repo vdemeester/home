@@ -11,4 +11,20 @@
     longitude = "7.5";
     tray = true;
   };
+  programs.fish = {
+    enable = true;
+    shellAbbrs = {
+      gs = "git status";
+    };
+  };
+  home.packages = with pkgs; [
+    slack
+    vscode
+    spotify
+    zoom-us
+    youtube-dl
+  ];
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
 }
