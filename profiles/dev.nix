@@ -3,15 +3,12 @@
 { configs, pkgs, ...}:
 
 {
-	imports = 
-		[
-			./gitconfig.nix
-		];
+	imports = [
+		./gitconfig.nix
+	];
 	environment.systemPackages = with pkgs; [
 		git
-		jq
 		grc
-		platinum-searcher
 		ripgrep
     gnumake
 	];
