@@ -14,9 +14,6 @@
 		];
 
 	time.timeZone = "Europe/Paris";
-	boot.loader.systemd-boot.enable = true;
-
-	services.openssh.enable = true;
 
 	networking.enableIPv6 = false;
 	networking.firewall.allowedTCPPorts = [ 80 443 2375 8384 ];
@@ -25,7 +22,7 @@
     imports = [ ../envs/hokkaido.nix ../envs/server.nix ];
   };
 
-	virtualisation.docker = {
+  virtualisation.docker = {
 		enable = true;
 		package = pkgs.docker-edge;
 		storageDriver = "overlay2";

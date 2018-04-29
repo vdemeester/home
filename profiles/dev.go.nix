@@ -2,8 +2,7 @@
 { configs, pkgs, ...}:
 
 {
-	imports = 
-	[
+	imports = [
 		./dev.nix
 	];
   environment.systemPackages = with pkgs; [

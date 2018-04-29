@@ -25,7 +25,6 @@
     imports = [ ../envs/wakasu.nix ../envs/dev.nix ../envs/laptop.nix ];
   };
 
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.luks.devices = [
     {
