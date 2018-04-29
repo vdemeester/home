@@ -5,6 +5,7 @@
     ./users.nix
     ../pkgs/home-manager/nixos
   ];
+	boot.loader.systemd-boot.enable = true;
   environment = {
     variables = {
       EDITOR = pkgs.lib.mkOverride 0 "vim";
