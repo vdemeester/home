@@ -6,9 +6,9 @@
 			../hardware-configuration.nix
 			../profiles/server.nix
 			../profiles/gitconfig.nix
-			../profiles/dev.nix
 			../profiles/avahi.nix
 			../profiles/syncthing.nix
+			../profiles/fish.nix
 			../service/ssh-tunnel.nix
       ../location/home.nix
 		];
