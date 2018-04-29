@@ -9,6 +9,7 @@
 		./scanning.nix
 		./avahi.nix
 		./syncthing.nix
+    ./fish.nix
 	];
 
   programs = {
