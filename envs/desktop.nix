@@ -1,7 +1,7 @@
 { pkgs, prefix, ... }:
 
 {
-  imports = [ ./fish.nix ];
+  imports = [ ./fish.nix ./base.nix ];
   programs.firefox = {
     enable = true;
   };

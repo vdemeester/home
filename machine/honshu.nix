@@ -16,13 +16,10 @@
 	time.timeZone = "Europe/Paris";
 	boot.loader.systemd-boot.enable = true;
 
-	security.pam.loginLimits = [
-    		{ domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
-		{ domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
-		{ domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
-	];
-	
-	hardware.bluetooth.enable = true;
+  home-manager.users.vincent = {...}: {
+    imports = [ ../envs/honshu.nix ../envs/server.nix ];
+  };
+
 	services = {
 		openssh = {
 			enable = true;

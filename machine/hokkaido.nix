@@ -22,7 +22,7 @@
 	networking.firewall.allowedTCPPorts = [ 80 443 2375 8384 ];
 
   home-manager.users.vincent = {...}: {
-    imports = [ ../envs/hokkaido.nix ../envs/base.nix ];
+    imports = [ ../envs/hokkaido.nix ../envs/server.nix ];
   };
 
 	virtualisation.docker = {
