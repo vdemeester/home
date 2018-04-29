@@ -1,6 +1,9 @@
 { configs, pkgs, ...}:
 
 {
+  environment.systemPackages = with pkgs; [
+    git
+  ];
 	environment.etc."gitconfig" = rec { text = ''
 [alias]
     co = checkout
