@@ -6,10 +6,11 @@
 			../hardware-configuration.nix
 			../hardware/dell-latitude-e6540.nix
 			../profiles/server.nix
-			../profiles/dev.python.nix
-			../profiles/dev.go.nix
-			../location/home.nix
+      ../profiles/gitconfig.nix
+      ../profiles/avahi.nix
+			../profiles/syncthing.nix
 			../service/ssh-tunnel.nix
+      ../location/home.nix
 		];
 
 	time.timeZone = "Europe/Paris";
