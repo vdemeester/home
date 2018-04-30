@@ -1,7 +1,7 @@
 { pkgs, prefix, ...}:
 
 {
-  imports = [ ./ssh.nix ./dev.nix ];
+  imports = [ ./ssh.nix ./dev.nix ./i3.nix ];
   home.keyboard = {
     layout = "fr(bepo),fr";
     variant = "oss";
@@ -9,18 +9,24 @@
   };
   xsession = {
     enable = true;
-    windowManager.command = "i3";
     initExtra = ''
-      ${pkgs.networkmanagerapplet}/bin/nm-applet &
       ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
     '';
+    pointerCursor = {
+      package = pkgs.vanilla-dmz;
+      name = "Vanilla-DMZ";
+    };
   };
   programs.autorandr = {
     enable = true;
   };
-  services.udiskie = {
+  services.gpg-agent = {
     enable = true;
+    enableSshSupport = true;
   };
+  services.dunst.enable = true;
+  services.udiskie.enable = true;
+  services.network-manager-applet.enable = true;
   services.screen-locker = {
     enable = true;
     lockCmd = "i3lock-color --clock -i $HOME/.background-lock --tiling";
