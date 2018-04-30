@@ -1,7 +1,7 @@
 { pkgs, prefix, ... }:
 
 {
-  imports = [ ./git.nix ];
+  imports = [ ./git.nix ./emacs.nix ];
   home.packages = with pkgs; [
     gnumake
     mercurial
