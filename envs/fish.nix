@@ -1,10 +1,11 @@
-{ pkgs, config, lib, ...}:
+{ pkgs, config, lib, ... }:
 
 {
   programs.fish = {
     enable = true;
     shellAbbrs = {
       gs = "git status";
+      gb = "git b";
     };
     shellAliases = import ./aliases.nix;
   };

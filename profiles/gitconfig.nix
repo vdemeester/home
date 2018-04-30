@@ -9,13 +9,8 @@
     co = checkout
     st = status
     ci = commit --signoff
-    cia = commit --amend
-    ciad = commit --amend --date=\"$(date -R)\"
-    ciads = commit --amend --date=\"$(date -R)\" -S
-    civ = commit -v
-    cis = commit --signoff -S
-    cids = commit --signoff --date=\"$(date -R)\"
-    wdiff = diff --color-words
+    ca = commit --amend
+    b = branc --color -v
     br = branch
     unstage = reset HEAD
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
