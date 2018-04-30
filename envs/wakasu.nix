@@ -1,6 +1,7 @@
 { pkgs, prefix, ...}:
 
 {
+  imports = [ ./ssh.nix ];
   programs.autorandr = {
     enable = true;
   };
