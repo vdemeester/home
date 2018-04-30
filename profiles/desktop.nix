@@ -118,6 +118,7 @@
 				sessionCommands = ''
           ${pkgs.networkmanagerapplet}/bin/nm-applet &
           ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
+          ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.background-lock --tiling &
 				'';
 			};
 		};
