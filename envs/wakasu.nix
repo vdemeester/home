@@ -2,9 +2,6 @@
 
 {
   imports = [ ./dev.nix ];
-  programs.autorandr = {
-    enable = true;
-  };
   services.redshift = {
     enable = true;
     brightness = { day = "1"; night = "0.9"; };
