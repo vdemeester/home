@@ -2,6 +2,19 @@
 
 {
   imports = [ ./ssh.nix ./dev.nix ];
+  home.keyboard = {
+    layout = "fr(bepo),fr";
+    variant = "oss";
+    options = ["grp:menu_toggle" "grp_led:caps" "compose:caps"];
+  };
+  xsession = {
+    enable = true;
+    windowManager.command = "i3";
+    initExtra = ''
+      ${pkgs.networkmanagerapplet}/bin/nm-applet &
+      ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
+    '';
+  };
   programs.autorandr = {
     enable = true;
   };
@@ -33,6 +46,7 @@
     spotify
     zoom-us
     youtube-dl
+    i3
     i3lock-color
   ];
   nixpkgs.config = {

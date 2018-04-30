@@ -103,23 +103,12 @@
     #Option "Ignore" "true"
     #					''
 	];
-			windowManager = {
-				i3 = {
-					enable = true;
-				};
-				default = "i3";
-			};
-			displayManager = {
+      displayManager = {
 				slim = {
 					enable = true;
 					# Probably put this into users instead ?
 					defaultUser = "vincent";
 				};
-				sessionCommands = ''
-          ${pkgs.networkmanagerapplet}/bin/nm-applet &
-          ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
-          ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.background-lock --tiling &
-				'';
 			};
 		};
 	};
