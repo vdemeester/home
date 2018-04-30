@@ -20,20 +20,6 @@
 	boot.tmpOnTmpfs = true;
 
 	nixpkgs.config = {
-		packageOverrides = self: with self; let
-			fetchNixPkgs = { rev, sha256, owner, repo }:
-		fetchFromGitHub {
-			inherit sha256 rev owner repo;
-		};
-    unstablePkgs = import (fetchNixPkgs {
-      owner = "NixOS";
-      repo = "nixpkgs-channels";
-      rev = "9c048f4fb66adc33c6b379f2edefcb615fd53de6";
-      sha256 = "18xbnfzj753bphzmgp74rn9is4n5ir4mvb4gp9lgpqrbfyy5dl2j";
-    }) {};
-	in {
-      inherit (unstablePkgs) iosevka fira-code;
-		};
 		allowUnfree = true;
 	};
 	environment.systemPackages = with pkgs; [
@@ -49,7 +35,6 @@
 		gnome3.defaultIconTheme
 		gnome3.gnome_themes_standard
 		i3status
-		i3lock-color
 		rofi
 		rofi-pass
 		pass
@@ -133,8 +118,6 @@
 				sessionCommands = ''
           ${pkgs.networkmanagerapplet}/bin/nm-applet &
           ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
-          ${pkgs.pythonPackages.udiskie}/bin/udiskie -a -t -n -F &
-          ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep i3lock-color -- --clock -i $HOME/.background-lock --tiling &
 				'';
 			};
 		};
@@ -153,6 +136,7 @@
       feh
 			fira
 			fira-code
+      fira-code-symbols
 			fira-mono
 			font-droid
 			iosevka

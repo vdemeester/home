@@ -4,6 +4,14 @@
   programs.autorandr = {
     enable = true;
   };
+  services.udiskie = {
+    enable = true;
+  };
+  services.screen-locker = {
+    enable = true;
+    lockCmd = "i3lock-color --clock -i $HOME/.background-lock --tiling";
+    inactiveInterval = 15;
+  };
   services.redshift = {
     enable = true;
     brightness = { day = "1"; night = "0.9"; };
@@ -20,6 +28,7 @@
     spotify
     zoom-us
     youtube-dl
+    i3lock-color
   ];
   nixpkgs.config = {
     allowUnfree = true;
