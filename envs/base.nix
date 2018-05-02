@@ -11,10 +11,13 @@ rec {
       path = "${home_directory}/src/nix/home-manager";
     };
   };
+  home.file.".tmux.conf".source = ./tmux/tmux.conf;
+  xdg.configFile."tmux/commons/keybindings".source = ./tmux/keybindings;
   home.packages = with pkgs; [
     jq
     htop
     pass
     tree
+    tmux
   ];
 }
