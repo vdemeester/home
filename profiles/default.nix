@@ -3,6 +3,7 @@
 {
   imports = [
     ./users.nix
+    ./overlays.nix
     ../pkgs/home-manager/nixos
   ];
 	boot.loader.systemd-boot.enable = true;
@@ -44,14 +45,6 @@
     '';
   };
   nixpkgs = {
-    overlays = [
-      (import ../overlays/sbr.overlay.nix)
-      # add third-party packages from outside the nixpkgs tree
-      (self: super: {
-        nix-beautify = import ../pkgs/nix-beautify { inherit pkgs; };
-        home-manager = import ../pkgs/home-manager { inherit pkgs; };
-      })
-    ];
     config = {
       allowUnfree = true;
     };

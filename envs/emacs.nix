@@ -1,57 +1,9 @@
 { pkgs, config, lib, melpaBuild, ... }:
-    
-let  
-compileEmacsFiles  = pkgs.callPackage ./emacs/builder.nix;
 
-/*
-counsel-org-clock= compileEmacsFiles {
-  name = "counsel-org-clock";
-  src = pkgs.fetchFromGitHub {
-    owner = "akirak";
-    repo = "counsel-org-clock";
-    rev = "18d68c7ce7b461bb7055ff873e39d5849a971417";
-    sha256 = "0c9yiwrc6apxrhc8dyfdgs6q2m2l8rd92rwmywci7ivhcpp4cadi";
-  };
-};
-*/
-
-bookmark-plus = compileEmacsFiles {
-  name = "bookmark-plus";
-  src = pkgs.fetchFromGitHub {
-    owner = "emacsmirror";
-    repo = "bookmark-plus";
-    rev = "954d48092247e9fd461d310fd9fc3c0d545362d5";
-    sha256 = "0c9yiwrc6apxrrc8dyfdgs6q2m2l8rd92rwmywci7ivhcpp4cadi";
-  };
-};
-
-/*
-minions = pkgs.melpaBuild {
-  pname = "minions";
-  version = "20180321.749";
-  src = pkgs.fetchFromGitHub {
-    owner = "tarsius";
-    repo = "minions";
-    rev = "acac7fb0b04ffdf243775231690956d163474177";
-    sha256 = "1065asbg1h2chd34cbja2pir93r5y8gp3wv3jv6sf5csa6yqk6c7";
-  };
-  recipeFile = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/melpa/melpa/e5cfaa4b5fda97054d45691fad9d79b559f2df14/recipes/minions";
-    sha256 = "1065asbg1h2chd34cbja2pir93r5y8gp3wv3jv6sf5csa6yqk6ch";
-    name = "minions";
-  };
-  packageRequires = [ pkgs.emacs ];
-  meta = {
-    homepage = "https://melpa.org/#/elfeed";
-    license = lib.licenses.free;
-  };
-};
-*/
-
-in {
-  
+{
   programs.emacs = {
     enable = true;
+    #package = pkgs.myEmacs;
     extraPackages = epkgs: with epkgs; [
       ace-window
       aggressive-indent
@@ -60,19 +12,17 @@ in {
       auto-yasnippet
       avy
       bm
-      bookmark-plus
       command-log-mode
       company
       company-emoji
       company-ghc
       company-go
       company-lsp
-      company-nixos-options
+      (with melpaPackages; [ company-nixos-options ])
       company-restclient
       company-shell
       counsel
       counsel-gtags
-      # counsel-org-clock # FIXME
       counsel-projectile
       # counsel-spotify
       counsel-tramp
@@ -92,15 +42,17 @@ in {
       elpy
       engine-mode
       eshell-bookmark
+      (with melpaPackages; [
       eshell-prompt-extras
       esh-autosuggest
+      ])
       exec-path-from-shell
       expand-region
       eyebrowse
-      ez-query-replace
+      (with melpaPackages; [ ez-query-replace ])
       fancy-narrow
       fish-mode
-      fish-completion
+      (with melpaPackages; [ fish-completion ])
       flycheck
       flycheck-clojure
       flycheck-haskell
@@ -117,16 +69,18 @@ in {
       gitattributes-mode
       gitconfig-mode
       gitignore-mode
-      go-mode
-      go-add-tags
-      # go-dlv
-      go-eldoc
-      go-errcheck
-      go-fill-struct
-      go-guru
-      # go-impl
-      gorepl-mode
-      go-tag
+      (with melpaPackages; [
+        go-add-tags
+        # go-dlv
+        go-eldoc
+        go-errcheck
+        go-fill-struct
+        go-guru
+        # go-impl
+        go-mode
+        gorepl-mode
+        go-tag
+      ])
       groovy-mode
       hardhat
       haskell-mode
@@ -142,9 +96,9 @@ in {
       ibuffer-projectile
       ibuffer-sidebar
       iedit
-      imenu-list
+      (with melpaPackages; [ imenu-list ])
       ivy
-      ivy-historian
+      (with melpaPackages; [ ivy-historian ])
       ivy-hydra
       ivy-pass
       ivy-rich
@@ -171,11 +125,14 @@ in {
       markdown-mode
       mc-extras
       # minions # FIXME
+      #(with melpaPackages; [ minions ])
       multiple-cursors
-      nix-buffer
-      nix-mode
-      nix-sandbox
-      nixos-options
+      (with melpaPackages; [
+        nix-buffer
+        nix-mode
+        nix-sandbox
+        nixos-options
+      ])
       no-littering
       olivetti
       ob-go
@@ -213,7 +170,7 @@ in {
       smart-jump
       smart-newline
       smart-region
-      smartparens
+      (with melpaPackages; [ smartparens ])
       solaire-mode
       sort-words
       sos
@@ -224,8 +181,9 @@ in {
       tide
       toml-mode
       typescript-mode
-      undo-tree
-      use-package
+      (with melpaPackages; [ undo-tree ])
+      (with melpaPackages; [ use-package ])
+      # use-package
       vdiff
       visual-fill-column
       visual-regexp
