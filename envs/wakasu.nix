@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./devops.nix
     ./dev.go.nix
     ./dev.rust.nix
     ./dev.python.nix
