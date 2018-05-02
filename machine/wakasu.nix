@@ -7,9 +7,8 @@
     ../profiles/laptop.nix
     ../profiles/ssh.nix
     ../profiles/yubikey.nix
+    ../profiles/dev.nix
     ../profiles/dockerization.nix
-    ../profiles/dev.go.nix
-    ../profiles/dev.python.nix
     ../location/docker.nix
     ../location/home.nix
     ../hardware/thinkpad-t460s.nix

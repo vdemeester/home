@@ -1,7 +1,13 @@
 { pkgs, prefix, ...}:
 
 {
-  imports = [ ./dev.nix ];
+  imports = [
+    ./dev.go.nix
+    ./dev.rust.nix
+    ./dev.python.nix
+    ./dev.js.nix
+    ./dev.haskell.nix
+  ];
   services.redshift = {
     enable = true;
     brightness = { day = "1"; night = "0.9"; };

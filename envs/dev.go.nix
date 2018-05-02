@@ -1,11 +1,8 @@
-# Go(lang) configuration
-{ configs, pkgs, ...}:
+{ pkgs, prefix, ... }:
 
 {
-	imports = [
-		./dev.nix
-	];
-  environment.systemPackages = with pkgs; [
+  imports = [ ./dev.nix ];
+  home.packages = with pkgs; [
     go
     gcc
     # tools
