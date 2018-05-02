@@ -104,6 +104,7 @@
       ivy-rich
       jedi
       jq-mode
+      js-import
       js2-mode
       js2-refactor
       json-mode
@@ -163,6 +164,7 @@
       request
       restclient
       ripgrep
+      (with melpaPackages; [ rjsx-mode ])
       selected
       shift-number
       shackle
