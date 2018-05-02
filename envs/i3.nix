@@ -9,6 +9,7 @@
         followMouse = false;
       };
       window = {
+        titlebar = false;
         border = 1;
         hideEdgeBorders = "both";
       };
@@ -18,7 +19,7 @@
       };
       keycodebindings = {
         "Mod4+Shift+24" = "kill";
-        "Mod4+33" = "exec \"${pkgs.rofi}/bin/rofi -show run -modi 'run,window' -location 2 -hide-scrollbar -separator-style solid -font Ubuntu\ Mono\ 14\"";
+        "Mod4+33" = "exec \"${pkgs.rofi}/bin/rofi -show run -modi 'run,window' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
         # focus window
         "Mod4+44" = "focus left";
         "Mod4+45" = "focus down";
