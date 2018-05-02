@@ -17,6 +17,11 @@
       name = "Vanilla-DMZ";
     };
   };
+  home.file.".XCompose".source = ./xorg/XCompose;
+  home.file.".Xmodmap".source = ./xorg/Xmodmap;
+  xdg.configFile."xorg/emoji.compose".source = ./xorg/emoji.compose;
+  xdg.configFile."xorg/parens.compose".source = ./xorg/parens.compose;
+  xdg.configFile."xorg/modletters.compose".source = ./xorg/modletters.compose;
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
