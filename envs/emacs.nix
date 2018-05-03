@@ -7,9 +7,9 @@
     extraPackages = epkgs: with epkgs; [
       ace-window
       aggressive-indent
-      alert
+      # alert
       async
-      auto-yasnippet
+      # auto-yasnippet
       avy
       bm
       command-log-mode
@@ -19,28 +19,29 @@
       company-go
       company-lsp
       (with melpaPackages; [ company-nixos-options ])
-      company-restclient
-      company-shell
+      #company-restclient
+      #company-shell
       counsel
-      counsel-gtags
+      #counsel-gtags
       counsel-projectile
       # counsel-spotify
-      counsel-tramp
-      crux
+      #counsel-tramp
+      #crux
       dash
       delight
       diff-hl
       diffview
       dired-collapse
+      dired-sidebar
       direnv
       docker
       docker-compose-mode
-      docker-tramp
+      #docker-tramp
       dockerfile-mode
       doom-themes
-      dumb-jump
-      elpy
-      engine-mode
+      #dumb-jump
+      #elpy
+      #engine-mode
       eshell-bookmark
       (with melpaPackages; [
       eshell-prompt-extras
@@ -54,18 +55,18 @@
       fish-mode
       (with melpaPackages; [ fish-completion ])
       flycheck
-      flycheck-clojure
-      flycheck-haskell
-      # flycheck-inline
-      flycheck-gometalinter
+      #flycheck-clojure
+      #flycheck-haskell
+      #flycheck-inline
+      #flycheck-gometalinter
       flycheck-popup-tip
       focus
       fullframe
-      ggtags
-      ghub
-      ghub-plus
+      #ggtags
+      #ghub
+      #ghub-plus
       git-commit
-      git-timemachine
+      #git-timemachine
       gitattributes-mode
       gitconfig-mode
       gitignore-mode
@@ -78,32 +79,31 @@
         go-guru
         # go-impl
         go-mode
-        gorepl-mode
+        #gorepl-mode
         go-tag
       ])
       groovy-mode
       hardhat
-      haskell-mode
+      #haskell-mode
       helpful
       highlight
-      highlight-escape-sequences
-      highlight-leading-spaces
+      #highlight-escape-sequences
+      #highlight-leading-spaces
       highlight-numbers
       highlight-symbol
       hydra
-      ialign
+      #ialign
       ibuffer-vc
-      ibuffer-projectile
-      ibuffer-sidebar
+      #ibuffer-projectile
       iedit
       (with melpaPackages; [ imenu-list ])
       ivy
-      (with melpaPackages; [ ivy-historian ])
+      #(with melpaPackages; [ ivy-historian ])
       ivy-hydra
       ivy-pass
       ivy-rich
-      jedi
-      jq-mode
+      #jedi
+      #jq-mode
       js-import
       js2-mode
       js2-refactor
@@ -117,14 +117,13 @@
       lsp-python
       lsp-rust
       magit
-      magit-filenotify
       magit-gitflow
-      magit-lfs
+      # magit-lfs
       magit-popup
-      magithub
-      makefile-executor
+      # magithub
+      #makefile-executor
       markdown-mode
-      mc-extras
+      #mc-extras
       # minions # FIXME
       #(with melpaPackages; [ minions ])
       multiple-cursors
@@ -137,13 +136,13 @@
       no-littering
       olivetti
       ob-go
-      ob-restclient
+      #ob-restclient
       ob-rust
       ob-typescript
       org-plus-contrib
       org-ref
-      org-super-agenda
-      org-web-tools
+      #org-super-agenda
+      #org-web-tools
       ox-epub
       ox-hugo
       ox-ioslide
@@ -154,43 +153,43 @@
       pass
       password-store
       password-store-otp
-      persistent-scratch
+      # persistent-scratch
       popup
       projectile
       projectile-ripgrep
       python-mode
       rainbow-delimiters
       rainbow-mode
-      request
-      restclient
+      #request
+      #restclient
       ripgrep
       (with melpaPackages; [ rjsx-mode ])
-      selected
+      #selected
       shift-number
       shackle
       shx
       smart-jump
       smart-newline
-      smart-region
+      #smart-region
       (with melpaPackages; [ smartparens ])
       solaire-mode
-      sort-words
-      sos
+      #sort-words
+      #sos
       string-edit
       string-inflection
       super-save
-      sx
-      tide
+      #sx
+      #tide
       toml-mode
       typescript-mode
       (with melpaPackages; [ undo-tree ])
       (with melpaPackages; [ use-package ])
       # use-package
-      vdiff
+      # vdiff
       visual-fill-column
       visual-regexp
-      visual-regexp-steroids
-      vlf
+      #visual-regexp-steroids
+      #vlf
       web-mode
       wgrep
       which-key
