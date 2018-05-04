@@ -110,12 +110,15 @@
       json-mode
       json-reformat
       json-snatcher
-      lsp-haskell
-      lsp-javascript-typescript
-      lsp-go
-      lsp-mode
-      lsp-python
-      lsp-rust
+      (with melpaPackages; [
+        lsp-haskell
+        lsp-javascript-typescript
+        lsp-go
+        lsp-mode
+        lsp-python
+        lsp-rust
+        lsp-ui
+      ])
       magit
       magit-gitflow
       # magit-lfs
