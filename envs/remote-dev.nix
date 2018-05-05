@@ -2,7 +2,9 @@
 
 {
   imports = [
+    ./fish.nix
     ./base.nix
-    ./dev.nix
+    ./dev.go.nix
+    ./dev.rust.nix
   ];
 }
