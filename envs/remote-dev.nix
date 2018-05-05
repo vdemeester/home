@@ -7,4 +7,5 @@
     ./dev.go.nix
     ./dev.rust.nix
   ];
+  manual.manpages.enable = false;
 }
