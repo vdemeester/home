@@ -22,6 +22,7 @@
   xdg.configFile."xorg/emoji.compose".source = ./xorg/emoji.compose;
   xdg.configFile."xorg/parens.compose".source = ./xorg/parens.compose;
   xdg.configFile."xorg/modletters.compose".source = ./xorg/modletters.compose;
+  xdg.configFile."user-dirs.dirs".source = ./xorg/user-dirs.dirs;
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
