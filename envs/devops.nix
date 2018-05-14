@@ -2,7 +2,8 @@
 
 {
   home.packages = with pkgs; [
-    packer
     google-cloud-sdk
+    packer
+    spice_gtk
   ];
 }

@@ -9,6 +9,7 @@
     ../profiles/yubikey.nix
     ../profiles/dev.nix
     ../profiles/dockerization.nix
+    ../profiles/virtualization.nix
     ../location/docker.nix
     ../location/home.nix
     ../hardware/thinkpad-t460s.nix
