@@ -1,4 +1,4 @@
-{ pkgs, config, lib, melpaBuild, ... }:
+{ pkgs, config, lib, ... }:
 
 {
   programs.emacs = {
@@ -187,8 +187,8 @@
       toml-mode
       typescript-mode
       (with melpaPackages; [ undo-tree ])
+      # (with melpaPackages; [ use-package use-package-chords use-package-ensure-system-package ])
       (with melpaPackages; [ use-package ])
-      # use-package
       # vdiff
       visual-fill-column
       visual-regexp
@@ -205,3 +205,4 @@
     ];
   };
 }
+
