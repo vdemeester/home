@@ -81,6 +81,7 @@
         go-mode
         #gorepl-mode
         go-tag
+        gotest
       ])
       groovy-mode
       hardhat
