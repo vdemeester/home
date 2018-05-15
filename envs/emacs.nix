@@ -162,6 +162,7 @@
       popup
       projectile
       projectile-ripgrep
+      (with melpaPackages; [ pulseaudio-control ])
       python-mode
       rainbow-delimiters
       rainbow-mode
