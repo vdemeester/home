@@ -111,6 +111,7 @@
       json-reformat
       json-snatcher
       (with melpaPackages; [
+        key-chord
         lsp-haskell
         lsp-javascript-typescript
         lsp-go
