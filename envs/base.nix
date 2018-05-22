@@ -19,5 +19,6 @@ rec {
     pass
     tree
     tmux
+    enchive
   ];
 }
