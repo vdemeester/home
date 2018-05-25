@@ -148,6 +148,7 @@
       org-ref
       #org-super-agenda
       #org-web-tools
+      (with melpaPackages; [ org-projectile ])
       ox-epub
       ox-hugo
       ox-ioslide
