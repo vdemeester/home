@@ -7,6 +7,7 @@
     ./dev.rust.nix
     ./dev.python.nix
     ./dev.js.nix
+    ./dev.java.nix
     ./dev.haskell.nix
   ];
   services.redshift = {
