@@ -1,191 +1,191 @@
-# Common configuration for any desktop (not that laptop are a superset of desktop)
+  # Common configuration for any desktop (not that laptop are a superset of desktop)
 
-{ configs, pkgs, ...}:
+  { configs, pkgs, ...}:
 
-{
-	imports = [
-		./default.nix
-		./printing.nix
-		./scanning.nix
-		./avahi.nix
-		./syncthing.nix
-    ./fish.nix
-	];
+  {
+    imports = [
+      ./default.nix
+      ./printing.nix
+      ./scanning.nix
+      ./avahi.nix
+      ./syncthing.nix
+      ./fish.nix
+    ];
 
-  programs = {
-    fish.enable = true;
-  };
-  
-	boot.loader.efi.canTouchEfiVariables = true;
-	boot.tmpOnTmpfs = true;
+    programs = {
+      fish.enable = true;
+    };
 
-	nixpkgs.config = {
-		allowUnfree = true;
-	};
-	environment.systemPackages = with pkgs; [
-    cryptsetup
-    aspell
-    aspellDicts.en
-    aspellDicts.fr
-    nix-repl
-		dmenu2
-		rofi
-		dunst
-		emacs
-		gnome3.defaultIconTheme
-		gnome3.gnome_themes_standard
-		i3status
-		rofi
-		rofi-pass
-		pass
-		libnotify
-		pythonPackages.udiskie
-		scrot
-		xlibs.xmodmap
-		xorg.xbacklight
-		xorg.xdpyinfo
-		xorg.xhost
-		xorg.xinit
-		xss-lock
-		xorg.xmessage
-		ape
-		tuck
-		clasp
-		keybase
-		mpv
-		ledger
-		unzip
-		peco
-		networkmanagerapplet
-    gnupg
-    pinentry
-    # overlay ?
-    envbox
-	];
-	hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
-	networking.networkmanager.enable = true;
-  networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
-	services = {
-		xserver = {
-			enable = true;
-			enableTCP = false;
-			libinput.enable = true;
-			synaptics.enable = false;
-			layout = "fr(bepo),fr";
-			xkbVariant = "oss";
-			xkbOptions = "grp:menu_toggle,grp_led:caps,compose:caps";
-			inputClassSections = [
-			''
-        Identifier      "TypeMatrix"
+    boot.loader.efi.canTouchEfiVariables = true;
+    boot.tmpOnTmpfs = true;
+
+    nixpkgs.config = {
+      allowUnfree = true;
+    };
+    environment.systemPackages = with pkgs; [
+      cryptsetup
+      aspell
+      aspellDicts.en
+      aspellDicts.fr
+      nix-repl
+      dmenu2
+      rofi
+      dunst
+      emacs
+      gnome3.defaultIconTheme
+      gnome3.gnome_themes_standard
+      i3status
+      rofi
+      rofi-pass
+      pass
+      libnotify
+      pythonPackages.udiskie
+      scrot
+      xlibs.xmodmap
+      xorg.xbacklight
+      xorg.xdpyinfo
+      xorg.xhost
+      xorg.xinit
+      xss-lock
+      xorg.xmessage
+      ape
+      tuck
+      clasp
+      keybase
+      mpv
+      ledger
+      unzip
+      peco
+      networkmanagerapplet
+      gnupg
+      pinentry
+      # overlay ?
+      envbox
+    ];
+    hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
+    networking.networkmanager.enable = true;
+    networking.networkmanager.unmanaged = [ "interface-name:ve-*" "interface-name:veth*" ];
+    services = {
+      xserver = {
+        enable = true;
+        enableTCP = false;
+        libinput.enable = true;
+        synaptics.enable = false;
+        layout = "fr(bepo),fr";
+        xkbVariant = "oss";
+        xkbOptions = "grp:menu_toggle,grp_led:caps,compose:caps";
+        inputClassSections = [
+        ''
+          Identifier      "TypeMatrix"
+          MatchIsKeyboard "on"
+          MatchVendor     "TypeMatrix.com"
+          MatchProduct    "USB Keyboard"
+          Driver          "evdev"
+          Option          "XbkModel"      "tm2030USB"
+          Option          "XkbLayout"     "fr"
+          Option          "XkbVariant"    "bepo"
+        ''
+      ''
+        Identifier      "ErgoDox"
         MatchIsKeyboard "on"
-        MatchVendor     "TypeMatrix.com"
-        MatchProduct    "USB Keyboard"
+        #MatchVendor     "ErgoDox_EZ"
+        #MatchProduct    "ErgoDox_EZ"
+        MatchUSBID      "feed:1307"
         Driver          "evdev"
-        Option          "XbkModel"      "tm2030USB"
         Option          "XkbLayout"     "fr"
         Option          "XkbVariant"    "bepo"
-			''
-		''
-      Identifier      "ErgoDox"
-      MatchIsKeyboard "on"
-      #MatchVendor     "ErgoDox_EZ"
-      #MatchProduct    "ErgoDox_EZ"
-      MatchUSBID      "feed:1307"
-      Driver          "evdev"
-      Option          "XkbLayout"     "fr"
-      Option          "XkbVariant"    "bepo"
-		''
-    #					''
-    #Identifier "evdev touchpad off"
-    #MatchIsTouchpad "on"
-    #MatchDevicePath "/dev/input/event*"
-    #Driver "evdev"
-    #Option "Ignore" "true"
-    #					''
-	];
-      displayManager = {
-				slim = {
-					enable = true;
-					# Probably put this into users instead ?
-					defaultUser = "vincent";
-				};
-			};
-		};
-	};
-	fonts = {
-		enableFontDir = true;
-		enableGhostscriptFonts = true;
-		fonts = with pkgs; [		
-			corefonts
-			inconsolata
-			dejavu_fonts
-			ubuntu_font_family
-			unifont
-			emojione
-			symbola
-      feh
-			fira
-			fira-code
-      fira-code-symbols
-			fira-mono
-			font-droid
-			iosevka
-			hasklig
-      source-code-pro
-      font-droid
-		];
-	};
+      ''
+      #					''
+      #Identifier "evdev touchpad off"
+      #MatchIsTouchpad "on"
+      #MatchDevicePath "/dev/input/event*"
+      #Driver "evdev"
+      #Option "Ignore" "true"
+      #					''
+    ];
+        displayManager = {
+          slim = {
+            enable = true;
+            # Probably put this into users instead ?
+            defaultUser = "vincent";
+          };
+        };
+      };
+    };
+    fonts = {
+      enableFontDir = true;
+      enableGhostscriptFonts = true;
+      fonts = with pkgs; [		
+        corefonts
+        inconsolata
+        dejavu_fonts
+        ubuntu_font_family
+        unifont
+        emojione
+        symbola
+        feh
+        fira
+        fira-code
+        fira-code-symbols
+        fira-mono
+        font-droid
+        iosevka
+        hasklig
+        source-code-pro
+        font-droid
+      ];
+    };
 
-	# Polkit.
-	security.polkit.extraConfig = ''
-	  polkit.addRule(function(action, subject) {
-		if ((action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
-		action.id == "org.freedesktop.udisks2.encrypted-unlock-system"
-		) &&
-		subject.local && subject.active && subject.isInGroup("users")) {
-		return polkit.Result.YES;
-		}
-		var YES = polkit.Result.YES;
-		var permission = {
-		// required for udisks1:
-		"org.freedesktop.udisks.filesystem-mount": YES,
-		"org.freedesktop.udisks.luks-unlock": YES,
-		"org.freedesktop.udisks.drive-eject": YES,
-		"org.freedesktop.udisks.drive-detach": YES,
-		// required for udisks2:
-		"org.freedesktop.udisks2.filesystem-mount": YES,
-		"org.freedesktop.udisks2.encrypted-unlock": YES,
-		"org.freedesktop.udisks2.eject-media": YES,
-		"org.freedesktop.udisks2.power-off-drive": YES,
-		// required for udisks2 if using udiskie from another seat (e.g. systemd):
-		"org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
-		"org.freedesktop.udisks2.filesystem-unmount-others": YES,
-		"org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
-		"org.freedesktop.udisks2.eject-media-other-seat": YES,
-		"org.freedesktop.udisks2.power-off-drive-other-seat": YES
-		};
-		if (subject.isInGroup("wheel")) {
-		return permission[action.id];
-		}
-	  });
-	'';
-	# Auto refresh nix-channel each day
-	systemd.user.services.channel-update = {
-		description = "Update nix-channel daily";
-		wantedBy = [ "multi-user.target" ];
-		serviceConfig = {
-			Type = "oneshot";
-			ExecStart = "/run/current-system/sw/bin/nix-channel --update";
-			Environment = "PATH=/run/current-system/sw/bin";
-		};
-	};
-	systemd.user.timers.channel-update = {
-		description = "Update nix-channel daily";
-		wantedBy = [ "timers.target" ];
-		timerConfig = {
-			OnCalendar = "daily";
-			Persistent = "true";
-		};
-	};
-	systemd.user.timers.channel-update.enable = true;
-}
+    # Polkit.
+    security.polkit.extraConfig = ''
+      polkit.addRule(function(action, subject) {
+      if ((action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
+      action.id == "org.freedesktop.udisks2.encrypted-unlock-system"
+      ) &&
+      subject.local && subject.active && subject.isInGroup("users")) {
+      return polkit.Result.YES;
+      }
+      var YES = polkit.Result.YES;
+      var permission = {
+      // required for udisks1:
+      "org.freedesktop.udisks.filesystem-mount": YES,
+      "org.freedesktop.udisks.luks-unlock": YES,
+      "org.freedesktop.udisks.drive-eject": YES,
+      "org.freedesktop.udisks.drive-detach": YES,
+      // required for udisks2:
+      "org.freedesktop.udisks2.filesystem-mount": YES,
+      "org.freedesktop.udisks2.encrypted-unlock": YES,
+      "org.freedesktop.udisks2.eject-media": YES,
+      "org.freedesktop.udisks2.power-off-drive": YES,
+      // required for udisks2 if using udiskie from another seat (e.g. systemd):
+      "org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
+      "org.freedesktop.udisks2.filesystem-unmount-others": YES,
+      "org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
+      "org.freedesktop.udisks2.eject-media-other-seat": YES,
+      "org.freedesktop.udisks2.power-off-drive-other-seat": YES
+      };
+      if (subject.isInGroup("wheel")) {
+      return permission[action.id];
+      }
+      });
+    '';
+    # Auto refresh nix-channel each day
+    systemd.user.services.channel-update = {
+      description = "Update nix-channel daily";
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "/run/current-system/sw/bin/nix-channel --update";
+        Environment = "PATH=/run/current-system/sw/bin";
+      };
+    };
+    systemd.user.timers.channel-update = {
+      description = "Update nix-channel daily";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "daily";
+        Persistent = "true";
+      };
+    };
+    systemd.user.timers.channel-update.enable = true;
+  }
