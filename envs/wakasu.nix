@@ -28,5 +28,6 @@
     slack
     vscode
     zoom-us
+    debootstrap
   ];
 }
