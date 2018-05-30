@@ -14,7 +14,7 @@
         hideEdgeBorders = "both";
       };
       keybindings = {
-        "Mod4+Return" = "exec termite"; # TODO: use i3-sensible-terminal instead
+        "Mod4+Return" = "exec alacritty"; # TODO: use i3-sensible-terminal instead
         "Mod4+Shift+F11" = "exec 'autorandr -c'";
       };
       keycodebindings = {
@@ -129,7 +129,7 @@
       assign [class="Firefox" window_role="browser"] → $WS1
 
       ## quick terminal (tmux)
-      exec --no-startup-id termite --name metask --exec tmux
+      exec --no-startup-id alacritty --title metask --exec tmux
       for_window [instance="metask"] floating enable;
       #for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position 0px 0px; resize shrink height 300px; resize grow width 683px; move scratchpad
       for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position 0px 0px; move scratchpad
