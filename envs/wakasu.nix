@@ -29,5 +29,6 @@
     vscode
     zoom-us
     debootstrap
+    weechat weechat-xmpp
   ];
 }

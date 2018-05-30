@@ -50,6 +50,7 @@
     youtube-dl
     spotify
     i3lock-color
+    alacritty # create a `programs.alacritty`
   ];
   nixpkgs.config = {
     allowUnfree = true;
