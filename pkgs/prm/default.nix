@@ -2,15 +2,21 @@
 
 buildGoPackage rec {
   name = "prm-unstable-${version}";
-  version = "2018-04-30";
-  rev = "708f8af64ef7faca358406496f81f83d33f28c12";
+  version = "2.1.1";
+  rev = "83ff93d6d9d043d8c3dde54d47e8a82524bb8cf3"; # v2.1.1
 
   goPackagePath = "github.com/ldez/prm";
+
+  buildFlagsArray = let t = "${goPackagePath}"; in ''
+    -ldflags=
+       -X ${t}.Version=${version}
+       -X ${t}.BuildDate=unknown
+  '';
 
   src = fetchgit {
     inherit rev;
     url = "https://github.com/ldez/prm";
-    sha256 = "16314icypsnw1b8vd306sd3752cz80ziq98mcayxh2bh4wk59hr7";
+    sha256 = "0adz9vli1x5f5v2vyfag7m2a9llj7bxih5g3ccjpiz22xk26rc6l";
   };
 
   goDeps = ./deps.nix;
