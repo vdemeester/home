@@ -7,7 +7,7 @@ buildGoPackage rec {
 
   goPackagePath = "github.com/ldez/prm";
 
-  buildFlagsArray = let t = "${goPackagePath}"; in ''
+  buildFlagsArray = let t = "${goPackagePath}/meta"; in ''
     -ldflags=
        -X ${t}.Version=${version}
        -X ${t}.BuildDate=unknown
