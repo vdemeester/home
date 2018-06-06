@@ -3,6 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     git
+    gitAndTools.git-extras
   ];
 	environment.etc."gitconfig" = rec { text = ''
 [alias]
