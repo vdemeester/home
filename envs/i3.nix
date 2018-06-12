@@ -129,9 +129,12 @@
       assign [class="Firefox" window_role="browser"] → $WS1
 
       ## quick terminal (tmux)
+      exec --no-startup-id emacs --title emask --name emask
+      for_window [instance="emask"] floating enable;
+      for_window [instance="emask"] move scratchpad; [instance="emask"] scratchpad show; move position 0px 0px; move scratchpad
+      bindcode $mod+Shift+49 [instance="emask"] scratchpad show
       exec --no-startup-id alacritty --title metask --command tmux
       for_window [instance="metask"] floating enable;
-      #for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position 0px 0px; resize shrink height 300px; resize grow width 683px; move scratchpad
       for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position 0px 0px; move scratchpad
       bindcode $mod+49 [instance="metask"] scratchpad show
 
