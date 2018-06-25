@@ -87,7 +87,7 @@
       hardhat
       #haskell-mode
       helpful
-      highlight
+      #highlight
       #highlight-escape-sequences
       #highlight-leading-spaces
       highlight-numbers
