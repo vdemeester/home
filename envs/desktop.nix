@@ -26,6 +26,7 @@
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
+    defaultCacheTtlSsh = 7200;
   };
   services.dunst.enable = true;
   services.udiskie.enable = true;
