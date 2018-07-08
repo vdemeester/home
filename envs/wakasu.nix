@@ -25,7 +25,6 @@
     set -gx TESTKIT_AWS_KEYNAME "vdemeester-wakasu"
   '';
   home.packages = with pkgs; [
-    slack
     vscode
     zoom-us
     debootstrap
