@@ -8,7 +8,7 @@ rec {
   programs = {
     home-manager = {
       enable = true;
-      path = "${home_directory}/src/nix/home-manager";
+      path = https://github.com/vdemeester/home-manager/archive/fish-module.tar.gz;
     };
   };
   home.file.".tmux.conf".source = ./tmux/tmux.conf;
