@@ -3,13 +3,14 @@
 { configs, pkgs, ...}:
 
 {
-	imports = [
-		./gitconfig.nix
-	];
-	environment.systemPackages = with pkgs; [
-		git
-		grc
-		ripgrep
+  imports = [
+    ./gitconfig.nix
+  ];
+  environment.systemPackages = with pkgs; [
+    git
+    tig
+    grc
+    ripgrep
     gnumake
-	];
+  ];
 }
