@@ -23,6 +23,7 @@
   };
   xdg.configFile."fish/conf.d/docker.fish".text = ''
     set -gx TESTKIT_AWS_KEYNAME "vdemeester-wakasu"
+    set -gx DOCKER_BUILDKIT 1
   '';
   home.packages = with pkgs; [
     vscode
