@@ -1,0 +1,12 @@
+{ pkgs, ... }:
+with pkgs; {
+	home.packages = [
+		emacs
+	];
+	programs = {
+		home-manager = {
+			enable = true;
+			path = https://github.com/vdemeester/home-manager/archive/fish-module.tar.gz;
+		};
+	};
+}
