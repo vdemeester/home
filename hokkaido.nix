@@ -1,7 +1,7 @@
 { pkgs, ... }:
 with pkgs; {
   imports = [
-    ./base.nix
+    ./desktop.nix
     ./devops.nix
     ./dev.go.nix
     ./dev.rust.nix
