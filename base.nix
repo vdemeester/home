@@ -4,7 +4,6 @@ let home_directory = builtins.getEnv "HOME"; in
 
 rec {
 
-  imports = [ ../profiles/overlays.nix ];
   programs = {
     home-manager = {
       enable = true;
