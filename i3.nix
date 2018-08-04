@@ -60,7 +60,7 @@
       bars = [{
         mode = "hide";
         position = "bottom";
-        statusCommand = "i3status";
+        statusCommand = "${pkgs.i3status}/bin/i3status";
         colors = {
           background = "#073642";
           statusline = "#eee8d5";
