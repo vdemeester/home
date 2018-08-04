@@ -4,9 +4,8 @@
   imports = [
     ./users.nix
     ./overlays.nix
-    ../pkgs/home-manager/nixos
   ];
-	boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = true;
   environment = {
     variables = {
       EDITOR = pkgs.lib.mkOverride 0 "vim";
@@ -18,12 +17,13 @@
       iotop
       lsof
       netcat
+      nix-beautify
       psmisc
+      pv
       tmux
       tree
       vim
       wget
-      nix-beautify
     ];
   };
   i18n = {
