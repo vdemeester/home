@@ -52,6 +52,8 @@
     spotify
     i3lock-color
     alacritty # create a `programs.alacritty`
+    gnome3.defaultIconTheme
+    gnome3.gnome_themes_standard
   ];
   nixpkgs.config = {
     allowUnfree = true;
