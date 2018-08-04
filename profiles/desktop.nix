@@ -18,29 +18,11 @@
 
     boot.loader.efi.canTouchEfiVariables = true;
     boot.tmpOnTmpfs = true;
-
-    nixpkgs.config = {
-      allowUnfree = true;
-    };
+  
     environment.systemPackages = with pkgs; [
       cryptsetup
-      aspell
-      aspellDicts.en
-      aspellDicts.fr
       nix-repl
-      dmenu2
-      rofi
-      dunst
       emacs
-      gnome3.defaultIconTheme
-      gnome3.gnome_themes_standard
-      i3status
-      rofi
-      rofi-pass
-      pass
-      libnotify
-      pythonPackages.udiskie
-      scrot
       xlibs.xmodmap
       xorg.xbacklight
       xorg.xdpyinfo
@@ -48,19 +30,9 @@
       xorg.xinit
       xss-lock
       xorg.xmessage
-      ape
-      tuck
-      clasp
-      keybase
-      mpv
-      ledger
       unzip
-      peco
-      networkmanagerapplet
       gnupg
       pinentry
-      # overlay ?
-      envbox
     ];
     hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
     networking.networkmanager.enable = true;
@@ -69,6 +41,7 @@
       xserver = {
         enable = true;
         enableTCP = false;
+	      windowManager.twm.enable = true;
         libinput.enable = true;
         synaptics.enable = false;
         layout = "fr(bepo),fr";
