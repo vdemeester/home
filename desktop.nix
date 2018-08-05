@@ -1,7 +1,7 @@
 { pkgs, prefix, ... }:
 
 {
-  imports = [ ./fish.nix ./ssh.nix ./i3.nix ./base.nix ];
+  imports = [ ./fish.nix ./ssh.nix ./i3.nix ./media.nix ./base.nix ];
   home.keyboard = {
     layout = "fr(bepo),fr";
     variant = "oss";
@@ -46,14 +46,21 @@
     enable = true;
   };
   home.packages = with pkgs; [
+    alacritty # create a `programs.alacritty`
+    aspell
+    aspellDicts.en
+    aspellDicts.fr
+    gnome3.defaultIconTheme
+    gnome3.gnome_themes_standard
+    i3lock-color
+    keybase
+    # pass
+    peco
+    scrot
+    spotify
     xdg-user-dirs
     xdg_utils
     youtube-dl
-    spotify
-    i3lock-color
-    alacritty # create a `programs.alacritty`
-    gnome3.defaultIconTheme
-    gnome3.gnome_themes_standard
   ];
   nixpkgs.config = {
     allowUnfree = true;

@@ -27,8 +27,6 @@ with pkgs; {
   '';
   home.packages = with pkgs; [
     vscode
-    zoom-us
-    debootstrap
     weechat weechat-xmpp
   ];
 }
