@@ -21,8 +21,8 @@
 	};
 	sound.mediaKeys.enable = true;
 
-	# spotify
-	networking.firewall.allowedTCPPorts = [ 57621 57622 ];
+	# spotify & pulseaudio
+	networking.firewall.allowedTCPPorts = [ 57621 57622 4713 ];
 	networking.firewall.allowedUDPPorts = [ 57621 57622 ];
 	
 	environment.systemPackages = with pkgs; [
