@@ -72,7 +72,7 @@ in
           ];
           */
         };
-        path = [ pkgs.containerd ];
+        path = [ pkgs.containerd pkgs.runc ];
       };
 
       
