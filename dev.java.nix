@@ -5,6 +5,6 @@
   home.packages = with pkgs; [
     jdk
     gradle
-    jetbrains.idea-community
+    jetbrains.idea-ultimate
   ];
 }
