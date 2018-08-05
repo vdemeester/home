@@ -41,6 +41,8 @@
 
   hardware.trackpoint.enable = false;
 
+  networking.firewall.allowedTCPPorts = [ 5900 ];
+
   time.timeZone = "Europe/Paris";
 
   services.xserver.displayManager.slim.theme = pkgs.fetchurl {
