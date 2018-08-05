@@ -10,6 +10,7 @@ rec {
     gitAndTools.gitflow
     gitAndTools.hub
     gitAndTools.tig
+    prm
   ];
   programs.git = {
     enable = true;

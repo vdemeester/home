@@ -7,6 +7,5 @@
     cmake
     binutils-unwrapped
     mercurial
-    prm
   ];
 }
