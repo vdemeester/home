@@ -23,27 +23,35 @@
   xdg.configFile."xorg/parens.compose".source = ./xorg/parens.compose;
   xdg.configFile."xorg/modletters.compose".source = ./xorg/modletters.compose;
   xdg.configFile."user-dirs.dirs".source = ./xorg/user-dirs.dirs;
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    defaultCacheTtlSsh = 7200;
+  services = {
+    gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+      defaultCacheTtlSsh = 7200;
+    };
+    dunst.enable = true;
+    udiskie.enable = true;
+    network-manager-applet.enable = true;
+    screen-locker = {
+      enable = true;
+      lockCmd = "i3lock-color --clock -i $HOME/.background-lock --tiling";
+      inactiveInterval = 15;
+    };
+    random-background = {
+      enable = true;
+      imageDirectory = "/home/vincent/desktop/pictures/wallpapers/Unsplashed";
+    };
   };
-  services.dunst.enable = true;
-  services.udiskie.enable = true;
-  services.network-manager-applet.enable = true;
-  services.screen-locker = {
-    enable = true;
-    lockCmd = "i3lock-color --clock -i $HOME/.background-lock --tiling";
-    inactiveInterval = 15;
-  };
-  programs.firefox.enable = true;
-  programs.termite = {
-    enable = true;
-    font = "Ubuntu Mono 16";
-    sizeHints = true;
-  };
-  programs.rofi = {
-    enable = true;
+  programs = {
+    firefox.enable = true;
+    termite = {
+      enable = true;
+      font = "Ubuntu Mono 16";
+      sizeHints = true;
+    };
+    rofi = {
+      enable = true;
+    };
   };
   home.packages = with pkgs; [
     alacritty # create a `programs.alacritty`
@@ -62,7 +70,4 @@
     xdg_utils
     youtube-dl
   ];
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
 }

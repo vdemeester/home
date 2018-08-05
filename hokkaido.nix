@@ -17,10 +17,6 @@ with pkgs; {
     longitude = "7.5";
     tray = true;
   };
-  services.random-background = {
-    enable = true;
-    imageDirectory = "/home/vincent/desktop/pictures/wallpapers/Unsplashed";
-  };
   xdg.configFile."fish/conf.d/docker.fish".text = ''
     set -gx TESTKIT_AWS_KEYNAME "vdemeester-wakasu"
     set -gx DOCKER_BUILDKIT 1
