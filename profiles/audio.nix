@@ -11,7 +11,10 @@
 			};
 			tcp = {
 				enable = true;
-				anonymousClients.allowedIpRanges = [ "127.0.0.1" "192.168.12.0/24" "10.0.0.0/24" ];
+				anonymousClients = {
+          allowAll = true;
+          allowedIpRanges = [ "127.0.0.1" "192.168.12.0/24" "10.0.0.0/24" ];
+        };
 			};
 			package = pkgs.pulseaudioFull;
 		};
