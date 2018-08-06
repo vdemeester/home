@@ -28,7 +28,7 @@ in
     packages = mkOption {
       type = types.listOf types.package;
       default = [];
-      description = "List of packages to be added to apparmor's include path";
+      description = "List of packages to be added to containerd service path";
     };
 
     listenOptions =
