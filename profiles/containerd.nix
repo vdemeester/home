@@ -6,6 +6,7 @@
   virtualisation = {
     containerd = {
       enable = true;
+      packages = [ pkgs.runc ];
     };
   };
 }
