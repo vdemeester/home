@@ -13,6 +13,5 @@
   ];
   home.packages = with pkgs; [
     vscode
-    weechat weechat-xmpp
   ];
 }

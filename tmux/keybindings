@@ -29,16 +29,16 @@ set -g mode-key vi
 # `PREFIX`-`ESCAPE` for going into copy mode
 bind-key ESCAPE copy-mode
 # Rebinding some vi-copy keys in a more bepoish fashion.
-bind-key -t vi-copy 'v' begin-selection
-bind-key -t vi-copy 'y' copy-selection
-bind-key -t vi-copy 'C' top-line
-bind-key -t vi-copy 'T' scroll-down
-bind-key -t vi-copy 'S' scroll-up
-bind-key -t vi-copy 'R' bottom-line
-bind-key -t vi-copy 'c' cursor-left
-bind-key -t vi-copy 't' cursor-down
-bind-key -t vi-copy 's' cursor-up
-bind-key -t vi-copy 'r' cursor-right
+#bind-key -Tvi-copy 'v' begin-selection
+#bind-key -Tvi-copy 'y' copy-selection
+#bind-key -Tvi-copy 'C' top-line
+#bind-key -Tvi-copy 'T' scroll-down
+#bind-key -Tvi-copy 'S' scroll-up
+#bind-key -Tvi-copy 'R' bottom-line
+#bind-key -Tvi-copy 'c' cursor-left
+#bind-key -Tvi-copy 't' cursor-down
+#bind-key -Tvi-copy 's' cursor-up
+#bind-key -Tvi-copy 'r' cursor-right
 # Telling childs that this is a 256 terminal multiplexer
 set -g default-terminal "screen-256color"
 # Maximizing/Restoring panes (useful for *a lot* of workflows)
