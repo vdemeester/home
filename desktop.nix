@@ -34,7 +34,7 @@
     network-manager-applet.enable = true;
     screen-locker = {
       enable = true;
-      lockCmd = "i3lock-color --clock -i $HOME/.background-lock --tiling";
+      lockCmd = "i3lock-color --clock --color=606060";
       inactiveInterval = 15;
     };
     random-background = {
