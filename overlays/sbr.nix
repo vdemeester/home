@@ -1,7 +1,13 @@
 self: super:
 {
+  ape = import ../pkgs/ape {
+    inherit (super) stdenv lib buildGoPackage fetchFromGitHub;
+  };
   dobi = import ../pkgs/dobi {
-    inherit (super) stdenv lib fetchFromGitHub buildGoPackage;
+    inherit (super) stdenv lib buildGoPackage fetchFromGitHub;
+  };
+  envbox = import ../pkgs/envbox {
+    inherit (super) stdenv lib buildGoPackage fetchFromGitHub;
   };
   op = import ../pkgs/op {
     inherit (super) stdenv lib fetchurl patchelf unzip file;
