@@ -3,6 +3,9 @@
 let
   pkgs = import <nixpkgs> { inherit system; };
 in rec {
+  dobi = import ./dobi {
+    inherit (pkgs) stdenv lib fetchFromGitHub buildGoPackage;
+  };
   prm = import ./prm {
     inherit (pkgs) stdenv lib fetchgit;
   };
