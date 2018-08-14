@@ -2,6 +2,8 @@
 
 This repository is using `home-manager` and `nix`.
 
+If you don't have `nix` installed, run `curl https://nixos.org/nix/install | sh` to install it.
+
 - clone this repository in `$HOME/.config/nixpkgs`
 - create a `home.nix` file with the content you want.
   Some machines files already exists that you can use :
