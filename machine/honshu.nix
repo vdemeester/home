@@ -16,10 +16,6 @@
 
 	time.timeZone = "Europe/Paris";
 
-  home-manager.users.vincent = {...}: {
-    imports = [ ../envs/honshu.nix ../envs/server.nix ];
-  };
-  
   virtualisation.docker = {
 		enable = true;
 		package = pkgs.docker-edge;
@@ -27,6 +23,8 @@
 		extraOptions = "--experimental --host=tcp://0.0.0.0:2375";
 	};
 	services = {
+
+	logind.extraConfig = "HandleLidSwitch=ignore";
     ssh-tunnel = {
 			enable = true;
 			localUser = "vincent";
