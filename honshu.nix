@@ -2,11 +2,7 @@
 
 {
   imports = [
-    ./devops.nix
+    ./server.nix
     ./dev.go.nix
-    ./dev.rust.nix
-    ./dev.python.nix
-    ./dev.js.nix
-    ./dev.haskell.nix
   ];
 }
