@@ -9,6 +9,9 @@ in rec {
   dobi = import ./dobi {
     inherit (pkgs) stdenv lib fetchFromGitHub buildGoPackage;
   };
+  emacs-scripts = import ./emacs-scripts {
+    inherit (pkgs) stdenv;
+  };
   envbox = import ./envbox {
     inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
   };

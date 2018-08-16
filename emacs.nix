@@ -1,6 +1,7 @@
 { pkgs, config, lib, ... }:
 
 {
+  home.packages = with pkgs; [ emacs-scripts ];
   programs.emacs = {
     enable = true;
     #package = pkgs.myEmacs;
