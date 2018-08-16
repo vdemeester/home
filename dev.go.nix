@@ -2,9 +2,7 @@
 
 {
   imports = [ ./dev.nix ];
-  xdg.configFile."fish/conf.d/go.fish".text = ''
-    set -gx GOPATH $HOME
-  '';
+  xdg.configFile."fish/conf.d/go.fish".source = ./fish/go.fish;
   home.packages = with pkgs; [
     go
     gcc
