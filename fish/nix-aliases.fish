@@ -7,5 +7,9 @@ function wakeonlan
 end
 
 function pprof
-    nix run nixpkgs.pprof -c pprof $argv
+    nix run -f ~/.config/nixpkgs/channels.nix unstable.pprof -c pprof $argv
+end
+
+function golangci-lint
+    nix run -f ~/.config/nixpkgs/channels.nix unstable.golangci-lint -c golangci-lint $argv
 end
