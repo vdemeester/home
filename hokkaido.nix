@@ -12,7 +12,6 @@
     ./dev.haskell.nix
   ];
   home.packages = with pkgs; [
-    op
     vscode
   ];
 }

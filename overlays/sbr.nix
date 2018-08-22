@@ -12,9 +12,6 @@ self: super:
   envbox = import ../pkgs/envbox {
     inherit (super) stdenv lib buildGoPackage fetchFromGitHub;
   };
-  op = import ../pkgs/op {
-    inherit (super) stdenv lib fetchurl patchelf unzip file;
-  };
   prm = import ../pkgs/prm {
     inherit (super) stdenv lib buildGoPackage fetchgit;
   };
