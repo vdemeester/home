@@ -7,7 +7,7 @@ rec {
   programs = {
     home-manager = {
       enable = true;
-      path = https://github.com/vdemeester/home-manager/archive/fish-module.tar.gz;
+      path = https://github.com/vdemeester/home-manager/archive/master.tar.gz;
     };
   };
   home.file.".nix-channels".source = ./nix-channels;

@@ -9,3 +9,7 @@ end
 function op
     nix run -f ~/.config/nixpkgs/channels.nix unstable.1password -c op $argv
 end
+
+function update-desktop-database
+    nix run nixpkgs.desktop-file-utils -c update-desktop-database $argv
+end

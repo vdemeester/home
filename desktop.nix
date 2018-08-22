@@ -23,6 +23,7 @@
   xdg.configFile."xorg/parens.compose".source = ./xorg/parens.compose;
   xdg.configFile."xorg/modletters.compose".source = ./xorg/modletters.compose;
   xdg.configFile."user-dirs.dirs".source = ./xorg/user-dirs.dirs;
+  home.file.".local/share/applications/org-protocol.desktop".source = ./xorg/org-protocol.desktop;
   services = {
     gpg-agent = {
       enable = true;
