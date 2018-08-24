@@ -1,9 +1,9 @@
 { configs, pkgs, ...}:
 
 {
-	environment.systemPackages = with pkgs; [
-		calibre
-		libreoffice
-		gimp
-	];
+  environment.systemPackages = with pkgs; [
+    calibre
+    libreoffice
+    gimp
+  ];
 }

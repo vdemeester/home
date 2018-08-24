@@ -5,7 +5,7 @@
     git
     gitAndTools.git-extras
   ];
-	environment.etc."gitconfig" = rec { text = ''
+  environment.etc."gitconfig" = rec { text = ''
 [alias]
     co = checkout
     st = status
@@ -52,5 +52,6 @@
 	
 [url "git@github.com:"]
     pushInsteadOf = git://github.com/
-	''; };
+  '';
+  };
 }

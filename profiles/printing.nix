@@ -1,10 +1,10 @@
 { configs, pkgs, ...}:
 
 {
-	services = {
-		printing = {
-			enable = true;
-			drivers = [ pkgs.gutenprint ];
-		};
-	};
+  services = {
+    printing = {
+      enable = true;
+      drivers = [ pkgs.gutenprint ];
+    };
+  };
 }

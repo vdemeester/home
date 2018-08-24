@@ -90,6 +90,5 @@ in
         SocketGroup = "root";
       };
     };
-    
   };
 }

@@ -1,21 +1,21 @@
 { config, pkgs, ... }:
 
 {
-	imports =
-		[
-			./thinkpad.nix
-		];
-	services = {
-		acpid = {
-			lidEventCommands = ''
+  imports =
+    [
+    ./thinkpad.nix
+  ];
+  ervices = {
+    acpid = {
+      lidEventCommands = ''
 if grep -q closed /proc/acpi/button/lid/LID/state; then
-	date >> /tmp/i3lock.log
-	DISPLAY=":0.0" XAUTHORITY=/home/fadenb/.Xauthority ${pkgs.i3lock}/bin/i3lock &>> /tmp/i3lock.log
+  date >> /tmp/i3lock.log
+  DISPLAY=":0.0" XAUTHORITY=/home/fadenb/.Xauthority ${pkgs.i3lock}/bin/i3lock &>> /tmp/i3lock.log
 fi
 '';
-		};
-		tlp = {
-			extraConfig = ''
+    };
+    tlp = {
+      extraConfig = ''
 # CPU optimizations
 CPU_SCALING_GOVERNOR_ON_AC=performance
 CPU_SCALING_GOVERNOR_ON_BAT=powersave
@@ -39,15 +39,10 @@ DEVICES_TO_DISABLE_ON_DOCK="wifi"
 DEVICES_TO_ENABLE_ON_UNDOCK="wifi"
 # Make sure it uses the right hard drive
 DISK_DEVICES="nvme0n1p3"
-			'';
-		};
-	};
-	services.xserver = {
-		dpi = 128;
-	};
-	#environment = {
-	#	variables.QT_DEVICE_PIXEL_RATIO = "2";
-	#	variables.GDK_SCALE = "2";
-	#	variables.GDK_DPI_SCALE = "0.75";
-	#};
+'';
+    };
+  };
+  services.xserver = {
+    dpi = 128;
+  };
 }

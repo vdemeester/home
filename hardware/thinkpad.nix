@@ -57,7 +57,7 @@ Option "Ignore" "true"
     wantedBy = [ "multi-user.target" ];
     unitConfig.RequiresMountsFor = "/sys";
     script = ''
-    echo '1500' > '/proc/sys/vm/dirty_writeback_centisecs'
+      echo '1500' > '/proc/sys/vm/dirty_writeback_centisecs'
     '';
   };
 }

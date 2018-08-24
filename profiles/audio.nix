@@ -20,7 +20,7 @@
     };
   };
   sound.mediaKeys.enable = true;
-  
+
   # spotify & pulseaudio
   networking.firewall = {
     allowedTCPPorts = [ 57621 57622 4713 ];

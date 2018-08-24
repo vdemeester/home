@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
 {
-	environment = {
-		systemPackages = with pkgs; [
-			synergy
-		];
-	};
+  environment = {
+    systemPackages = with pkgs; [
+      synergy
+    ];
+  };
 }
