@@ -7,5 +7,6 @@
     cmake
     binutils-unwrapped
     mercurial
+    ripgrep
   ];
 }

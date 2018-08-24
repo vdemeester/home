@@ -27,11 +27,12 @@ rec {
   xdg.configFile."tmux/tmux.conf".source = ./tmux/tmux.conf;
   xdg.configFile."tmux/commons/keybindings".source = ./tmux/keybindings;
   home.packages = with pkgs; [
-    jq
+    direnv
+    enchive
     htop
+    jq
     pass
     tree
     tmux
-    enchive
   ];
 }
