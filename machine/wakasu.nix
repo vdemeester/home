@@ -22,9 +22,9 @@
     { domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
   ];
 
-  home-manager.users.vincent = {...}: {
-    imports = [ ../envs/wakasu.nix ../envs/laptop.nix ];
-  };
+  #home-manager.users.vincent = {...}: {
+  #  imports = [ ../envs/wakasu.nix ../envs/laptop.nix ];
+  #};
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.luks.devices = [
@@ -40,6 +40,8 @@
   hardware.bluetooth.powerOnBoot = true;
 
   hardware.trackpoint.enable = false;
+
+  networking.firewall.allowedTCPPorts = [ 5900 ];
 
   time.timeZone = "Europe/Paris";
 
