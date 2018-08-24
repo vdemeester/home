@@ -38,6 +38,7 @@ rec {
       ls-ignored = "ls-files --exclude-standard --ignored --others";
       resolve = "!git ls-files --unmerged | cut -c51- | sort -u | xargs git add";
       su = "submodule update --init --recursive";
+      st = "status";
       w = "status -sb";
     };
     extraConfig = {
