@@ -20,10 +20,12 @@
     };
   };
   sound.mediaKeys.enable = true;
-
+  
   # spotify & pulseaudio
-  networking.firewall.allowedTCPPorts = [ 57621 57622 4713 ];
-  networking.firewall.allowedUDPPorts = [ 57621 57622 ];
+  networking.firewall = {
+    allowedTCPPorts = [ 57621 57622 4713 ];
+    allowedUDPPorts = [ 57621 57622 ];
+  };
 
   environment.systemPackages = with pkgs; [
     apulse       # allow alsa application to use pulse
