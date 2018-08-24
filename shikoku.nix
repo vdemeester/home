@@ -3,7 +3,7 @@
 {
   imports = [
     ./base.nix
-    ./dev.nix
+    ./dev.go.nix
     ./fish.nix
     ./ssh.nix
   ];
