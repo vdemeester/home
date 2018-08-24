@@ -8,6 +8,9 @@
       gb = "git b";
     };
     shellAliases = import ./aliases.nix;
+    shellInit = ''
+    eval (${pkgs.direnv}/bin/direnv hook fish)
+    '';
   };
   xdg.configFile."fish/conf.d/nix-aliases.fish".source = ./fish/nix-aliases.fish;
   xdg.configFile."fish/conf.d/sudope.fish".source = ./fish/sudope.fish;
