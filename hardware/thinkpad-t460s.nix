@@ -5,7 +5,7 @@
     [
     ./thinkpad.nix
   ];
-  ervices = {
+  services = {
     acpid = {
       lidEventCommands = ''
 if grep -q closed /proc/acpi/button/lid/LID/state; then
