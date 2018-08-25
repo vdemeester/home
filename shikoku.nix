@@ -7,4 +7,5 @@
     ./fish.nix
     ./ssh.nix
   ];
+  home.packages = with pkgs; [ docker ];
 }
