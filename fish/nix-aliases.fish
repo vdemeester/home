@@ -13,3 +13,7 @@ end
 function update-desktop-database
     nix run nixpkgs.desktop-file-utils -c update-desktop-database $argv
 end
+
+function sshfs
+    nix run nixpkgs.sshfs -c sshfs $argv
+end
