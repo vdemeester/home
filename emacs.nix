@@ -4,7 +4,7 @@
   home.packages = with pkgs; [ emacs-scripts ];
   programs.emacs = {
     enable = true;
-    #package = pkgs.myEmacs;
+    # package = pkgs.myEmacs;
     extraPackages = epkgs: with epkgs; [
       ace-window
       aggressive-indent
@@ -130,7 +130,7 @@
       #makefile-executor
       markdown-mode
       #mc-extras
-      # minions # FIXME
+      # minions # FIXME      
       #(with melpaPackages; [ minions ])
       multiple-cursors
       (with melpaPackages; [
