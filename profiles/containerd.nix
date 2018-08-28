@@ -2,7 +2,12 @@
 
 {
   imports = [ ../service/containerd.nix ];
-  environment.systemPackages = with pkgs; [ runc ];
+  environment.systemPackages = with pkgs; [
+    cni
+    # cni-plugins
+    containerd
+    runc
+  ];
   virtualisation = {
     containerd = {
       enable = true;

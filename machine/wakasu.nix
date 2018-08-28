@@ -8,6 +8,7 @@
     ../profiles/ssh.nix
     ../profiles/yubikey.nix
     ../profiles/dev.nix
+    ../profiles/containerd.nix
     ../profiles/dockerization.nix
     ../profiles/virtualization.nix
     ../profiles/wireguard.nix

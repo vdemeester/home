@@ -10,13 +10,8 @@
   environment.systemPackages = with pkgs; [
     python27Packages.docker_compose
     docker-machine
-    runc
-    containerd
   ];
   virtualisation = {
-    containerd = {
-      enable = true;
-    };
     docker = {
       enable = true;
       package = pkgs.docker-edge;
