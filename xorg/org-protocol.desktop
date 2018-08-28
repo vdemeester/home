@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=org-protocol
-Exec=/home/vincent/.nix-profile/bin/emacsclient -c -n %u
+Exec=/home/vincent/.nix-profile/bin/emacsclient -s org -c -n %u
 Type=Application
 Terminal=false
 Categories=System;
