@@ -7,7 +7,7 @@
       Description = "Emacs: the extensible, self-documenting text editor";
     };
     Service = {
-      Environment = "PATH=/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
+      Environment = "PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
       Type      = "forking";
       ExecStart = "/home/vincent/.nix-profile/bin/emacs --daemon";
       ExecStop  = "/home/vincent/.nix-profile/bin/emacsclient --eval (kill-emacs)";
@@ -22,7 +22,7 @@
       Description = "Emacs: the extensible, self-documenting text editor";
     };
     Service = {
-      Environment = "PATH=/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
+      Environment = "PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
       Type      = "forking";
       ExecStart = "/home/vincent/.nix-profile/bin/emacs --daemon=org";
       ExecStop  = "/home/vincent/.nix-profile/bin/emacsclient --socket-name=org --eval (kill-emacs)";
