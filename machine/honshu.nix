@@ -9,6 +9,7 @@
     ../profiles/dev.nix
     ../profiles/fish.nix
     ../profiles/avahi.nix
+    ../profiles/containerd.nix
     ../profiles/syncthing.nix
     ../service/ssh-tunnel.nix
     ../location/home.nix
