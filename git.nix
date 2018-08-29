@@ -12,6 +12,11 @@ rec {
     gitAndTools.tig
     prm
   ];
+  xdg.configFile."fish/conf.d/git.fish".source = ./fish/git.fish;
+  programs.fish.shellAbbrs = {
+    gs = "git status";
+    gb = "git b";
+  };
   programs.git = {
     enable = true;
 

@@ -3,10 +3,6 @@
 {
   programs.fish = {
     enable = true;
-    shellAbbrs = {
-      gs = "git status";
-      gb = "git b";
-    };
     shellAliases = import ./aliases.nix;
     shellInit = ''
     eval (${pkgs.direnv}/bin/direnv hook fish)
