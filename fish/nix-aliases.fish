@@ -17,3 +17,11 @@ end
 function sshfs
     nix run nixpkgs.sshfs -c sshfs $argv
 end
+
+function lspci
+    nix run nixpkgs.pciutils -c lspci $argv
+end
+
+function lsusb
+    nix run nixpkgs.usbutils -c lspci $argv
+end
