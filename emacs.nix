@@ -8,7 +8,7 @@
     };
     Service = {
       Environment = ''
-        PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin ASPELL_CONF=dict-dir=/home/vincent/.nix-profile/lib/aspell
+        PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin GOPATH=/home/vincent ASPELL_CONF=dict-dir=/home/vincent/.nix-profile/lib/aspell
       '';
       Type      = "forking";
       ExecStart = "/home/vincent/.nix-profile/bin/emacs --daemon";
@@ -25,7 +25,7 @@
     };
     Service = {
       Environment = ''
-        PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin ASPELL_CONF=dict-dir=/home/vincent/.nix-profile/lib/aspell
+        PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin GOPATH=/home/vincent ASPELL_CONF=dict-dir=/home/vincent/.nix-profile/lib/aspell
       '';
       Type      = "forking";
       ExecStart = "/home/vincent/.nix-profile/bin/emacs --daemon=org";
