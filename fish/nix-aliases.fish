@@ -23,5 +23,5 @@ function lspci
 end
 
 function lsusb
-    nix run nixpkgs.usbutils -c lspci $argv
+    nix run nixpkgs.usbutils -c lsusb $argv
 end
