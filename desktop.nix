@@ -54,6 +54,7 @@
       enable = true;
     };
   };
+  xdg.configFile."alacritty/alacritty.yml".source = ./xorg/alacritty.yml;
   home.packages = with pkgs; [
     alacritty # create a `programs.alacritty`
     aspell
