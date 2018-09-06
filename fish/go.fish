@@ -1,9 +1,10 @@
 set -gx GOPATH $HOME
 
-function pprof
-    nix run -f ~/.config/nixpkgs/channels.nix unstable.pprof -c pprof $argv
+function _def_go_nix_run_aliases
+    set -l unstable pprof golangci-lint
+    for s in $unstable
+	_nix_run_package $s unstable ~/.config/nixpkgs/channels.nix
+    end
 end
 
-function golangci-lint
-    nix run -f ~/.config/nixpkgs/channels.nix unstable.golangci-lint -c golangci-lint $argv
-end
+_def_go_nix_run_aliases
