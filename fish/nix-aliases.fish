@@ -1,5 +1,5 @@
 function _def_nix_run_aliases
-    set -l stable mr sshfs wakeonlan:python36Packages.wakeonlan lspci:pciutils lsusb:usbutils beet:beets
+    set -l stable mr sshfs ncdu fd entr wakeonlan:python36Packages.wakeonlan lspci:pciutils lsusb:usbutils beet:beets
     set -l unstable op:_1password update-desktop-database:desktop-file-utils
     set -l channels_file ~/.config/nixpkgs/channels.nix
     for s in $stable
