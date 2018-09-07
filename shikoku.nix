@@ -2,7 +2,8 @@
 
 {
   imports = [
-    ./base.nix
+    ./desktop.nix
+    ./gaming.nix
     ./devops.nix
     ./dev.go.nix
     ./dev.rust.nix
