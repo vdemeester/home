@@ -3,16 +3,16 @@
 {
   imports = [ # Include the results of the hardware scan.
     ../hardware-configuration.nix
-    ../profiles/ssh.nix
     ../profiles/desktop.nix
+    ../profiles/ssh.nix
     ../profiles/audio.nix
     ../profiles/dev.nix
+    ../profiles/containerd.nix
     ../profiles/virtualization.nix
     #../profiles/dockerization.nix
-    ../profiles/containerd.nix
     ../profiles/gaming.nix
+    ../profiles/wireguard.nix
     ../location/home.nix
-    ../service/ssh-tunnel.nix
   ];
 
   time.timeZone = "Europe/Paris";
