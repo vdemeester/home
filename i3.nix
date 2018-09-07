@@ -88,13 +88,13 @@
       # Use Mouse+$mod to drag floating windows to their wanted position
       floating_modifier $mod
 
-      set $WS0 0 🗪
+      set $WS0 0 🐽
       set $WS1 1 🌎
-      set $WS2 2 🐳
+      set $WS2 2 🐧
       set $WS3 3 🐹
       set $WS4 4 🐸
       set $WS5 5 👷
-      set $WS6 6 🐧
+      set $WS6 6 🔰
       set $WS7 7 ꙮ
       set $WS8 8 🎧
       set $WS9 9 🖃
