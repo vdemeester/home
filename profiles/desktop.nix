@@ -74,29 +74,30 @@
       };
     };
   };
+  
   fonts = {
     enableFontDir = true;
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
       corefonts
-      inconsolata
       dejavu_fonts
-      ubuntu_font_family
-      unifont
-      emojione
-      symbola
       feh
       fira
       fira-code
       fira-code-symbols
       fira-mono
       font-droid
-      iosevka
       hasklig
+      inconsolata
+      iosevka
+      symbola
       source-code-pro
-      font-droid
+      ubuntu_font_family
+      unifont
+      #emojione
     ];
   };
+  
   
   # Polkit.
   security.polkit.extraConfig = ''
