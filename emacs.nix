@@ -146,6 +146,7 @@
       json-mode
       json-reformat
       json-snatcher
+      kubernetes
       (with melpaPackages; [
         key-chord
         lsp-haskell
