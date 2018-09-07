@@ -4,7 +4,7 @@
   xsession.windowManager.i3 = {
     enable = true;
     config = {
-      fonts = [ "Ubuntu Mono 10" ];
+      fonts = ["Fira Code 10"];
       focus = {
         followMouse = false;
       };
@@ -14,7 +14,7 @@
         hideEdgeBorders = "both";
       };
       keybindings = {
-        "Mod4+Return" = "exec alacritty"; # TODO: use i3-sensible-terminal instead
+        "Mod4+Return" = "exec alacritty";
         "Mod4+Shift+F11" = "exec 'autorandr -c'";
       };
       keycodebindings = {
@@ -61,6 +61,7 @@
         mode = "hide";
         position = "bottom";
         statusCommand = "${pkgs.i3status}/bin/i3status";
+        # fonts = ["Fira Code 10"];
         colors = {
           background = "#073642";
           statusline = "#eee8d5";
