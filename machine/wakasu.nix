@@ -23,10 +23,6 @@
     { domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
   ];
 
-  #home-manager.users.vincent = {...}: {
-  #  imports = [ ../envs/wakasu.nix ../envs/laptop.nix ];
-  #};
-
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.luks.devices = [
     {
