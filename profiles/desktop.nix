@@ -81,6 +81,7 @@
     fonts = with pkgs; [
       corefonts
       dejavu_fonts
+      emojione
       feh
       fira
       fira-code
@@ -94,7 +95,6 @@
       source-code-pro
       ubuntu_font_family
       unifont
-      #emojione
     ];
   };
   
