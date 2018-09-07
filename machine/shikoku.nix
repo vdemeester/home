@@ -9,7 +9,7 @@
     ../profiles/dev.nix
     ../profiles/containerd.nix
     ../profiles/virtualization.nix
-    #../profiles/dockerization.nix
+    ../profiles/dockerization.nix
     ../profiles/gaming.nix
     ../profiles/wireguard.nix
     ../location/home.nix
