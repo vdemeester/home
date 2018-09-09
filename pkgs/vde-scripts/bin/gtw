@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-filewatcher --idle-timeout=120m \
-	    -x .git -x vendor \
-	    -x e2e -x integration -x integration-cli \
-	    -x bin -x bundles \
-	    go test -cover -coverprofile=cover.out './${dir}'

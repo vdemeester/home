@@ -23,6 +23,7 @@
       tmux
       tree
       vim
+      vrsync
       wget
     ];
   };
