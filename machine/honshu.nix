@@ -29,6 +29,25 @@
     };
   };
 
+  systemd.services.vrsync = {
+    description = "vrsync - sync folders to NAS";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.vrsync}/bin/vrsync --dry-run";
+      Environment = "PATH=/run/current-system/sw/bin";
+    };
+  };
+  systemd.timers.vrsync = {
+    description = "vrsync hourly";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "hourly";
+      Persistent = true";"
+    };
+  };
+  # systemd.timers.vrsync.enable = true;
+
   networking.enableIPv6 = false;
   networking.firewall.allowedTCPPorts = [ 3389 2375 ];
 }
