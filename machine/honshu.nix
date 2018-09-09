@@ -33,7 +33,6 @@
 /home/vincent/desktop/pictures/screenshots/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/screenshots/
 /home/vincent/desktop/pictures/wallpapers/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/wallpapers/
 /home/vincent/desktop/pictures/photos/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/photos/
-/home/vincent/desktop/documents/ vincent@synodine.local:/volume1/documents/
 /run/media/vincent/FcCuir/music/ vincent@synodine.local:/volumeUSB2/usbshare/music/
   '';
 
@@ -42,7 +41,7 @@
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.vrsync}/bin/vrsync --dry-run";
+      ExecStart = "${pkgs.vrsync}/bin/vrsync";
       Environment = "PATH=/run/current-system/sw/bin";
     };
   };
