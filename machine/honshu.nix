@@ -39,11 +39,11 @@
     };
   };
   systemd.timers.vrsync = {
-    description = "vrsync hourly";
+    description = "vrsync daily";
     wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnCalendar = "hourly";
-      Persistent = true";"
+      OnCalendar = "daily";
+      Persistent = "true";
     };
   };
   # systemd.timers.vrsync.enable = true;
