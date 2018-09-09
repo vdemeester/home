@@ -6,7 +6,7 @@ set -e
 
 CONF=${CONF:-/etc/vrsync}
 
-cmd="rsync -ave ssh --progress --size-only --delete --exclude '*~' --exclude '.stfolder'"
+cmd="rsync -ave ssh --progress --size-only --delete --exclude='*~' --exclude=.stfolder"
 test -e $CONF || {
     echo "$CONF does not exists, bailing…"
     exit 1
