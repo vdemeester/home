@@ -54,7 +54,28 @@
       Persistent = "true";
     };
   };
-  # systemd.timers.vrsync.enable = true;
+  systemd.timers.vrsync.enable = true;
+
+  # ape – sync git mirrors
+  systemd.services.ape = {
+    description = "Ape - sync git mirrors";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "vincent";
+      ExecStart = "${pkgs.ape}/bin/ape up /home/vincent/share/mirrors/";
+      Environment = "PATH=/run/current-system/sw/bin/";
+    };
+  };
+  systemd.timers.ape = {
+    description = "Ape hourly";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "hourly";
+      Persistent = "true";
+    };
+  };
+  systemd.timers.ape.enable = true;
 
   networking.enableIPv6 = false;
   networking.firewall.allowedTCPPorts = [ 3389 2375 ];
