@@ -1,3 +1,8 @@
-function git-annex
-    nix run nixpkgs.gitAndTools.git-annex -c git-annex $argv
+function _def_git_nix_run_aliases
+    set -l packages git-annex:gitAndTools.git-annex
+    for s in $packages
+	_nix_run_package $s nixpkgs
+    end
 end
+
+_def_git_nix_run_aliases
