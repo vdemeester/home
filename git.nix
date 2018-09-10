@@ -16,7 +16,7 @@ rec {
   programs.fish.shellAbbrs = {
     gs = "git status";
     gb = "git b";
-    gfr = "git fetch -p --all;and git rebase -S --autostash ";
+    gfr = "git fetch -p --all;and git rebase -S --autostash";
   };
   programs.git = {
     enable = true;
