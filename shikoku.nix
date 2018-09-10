@@ -14,6 +14,9 @@
     ./fish.nix
     ./ssh.nix
   ];
+  xdg.configFile."fish/conf.d/docker.fish".text = ''
+    set -gx DOCKER_BUILDKIT 1
+  '';
   home.packages = with pkgs; [
     vscode
     zoom-us
