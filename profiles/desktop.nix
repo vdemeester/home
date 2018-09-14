@@ -27,6 +27,7 @@
     unzip
     gnupg
     pinentry
+    mpv
   ];
   hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
   networking.networkmanager.enable = true;
