@@ -35,6 +35,7 @@
 /home/vincent/desktop/pictures/photos/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/photos/
 /home/vincent/desktop/documents/ vincent@synodine.local:/volume1/documents/
 /run/media/vincent/FcCuir/music/ vincent@synodine.local:/volumeUSB2/usbshare/music/
+vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/drive/
   '';
 
   systemd.services.vrsync = {
