@@ -1,7 +1,6 @@
 { pkgs, config, lib, ... }:
 
 {
-  home.packages = with pkgs; [ emacs-scripts ];
   systemd.user.services.emacs = {
     Unit = {
       Description = "Emacs: the extensible, self-documenting text editor";

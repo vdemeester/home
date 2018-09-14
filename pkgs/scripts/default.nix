@@ -1,7 +1,7 @@
 { stdenv }:
 
 stdenv.mkDerivation {
-  name = "emacs-scripts-0.2";
+  name = "vde-scripts-0.1";
   builder = ./builder.sh;
   src = ./.;
 }

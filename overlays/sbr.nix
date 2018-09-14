@@ -6,7 +6,7 @@ self: super:
   dobi = import ../pkgs/dobi {
     inherit (super) stdenv lib buildGoPackage fetchFromGitHub;
   };
-  emacs-scripts = import ../pkgs/emacs-scripts {
+  scripts = import ../pkgs/scripts {
     inherit (super) stdenv;
   };
   envbox = import ../pkgs/envbox {

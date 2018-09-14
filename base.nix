@@ -27,6 +27,7 @@ rec {
   xdg.configFile."tmux/tmux.conf".source = ./tmux/tmux.conf;
   xdg.configFile."tmux/commons/keybindings".source = ./tmux/keybindings;
   home.packages = with pkgs; [
+    scripts
     direnv
     enchive
     htop
