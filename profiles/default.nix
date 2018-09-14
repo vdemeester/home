@@ -17,7 +17,6 @@
       iotop
       lsof
       netcat
-      nix-beautify
       psmisc
       pv
       tmux
