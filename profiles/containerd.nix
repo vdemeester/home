@@ -7,6 +7,7 @@
     cni-plugins
     containerd-edge
     runc-edge
+    stellar
   ];
   virtualisation = {
     containerd = {

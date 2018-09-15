@@ -17,4 +17,7 @@ self: super: {
   cni-plugins = import ../pkgs/cni/plugins.nix {
     inherit (self) stdenv lib fetchFromGitHub go;
   };
+  stellar = import ../pkgs/stellar {
+    inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
+  };
 }
