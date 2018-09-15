@@ -3,14 +3,18 @@
 stdenv.mkDerivation rec {
   name = "stellar-${version}";
   version = "0.1.0";
-  commit = "ae539df";
-  rev = "v${version}";
+  commit = "92a8e36";
+  #commit = "ae539df";
+  #rev = "v${version}";
+  rev = "92a8e365c417dfdbc1df557fc4000c15fe955027";
 
   src = fetchFromGitHub {
     inherit rev;
-    owner = "ehazlett";
+    #owner = "ehazlett";
+    #repo = "stellar";
+    owner = "vdemeester";
     repo = "stellar";
-    sha256 = "0gv0z9hf6bh926sga2wadr3bdkigqbl849lhc0552by6c0c8p5dk";
+    sha256 = "024vg6lrwhp6j3zqwswgvbr043inijnmzyc4jhn6vgdwalf33k10";
   };
 
   makeFlags = ["COMMIT=${commit}"];
