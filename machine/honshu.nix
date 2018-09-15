@@ -79,5 +79,5 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
   systemd.timers.ape.enable = true;
 
   networking.enableIPv6 = false;
-  networking.firewall.allowedTCPPorts = [ 3389 2375 ];
+  networking.firewall.allowedTCPPorts = [ 3389 2375 7946 ];
 }

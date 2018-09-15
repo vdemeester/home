@@ -34,4 +34,6 @@
   };
 
   hardware.bluetooth.enable = true;
+
+  networking.firewall.allowedTCPPorts = [ 7946 ];
 }
