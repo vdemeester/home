@@ -4,7 +4,7 @@
   imports = [ ../service/containerd.nix ];
   environment.systemPackages = with pkgs; [
     cni
-    # cni-plugins
+    cni-plugins
     containerd-edge
     runc-edge
   ];

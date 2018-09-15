@@ -16,4 +16,10 @@ rec {
   containerd-edge = import ./containerd {
     inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo go btrfs-progs;
   };
+  cni = import ./cni {
+    inherit (pkgs) stdenv fetchFromGitHub go;
+  };
+  cni-plugins = import ./cni/plugins.nix {
+    inherit (pkgs) stdenv lib fetchFromGitHub go;
+  };
 }
