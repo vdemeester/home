@@ -64,7 +64,7 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
     serviceConfig = {
       Type = "oneshot";
       User = "vincent";
-      ExecStart = "${pkgs.ape}/bin/ape up /home/vincent/share/mirrors/";
+      ExecStart = "${pkgs.ape}/bin/ape up /home/vincent/var/mirrors/";
       Environment = "PATH=/run/current-system/sw/bin/";
     };
   };
@@ -79,5 +79,5 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
   systemd.timers.ape.enable = true;
 
   networking.enableIPv6 = false;
-  networking.firewall.allowedTCPPorts = [ 3389 2375 7946 9000 ];
+  networking.firewall.allowedTCPPorts = [ 3389 2375 7946 9000 80 ];
 }
