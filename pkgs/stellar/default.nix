@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   commit = "92a8e36";
   #commit = "ae539df";
   #rev = "v${version}";
-  rev = "92a8e365c417dfdbc1df557fc4000c15fe955027";
+  rev = "7f1ebfb50c282411295cbf1f52d3668551a705a8";
 
   src = fetchFromGitHub {
     inherit rev;
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     #repo = "stellar";
     owner = "vdemeester";
     repo = "stellar";
-    sha256 = "024vg6lrwhp6j3zqwswgvbr043inijnmzyc4jhn6vgdwalf33k10";
+    sha256 = "0yhzak7rs8v07jp9nk3212d55j34np7d6dvw7d8yx4h1azm1cv60";
   };
 
   makeFlags = ["COMMIT=${commit}"];
