@@ -23,6 +23,6 @@ rec {
     inherit (pkgs) stdenv lib fetchFromGitHub go;
   };
   stellar = import ./stellar {
-    inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
+    inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo go;
   };
 }

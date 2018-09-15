@@ -18,6 +18,6 @@ self: super: {
     inherit (self) stdenv lib fetchFromGitHub go;
   };
   stellar = import ../pkgs/stellar {
-    inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
+    inherit (self) stdenv lib fetchFromGitHub removeReferencesTo go;
   };
 }
