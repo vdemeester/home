@@ -5,13 +5,14 @@
   environment.systemPackages = with pkgs; [
     cni
     # cni-plugins
-    containerd
-    runc
+    containerd-edge
+    runc-edge
   ];
   virtualisation = {
     containerd = {
       enable = true;
-      packages = [ pkgs.runc ];
+      package = pkgs.containerd-edge;
+      packages = [ pkgs.runc-edge];
     };
   };
 }

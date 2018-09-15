@@ -1,4 +1,5 @@
 # Systemd services for containerd.
+
 { config, lib, pkgs, ... }:
 
 with lib;
@@ -6,7 +7,6 @@ with lib;
 let
 
   cfg = config.virtualisation.containerd;
-#   proxy_env = optionalAttrs (pro != null) { Environment = "\"http_proxy=${pro}\""; };
 
 in
 
@@ -25,12 +25,6 @@ in
       '';
     };
 
-    packages = mkOption {
-      type = types.listOf types.package;
-      default = [];
-      description = "List of packages to be added to containerd service path";
-    };
-
     listenOptions =
       mkOption {
       type = types.listOf types.str;
@@ -40,6 +34,21 @@ in
         A list of unix and tcp containerd should listen to. The format follows
         ListenStream as described in systemd.socket(5).
       '';
+    };
+
+    package = mkOption {
+      default = pkgs.containerd;
+      type = types.package;
+      example = pkgs.containerd;
+      description = ''
+        Containerd package to be used in the module
+      '';
+    };
+
+    packages = mkOption {
+      type = types.listOf types.package;
+      default = [ pkgs.runc ];
+      description = "List of packages to be added to containerd service path";
     };
 
     extraOptions =
@@ -57,9 +66,8 @@ in
   ###### implementation
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.containerd ];
-    #   users.extraGroups.docker.gid = config.ids.gids.docker;
-    systemd.packages = [ pkgs.containerd ];
+    environment.systemPackages = [ cfg.package];
+    systemd.packages = [ cfg.package];
 
     systemd.services.containerd = {
       wantedBy = [ "multi-user.target" ];
@@ -67,18 +75,13 @@ in
         ExecStart = [
           ""
         ''
-          ${pkgs.containerd}/bin/containerd \
+          ${cfg.package}/bin/containerd \
           ${cfg.extraOptions}
         ''];
-        /*
-        ExecReload=[
-        ""
-        "${pkgs.procps}/bin/kill -s HUP $MAINPID"
-        ];
-        */
-        };
-      path = [ pkgs.containerd ] ++ cfg.packages;
+      };
+      path = [cfg.package] ++ cfg.packages;
     };
+
 
     systemd.sockets.containerd = {
       description = "Containerd Socket for the API";
@@ -90,5 +93,8 @@ in
         SocketGroup = "root";
       };
     };
+
   };
+
+
 }
