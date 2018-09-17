@@ -9,6 +9,9 @@ self: super:
   protobuild = import ../pkgs/protobuild {
     inherit (self) stdenv lib buildGoPackage fetchgit;
   };
+  gogo-protobuf = import ./gogo-protobuf {
+    inherit (self) stdenv lib buildGoPackage fetchgit;
+  };
   scripts = import ../pkgs/scripts {
     inherit (self) stdenv;
   };

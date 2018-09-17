@@ -12,6 +12,9 @@ in rec {
   protobuild = import ./protobuild {
     inherit (pkgs) stdenv lib buildGoPackage fetchgit;
   };
+  gogo-protobuf = import ./gogo-protobuf {
+    inherit (pkgs) stdenv lib buildGoPackage fetchgit;
+  };
   scripts = import ./scripts {
     inherit (pkgs) stdenv;
   };
