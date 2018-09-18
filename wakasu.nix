@@ -17,6 +17,7 @@
   '';
   home.packages = with pkgs; [
     vscode
+    jetbrains.idea-ultimate
     zoom-us
     debootstrap
     weechat weechat-xmpp
