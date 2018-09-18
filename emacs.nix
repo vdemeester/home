@@ -70,12 +70,10 @@
       direnv
       docker
       docker-compose-mode
-      #docker-tramp
       dockerfile-mode
       doom-themes
       #dumb-jump
       #elpy
-      #engine-mode
       eshell-bookmark
       (with melpaPackages; [
       eshell-prompt-extras
