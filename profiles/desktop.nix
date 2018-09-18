@@ -15,7 +15,6 @@
 
   environment.systemPackages = with pkgs; [
     cryptsetup
-    nix-repl
     emacs
     xlibs.xmodmap
     xorg.xbacklight
