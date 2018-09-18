@@ -51,7 +51,7 @@
   };
 
   system = {
-    stateVersion = "18.03";
+    stateVersion = "18.09";
   };
   systemd.services.nixos-update = {
     description = "NixOS Upgrade";
