@@ -121,7 +121,7 @@
       hardhat
       #haskell-mode
       helpful
-      #highlight
+      highlight
       #highlight-escape-sequences
       #highlight-leading-spaces
       highlight-numbers
@@ -145,9 +145,9 @@
       json-mode
       json-reformat
       json-snatcher
-      kubernetes
       (with melpaPackages; [
         key-chord
+        #kubernetes
         lsp-haskell
         lsp-javascript-typescript
         lsp-go
@@ -165,7 +165,7 @@
       markdown-mode
       #mc-extras
       # minions # FIXME      
-      #(with melpaPackages; [ minions ])
+      (with melpaPackages; [ minions ])
       multiple-cursors
       (with melpaPackages; [
         nix-buffer
