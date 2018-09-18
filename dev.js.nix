@@ -9,7 +9,7 @@
     set -gx PATH $HOME/.local/npm/bin $PATH
   '';
   home.packages = with pkgs; [
-    nodejs-9_x
+    nodejs-10_x
     yarn
   ];
 }
