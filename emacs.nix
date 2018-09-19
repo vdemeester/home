@@ -10,7 +10,7 @@
         PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin GOPATH=/home/vincent ASPELL_CONF=dict-dir=/home/vincent/.nix-profile/lib/aspell
       '';
       Type      = "forking";
-      ExecStart = "/home/vincent/.nix-profile/bin/emacs --daemon";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'source /etc/profile; exec /home/vincent/.nix-profile/bin/emacs --daemon'";
       ExecStop  = "/home/vincent/.nix-profile/bin/emacsclient --eval (kill-emacs)";
       Restart   = "always";
     };
@@ -27,7 +27,7 @@
         PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin GOPATH=/home/vincent ASPELL_CONF=dict-dir=/home/vincent/.nix-profile/lib/aspell
       '';
       Type      = "forking";
-      ExecStart = "/home/vincent/.nix-profile/bin/emacs --daemon=org";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'source /etc/profile; exec /home/vincent/.nix-profile/bin/emacs --daemon=org'";
       ExecStop  = "/home/vincent/.nix-profile/bin/emacsclient --socket-name=org --eval (kill-emacs)";
       Restart   = "always";
     };
