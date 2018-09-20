@@ -21,5 +21,6 @@
     vscode
     jetbrains.idea-ultimate
     zoom-us
+    obs-studio # screencast
   ];
 }
