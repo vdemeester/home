@@ -7,6 +7,7 @@
     ../profiles/ssh.nix
     ../profiles/audio.nix
     ../profiles/dev.nix
+    ../profiles/buildkitd.nix
     ../profiles/containerd.nix
     ../profiles/virtualization.nix
     ../profiles/dockerization.nix
