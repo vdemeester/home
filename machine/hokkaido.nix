@@ -9,8 +9,7 @@
     ../profiles/yubikey.nix
     ../profiles/dev.nix
     ../profiles/containerd.nix
-    #../profiles/dockerization.nix
-    #../profiles/virtualization.nix
+    ../profiles/buildkitd.nix
     ../profiles/wireguard.nix
     ../location/home.nix
     ../hardware/thinkpad-x220.nix
