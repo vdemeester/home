@@ -73,6 +73,8 @@ in
     systemd.packages = [ cfg.package ];
 
     systemd.services.buildkitd = {
+      wants = [ "containerd.service" ];
+      after = [ "containerd.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         ExecStart = [
