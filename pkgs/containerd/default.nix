@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     owner = "containerd";
     repo = "containerd";
     rev = "v${version}";
-    sha256 = "01y21fx5aidxrn3xz562sqyp9anw85hv9cbpbknj3wf2w15lmkhy";
+    sha256 = "118c3vpdmgk1n5cbp9a1pzdrplbvzqv75gagc2dy781warpmzpid";
   };
 
   hardeningDisable = [ "fortify" ];
