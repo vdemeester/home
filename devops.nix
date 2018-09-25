@@ -7,5 +7,6 @@
     spice_gtk
     minikube
     kubectl
+    go-containerregistry
   ];
 }
