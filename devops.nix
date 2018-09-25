@@ -8,5 +8,6 @@
     minikube
     kubectl
     go-containerregistry
+    skopeo
   ];
 }
