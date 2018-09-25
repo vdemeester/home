@@ -5,9 +5,11 @@
     google-cloud-sdk
     packer
     spice_gtk
-    minikube
-    kubectl
+    # kubernetes
     go-containerregistry
+    kail
+    kubectl
+    minikube
     skopeo
   ];
 }
