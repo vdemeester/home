@@ -5,5 +5,6 @@
     google-cloud-sdk
     packer
     spice_gtk
+    minikube
   ];
 }
