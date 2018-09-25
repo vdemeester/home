@@ -14,8 +14,10 @@ buildGoPackage rec {
   };
 
   goDeps = ./deps.nix;
+  subPackages = [
+    "cmd/crane" "cmd/gcrane" "cmd/ko"
+  ];
 
-  # TODO: add metadata https://nixos.org/nixpkgs/manual/#sec-standard-meta-attributes
   meta = {
     description = "Go library and CLIs for working with container registries";
     homepage = https://github.com/google/go-containerregistry;
