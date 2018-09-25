@@ -163,7 +163,7 @@
       markdown-mode
       #mc-extras
       # minions # FIXME      
-      (with melpaPackages; [ minions ])
+      (with melpaPackages; [ minions moody ])
       multiple-cursors
       (with melpaPackages; [
         nix-buffer
