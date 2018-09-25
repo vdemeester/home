@@ -29,10 +29,13 @@
     mpv
   ];
   hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
-  networking.networkmanager.enable = true;
-  networking.networkmanager.unmanaged = [
-    "interface-name:ve-*" "interface-name:veth*"
-  ];
+  networking.networkmanager = {
+    enable = true;
+    unmanaged =  [
+      "interface-name:ve-*" "interface-name:veth*"
+    ];
+    packages = with pkgs; [ networkmanager-openvpn ];  
+  };
   services = {
     xserver = {
       enable = true;
