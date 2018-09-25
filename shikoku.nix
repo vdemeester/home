@@ -18,9 +18,10 @@
     set -gx DOCKER_BUILDKIT 1
   '';
   home.packages = with pkgs; [
-    vscode
-    jetbrains.idea-ultimate
-    zoom-us
+    google-chrome
     obs-studio # screencast
+    jetbrains.idea-ultimate
+    vscode
+    zoom-us
   ];
 }
