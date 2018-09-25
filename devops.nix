@@ -6,5 +6,6 @@
     packer
     spice_gtk
     minikube
+    kubectl
   ];
 }
