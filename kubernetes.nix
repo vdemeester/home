@@ -6,5 +6,6 @@
     go-containerregistry
     kail
     minikube
+    kubectl
   ];
 }
