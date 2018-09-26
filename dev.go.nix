@@ -26,6 +26,7 @@
     # vendoring tools
     vndr
     dep
+    dep-collector
     # misc
     protobuf
     protobuild

@@ -6,6 +6,9 @@ self: super:
   dobi = import ../pkgs/dobi {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
+  dep-collector = import ../pkgs/dep-collector {
+    inherit (self) stdenv lib fetchgit buildGoPackage;
+  };
   protobuild = import ../pkgs/protobuild {
     inherit (self) stdenv lib buildGoPackage fetchgit;
   };

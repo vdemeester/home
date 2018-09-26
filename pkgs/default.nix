@@ -9,6 +9,9 @@ in rec {
   dobi = import ./dobi {
     inherit (pkgs) stdenv lib fetchFromGitHub buildGoPackage;
   };
+  dep-collector = import ./dep-collector {
+    inherit (pkgs) stdenv lib fetchgit buildGoPackage;
+  };
   protobuild = import ./protobuild {
     inherit (pkgs) stdenv lib buildGoPackage fetchgit;
   };
