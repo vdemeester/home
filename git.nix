@@ -1,6 +1,5 @@
 { pkgs, config, lib, ... }:
 
-
 let 
   ca-bundle_crt = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"; in
 rec {
@@ -106,10 +105,33 @@ rec {
         = "git://github.com/";
     };
     
+      includes = [
+        {
+          path = "~/.config/git/config.d/redhat.gitconfig";
+          condition = "gitdir:~/src/github.com/knative/";
+        }
+        {
+          path = "~/.config/git/config.d/redhat.gitconfig";
+          condition = "gitdir:~/src/k8s.io/";
+        }
+        {
+          path = "~/.config/git/config.d/redhat.gitconfig";
+          condition = "gitdir:~/src/github.com/operator-framework/";
+        }
+        {
+          path = "~/.config/git/config.d/redhat.gitconfig";
+          condition = "gitdir:~/src/github.com/openshift/";
+        }
+        {
+          path = "~/.config/git/config.d/redhat.gitconfig";
+          condition = "gitdir:~/src/github.com/redhat-developer/";
+        }
+      ];
     ignores = [
       "*.elc" "*.vo" "*.aux" "*.v.d" "*.o" "*.a" "*.la" "*.so" "*.dylib"
       "*.pyc" "*.pyo" ".idea" "*.iml"
       "*~" "#*#" ".makefile" ".clean"
     ];
   };
+  xdg.configFile."git/config.d/redhat.gitconfig".source = ./git/redhat.gitconfig;
 }
