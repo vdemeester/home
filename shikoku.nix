@@ -21,6 +21,8 @@
     google-chrome
     obs-studio # screencast
     jetbrains.idea-ultimate
+    mattermost-desktop
+    slack
     vscode
     zoom-us
   ];
