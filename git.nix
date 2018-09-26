@@ -116,6 +116,10 @@ rec {
         }
         {
           path = "~/.config/git/config.d/redhat.gitconfig";
+          condition = "gitdir:~/src/github.com/minishift/";
+        }
+        {
+          path = "~/.config/git/config.d/redhat.gitconfig";
           condition = "gitdir:~/src/github.com/operator-framework/";
         }
         {
