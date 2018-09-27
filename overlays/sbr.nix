@@ -18,6 +18,9 @@ self: super:
   gogo-protobuf = import ../pkgs/gogo-protobuf {
     inherit (self) stdenv lib buildGoPackage fetchgit;
   };
+  kubespy = import ../pkgs/kubespy {
+    inherit (self) stdenv lib buildGoPackage fetchgit;
+  };
   scripts = import ../pkgs/scripts {
     inherit (self) stdenv;
   };

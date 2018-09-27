@@ -21,6 +21,9 @@ in rec {
   gogo-protobuf = import ./gogo-protobuf {
     inherit (pkgs) stdenv lib buildGoPackage fetchgit;
   };
+  kubespy = import ./kubespy {
+    inherit (pkgs) stdenv lib buildGoPackage fetchgit;
+  };
   scripts = import ./scripts {
     inherit (pkgs) stdenv;
   };
