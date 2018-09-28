@@ -2,8 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    cri-tools
-    kail
-    kubectl
+    minikube
   ];
 }
