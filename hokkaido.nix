@@ -3,12 +3,16 @@
 {
   imports = [
     ./laptop.nix
+    # dev
     ./dev.go.nix
-    ./dev.rust.nix
     ./dev.python.nix
     ./dev.js.nix
+    # k8s
+    ./containers.nix
+    ./kubernetes.nix
   ];
   home.packages = with pkgs; [
+    google-chrome
     vscode
   ];
 }
