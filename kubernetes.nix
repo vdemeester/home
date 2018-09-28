@@ -5,5 +5,6 @@
     cri-tools
     kail
     kubectl
+    kustomize
   ];
 }
