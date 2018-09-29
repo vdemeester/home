@@ -11,6 +11,7 @@
     ./dev.js.nix
     ./dev.java.nix
     ./dev.haskell.nix
+    ./vscode.nix
     ./fish.nix
     ./ssh.nix
   ];
@@ -23,7 +24,6 @@
     jetbrains.idea-ultimate
     mattermost-desktop
     slack
-    vscode
     zoom-us
   ];
 }
