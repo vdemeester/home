@@ -134,6 +134,12 @@ self: super:
             sha256 = "1y7sb3585knv2pbq7vf2cjf3xy1fgzrqzn2h3fx2d2bj6ns6vpy3";
           }
           {
+            name = "crates";
+            publisher = "serayuzgur";
+            version = "0.3.2";
+            sha256 = "0xn24vghmcf8fi8cdgaa3f0npmkdr4fdn9y1g56l2fzrx2z4rw3q";
+          }
+          {
             name = "Kotlin";
             publisher = "mathiasfrohlich";
             version = "1.6.0";
@@ -168,6 +174,12 @@ self: super:
             publisher = "redhat";
             version = "0.0.16";
             sha256 = "0v21qj65nrp850r0jmivmsm9y5i99ymxxm8ganzdia4vbv5hzx9r";
+          }
+          {
+            name = "better-toml";
+            publisher = "bungcip";
+            version = "0.3.2";
+            sha256 = "08lhzhrn6p0xwi0hcyp6lj9bvpfj87vr99klzsiy8ji7621dzql3";
           }
         ] ++ [
           super.vscode-extensions.bbenoist.Nix
