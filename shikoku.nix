@@ -11,9 +11,10 @@
     ./dev.js.nix
     ./dev.java.nix
     ./dev.haskell.nix
-    ./vscode.nix
     ./fish.nix
+    ./openshift.nix
     ./ssh.nix
+    ./vscode.nix
   ];
   xdg.configFile."fish/conf.d/docker.fish".text = ''
     set -gx DOCKER_BUILDKIT 1
