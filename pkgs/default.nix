@@ -24,6 +24,9 @@ in rec {
   kubespy = import ./kubespy {
     inherit (pkgs) stdenv lib buildGoPackage fetchgit;
   };
+  knctl = import ./knctl {
+    inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
+  };
   scripts = import ./scripts {
     inherit (pkgs) stdenv;
   };

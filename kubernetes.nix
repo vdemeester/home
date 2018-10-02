@@ -6,5 +6,6 @@
     kail
     kubectl
     kustomize
+    knctl
   ];
 }
