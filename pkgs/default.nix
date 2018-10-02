@@ -30,6 +30,9 @@ in rec {
   scripts = import ./scripts {
     inherit (pkgs) stdenv;
   };
+  s2i = import ./s2i {
+    inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
+  };
   envbox = import ./envbox {
     inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
   };

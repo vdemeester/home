@@ -27,6 +27,9 @@ self: super:
   scripts = import ../pkgs/scripts {
     inherit (self) stdenv;
   };
+  s2i= import ../pkgs/s2i {
+    inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
+  };
   envbox = import ../pkgs/envbox {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
