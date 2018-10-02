@@ -6,6 +6,7 @@ buildGoPackage rec {
   rev = "v${version}";
 
   goPackagePath = "github.com/cppforlife/knctl";
+  subPackages = [ "cmd/knctl" ];
 
   src = fetchFromGitHub {
     inherit rev;

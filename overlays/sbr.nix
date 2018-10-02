@@ -21,7 +21,7 @@ self: super:
   kubespy = import ../pkgs/kubespy {
     inherit (self) stdenv lib buildGoPackage fetchgit;
   };
-  knctl = import ./knctl {
+  knctl = import ../pkgs/knctl {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
   scripts = import ../pkgs/scripts {
