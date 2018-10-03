@@ -64,10 +64,13 @@
     gnome3.gnome_themes_standard
     i3lock-color
     keybase
+    libnotify
+    maim
     # pass
     peco
-    scrot
+    # scrot
     spotify
+    slop
     xdg-user-dirs
     xdg_utils
     youtube-dl
