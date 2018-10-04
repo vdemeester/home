@@ -24,6 +24,9 @@ self: super:
   knctl = import ../pkgs/knctl {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
+  krew = import ../pkgs/krew {
+    inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
+  };
   scripts = import ../pkgs/scripts {
     inherit (self) stdenv;
   };

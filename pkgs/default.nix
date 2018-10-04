@@ -27,6 +27,9 @@ in rec {
   knctl = import ./knctl {
     inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
   };
+  krew = import ./krew {
+    inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
+  };
   scripts = import ./scripts {
     inherit (pkgs) stdenv;
   };
