@@ -133,7 +133,7 @@
       ## quick terminal (tmux)
       exec --no-startup-id alacritty --title metask --class metask --command tmux
       for_window [instance="metask"] floating enable;
-      for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position 0px 0px; move scratchpad
+      for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position center; move scratchpad
       bindcode $mod+49 [instance="metask"] scratchpad show
 
       bindsym XF86MonBrightnessUp exec "xbacklight -inc 10"
