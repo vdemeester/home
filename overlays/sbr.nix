@@ -34,7 +34,7 @@ self: super:
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
   prm = import ../pkgs/prm {
-    inherit (self) stdenv lib buildGoPackage fetchgit;
+    inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
   tmux-tpm = import ../pkgs/tmux-tpm {
     inherit (self) stdenv lib fetchFromGitHub;

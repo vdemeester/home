@@ -37,7 +37,7 @@ in rec {
     inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
   };
   prm = import ./prm {
-    inherit (pkgs) stdenv lib fetchgit;
+    inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
   };
   tmux-tpm = import ./tmux-tpm {
     inherit (pkgs) stdenv lib fetchFromGitHub;

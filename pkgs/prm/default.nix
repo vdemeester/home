@@ -1,4 +1,4 @@
-{ stdenv, lib, buildGoPackage, fetchgit }:
+{ stdenv, lib, buildGoPackage, fetchFromGitHub }:
 
 buildGoPackage rec {
   name = "prm-unstable-${version}";
@@ -13,9 +13,10 @@ buildGoPackage rec {
        -X ${t}.BuildDate=unknown
   '';
 
-  src = fetchgit {
+  src = fetchFromGitHub {
     inherit rev;
-    url = "https://github.com/ldez/prm";
+    owner = "ldez";
+    repo = "prm";
     sha256 = "0adz9vli1x5f5v2vyfag7m2a9llj7bxih5g3ccjpiz22xk26rc6l";
   };
 
