@@ -128,6 +128,7 @@
       bindcode $mod+Shift+19 move container to workspace $WS0
 
       assign [class="Firefox" window_role="browser"] → $WS1
+      assign [class="Google-chrome" window_role="browser"] → $WS1
 
       ## quick terminal (tmux)
       exec --no-startup-id alacritty --title metask --class metask --command tmux
