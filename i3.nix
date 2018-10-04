@@ -137,9 +137,9 @@
       bindcode $mod+49 [instance="metask"] scratchpad show
 
       ## hide those chats !
-      for_window [class="Slack"] move scratchpad; scratchpad show
+      for_window [class="Slack"] move scratchpad; [class="Slack"] scratchpad show
       bindcode $mod+Shift+49 [class="Slack"] scratchpad show
-      for_window [class="Mattermost"] move scratchpad; scratchpad show
+      for_window [class="Mattermost"] move scratchpad; [class="Mattermost"] scratchpad show
       bindcode $mod+Control+49 [class="Mattermost"] scratchpad show
 
       bindsym XF86MonBrightnessUp exec "xbacklight -inc 10"
