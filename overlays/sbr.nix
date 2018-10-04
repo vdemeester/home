@@ -33,6 +33,9 @@ self: super:
   s2i= import ../pkgs/s2i {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
+  skaffold = import ../pkgs/skaffold {
+    inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
+  };
   envbox = import ../pkgs/envbox {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };

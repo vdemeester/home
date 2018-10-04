@@ -33,6 +33,9 @@ in rec {
   scripts = import ./scripts {
     inherit (pkgs) stdenv;
   };
+  skaffold = import ./skaffold {
+    inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
+  };
   s2i = import ./s2i {
     inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
   };
