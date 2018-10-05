@@ -94,6 +94,7 @@
       hasklig
       inconsolata
       iosevka
+      overpass
       symbola
       source-code-pro
       ubuntu_font_family
