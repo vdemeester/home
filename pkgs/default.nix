@@ -21,6 +21,9 @@ in rec {
   gogo-protobuf = import ./gogo-protobuf {
     inherit (pkgs) stdenv lib buildGoPackage fetchgit;
   };
+  openshift = import ./openshift {
+    inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo which go_1_10 go-bindata makeWrapper rsync utillinux coreutils kerberos clang;
+  };
   kubespy = import ./kubespy {
     inherit (pkgs) stdenv lib buildGoPackage fetchgit;
   };
