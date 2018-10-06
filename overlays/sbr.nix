@@ -30,6 +30,9 @@ self: super:
   openshift = import ../pkgs/openshift {
     inherit (self) stdenv lib fetchFromGitHub removeReferencesTo which go_1_10 go-bindata makeWrapper rsync utillinux coreutils kerberos clang;
   };
+  podman = import ../pkgs/podman {
+    inherit (self) stdenv lib fetchFromGitHub removeReferencesTo pkgconfig makeWrapper go libtool gpgme lvm2 btrfs-progs libseccomp gcc;
+  };
   scripts = import ../pkgs/scripts {
     inherit (self) stdenv;
   };

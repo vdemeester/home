@@ -24,6 +24,9 @@ in rec {
   openshift = import ./openshift {
     inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo which go_1_10 go-bindata makeWrapper rsync utillinux coreutils kerberos clang;
   };
+  podman = import ./podman {
+    inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo pkgconfig makeWrapper go libtool gpgme lvm2 btrfs-progs libseccomp gcc;
+  };
   kubespy = import ./kubespy {
     inherit (pkgs) stdenv lib buildGoPackage fetchgit;
   };
