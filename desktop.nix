@@ -29,6 +29,9 @@
       enable = true;
       enableSshSupport = true;
       defaultCacheTtlSsh = 7200;
+      extraConfig = ''
+      allow-emacs-pinentry
+      '';
     };
     dunst.enable = true;
     udiskie.enable = true;

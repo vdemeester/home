@@ -194,6 +194,7 @@
       password-store
       password-store-otp
       # persistent-scratch
+      pinentry
       popup
       projectile
       projectile-ripgrep
