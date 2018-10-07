@@ -37,6 +37,7 @@
     packages = with pkgs; [ networkmanager-openvpn ];  
   };
   services = {
+    flatpak.enable = true;
     xserver = {
       enable = true;
       enableTCP = false;

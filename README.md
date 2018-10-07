@@ -5,7 +5,6 @@ nixos-enabled computers.
 
 ## How to use 🐻
 
-
 ## NixOS
 
 When installing nixos:
