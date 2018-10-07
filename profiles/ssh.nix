@@ -7,4 +7,5 @@
       startWhenNeeded = false;
     };
   };
+  programs.mosh.enable = true;
 }
