@@ -30,6 +30,8 @@ rec {
     scripts
     direnv
     enchive
+    exa
+    fd
     htop
     jq
     pass
