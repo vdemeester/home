@@ -30,6 +30,7 @@ rec {
     scripts
     direnv
     enchive
+    entr
     exa
     fd
     htop

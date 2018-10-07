@@ -1,5 +1,5 @@
 function _def_nix_run_aliases
-    set -l stable mr sshfs ncdu entr wakeonlan:python36Packages.wakeonlan lspci:pciutils lsusb:usbutils beet:beets gotop virt-manager:virtmanager pandoc
+    set -l stable mr sshfs ncdu wakeonlan:python36Packages.wakeonlan lspci:pciutils lsusb:usbutils beet:beets gotop virt-manager:virtmanager pandoc
     set -l unstable op:_1password update-desktop-database:desktop-file-utils lgogdownloader
     for s in $stable
 	_nix_run_package $s nixpkgs
