@@ -1,6 +1,7 @@
 { pkgs, config, lib, ... }:
 
 {
+  home.file.".ssh/sockets/.placeholder".text = '''';
   programs.ssh = {
     enable = true;
 
