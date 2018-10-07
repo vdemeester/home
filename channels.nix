@@ -14,6 +14,8 @@ channels = {
   v17_09       = "17.09";
   impala      = "18.03";
   v18_03       = "18.03";
+  jellyfish      = "18.09";
+  v18_09       = "18.09";
   unstable    = "unstable";
 };
 in mapAttrs (v:
