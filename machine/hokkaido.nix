@@ -28,7 +28,7 @@
 
   services.autofs = {
     enable = true;
-    debug = true;
+    debug = false;
     autoMaster = let
       mapConfSsh = pkgs.writeText "auto.sshfs"  ''
       shikoku.local -fstype=fuse,allow_other :sshfs\#shikoku.local\:
