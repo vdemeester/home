@@ -28,6 +28,7 @@ bind -r R resize-pane -R 5
 set -g mode-key vi
 # `PREFIX`-`ESCAPE` for going into copy mode
 bind-key ESCAPE copy-mode
+bind-key b copy-mode
 # Rebinding some vi-copy keys in a more bepoish fashion.
 #bind-key -Tvi-copy 'v' begin-selection
 #bind-key -Tvi-copy 'y' copy-selection
