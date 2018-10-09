@@ -11,7 +11,7 @@
         shell = if config.programs.fish.enable then pkgs.fish else pkgs.bash;
         initialPassword = "changeMe";
         openssh.authorizedKeys.keys =
-          with import ../assets/ssh-keys.nix; [ honshu wakasu hokkaido kobe ];
+          with import ../assets/ssh-keys.nix; [ honshu wakasu hokkaido california shikoku ];
       };
     };
   };
