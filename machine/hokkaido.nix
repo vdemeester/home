@@ -11,6 +11,7 @@
     ../profiles/containerd.nix
     ../profiles/buildkitd.nix
     ../profiles/wireguard.nix
+    ../service/wireguard.client.nix
     ../location/home.nix
     ../hardware/thinkpad-x220.nix
   ];
@@ -45,5 +46,13 @@
   services.xserver.displayManager.slim.theme = pkgs.fetchurl {
     url = "https://github.com/vdemeester/slim-themes/raw/master/docker-key-theme-0.1.tar.xz";
     sha256 = "127893l1nzqya0g68k8841g5lm3hlnx7b3b3h06axvplc54a1jd8";
+  };
+
+  services.wireguard = with import ../assets/wireguard.nix; {
+    enable = true;
+    ips = [ "${ips.hokkaido}/24" ];
+    endpoint = main.endpointIP;
+    endpointPort = main.listenPort;
+    endpointPublicKey = kerkouane.publicKey;
   };
 }
