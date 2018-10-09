@@ -1,5 +1,6 @@
 hardware-configuration.nix
 result
+result-bin
 .tramp*
 *~
 hostname
@@ -7,3 +8,4 @@ accounts.nix
 assets/*
 networking.nix
 wireguard*.key
+.envrc
