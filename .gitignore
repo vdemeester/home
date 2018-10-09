@@ -4,3 +4,6 @@ result
 *~
 hostname
 accounts.nix
+assets/*
+networking.nix
+wireguard*.key
