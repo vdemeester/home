@@ -13,6 +13,7 @@
     ../profiles/dockerization.nix
     ../profiles/gaming.nix
     ../profiles/wireguard.nix
+    ../service/wireguard.client.nix
     ../location/home.nix
   ];
 
@@ -35,6 +36,13 @@
   };
 
   hardware.bluetooth.enable = true;
-
   networking.firewall.allowedTCPPorts = [ 7946 9000 ];
+
+  services.wireguard = with import ../assets/wireguard.nix; {
+    enable = true;
+    ips = [ "${ips.shikoku}/24" ];
+    endpoint = main.endpointIP;
+    endpointPort = main.listenPort;
+    endpointPublicKey = kerkouane.publicKey;
+  };
 }
