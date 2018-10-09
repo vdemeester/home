@@ -15,7 +15,7 @@
       ips = kerkouane.allowedIPs;
       listenPort = main.listenPort;
       privateKeyFile = "/etc/nixos/wireguard.private.key";
-      peers = [ shikoku california honshu ];
+      peers = main.peers;
     };
   };
 }
