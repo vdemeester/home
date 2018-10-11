@@ -6,9 +6,10 @@
     m = "make";
   };
   home.packages = with pkgs; [
-    gnumake
-    cmake
     binutils-unwrapped
+    cmake
+    gnumake
+    lnav
     mercurial
     ripgrep
   ];
