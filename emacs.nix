@@ -177,7 +177,6 @@
       #ob-restclient
       ob-rust
       ob-typescript
-      org-journal
       org-plus-contrib
       org-ref
       #org-super-agenda
