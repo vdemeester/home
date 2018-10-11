@@ -3,6 +3,9 @@ self: super:
   ape = import ../pkgs/ape {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
+  conmon = import ./conmon {
+    inherit (self) stdenv lib fetchFromGitHub makeWrapper pkgconfig libtool gcc glib;
+  };
   dobi = import ../pkgs/dobi {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };

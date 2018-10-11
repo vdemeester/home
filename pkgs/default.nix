@@ -6,6 +6,9 @@ in rec {
   ape = import ./ape {
     inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
   };
+  conmon = import ./conmon {
+    inherit (pkgs) stdenv lib fetchFromGitHub makeWrapper pkgconfig libtool gcc glib;
+  };
   dobi = import ./dobi {
     inherit (pkgs) stdenv lib fetchFromGitHub buildGoPackage;
   };
