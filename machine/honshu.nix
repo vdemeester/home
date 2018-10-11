@@ -11,7 +11,8 @@
     ../profiles/avahi.nix
     ../profiles/containerd.nix
     ../profiles/syncthing.nix
-    ../service/ssh-tunnel.nix
+    ../profiles/wireguard.nix
+    ../service/wireguard.client.nix
     ../location/home.nix
   ];
 
@@ -19,14 +20,13 @@
 
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";
-    ssh-tunnel = {
-      enable = true;
-      localUser = "vincent";
-      remoteHostname = "95.85.58.158";
-      remotePort = 22;
-      remoteUser = "vincent";
-      bindPort = 2224;
-    };
+  };
+  services.wireguard = with import ../assets/wireguard.nix; {
+    enable = true;
+    ips = [ "${ips.honshu}/24" ];
+    endpoint = main.endpointIP;
+    endpointPort = main.listenPort;
+    endpointPublicKey = kerkouane.publicKey;
   };
 
   environment.etc."vrsync".text = ''
