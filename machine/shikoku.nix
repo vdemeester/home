@@ -38,11 +38,11 @@
   hardware.bluetooth.enable = true;
   networking.firewall.allowedTCPPorts = [ 7946 9000 ];
 
-  services.wireguard = with import ../assets/wireguard.nix; {
+  services.wireguard = with import ../assets/machines.nix; {
     enable = true;
-    ips = [ "${ips.shikoku}/24" ];
-    endpoint = main.endpointIP;
-    endpointPort = main.listenPort;
-    endpointPublicKey = kerkouane.publicKey;
+    ips = [ "${wireguard.ips.shikoku}/24" ];
+    endpoint = wg.endpointIP;
+    endpointPort = wg.listenPort;
+    endpointPublicKey = wireguard.kerkouane.publicKey;
   };
 }
