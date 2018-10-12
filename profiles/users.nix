@@ -16,5 +16,10 @@
           subGidRanges = [{ startGid = 100000; count = 65536; }];
       };
     };
-  };
+    };
+    programs.ssh.extraConfig = with import ../assets/machines.nix; ''
+Host kerkouane kerkouane.sbr.pm
+  Hostname kerkouane.sbr.pm
+  Port ${toString ssh.kerkouane.port}
+    '';
 }
