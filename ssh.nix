@@ -33,14 +33,6 @@
           controlPersist = "360";
         };
       };
-      hokkaido-remote = {
-        proxyCommand = "${pkgs.openssh}/bin/ssh -q p.sbr.pm nc localhost 2223";
-        user = "vincent";
-      };
-      honshu-remote = {
-        proxyCommand = "${pkgs.openssh}/bin/ssh -q p.sbr.pm nc localhost 2224";
-        user = "vincent";
-      };
     };
   };
 }
