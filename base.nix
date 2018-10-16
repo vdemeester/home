@@ -38,5 +38,6 @@ rec {
     pass
     tree
     tmux
+    yq
   ];
 }
