@@ -28,4 +28,11 @@ rec {
   stellar = import ./stellar {
     inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo go;
   };
+  # to upstream
+  podman = import ./podman {
+    inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo pkgconfig makeWrapper go libtool gpgme lvm2 btrfs-progs libseccomp gcc;
+  };
+  conmon = import ./conmon {
+    inherit (pkgs) stdenv lib fetchFromGitHub makeWrapper pkgconfig libtool gcc glib;
+  };
 }

@@ -4,6 +4,7 @@
   imports = [
     ./users.nix
     ./overlays.nix
+    ../modules/module-list.nix
   ];
   boot.loader.systemd-boot.enable = true;
   environment = {

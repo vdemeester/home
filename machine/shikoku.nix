@@ -38,7 +38,12 @@
   hardware.bluetooth.enable = true;
   networking.firewall.allowedTCPPorts = [ 7946 9000 ];
 
-  services.wireguard = with import ../assets/machines.nix; {
+  # Move elsewhere
+  programs.podman = {
+    enable = true;
+  };
+
+   services.wireguard = with import ../assets/machines.nix; {
     enable = true;
     ips = [ "${wireguard.ips.shikoku}/24" ];
     endpoint = wg.endpointIP;
