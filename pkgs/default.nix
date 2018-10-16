@@ -6,9 +6,6 @@ in rec {
   ape = import ./ape {
     inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
   };
-  conmon = import ./conmon {
-    inherit (pkgs) stdenv lib fetchFromGitHub makeWrapper pkgconfig libtool gcc glib;
-  };
   dobi = import ./dobi {
     inherit (pkgs) stdenv lib fetchFromGitHub buildGoPackage;
   };
@@ -26,9 +23,6 @@ in rec {
   };
   openshift = import ./openshift {
     inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo which go_1_10 go-bindata makeWrapper rsync utillinux coreutils kerberos clang;
-  };
-  podman = import ./podman {
-    inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo pkgconfig makeWrapper go libtool gpgme lvm2 btrfs-progs libseccomp gcc;
   };
   kubespy = import ./kubespy {
     inherit (pkgs) stdenv lib buildGoPackage fetchgit;
