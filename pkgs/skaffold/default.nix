@@ -2,7 +2,7 @@
 
 buildGoPackage rec {
   name = "skaffold-${version}";
-  version = "0.15.1";
+  version = "0.16.0";
   rev = "v${version}";
 
   goPackagePath = "github.com/GoogleContainerTools/skaffold";
@@ -12,7 +12,7 @@ buildGoPackage rec {
     inherit rev;
     owner = "GoogleContainerTools";
     repo = "skaffold";
-    sha256 = "1ckkibagcxdbwsrfniailq6sdrs24vg8kbv9w26hhgas2l82a1xr";
+    sha256 = "0vpjxyqppyj4zs02n8b0k0qd8zidrrcks60x6qd5a4bbqa0c1zld";
   };
 
   meta = {
