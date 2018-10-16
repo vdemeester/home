@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./containerd.nix ../service/buildkit.nix ];
+  imports = [ ./containerd.nix ];
   environment.systemPackages = with pkgs; [
     buildkit
   ];

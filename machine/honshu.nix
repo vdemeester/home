@@ -11,8 +11,6 @@
     ../profiles/avahi.nix
     ../profiles/containerd.nix
     ../profiles/syncthing.nix
-    ../profiles/wireguard.nix
-    ../service/wireguard.client.nix
     ../location/home.nix
   ];
 

@@ -11,7 +11,6 @@
     ../profiles/containerd.nix
     ../profiles/dockerization.nix
     ../profiles/virtualization.nix
-    ../profiles/wireguard.nix
     ../location/docker.nix
     ../location/home.nix
     ../hardware/thinkpad-t460s.nix

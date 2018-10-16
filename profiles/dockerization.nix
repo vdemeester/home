@@ -2,11 +2,6 @@
 { config, pkgs, ...}:
 
 {
-  imports = [
-    ../service/docker.nix
-    # Remove once containerd module is upstream
-    ../service/containerd.nix
-  ];
   environment.systemPackages = with pkgs; [
     python27Packages.docker_compose
     docker-machine

@@ -10,8 +10,6 @@
     ../profiles/dev.nix
     ../profiles/containerd.nix
     ../profiles/buildkitd.nix
-    ../profiles/wireguard.nix
-    ../service/wireguard.client.nix
     ../location/home.nix
     ../hardware/thinkpad-x220.nix
   ];

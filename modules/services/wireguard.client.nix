@@ -49,6 +49,8 @@ in
     };
   };
   config = mkIf cfg.enable {
+    boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
+    environment.systemPackages = [ pkgs.wireguard ];
     networking.wireguard.interfaces = {
       wg0 = {
         ips = cfg.ips;

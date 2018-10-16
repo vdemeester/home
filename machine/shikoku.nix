@@ -12,8 +12,6 @@
     ../profiles/virtualization.nix
     ../profiles/dockerization.nix
     ../profiles/gaming.nix
-    ../profiles/wireguard.nix
-    ../service/wireguard.client.nix
     ../location/home.nix
   ];
 
