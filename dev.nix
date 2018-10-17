@@ -12,5 +12,6 @@
     lnav
     mercurial
     ripgrep
+    shfmt
   ];
 }
