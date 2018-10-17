@@ -18,13 +18,16 @@ self: super:
   gogo-protobuf = import ../pkgs/gogo-protobuf {
     inherit (self) stdenv lib buildGoPackage fetchgit;
   };
-  kubespy = import ../pkgs/kubespy {
-    inherit (self) stdenv lib buildGoPackage fetchgit;
-  };
   knctl = import ../pkgs/knctl {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
   krew = import ../pkgs/krew {
+    inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
+  };
+  kubespy = import ../pkgs/kubespy {
+    inherit (self) stdenv lib buildGoPackage fetchgit;
+  };
+  kube-prompt = import ../pkgs/kube-prompt {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
   openshift = import ../pkgs/openshift {

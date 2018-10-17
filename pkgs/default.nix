@@ -33,6 +33,9 @@ in rec {
   krew = import ./krew {
     inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
   };
+  kube-prompt = import ./kube-prompt {
+    inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
+  };
   scripts = import ./scripts {
     inherit (pkgs) stdenv;
   };
