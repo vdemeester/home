@@ -10,7 +10,7 @@
   networking.firewall.allowedUDPPorts = [ 51820 ];
   networking.wireguard.interfaces = with import ../assets/machines.nix; {
     "wg0" = {
-      ips = wg.allowedIPs;
+      ips = wireguard.kerkouane.allowedIPs;
       listenPort = wg.listenPort;
       privateKeyFile = "/etc/nixos/wireguard.private.key";
       peers = wg.peers;
