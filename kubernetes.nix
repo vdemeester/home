@@ -8,5 +8,6 @@
     kustomize
     knctl
     kube-prompt
+    kubectx
   ];
 }
