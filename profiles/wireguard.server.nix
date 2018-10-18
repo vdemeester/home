@@ -8,7 +8,7 @@
     iptables -t nat -A POSTROUTING -s10.100.0.0/24 -j MASQUERADE
   '';
   networking.firewall.allowedUDPPorts = [ 51820 ];
-  networking.firewall.trustedInterfaces = "wg0";
+  networking.firewall.trustedInterfaces = [ "wg0" ];
   networking.wireguard.interfaces = with import ../assets/machines.nix; {
     "wg0" = {
       ips = wireguard.kerkouane.allowedIPs;
