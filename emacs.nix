@@ -218,8 +218,6 @@
       #sos
       string-edit
       string-inflection
-      super-save
-      #sx
       #tide
       toml-mode
       typescript-mode
