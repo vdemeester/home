@@ -8,6 +8,7 @@
   home.packages = with pkgs; [
     binutils-unwrapped
     cmake
+    fswatch
     gnumake
     lnav
     mercurial
