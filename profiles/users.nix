@@ -21,5 +21,8 @@
 Host kerkouane kerkouane.sbr.pm
   Hostname kerkouane.sbr.pm
   Port ${toString ssh.kerkouane.port}
+Host carthage carthage.sbr.pm
+  Hostname carthage.sbr.pm
+  Port ${toString ssh.carthage.port}
     '';
 }
