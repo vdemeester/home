@@ -14,7 +14,7 @@ let
   versionMajor = ver 0;
   versionMinor = ver 1;
   versionPatch = ver 2;
-  gitCommit = "f7602dd6ca3fc07883a03418c4e96bba2b8be653";
+  gitCommit = "0cbc58b117403b9d9169dbafdfac59ef104bb997";
   # version is in vendor/k8s.io/kubernetes/pkg/version/base.go
   k8sversion = "v1.11.1";
   k8sgitcommit = "b81c8f8";
@@ -29,7 +29,7 @@ in stdenv.mkDerivation rec {
     repo = "origin";
     # rev = "v${version}";
     rev = "${gitCommit}";
-    sha256 = "18i49mydikwlpbl7mh3a0arvm5447wcdf4ckv2kbiyqv8kpna36z";
+    sha256 = "06q4v2a1mm6c659ab0rzkqz6b66vx4avqfg0s9xckwhq420lzgka";
 };
 
   # go > 1.10
