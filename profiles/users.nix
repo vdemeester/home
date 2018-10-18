@@ -18,11 +18,15 @@
     };
     };
     programs.ssh.extraConfig = with import ../assets/machines.nix; ''
-Host kerkouane kerkouane.sbr.pm ${wireguard.ips.kerkouane}
+Host kerkouane kerkouane.sbr.pm
   Hostname kerkouane.sbr.pm
   Port ${toString ssh.kerkouane.port}
-Host carthage carthage.sbr.pm ${wireguard.ips.carthage}
+Host kerkouane.vpn ${wireguard.ips.kerkouane}
+  Port ${toString ssh.kerkouane.port}
+Host carthage carthage.sbr.pm
   Hostname carthage.sbr.pm
+  Port ${toString ssh.carthage.port}
+Host ${wireguard.ips.carthage}
   Port ${toString ssh.carthage.port}
     '';
 }
