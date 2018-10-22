@@ -127,11 +127,9 @@
       hydra
       #ialign
       ibuffer-vc
-      #ibuffer-projectile
       iedit
       (with melpaPackages; [ imenu-list ])
       ivy
-      #(with melpaPackages; [ ivy-historian ])
       ivy-hydra
       ivy-pass
       ivy-rich
@@ -145,7 +143,6 @@
       json-snatcher
       (with melpaPackages; [
         key-chord
-        #kubernetes
         lsp-haskell
         lsp-javascript-typescript
         lsp-go
@@ -156,13 +153,8 @@
       ])
       magit
       magit-gitflow
-      # magit-lfs
       magit-popup
-      # magithub
-      #makefile-executor
       markdown-mode
-      #mc-extras
-      # minions # FIXME      
       (with melpaPackages; [ minions moody ])
       multiple-cursors
       (with melpaPackages; [
@@ -201,23 +193,15 @@
       python-mode
       rainbow-delimiters
       rainbow-mode
-      #request
-      #restclient
       ripgrep
       (with melpaPackages; [ rjsx-mode ])
-      #selected
       shift-number
       shackle
       shx
       smart-jump
-      smart-newline
-      #smart-region
       (with melpaPackages; [ smartparens ])
       solaire-mode
-      #sort-words
-      #sos
       string-edit
-      string-inflection
       #tide
       toml-mode
       typescript-mode
@@ -232,7 +216,6 @@
       web-mode
       wgrep
       which-key
-      whitespace-cleanup-mode
       # window-purpose
       with-editor
       yasnippet
