@@ -74,6 +74,7 @@ in stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p "$out/bin"
     cp -a "_output/local/bin/$(go env GOOS)/$(go env GOARCH)/"* "$out/bin/"
+    rm $out/bin/kubectl
     install -D -t "$out/etc/bash_completion.d" contrib/completions/bash/*
     install -D -t "$out/share/zsh/site-functions" contrib/completions/zsh/*
   '';
