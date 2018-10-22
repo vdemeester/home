@@ -130,6 +130,10 @@ rec {
           path = "~/.config/git/config.d/redhat.gitconfig";
           condition = "gitdir:~/src/github.com/redhat-developer/";
         }
+        {
+          path = "~/.config/git/config.d/redhat.gitconfig";
+          condition = "gitdir:~/src/github.com/containers/";
+        }
       ];
     ignores = [
       "*.elc" "*.vo" "*.aux" "*.v.d" "*.o" "*.a" "*.la" "*.so" "*.dylib"
