@@ -154,6 +154,7 @@
       magit
       magit-gitflow
       magit-popup
+      magit-todos
       markdown-mode
       (with melpaPackages; [ minions moody ])
       multiple-cursors
