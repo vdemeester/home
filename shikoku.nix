@@ -25,6 +25,7 @@
     jetbrains.idea-ultimate
     mattermost-desktop
     slack
+    virtmanager
     zoom-us
   ];
 }
