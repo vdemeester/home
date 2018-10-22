@@ -2,7 +2,7 @@
 
 buildGoPackage rec {
   name = "s2i-${version}";
-  version = "1.1.11";
+  version = "1.1.12";
   rev = "v${version}";
 
   goPackagePath = "github.com/openshift/source-to-image";
@@ -12,7 +12,7 @@ buildGoPackage rec {
     inherit rev;
     owner = "openshift";
     repo = "source-to-image";
-    sha256 = "0mi4wnvawlgsv4zxg6skg022lqyshgyr3xab5sb2rvqvy0wiqvmr";
+    sha256 = "1f7k1z1sgn5dd45ww29fyidz06a60mrvm38dzd8ndwblwbz6z11f";
   };
 
   meta = {
