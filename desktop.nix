@@ -63,6 +63,7 @@
     aspell
     aspellDicts.en
     aspellDicts.fr
+    etBook
     gnome3.defaultIconTheme
     gnome3.gnome_themes_standard
     i3lock-color
