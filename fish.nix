@@ -6,6 +6,15 @@
     shellAliases = import ./aliases.nix;
     shellInit = ''
     eval (${pkgs.direnv}/bin/direnv hook fish)
+    # emacs ansi-term support
+    if test -n "$EMACS"
+      set -x TERM eterm-color
+
+      # this function may be required
+      function fish_title
+        true
+      end
+    end
     '';
   };
   xdg.configFile."fish/conf.d/a_nix_run.fish".source = ./fish/a_nix_run.fish;
