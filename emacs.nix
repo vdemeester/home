@@ -165,7 +165,7 @@
         nixos-options
       ])
       no-littering
-      olivetti
+      ob-async
       ob-go
       #ob-restclient
       ob-rust
