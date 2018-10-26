@@ -16,7 +16,24 @@
   ];
 
   time.timeZone = "Europe/Paris";
-  boot.loader.systemd-boot.enable = true;
+  #boot.loader.systemd-boot.enable = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.efiSupport = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
+  boot.loader.grub.devices = ["nodev"];
+  #boot.loader.grub.device = "/dev/nvme0n1";
+  boot.loader.grub.extraEntries = ''
+        menuentry "Windows" {
+          insmod part_gpt
+          insmod fat
+          insmod search_fs_uuid
+          insmod chain
+          search --fs--uid --set=root $FS_UUID
+          chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+        }
+      '';
+  boot.loader.grub.useOSProber = true;
 
   services = {
     xserver = {
@@ -34,7 +51,8 @@
   };
 
   hardware.bluetooth.enable = true;
-  networking.firewall.allowedTCPPorts = [ 7946 9000 ];
+  networking.firewall.allowedUDPPortRanges = [ { from = 6001; to = 6101; } ];
+  networking.firewall.allowedTCPPorts = [ 7946 9000 5000 ];
 
   # Move elsewhere
   programs.podman = {
