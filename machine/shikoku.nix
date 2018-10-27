@@ -29,8 +29,8 @@
           insmod fat
           insmod search_fs_uuid
           insmod chain
-          search --fs--uid --set=root $FS_UUID
-          chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+          search --fs-uuid --no-floppy --set=root 122F-2055
+          chainloader ($root)/Microsoft/Boot/bootmgfw.efi
         }
       '';
   boot.loader.grub.useOSProber = true;
