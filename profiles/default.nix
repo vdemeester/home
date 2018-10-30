@@ -30,7 +30,7 @@
   };
   i18n = {
     consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "fr";
+    consoleKeyMap = "fr-bepo";
     defaultLocale = "en_US.UTF-8";
   };
   nix = {
