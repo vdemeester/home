@@ -11,7 +11,7 @@
         shell = if config.programs.fish.enable then pkgs.fish else pkgs.bash;
         initialPassword = "changeMe";
         openssh.authorizedKeys.keys =
-          with import ../assets/machines.nix; [ ssh.honshu.key ssh.kerkouane.key ssh.hokkaido.key ssh.california.key ssh.shikoku.key ssh.massimo.key ssh.carthage.key ];
+          with import ../assets/machines.nix; [ ssh.honshu.key ssh.kerkouane.key ssh.hokkaido.key ssh.california.key ssh.shikoku.key ssh.massimo.key ssh.carthage.key ssh.wakasu.key ];
           subUidRanges = [{ startUid = 100000; count = 65536; }];
           subGidRanges = [{ startGid = 100000; count = 65536; }];
       };
@@ -38,5 +38,7 @@ Host hokkaido.vpn ${wireguard.ips.hokkaido}
   Hostname ${wireguard.ips.hokkaido}
 Host massimo.vpn ${wireguard.ips.massimo}
   Hostname ${wireguard.ips.massimo}
+Host wakasu.vpn ${wireguard.ips.wakasu}
+Hostname ${wireguard.ips.wakasu}
     '';
 }
