@@ -1,7 +1,8 @@
 { pkgs, prefix, ... }:
 
 {
-  imports = [ ./fish.nix ./ssh.nix ./i3.nix ./base.nix ];
+  imports = [ ./fish.nix ./ssh.nix ./base.nix ];
+  profiles.i3.enable = true;
   home.keyboard = {
     layout = "fr(bepo),fr";
     variant = "oss";

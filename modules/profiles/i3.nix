@@ -1,6 +1,21 @@
-{ pkgs, config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
+with lib;
+
+let
+  cfg = config.profiles.i3;
+in
 {
+  options = {
+    profiles.i3 = {
+      enable = mkOption {
+        default = false;
+        description = "Enable i3 profile";
+        type = types.bool;
+      };
+    };
+  };
+  config = mkIf cfg.enable {
   xsession.windowManager.i3 = {
     enable = true;
     config = {
@@ -237,4 +252,5 @@
     format = "/ %free"
     }
   '';
+  };
 }
