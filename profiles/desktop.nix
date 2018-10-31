@@ -12,6 +12,7 @@
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.tmpOnTmpfs = true;
+  boot.plymouth.enable = true;
 
   environment.systemPackages = with pkgs; [
     cryptsetup

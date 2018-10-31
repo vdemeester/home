@@ -19,9 +19,6 @@
     { domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
     { domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
   ];
-
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.plymouth.enable = true;
   
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
