@@ -18,6 +18,17 @@
       name = "Vanilla-DMZ";
     };
   };
+  gtk = {
+    enable = true;
+    iconTheme = {
+      name = "Arc";
+      package = pkgs.arc-icon-theme;
+    };
+    theme = {
+      name = "Arc-Dark";
+      package = pkgs.arc-theme;
+    };
+  };
   home.file.".XCompose".source = ./xorg/XCompose;
   home.file.".Xmodmap".source = ./xorg/Xmodmap;
   xdg.configFile."xorg/emoji.compose".source = ./xorg/emoji.compose;
