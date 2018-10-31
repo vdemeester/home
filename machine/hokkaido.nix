@@ -8,8 +8,6 @@
     ../profiles/ssh.nix
     ../profiles/yubikey.nix
     ../profiles/dev.nix
-    ../profiles/containerd.nix
-    ../profiles/buildkitd.nix
     ../location/home.nix
     ../hardware/thinkpad-x220.nix
   ];
@@ -24,6 +22,10 @@
     nfs-utils
     sshfs
   ];
+  
+  programs.podman = {
+    enable = true;
+  };
 
   services.autofs = {
     enable = true;
