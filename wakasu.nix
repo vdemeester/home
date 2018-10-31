@@ -23,7 +23,7 @@
     mattermost-desktop
     slack
     virtmanager
-    #jetbrains.idea-ultimate
+    jetbrains.idea-ultimate
   ];
   services.shairport-sync.enable = true;
 }
