@@ -32,6 +32,7 @@
         }
       '';
   boot.loader.grub.useOSProber = true;
+  boot.plymouth.enable = true;
 
   services = {
     xserver = {
