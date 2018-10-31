@@ -69,8 +69,8 @@ self: super:
           {
             name = "vsc-material-theme";
             publisher = "Equinusocio";
-            version = "2.4.2";
-            sha256 = "1cl9xy9pg0jvgpz4ifvb9n6lv1xcsnrsh56xmz2hr6901n4gk70p";
+            version = "2.5.1";
+            sha256 = "1qr7zk3qjsp98346r642k54s6jny8fkanac99v3aa7i2k6idpm6g";
           }
           {
             name = "material-icon-theme";
@@ -160,8 +160,8 @@ self: super:
           {
             name = "Kotlin";
             publisher = "mathiasfrohlich";
-            version = "1.6.0";
-            sha256 = "04lqzn4pzwx6m936b9jv4nh3q3rs9p9jla8mpln0751jk1844y47";
+            version = "1.7.0";
+            sha256 = "1d81rgfh1c1wkz4la0mmjj6k28if237f835diyk3z6n63cazapli";
           }
           {
             name = "java";
