@@ -47,7 +47,7 @@ in
 
     packages = mkOption {
       type = types.listOf types.package;
-      default = [ pkgs.runc ];
+      default = [ pkgs.runc-edge ];
       description = "List of packages to be added to containerd service path";
     };
 

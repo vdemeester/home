@@ -25,7 +25,7 @@ in
 
     environment.etc."containers/libpod.conf".text = ''
       image_default_transport = "docker://"
-      runtime_path = ["${pkgs.runc}/bin/runc"]
+      runtime_path = ["${pkgs.runc-edge}/bin/runc"]
       conmon_path = ["${pkgs.conmon}/bin/conmon"]
       cni_plugin_dir = ["${pkgs.cni-plugins}/bin/"]
       cgroup_manager = "systemd"
@@ -80,7 +80,7 @@ in
 }
     '';
 
-    environment.systemPackages = [ pkgs.podman pkgs.conmon pkgs.runc ];
+    environment.systemPackages = [ pkgs.podman pkgs.conmon pkgs.runc-edge ];
 
   };
 }

@@ -5,7 +5,7 @@ with lib;
 
 stdenv.mkDerivation rec {
   name = "runc-${version}";
-  version = "v1.0.0-dev";
+  version = "1.0.0-rc6";
 
   src = fetchFromGitHub {
     owner = "opencontainers";

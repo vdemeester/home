@@ -12,7 +12,7 @@
     containerd = {
       enable = true;
       package = pkgs.containerd-edge;
-      packages = [ pkgs.runc-edge];
+      packages = [ pkgs.runc-edge ];
     };
   };
 }

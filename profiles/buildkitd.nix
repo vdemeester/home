@@ -9,6 +9,7 @@
     buildkitd= {
       enable = true;
       package = pkgs.buildkit;
+      packages = [ pkgs.runc-edge pkgs.git ];
       extraOptions = "--oci-worker=false --containerd-worker=true";
     };
   };
