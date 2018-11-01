@@ -12,6 +12,7 @@ rec {
     # Generated hardware configuration
     ./hardware-configuration.nix
     # Default profile with default configuration
+    ./modules/module-list.nix
     ./profiles/default.nix
     # Machine specific configuration files
     (./machine + "/${hostName}.nix")

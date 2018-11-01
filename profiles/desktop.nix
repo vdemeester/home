@@ -7,7 +7,6 @@
     ./scanning.nix
     ./avahi.nix
     ./syncthing.nix
-    ./fish.nix
   ];
 
   boot.loader.efi.canTouchEfiVariables = true;

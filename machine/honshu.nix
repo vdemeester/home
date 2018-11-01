@@ -7,7 +7,6 @@
     ../hardware/dell-latitude-e6540.nix
     ../profiles/server.nix
     ../profiles/dev.nix
-    ../profiles/fish.nix
     ../profiles/avahi.nix
     ../profiles/containerd.nix
     ../profiles/syncthing.nix
