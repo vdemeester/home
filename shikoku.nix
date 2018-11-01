@@ -5,16 +5,16 @@
     ./desktop.nix
     ./gaming.nix
     ./devops.nix
-    ./dev.rust.nix
-    ./dev.python.nix
-    ./dev.js.nix
-    ./dev.java.nix
     ./openshift.nix
   ];
   profiles.desktop.enable = true;
   profiles.dev = {
     go.enable = true;
     haskell.enable = true;
+    java.enable = true;
+    js.enable = true;
+    python.enable = true;
+    rust.enable = true;
   };
   programs.vscode.enable = true;
   xdg.configFile."fish/conf.d/docker.fish".text = ''

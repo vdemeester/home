@@ -3,9 +3,11 @@
 {
   imports = [
     ./base.nix
-    ./dev.js.nix
-    ./dev.rust.nix
   ];
-  profiles.dev.go.enable = true;
+  profiles.dev = {
+    go.enable = true;
+    js.enable = true;
+    rust.enable = true;
+  };
   manual.manpages.enable = false;
 }
