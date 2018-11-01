@@ -13,6 +13,7 @@
     ./profiles/dev.rust.nix
     ./profiles/emacs.nix
     ./profiles/fish.nix
+    ./profiles/gaming.nix
     ./profiles/git.nix
     ./profiles/i3.nix
     ./profiles/laptop.nix

@@ -3,11 +3,11 @@
 {
   imports = [
     ./desktop.nix
-    ./gaming.nix
     ./devops.nix
     ./openshift.nix
   ];
   profiles.desktop.enable = true;
+  profiles.gaming.enable = true;
   profiles.dev = {
     go.enable = true;
     haskell.enable = true;
