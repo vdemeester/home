@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./laptop.nix
+    ./desktop.nix
     # dev
     ./dev.go.nix
     ./dev.python.nix
@@ -12,7 +12,7 @@
     ./containers.nix
     ./kubernetes.nix
   ];
-  profiles.desktop.enable = true;
+  profiles.laptop.enable = true;
   home.packages = with pkgs; [
     google-chrome
   ];

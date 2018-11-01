@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./laptop.nix
+    ./desktop.nix
     ./devops.nix
     ./dev.go.nix
     ./dev.rust.nix
@@ -14,6 +14,7 @@
     ./ssh.nix
     ./vscode.nix
   ];
+  profiles.laptop.enable = true;
   xdg.configFile."fish/conf.d/docker.fish".text = ''
     set -gx DOCKER_BUILDKIT 1
   '';
