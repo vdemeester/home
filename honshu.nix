@@ -5,7 +5,7 @@
     ./base.nix
   ];
   profiles.dev.go.enable = true;
-  xdg.configFile."ape.conf".source = ./ape.conf;
+  xdg.configFile."ape.conf".source = ./assets/ape.conf;
   home.packages = with pkgs; [
     youtube-dl
   ];
