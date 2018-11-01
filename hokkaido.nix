@@ -12,6 +12,7 @@
     ./containers.nix
     ./kubernetes.nix
   ];
+  profiles.desktop.enable = true;
   home.packages = with pkgs; [
     google-chrome
   ];

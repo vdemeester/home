@@ -1,7 +1,8 @@
 { pkgs, config, lib, ... }:
 
 {
-  home.file.".local/share/applications/org-protocol.desktop".source = ./xorg/org-protocol.desktop;
+  # FIXME update this
+  home.file.".local/share/applications/org-protocol.desktop".source = ./modules/profiles/assets/xorg/org-protocol.desktop;
   systemd.user.services.emacs = {
     Unit = {
       Description = "Emacs: the extensible, self-documenting text editor";
