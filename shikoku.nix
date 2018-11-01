@@ -37,5 +37,4 @@
     virtmanager
     zoom-us
   ];
-  services.shairport-sync.enable = true;
 }

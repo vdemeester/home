@@ -41,7 +41,7 @@ in
 
   ###### implementation
 
-  config = mkIf config.services.shairport-sync.enable {
+  config = mkIf cfg.enable {
 
     /*
     Requires the following in NixOS (or elsewhere).
