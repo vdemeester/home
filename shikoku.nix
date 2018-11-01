@@ -21,14 +21,16 @@
     kubernetes = { enable = true; minikube.enable = true; };
     openshift = { enable = true; minishift.enable = true; };
   };
-  programs.vscode.enable = true;
+  programs = {
+    vscode.enable = true;
+    google-chrome.enable = true;
+  };
   services.shairport-sync.enable = true;
   
   home.file."src/github.com/knative/.envrc".source = ./projects/nix.envrc;
   home.file."src/github.com/knative/default.nix".source = ./projects/knative/default.nix;
 
   home.packages = with pkgs; [
-    google-chrome
     obs-studio # screencast
     mattermost-desktop
     slack

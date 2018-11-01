@@ -20,9 +20,11 @@
     kubernetes = { enable = true; minikube.enable = true; };
     openshift = { enable = true; minishift.enable = true; };
   };
-  programs.vscode.enable = true;
+  programs = {
+    vscode.enable = true;
+    google-chrome.enable = true;
+  };
   home.packages = with pkgs; [
-    google-chrome
     obs-studio
     mattermost-desktop
     slack
