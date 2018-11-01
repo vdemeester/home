@@ -3,9 +3,7 @@
 {
   imports = [
     ./base.nix
-    ./dev.go.nix
-    ./fish.nix
-    ./ssh.nix
   ];
+  profiles.dev.go.enable = true;
   home.packages = with pkgs; [ docker ];
 }

@@ -5,6 +5,7 @@
     ./profiles/bash.nix
     ./profiles/desktop.nix
     ./profiles/dev.nix
+    ./profiles/dev.go.nix
     ./profiles/emacs.nix
     ./profiles/fish.nix
     ./profiles/git.nix

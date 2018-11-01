@@ -2,11 +2,10 @@
 
 {
   imports = [
-    ./fish.nix
     ./base.nix
-    ./dev.go.nix
     ./dev.js.nix
     ./dev.rust.nix
   ];
+  profiles.dev.go.enable = true;
   manual.manpages.enable = false;
 }

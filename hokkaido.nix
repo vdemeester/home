@@ -4,7 +4,6 @@
   imports = [
     ./desktop.nix
     # dev
-    ./dev.go.nix
     ./dev.python.nix
     ./dev.js.nix
     ./vscode.nix
@@ -13,6 +12,7 @@
     ./kubernetes.nix
   ];
   profiles.laptop.enable = true;
+  profiles.dev.go.enable = true;
   home.packages = with pkgs; [
     google-chrome
   ];
