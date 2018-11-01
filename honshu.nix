@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./server.nix
+    ./base.nix
   ];
   profiles.dev.go.enable = true;
   xdg.configFile."ape.conf".source = ./ape.conf;
