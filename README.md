@@ -12,7 +12,7 @@ If you don't have `nix` installed, run `curl https://nixos.org/nix/install | sh`
 
   {
 	imports = [
-	    ./hokkaido.nix
+	    ./machines/hokkaido.nix
   	];
   }
   ```
