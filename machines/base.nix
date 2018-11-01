@@ -12,16 +12,12 @@ rec {
   };
   home.file.".nix-channels".source = ../assets/nix-channels;
   home.packages = with pkgs; [
-    aspell
-    aspellDicts.en
-    aspellDicts.fr
     direnv
     enchive
     entr
     exa
     fd
     htop
-    pass
     scripts
     tree
   ];

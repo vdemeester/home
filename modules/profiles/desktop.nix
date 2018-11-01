@@ -79,11 +79,15 @@ in
     };
     profiles.i3.enable = cfg.xsession.i3;
     home.packages = with pkgs; [
-      keybase
-      peco
+      aspell
+      aspellDicts.en
+      aspellDicts.fr
       #etBook
       gnome3.defaultIconTheme
       gnome3.gnome_themes_standard
+      keybase
+      peco
+      pass
       xdg-user-dirs
       xdg_utils
     ];
