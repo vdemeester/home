@@ -54,12 +54,19 @@ in
         package = pkgs.arc-theme;
       };
     };
-    services.redshift = {
-      enable = true;
-      brightness = { day = "1"; night = "0.9"; };
-      latitude = "48.3";
-      longitude = "7.5";
-      tray = true;
+    services = {
+      redshift = {
+        enable = true;
+        brightness = { day = "1"; night = "0.9"; };
+        latitude = "48.3";
+        longitude = "7.5";
+        tray = true;
+      };
+      gpg-agent = {
+        enable = true;
+        enableSshSupport = true;
+        defaultCacheTtlSsh = 7200;
+      };
     };
     home.file.".XCompose".source = ./assets/xorg/XCompose;
     home.file.".Xmodmap".source = ./assets/xorg/Xmodmap;
