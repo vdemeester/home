@@ -21,10 +21,8 @@ rec {
     exa
     fd
     htop
-    jq #dev
     pass
     scripts
     tree
-    yq #dev
   ];
 }

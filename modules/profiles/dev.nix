@@ -23,10 +23,12 @@ in
         cmake
         fswatch
         gnumake
+        jq
         lnav
         mercurial
         ripgrep
         shfmt
+        yq
       ];
     }
     (mkIf config.profiles.fish.enable {
