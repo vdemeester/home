@@ -15,11 +15,9 @@
     python.enable = true;
     rust.enable = true;
   };
+  profiles.docker.enable = true;
   programs.vscode.enable = true;
   programs.podman.enable = true;
-  xdg.configFile."fish/conf.d/docker.fish".text = ''
-    set -gx DOCKER_BUILDKIT 1
-  '';
   home.packages = with pkgs; [
     google-chrome
     obs-studio

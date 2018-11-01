@@ -11,6 +11,7 @@
     ./profiles/dev.js.nix
     ./profiles/dev.python.nix
     ./profiles/dev.rust.nix
+    ./profiles/docker.nix
     ./profiles/emacs.nix
     ./profiles/fish.nix
     ./profiles/gaming.nix
