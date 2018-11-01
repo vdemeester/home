@@ -6,7 +6,6 @@
     aspell
     aspellDicts.en
     aspellDicts.fr
-    #etBook
     keybase
     peco
     spotify
