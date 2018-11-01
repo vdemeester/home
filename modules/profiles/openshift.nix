@@ -12,6 +12,11 @@ in
         description = "Enable openshift profile";
         type = types.bool;
       };
+      package = mkOption {
+        default = pkgs.openshift;
+        description = "Openshift package";
+        type = types.package;
+      };
       minishift = {
         enable = mkOption {
           default = false;
@@ -31,7 +36,7 @@ in
       profiles.containers.kubernetes.enable = true;
       home.packages = with pkgs; [
         s2i
-        openshift
+        cfg.package
       ];
     }
     (mkIf cfg.minishift.enable {

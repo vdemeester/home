@@ -30,7 +30,7 @@ self: super:
   kube-prompt = import ../pkgs/kube-prompt {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
-  openshift = import ../pkgs/openshift {
+  openshift-edge = import ../pkgs/openshift {
     inherit (self) stdenv lib fetchFromGitHub removeReferencesTo which go_1_10 go-bindata makeWrapper rsync utillinux coreutils kerberos clang;
   };
   scripts = import ../pkgs/scripts {

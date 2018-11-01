@@ -18,7 +18,7 @@
     enable = true;
     docker = true;
     kubernetes = { enable = true; minikube.enable = true; };
-    openshift = { enable = true; minishift.enable = true; };
+    openshift = { enable = true; package = pkgs.openshift-edge; minishift.enable = true; };
   };
   profiles.media.enable = true;
   programs = {
