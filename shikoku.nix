@@ -11,10 +11,10 @@
     ./dev.java.nix
     ./dev.haskell.nix
     ./openshift.nix
-    ./vscode.nix
   ];
   profiles.desktop.enable = true;
   profiles.dev.go.enable = true;
+  programs.vscode.enable = true;
   xdg.configFile."fish/conf.d/docker.fish".text = ''
     set -gx DOCKER_BUILDKIT 1
   '';

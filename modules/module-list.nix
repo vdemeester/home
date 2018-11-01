@@ -13,6 +13,7 @@
     ./profiles/laptop.nix
     ./profiles/ssh.nix
     ./profiles/tmux.nix
+    ./programs/vscode.nix
     ./services/shairport-sync.nix
   ];
 }
