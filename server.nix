@@ -1,5 +1,5 @@
 { pkgs, prefix, ... }:
 
 {
-  imports = [ ./fish.nix ./base.nix ];
+  imports = [ ./base.nix ];
 }

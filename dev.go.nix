@@ -2,7 +2,7 @@
 
 {
   imports = [ ./dev.nix ];
-  xdg.configFile."fish/conf.d/go.fish".source = ./fish/go.fish;
+  xdg.configFile."fish/conf.d/go.fish".source = ./modules/profiles/assets/fish/go.fish;
   programs.fish.shellAbbrs = {
     got = "go test -v";
     gob = "go build -v";

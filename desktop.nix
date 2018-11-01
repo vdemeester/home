@@ -1,7 +1,7 @@
 { pkgs, prefix, ... }:
 
 {
-  imports = [ ./fish.nix ./ssh.nix ./base.nix ];
+  imports = [ ./base.nix ];
   services = {
     gpg-agent = {
       enable = true;
