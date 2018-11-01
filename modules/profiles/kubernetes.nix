@@ -8,7 +8,7 @@ in
   options = {
     profiles.containers.kubernetes = {
       enable = mkOption {
-        default = true;
+        default = false;
         description = "Enable kubernetes profile";
         type = types.bool;
       };

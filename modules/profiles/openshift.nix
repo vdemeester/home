@@ -8,7 +8,7 @@ in
   options = {
     profiles.containers.openshift = {
       enable = mkOption {
-        default = true;
+        default = false;
         description = "Enable openshift profile";
         type = types.bool;
       };
