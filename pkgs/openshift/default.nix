@@ -14,10 +14,10 @@ let
   versionMajor = ver 0;
   versionMinor = ver 1;
   versionPatch = ver 2;
-  gitCommit = "0cbc58b117403b9d9169dbafdfac59ef104bb997";
+  gitCommit = "0cbc58b";
   # version is in vendor/k8s.io/kubernetes/pkg/version/base.go
   k8sversion = "v1.11.1";
-  k8sgitcommit = "b81c8f8";
+  k8sgitcommit = "b1b2997";
   k8sgitMajor = "0";
   k8sgitMinor = "1";
 in stdenv.mkDerivation rec {
@@ -27,8 +27,7 @@ in stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "openshift";
     repo = "origin";
-    # rev = "v${version}";
-    rev = "${gitCommit}";
+    rev = "v${version}";
     sha256 = "06q4v2a1mm6c659ab0rzkqz6b66vx4avqfg0s9xckwhq420lzgka";
 };
 
@@ -74,7 +73,6 @@ in stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p "$out/bin"
     cp -a "_output/local/bin/$(go env GOOS)/$(go env GOARCH)/"* "$out/bin/"
-    rm $out/bin/kubectl
     install -D -t "$out/etc/bash_completion.d" contrib/completions/bash/*
     install -D -t "$out/share/zsh/site-functions" contrib/completions/zsh/*
   '';
