@@ -28,8 +28,8 @@
   };
   services.shairport-sync.enable = true;
   
-  home.file."src/github.com/knative/.envrc".source = ./projects/nix.envrc;
-  home.file."src/github.com/knative/default.nix".source = ./projects/knative/default.nix;
+  home.file."src/github.com/knative/.envrc".source = ../projects/nix.envrc;
+  home.file."src/github.com/knative/default.nix".source = ../projects/knative/default.nix;
 
   home.packages = with pkgs; [
     obs-studio # screencast
