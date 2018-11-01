@@ -16,6 +16,7 @@
     ./profiles/emacs.nix
     ./profiles/fish.nix
     ./profiles/gaming.nix
+    ./profiles/gcloud.nix
     ./profiles/git.nix
     ./profiles/i3.nix
     ./profiles/kubernetes.nix

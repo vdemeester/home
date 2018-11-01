@@ -16,6 +16,7 @@
     python.enable = true;
     rust.enable = true;
   };
+  profiles.cloud.google.enable = true;
   profiles.containers = {
     enable = true;
     docker = true;
