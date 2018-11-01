@@ -19,10 +19,9 @@ rec {
     exa
     fd
     htop
-    jq
+    jq #dev
     pass
     tree
-    tmux
-    yq
+    yq #dev
   ];
 }
