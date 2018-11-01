@@ -15,6 +15,9 @@ in
     };
   };
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      tmux
+    ];
     home.file.".tmux.conf".text = ''
       source-file $HOME/.config/tmux/tmux.conf
       set-environment -g TMUX_PLUGIN_MANAGER_PATH '$HOME/.config/tmux/plugins'
