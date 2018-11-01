@@ -15,6 +15,7 @@
     rust.enable = true;
   };
   programs.vscode.enable = true;
+  programs.podman.enable = true;
   home.packages = with pkgs; [
     google-chrome
   ];
