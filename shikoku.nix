@@ -3,8 +3,6 @@
 {
   imports = [
     ./desktop.nix
-    ./devops.nix
-    ./openshift.nix
   ];
   profiles.desktop.enable = true;
   profiles.gaming.enable = true;

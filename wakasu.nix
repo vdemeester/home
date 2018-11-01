@@ -3,7 +3,6 @@
 {
   imports = [
     ./desktop.nix
-    ./devops.nix
   ];
   profiles.laptop.enable = true;
   profiles.dev = {
