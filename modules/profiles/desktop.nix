@@ -67,6 +67,9 @@ in
     xdg.configFile."xorg/parens.compose".source = ./assets/xorg/parens.compose;
     xdg.configFile."xorg/modletters.compose".source = ./assets/xorg/modletters.compose;
     xdg.configFile."user-dirs.dirs".source = ./assets/xorg/user-dirs.dirs;
+    programs = {
+      firefox.enable = true;
+    };
     profiles.i3.enable = cfg.xsession.i3;
     home.packages = with pkgs; [
       gnome3.defaultIconTheme
