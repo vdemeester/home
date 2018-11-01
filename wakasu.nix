@@ -4,7 +4,6 @@
   imports = [
     ./desktop.nix
     ./devops.nix
-    ./openshift.nix
   ];
   profiles.laptop.enable = true;
   profiles.dev = {
@@ -20,7 +19,7 @@
     enable = true;
     docker = true;
     kubernetes = { enable = true; minikube.enable = true; };
-    #openshift = { enable = true; minishift.enable = true; };
+    openshift = { enable = true; minishift.enable = true; };
   };
   programs.vscode.enable = true;
   home.packages = with pkgs; [

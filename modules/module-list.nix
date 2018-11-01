@@ -21,6 +21,7 @@
     ./profiles/i3.nix
     ./profiles/kubernetes.nix
     ./profiles/laptop.nix
+    ./profiles/openshift.nix
     ./profiles/ssh.nix
     ./profiles/tmux.nix
     ./profiles/zsh.nix

@@ -32,7 +32,6 @@ in
       home.packages = with pkgs; [
         cri-tools
         kail
-        kubectl
         kustomize
         knctl
         kube-prompt
@@ -40,7 +39,13 @@ in
       ];
     }
     (mkIf cfg.minikube.enable {
-      home.packages = with pkgs; [ cfg.minikube.package ];
+      home.packages = with pkgs; [
+        cfg.minikube.package
+        docker-machine-kvm2
+      ];
+    })
+    (mkIf (!config.profiles.containers.openshift.enable) {
+      home.packages = with pkgs; [ kubectl ];
     })
   ]);
 }
