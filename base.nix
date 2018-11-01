@@ -12,7 +12,9 @@ rec {
   };
   home.file.".nix-channels".source = ./nix-channels;
   home.packages = with pkgs; [
-    scripts
+    aspell
+    aspellDicts.en
+    aspellDicts.fr
     direnv
     enchive
     entr
@@ -21,6 +23,7 @@ rec {
     htop
     jq #dev
     pass
+    scripts
     tree
     yq #dev
   ];

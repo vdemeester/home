@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./desktop.nix
+    ./base.nix
   ];
   profiles.laptop.enable = true;
   profiles.dev = {
@@ -20,6 +20,7 @@
     kubernetes = { enable = true; minikube.enable = true; };
     openshift = { enable = true; minishift.enable = true; };
   };
+  profiles.media.enable = true;
   programs = {
     vscode.enable = true;
     google-chrome.enable = true;

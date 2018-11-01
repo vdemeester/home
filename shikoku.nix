@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./desktop.nix
+    ./base.nix
   ];
   profiles.desktop.enable = true;
   profiles.gaming.enable = true;
@@ -14,6 +14,7 @@
     python.enable = true;
     rust.enable = true;
   };
+  profiles.media.enable = true;
   profiles.cloud.google.enable = true;
   profiles.containers = {
     enable = true;

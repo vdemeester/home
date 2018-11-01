@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./desktop.nix
+    ./base.nix
   ];
   profiles.laptop.enable = true;
   profiles.dev = {
@@ -13,6 +13,7 @@
     rust.enable = true;
   };
   profiles.containers.enable = true;
+  profiles.media.enable = true;
   programs.vscode.enable = true;
   home.packages = with pkgs; [
     google-chrome
