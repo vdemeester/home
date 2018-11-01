@@ -12,13 +12,23 @@ in
         description = "Enable java development profile";
         type = types.bool;
       };
+      idea = mkOption {
+        default = false;
+        description = "Install intellij idea";
+        type = types.bool;
+      };
     };
   };
-  config = mkIf cfg.enable {
-    profiles.dev.enable = true;
-    home.packages = with pkgs; [
-      jdk
-      gradle
-    ];
-  };
+  config = mkIf cfg.enable (mkMerge [
+    {
+      profiles.dev.enable = true;
+      home.packages = with pkgs; [
+        jdk
+        gradle
+      ];
+    }
+    (mkIf cfg.idea {
+      home.packages = with pkgs; [ jetbrains.idea-ultimate ];
+    })
+  ]);
 }

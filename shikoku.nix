@@ -11,7 +11,7 @@
   profiles.dev = {
     go.enable = true;
     haskell.enable = true;
-    java.enable = true;
+    java = { enable = true; idea = true; };
     js.enable = true;
     python.enable = true;
     rust.enable = true;
@@ -25,7 +25,6 @@
   home.packages = with pkgs; [
     google-chrome
     obs-studio # screencast
-    jetbrains.idea-ultimate
     mattermost-desktop
     slack
     virtmanager

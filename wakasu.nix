@@ -9,7 +9,7 @@
   profiles.laptop.enable = true;
   profiles.dev = {
     go.enable = true;
-    java.enable = true;
+    java = { enable = true; idea = true; };
     js.enable = true;
     haskell.enable = true;
     python.enable = true;
@@ -24,7 +24,6 @@
     mattermost-desktop
     slack
     virtmanager
-    jetbrains.idea-ultimate
   ];
   services.shairport-sync.enable = true;
 }

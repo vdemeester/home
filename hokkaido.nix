@@ -11,6 +11,7 @@
   profiles.dev = {
     go.enable = true;
     js.enable = true;
+    java.enable = true;
     python.enable = true;
     rust.enable = true;
   };
