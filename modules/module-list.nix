@@ -3,6 +3,7 @@
 {
   imports = [
     ./profiles/bash.nix
+    ./profiles/containers.nix
     ./profiles/desktop.nix
     ./profiles/dev.nix
     ./profiles/dev.go.nix

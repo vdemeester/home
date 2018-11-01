@@ -4,7 +4,6 @@
   imports = [
     ./desktop.nix
     # k8s
-    ./containers.nix
     ./kubernetes.nix
   ];
   profiles.laptop.enable = true;
@@ -15,8 +14,8 @@
     python.enable = true;
     rust.enable = true;
   };
+  profiles.containers.enable = true;
   programs.vscode.enable = true;
-  programs.podman.enable = true;
   home.packages = with pkgs; [
     google-chrome
   ];

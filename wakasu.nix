@@ -15,9 +15,11 @@
     python.enable = true;
     rust.enable = true;
   };
-  profiles.docker.enable = true;
+  profiles.containers = {
+    enable = true;
+    docker = true;
+  };
   programs.vscode.enable = true;
-  programs.podman.enable = true;
   home.packages = with pkgs; [
     google-chrome
     obs-studio
