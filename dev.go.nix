@@ -1,7 +1,7 @@
 { pkgs, prefix, ... }:
 
 {
-  imports = [ ./dev.nix ];
+  profiles.dev.enable = true;
   xdg.configFile."fish/conf.d/go.fish".source = ./modules/profiles/assets/fish/go.fish;
   programs.fish.shellAbbrs = {
     got = "go test -v";

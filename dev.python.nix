@@ -1,7 +1,7 @@
 { pkgs, prefix, ... }:
 
 {
-  imports = [ ./dev.nix ];
+  profiles.dev.enable = true;
   home.packages = with pkgs; [
     python3
     python36Packages.virtualenv

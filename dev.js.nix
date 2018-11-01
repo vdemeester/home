@@ -1,7 +1,7 @@
 { pkgs, prefix, ... }:
 
 {
-  imports = [ ./dev.nix ];
+  profiles.dev.enable = true;
   home.file.".npmrc".text = ''
     prefix = ~/.local/npm
   '';
