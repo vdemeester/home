@@ -18,6 +18,7 @@
     ./profiles/gaming.nix
     ./profiles/git.nix
     ./profiles/i3.nix
+    ./profiles/kubernetes.nix
     ./profiles/laptop.nix
     ./profiles/ssh.nix
     ./profiles/tmux.nix

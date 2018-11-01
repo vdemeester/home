@@ -3,8 +3,6 @@
 {
   imports = [
     ./desktop.nix
-    # k8s
-    ./kubernetes.nix
   ];
   profiles.laptop.enable = true;
   profiles.dev = {
