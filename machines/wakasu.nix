@@ -17,7 +17,6 @@
   profiles.containers = {
     enable = true;
     docker = true;
-    podman = true;
     kubernetes = { enable = true; minikube.enable = true; };
     openshift = { enable = true; package = pkgs.openshift-edge; minishift.enable = true; };
   };
@@ -25,6 +24,7 @@
   programs = {
     vscode.enable = true;
     google-chrome.enable = true;
+    podman.enable = true;
   };
   home.packages = with pkgs; [
     obs-studio

@@ -13,7 +13,7 @@ in
         type = types.bool;
       };
       podman = mkOption {
-        default = podman;
+        default = true;
         description = "Enable podman tools";
         type = types.bool;
       };
@@ -25,7 +25,7 @@ in
     };
     config = mkIf cfg.enable {
       profiles.docker.enable = cfg.docker;
-      profiles.podman.enalbe = cfg.podman || !cfg.docker;
+      programs.podman.enable = cfg.podman;
       home.packages = with pkgs; [
         go-containerregistry
         skopeo

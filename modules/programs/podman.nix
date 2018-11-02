@@ -9,7 +9,7 @@ in
     programs.podman = {
       enable = mkOption {
         default = false;
-        description = "Enable VS Code profile";
+        description = "Enable podman profile";
         type = types.bool;
       };
     };
