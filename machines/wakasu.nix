@@ -17,6 +17,7 @@
   profiles.containers = {
     enable = true;
     docker = true;
+    podman = true;
     kubernetes = { enable = true; minikube.enable = true; };
     openshift = { enable = true; package = pkgs.openshift-edge; minishift.enable = true; };
   };
