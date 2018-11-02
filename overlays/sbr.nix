@@ -39,6 +39,9 @@ self: super:
   s2i= import ../pkgs/s2i {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
+  slirp4netns = import ./pkgs/slirp4netns {
+    inherit (self) stdenv lib fetchFromGitHub automake autoconf gcc;
+  };
   skaffold = import ../pkgs/skaffold {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };
