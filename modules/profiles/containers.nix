@@ -23,13 +23,13 @@ in
         type = types.bool;
       };
     };
-    config = mkIf cfg.enable {
-      profiles.docker.enable = cfg.docker;
-      programs.podman.enable = cfg.podman;
-      home.packages = with pkgs; [
-        go-containerregistry
-        skopeo
-      ];
-    };
+  };
+  config = mkIf cfg.enable {
+    profiles.docker.enable = cfg.docker;
+    programs.podman.enable = cfg.podman;
+    home.packages = with pkgs; [
+      go-containerregistry
+      skopeo
+    ];
   };
 }
