@@ -5,6 +5,7 @@
     ../profiles/server.nix
     ../profiles/gitconfig.nix
     ../profiles/users.nix
+    ../profiles/syncthing.nix
   ];
 
   boot.cleanTmpDir = true;
@@ -18,7 +19,9 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGR4dqXwHwPpYgyk6yl9+9LRL3qrBZp3ZWdyKaTiXp0p vincent@shikoku"
   ];
   time.timeZone = "Europe/Paris";
-  
+
+  programs.podman.enable = true;
+
   services.wireguard = with import ../assets/machines.nix; {
     enable = true;
     ips = [ "${wireguard.ips.carthage}/24" ];
