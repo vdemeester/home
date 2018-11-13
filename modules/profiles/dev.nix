@@ -18,6 +18,11 @@ in
     {
       profiles.git.enable = true;
       profiles.emacs.enable = true;
+      home.file.".ignore".text = ''
+      *.swp
+      *~
+      **/VENDOR-LICENSE
+      '';
       home.packages = with pkgs; [
         binutils-unwrapped
         cmake
