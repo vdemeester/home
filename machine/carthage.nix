@@ -22,6 +22,7 @@
 
   programs.podman.enable = true;
 
+  services.syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.carthage}:8384";
   services.wireguard = with import ../assets/machines.nix; {
     enable = true;
     ips = [ "${wireguard.ips.carthage}/24" ];

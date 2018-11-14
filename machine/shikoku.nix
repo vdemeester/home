@@ -57,7 +57,8 @@
     enable = true;
   };
 
-   services.wireguard = with import ../assets/machines.nix; {
+  services.syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.shikoku}:8384";
+  services.wireguard = with import ../assets/machines.nix; {
     enable = true;
     ips = [ "${wireguard.ips.shikoku}/24" ];
     endpoint = wg.endpointIP;

@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  services.syncthing = {
+  services.syncthing-edge = {
     enable = true;
     user = "vincent";
     dataDir = "/home/vincent/.syncthing";

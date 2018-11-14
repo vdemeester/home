@@ -60,6 +60,7 @@
     enable = true;
   };
 
+  services.syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.wakasu}:8384";
   services.wireguard = with import ../assets/machines.nix; {
     enable = true;
     ips = [ "${wireguard.ips.wakasu}/24" ];

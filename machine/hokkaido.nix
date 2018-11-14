@@ -48,6 +48,7 @@
     sha256 = "127893l1nzqya0g68k8841g5lm3hlnx7b3b3h06axvplc54a1jd8";
   };
 
+  services.syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.hokkaido}:8384";
   services.wireguard = with import ../assets/wireguard.nix; {
     enable = true;
     ips = [ "${ips.hokkaido}/24" ];

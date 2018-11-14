@@ -18,6 +18,8 @@
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";
   };
+  
+  services.syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.honshu}:8384";
   services.wireguard = with import ../assets/wireguard.nix; {
     enable = true;
     ips = [ "${ips.honshu}/24" ];
