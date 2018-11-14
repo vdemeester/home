@@ -42,18 +42,6 @@
   hardware.nvidia.optimus_prime.enable = true;
   hardware.nvidia.optimus_prime.nvidiaBusId = "PCI:1:0:0";
   hardware.nvidia.optimus_prime.intelBusId = "PCI:0:2:0";
-  
-  services.autofs = {
-    enable = true;
-    debug = false;
-    autoMaster = let
-      mapConf = pkgs.writeText "auto"  ''
-      synodine -fstype=nfs,rw 192.168.12.19:/
-      '';
-    in ''
-      /auto file:${mapConf}
-    '';
-  };
 
   # Move elsewhere
   programs.podman = {
