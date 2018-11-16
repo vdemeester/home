@@ -21,7 +21,7 @@ in
         docker-machine
         docker-machine-kvm
         docker-machine-kvm2
-        python27Packages.docker_compose
+        docker-compose
       ];
     }
     (mkIf config.profiles.fish.enable {
