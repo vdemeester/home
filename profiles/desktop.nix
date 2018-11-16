@@ -27,6 +27,8 @@
     gnupg
     pinentry
     mpv
+    # user repositories
+    nur.repos.mic92.inxi
   ];
   hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
   networking.networkmanager = {
