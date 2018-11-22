@@ -5,6 +5,9 @@ self: super: {
   vrsync = import ../pkgs/vrsync {
     inherit (self) stdenv lib;
   };
+  vde-thinkpad = import ../pkgs/vde-thinkpad {
+    inherit (self) stdenv lib;
+  };
   runc-edge = import ../pkgs/runc {
     inherit (self) stdenv lib fetchFromGitHub removeReferencesTo go-md2man go pkgconfig libapparmor apparmor-parser libseccomp;
   };

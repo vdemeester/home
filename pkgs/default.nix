@@ -10,6 +10,9 @@ rec {
   vrsync = import ./vrsync {
     inherit (pkgs) stdenv lib;
   };
+  vde-thinkpad = import ./vde-thinkpad {
+    inherit (pkgs) stdenv lib;
+  };
   runc-edge = import ./runc {
     inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo go-md2man go pkgconfig libapparmor apparmor-parser libseccomp;
   };

@@ -41,4 +41,9 @@ DISK_DEVICES="nvme0n1p2"
 '';
     };
   };
+  services.udev.extraRules = ''
+  # Rules for Lenovo Thinkpad WS Dock
+  SUBSYSTEM=="usb", ACTION=="add|remove", ENV{ID_VENDOR}=="17ef", ENV{ID_MODEL}=="305a", RUN+="${pkgs.vde-thinkpad}/bin/dock"
+  '';
+
 }
