@@ -42,9 +42,6 @@ self: super:
   slirp4netns = import ../pkgs/slirp4netns {
     inherit (self) stdenv lib fetchFromGitHub automake autoconf gcc;
   };
-  skaffold = import ../pkgs/skaffold {
-    inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
-  };
   envbox = import ../pkgs/envbox {
     inherit (self) stdenv lib buildGoPackage fetchFromGitHub;
   };

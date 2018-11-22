@@ -39,9 +39,6 @@ in rec {
   scripts = import ./scripts {
     inherit (pkgs) stdenv;
   };
-  skaffold = import ./skaffold {
-    inherit (pkgs) stdenv lib buildGoPackage fetchFromGitHub;
-  };
   slirp4netns = import ./slirp4netns {
     inherit (pkgs) stdenv lib fetchFromGitHub automake autoconf gcc;
   };
