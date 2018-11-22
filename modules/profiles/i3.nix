@@ -18,6 +18,7 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       alacritty
+      arandr
       i3lock-color
       libnotify
       maim
@@ -151,7 +152,7 @@ in
         bindcode $mod+16 workspace $WS7
         bindcode $mod+17 workspace $WS8
         bindcode $mod+18 workspace $WS9
-          bindcode $mod+19 workspace $WS0
+        bindcode $mod+19 workspace $WS0
 
         # move focused container to workspace
         bindcode $mod+Shift+10 move container to workspace $WS1
@@ -172,7 +173,7 @@ in
         exec --no-startup-id alacritty --title metask --class metask --command tmux
         for_window [instance="metask"] floating enable;
         for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position center; move scratchpad
-          bindcode $mod+49 [instance="metask"] scratchpad show
+        bindcode $mod+49 [instance="metask"] scratchpad show; move position center
 
         ## hide those chats !
         for_window [class="Slack"] move scratchpad; [class="Slack"] scratchpad show
@@ -202,8 +203,14 @@ in
         bindsym $mod+Shift+F12 exec "i3-nagbar -t warning -m 'You pressed the poweroff shortcut. Do you really want to poweroff?' -b 'Yes, poweroff' 'systemctl poweroff'"
         # reboot
         bindsym $mod+Control+F12 exec "i3-nagbar -t warning -m 'You pressed the reboot shortcut. Do you really want to reboot?' -b 'Yes, reboot' 'systemctl reboot'"
+
+        # screen management
+        bindsym $mod+F11 exec "autorandr -c on-the-move"
+        bindsym $mod+Shift+F11 exec "arandr"
+        bindsym $mod+Control+F11 exec "autorandr -c home1"
+
         # move workspace to output
-          set $workspace_move Move workspace to output : [l]eft [r]ight [d]own [u]p
+        set $workspace_move Move workspace to output : [l]eft [r]ight [d]own [u]p
 
         mode "$workspace_move" {
         bindsym left move workspace to output left
