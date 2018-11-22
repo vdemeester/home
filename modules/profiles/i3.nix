@@ -54,7 +54,6 @@ in
         };
         keybindings = {
           "Mod4+Return" = "exec alacritty";
-          "Mod4+Shift+F11" = "exec 'autorandr -c'";
         };
         keycodebindings = {
           "Mod4+Shift+24" = "kill";
