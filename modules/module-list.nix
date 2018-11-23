@@ -3,8 +3,10 @@
 {
   imports = [
     ./profiles/fish.nix
-    #./profiles/desktop.nix
-    #./profiles/laptop.nix
+    ./profiles/desktop.nix
+    ./profiles/nix-config.nix
+    ./profiles/nix-auto-update.nix
+    ./profiles/laptop.nix
     ./programs/podman.nix
     ./services/syncthing.nix
     ./services/wireguard.client.nix

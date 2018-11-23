@@ -1,0 +1,64 @@
+{ config, lib, pkgs, ... }:
+
+with lib;
+let
+  cfg = config.profiles.nix-config;
+in
+{
+  options = {
+    profiles.nix-config = {
+      enable = mkOption {
+        default = true;
+        description = "Enable nix-config profile";
+        type = types.bool;
+      };
+      gcDates = mkOption {
+        default = "weekly";
+        description = "Specification (in the format described by systemd.time(7)) of the time at which the garbage collector will run. ";
+        type = types.str;
+      };
+      olderThan = mkOption {
+        default = "15d";
+        description = "Number of day to keep when garbage collect";
+        type = types.str;
+      };
+    };
+  };
+  config = mkIf cfg.enable {
+    nix = {
+      useSandbox = true;
+      gc = {
+        automatic = true;
+        dates = cfg.gcDates;
+        options = "--delete-older-than ${cfg.olderThan}";
+      };
+      # if hydra is down, don't wait forever
+      extraOptions = ''
+        connect-timeout = 20
+        build-cores = 0
+      '';
+      binaryCaches = [
+        "https://cache.nixos.org/"
+        "https://r-ryantm.cachix.org"
+        "https://vdemeester.cachix.org"
+        "https://shortbrain.cachix.org"
+      ];
+      binaryCachePublicKeys = [
+        "r-ryantm.cachix.org-1:gkUbLkouDAyvBdpBX0JOdIiD2/DP1ldF3Z3Y6Gqcc4c="
+        "vdemeester.cachix.org-1:uCECG6so7v1rs77c5NFz2dCePwd+PGNeZ6E5DrkT7F0="
+        "shortbrain.cachix.org-1:dqXcXzM0yXs3eo9ChmMfmob93eemwNyhTx7wCR4IjeQ="
+      ];
+      trustedUsers = [ "root" "vincent" ];
+    };
+    nixpkgs = {
+      config = {
+        allowUnfree = true;
+        packageOverrides = pkgs: {
+          nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+            inherit pkgs;
+          };
+        };
+      };
+    };
+  };
+}

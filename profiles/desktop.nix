@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./default.nix
     ./printing.nix
     ./scanning.nix
     ./avahi.nix
