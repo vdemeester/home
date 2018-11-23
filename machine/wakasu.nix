@@ -7,14 +7,14 @@
     ../profiles/laptop.nix
     ../profiles/ssh.nix
     ../profiles/dev.nix
-    ../profiles/containerd.nix
-    ../profiles/dockerization.nix
-    ../profiles/virtualization.nix
     ../location/home.nix
     ../hardware/lenovo-p50.nix
   ];
 
   profiles.laptop.enable = true;
+  profiles.docker.enable = true;
+  profiles.containerd.enable = true;
+  profiles.virtualization.enable = true;
   security.pam.loginLimits = [
     { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
     { domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }

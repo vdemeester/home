@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./users.nix
     ./overlays.nix
   ];
   boot.loader.systemd-boot.enable = true;
