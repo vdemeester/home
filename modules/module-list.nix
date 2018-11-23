@@ -15,6 +15,7 @@
     ./profiles/printing.nix
     ./profiles/pulseaudio.nix
     ./profiles/scanning.nix
+    ./profiles/ssh.nix
     ./profiles/syncthing.nix
     ./profiles/users.nix
     ./profiles/virtualization.nix
