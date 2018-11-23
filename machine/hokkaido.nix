@@ -2,21 +2,16 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-    ../hardware-configuration.nix
-    ../profiles/yubikey.nix
-    ../location/home.nix
-    ../hardware/thinkpad-x220.nix
-  ];
+    [
+      ../profiles/yubikey.nix
+      ../location/home.nix
+      ../hardware/thinkpad-x220.nix
+    ];
 
   profiles.laptop.enable = true;
   profiles.ssh.enable = true;
   profiles.dev.enable = true;
 
-  boot.loader.efi.canTouchEfiVariables = true;
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-  hardware.trackpoint.enable = false;
   time.timeZone = "Europe/Paris";
 
   environment.systemPackages = with pkgs; [
