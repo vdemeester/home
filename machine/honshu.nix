@@ -1,11 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-    ../hardware/dell-latitude-e6540.nix
-    ../location/home.nix
-    ];
+  imports = [ ../hardware/dell-latitude-e6540.nix ];
 
   profiles.ssh.enable = true;
   profiles.dev.enable = true;

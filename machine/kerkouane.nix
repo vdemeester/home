@@ -1,13 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ../networking.nix # generated at runtime by nixos-infect
-    ../profiles/wireguard.server.nix
-  ];
+  imports = [ ../networking.nix ];
 
   profiles.ssh.enable = true;
   profiles.git.enable = true;
+  profiles.wireguard.enable = true;
 
   boot.cleanTmpDir = true;
   boot.loader.grub.enable = true;

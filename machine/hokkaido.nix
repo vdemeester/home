@@ -1,16 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ../profiles/yubikey.nix
-      ../location/home.nix
-      ../hardware/thinkpad-x220.nix
-    ];
+  imports = [ ../hardware/thinkpad-x220.nix ];
 
   profiles.laptop.enable = true;
   profiles.ssh.enable = true;
   profiles.dev.enable = true;
+  profiles.yubikey.enable = true;
 
   time.timeZone = "Europe/Paris";
 

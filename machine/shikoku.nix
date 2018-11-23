@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ../location/home.nix
-  ];
-
   profiles.desktop.enable = true;
   profiles.docker.enable = true;
   profiles.buildkit.enable = true;

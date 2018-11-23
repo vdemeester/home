@@ -1,11 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ../location/home.nix
-      ../hardware/lenovo-p50.nix
-    ];
+  imports = [ ../hardware/lenovo-p50.nix ];
 
   profiles.laptop.enable = true;
   profiles.docker.enable = true;

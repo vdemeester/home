@@ -23,6 +23,8 @@
     ./profiles/syncthing.nix
     ./profiles/users.nix
     ./profiles/virtualization.nix
+    ./profiles/wireguard.server.nix
+    ./profiles/yubikey.nix
     ./programs/podman.nix
     ./services/syncthing.nix
     ./services/wireguard.client.nix
