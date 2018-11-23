@@ -3,7 +3,6 @@
 {
   imports = [ # Include the results of the hardware scan.
     ../hardware-configuration.nix
-    ../profiles/ssh.nix
     ../profiles/dev.nix
     ../profiles/gaming.nix
     ../location/home.nix
@@ -14,6 +13,7 @@
   profiles.buildkit.enable = true;
   profiles.containerd.enable = true;
   profiles.virtualization.enable = true;
+  profiles.ssh.enable = true;
   
   time.timeZone = "Europe/Paris";
 
