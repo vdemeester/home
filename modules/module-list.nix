@@ -4,6 +4,7 @@
   imports = [
     ./profiles/fish.nix
     ./profiles/desktop.nix
+    ./profiles/i18n.nix
     ./profiles/nix-config.nix
     ./profiles/nix-auto-update.nix
     ./profiles/laptop.nix
