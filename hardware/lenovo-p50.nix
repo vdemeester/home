@@ -4,6 +4,13 @@
   imports = [
     ./thinkpad.nix
   ];
+  
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  hardware.nvidia.optimus_prime.enable = true;
+  hardware.nvidia.optimus_prime.nvidiaBusId = "PCI:1:0:0";
+  hardware.nvidia.optimus_prime.intelBusId = "PCI:0:2:0";
+  
   services = {
     acpid = {
       lidEventCommands = ''

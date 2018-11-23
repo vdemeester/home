@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  boot.loader.efi.canTouchEfiVariables = true;
+  hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
+
   boot = {
     kernelParams = [
       # Kernel GPU Savings Options (NOTE i915 chipset only)

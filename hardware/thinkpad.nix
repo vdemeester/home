@@ -1,11 +1,16 @@
 { config, pkgs, ... }:
 
 {
+  hardware.trackpoint.enable = false;
   hardware.cpu.intel.updateMicrocode = true;
+  hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
+
   environment.systemPackages = with pkgs; [
     linuxPackages.tp_smapi
   ];
+
   boot = {
+    loader.efi.canTouchEfiVariables = true;
     kernelParams = [
       # Kernel GPU Savings Options (NOTE i915 chipset only)
       "i915.enable_rc6=1" "i915.enable_fbc=1"

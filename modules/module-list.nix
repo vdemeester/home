@@ -12,7 +12,9 @@
     ./profiles/laptop.nix
     ./profiles/nix-config.nix
     ./profiles/nix-auto-update.nix
+    ./profiles/printing.nix
     ./profiles/pulseaudio.nix
+    ./profiles/scanning.nix
     ./profiles/syncthing.nix
     ./profiles/users.nix
     ./profiles/virtualization.nix

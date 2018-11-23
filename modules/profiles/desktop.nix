@@ -32,11 +32,23 @@ in
         description = "Enable syncthing with the desktop profile";
         type = types.bool;
       };
+      scanning = mkOption {
+        default = true;
+        description = "Enable scanning with the desktop profile";
+        type = types.bool;
+      };
+      printing = mkOption {
+        default = true;
+        description = "Enable printing with the desktop profile";
+        type = types.bool;
+      };
     };
   };
   config = mkIf cfg.enable {
-    profiles.pulseaudio.enable = cfg.pulseaudio;
     profiles.avahi.enable = cfg.avahi;
+    profiles.printing.enable = cfg.printing;
+    profiles.pulseaudio.enable = cfg.pulseaudio;
+    profiles.scanning.enable = cfg.scanning;
     profiles.syncthing.enable = cfg.syncthing;
 
     boot = {
