@@ -7,14 +7,16 @@
     ../profiles/ssh.nix
     ../profiles/audio.nix
     ../profiles/dev.nix
-    ../profiles/buildkitd.nix
-    ../profiles/containerd.nix
-    ../profiles/virtualization.nix
-    ../profiles/dockerization.nix
     ../profiles/gaming.nix
     ../location/home.nix
   ];
 
+  profiles.desktop.enable = true;
+  profiles.docker.enable = true;
+  profiles.buildkit.enable = true;
+  profiles.containerd.enable = true;
+  profiles.virtualization.enable = true;
+  
   time.timeZone = "Europe/Paris";
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
