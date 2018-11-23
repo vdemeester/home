@@ -23,7 +23,7 @@ in
         gitAndTools.gitflow
         gitAndTools.hub
         gitAndTools.tig
-        prm
+        nur.repos.vdemeester.prm
       ];
       programs.git = {
         enable = true;

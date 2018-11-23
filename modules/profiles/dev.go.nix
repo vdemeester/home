@@ -35,10 +35,10 @@ in
         # vendoring tools
         vndr
         dep
-        dep-collector
+        nur.repos.vdemeester.dep-collector
         # misc
         protobuf
-        protobuild
+        nur.repos.vdemeester.protobuild
       ];
     }
     (mkIf config.profiles.fish.enable {

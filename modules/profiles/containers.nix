@@ -28,7 +28,7 @@ in
     profiles.docker.enable = cfg.docker;
     programs.podman.enable = cfg.podman;
     home.packages = with pkgs; [
-      go-containerregistry
+      nur.repos.vdemeester.go-containerregistry
       skopeo
     ];
   };

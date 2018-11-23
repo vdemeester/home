@@ -16,7 +16,7 @@ in
   };
   config = mkIf cfg.enable {
     # FIXME(vdemeester) package podman and conmon in nixpkgs
-    home.packages = with pkgs; [ slirp4netns ];
+    home.packages = with pkgs; [ nur.repos.vdemeester.slirp4netns ];
     xdg.configFile."containers/libpod.conf".text = ''
       image_default_transport = "docker://"
       runtime_path = ["/run/current-system/sw/bin/runc"]
