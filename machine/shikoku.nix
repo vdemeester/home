@@ -3,9 +3,7 @@
 {
   imports = [ # Include the results of the hardware scan.
     ../hardware-configuration.nix
-    ../profiles/desktop.nix
     ../profiles/ssh.nix
-    ../profiles/audio.nix
     ../profiles/dev.nix
     ../profiles/gaming.nix
     ../location/home.nix
