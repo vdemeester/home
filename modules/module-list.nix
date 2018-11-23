@@ -8,9 +8,10 @@
     ./profiles/desktop.nix
     ./profiles/docker.nix
     ./profiles/i18n.nix
+    ./profiles/laptop.nix
     ./profiles/nix-config.nix
     ./profiles/nix-auto-update.nix
-    ./profiles/laptop.nix
+    ./profiles/pulseaudio.nix
     ./profiles/users.nix
     ./profiles/virtualization.nix
     ./programs/podman.nix
