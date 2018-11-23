@@ -1,9 +1,7 @@
 { config, pkgs, ...}:
 
 {
-  imports = [
-    ./thinkpad.nix
-  ];
+  imports = [ ./thinkpad.nix ];
   
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
@@ -12,14 +10,6 @@
   hardware.nvidia.optimus_prime.intelBusId = "PCI:0:2:0";
   
   services = {
-    acpid = {
-      lidEventCommands = ''
-if grep -q closed /proc/acpi/button/lid/LID/state; then
-  date >> /tmp/i3lock.log
-  DISPLAY=":0.0" XAUTHORITY=/home/fadenb/.Xauthority ${pkgs.i3lock}/bin/i3lock &>> /tmp/i3lock.log
-fi
-'';
-    };
     tlp = {
       extraConfig = ''
 # CPU optimizations

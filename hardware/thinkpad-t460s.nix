@@ -1,19 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-    ./thinkpad.nix
-  ];
+  imports = [ ./thinkpad.nix ];
   services = {
-    acpid = {
-      lidEventCommands = ''
-if grep -q closed /proc/acpi/button/lid/LID/state; then
-  date >> /tmp/i3lock.log
-  DISPLAY=":0.0" XAUTHORITY=/home/fadenb/.Xauthority ${pkgs.i3lock}/bin/i3lock &>> /tmp/i3lock.log
-fi
-'';
-    };
     tlp = {
       extraConfig = ''
 # CPU optimizations
