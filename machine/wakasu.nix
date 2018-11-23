@@ -2,11 +2,10 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-    ../hardware-configuration.nix
-    ../location/home.nix
-    ../hardware/lenovo-p50.nix
-  ];
+    [
+      ../location/home.nix
+      ../hardware/lenovo-p50.nix
+    ];
 
   profiles.laptop.enable = true;
   profiles.docker.enable = true;

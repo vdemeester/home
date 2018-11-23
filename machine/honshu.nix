@@ -2,12 +2,10 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-    ../hardware-configuration.nix
+    [
     ../hardware/dell-latitude-e6540.nix
-    ../profiles/server.nix
     ../location/home.nix
-  ];
+    ];
 
   profiles.ssh.enable = true;
   profiles.dev.enable = true;

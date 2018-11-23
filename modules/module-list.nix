@@ -3,6 +3,7 @@
 {
   imports = [
     ./profiles/avahi.nix
+    ./profiles/base.nix
     ./profiles/buildkit.nix
     ./profiles/fish.nix
     ./profiles/containerd.nix

@@ -1,8 +1,8 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+
+{
   imports = [
-    ../hardware-configuration.nix
     ../networking.nix # generated at runtime by nixos-infect
-    ../profiles/server.nix
   ];
 
   profiles.ssh.enable = true;

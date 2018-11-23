@@ -1,9 +1,6 @@
-{ config, pkgs, ... }: {
-  imports = [
-    ../hardware-configuration.nix
-    ../profiles/server.ni
-  ];
+{ config, pkgs, ... }:
 
+{
   profiles.ssh.enable = true;
   profiles.git.enable = true;
 

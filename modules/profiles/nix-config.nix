@@ -51,6 +51,9 @@ in
       trustedUsers = [ "root" "vincent" ];
     };
     nixpkgs = {
+      overlays = [
+        (import ../../overlays/sbr.overlay.nix)
+      ];
       config = {
         allowUnfree = true;
         packageOverrides = pkgs: {
