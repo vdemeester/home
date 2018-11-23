@@ -2,20 +2,22 @@
 
 {
   imports = [ ../networking.nix ];
-
-  profiles.ssh.enable = true;
-  profiles.git.enable = true;
-  profiles.wireguard.enable = true;
-
-  boot.cleanTmpDir = true;
-  boot.loader.grub.enable = true;
+  time.timeZone = "Europe/Paris";
+  boot = {
+    cleanTmpDir = true;
+    loader.grub.enable = true;
+  };
+  profiles = {
+    git.enable = true;
+    ssh.enable = true;
+    wireguard.server.enable = true;
+  };
   networking.firewall.allowPing = true;
-  services.openssh.enable = true;
-  services.openssh.ports = with import ../assets/machines.nix; [ ssh.kerkouane.port ];
-  services.openssh.permitRootLogin = "without-password";
-  programs.fish.enable = true;
+  services = {
+    openssh.ports = with import ../assets/machines.nix; [ ssh.kerkouane.port ];
+    openssh.permitRootLogin = "without-password";
+  };
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGR4dqXwHwPpYgyk6yl9+9LRL3qrBZp3ZWdyKaTiXp0p vincent@shikoku"
   ];
-  time.timeZone = "Europe/Paris";
 }

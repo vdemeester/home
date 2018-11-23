@@ -2,28 +2,30 @@
 
 {
   imports = [ ../hardware/dell-latitude-e6540.nix ];
-
-  profiles.ssh.enable = true;
-  profiles.dev.enable = true;
-  profiles.containerd.enable = true;
-  profiles.avahi.enable = true;
-  profiles.syncthing.enable = true;
-
   time.timeZone = "Europe/Paris";
-
+  profiles = {
+    avahi.enable = true;
+    containerd.enable = true;
+    dev.enable = true;
+    ssh.enable = true;
+    syncthing.enable = true;
+  };
+  networking = {
+    enableIPv6 = false;
+    firewall.allowedTCPPorts = [ 3389 2375 7946 9000 80 ];
+  };
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";
+    syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.honshu}:8384";
+    wireguard = with import ../assets/wireguard.nix; {
+      enable = true;
+      ips = [ "${ips.honshu}/24" ];
+      endpoint = main.endpointIP;
+      endpointPort = main.listenPort;
+      endpointPublicKey = kerkouane.publicKey;
+    };
   };
   
-  services.syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.honshu}:8384";
-  services.wireguard = with import ../assets/wireguard.nix; {
-    enable = true;
-    ips = [ "${ips.honshu}/24" ];
-    endpoint = main.endpointIP;
-    endpointPort = main.listenPort;
-    endpointPublicKey = kerkouane.publicKey;
-  };
-
   environment.etc."vrsync".text = ''
 /home/vincent/desktop/pictures/screenshots/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/screenshots/
 /home/vincent/desktop/pictures/wallpapers/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/wallpapers/
@@ -32,7 +34,6 @@
 /run/media/vincent/FcCuir/music/ vincent@synodine.local:/volumeUSB2/usbshare/music/
 vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/drive/
   '';
-
   systemd.services.vrsync = {
     description = "vrsync - sync folders to NAS";
     wantedBy = [ "multi-user.target" ];
@@ -51,7 +52,6 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
     };
   };
   systemd.timers.vrsync.enable = true;
-
   # ape – sync git mirrors
   systemd.services.ape = {
     description = "Ape - sync git mirrors";
@@ -72,7 +72,4 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
     };
   };
   systemd.timers.ape.enable = true;
-
-  networking.enableIPv6 = false;
-  networking.firewall.allowedTCPPorts = [ 3389 2375 7946 9000 80 ];
 }
