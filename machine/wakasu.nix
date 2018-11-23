@@ -30,6 +30,11 @@
   time.timeZone = "Europe/Paris";
 
   services = {
+    logind.extraConfig = ''
+      HandleLidSwitch=suspend
+      HandleLidSwitchExternalPower=ignore
+      HandleLidSwitchDocked=ignore
+    '';
     xserver = {
       videoDrivers = [ "nvidia" ];
       dpi = 96;
