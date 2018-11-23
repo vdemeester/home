@@ -17,12 +17,12 @@
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";
     syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.honshu}:8384";
-    wireguard = with import ../assets/wireguard.nix; {
+    wireguard = with import ../assets/machines.nix; {
       enable = true;
-      ips = [ "${ips.honshu}/24" ];
-      endpoint = main.endpointIP;
-      endpointPort = main.listenPort;
-      endpointPublicKey = kerkouane.publicKey;
+      ips = [ "${wireguard.ips.honshu}/24" ];
+      endpoint = wg.endpointIP;
+      endpointPort = wg.listenPort;
+      endpointPublicKey = wireguard.kerkouane.publicKey;
     };
   };
   
