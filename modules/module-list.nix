@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./profiles/avahi.nix
     ./profiles/buildkit.nix
     ./profiles/fish.nix
     ./profiles/containerd.nix
@@ -12,6 +13,7 @@
     ./profiles/nix-config.nix
     ./profiles/nix-auto-update.nix
     ./profiles/pulseaudio.nix
+    ./profiles/syncthing.nix
     ./profiles/users.nix
     ./profiles/virtualization.nix
     ./programs/podman.nix
