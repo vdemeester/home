@@ -1,10 +1,11 @@
 { config, pkgs, ... }: {
   imports = [
     ../hardware-configuration.nix
-    ../profiles/server.nix
-    ../profiles/gitconfig.nix
-    ../profiles/users.nix
+    ../profiles/server.ni
   ];
+
+  profiles.ssh.enable = true;
+  profiles.git.enable = true;
 
   boot.cleanTmpDir = true;
   networking.firewall.allowPing = true;

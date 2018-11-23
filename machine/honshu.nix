@@ -6,12 +6,14 @@
     ../hardware-configuration.nix
     ../hardware/dell-latitude-e6540.nix
     ../profiles/server.nix
-    ../profiles/dev.nix
-    ../profiles/avahi.nix
-    ../profiles/containerd.nix
-    ../profiles/syncthing.nix
     ../location/home.nix
   ];
+
+  profiles.ssh.enable = true;
+  profiles.dev.enable = true;
+  profiles.containerd.enable = true;
+  profiles.avahi.enable = true;
+  profiles.syncthing.enable = true;
 
   time.timeZone = "Europe/Paris";
 

@@ -3,10 +3,11 @@
     ../hardware-configuration.nix
     ../networking.nix # generated at runtime by nixos-infect
     ../profiles/server.nix
-    ../profiles/gitconfig.nix
-    ../profiles/users.nix
     ../profiles/wireguard.server.nix
   ];
+
+  profiles.ssh.enable = true;
+  profiles.git.enable = true;
 
   boot.cleanTmpDir = true;
   boot.loader.grub.enable = true;

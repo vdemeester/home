@@ -4,7 +4,6 @@
   imports =
     [ # Include the results of the hardware scan.
     ../hardware-configuration.nix
-    ../profiles/dev.nix
     ../location/home.nix
     ../hardware/lenovo-p50.nix
   ];
@@ -14,6 +13,7 @@
   profiles.containerd.enable = true;
   profiles.virtualization.enable = true;
   profiles.ssh.enable = true;
+  profiles.dev.enable = true;
 
   # Move elsewhere
   programs.podman = {

@@ -7,7 +7,9 @@
     ./profiles/fish.nix
     ./profiles/containerd.nix
     ./profiles/desktop.nix
+    ./profiles/dev.nix
     ./profiles/docker.nix
+    ./profiles/git.nix
     ./profiles/i18n.nix
     ./profiles/laptop.nix
     ./profiles/nix-config.nix
