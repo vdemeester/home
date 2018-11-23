@@ -1,9 +1,0 @@
-{
-  spotify = {
-    user = "email@address";
-    password = "password";
-    # Client ID & Secret can be created here https://www.mopidy.com/authenticate/#spotify
-    client_id = "client_id";
-    client_secret = "client_secret";
-  };
-}
