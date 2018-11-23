@@ -35,6 +35,13 @@ in
     };
     sound.mediaKeys.enable = true;
   
+
+    security.pam.loginLimits = [
+      { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
+      { domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
+      { domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
+    ];
+
     # spotify & pulseaudio
     networking.firewall = {
       allowedTCPPorts = [ 57621 57622 4713 ];

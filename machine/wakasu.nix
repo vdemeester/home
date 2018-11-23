@@ -19,12 +19,6 @@
     enable = true;
   };
 
-  security.pam.loginLimits = [
-    { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
-    { domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
-    { domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
-  ];
-
   networking.firewall.allowedUDPPortRanges = [ { from = 6001; to = 6101; } ];
   networking.firewall.allowedTCPPorts = [ 7946 9000 5000 ];
 
