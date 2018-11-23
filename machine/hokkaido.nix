@@ -4,13 +4,14 @@
   imports =
     [ # Include the results of the hardware scan.
     ../hardware-configuration.nix
-    ../profiles/laptop.nix
-    ../profiles/ssh.nix
     ../profiles/yubikey.nix
-    ../profiles/dev.nix
     ../location/home.nix
     ../hardware/thinkpad-x220.nix
   ];
+
+  profiles.laptop.enable = true;
+  profiles.ssh.enable = true;
+  profiles.dev.enable = true;
 
   boot.loader.efi.canTouchEfiVariables = true;
   hardware.bluetooth.enable = true;
