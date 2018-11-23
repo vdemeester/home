@@ -10,6 +10,7 @@
     ./profiles/desktop.nix
     ./profiles/dev.nix
     ./profiles/docker.nix
+    ./profiles/gaming.nix
     ./profiles/git.nix
     ./profiles/i18n.nix
     ./profiles/laptop.nix

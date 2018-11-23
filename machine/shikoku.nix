@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../profiles/gaming.nix
     ../location/home.nix
   ];
 
@@ -13,6 +12,7 @@
   profiles.virtualization.enable = true;
   profiles.ssh.enable = true;
   profiles.dev.enable = true;
+  profiles.gaming.enable = true;
   
   time.timeZone = "Europe/Paris";
 
