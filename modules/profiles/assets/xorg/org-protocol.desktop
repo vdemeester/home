@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=org-protocol
-Exec=eco -n %u
+Exec=ec -n %u
 Type=Application
 Terminal=false
 Categories=System;
