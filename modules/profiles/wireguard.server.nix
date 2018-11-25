@@ -23,7 +23,7 @@ in
     '';
     networking.firewall.allowedUDPPorts = [ 51820 ];
     networking.firewall.trustedInterfaces = [ "wg0" ];
-    networking.wireguard.interfaces = with import ../../../assets/machines.nix; {
+    networking.wireguard.interfaces = with import ../../assets/machines.nix; {
       "wg0" = {
         ips = wireguard.kerkouane.allowedIPs;
         listenPort = wg.listenPort;
