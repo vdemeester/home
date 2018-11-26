@@ -4,15 +4,17 @@
   imports = [
     ./base.nix
   ];
-  profiles.dev = {
-    go.enable = true;
-    js.enable = true;
-  };
-  programs = {
-    vscode.enable = true;
-    emacs.enable = {
+  profiles = {
+    dev = {
+      go.enable = true;
+      js.enable = true;
+    };
+    emacs = {
       enable = true;
       daemonService = false;
     };
+  };
+  programs = {
+    vscode.enable = true;
   };
 }
