@@ -8,10 +8,12 @@
   profiles = {
     git.enable = true;
     ssh.enable = true;
+    syncthing.enable = true;
   };
   networking.firewall.allowPing = true;
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";
+    syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.massimo}:8384";
     wireguard = with import ../assets/machines.nix; {
       enable = true;
       ips = [ "${wireguard.ips.massimo}/24" ];
