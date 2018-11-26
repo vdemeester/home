@@ -86,6 +86,7 @@ in
       gnome3.defaultIconTheme
       gnome3.gnome_themes_standard
       keybase
+      mpv
       peco
       pass
       xdg-user-dirs
