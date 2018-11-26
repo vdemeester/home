@@ -25,9 +25,9 @@
     ./profiles/openshift.nix
     ./profiles/ssh.nix
     ./profiles/tmux.nix
+    ./profiles/vscode.nix
     ./profiles/zsh.nix
     ./programs/podman.nix
-    ./programs/vscode.nix
     ./services/shairport-sync.nix
   ];
 }

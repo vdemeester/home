@@ -13,6 +13,7 @@
     js.enable = true;
     python.enable = true;
     rust.enable = true;
+    vscode.enable = true;
   };
   profiles.media.enable = true;
   profiles.cloud.google.enable = true;
@@ -24,7 +25,6 @@
     openshift = { enable = true; minishift.enable = true; };
   };
   programs = {
-    vscode.enable = true;
     google-chrome.enable = true;
   };
   services.shairport-sync.enable = true;

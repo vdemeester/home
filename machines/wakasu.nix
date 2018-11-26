@@ -12,6 +12,7 @@
     haskell.enable = true;
     python.enable = true;
     rust.enable = true;
+    vscode.enable = true;
   };
   profiles.cloud.google.enable = true;
   profiles.containers = {
@@ -22,7 +23,6 @@
   };
   profiles.media.enable = true;
   programs = {
-    vscode.enable = true;
     google-chrome.enable = true;
     podman.enable = true;
   };
