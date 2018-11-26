@@ -17,6 +17,14 @@ in
   config = mkIf cfg.enable {
     programs.vscode = {
       enable = true;
+      userSettings = {
+        "workbench.iconTheme" = "material-icon-theme";
+        "workbench.colorTheme" = "Material Theme Darker High Contrast";
+        "editor.fontFamily" = "'Fira Code','Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'";
+        "[nix]"."editor.tabSize" = 2;
+        "editor.minimap.enabled" = false;
+        "window.titleBarStyle"= "custom";
+      };
       extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "EditorConfig";
