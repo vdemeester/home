@@ -12,28 +12,16 @@ in
         description = "Enable emacs profile";
         type = types.bool;
       };
+      daemonService = mkOption {
+        default = true;
+        description = "Enable emacs daemon service";
+        type = types.bool;
+      };
     };
   };
   config = mkIf cfg.enable (mkMerge [
     {
       home.file.".local/share/applications/org-protocol.desktop".source = ./assets/xorg/org-protocol.desktop;
-      systemd.user.services.emacs = {
-        Unit = {
-          Description = "Emacs: the extensible, self-documenting text editor";
-        };
-        Service = {
-          Environment = ''
-            PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin GOPATH=/home/vincent ASPELL_CONF=dict-dir=/home/vincent/.nix-profile/lib/aspell
-          '';
-          Type      = "forking";
-          ExecStart = "${pkgs.bash}/bin/bash -c 'source /etc/profile; exec /home/vincent/.nix-profile/bin/emacs --daemon'";
-          ExecStop  = "/home/vincent/.nix-profile/bin/emacsclient --eval (kill-emacs)";
-          Restart   = "always";
-        };
-        Install = {
-          WantedBy = [ "default.target" ];
-        };
-      };
       programs.emacs = {
         enable = true;
         # package = pkgs.myEmacs;
@@ -227,6 +215,25 @@ in
       services.gpg-agent.extraConfig = ''
         allow-emacs-pinentry
       '';
+    })
+    (mkIf cfg.daemonService {
+      systemd.user.services.emacs = {
+        Unit = {
+          Description = "Emacs: the extensible, self-documenting text editor";
+        };
+        Service = {
+          Environment = ''
+            PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin GOPATH=/home/vincent ASPELL_CONF=dict-dir=/home/vincent/.nix-profile/lib/aspell
+          '';
+          Type      = "forking";
+          ExecStart = "${pkgs.bash}/bin/bash -c 'source /etc/profile; exec /home/vincent/.nix-profile/bin/emacs --daemon'";
+          ExecStop  = "/home/vincent/.nix-profile/bin/emacsclient --eval (kill-emacs)";
+          Restart   = "always";
+        };
+        Install = {
+          WantedBy = [ "default.target" ];
+        };
+      };
     })
   ]);
 }
