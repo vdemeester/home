@@ -46,7 +46,7 @@ in
           dired-sidebar
           direnv
           dockerfile-mode
-          easy-kell
+          easy-kill
           eshell-bookmark
           (with melpaPackages; [
           eshell-prompt-extras
