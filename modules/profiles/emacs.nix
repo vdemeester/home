@@ -22,6 +22,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       home.file.".local/share/applications/org-protocol.desktop".source = ./assets/xorg/org-protocol.desktop;
+      home.packages = with pkgs; [ pandoc ];
       programs.emacs = {
         enable = true;
         # package = pkgs.myEmacs;
