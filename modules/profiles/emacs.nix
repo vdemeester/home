@@ -40,7 +40,6 @@ in
           company-lsp
           counsel
           counsel-projectile
-          #crux
           dash
           delight
           dired-collapse
@@ -67,6 +66,7 @@ in
           gitconfig-mode
           gitignore-mode
           (with melpaPackages; [
+            godoctor
             go-add-tags
             go-eldoc
             go-errcheck
