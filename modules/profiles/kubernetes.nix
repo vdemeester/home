@@ -34,7 +34,7 @@ in
         kail
         kustomize
         nur.repos.vdemeester.knctl
-        nur.repos.vdemeester.kube-prompt
+        kube-prompt
         kubectx
       ];
     }
