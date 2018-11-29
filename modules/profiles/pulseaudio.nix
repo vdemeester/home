@@ -12,6 +12,11 @@ in
         description = "Enable pulseaudio profile";
         type = types.bool;
       };
+      tcp = mkOption {
+        default = false;
+        description = "Enable pulseaudio tcp";
+        type = types.bool;
+      };
     };
   };
   config = mkIf cfg.enable {
@@ -20,11 +25,11 @@ in
         enable = true;
         support32Bit = true;
         zeroconf = {
-          discovery.enable = true;
-          publish.enable = true;
+          discovery.enable = cfg.tcp;
+          publish.enable = cfg.tcp;
         };
         tcp = {
-          enable = true;
+          enable = cfg.tcp;
           anonymousClients = {
             allowAll = true;
             allowedIpRanges = [ "127.0.0.1" "192.168.12.0/24" "10.0.0.0/24" ];
