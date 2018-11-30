@@ -70,8 +70,12 @@ in
       ];
       packages = with pkgs; [ networkmanager-openvpn ];  
     };
+
+    programs.dconf.enable = true;
+
     services = {
       flatpak.enable = cfg.flatpak;
+      dbus.packages = [ pkgs.gnome3.dconf ];
       xserver = {
         enable = true;
         enableTCP = false;
