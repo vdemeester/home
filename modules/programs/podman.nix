@@ -80,7 +80,7 @@ in
 }
     '';
 
-    environment.systemPackages = [ pkgs.podman pkgs.conmon pkgs.runc-edge ];
+    environment.systemPackages = with pkgs; [ nur.repos.vdemeester.podman nur.repos.vdemeester.conmon pkgs.runc-edge ];
 
   };
 }
