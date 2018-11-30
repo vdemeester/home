@@ -42,6 +42,13 @@ in
         description = "Enable printing with the desktop profile";
         type = types.bool;
       };
+      slimTheme = mkOption {
+        default = {
+          url = "https://github.com/vdemeester/slim-themes/raw/master/docker-key-theme-0.1.tar.xz";
+          sha256 = "127893l1nzqya0g68k8841g5lm3hlnx7b3b3h06axvplc54a1jd8";
+        };
+        description = "Slim theme to use";
+      };
     };
   };
   config = mkIf cfg.enable {
@@ -101,10 +108,7 @@ in
             enable = true;
             # Probably put this into users instead ?
             defaultUser = "vincent";
-            theme = pkgs.fetchurl {
-              url = "https://github.com/vdemeester/slim-themes/raw/master/docker-key-theme-0.1.tar.xz";
-              sha256 = "127893l1nzqya0g68k8841g5lm3hlnx7b3b3h06axvplc54a1jd8";
-            };
+            theme = pkgs.fetchurl cfg.slimTheme;
           };
         };
       };
