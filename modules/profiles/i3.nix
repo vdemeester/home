@@ -13,6 +13,11 @@ in
         description = "Enable i3 profile";
         type = types.bool;
       };
+      lockCmd = mkOption {
+        default = "slimlock"; # "i3lock-color --clock --color=606060"
+        description = "Lock command to use";
+        type = types.str;
+      };
     };
   };
   config = mkIf cfg.enable {
@@ -31,7 +36,7 @@ in
       network-manager-applet.enable = true;
       screen-locker = {
         enable = true;
-        lockCmd = "i3lock-color --clock --color=606060";
+        lockCmd = cfg.lockCmd;
         inactiveInterval = 15;
       };
       random-background = {
