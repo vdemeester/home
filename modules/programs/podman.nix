@@ -26,7 +26,7 @@ in
     environment.etc."containers/libpod.conf".text = ''
       image_default_transport = "docker://"
       runtime_path = ["${pkgs.runc-edge}/bin/runc"]
-      conmon_path = ["${pkgs.conmon}/bin/conmon"]
+      conmon_path = ["${pkgs.nur.repos.vdemeester.conmon}/bin/conmon"]
       cni_plugin_dir = ["${pkgs.cni-plugins}/bin/"]
       cgroup_manager = "systemd"
       cni_config_dir = "/etc/cni/net.d/"
