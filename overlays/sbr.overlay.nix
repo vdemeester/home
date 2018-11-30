@@ -26,10 +26,4 @@ self: super: {
   stellar = import ../pkgs/stellar {
     inherit (self) stdenv lib fetchFromGitHub removeReferencesTo go;
   };
-  podman = import ../pkgs/podman {
-    inherit (self) stdenv lib fetchFromGitHub removeReferencesTo pkgconfig makeWrapper go libtool gpgme lvm2 btrfs-progs libseccomp gcc;
-  };
-  conmon = import ../pkgs/conmon {
-    inherit (self) stdenv lib fetchFromGitHub makeWrapper pkgconfig libtool gcc glib;
-  };
 }
