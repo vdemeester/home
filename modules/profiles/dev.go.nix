@@ -18,16 +18,16 @@ in
     {
       profiles.dev.enable = true;
       home.packages = with pkgs; [
-        go
         gcc
-        # tools
-        gotools
-        golint
-        godef
+        go
         gocode
-        gotests
-        gopkgs
+        godef
+        golangci-lint
+        golint
         gomodifytags
+        gopkgs
+        gotests
+        gotools
         go-outline
         go-symbols
         goconvey
