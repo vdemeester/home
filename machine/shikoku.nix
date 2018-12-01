@@ -30,6 +30,8 @@
           }
         '';
     loader.grub.useOSProber = true;
+    kernelModules = [ "kvm_intel" ];
+    kernelParams = [ "kvm_intel.nested=1" ];
   };
   hardware.bluetooth.enable = true;
   programs.podman = {
