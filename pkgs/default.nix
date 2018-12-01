@@ -25,9 +25,6 @@ rec {
   cni-plugins = import ./cni/plugins.nix {
     inherit (pkgs) stdenv lib fetchFromGitHub go;
   };
-  buildkit = import ./buildkit {
-    inherit (pkgs) stdenv lib fetchFromGitHub buildGoPackage;
-  };
   stellar = import ./stellar {
     inherit (pkgs) stdenv lib fetchFromGitHub removeReferencesTo go;
   };

@@ -14,9 +14,6 @@ self: super: {
   containerd-edge = import ../pkgs/containerd {
     inherit (self) stdenv lib fetchFromGitHub removeReferencesTo go btrfs-progs;
   };
-  buildkit = import ../pkgs/buildkit {
-    inherit (self) stdenv lib fetchFromGitHub buildGoPackage;
-  };
   cni = import ../pkgs/cni {
     inherit (self) stdenv fetchFromGitHub go;
   };
