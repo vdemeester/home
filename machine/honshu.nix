@@ -59,7 +59,7 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
     serviceConfig = {
       Type = "oneshot";
       User = "vincent";
-      ExecStart = "${pkgs.ape}/bin/ape up /home/vincent/var/mirrors/";
+      ExecStart = "${pkgs.nur.repos.vdemeester.ape}/bin/ape up /home/vincent/var/mirrors/";
       Environment = "PATH=/run/current-system/sw/bin/";
     };
   };

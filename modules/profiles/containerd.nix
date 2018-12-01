@@ -22,15 +22,24 @@ in
         description = "runc package to be used";
         type = types.package;
       };
+      cniPackage = mkOption {
+        default = pkgs.nur.repos.vdemeester.cni;
+        description = "cni package to be used";
+        type = types.package;
+      };
+      cniPluginsPackage = mkOption {
+        default = pkgs.nur.repos.vdemeester.cni-plugins;
+        description = "cni-plugins package to be used";
+        type = types.package;
+      };
     };
   };
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      cni
-      cni-plugins
+      cfg.cniPackage
+      cfg.cniPluginsPackage
       cfg.package
       cfg.runcPackage
-      stellar
     ];
     virtualisation = {
       containerd = {

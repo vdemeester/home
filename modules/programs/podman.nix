@@ -33,6 +33,16 @@ in
         description = "conmon package to be used";
         type = types.package;
       };
+      cniPackage = mkOption {
+        default = pkgs.nur.repos.vdemeester.cni;
+        description = "cni package to be used";
+        type = types.package;
+      };
+      cniPluginsPackage = mkOption {
+        default = pkgs.nur.repos.vdemeester.cni-plugins;
+        description = "cni-plugins package to be used";
+        type = types.package;
+      };
     };
   };
 
@@ -42,7 +52,7 @@ in
       image_default_transport = "docker://"
       runtime_path = ["${cfg.runcPackage}/bin/runc"]
       conmon_path = ["${cfg.conmonPackage}/bin/conmon"]
-      cni_plugin_dir = ["${pkgs.cni-plugins}/bin/"]
+      cni_plugin_dir = ["${cfg.cniPluginsPackage}/bin/"]
       cgroup_manager = "systemd"
       cni_config_dir = "/etc/cni/net.d/"
       cni_default_network = "podman"
