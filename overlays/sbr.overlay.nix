@@ -8,12 +8,6 @@ self: super: {
   vde-thinkpad = import ../pkgs/vde-thinkpad {
     inherit (self) stdenv lib;
   };
-  runc-edge = import ../pkgs/runc {
-    inherit (self) stdenv lib fetchFromGitHub removeReferencesTo go-md2man go pkgconfig libapparmor apparmor-parser libseccomp;
-  };
-  containerd-edge = import ../pkgs/containerd {
-    inherit (self) stdenv lib fetchFromGitHub removeReferencesTo go btrfs-progs;
-  };
   cni = import ../pkgs/cni {
     inherit (self) stdenv fetchFromGitHub go;
   };

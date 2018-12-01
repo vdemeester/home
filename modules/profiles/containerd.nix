@@ -13,12 +13,12 @@ in
         type = types.bool;
       };
       package = mkOption {
-      default = pkgs.containerd-edge;
+        default = pkgs.nur.repos.vdemeester.containerd;
         description = "containerd package to be used";
         type = types.package;
       };
       runcPackage = mkOption {
-        default = pkgs.runc-edge;
+        default = pkgs.nur.repos.vdemeester.runc;
         description = "runc package to be used";
         type = types.package;
       };
