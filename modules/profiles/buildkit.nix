@@ -12,18 +12,31 @@ in
         description = "Enable buildkit profile";
         type = types.bool;
       };
+      package = mkOption {
+        default = pkgs.nur.repos.vdemeester.buildkit;
+        description = "buildkit package to be used";
+        type = types.package;
+      };
+      runcPackage = mkOption {
+        default = pkgs.runc-edge;
+        description = "runc package to be used";
+        type = types.package;
+      };
     };
   };
   config = mkIf cfg.enable {
-    profiles.containerd.enable = true;
+    profiles.containerd = {
+      enable = true;
+      runcPackage = cfg.runcPackage;
+    };
     environment.systemPackages = with pkgs; [
-      buildkit
+      cfg.package
     ];
     virtualisation = {
       buildkitd= {
         enable = true;
-        package = pkgs.buildkit;
-        packages = [ pkgs.runc-edge pkgs.git ];
+        package = cfg.package;
+        packages = [ cfg.runcPackage pkgs.git ];
         extraOptions = "--oci-worker=false --containerd-worker=true";
       };
     };

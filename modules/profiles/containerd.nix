@@ -12,21 +12,31 @@ in
         description = "Enable containerd profile";
         type = types.bool;
       };
+      package = mkOption {
+      default = pkgs.containerd-edge;
+        description = "containerd package to be used";
+        type = types.package;
+      };
+      runcPackage = mkOption {
+        default = pkgs.runc-edge;
+        description = "runc package to be used";
+        type = types.package;
+      };
     };
   };
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       cni
       cni-plugins
-      containerd-edge
-      runc-edge
+      cfg.package
+      cfg.runcPackage
       stellar
     ];
     virtualisation = {
       containerd = {
         enable = true;
-        package = pkgs.containerd-edge;
-        packages = [ pkgs.runc-edge ];
+        package = cfg.package;
+        packages = [ cfg.runcPackage ];
       };
     };
   };
