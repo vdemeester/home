@@ -18,6 +18,21 @@ in
         '';
         type = types.bool;
       };
+      package = mkOption {
+        default = pkgs.nur.repos.vdemeester.podman;
+        description = "buildkit package to be used";
+        type = types.package;
+      };
+      runcPackage = mkOption {
+        default = pkgs.runc-edge;
+        description = "runc package to be used";
+        type = types.package;
+      };
+      conmonPackage = mkOption {
+        default = pkgs.nur.repos.vdemeester.conmon;
+        description = "conmon package to be used";
+        type = types.package;
+      };
     };
   };
 
@@ -25,8 +40,8 @@ in
 
     environment.etc."containers/libpod.conf".text = ''
       image_default_transport = "docker://"
-      runtime_path = ["${pkgs.runc-edge}/bin/runc"]
-      conmon_path = ["${pkgs.nur.repos.vdemeester.conmon}/bin/conmon"]
+      runtime_path = ["${cfg.runcPackage}/bin/runc"]
+      conmon_path = ["${cfg.conmonPackage}/bin/conmon"]
       cni_plugin_dir = ["${pkgs.cni-plugins}/bin/"]
       cgroup_manager = "systemd"
       cni_config_dir = "/etc/cni/net.d/"
@@ -80,7 +95,7 @@ in
 }
     '';
 
-    environment.systemPackages = with pkgs; [ nur.repos.vdemeester.podman nur.repos.vdemeester.conmon pkgs.runc-edge ];
+    environment.systemPackages = with pkgs; [ cfg.package cfg.conmonPackage cfg.runcPackage ];
 
   };
 }
