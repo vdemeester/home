@@ -11,11 +11,14 @@
 
   boot = {
     loader.efi.canTouchEfiVariables = true;
+    kernelModules = [ "kvm_intel" ];
     kernelParams = [
       # Kernel GPU Savings Options (NOTE i915 chipset only)
       "i915.enable_rc6=1" "i915.enable_fbc=1"
       "i915.lvds_use_ssc=0"
       "drm.debug=0" "drm.vblankoffdelay=1"
+      "kvm_intel.nested=1"
+      "intel_iommu=on"
     ];
     blacklistedKernelModules = [
       # Kernel GPU Savings Options (NOTE i915 chipset only)
