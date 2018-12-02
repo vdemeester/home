@@ -119,7 +119,7 @@ in
           ExecStart = [
             ""
             ''
-              ${pkgs.docker-edge}/bin/dockerd \
+              ${cfg.package}/bin/dockerd \
                 --group=docker \
                 --host=fd:// \
                 --log-driver=${cfg.logDriver} \
