@@ -20,7 +20,7 @@ in
       };
       package = mkOption {
         default = pkgs.nur.repos.vdemeester.podman;
-        description = "buildkit package to be used";
+        description = "podman package to be used";
         type = types.package;
       };
       runcPackage = mkOption {
