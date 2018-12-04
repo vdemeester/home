@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-{
+with import ../assets/machines.nix; {
   time.timeZone = "Europe/Paris";
   boot = {
     cleanTmpDir = true;
@@ -13,8 +13,8 @@
   networking.firewall.allowPing = true;
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";
-    syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.massimo}:8384";
-    wireguard = with import ../assets/machines.nix; {
+    syncthing-edge.guiAddress = "${wireguard.ips.massimo}:8384";
+    wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.massimo}/24" ];
       endpoint = wg.endpointIP;

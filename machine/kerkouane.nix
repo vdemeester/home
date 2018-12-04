@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-{
+with import ../assets/machines.nix; {
   imports = [ ../networking.nix ];
   time.timeZone = "Europe/Paris";
   boot = {
@@ -14,7 +14,7 @@
   };
   networking.firewall.allowPing = true;
   services = {
-    openssh.ports = with import ../assets/machines.nix; [ ssh.kerkouane.port ];
+    openssh.ports = [ ssh.kerkouane.port ];
     openssh.permitRootLogin = "without-password";
   };
   users.users.root.openssh.authorizedKeys.keys = [

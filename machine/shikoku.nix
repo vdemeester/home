@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-{
+with import ../assets/machines.nix; {
   time.timeZone = "Europe/Paris";
   profiles = {
     buildkit.enable = true;
@@ -42,8 +42,8 @@
     firewall.allowedTCPPorts = [ 7946 9000 5000 ];
   };
   services = {
-    syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.shikoku}:8384";
-    wireguard = with import ../assets/machines.nix; {
+    syncthing-edge.guiAddress = "${wireguard.ips.shikoku}:8384";
+    wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.shikoku}/24" ];
       endpoint = wg.endpointIP;

@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-{
+with import ../assets/machines.nix; {
   imports = [
     ../networking.nix # generated at runtime by nixos-infect
   ];
@@ -19,10 +19,10 @@
   };
   networking.firewall.allowPing = true;
   services = {
-    openssh.ports = with import ../assets/machines.nix; [ ssh.carthage.port ];
+    openssh.ports = [ ssh.carthage.port ];
     openssh.permitRootLogin = "without-password";
-    syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.carthage}:8384";
-    wireguard = with import ../assets/machines.nix; {
+    syncthing-edge.guiAddress = "${wireguard.ips.carthage}:8384";
+    wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.carthage}/24" ];
       endpoint = wg.endpointIP;

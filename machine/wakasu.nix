@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-{
+with import ../assets/machines.nix; {
   imports = [ ../hardware/lenovo-p50.nix ];
   time.timeZone = "Europe/Paris";
   profiles = {
@@ -24,8 +24,8 @@
       HandleLidSwitchExternalPower=ignore
       HandleLidSwitchDocked=ignore
     '';
-    syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.wakasu}:8384";
-    wireguard = with import ../assets/machines.nix; {
+    syncthing-edge.guiAddress = "${wireguard.ips.wakasu}:8384";
+    wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.wakasu}/24" ];
       endpoint = wg.endpointIP;

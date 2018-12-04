@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-{
+with import ../assets/machines.nix; {
   imports = [ ../hardware/dell-latitude-e6540.nix ];
   time.timeZone = "Europe/Paris";
   profiles = {
@@ -16,8 +16,8 @@
   };
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";
-    syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.honshu}:8384";
-    wireguard = with import ../assets/machines.nix; {
+    syncthing-edge.guiAddress = "${wireguard.ips.honshu}:8384";
+    wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.honshu}/24" ];
       endpoint = wg.endpointIP;

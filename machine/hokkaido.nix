@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-{
+with import ../assets/machines.nix; {
   imports = [ ../hardware/thinkpad-x220.nix ];
   time.timeZone = "Europe/Paris";
   profiles = {
@@ -34,8 +34,8 @@
         /auto/sshfs file:${mapConfSsh} uid=1000,gid=100,--timeout=30,--ghost
       '';
     };
-    syncthing-edge.guiAddress = with import ../assets/machines.nix; "${wireguard.ips.hokkaido}:8384";
-    wireguard = with import ../assets/machines.nix; {
+    syncthing-edge.guiAddress = "${wireguard.ips.hokkaido}:8384";
+    wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.hokkaido}/24" ];
       endpoint = wg.endpointIP;
