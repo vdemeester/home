@@ -39,6 +39,7 @@ in
         # misc
         protobuf
         nur.repos.vdemeester.protobuild
+        nur.repos.vdemeester.ram
       ];
     }
     (mkIf config.profiles.fish.enable {
