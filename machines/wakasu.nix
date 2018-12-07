@@ -31,6 +31,7 @@
     mattermost-desktop
     slack
     virtmanager
+    awscli
   ];
   services.shairport-sync.enable = true;
 }
