@@ -32,6 +32,7 @@
     slack
     virtmanager
     awscli
+    terraform
   ];
   services.shairport-sync.enable = true;
 }
