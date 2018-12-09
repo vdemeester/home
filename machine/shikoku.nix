@@ -2,6 +2,11 @@
 
 with import ../assets/machines.nix; {
   time.timeZone = "Europe/Paris";
+  fileSystems."/mnt/synodine" = {
+    device = "192.168.12.19:/";
+    fsType = "nfs";
+    options = ["x-systemd.automount" "noauto"];
+  };
   profiles = {
     buildkit.enable = true;
     containerd.enable = true;

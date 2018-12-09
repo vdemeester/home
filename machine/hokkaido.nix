@@ -3,6 +3,11 @@
 with import ../assets/machines.nix; {
   imports = [ ../hardware/thinkpad-x220.nix ];
   time.timeZone = "Europe/Paris";
+  fileSystems."/mnt/synodine" = {
+    device = "192.168.12.19:/";
+    fsType = "nfs";
+    options = ["x-systemd.automount" "noauto"];
+  };
   profiles = {
     avahi.enable = true;
     dev.enable = true;
