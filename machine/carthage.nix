@@ -15,7 +15,7 @@ with import ../assets/machines.nix; {
     syncthing.enable = true;
   };
   programs = {
-    podman = true;
+    podman.enable = true;
   };
   networking.firewall.allowPing = true;
   services = {
