@@ -25,6 +25,7 @@ with import ../assets/machines.nix; {
       HandleLidSwitchDocked=ignore
     '';
     syncthing-edge.guiAddress = "${wireguard.ips.wakasu}:8384";
+    smartd.enable = true;
     wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.wakasu}/24" ];

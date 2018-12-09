@@ -43,6 +43,7 @@ with import ../assets/machines.nix; {
   };
   services = {
     syncthing-edge.guiAddress = "${wireguard.ips.shikoku}:8384";
+    smartd.enable = true;
     wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.shikoku}/24" ];
