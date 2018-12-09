@@ -6,6 +6,7 @@ with import ../assets/machines.nix; {
     cleanTmpDir = true;
   };
   profiles = {
+    avahi.enable = true;
     git.enable = true;
     ssh.enable = true;
     syncthing.enable = true;

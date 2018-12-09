@@ -10,6 +10,7 @@ with import ../assets/machines.nix; {
     syncthing.enable = true;
     virtualization.enable = true;
   };
+  networking.firewall.allowPing = true;
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";    
     syncthing-edge.guiAddress = "${wireguard.ips.hokkaido}:8384";

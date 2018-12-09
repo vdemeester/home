@@ -5,7 +5,6 @@ with import ../assets/machines.nix; {
   time.timeZone = "Europe/Paris";
   profiles = {
     avahi.enable = true;
-    containerd.enable = true;
     dev.enable = true;
     ssh.enable = true;
     syncthing.enable = true;
@@ -13,6 +12,7 @@ with import ../assets/machines.nix; {
   networking = {
     enableIPv6 = false;
     firewall.allowedTCPPorts = [ 3389 2375 7946 9000 80 ];
+    firewall.allowPing = true;
   };
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";
