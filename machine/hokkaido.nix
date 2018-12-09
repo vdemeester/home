@@ -7,6 +7,7 @@ with import ../assets/machines.nix; {
     avahi.enable = true;
     dev.enable = true;
     ssh.enable = true;
+    syncthing.enable = true;
     virtualization.enable = true;
   };
   services = {
