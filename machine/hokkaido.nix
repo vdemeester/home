@@ -4,30 +4,13 @@ with import ../assets/machines.nix; {
   imports = [ ../hardware/thinkpad-x220.nix ];
   time.timeZone = "Europe/Paris";
   profiles = {
+    avahi.enable = true;
     dev.enable = true;
-    laptop.enable = true;
     ssh.enable = true;
-    yubikey.enable = true;
-  };
-  programs.podman = {
-    enable = true;
+    virtualization.enable = true;
   };
   services = {
-    autofs = {
-      enable = true;
-      debug = false;
-      autoMaster = let
-        mapConfSsh = pkgs.writeText "auto.sshfs"  ''
-        shikoku.local -fstype=fuse,allow_other :sshfs\#shikoku.local\:
-        '';
-        mapConf = pkgs.writeText "auto"  ''
-        synodine -fstype=nfs,rw 192.168.12.19:/
-        '';
-      in ''
-        /auto file:${mapConf}
-        /auto/sshfs file:${mapConfSsh} uid=1000,gid=100,--timeout=30,--ghost
-      '';
-    };
+    logind.extraConfig = "HandleLidSwitch=ignore";    
     syncthing-edge.guiAddress = "${wireguard.ips.hokkaido}:8384";
     wireguard = {
       enable = true;
