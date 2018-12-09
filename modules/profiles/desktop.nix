@@ -44,8 +44,8 @@ in
       };
       slimTheme = mkOption {
         default = {
-          url = "https://github.com/vdemeester/slim-themes/raw/master/docker-key-theme-0.1.tar.xz";
-          sha256 = "127893l1nzqya0g68k8841g5lm3hlnx7b3b3h06axvplc54a1jd8";
+          url = "https://github.com/vdemeester/slim-themes/raw/master/v-theme-0.1.tar.xz";
+          sha256 = "1648krzmh6y2khbcf1zyik3znjpa8rckchbq49z1vqcg8zi587xi";
         };
         description = "Slim theme to use";
       };

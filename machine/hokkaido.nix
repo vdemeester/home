@@ -6,12 +6,6 @@ with import ../assets/machines.nix; {
   profiles = {
     dev.enable = true;
     laptop.enable = true;
-    desktop = {
-        slimTheme = {
-          url = "https://github.com/vdemeester/slim-themes/raw/master/v-theme-0.1.tar.xz";
-          sha256 = "1648krzmh6y2khbcf1zyik3znjpa8rckchbq49z1vqcg8zi587xi";
-        };
-    };
     ssh.enable = true;
     yubikey.enable = true;
   };
