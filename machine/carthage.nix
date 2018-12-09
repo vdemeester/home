@@ -14,9 +14,6 @@ with import ../assets/machines.nix; {
     ssh.enable = true;
     syncthing.enable = true;
   };
-  programs = {
-    podman.enable = true;
-  };
   networking.firewall.allowPing = true;
   services = {
     openssh.ports = [ ssh.carthage.port ];
