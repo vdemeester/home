@@ -34,9 +34,6 @@
 
   home.packages = with pkgs; [
     obs-studio # screencast
-    mattermost-desktop
-    slack
     virtmanager
-    zoom-us
   ];
 }
