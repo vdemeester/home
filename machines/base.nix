@@ -11,6 +11,7 @@ rec {
     };
   };
   home.file.".nix-channels".source = ../assets/nix-channels;
+  home.file.".msmtprc".source = /etc/msmtprc;
   home.packages = with pkgs; [
     direnv
     enchive
