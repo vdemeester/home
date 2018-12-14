@@ -14,6 +14,7 @@
     ./profiles/git.nix
     ./profiles/i18n.nix
     ./profiles/laptop.nix
+    ./profiles/mail.nix
     ./profiles/nix-config.nix
     ./profiles/nix-auto-update.nix
     ./profiles/printing.nix
