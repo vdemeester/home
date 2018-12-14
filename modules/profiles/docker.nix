@@ -34,6 +34,9 @@ in
         extraOptions = "--label=type=desktop --experimental --init --debug --add-runtime docker-runc=${cfg.runcPackage}/bin/runc --default-runtime=docker-runc --containerd=/run/containerd/containerd.sock --insecure-registry 172.30.0.0/16";
       };
     };
+    environment.etc."docker/daemon.json".text = ''
+      {"features":{"buildkit": true}}
+    '';
     networking.firewall.trustedInterfaces = [ "docker0" ];
   };
 }
