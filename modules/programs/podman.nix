@@ -34,7 +34,7 @@ in
       [registries.search]
       registries = ['docker.io', 'registry.fedoraproject.org', 'quay.io', 'registry.access.redhat.com', 'registry.centos.org']
       [registries.insecure]
-      registries = []
+      registries = ['massimo.local:5000', '192.168.12.0/16']
     '';
 
     xdg.configFile."containers/policy.json".text = ''
