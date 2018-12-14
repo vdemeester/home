@@ -26,7 +26,7 @@ in
     }
     (mkIf config.profiles.fish.enable {
       xdg.configFile."fish/conf.d/docker.fish".text = ''
-        set -gx DOCKER_BUILDKIT 1
+        # set -gx DOCKER_BUILDKIT 1
       '';
     })
   ]);
