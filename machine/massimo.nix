@@ -17,6 +17,7 @@ with import ../assets/machines.nix; {
     syncthing.enable = true;
   };
   networking.firewall.allowPing = true;
+  networking.firewall.allowedTCPPorts = [ 5000 ];
   services = {
     dockerRegistry = {
       enable = true;
