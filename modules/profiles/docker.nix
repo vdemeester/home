@@ -31,11 +31,11 @@ in
         package = cfg.package;
         liveRestore = false;
         storageDriver = "overlay2";
-        extraOptions = "--label=type=desktop --experimental --init --debug --add-runtime docker-runc=${cfg.runcPackage}/bin/runc --default-runtime=docker-runc --containerd=/run/containerd/containerd.sock --insecure-registry 172.30.0.0/16";
+        extraOptions = "--experimental --init --add-runtime docker-runc=${cfg.runcPackage}/bin/runc --default-runtime=docker-runc --containerd=/run/containerd/containerd.sock";
       };
     };
     environment.etc."docker/daemon.json".text = ''
-      {"features":{"buildkit": true}}
+      {"features":{"buildkit": true}, "insecure-registries": ["172.30.0.0/16", "192.168.12.0/16", "massimo.local:5000"]}
     '';
     networking.firewall.trustedInterfaces = [ "docker0" ];
   };
