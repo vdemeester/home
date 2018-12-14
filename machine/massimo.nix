@@ -18,6 +18,11 @@ with import ../assets/machines.nix; {
   };
   networking.firewall.allowPing = true;
   services = {
+    dockerRegistry = {
+      enable = true;
+      enableGarbageCollect = true;
+      listenAddress = "0.0.0.0";
+    };
     logind.extraConfig = "HandleLidSwitch=ignore";
     syncthing-edge.guiAddress = "${wireguard.ips.massimo}:8384";
     wireguard = {
