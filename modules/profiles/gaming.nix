@@ -25,5 +25,6 @@ in
       SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", MODE="0666"
       KERNEL=="uinput", MODE="0660", GROUP="users", OPTIONS+="static_node=uinput"
     '';
+    environment.systemPackages = with pkgs; [ steam ];
   };
 }
