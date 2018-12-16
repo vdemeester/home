@@ -19,6 +19,7 @@ in
     };
   };
   config = mkIf cfg.enable {
+    network.firewall.allowedTCPPorts = [ 80 443];
     services.nginx = {
       enable = true;
       appendHttpConfig = ''
