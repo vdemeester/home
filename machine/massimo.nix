@@ -19,6 +19,10 @@ with import ../assets/machines.nix; {
   networking.firewall.allowPing = true;
   networking.firewall.allowedTCPPorts = [ 5000 ];
   services = {
+    athens = {
+      enable = true;
+      user = "vincent";
+    };
     dockerRegistry = {
       enable = true;
       enableGarbageCollect = true;

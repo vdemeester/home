@@ -17,9 +17,21 @@ in
           Athens package to use.
         '';
       };
+
+      user = mkOption {
+        type = types.str;
+      };
+
+      group = mkOption {
+        type = types.str;
+        default = "nogroup";
+      };
     };
   };
   config = mkIf cfg.enable {
+    networking.firewall = {
+      allowedTCPPorts = [ 3000 ];
+    };
     systemd.packages = [ cfg.package ];
     environment.etc."athens/config.toml".text = ''
       GoBinary = "${pkgs.go}/bin/go"
@@ -31,7 +43,9 @@ in
       BuffaloLogLevel = "debug"
       Port = ":3000"
       ForceSSL = false
-      StoragType = "disk"
+      CloudRuntime = "none"
+      Timeout = 300
+      StorageType = "disk"
 
       [Storage]
         [Storage.Disk]
@@ -41,13 +55,18 @@ in
       description = "Athens service";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
+      preStart = ''
+        mkdir -p /val/lib/athens
+      '';
+      environment = { HOME="/var/lib/athens"; };
       serviceConfig = {
+        User = cfg.user;
         Restart = "on-failure";
         ExecStart = ''
           ${cfg.package}/bin/proxy -config_file=/etc/athens/config.toml
         '';
-        path = [ cfg.package ] ++ [ pkgs.go ];
       };
+      path = [ cfg.package ] ++ [ pkgs.go pkgs.git ];
     };
   };
 }
