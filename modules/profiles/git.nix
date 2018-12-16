@@ -51,7 +51,7 @@ in
   	changed = yellow
   	untracked = red
   [core]
-  	excludesfile = ~/.gitignore.global
+  	#excludesfile = ~/.gitignore.global
   [push]
   	default = matching
   [merge]
