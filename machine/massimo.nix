@@ -19,6 +19,10 @@ with import ../assets/machines.nix; {
   networking.firewall.allowPing = true;
   networking.firewall.allowedTCPPorts = [ 5000 ];
   services = {
+    nix-binary-cache = {
+      enable = true;
+      domain = "massimo.local";
+    };
     athens = {
       enable = true;
       user = "vincent";
