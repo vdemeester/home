@@ -120,7 +120,7 @@ in {
       allowedUDPPorts = [ 21027 ];
     };
 
-    systemd.packages = [ pkgs.syncthing ];
+    systemd.packages = [ cfg.package ];
 
     users = mkIf (cfg.user == defaultUser) {
       users."${defaultUser}" =
