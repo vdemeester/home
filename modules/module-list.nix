@@ -27,6 +27,7 @@
     ./profiles/wireguard.server.nix
     ./profiles/yubikey.nix
     ./programs/podman.nix
+    ./services/athens.nix
     ./services/syncthing.nix
     ./services/wireguard.client.nix
     ./virtualisation/buildkit.nix
