@@ -22,7 +22,7 @@ with import ../assets/machines.nix; {
     nix-binary-cache = {
       enable = true;
       domain = "massimo.local";
-      aliases = ["cache.massimo.home"];
+      aliases = ["cache.massimo.home" "nix.cache.home"];
     };
     athens = {
       enable = true;
