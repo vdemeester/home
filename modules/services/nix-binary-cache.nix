@@ -16,6 +16,11 @@ in
         description = "domain to serve";
         type = types.str;
       };
+      aliases = mkOption {
+        default = [];
+        description = "server aliases to serve";
+        type = types.listOf types.str;
+      };
     };
   };
   config = mkIf cfg.enable {
@@ -34,6 +39,7 @@ in
         access_log logs/access.log;
       '';
       virtualHosts."${cfg.domain}" = {
+      serverAliases = cfg.aliases;
         # enableACME = true;
 
         locations."/" = {
