@@ -38,7 +38,7 @@ in
         build-cores = 0
       '';
       binaryCaches = [
-        "http://massimo.local"
+        "http://cache.massimo.home"
         "https://cache.nixos.org/"
         "https://r-ryantm.cachix.org"
         "https://vdemeester.cachix.org"
