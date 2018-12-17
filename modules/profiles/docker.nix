@@ -26,7 +26,7 @@ in
   };
   config = mkIf cfg.enable {
     virtualisation = {
-      docker = {
+      mydocker = {
         enable = true;
         package = cfg.package;
         liveRestore = false;

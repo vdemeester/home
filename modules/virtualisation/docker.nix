@@ -6,16 +6,15 @@ with lib;
 
 let
 
-  cfg = config.virtualisation.docker-edge;
-  pro = config.networking.proxy.default;
-  proxy_env = optionalAttrs (pro != null) { Environment = "\"http_proxy=${pro}\""; };
+  cfg = config.virtualisation.mydocker;
+  proxy_env = config.networking.proxy.envVars;
 
 in
 
 {
   ###### interface
 
-  options.virtualisation.docker-edge = {
+  options.virtualisation.mydocker = {
     enable =
       mkOption {
         type = types.bool;
@@ -85,15 +84,6 @@ in
           '';
       };
 
-    package = mkOption {
-      default = pkgs.docker;
-      type = types.package;
-      example = pkgs.docker-edge;
-      description = ''
-        Docker package to be used in the module.
-      '';
-    };
-
     extraOptions =
       mkOption {
         type = types.separatedString " ";
@@ -104,17 +94,68 @@ in
             <command>docker</command> daemon.
           '';
       };
+
+    autoPrune = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Whether to periodically prune Docker resources. If enabled, a
+          systemd timer will run <literal>docker system prune -f</literal>
+          as specified by the <literal>dates</literal> option.
+        '';
+      };
+
+      flags = mkOption {
+        type = types.listOf types.str;
+        default = [];
+        example = [ "--all" ];
+        description = ''
+          Any additional flags passed to <command>docker system prune</command>.
+        '';
+      };
+
+      dates = mkOption {
+        default = "weekly";
+        type = types.str;
+        description = ''
+          Specification (in the format described by
+          <citerefentry><refentrytitle>systemd.time</refentrytitle>
+          <manvolnum>7</manvolnum></citerefentry>) of the time at
+          which the prune will occur.
+        '';
+      };
+    };
+
+    package = mkOption {
+      default = pkgs.docker;
+      type = types.package;
+      example = pkgs.docker-edge;
+      description = ''
+        Docker package to be used in the module.
+      '';
+    };
+
+    packages = mkOption {
+      default = [ pkgs.git ];
+      type = types.listOf types.package;
+      example = [ pkgs.git ];
+      description = ''
+        Additional packages to be used in the module
+      '';
+    };
   };
 
   ###### implementation
 
   config = mkIf cfg.enable (mkMerge [{
       environment.systemPackages = [ cfg.package ];
-      users.extraGroups.docker.gid = config.ids.gids.docker;
+      users.groups.docker.gid = config.ids.gids.docker;
       systemd.packages = [ cfg.package ];
 
       systemd.services.docker = {
         wantedBy = optional cfg.enableOnBoot "multi-user.target";
+        environment = proxy_env;
         serviceConfig = {
           ExecStart = [
             ""
@@ -131,9 +172,9 @@ in
             ""
             "${pkgs.procps}/bin/kill -s HUP $MAINPID"
           ];
-        } // proxy_env;
+        };
 
-        path = [ pkgs.kmod ] ++ (optional (cfg.storageDriver == "zfs") pkgs.zfs);
+        path = [ pkgs.kmod ] ++ cfg.packages ++ (optional (cfg.storageDriver == "zfs") pkgs.zfs);
       };
 
       systemd.sockets.docker = {
@@ -145,6 +186,22 @@ in
           SocketUser = "root";
           SocketGroup = "docker";
         };
+      };
+
+
+      systemd.services.docker-prune = {
+        description = "Prune docker resources";
+
+        restartIfChanged = false;
+        unitConfig.X-StopOnRemoval = false;
+
+        serviceConfig.Type = "oneshot";
+
+        script = ''
+          ${cfg.package}/bin/docker system prune -f ${toString cfg.autoPrune.flags}
+        '';
+
+        startAt = optional cfg.autoPrune.enable cfg.autoPrune.dates;
       };
     }
   ]);
