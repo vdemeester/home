@@ -28,6 +28,7 @@
     ./profiles/yubikey.nix
     ./programs/podman.nix
     ./services/athens.nix
+    ./services/coredns.nix
     ./services/nix-binary-cache.nix
     ./services/syncthing.nix
     ./services/wireguard.client.nix

@@ -24,6 +24,10 @@ with import ../assets/machines.nix; {
       domain = "massimo.local";
       aliases = ["cache.massimo.home" "nix.cache.home"];
     };
+    coredns = {
+      enable = true;
+      names = dns;
+    };
     athens = {
       enable = true;
       user = "vincent";
