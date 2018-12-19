@@ -16,17 +16,15 @@ with import ../assets/machines.nix; {
     ssh.enable = true;
   };
   networking.firewall.allowPing = true;
-  /*
   services = {
     wireguard = {
       enable = true;
-      ips = [ "${wireguard.ips.massimo}/24" ];
+      ips = [ "${wireguard.ips.kobe}/24" ];
       endpoint = wg.endpointIP;
       endpointPort = wg.listenPort;
       endpointPublicKey = wireguard.kerkouane.publicKey;
     };
   };
-  */
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGR4dqXwHwPpYgyk6yl9+9LRL3qrBZp3ZWdyKaTiXp0p vincent@shikoku"
   ];
