@@ -36,6 +36,11 @@ with import ../assets/machines.nix; {
       enable = true;
       enableGarbageCollect = true;
       listenAddress = "0.0.0.0";
+      extraConfig = {
+        proxy = {
+          remoteurl = "https://registry-1.docker.io";
+        };
+      };
     };
     logind.extraConfig = "HandleLidSwitch=ignore";
     syncthing-edge.guiAddress = "${wireguard.ips.massimo}:8384";
