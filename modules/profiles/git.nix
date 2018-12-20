@@ -58,6 +58,9 @@ in
           core = {
             editor = "${pkgs.emacs}/bin/emacsclient -t";
           };
+          forge = {
+            remote = "upstream";
+          };
           color = {
             status      = "auto";
             diff        = "auto";
