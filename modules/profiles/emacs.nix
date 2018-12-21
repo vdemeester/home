@@ -114,6 +114,7 @@ in
             nix-buffer
             nix-mode
             nix-sandbox
+            nix-update
             nixos-options
           ])
           no-littering
