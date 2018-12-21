@@ -104,7 +104,7 @@ in
           mode = "hide";
           position = "bottom";
           statusCommand = "${pkgs.i3status}/bin/i3status";
-          fonts = ["Fira Code 10"];
+          trayOutput = "primary";
         }];
       };
       extraConfig = ''
