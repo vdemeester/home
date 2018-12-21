@@ -5,13 +5,13 @@ with import ../assets/machines.nix; {
     ../networking.nix # generated at runtime by nixos-infect
   ];
   time.timeZone = "Europe/Paris";
-  profiles.nix-config.localCaches = [];
   boot = {
     cleanTmpDir = true;
     loader.grub.enable = true;
   };
   profiles = {
     git.enable = true;
+    nix-config.localCaches = [];
     ssh.enable = true;
     syncthing.enable = true;
   };

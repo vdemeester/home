@@ -3,13 +3,13 @@
 with import ../assets/machines.nix; {
   imports = [ ../networking.nix ];
   time.timeZone = "Europe/Paris";
-  profiles.nix-config.localCaches = [];
   boot = {
     cleanTmpDir = true;
     loader.grub.enable = true;
   };
   profiles = {
     git.enable = true;
+    nix-config.localCaches = [];
     ssh.enable = true;
     wireguard.server.enable = true;
   };
