@@ -104,47 +104,25 @@ in
           mode = "hide";
           position = "bottom";
           statusCommand = "${pkgs.i3status}/bin/i3status";
-          # fonts = ["Fira Code 10"];
-          colors = {
-            background = "#073642";
-            statusline = "#eee8d5";
-            focusedWorkspace = {
-              border = "#cb4b16";
-              background = "#cb4b16";
-              text = "#eee8d5";
-            };
-            activeWorkspace = {
-              border = "#cb4b16";
-              background = "#cb4b16";
-              text = "#eee8d5";
-            };
-            inactiveWorkspace = {
-              border = "#b58900";
-              background = "#b58900";
-              text = "#eee8d5";
-            };
-          };
+          fonts = ["Fira Code 10"];
         }];
       };
       extraConfig = ''
           set $mod Mod4
 
         # Use Mouse+$mod to drag floating windows to their wanted position
-          floating_modifier $mod
+        floating_modifier $mod
 
-        set $WS0 0 🐽
-        set $WS1 1 🌎
-        set $WS2 2 🐧
-        set $WS3 3 🐹
-        set $WS4 4 🐸
-        set $WS5 5 👷
-        set $WS6 6 🔰
-        set $WS7 7 ꙮ
-        set $WS8 8 🎧
-        set $WS9 9 🖃
-        # 🗍 🖳 🖧 🖃 🔰 🔮 📰 📐 📁 📂 💻 💡 💢 👷 👊
-        # 🐳 🐸 🐹 🐺 🐽 🐮 🐾 🐿 🐧 🐥 🐣 🐠 🐘 🐙 🐟 🏭
-          # 🏈 🎧 🍰 🍪 🍙 🌵 🌟 ⛺ ⚗ ♺
+        set $WS0 0
+        set $WS1 1
+        set $WS2 2
+        set $WS3 3
+        set $WS4 4
+        set $WS5 5
+        set $WS6 6
+        set $WS7 7
+        set $WS8 8
+        set $WS9 9
 
         # switch to workspace
         bindcode $mod+10 workspace $WS1
@@ -171,7 +149,7 @@ in
           bindcode $mod+Shift+19 move container to workspace $WS0
 
         assign [class="Firefox" window_role="browser"] → $WS1
-          assign [class="Google-chrome" window_role="browser"] → $WS1
+        assign [class="Google-chrome" window_role="browser"] → $WS1
 
         ## quick terminal (tmux)
         exec --no-startup-id alacritty --title metask --class metask --command tmux
@@ -193,7 +171,7 @@ in
         bindsym XF86AudioMicMute exec "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
         bindsym XF86AudioPlay exec "playerctl play-pause"
         bindsym XF86AudioNext exec "playerctl next"
-          bindsym XF86AudioPrev exec "playerctl previous"
+        bindsym XF86AudioPrev exec "playerctl previous"
 
         # reload the configuration file
         bindsym $mod+Shift+x reload
@@ -244,13 +222,13 @@ in
         bindsym t resize shrink width 10 px or 10 ppt
         bindsym s resize grow height 10 px or 10 ppt
         bindsym r resize shrink height 10 px or 10 ppt
-          bindsym n resize grow width 10 px or 10 ppt
+        bindsym n resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
-          bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
