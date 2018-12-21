@@ -22,6 +22,11 @@ in
         description = "Number of day to keep when garbage collect";
         type = types.str;
       };
+      localCaches = mkOption {
+        default = [ "http://nix.cache.home" ];
+        description = "List of local nix caches";
+        type = types.listOf types.str;
+      };
     };
   };
   config = mkIf cfg.enable {
@@ -37,8 +42,7 @@ in
         connect-timeout = 20
         build-cores = 0
       '';
-      binaryCaches = [
-        "http://nix.cache.home"
+      binaryCaches = cfg.localCaches ++ [
         "https://cache.nixos.org/"
         "https://r-ryantm.cachix.org"
         "https://vdemeester.cachix.org"

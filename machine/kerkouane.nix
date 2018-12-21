@@ -3,6 +3,7 @@
 with import ../assets/machines.nix; {
   imports = [ ../networking.nix ];
   time.timeZone = "Europe/Paris";
+  profiles.nix-config.localCaches = [];
   boot = {
     cleanTmpDir = true;
     loader.grub.enable = true;
