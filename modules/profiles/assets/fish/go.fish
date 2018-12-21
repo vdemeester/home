@@ -1,5 +1,5 @@
 set -gx GOPATH $HOME
-set -gx GOPROXY http://massimo.local:3000
+set -gx GOPROXY http://go.cache.home:3000
 
 function _def_go_nix_run_aliases
     set -l unstable pprof
