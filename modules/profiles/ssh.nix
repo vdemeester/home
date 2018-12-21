@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 with lib;
 let
@@ -24,7 +24,7 @@ in
       userKnownHostsFile = "~/.config/ssh/known_hosts";
       controlPath = "~/.ssh/sockets/%u-%l-%r@%h:%p";
     
-      matchBlocks = rec {
+      matchBlocks = {
         "github.com" = {
           hostname = "github.com";
           user = "git";

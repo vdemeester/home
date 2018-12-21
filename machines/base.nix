@@ -1,8 +1,6 @@
-{ pkgs, prefix, ...}:
+{ pkgs, ...}:
 
-let home_directory = builtins.getEnv "HOME"; in
-
-rec {
+{
   imports = [ ../modules/module-list.nix ];
   programs = {
     home-manager = {

@@ -1,5 +1,3 @@
-{ pkgs, lib, ... }:
-
 {
   imports = [
     ./profiles/bash.nix
