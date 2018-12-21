@@ -155,7 +155,7 @@ in
         exec --no-startup-id alacritty --title metask --class metask --command tmux
         for_window [instance="metask"] floating enable;
         for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position center; move scratchpad
-        bindcode $mod+49 [instance="metask"] scratchpad show; move position center
+        bindcode $mod+49 [instance="metask"] scratchpad show
 
         ## hide those chats !
         for_window [class="Slack"] move scratchpad; [class="Slack"] scratchpad show
