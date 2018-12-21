@@ -1,8 +1,5 @@
 self: super:
 {
-  kubespy = import ../pkgs/kubespy {
-    inherit (self) stdenv lib buildGoPackage fetchgit;
-  };
   scripts = import ../pkgs/scripts {
     inherit (self) stdenv;
   };
