@@ -103,8 +103,8 @@ in
         bars = [{
           mode = "hide";
           position = "bottom";
-          statusCommand = "${pkgs.i3status}/bin/i3status";
           trayOutput = "primary";
+          fonts = [ "Fira Code 12" ];
         }];
       };
       extraConfig = ''
@@ -238,29 +238,5 @@ in
         bindsym $mod+o mode "resize"
       '';
     };
-    xdg.configFile."i3/i3status.conf".text = ''
-      general {
-      colors = true
-      color_bad = "#dc322f"
-      color_degraded = "#cb4b16"
-      color_separator = "#000000"
-      output_format = "i3bar"
-      interval = 5
-        }
-
-      order = ""
-      order = "wireless wlp3s0"
-      order += "disk /"
-        order += "time"
-
-      wireless wlp3s0 {
-      format_up = "W: (%quality at %essid) %ip"
-      format_down = "W: down"
-        }
-
-      disk "/" {
-      format = "/ %free"
-      }
-    '';
     };
 }
