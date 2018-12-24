@@ -46,6 +46,7 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
       Type = "oneshot";
       ExecStart = "${pkgs.vrsync}/bin/vrsync";
       Environment = "PATH=/run/current-system/sw/bin";
+      OnFailure = "status-email-root@%n.service";
     };
   };
   systemd.timers.vrsync = {
