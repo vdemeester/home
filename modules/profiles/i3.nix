@@ -104,6 +104,7 @@ in
           mode = "hide";
           position = "bottom";
           trayOutput = "primary";
+          statusCommand = "${pkgs.i3status}/bin/i3status";
           fonts = [ "Fira Code 12" ];
         }];
       };
@@ -238,5 +239,85 @@ in
         bindsym $mod+o mode "resize"
       '';
     };
+    xdg.configFile."i3status/config".text = ''
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+	colors = true
+	interval = 2
+}
+
+order += "disk /"
+order += "run_watch 🐳"
+order += "path_exists 🔑"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "volume master"
+order += "battery 0"
+order += "cpu_temperature 0"
+order += "load"
+order += "tztime local"
+
+wireless _first_ {
+	format_up = "W: (%quality at %essid) %ip"
+	format_down = "W: down"
+}
+
+ethernet _first_ {
+	# if you use %speed, i3status requires root privileges
+	format_up = "E: %ip (%speed)"
+	format_down = "E: down"
+}
+
+battery 0 {
+	format = "%status %percentage %remaining"
+	format_down = "No battery"
+	status_chr = "⚇"
+	status_bat = "⚡"
+	status_full = "☻"
+  status_unk = "?"
+	path = "/sys/class/power_supply/BAT%d/uevent"
+	low_threshold = 10
+}
+
+run_watch 🐳 {
+	pidfile = "/run/docker.pid"
+}
+
+path_exists 🔑 {
+	path = "/proc/sys/net/ipv4/conf/wg0"
+}
+
+tztime local {
+	format = "%Y-%m-%d %H:%M:%S"
+}
+
+load {
+	format = "%1min"
+}
+
+cpu_temperature 0 {
+	format = "T: %degrees °C"
+	path = "/sys/class/hwmon/hwmon0/temp1_input"
+}
+
+disk "/" {
+	format = "%avail"
+}
+
+volume master {
+	format = "♪: %volume"
+	format_muted = "♪: muted (%volume)"
+	device = "default"
+	mixer = "Master"
+	mixer_idx = 0
+}
+    '';
     };
 }
