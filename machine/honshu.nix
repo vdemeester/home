@@ -66,6 +66,7 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
       User = "vincent";
       ExecStart = "${pkgs.nur.repos.vdemeester.ape}/bin/ape up /home/vincent/var/mirrors/";
       Environment = "PATH=/run/current-system/sw/bin/";
+      OnFailure = "status-email-root@%n.service";
     };
   };
   systemd.timers.ape = {

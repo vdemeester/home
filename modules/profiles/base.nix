@@ -37,5 +37,16 @@ in
         wget
       ];
     };
+    systemd.services."status-email-root@" = {
+      description = "status email for %i to vincent";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = ''
+          ${pkgs.nur.repos.vdemeester.systemd-email}/bin/systemd-email vincent@demeester.fr %i
+        '';
+        User = "root";
+        Environment = "PATH=/run/current-system/sw/bin";
+      };
+    };
   };
 }

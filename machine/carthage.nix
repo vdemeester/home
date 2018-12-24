@@ -11,7 +11,10 @@ with import ../assets/machines.nix; {
   };
   profiles = {
     git.enable = true;
-    nix-config.localCaches = [];
+    nix-config = {
+      autoUpgrade = false;
+      localCaches = [];
+    };
     ssh.enable = true;
     syncthing.enable = true;
   };
