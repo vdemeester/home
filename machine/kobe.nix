@@ -17,6 +17,10 @@ with import ../assets/machines.nix; {
   };
   networking.firewall.allowPing = true;
   services = {
+    coredns = {
+      enable = true;
+      names = dns;
+    };
     wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.kobe}/24" ];

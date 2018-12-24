@@ -52,6 +52,7 @@ $TTL    604800
 
 ; name servers - NS records
 @ IN NS ns1
+@ IN NS ns2
 
 ${concatStrings (kToNS name ns)}
   '');
@@ -66,6 +67,7 @@ $TTL    604800
 
 ; name servers - NS records
 @ IN NS ns1.${name}.
+@ IN NS ns2.${name}.
 
 ${concatStrings (kToReverseNS name ns)}
 '');
