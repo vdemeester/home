@@ -11,6 +11,7 @@ with import ../assets/machines.nix; {
   profiles = {
     avahi.enable = true;
     dev.enable = true;
+    docker.enable = true;
     ssh.enable = true;
     syncthing.enable = true;
     virtualization.enable = true;
