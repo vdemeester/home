@@ -24,6 +24,7 @@ in
         gitAndTools.hub
         gitAndTools.tig
         nur.repos.vdemeester.prm
+        nur.repos.vdemeester.ape
       ];
       programs.git = {
         enable = true;
