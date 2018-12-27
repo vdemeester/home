@@ -15,6 +15,7 @@ with import ../assets/machines.nix; {
     ssh.enable = true;
     syncthing.enable = true;
     virtualization.enable = true;
+    nix-config.buildCores = 2;
   };
   networking.firewall.allowPing = true;
   services = {

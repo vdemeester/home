@@ -13,6 +13,7 @@ with import ../assets/machines.nix; {
   profiles = {
     avahi.enable = true;
     git.enable = true;
+    nix-config.buildCores = 4;
     ssh.enable = true;
     syncthing.enable = true;
   };

@@ -11,6 +11,7 @@ with import ../assets/machines.nix; {
   profiles = {
     avahi.enable = true;
     dev.enable = true;
+    nix-config.buildCores = 4;
     ssh.enable = true;
     syncthing.enable = true;
   };

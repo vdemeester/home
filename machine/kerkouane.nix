@@ -10,6 +10,7 @@ with import ../assets/machines.nix; {
   profiles = {
     git.enable = true;
     nix-config.localCaches = [];
+    nix-config.buildCores = 1;
     nix-auto-update.autoUpgrade = false;
     ssh.enable = true;
     wireguard.server.enable = true;

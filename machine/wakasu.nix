@@ -8,6 +8,7 @@ with import ../assets/machines.nix; {
     dev.enable = true;
     docker.enable = true;
     laptop.enable = true;
+    nix-config.buildCores = 4;
     ssh.enable = true;
     virtualization.enable = true;
   };

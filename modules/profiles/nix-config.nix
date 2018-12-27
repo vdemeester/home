@@ -22,6 +22,14 @@ in
         description = "Number of day to keep when garbage collect";
         type = types.str;
       };
+      buildCores = mkOption {
+        type = types.int;
+        default = 2;
+        example = 4;
+        description = ''
+          Maximum number of concurrent tasks during one build.
+        '';
+      };
       localCaches = mkOption {
         default = [ "http://nix.cache.home" ];
         description = "List of local nix caches";
@@ -31,6 +39,7 @@ in
   };
   config = mkIf cfg.enable {
     nix = {
+      buildCores = cfg.buildCores;
       useSandbox = true;
       gc = {
         automatic = true;

@@ -30,6 +30,7 @@ with import ../assets/machines.nix; {
   profiles = {
     avahi.enable = true;
     git.enable = true;
+    nix-config.buildCores = 1;
     ssh.enable = true;
   };
   networking.firewall.allowPing = true;
