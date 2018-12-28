@@ -40,6 +40,9 @@ in
         protobuf
         nur.repos.vdemeester.protobuild
         nur.repos.vdemeester.ram
+        nur.repos.vdemeester.sec
+        nur.repos.vdemeester.goreturns
+        nur.repos.vdemeester.esc
       ];
     }
     (mkIf config.profiles.fish.enable {
