@@ -24,6 +24,9 @@
       # Kernel GPU Savings Options (NOTE i915 chipset only)
       "sierra_net" "cdc_mbim" "cdc_ncm"
     ];
+    initrd = {
+      availableKernelModules = [ "aesni-intel" ];
+    };
   };
   services = {
     acpid = {
