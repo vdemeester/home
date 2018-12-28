@@ -38,6 +38,7 @@ in
           company-ghc
           company-go
           company-lsp
+          company-racer
           counsel
           counsel-projectile
           dash
@@ -60,6 +61,7 @@ in
           flycheck
           flycheck-golangci-lint
           flycheck-popup-tip
+          flycheck-rust
           fullframe
           git-commit
           gitattributes-mode
@@ -139,9 +141,11 @@ in
           projectile
           projectile-ripgrep
           python-mode
+          racer
           rainbow-delimiters
           rainbow-mode
           ripgrep
+          rust-mode
           shift-number
           shackle
           shx
