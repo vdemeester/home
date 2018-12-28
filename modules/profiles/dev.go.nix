@@ -43,6 +43,7 @@ in
         nur.repos.vdemeester.sec
         nur.repos.vdemeester.goreturns
         nur.repos.vdemeester.esc
+        nur.repos.vdemeester.yaspell
       ];
     }
     (mkIf config.profiles.fish.enable {
