@@ -28,8 +28,10 @@ in
     profiles.docker.enable = cfg.docker;
     programs.podman.enable = cfg.podman;
     home.packages = with pkgs; [
-      nur.repos.vdemeester.go-containerregistry
       nur.repos.mic92.cntr
+      nur.repos.vdemeester.go-containerregistry
+      nur.repos.vdemeester.tilt
+      nur.repos.vdemeester.yak
       skopeo
     ];
   };
