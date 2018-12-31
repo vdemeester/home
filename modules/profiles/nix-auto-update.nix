@@ -64,7 +64,7 @@ in
         { inherit (config.environment.sessionVariables) NIX_PATH;
           HOME = "/root";
         };
-        path = [ pkgs.gnutar pkgs.xz pkgs.git config.nix.package.out ];
+        path = [ pkgs.gnutar pkgs.xz pkgs.git config.nix.package.out pkgs.commonsCompress ];
         script = ''
           cd /etc/nixos/
           git pull --autostash --rebase
