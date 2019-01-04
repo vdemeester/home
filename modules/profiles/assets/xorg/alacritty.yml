@@ -10,7 +10,7 @@ window:
     x: 2
     y: 2
 
-  decorations: true
+  decorations: full
 
 tabspaces: 8
 
@@ -33,7 +33,10 @@ font:
   use_thin_strokes: true
 
 render_timer: false
-custom_cursor_colors: false
+
+cursor:
+  style: Underline
+  hide_when_typing: false
 
 # Colors (Tomorrow Night Bright)
 colors:
@@ -94,7 +97,7 @@ mouse_bindings:
 mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
-  faux_scrollback_lines: 1
+  faux_scrolling_lines: 1
 
 scrolling:
   history: 10000
@@ -106,8 +109,6 @@ selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
 dynamic_title: true
-hide_cursor_when_typing: false
-cursor_style: Underline
 
 live_config_reload: true
 
