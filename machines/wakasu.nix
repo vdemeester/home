@@ -1,5 +1,15 @@
 { pkgs, ...}:
 
+let
+  my-obs = pkgs.obs-studio.overrideDerivation (oldAttrs: {
+      patches = [
+        (pkgs.fetchpatch {
+          url = "https://patch-diff.githubusercontent.com/raw/obsproject/obs-studio/pull/1557.diff";
+          sha256 = "162fnkxh2wyn6wrrm1kzv7c2mn96kx35vlmk2qwn1nqlifbpsfyq";
+        })
+      ];
+    });
+in
 {
   imports = [
     ./base.nix
@@ -27,7 +37,7 @@
     podman.enable = true;
   };
   home.packages = with pkgs; [
-    obs-studio
+    my-obs
     mattermost-desktop
     slack
     virtmanager
