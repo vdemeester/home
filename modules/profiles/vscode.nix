@@ -35,8 +35,8 @@ in
           {
             name = "vsc-material-theme";
             publisher = "Equinusocio";
-            version = "2.6.1";
-            sha256 = "0985ybx1ad5qn4m2fykxfj5br409w5mjc4i3ai8z3i3nkchkny28";
+            version = "2.6.3";
+            sha256 = "1ghqp0yfcpcnjcwgvxw7aix9fj5q8kr0i97lmzlw2jqslmyvxg5x";
           }
           {
             name = "material-icon-theme";
