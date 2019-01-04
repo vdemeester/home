@@ -28,6 +28,7 @@ in
     };
   };
   config = mkIf cfg.enable {
+    profiles.gpg.enable = true;
     xsession = mkIf cfg.xsession.enable {
       enable = true;
       initExtra = ''
@@ -61,11 +62,6 @@ in
         latitude = "48.3";
         longitude = "7.5";
         tray = true;
-      };
-      gpg-agent = {
-        enable = true;
-        enableSshSupport = true;
-        defaultCacheTtlSsh = 7200;
       };
     };
     home.file.".XCompose".source = ./assets/xorg/XCompose;

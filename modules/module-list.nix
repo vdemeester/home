@@ -16,6 +16,7 @@
     ./profiles/gaming.nix
     ./profiles/gcloud.nix
     ./profiles/git.nix
+    ./profiles/gpg.nix
     ./profiles/i3.nix
     ./profiles/kubernetes.nix
     ./profiles/laptop.nix
