@@ -3,6 +3,10 @@
 with import ../assets/machines.nix; {
   imports = [ ../hardware/lenovo-p50.nix ];
   time.timeZone = "Europe/Paris";
+  hardware.sane.enable = true;
+  hardware.sane.extraConfig = {
+    "canon" = "bjnp://192.168.12.70";
+  };
   profiles = {
     containerd.enable = true;
     dev.enable = true;

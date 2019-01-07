@@ -27,7 +27,7 @@ in
           isNormalUser = true;
           uid = 1000;
           createHome = true;
-          extraGroups = [ "wheel" "input" ] ++ optionals config.profiles.desktop.enable ["audio" "video" "scanner" "networkmanager"]
+          extraGroups = [ "wheel" "input" ] ++ optionals config.profiles.desktop.enable ["audio" "video" "lp" "scanner" "networkmanager"]
                     ++ optionals config.profiles.docker.enable [ "docker" ]
                     ++ optionals config.profiles.buildkit.enable [ "buildkit" ]
                     ++ optionals config.profiles.virtualization.enable [ "libvirtd" "vboxusers" ];

@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./hardware/sane-extra-config.nix
     ./profiles/avahi.nix
     ./profiles/base.nix
     ./profiles/buildkit.nix
