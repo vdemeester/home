@@ -1,14 +1,8 @@
 { config, pkgs, ... }:
 
 with import ../assets/machines.nix; {
-  imports = [ ../hardware/lenovo-p50.nix ];
-  time.timeZone = "Europe/Paris";
-  hardware.sane.enable = true;
-  hardware.sane.extraConfig = {
-    "canon" = "bjnp://192.168.12.70";
-  };
+  imports = [ ../hardware/lenovo-p50.nix ./home.nix ];
   profiles = {
-    containerd.enable = true;
     dev.enable = true;
     docker.enable = true;
     laptop.enable = true;
@@ -18,10 +12,6 @@ with import ../assets/machines.nix; {
   };
   programs = {
     podman.enable = true;
-  };
-  networking = {
-    firewall.allowedUDPPortRanges = [ { from = 6001; to = 6101; } ];
-    firewall.allowedTCPPorts = [ 7946 9000 5000 ];
   };
   services = {
     logind.extraConfig = ''

@@ -1,23 +1,7 @@
 { config, pkgs, ... }:
 
 with import ../assets/machines.nix; {
-  time.timeZone = "Europe/Paris";
-  fileSystems."/mnt/synodine" = {
-    device = "192.168.12.19:/";
-    fsType = "nfs";
-    options = ["x-systemd.automount" "noauto"];
-  };
-  profiles = {
-    buildkit.enable = true;
-    containerd.enable = true;
-    desktop.enable = true;
-    dev.enable = true;
-    docker.enable = true;
-    gaming.enable = true;
-    nix-config.buildCores = 4;
-    ssh.enable = true;
-    virtualization.enable = true;
-  };
+  imports = [ ./home.nix ];
   boot = {
     loader.efi.canTouchEfiVariables = true;
     loader.grub.enable = true;
@@ -40,12 +24,22 @@ with import ../assets/machines.nix; {
     kernelParams = [ "kvm_intel.nested=1" ];
   };
   hardware.bluetooth.enable = true;
-  programs.podman = {
-    enable = true;
-  };
   networking = {
     firewall.allowedUDPPortRanges = [ { from = 6001; to = 6101; } ];
     firewall.allowedTCPPorts = [ 7946 9000 5000 ];
+  };
+  profiles = {
+    buildkit.enable = true;
+    desktop.enable = true;
+    dev.enable = true;
+    docker.enable = true;
+    gaming.enable = true;
+    nix-config.buildCores = 4;
+    ssh.enable = true;
+    virtualization.enable = true;
+  };
+  programs.podman = {
+    enable = true;
   };
   services = {
     syncthing-edge.guiAddress = "${wireguard.ips.shikoku}:8384";

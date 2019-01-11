@@ -1,14 +1,15 @@
 { config, pkgs, ... }:
 
 with import ../assets/machines.nix; {
-  time.timeZone = "Europe/Paris";
-  fileSystems."/mnt/synodine" = {
-    device = "192.168.12.19:/";
-    fsType = "nfs";
-    options = ["x-systemd.automount" "noauto"];
-  };
+  imports = [ ./home.nix ];
   boot = {
     cleanTmpDir = true;
+  };
+  networking = {
+    firewall = {
+      allowPing = true;
+      allowedTCPPorts = [ 5000 ];
+    };
   };
   profiles = {
     avahi.enable = true;
@@ -17,8 +18,6 @@ with import ../assets/machines.nix; {
     ssh.enable = true;
     syncthing.enable = true;
   };
-  networking.firewall.allowPing = true;
-  networking.firewall.allowedTCPPorts = [ 5000 ];
   services = {
     nix-binary-cache = {
       enable = true;

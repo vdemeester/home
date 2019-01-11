@@ -1,12 +1,11 @@
 { config, pkgs, ... }:
 
 with import ../assets/machines.nix; {
-  imports = [ ../hardware/dell-latitude-e6540.nix ];
-  time.timeZone = "Europe/Paris";
-  fileSystems."/mnt/synodine" = {
-    device = "192.168.12.19:/";
-    fsType = "nfs";
-    options = ["x-systemd.automount" "noauto"];
+  imports = [ ../hardware/dell-latitude-e6540.nix ./home.nix ];
+  networking = {
+    enableIPv6 = false;
+    firewall.allowedTCPPorts = [ 3389 2375 7946 9000 80 ];
+    firewall.allowPing = true;
   };
   profiles = {
     avahi.enable = true;
@@ -14,11 +13,6 @@ with import ../assets/machines.nix; {
     nix-config.buildCores = 4;
     ssh.enable = true;
     syncthing.enable = true;
-  };
-  networking = {
-    enableIPv6 = false;
-    firewall.allowedTCPPorts = [ 3389 2375 7946 9000 80 ];
-    firewall.allowPing = true;
   };
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";
@@ -31,7 +25,8 @@ with import ../assets/machines.nix; {
       endpointPublicKey = wireguard.kerkouane.publicKey;
     };
   };
-  
+
+  # -----------------------------------
   environment.etc."vrsync".text = ''
 /home/vincent/desktop/pictures/screenshots/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/screenshots/
 /home/vincent/desktop/pictures/wallpapers/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/wallpapers/

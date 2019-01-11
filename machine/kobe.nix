@@ -1,12 +1,11 @@
 { config, pkgs, ... }:
 
 with import ../assets/machines.nix; {
-  time.timeZone = "Europe/Paris";
-  fileSystems."/mnt/synodine" = {
-    device = "192.168.12.19:/";
-    fsType = "nfs";
-    options = ["x-systemd.automount" "noauto"];
+  imports = [ ./home.nix ];
+  boot = {
+    cleanTmpDir = true;
   };
+  networking.firewall.allowPing = true;
   nix = {
     distributedBuilds = true;
     buildMachines = [{
@@ -24,16 +23,12 @@ with import ../assets/machines.nix; {
       maxJobs = 2;
     }];
   };
-  boot = {
-    cleanTmpDir = true;
-  };
   profiles = {
     avahi.enable = true;
     git.enable = true;
     nix-config.buildCores = 1;
     ssh.enable = true;
   };
-  networking.firewall.allowPing = true;
   services = {
     coredns = {
       enable = true;

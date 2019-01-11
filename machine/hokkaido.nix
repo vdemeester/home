@@ -1,13 +1,8 @@
 { config, pkgs, ... }:
 
 with import ../assets/machines.nix; {
-  imports = [ ../hardware/thinkpad-x220.nix ];
-  time.timeZone = "Europe/Paris";
-  fileSystems."/mnt/synodine" = {
-    device = "192.168.12.19:/";
-    fsType = "nfs";
-    options = ["x-systemd.automount" "noauto"];
-  };
+  imports = [ ../hardware/thinkpad-x220.nix ./home.nix ];
+  networking.firewall.allowPing = true;
   profiles = {
     avahi.enable = true;
     dev.enable = true;
@@ -17,7 +12,6 @@ with import ../assets/machines.nix; {
     virtualization.enable = true;
     nix-config.buildCores = 2;
   };
-  networking.firewall.allowPing = true;
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";    
     syncthing-edge.guiAddress = "${wireguard.ips.hokkaido}:8384";
