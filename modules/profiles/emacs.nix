@@ -42,6 +42,7 @@ in
           counsel
           counsel-projectile
           dash
+          deft
           delight
           dired-collapse
           dired-sidebar
@@ -140,6 +141,7 @@ in
           popup
           projectile
           projectile-ripgrep
+          pdf-tools
           python-mode
           racer
           rainbow-delimiters
