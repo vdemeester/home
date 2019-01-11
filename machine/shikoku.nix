@@ -63,13 +63,6 @@ with import ../assets/machines.nix; {
         { output = "HDMI-0"; primary = true; }
         { output = "DP-0"; monitorConfig = "Option \"Rotate\" \"right\""; }
       ];
-      /*
-      displayManager = {
-        sessionCommands = ''
-          xrandr --output HDMI-0 --primary --mode 3440x1440 --pos 0x424 --rotate normal--output DP-0 --mode 2560x1440 --pos 3440x0 --rotate right
-        '';
-      };
-      */
       dpi = 96;
     };
   };
