@@ -61,7 +61,7 @@ with import ../assets/machines.nix; {
       videoDrivers = [ "nvidia" ];
       displayManager = {
         sessionCommands = ''
-          xrandr --output DP-2 --auto --left-of DP-4 --output DP-4 --auto &
+          xrandr --output HDMI-0 --primary --mode 3440x1440 --pos 0x424 --rotate normal--output DP-0 --mode 2560x1440 --pos 3440x0 --rotate right
         '';
       };
       dpi = 96;
