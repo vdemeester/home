@@ -63,6 +63,7 @@ in
           flycheck-golangci-lint
           flycheck-popup-tip
           flycheck-rust
+          fold-this
           fullframe
           git-commit
           gitattributes-mode
