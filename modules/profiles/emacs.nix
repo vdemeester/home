@@ -126,6 +126,7 @@ in
           ob-rust
           ob-typescript
           org-plus-contrib
+          org-bullets
           org-ref
           #org-super-agenda
           #org-web-tools
@@ -148,6 +149,7 @@ in
           rainbow-mode
           ripgrep
           rust-mode
+          scratch
           shift-number
           shackle
           shx
