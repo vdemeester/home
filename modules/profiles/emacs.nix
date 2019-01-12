@@ -147,6 +147,7 @@ in
           racer
           rainbow-delimiters
           rainbow-mode
+          region-bindings-mode
           ripgrep
           rust-mode
           scratch
