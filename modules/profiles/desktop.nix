@@ -98,9 +98,9 @@ in
           ''
           ''
             Identifier      "ErgoDox"
-            MatchIsKeyboard "on"
             #MatchVendor     "ErgoDox_EZ"
             #MatchProduct    "ErgoDox_EZ"
+            MatchIsKeyboard "on"
             MatchUSBID      "feed:1307"
             Driver          "evdev"
             Option          "XkbLayout"     "fr"

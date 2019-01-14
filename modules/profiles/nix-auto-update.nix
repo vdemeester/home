@@ -66,6 +66,7 @@ in
         };
         path = [ pkgs.gnutar pkgs.xz pkgs.git config.nix.package.out pkgs.commonsCompress ];
         script = ''
+          export PATH=/run/current-system/sw/bin
           cd /etc/nixos/
           git pull --autostash --rebase
           nix-channel --update
