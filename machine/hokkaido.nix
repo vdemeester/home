@@ -2,7 +2,13 @@
 
 with import ../assets/machines.nix; {
   imports = [ ../hardware/thinkpad-x220.nix ./home.nix ];
-  networking.firewall.allowPing = true;
+  networking = {
+    firewall.allowPing = true;
+    bridges.br1.interfaces = [ "enp0s25" ];
+    interfaces.enp0s25 = {
+      useDHCP = true;
+    };
+  };
   profiles = {
     avahi.enable = true;
     dev.enable = true;
