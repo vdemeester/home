@@ -149,6 +149,8 @@ in
           rainbow-delimiters
           rainbow-mode
           region-bindings-mode
+          request
+          request-deferred
           ripgrep
           rust-mode
           scratch
