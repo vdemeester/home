@@ -2,8 +2,15 @@
 
 with import ../assets/machines.nix; {
   imports = [ ../hardware/thinkpad-x220.nix ./home.nix ];
+  boot = {
+    kernel.sysctl = {
+      "net.bridge.bridge-nf-call-arptables" = 0;
+      "net.bridge.bridge-nf-call-iptables" = 0;
+      "net.bridge.bridge-nf-call-ip6tables" = 0;
+    };
+  };
   networking = {
-    firewall.allowPing = true;
+    firewall.enable = false; # we are in safe territory :D
     bridges.br1.interfaces = [ "enp0s25" ];
     interfaces.enp0s25 = {
       useDHCP = true;
