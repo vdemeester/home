@@ -42,6 +42,11 @@ in
         description = "Enable printing with the desktop profile";
         type = types.bool;
       };
+      networkmanager = mkOption {
+        default = true;
+        description = "Enable networkmanager with the desktop profile";
+        type = types.bool;
+      };
       slimTheme = mkOption {
         default = {
           url = "https://github.com/vdemeester/slim-themes/raw/master/v-theme-0.1.tar.xz";
@@ -64,9 +69,9 @@ in
     };
     
     networking.networkmanager = {
-      enable = true;
+      enable = cfg.networkmanager;
       unmanaged =  [
-        "interface-name:ve-*" "interface-name:veth*" "interface-name:wg0"
+        "interface-name:ve-*" "interface-name:veth*" "interface-name:wg0" "interface-name:docker0" "interface-name:virbr*"
       ];
       packages = with pkgs; [ networkmanager-openvpn ];  
     };
