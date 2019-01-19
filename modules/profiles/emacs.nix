@@ -128,8 +128,9 @@ in
           ob-typescript
           org-plus-contrib
           org-bullets
+          org-capture-pop-frame
           org-ref
-          #org-super-agenda
+          org-super-agenda
           #org-web-tools
           (with melpaPackages; [ org-projectile ])
           ox-epub
