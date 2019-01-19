@@ -22,15 +22,27 @@ with import ../assets/machines.nix; {
     loader.grub.useOSProber = true;
     kernelModules = [ "kvm_intel" ];
     kernelParams = [ "kvm_intel.nested=1" ];
+    kernel.sysctl = {
+      "net.bridge.bridge-nf-call-arptables" = 0;
+      "net.bridge.bridge-nf-call-iptables" = 0;
+      "net.bridge.bridge-nf-call-ip6tables" = 0;
+    };
   };
   hardware.bluetooth.enable = true;
   networking = {
     firewall.allowedUDPPortRanges = [ { from = 6001; to = 6101; } ];
     firewall.allowedTCPPorts = [ 7946 9000 5000 ];
+    bridges.br1.interfaces = [ "enp0s31f6" ];
+    interfaces.enp0s31f6 = {
+      useDHCP = true;
+    };
   };
   profiles = {
     buildkit.enable = true;
-    desktop.enable = true;
+    desktop = {
+      enable = true;
+      networkmanager = false;
+    };
     dev.enable = true;
     docker.enable = true;
     gaming.enable = true;
