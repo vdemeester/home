@@ -22,7 +22,10 @@ with import ../assets/machines.nix; {
     docker.enable = true;
     ssh.enable = true;
     syncthing.enable = true;
-    virtualization.enable = true;
+    virtualization = {
+      enable = true;
+      listenTCP = true;
+    };
     nix-config.buildCores = 2;
   };
   services = {
