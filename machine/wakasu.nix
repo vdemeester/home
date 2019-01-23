@@ -2,6 +2,15 @@
 
 with import ../assets/machines.nix; {
   imports = [ ../hardware/lenovo-p50.nix ./home.nix ];
+  boot = {
+    kernelModules = [ "kvm_intel" ];
+    kernelParams = [ "kvm_intel.nested=1" ];
+    kernel.sysctl = {
+      "net.bridge.bridge-nf-call-arptables" = 0;
+      "net.bridge.bridge-nf-call-iptables" = 0;
+      "net.bridge.bridge-nf-call-ip6tables" = 0;
+    };
+  };
   profiles = {
     dev.enable = true;
     docker.enable = true;
