@@ -30,8 +30,7 @@ with import ../assets/machines.nix; {
   };
   hardware.bluetooth.enable = true;
   networking = {
-    firewall.allowedUDPPortRanges = [ { from = 6001; to = 6101; } ];
-    firewall.allowedTCPPorts = [ 7946 9000 5000 ];
+    firewall.enable = false; # we are in safe territory :D
     bridges.br1.interfaces = [ "enp0s31f6" ];
     interfaces.enp0s31f6 = {
       useDHCP = true;
@@ -48,7 +47,10 @@ with import ../assets/machines.nix; {
     gaming.enable = true;
     nix-config.buildCores = 4;
     ssh.enable = true;
-    virtualization.enable = true;
+    virtualization = {
+      enable = true;
+      listenTCP = true;
+    };
   };
   programs.podman = {
     enable = true;
