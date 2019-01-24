@@ -19,17 +19,28 @@ in
       };
     };
   };
-  config = mkIf cfg.enable {
-    virtualisation.libvirtd = {
-      enable = true;
-      extraConfig = mkIf cfg.listenTCP ''
-      listen_tcp = 1
-      tcp_port = "16509"
-      '';
-    };
-    environment.systemPackages = with pkgs; [
-      qemu
-      vde2
-    ];
-  };
+  config = mkIf cfg.enable (mkMerge [
+    {
+      virtualisation.libvirtd = {
+        enable = true;
+      };
+      environment.systemPackages = with pkgs; [
+        qemu
+        vde2
+      ];
+    }
+    (mkIf cfg.listenTCP {
+      boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
+      virtualisation.libvirtd = {
+        extraConfig = ''
+        listen_tls = 0
+        listen_tcp = 1
+        auth_tcp="none"
+        tcp_port = "16509"
+        '';
+        extraOptions = [ "--listen" ];
+      };
+      networking.firewall.allowedTCPPorts = [ 16509 ];
+    })
+  ]);
 }
