@@ -19,11 +19,12 @@ in
       enable = true;
       userSettings = {
         "workbench.iconTheme" = "material-icon-theme";
-        "workbench.colorTheme" = "Material Theme Darker High Contrast";
+        "workbench.colorTheme" = "plain";
         "editor.fontFamily" = "'Fira Code','Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'";
         "[nix]"."editor.tabSize" = 2;
         "editor.minimap.enabled" = false;
         "window.titleBarStyle"= "custom";
+        "breadcrumbs.enabled" = true;
       };
       extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
