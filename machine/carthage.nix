@@ -18,7 +18,21 @@ with import ../assets/machines.nix; {
     syncthing.enable = true;
   };
   networking.firewall.allowPing = true;
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  security = {
+    acme.certs = {
+      "sbr.pm".email = "vincent@sbr.pm";
+    };
+  };
   services = {
+    nginx = {
+      enable = true;
+      virtualHosts."sbr.pm" = {
+        enableACME = true;
+        forceSSL = true;
+        root = "/var/www/default";
+      };
+    };
     openssh.ports = [ ssh.carthage.port ];
     openssh.permitRootLogin = "without-password";
     syncthing-edge.guiAddress = "${wireguard.ips.carthage}:8384";
