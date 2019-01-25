@@ -27,10 +27,21 @@ with import ../assets/machines.nix; {
   services = {
     nginx = {
       enable = true;
+      virtualHosts."carthage.sbr.pm" = {
+        enableACME = true;
+        forceSSL = true;
+        root = "/var/www/default";
+        locations."/" = {
+          index = "index";
+	};
+      };
       virtualHosts."sbr.pm" = {
         enableACME = true;
         forceSSL = true;
         root = "/var/www/default";
+        locations."/" = {
+          index = "index";
+	};
       };
     };
     openssh.ports = [ ssh.carthage.port ];
