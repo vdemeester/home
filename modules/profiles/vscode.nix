@@ -165,6 +165,12 @@ in
             version = "0.3.2";
             sha256 = "08lhzhrn6p0xwi0hcyp6lj9bvpfj87vr99klzsiy8ji7621dzql3";
           }
+          {
+            name = "plain";
+            publisher = "konstantin";
+            version = "0.0.7";
+            sha256 = "0qbn8bdcbvz8qfjb42n4j9asmsd6zf33w9ypyinb7x37ylw482nx";
+          }
         ] ++ [
           pkgs.vscode-extensions.bbenoist.Nix
           pkgs.vscode-extensions.ms-python.python
