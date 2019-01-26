@@ -33,7 +33,7 @@ with import ../assets/machines.nix; {
         root = "/var/www/default";
         locations."/" = {
           index = "index";
-	};
+        };
       };
       virtualHosts."sbr.pm" = {
         enableACME = true;
@@ -41,7 +41,7 @@ with import ../assets/machines.nix; {
         root = "/var/www/default";
         locations."/" = {
           index = "index";
-	};
+        };
       };
     };
     openssh.ports = [ ssh.carthage.port ];
@@ -53,7 +53,7 @@ with import ../assets/machines.nix; {
       endpoint = wg.endpointIP;
       endpointPort = wg.listenPort;
       endpointPublicKey = wireguard.kerkouane.publicKey;
-    };  
+    };
   };
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGR4dqXwHwPpYgyk6yl9+9LRL3qrBZp3ZWdyKaTiXp0p vincent@shikoku"
