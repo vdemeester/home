@@ -25,7 +25,7 @@ in
       home.packages = with pkgs; [ pandoc rustracer ];
       programs.emacs = {
         enable = true;
-        # package = pkgs.myEmacs;
+        package = pkgs.emacs.override { inherit (pkgs) imagemagick; };
         extraPackages = epkgs: with epkgs; [
           ace-window
           aggressive-indent
