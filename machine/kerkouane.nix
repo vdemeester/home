@@ -13,12 +13,14 @@ with import ../assets/machines.nix; {
     nix-config.buildCores = 1;
     nix-auto-update.autoUpgrade = false;
     ssh.enable = true;
+    syncthing.enable = true;
     wireguard.server.enable = true;
   };
   networking.firewall.allowPing = true;
   services = {
     openssh.ports = [ ssh.kerkouane.port ];
     openssh.permitRootLogin = "without-password";
+    syncthing-edge.guiAddress = "${wireguard.ips.kerkouane}:8384";
   };
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGR4dqXwHwPpYgyk6yl9+9LRL3qrBZp3ZWdyKaTiXp0p vincent@shikoku"
