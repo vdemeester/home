@@ -164,7 +164,6 @@ in
       };
     }
     (mkIf config.profiles.fish.enable{
-      xdg.configFile."fish/conf.d/git.fish".source = ./assets/fish/git.fish;
       programs.fish.shellAbbrs = {
         gs = "git status";
         gb = "git b";

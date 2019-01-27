@@ -31,8 +31,6 @@ in
       end
       '';
     };
-    xdg.configFile."fish/conf.d/a_nix_run.fish".source = ./assets/fish/a_nix_run.fish;
-    xdg.configFile."fish/conf.d/nix-aliases.fish".source = ./assets/fish/nix-aliases.fish;
     xdg.configFile."fish/conf.d/sudope.fish".source = ./assets/fish/sudope.fish;
     xdg.configFile."fish/functions/sudope.fish".source = ./assets/fish/sudope.function.fish;
     xdg.configFile."fish/functions/fish_prompt.fish".source = ./assets/fish/fish_prompt.fish;
