@@ -152,7 +152,16 @@ in
           "*~" "#*#" ".makefile" ".clean"
         ];
       };
-      xdg.configFile."git/config.d/redhat.gitconfig".source = ./assets/git/redhat.gitconfig;    
+      xdg.configFile."git/config.d/redhat.gitconfig".source = ./assets/git/redhat.gitconfig;
+      xdg.configFile."nr/git" = {
+        text = builtins.toJSON [
+          {cmd = "mr";}
+          {cmd = "grv"; pkg = "gitAndTools.grv";}
+          {cmd = "git-annex"; pkg = "gitAndTools.git-annex";}
+          {cmd = "git-appraise"; pkg = "gitAndTools.git-appraise"; chan = "unstable";}
+        ];
+        onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr git";
+      };
     }
     (mkIf config.profiles.fish.enable{
       xdg.configFile."fish/conf.d/git.fish".source = ./assets/fish/git.fish;

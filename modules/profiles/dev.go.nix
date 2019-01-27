@@ -45,6 +45,12 @@ in
         nur.repos.vdemeester.esc
         nur.repos.vdemeester.yaspell
       ];
+      xdg.configFile."nr/go" = {
+        text = builtins.toJSON [
+          {cmd = "pprof"; chan = "unstable";}
+        ];
+        onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr go";
+      };
     }
     (mkIf config.profiles.fish.enable {
       xdg.configFile."fish/conf.d/go.fish".source = ./assets/fish/go.fish;

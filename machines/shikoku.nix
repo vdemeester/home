@@ -36,15 +36,4 @@
     obs-studio
     virtmanager
   ];
-
-  xdg.configFile."nr" = {
-    text = builtins.toJSON [
-      {cmd = "mr";}
-      {cmd = "sshfs";}
-      {cmd = "lspci"; pkg = "pciutils";}
-      {cmd = "lsusb"; pkg = "usbutils";}
-      {cmd = "wakeonlan"; pkg = "python36Packages.wakeonlan";}
-    ];
-    onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr";
-  };
 }
