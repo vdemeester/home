@@ -172,6 +172,7 @@ in
           wgrep
           which-key
           with-editor
+          xterm-color
           yasnippet
           yaml-mode
         ];
