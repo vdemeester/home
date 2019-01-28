@@ -37,7 +37,7 @@ in
     xdg.configFile."fish/functions/fish_right_prompt.fish".source = ./assets/fish/fish_right_prompt.fish;
     xdg.configFile."nr/default" = {
       text = builtins.toJSON [
-        {cmd = "ncdu";} {cmd = "sshfs";} {cmd = "gotop";} {cmd = "pandoc";}
+        {cmd = "ncdu";} {cmd = "sshfs";} {cmd = "gotop";} {cmd = "pandoc";} {cmd = "dep2nix";} {cmd = "go2nix";}
         {cmd = "lspci"; pkg = "pciutils";}
         {cmd = "lsusb"; pkg = "usbutils";}
         {cmd = "wakeonlan"; pkg = "python36Packages.wakeonlan";}
