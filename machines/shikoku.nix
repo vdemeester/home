@@ -15,6 +15,7 @@
     rust.enable = true;
     vscode.enable = true;
   };
+  profiles.emacs.withXwidgets = true;
   profiles.media.enable = true;
   profiles.cloud.google.enable = true;
   profiles.containers = {

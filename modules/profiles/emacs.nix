@@ -17,6 +17,11 @@ in
         description = "Enable emacs daemon service";
         type = types.bool;
       };
+      withXwidgets = mkOption {
+        default = false;
+        description = "Enable Xwidgets in emacs build";
+        type = types.bool;
+      };
     };
   };
   config = mkIf cfg.enable (mkMerge [
@@ -25,7 +30,7 @@ in
       home.packages = with pkgs; [ pandoc rustracer ];
       programs.emacs = {
         enable = true;
-        package = pkgs.emacs.override { inherit (pkgs) imagemagick; };
+        package = pkgs.emacs.override { inherit (pkgs) imagemagick; withXwidgets = cfg.withXwidgets; };
         extraPackages = epkgs: with epkgs; [
           ace-window
           aggressive-indent
@@ -129,6 +134,7 @@ in
           org-plus-contrib
           org-bullets
           org-capture-pop-frame
+          org-gcal
           org-ref
           org-super-agenda
           #org-web-tools
