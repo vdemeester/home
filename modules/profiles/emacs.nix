@@ -47,6 +47,7 @@ in
           counsel
           counsel-projectile
           dash
+          define-word
           deft
           delight
           dired-collapse
