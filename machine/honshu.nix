@@ -38,6 +38,7 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
   systemd.services.vrsync = {
     description = "vrsync - sync folders to NAS";
     wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.vrsync}/bin/vrsync";
@@ -58,6 +59,7 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
   systemd.services.ape = {
     description = "Ape - sync git mirrors";
     wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
     serviceConfig = {
       Type = "oneshot";
       User = "vincent";
