@@ -39,6 +39,7 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
     description = "vrsync - sync folders to NAS";
     wantedBy = [ "multi-user.target" ];
     restartIfChanged = false;
+    startAt = "daily";
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.vrsync}/bin/vrsync";
@@ -46,20 +47,12 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
       OnFailure = "status-email-root@%n.service";
     };
   };
-  systemd.timers.vrsync = {
-    description = "vrsync daily";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "daily";
-      Persistent = "true";
-    };
-  };
-  systemd.timers.vrsync.enable = true;
   # ape – sync git mirrors
   systemd.services.ape = {
     description = "Ape - sync git mirrors";
     wantedBy = [ "multi-user.target" ];
     restartIfChanged = false;
+    startAt = "hourly";
     serviceConfig = {
       Type = "oneshot";
       User = "vincent";
@@ -68,13 +61,4 @@ vincent@synodine.local:/volume1/backup/drive/ /run/media/vincent/Toshito/backup/
       OnFailure = "status-email-root@%n.service";
     };
   };
-  systemd.timers.ape = {
-    description = "Ape hourly";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "hourly";
-      Persistent = "true";
-    };
-  };
-  systemd.timers.ape.enable = true;
 }

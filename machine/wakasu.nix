@@ -17,7 +17,10 @@ with import ../assets/machines.nix; {
     laptop.enable = true;
     nix-config.buildCores = 4;
     ssh.enable = true;
-    virtualization.enable = true;
+    virtualization = {
+      enable = true;
+      listenTCP = true;
+    };
   };
   programs = {
     podman.enable = true;
