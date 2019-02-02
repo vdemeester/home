@@ -30,7 +30,7 @@ with import ../assets/machines.nix; {
       virtualHosts."carthage.sbr.pm" = {
         enableACME = true;
         forceSSL = true;
-        root = "/var/www/default";
+        root = "/home/vincent/desktop/sites/carthage.sbr.pm";
         locations."/" = {
           index = "index";
         };
@@ -38,7 +38,7 @@ with import ../assets/machines.nix; {
       virtualHosts."sbr.pm" = {
         enableACME = true;
         forceSSL = true;
-        root = "/var/www/default";
+        root = "/home/vincent/desktop/sites/sbr.pm";
         locations."/" = {
           index = "index";
         };
