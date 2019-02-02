@@ -138,8 +138,7 @@ in
           org-gcal
           org-ref
           org-super-agenda
-          #org-web-tools
-          (with melpaPackages; [ org-projectile ])
+          org-web-tools
           ox-epub
           ox-hugo
           ox-ioslide
@@ -162,7 +161,6 @@ in
           ripgrep
           rust-mode
           scratch
-          shift-number
           shackle
           shx
           smart-jump
