@@ -130,12 +130,12 @@ in
           no-littering
           ob-async
           ob-go
+          ob-http
           ob-rust
           ob-typescript
           org-plus-contrib
           org-bullets
           org-capture-pop-frame
-          org-gcal
           org-ref
           org-super-agenda
           org-web-tools
@@ -143,6 +143,7 @@ in
           ox-hugo
           ox-ioslide
           ox-pandoc
+          ox-slack
           ox-tufte
           ox-twbs
           pandoc-mode
