@@ -46,6 +46,7 @@ in
     };
     xdg.configFile."alacritty/alacritty.yml".source = ./assets/xorg/alacritty.yml;
     xsession.windowManager.i3 = {
+      package = pkgs.i3-gaps;
       enable = true;
       config = {
         fonts = ["Fira Code 10"];
@@ -59,6 +60,10 @@ in
         };
         keybindings = {
           "Mod4+Return" = "exec alacritty";
+        };
+        gaps = {
+          inner = 0;
+          outer = 0;
         };
         keycodebindings = {
           "Mod4+Shift+24" = "kill";
@@ -74,6 +79,16 @@ in
           "Mod4+Shift+45" = "move down";
           "Mod4+Shift+46" = "move up";
           "Mod4+Shift+47" = "move right";
+          # resize
+          "Mod4+Control+44" = "resize shrink width 5px or 5ppt";
+          "Mod4+Control+45" = "resize grow width 5px or 5ppt";
+          "Mod4+Control+46" = "resize shrink hight 5px or 5ppt";
+          "Mod4+Control+47" = "resize grow height 5px or 5ppt";
+          # gaps
+          "Mod4+Mod1+44" = "gaps inner current plus 5";
+          "Mod4+Mod1+45" = "gaps inner current minus 5";
+          "Mod4+Mod1+46" = "gaps outer current plus 5";
+          "Mod4+Mod1+47" = "gaps outer current minus 5";
           # Split
           "Mod4+43" = "split h";
           "Mod4+55" = "split v";
