@@ -133,6 +133,7 @@ in
           ob-http
           ob-rust
           ob-typescript
+          orca
           org-plus-contrib
           org-bullets
           org-capture-pop-frame
