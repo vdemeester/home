@@ -70,6 +70,15 @@ in
     xdg.configFile."xorg/parens.compose".source = ./assets/xorg/parens.compose;
     xdg.configFile."xorg/modletters.compose".source = ./assets/xorg/modletters.compose;
     xdg.configFile."user-dirs.dirs".source = ./assets/xorg/user-dirs.dirs;
+    xdg.configFile."nr/desktop" = {
+      text = builtins.toJSON [
+        {cmd = "surf";} {cmd = "dmenu";}
+        {cmd = "virt-manager"; pkg = "virtmanager";}
+        {cmd = "update-desktop-database"; pkg = "desktop-file-utils"; chan = "unstable";}
+        {cmd = "lgogdownloader"; chan = "unstable";}
+      ];
+      onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr desktop";
+    };
     programs = {
       firefox.enable = true;
     };
