@@ -2,6 +2,9 @@
 
 {
   imports = [ ./thinkpad.nix ];
+  boot.extraModprobeConfig = ''
+  options iwlwifi 11n_disable=1
+  '';
   services = {
     tlp = {
       extraConfig = ''
