@@ -82,7 +82,7 @@ in
           # resize
           "Mod4+Control+44" = "resize shrink width 5px or 5ppt";
           "Mod4+Control+45" = "resize grow width 5px or 5ppt";
-          "Mod4+Control+46" = "resize shrink hight 5px or 5ppt";
+          "Mod4+Control+46" = "resize shrink height 5px or 5ppt";
           "Mod4+Control+47" = "resize grow height 5px or 5ppt";
           # gaps
           "Mod4+Mod1+44" = "gaps inner current plus 5";
