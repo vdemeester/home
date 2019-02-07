@@ -268,12 +268,12 @@ general {
 	interval = 2
 }
 
-order += "disk /"
-order += "run_watch 🐳"
+#order += "disk /"
+#order += "run_watch 🐳"
 order += "path_exists 🔑"
-order += "wireless _first_"
-order += "ethernet _first_"
-order += "volume master"
+#order += "wireless _first_"
+#order += "ethernet _first_"
+#order += "volume master"
 order += "battery 0"
 order += "cpu_temperature 0"
 order += "load"
