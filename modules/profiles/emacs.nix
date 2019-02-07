@@ -185,6 +185,12 @@ in
         ];
       };
     }
+    (mkIf config.profiles.desktop.enable {
+      home.file."bin/capture" = {
+        source = ./assets/bin/capture;
+        executable = true;
+      };
+    })
     (mkIf config.services.gpg-agent.enable {
       services.gpg-agent.extraConfig = ''
         allow-emacs-pinentry
