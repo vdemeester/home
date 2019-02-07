@@ -9,27 +9,20 @@ with import ../assets/machines.nix; {
       "net.bridge.bridge-nf-call-ip6tables" = 0;
     };
   };
-  networking = {
-    firewall.enable = false; # we are in safe territory :D
-    bridges.br1.interfaces = [ "enp0s25" ];
-    interfaces.enp0s25 = {
-      useDHCP = true;
-    };
-  };
   profiles = {
-    avahi.enable = true;
     dev.enable = true;
     docker.enable = true;
+    laptop.enable = true;
     ssh.enable = true;
     syncthing.enable = true;
-    virtualization = {
-      enable = true;
-      listenTCP = true;
-    };
     nix-config.buildCores = 2;
   };
   services = {
-    logind.extraConfig = "HandleLidSwitch=ignore";    
+    logind.extraConfig = ''
+      HandleLidSwitch=suspend
+      HandleLidSwitchExternalPower=ignore
+      HandleLidSwitchDocked=ignore
+    '';
     syncthing-edge.guiAddress = "${wireguard.ips.hokkaido}:8384";
     wireguard = {
       enable = true;
