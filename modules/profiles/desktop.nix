@@ -72,7 +72,7 @@ in
     xdg.configFile."user-dirs.dirs".source = ./assets/xorg/user-dirs.dirs;
     xdg.configFile."nr/desktop" = {
       text = builtins.toJSON [
-        {cmd = "surf";} {cmd = "dmenu";} {cmd = "sixv";}
+        {cmd = "surf";} {cmd = "dmenu";} {cmd = "sxiv";}
         {cmd = "virt-manager"; pkg = "virtmanager";}
         {cmd = "update-desktop-database"; pkg = "desktop-file-utils"; chan = "unstable";}
         {cmd = "lgogdownloader"; chan = "unstable";}
