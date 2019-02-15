@@ -6,6 +6,7 @@
   options iwlwifi 11n_disable=1
   '';
   services = {
+    fprintd.enable = true;
     tlp = {
       extraConfig = ''
 # CPU optimizations
@@ -29,4 +30,6 @@ DEVICES_TO_ENABLE_ON_WWAN_DISCONNECT=""
 '';
     };
   };
+  security.pam.services.login.fprintAuth = true;
+  security.pam.services.xscreensaver.fprintAuth = true;
 }
