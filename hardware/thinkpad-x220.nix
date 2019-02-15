@@ -5,6 +5,7 @@
   boot.extraModprobeConfig = ''
   options iwlwifi 11n_disable=1
   '';
+  security.pam.services.slimlock.fprintAuth = false;
   security.pam.services.slim.fprintAuth = false;
   security.pam.services.login.fprintAuth = false;
   security.pam.services.xscreensaver.fprintAuth = false;
