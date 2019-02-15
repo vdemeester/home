@@ -14,6 +14,7 @@
     ./profiles/gaming.nix
     ./profiles/git.nix
     ./profiles/i18n.nix
+    ./profiles/ipfs.nix
     ./profiles/laptop.nix
     ./profiles/mail.nix
     ./profiles/nix-config.nix
