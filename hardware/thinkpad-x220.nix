@@ -5,6 +5,9 @@
   boot.extraModprobeConfig = ''
   options iwlwifi 11n_disable=1
   '';
+  security.pam.services.slim.fprintAuth = false;
+  security.pam.services.login.fprintAuth = false;
+  security.pam.services.xscreensaver.fprintAuth = false;
   services = {
     fprintd.enable = true;
     tlp = {
@@ -30,6 +33,4 @@ DEVICES_TO_ENABLE_ON_WWAN_DISCONNECT=""
 '';
     };
   };
-  security.pam.services.login.fprintAuth = true;
-  security.pam.services.xscreensaver.fprintAuth = true;
 }
