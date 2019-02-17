@@ -31,7 +31,28 @@ in
     ];
     programs.rofi.enable = true;
     services = {
-      dunst.enable = true;
+      dunst = {
+        enable = true;
+        settings = {
+          global = {
+            geometry = "500x5-10+10";
+            follow = "keyboard";
+            frame_color = "#cccccc";
+            font = "Fira Code 10";
+            indicate_hidden = "yes";
+            separator_height = 1;
+            padding = 8;
+            horizontal_padding = 8;
+            frame_width = 2;
+            sort = "yes";
+            markup = "full";
+            format = "<b>%s</b>\n%b";
+            ignore_newline = "no";
+            stack_duplicates = true;
+            show_indicators = "yes";
+          };
+        };
+      };
       udiskie.enable = true;
       network-manager-applet.enable = true;
       screen-locker = {
