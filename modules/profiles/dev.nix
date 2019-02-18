@@ -24,9 +24,10 @@ in
       **/VENDOR-LICENSE
       '';
       home.packages = with pkgs; [
-        binutils-unwrapped
+        #binutils-unwrapped
         cmake
         fswatch
+        gcc
         gnumake
         jq
         lnav
