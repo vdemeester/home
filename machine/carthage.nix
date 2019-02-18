@@ -32,7 +32,7 @@ with import ../assets/machines.nix; {
         forceSSL = true;
         root = "/home/vincent/desktop/sites/carthage.sbr.pm";
         locations."/" = {
-          index = "index";
+          index = "index.html";
         };
       };
       virtualHosts."sbr.pm" = {
@@ -40,7 +40,7 @@ with import ../assets/machines.nix; {
         forceSSL = true;
         root = "/home/vincent/desktop/sites/sbr.pm";
         locations."/" = {
-          index = "index";
+          index = "index.html";
         };
       };
     };
