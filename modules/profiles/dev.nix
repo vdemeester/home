@@ -24,7 +24,7 @@ in
       **/VENDOR-LICENSE
       '';
       home.packages = with pkgs; [
-        #binutils-unwrapped
+        binutils
         cmake
         fswatch
         gcc
