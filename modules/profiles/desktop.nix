@@ -96,6 +96,7 @@ in
       pass
       xdg-user-dirs
       xdg_utils
+      xsel
     ];
   };
 }
