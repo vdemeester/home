@@ -26,6 +26,9 @@ with import ../assets/machines.nix; {
   programs = {
     podman.enable = true;
   };
+  networking = {
+    firewall.enable = false; # we are in safe territory :D
+  };
   services = {
     logind.extraConfig = ''
       HandleLidSwitch=suspend
