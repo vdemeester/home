@@ -9,6 +9,7 @@ with import ../assets/machines.nix; {
       "net.bridge.bridge-nf-call-ip6tables" = 0;
     };
   };
+  powerManagement.cpuFreqGovernor = "powersave";
   profiles = {
     dev.enable = true;
     docker.enable = true;
