@@ -25,7 +25,7 @@
       "sierra_net" "cdc_mbim" "cdc_ncm"
     ];
     initrd = {
-      availableKernelModules = [ "aesni-intel" ];
+      availableKernelModules = [ "aesni-intel" "aes_x86_64" "cryptd" ];
     };
   };
   services = {
