@@ -12,7 +12,7 @@ with import ../assets/machines.nix; {
   profiles = {
     dev.enable = true;
     docker.enable = true;
-    ipfs.enable = true;
+    #ipfs.enable = true;
     laptop.enable = true;
     ssh.enable = true;
     syncthing.enable = true;
