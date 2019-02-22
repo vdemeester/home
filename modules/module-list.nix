@@ -20,6 +20,7 @@
     ./profiles/i3.nix
     ./profiles/kubernetes.nix
     ./profiles/laptop.nix
+    ./profiles/mails.nix
     ./profiles/media.nix
     ./profiles/openshift.nix
     ./profiles/ssh.nix
