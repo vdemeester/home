@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
@@ -65,10 +65,15 @@ in
         };
       };
     };
-    services.mbsync.enable = true;
+    # services.mbsync = {
+    #   enable = true;
+    #   preExec = "mkdir -p ~/desktop/mails/redhat ~/desktop/mails/perso";
+    #   postexec = "${pkgs.mu}/bin/mu index";
+    # };
     programs.mbsync.enable = true;
     programs.afew.enable = true;
     programs.notmuch.enable = true;
     programs.msmtp.enable = true;
+    home.packages = with pkgs; [ mu ];
   };
 }

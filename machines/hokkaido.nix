@@ -10,5 +10,6 @@
   profiles.gpg.enable = true;
   profiles.containers.enable = true;
   profiles.media.enable = true;
+  profiles.mails.enable = true;
   programs.podman.enable = true;
 }
