@@ -22,7 +22,7 @@ in
           address = "vdemeest@redhat.com";
           userName = "vdemeest@redhat.com";
           realName = "Vincent Demeester";
-          passwordCommand = "gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ~/sync/rh.pass -d ~/desktop/documents/rh.pass.gpg";
+          passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ~/sync/rh.pass -d ~/desktop/documents/rh.pass.gpg";
           imap.host = "imap.gmail.com";
           smtp.host = "smtp.gmail.com";
           mbsync = {
@@ -45,7 +45,7 @@ in
           address = "vinc.demeester@gmail.com";
           userName = "vinc.demeester@gmail.com";
           realName = "Vincent Demeester";
-          passwordCommand = "gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ~/sync/perso.pass -d ~/desktop/documents/perso.pass.gpg";
+          passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ~/sync/perso.pass -d ~/desktop/documents/perso.pass.gpg";
           imap.host = "imap.gmail.com";
           smtp.host = "smtp.gmail.com";
           mbsync = {
@@ -65,11 +65,14 @@ in
         };
       };
     };
-    # services.mbsync = {
-    #   enable = true;
-    #   preExec = "mkdir -p ~/desktop/mails/redhat ~/desktop/mails/perso";
-    #   postexec = "${pkgs.mu}/bin/mu index";
-    # };
+    services.mbsync = {
+      enable = true;
+      preExec = "${pkgs.coreutils}/bin/mkdir -p ~/desktop/mails/redhat ~/desktop/mails/perso";
+      #postExec = "${pkgs.mu}/bin/mu index";
+    };
+    programs.astroid = {
+      enable = true;
+    };
     programs.mbsync.enable = true;
     programs.afew.enable = true;
     programs.notmuch.enable = true;

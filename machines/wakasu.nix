@@ -22,6 +22,7 @@
     openshift = { enable = true; minishift.enable = true; };
   };
   profiles.media.enable = true;
+  profiles.mails.enable = true;
   programs = {
     google-chrome.enable = true;
     podman.enable = true;
