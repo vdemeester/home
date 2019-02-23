@@ -68,13 +68,32 @@ in
     services.mbsync = {
       enable = true;
       preExec = "${pkgs.coreutils}/bin/mkdir -p /home/vincent/desktop/mails/redhat /home/vincent/desktop/mails/perso";
-      postExec = "env NOTMUCH_CONFIG=/home/vincent/.config/notmuch/notmuchrc NMBGIT=/home/vincent/.local/share/notmuch/nmbug ${pkgs.notmuch}/bin/notmuch new";
+      postExec = "env NOTMUCH_CONFIG=/home/vincent/.config/notmuch/notmuchrc NMBGIT=/home/vincent/.local/share/notmuch/nmbug ${pkgs.notmuch}/bin/notmuch new && ${pkgs.afew}/bin/afew -C $HOME/.config/notmuch/notmuchrc --tag --new";
     };
     programs.astroid = {
       enable = true;
+      externalEditor = "emacsclient -c";
+      extraConfig = {
+        startup.queries.inbox = "tag:Inbox";
+        startup.queries.inbox_perso = "tag:Inbox and tag:perso";
+        startup.queries.inbox_redhat = "tag:Inbox and tag:redhat";
+      };
     };
     programs.mbsync.enable = true;
-    programs.afew.enable = true;
+    programs.afew = {
+      enable = true;
+      extraConfig = ''
+        [SpamFilter]
+        [KillThreadsFilter]
+        [ListMailsFilter]
+        [ArchiveSentMailsFilter]
+        [InboxFilter]
+
+        [FolderNameFilter]
+        folder_blacklist = perso/[Gmail]/All\ Mail redhat/[Gmail]/All\ Mail
+        maildir_separator = /
+      '';
+    };
     programs.notmuch.enable = true;
     programs.msmtp.enable = true;
     home.packages = with pkgs; [ mu ];
