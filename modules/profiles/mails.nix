@@ -67,8 +67,8 @@ in
     };
     services.mbsync = {
       enable = true;
-      preExec = "${pkgs.coreutils}/bin/mkdir -p ~/desktop/mails/redhat ~/desktop/mails/perso";
-      #postExec = "${pkgs.mu}/bin/mu index";
+      preExec = "${pkgs.coreutils}/bin/mkdir -p /home/vincent/desktop/mails/redhat /home/vincent/desktop/mails/perso";
+      postExec = "env NOTMUCH_CONFIG=/home/vincent/.config/notmuch/notmuchrc NMBGIT=/home/vincent/.local/share/notmuch/nmbug ${pkgs.notmuch}/bin/notmuch new";
     };
     programs.astroid = {
       enable = true;
