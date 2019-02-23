@@ -128,6 +128,7 @@ in
             nixos-options
           ])
           no-littering
+          notmuch
           ob-async
           ob-go
           ob-http
