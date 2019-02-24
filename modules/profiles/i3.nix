@@ -62,7 +62,7 @@ in
       };
       random-background = {
         enable = true;
-        imageDirectory = "/home/vincent/desktop/pictures/wallpapers/Unsplashed";
+        imageDirectory = "${config.home.homeDirectory}/desktop/pictures/wallpapers/Unsplashed";
       };
     };
     xdg.configFile."alacritty/alacritty.yml".source = ./assets/xorg/alacritty.yml;

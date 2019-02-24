@@ -204,11 +204,11 @@ in
         };
         Service = {
           Environment = ''
-            PATH=/home/vincent/bin:/home/vincent/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin GOPATH=/home/vincent ASPELL_CONF=dict-dir=/home/vincent/.nix-profile/lib/aspell
+            PATH=${config.home.homeDirectory}/bin:${config.home.homeDirectory}/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin GOPATH=${config.home.homeDirectory} ASPELL_CONF=dict-dir=${config.home.homeDirectory}/.nix-profile/lib/aspell
           '';
           Type      = "forking";
-          ExecStart = "${pkgs.bash}/bin/bash -c 'source /etc/profile; exec /home/vincent/.nix-profile/bin/emacs --daemon'";
-          ExecStop  = "/home/vincent/.nix-profile/bin/emacsclient --eval (kill-emacs)";
+          ExecStart = "${pkgs.bash}/bin/bash -c 'source /etc/profile; exec ${config.home.homeDirectory}/.nix-profile/bin/emacs --daemon'";
+          ExecStop  = "${config.home.homeDirectory}/.nix-profile/bin/emacsclient --eval (kill-emacs)";
           Restart   = "always";
         };
         Install = {

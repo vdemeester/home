@@ -21,8 +21,8 @@ in
 
       serverAliveInterval = 60;
       hashKnownHosts = true;
-      userKnownHostsFile = "~/.config/ssh/known_hosts";
-      controlPath = "~/.ssh/sockets/%u-%l-%r@%h:%p";
+      userKnownHostsFile = "${config.xdg.configHome}/ssh/known_hosts";
+      controlPath = "${config.home.homeDirectory}/.ssh/sockets/%u-%l-%r@%h:%p";
     
       matchBlocks = {
         "github.com" = {

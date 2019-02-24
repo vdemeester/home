@@ -19,8 +19,8 @@ in
       tmux
     ];
     home.file.".tmux.conf".text = ''
-      source-file $HOME/.config/tmux/tmux.conf
-      set-environment -g TMUX_PLUGIN_MANAGER_PATH '$HOME/.config/tmux/plugins'
+      source-file ${config.xdg.configHome}/tmux/tmux.conf
+      set-environment -g TMUX_PLUGIN_MANAGER_PATH '${config.xdg.configHome}/tmux/plugins'
 
       set -g @plugin 'tmux-plugins/tpm'
       set -g @plugin 'tmux-plugins/tmux-resurrect'

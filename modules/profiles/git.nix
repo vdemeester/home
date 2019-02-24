@@ -118,32 +118,32 @@ in
         
         includes = [
           {
-            path = "~/.config/git/config.d/redhat.gitconfig";
-            condition = "gitdir:~/src/github.com/knative/";
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/knative/";
           }
           {
-            path = "~/.config/git/config.d/redhat.gitconfig";
-            condition = "gitdir:~/src/k8s.io/";
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/k8s.io/";
           }
           {
-            path = "~/.config/git/config.d/redhat.gitconfig";
-            condition = "gitdir:~/src/github.com/minishift/";
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/minishift/";
           }
           {
-            path = "~/.config/git/config.d/redhat.gitconfig";
-            condition = "gitdir:~/src/github.com/operator-framework/";
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/operator-framework/";
           }
           {
-            path = "~/.config/git/config.d/redhat.gitconfig";
-            condition = "gitdir:~/src/github.com/openshift/";
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/openshift/";
           }
           {
-            path = "~/.config/git/config.d/redhat.gitconfig";
-            condition = "gitdir:~/src/github.com/redhat-developer/";
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/redhat-developer/";
           }
           {
-            path = "~/.config/git/config.d/redhat.gitconfig";
-            condition = "gitdir:~/src/github.com/containers/";
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/containers/";
           }
         ];
         ignores = [

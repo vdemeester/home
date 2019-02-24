@@ -22,7 +22,7 @@ in
           address = "vdemeest@redhat.com";
           userName = "vdemeest@redhat.com";
           realName = "Vincent Demeester";
-          passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ~/sync/rh.pass -d ~/desktop/documents/rh.pass.gpg";
+          passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ${config.home.homeDirectory}/sync/rh.pass -d ${config.home.homeDirectory}/desktop/documents/rh.pass.gpg";
           imap.host = "imap.gmail.com";
           smtp.host = "smtp.gmail.com";
           mbsync = {
@@ -45,7 +45,7 @@ in
           address = "vinc.demeester@gmail.com";
           userName = "vinc.demeester@gmail.com";
           realName = "Vincent Demeester";
-          passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ~/sync/perso.pass -d ~/desktop/documents/perso.pass.gpg";
+          passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ${config.home.homeDirectory}/sync/perso.pass -d ${config.home.homeDirectory}/desktop/documents/perso.pass.gpg";
           imap.host = "imap.gmail.com";
           smtp.host = "smtp.gmail.com";
           mbsync = {

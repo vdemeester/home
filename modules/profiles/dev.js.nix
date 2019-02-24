@@ -17,7 +17,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       home.file.".npmrc".text = ''
-        prefix = ~/.local/npm
+        prefix = ${config.home.homeDirectory}/.local/npm
       '';
       home.packages = with pkgs; [
         nodejs-10_x
@@ -26,7 +26,7 @@ in
     }
     (mkIf config.profiles.fish.enable {
       xdg.configFile."fish/conf.d/js.fish".text = ''
-        set -gx PATH $HOME/.local/npm/bin $PATH
+        set -gx PATH ${config.home.homeDirectory}/.local/npm/bin $PATH
       '';
     })
   ]);

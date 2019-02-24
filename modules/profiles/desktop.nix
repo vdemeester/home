@@ -32,7 +32,7 @@ in
     xsession = mkIf cfg.xsession.enable {
       enable = true;
       initExtra = ''
-        ${pkgs.xlibs.xmodmap}/bin/xmodmap ~/.Xmodmap &
+        ${pkgs.xlibs.xmodmap}/bin/xmodmap ${config.home.homeDirectory}.Xmodmap &
       '';
       pointerCursor = {
         package = pkgs.vanilla-dmz;
