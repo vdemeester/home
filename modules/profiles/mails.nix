@@ -119,13 +119,10 @@ in
 
         [MailMover]
         folders = perso/Inbox redhat/Inbox 
-        # "perso/[Gmail]/All Mail" "redhat/[Gmail]/All Mail"
         rename = true
 
         perso/Inbox = 'NOT tag:Inbox':"perso/[Gmail]/All Mail"
         redhat/Inbox = 'NOT tag:Inbox':"redhat/[Gmail]/All Mail"
-        #"perso/[Gmail]/All Mail" = 'tag:Inbox':perso/Inbox
-        #"redhat/[Gmail]/All Mail" = 'tag:Inbox':redhat/Inbox
       '';
     };
     programs.notmuch.enable = true;
