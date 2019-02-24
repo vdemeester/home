@@ -28,7 +28,7 @@ in
           mbsync = {
             enable = true;
             create = "both";
-            #expunge = "both";
+            expunge = "both";
             patterns = ["*" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"];
             extraConfig = {
               channel = {
@@ -51,7 +51,7 @@ in
           mbsync = {
             enable = true;
             create = "both";
-            #expunge = "both";
+            expunge = "both";
             patterns = ["*" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"];
             extraConfig = {
               channel = {
@@ -67,8 +67,33 @@ in
     };
     services.mbsync = {
       enable = true;
-      preExec = "${pkgs.coreutils}/bin/mkdir -p /home/vincent/desktop/mails/redhat /home/vincent/desktop/mails/perso";
-      postExec = "env NOTMUCH_CONFIG=/home/vincent/.config/notmuch/notmuchrc NMBGIT=/home/vincent/.local/share/notmuch/nmbug ${pkgs.notmuch}/bin/notmuch new && ${pkgs.afew}/bin/afew -C $HOME/.config/notmuch/notmuchrc --tag --new";
+      preExec = "${config.xdg.configHome}/mbsync/preExec";
+      postExec = "${config.xdg.configHome}/mbsync/postExec";
+      frequency = "*:0/30";
+    };
+    xdg.configFile."mbsync/preExec" = {
+      text = ''
+      #!${pkgs.stdenv.shell}
+
+      export NOTMUCH_CONFIG=${config.xdg.configHome}/notmuch/notmuchrc
+      export NMBGIT=${config.xdg.dataHome}/notmuch/nmbug
+      
+      ${pkgs.coreutils}/bin/mkdir -p ${config.home.homeDirectory}/desktop/mails/redhat ${config.home.homeDirectory}/desktop/mails/perso
+      ${pkgs.afew}/bin/afew -C  ${config.xdg.configHome}/notmuch/notmuchrc -m -v
+      '';
+      executable = true;
+    };
+    xdg.configFile."mbsync/postExec" = {
+      text = ''
+      #!${pkgs.stdenv.shell}
+
+      export NOTMUCH_CONFIG=${config.xdg.configHome}/notmuch/notmuchrc
+      export NMBGIT=${config.xdg.dataHome}/notmuch/nmbug
+      
+      ${pkgs.notmuch}/bin/notmuch new
+      ${pkgs.afew}/bin/afew -C ${config.xdg.configHome}/notmuch/notmuchrc --tag --new
+      '';
+      executable = true;
     };
     programs.astroid = {
       enable = true;
@@ -90,8 +115,15 @@ in
         [InboxFilter]
 
         [FolderNameFilter]
-        folder_blacklist = perso/[Gmail]/All\ Mail redhat/[Gmail]/All\ Mail
+        folder_blacklist = "perso/[Gmail]/All Mail" "redhat/[Gmail]/All Mail"
         maildir_separator = /
+
+        [MailMover]
+        folders = perso/Inbox redhat/Inbox
+        rename = true
+
+        perso/Inbox = 'NOT tag:Inbox':"perso/[Gmail]/All Mail"
+        redhat/Inbox = 'NOT tag:Inbox':"redhat/[Gmail]/All Mail"
       '';
     };
     programs.notmuch.enable = true;
