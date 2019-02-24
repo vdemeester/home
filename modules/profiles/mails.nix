@@ -91,7 +91,7 @@ in
       export NMBGIT=${config.xdg.dataHome}/notmuch/nmbug
       
       ${pkgs.notmuch}/bin/notmuch new
-      ${pkgs.afew}/bin/afew -C ${config.xdg.configHome}/notmuch/notmuchrc --tag --new
+      ${pkgs.afew}/bin/afew -C ${config.xdg.configHome}/notmuch/notmuchrc --tag --new -v
       '';
       executable = true;
     };
@@ -112,10 +112,9 @@ in
         [KillThreadsFilter]
         [ListMailsFilter]
         [ArchiveSentMailsFilter]
-        [InboxFilter]
-
         [FolderNameFilter]
         maildir_separator = /
+        [InboxFilter]
 
         [MailMover]
         folders = perso/Inbox redhat/Inbox 
