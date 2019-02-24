@@ -114,7 +114,6 @@ in
         [ArchiveSentMailsFilter]
         [FolderNameFilter]
         maildir_separator = /
-        [InboxFilter]
 
         [MailMover]
         folders = perso/Inbox redhat/Inbox 
