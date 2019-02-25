@@ -9,13 +9,6 @@ with import ../assets/machines.nix; {
   nix = {
     distributedBuilds = true;
     buildMachines = [{
-      hostName = "hokkaido.home";
-      sshUser = "vincent";
-      sshKey = "/home/vincent/.ssh/id_ed25519";
-      system = "x86_64-linux";
-      maxJobs = 2;
-      sypportedFeatures = ["kvm" "docker"];
-    } {
       hostName = "honshu.home";
       sshUser = "vincent";
       sshKey = "/home/vincent/.ssh/id_ed25519";
