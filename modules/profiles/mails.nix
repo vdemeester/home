@@ -92,6 +92,7 @@ in
       
       ${pkgs.notmuch}/bin/notmuch new
       ${pkgs.afew}/bin/afew -C ${config.xdg.configHome}/notmuch/notmuchrc --tag --new -v
+      ${pkgs.notmuch}/bin/notmuch tag -inbox tag:inbox
       '';
       executable = true;
     };
