@@ -8,7 +8,7 @@ in
   options = {
     profiles.mails = {
       enable = mkOption {
-        default = true;
+        default = false;
         description = "Enable mails configurations";
         type = types.bool;
       };
