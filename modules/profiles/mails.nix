@@ -93,7 +93,7 @@ in
       ${pkgs.notmuch}/bin/notmuch new
       ${pkgs.afew}/bin/afew -C ${config.xdg.configHome}/notmuch/notmuchrc --tag --new -v
       ${pkgs.notmuch}/bin/notmuch tag -inbox tag:inbox
-      ${pkgs.notmuch}/bin/notmuch tag -Inbox "NOT folder:Inbox and tag:Inbox"
+      #${pkgs.notmuch}/bin/notmuch tag -Inbox "NOT folder:Inbox and tag:Inbox"
       '';
       executable = true;
     };
