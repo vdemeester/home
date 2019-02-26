@@ -128,5 +128,13 @@ in
     programs.notmuch.enable = true;
     programs.msmtp.enable = true;
     home.packages = with pkgs; [ mu ];
+    home.file."bin/msmtp" = {
+      text = ''
+      #!${pkgs.stdenv.shell}
+
+      ${pkgs.msmtp}/bin/msmtp --read-envelope-from $@
+      '';
+      executable = true;
+    };
   };
 }
