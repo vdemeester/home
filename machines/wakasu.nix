@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -29,7 +29,6 @@
   };
   home.packages = with pkgs; [
     obs-studio
-    mattermost-desktop
     slack
     virtmanager
     awscli
