@@ -47,6 +47,11 @@ in
         description = "Enable networkmanager with the desktop profile";
         type = types.bool;
       };
+      autoLogin = mkOption {
+        default = false;
+        description = "Enable auto login";
+        type = types.bool;
+      };
       slimTheme = mkOption {
         default = {
           url = "https://github.com/vdemeester/slim-themes/raw/master/v-theme-0.1.tar.xz";
@@ -115,6 +120,7 @@ in
         displayManager = {
           slim = {
             enable = true;
+            autoLogin = cfg.autoLogin;
             # Probably put this into users instead ?
             defaultUser = "vincent";
             theme = pkgs.fetchurl cfg.slimTheme;
