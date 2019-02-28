@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   imports = [
     ./base.nix
@@ -12,4 +14,8 @@
   profiles.media.enable = true;
   profiles.mails.enable = true;
   programs.podman.enable = true;
+  home.packages = with pkgs; [
+    slack
+    virtmanager
+  ];
 }
