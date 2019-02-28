@@ -19,6 +19,9 @@ with import ../assets/machines.nix; {
     syncthing.enable = true;
     nix-config.buildCores = 2;
   };
+  programs = {
+    podman.enable = true;
+  };
   services = {
     logind.extraConfig = ''
       HandleLidSwitch=suspend
