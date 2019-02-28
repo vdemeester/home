@@ -16,6 +16,7 @@ with import ../assets/machines.nix; {
     docker.enable = true;
     #ipfs.enable = true;
     laptop.enable = true;
+    desktop.autoLogin = true;
     nix-config.buildCores = 4;
     ssh.enable = true;
     virtualization = {
