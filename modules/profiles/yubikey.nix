@@ -24,6 +24,8 @@ in
     environment = {
       systemPackages = with pkgs; [
         yubico-piv-tool
+        yubikey-personalization
+        yubioath-desktop
       ];
     };
   };

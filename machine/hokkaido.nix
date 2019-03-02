@@ -9,6 +9,7 @@ with import ../assets/machines.nix; {
       "net.bridge.bridge-nf-call-ip6tables" = 0;
     };
   };
+  hardware.u2f.enable = true;
   profiles = {
     dev.enable = true;
     docker.enable = true;
@@ -18,6 +19,7 @@ with import ../assets/machines.nix; {
     ssh.enable = true;
     syncthing.enable = true;
     nix-config.buildCores = 2;
+    yubikey.enable = true;
   };
   programs = {
     podman.enable = true;
