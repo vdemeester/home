@@ -32,6 +32,7 @@ in
         enable = true;
         package = pkgs.emacs.override { inherit (pkgs) imagemagick; withXwidgets = cfg.withXwidgets; };
         extraPackages = epkgs: with epkgs; [
+          ace-link
           ace-window
           aggressive-indent
           async
