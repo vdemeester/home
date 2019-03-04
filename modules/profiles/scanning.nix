@@ -17,10 +17,12 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       saneFrontends
+      saneBackends
       simple-scan
     ];
     hardware.sane = {
       enable = true;
+      extraConfig = { "pixma" = "bjnp://192.168.12.70"; };
     };
   };
 }
