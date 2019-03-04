@@ -18,6 +18,7 @@ with import ../assets/machines.nix; {
     laptop.enable = true;
     desktop.autoLogin = true;
     nix-config.buildCores = 4;
+    qemu-user = { arm = true; aarch64 = true; };
     ssh.enable = true;
     virtualization = {
       enable = true;

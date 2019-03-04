@@ -21,6 +21,7 @@
     ./profiles/nix-auto-update.nix
     ./profiles/printing.nix
     ./profiles/pulseaudio.nix
+    ./profiles/qemu.nix
     ./profiles/scanning.nix
     ./profiles/ssh.nix
     ./profiles/syncthing.nix

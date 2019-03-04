@@ -47,6 +47,7 @@ with import ../assets/machines.nix; {
     gaming.enable = true;
     #ipfs.enable = true;
     nix-config.buildCores = 4;
+    qemu-user = { arm = true; aarch64 = true; };
     ssh.enable = true;
     virtualization = {
       enable = true;
