@@ -15,6 +15,6 @@ in
     };
   };
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ google-cloud-sdk gcsfuse google-compute-engine ];
+    home.packages = with pkgs; [ google-cloud-sdk gcsfuse ]; #google-compute-engine
   };
 }
