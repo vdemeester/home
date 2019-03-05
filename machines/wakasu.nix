@@ -18,7 +18,7 @@
   profiles.containers = {
     enable = true;
     docker = true;
-    kubernetes = { enable = true; minikube.enable = true; };
+    kubernetes = { enable = true; minikube.enable = true; minikube.package = pkgs.nur.repos.vdemeester.minikube; };
     openshift = { enable = true; minishift.enable = true; };
   };
   profiles.media.enable = true;
