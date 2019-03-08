@@ -29,6 +29,9 @@ in
         vde2
       ];
     }
+    (mkIf config.profiles.desktop.enable {
+      environment.systemPackages = with pkgs; [ virtmanager ];
+    })
     (mkIf cfg.listenTCP {
       boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
       virtualisation.libvirtd = {
