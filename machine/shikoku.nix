@@ -45,7 +45,6 @@ with import ../assets/machines.nix; {
     dev.enable = true;
     docker.enable = true;
     gaming.enable = true;
-    #ipfs.enable = true;
     nix-config.buildCores = 4;
     qemu-user = { arm = true; aarch64 = true; };
     ssh.enable = true;

@@ -14,7 +14,6 @@ with import ../assets/machines.nix; {
   profiles = {
     dev.enable = true;
     docker.enable = true;
-    #ipfs.enable = true;
     laptop.enable = true;
     desktop.autoLogin = true;
     nix-config.buildCores = 4;
