@@ -12,13 +12,12 @@ with import ../assets/machines.nix; {
   hardware.u2f.enable = true;
   profiles = {
     dev.enable = true;
-    docker.enable = true;
     laptop.enable = true;
     desktop.autoLogin = true;
-    ssh.enable = true;
     syncthing.enable = true;
     nix-config.buildCores = 2;
     yubikey.enable = true;
+    virtualization.enable = true;
   };
   programs = {
     podman.enable = true;
@@ -26,7 +25,7 @@ with import ../assets/machines.nix; {
   services = {
     logind.extraConfig = ''
       HandleLidSwitch=suspend
-      HandleLidSwitchExternalPower=ignore
+      HandleLidSwitchExternalPower=suspend
       HandleLidSwitchDocked=ignore
     '';
     syncthing-edge.guiAddress = "${wireguard.ips.hokkaido}:8384";
