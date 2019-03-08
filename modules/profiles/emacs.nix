@@ -95,7 +95,7 @@ in
           #highlight-escape-sequences
           #highlight-leading-spaces
           highlight-numbers
-          highlight-symbol
+          #highlight-symbol
           hydra
           ibuffer-vc
           iedit
@@ -169,6 +169,7 @@ in
           shx
           smart-jump
           (with melpaPackages; [ smartparens ])
+          (with melpaPackages; [ symbol-overlay ])
           solaire-mode
           string-edit
           toml-mode
