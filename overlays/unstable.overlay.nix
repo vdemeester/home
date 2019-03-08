@@ -3,6 +3,7 @@ _: _: let
   unstable = import unstableTarball { overlays = []; };
 in {
   inherit (unstable)
-  cachix
+  # cachix
+  #git
   ;
 }
