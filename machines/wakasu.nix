@@ -30,7 +30,6 @@
   home.packages = with pkgs; [
     obs-studio
     slack
-    virtmanager
     awscli
     terraform
   ];
