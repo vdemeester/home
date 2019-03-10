@@ -15,6 +15,7 @@
   profiles.mails.enable = true;
   programs.podman.enable = true;
   home.packages = with pkgs; [
+    ledger
     slack
   ];
 }

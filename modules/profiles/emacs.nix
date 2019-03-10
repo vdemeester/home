@@ -106,6 +106,9 @@ in
           js2-mode
           js2-refactor
           json-mode
+          ledger-mode
+          hledger-mode
+          ledger-import
           (with melpaPackages; [
             key-chord
             lsp-haskell
@@ -118,6 +121,7 @@ in
           magit
           magit-gitflow
           magit-popup
+          #(with melpaPackages; [ pretty-hydra major-mode-hydra ])
           markdown-mode
           (with melpaPackages; [ minions moody ])
           multiple-cursors
@@ -174,6 +178,7 @@ in
           string-edit
           toml-mode
           typescript-mode
+          try
           (with melpaPackages; [ undo-tree ])
           (with melpaPackages; [ use-package ])
           visual-fill-column
