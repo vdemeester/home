@@ -57,15 +57,10 @@ in
           dockerfile-mode
           easy-kill
           eshell-bookmark
-          (with melpaPackages; [
-          eshell-prompt-extras
-          esh-autosuggest
-          ])
           exec-path-from-shell
           expand-region
           eyebrowse
           fish-mode
-          (with melpaPackages; [ fish-completion ])
           flycheck
           flycheck-golangci-lint
           flycheck-popup-tip
@@ -76,19 +71,6 @@ in
           gitattributes-mode
           gitconfig-mode
           gitignore-mode
-          (with melpaPackages; [
-            godoctor
-            go-add-tags
-            go-eldoc
-            go-errcheck
-            go-fill-struct
-            go-guru
-            # go-impl
-            go-mode
-            #gorepl-mode
-            go-tag
-            gotest
-          ])
           hardhat
           helpful
           highlight
@@ -109,29 +91,11 @@ in
           ledger-mode
           hledger-mode
           ledger-import
-          (with melpaPackages; [
-            key-chord
-            lsp-haskell
-            lsp-javascript-typescript
-            lsp-go
-            lsp-mode
-            lsp-rust
-            lsp-ui
-          ])
           magit
           magit-gitflow
           magit-popup
-          #(with melpaPackages; [ pretty-hydra major-mode-hydra ])
           markdown-mode
-          (with melpaPackages; [ minions moody ])
           multiple-cursors
-          (with melpaPackages; [
-            nix-buffer
-            nix-mode
-            nix-sandbox
-            nix-update
-            nixos-options
-          ])
           no-littering
           notmuch
           ob-async
@@ -172,15 +136,11 @@ in
           shackle
           shx
           smart-jump
-          (with melpaPackages; [ smartparens ])
-          (with melpaPackages; [ symbol-overlay ])
           solaire-mode
           string-edit
           toml-mode
           typescript-mode
           try
-          (with melpaPackages; [ undo-tree ])
-          (with melpaPackages; [ use-package ])
           visual-fill-column
           visual-regexp
           web-mode
@@ -190,7 +150,41 @@ in
           xterm-color
           yasnippet
           yaml-mode
-        ];
+        ] ++ (with melpaPackages; [
+          eshell-prompt-extras
+          esh-autosuggest
+          fish-completion
+          godoctor
+          go-add-tags
+          go-eldoc
+          go-errcheck
+          go-fill-struct
+          go-guru
+          # go-impl
+          go-mode
+          #gorepl-mode
+          go-tag
+          gotest
+          key-chord
+          lsp-haskell
+          lsp-javascript-typescript
+          lsp-go
+          lsp-mode
+          lsp-rust
+          lsp-ui
+          #(with melpaPackages; [ pretty-hydra major-mode-hydra ])
+          minions
+          moody
+          nix-buffer
+          nix-mode
+          nix-sandbox
+          nix-update
+          nixos-options
+          smartparens
+          symbol-overlay
+          undo-tree
+          use-package
+        ]);
       };
     }
     (mkIf config.profiles.desktop.enable {
