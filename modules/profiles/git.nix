@@ -123,6 +123,18 @@ in
           }
           {
             path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/tektoncd/";
+          }
+          {
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/google/";
+          }
+          {
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/GoogleContainerTools/";
+          }
+          {
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
             condition = "gitdir:${config.home.homeDirectory}/src/k8s.io/";
           }
           {
