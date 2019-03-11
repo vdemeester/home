@@ -43,7 +43,6 @@ in
           company-emoji
           company-ghc
           company-go
-          company-lsp
           company-racer
           counsel
           counsel-projectile
@@ -166,12 +165,6 @@ in
           go-tag
           gotest
           key-chord
-          lsp-haskell
-          lsp-javascript-typescript
-          lsp-go
-          lsp-mode
-          lsp-rust
-          lsp-ui
           #(with melpaPackages; [ pretty-hydra major-mode-hydra ])
           minions
           moody
