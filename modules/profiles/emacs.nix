@@ -164,6 +164,7 @@ in
           #gorepl-mode
           go-tag
           gotest
+          hide-mode-line
           key-chord
           #(with melpaPackages; [ pretty-hydra major-mode-hydra ])
           minions
