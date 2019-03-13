@@ -29,8 +29,7 @@ in
     programs.podman.enable = cfg.podman;
     home.packages = with pkgs; [
       nur.repos.mic92.cntr
-      nur.repos.vdemeester.go-containerregistry
-      nur.repos.vdemeester.tilt
+      nur.repos.vdemeester.go-containerregistrypv
       nur.repos.vdemeester.yak
       skopeo
     ];
