@@ -169,6 +169,7 @@ in
           #(with melpaPackages; [ pretty-hydra major-mode-hydra ])
           minions
           moody
+          mwim
           nix-buffer
           nix-mode
           nix-sandbox
