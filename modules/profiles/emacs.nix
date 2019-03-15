@@ -175,6 +175,7 @@ in
           nix-sandbox
           nix-update
           nixos-options
+          org-super-agenda
           smartparens
           symbol-overlay
           undo-tree
