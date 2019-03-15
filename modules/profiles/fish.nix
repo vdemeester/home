@@ -40,6 +40,7 @@ in
         {cmd = "ncdu";} {cmd = "sshfs";} {cmd = "gotop";} {cmd = "pandoc";}
         {cmd = "lspci"; pkg = "pciutils";}
         {cmd = "lsusb"; pkg = "usbutils";}
+        {cmd = "9"; pkg = "plan9port"; }
         {cmd = "wakeonlan"; pkg = "python36Packages.wakeonlan";}
         {cmd = "beet"; pkg = "beets";}
         {cmd = "http"; pkg = "httpie"; }
