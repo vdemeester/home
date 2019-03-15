@@ -16,6 +16,16 @@ with import ../assets/machines.nix; {
   };
   services = {
     logind.extraConfig = "HandleLidSwitch=ignore";
+    tarsnap = {
+      enable = true;
+      archives = {
+        documents = {
+          directories = [ "/home/vincent/desktop/documents" ];
+          period = "daily";
+          keyfile = "/etc/nixos/assets/tarsnap.documents.key";
+        };
+      };
+    };
     syncthing-edge.guiAddress = "${wireguard.ips.honshu}:8384";
     wireguard = {
       enable = true;
