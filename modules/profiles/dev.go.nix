@@ -47,6 +47,8 @@ in
       xdg.configFile."nr/go" = {
         text = builtins.toJSON [
           {cmd = "pprof"; chan = "unstable";}
+          {cmd = "go2nix"; }
+          {cmd = "dep2nix"; }
         ];
         onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr go";
       };
