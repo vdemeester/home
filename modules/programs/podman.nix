@@ -105,7 +105,7 @@ in
 }
     '';
 
-    environment.systemPackages = with pkgs; [ cfg.package cfg.conmonPackage cfg.runcPackage ];
+    environment.systemPackages = with pkgs; [ cfg.package cfg.conmonPackage cfg.runcPackage iptables ];
 
   };
 }
