@@ -24,6 +24,16 @@ with import ../assets/machines.nix; {
           period = "daily";
           keyfile = "/etc/nixos/assets/tarsnap.documents.key";
         };
+        org = {
+          directories = [ "/home/vincent/desktop/org" ];
+          period = "daily";
+          keyfile = "/etc/nixos/assets/tarsnap.org.key";
+        };
+        sites = {
+          directories = [ "/home/vincent/desktop/sites" ];
+          period = "daily";
+          keyfile = "/etc/nixos/assets/tarsnap.sites.key";
+        };
       };
     };
     syncthing-edge.guiAddress = "${wireguard.ips.honshu}:8384";
