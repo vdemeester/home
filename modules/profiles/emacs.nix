@@ -51,7 +51,7 @@ in
           deft
           delight
           dired-collapse
-          dired-sidebar
+          dired-quick-sort
           direnv
           dockerfile-mode
           easy-kill
