@@ -2,9 +2,12 @@
 
 {
   imports = [ ./thinkpad.nix ];
-  boot.extraModprobeConfig = ''
-  options iwlwifi 11n_disable=1
-  '';
+  boot = {
+    kernelParams = [ "i915.enable_psr=0" ];
+    extraModprobeConfig = ''
+    options iwlwifi 11n_disable=1
+    '';
+  };
   security.pam.services.slimlock.fprintAuth = false;
   security.pam.services.slim.fprintAuth = false;
   security.pam.services.login.fprintAuth = false;
