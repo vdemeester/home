@@ -27,7 +27,13 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       home.file.".local/share/applications/org-protocol.desktop".source = ./assets/xorg/org-protocol.desktop;
-      home.packages = with pkgs; [ pandoc zip texlive.combined.scheme-full ditaa graphviz ];
+      home.packages = with pkgs; [
+        ditaa
+        graphviz
+        pandoc
+        texlive.combined.scheme-full
+        zip
+      ];
       programs.emacs = {
         enable = true;
         package = pkgs.emacs.override { inherit (pkgs) imagemagick; withXwidgets = cfg.withXwidgets; };
