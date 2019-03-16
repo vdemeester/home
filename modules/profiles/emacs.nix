@@ -27,7 +27,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       home.file.".local/share/applications/org-protocol.desktop".source = ./assets/xorg/org-protocol.desktop;
-      home.packages = with pkgs; [ pandoc rustracer wmctrl ];
+      home.packages = with pkgs; [ pandoc zip texlive.combined.scheme-full ditaa graphviz ];
       programs.emacs = {
         enable = true;
         package = pkgs.emacs.override { inherit (pkgs) imagemagick; withXwidgets = cfg.withXwidgets; };
@@ -188,6 +188,7 @@ in
         source = ./assets/bin/capture;
         executable = true;
       };
+      home.packages = with pkgs; [ wmctrl ];
     })
     (mkIf config.services.gpg-agent.enable {
       services.gpg-agent.extraConfig = ''
