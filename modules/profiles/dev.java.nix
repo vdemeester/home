@@ -12,6 +12,11 @@ in
         description = "Enable java development profile";
         type = types.bool;
       };
+      javaPackage = mkOption {
+        default = pkgs.jdk;
+        description = "Java package to use";
+        type = types.package;
+      };
       idea = mkOption {
         default = false;
         description = "Install intellij idea";
@@ -23,7 +28,7 @@ in
     {
       profiles.dev.enable = true;
       home.packages = with pkgs; [
-        jdk
+        cfg.javaPackage
         gradle
       ];
     }

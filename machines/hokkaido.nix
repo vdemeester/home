@@ -8,6 +8,7 @@
   profiles.dev = {
     go.enable = true;
     rust.enable = true;
+    java = { enable = true; javaPackage = pkgs.jre; };
   };
   profiles.laptop.enable = true;
   profiles.media.enable = true;
