@@ -72,13 +72,15 @@ in
       tmpOnTmpfs = true;
       plymouth.enable = true;
     };
-    
+
+    hardware.bluetooth.enable = true;
+
     networking.networkmanager = {
       enable = cfg.networkmanager;
       unmanaged =  [
         "interface-name:ve-*" "interface-name:veth*" "interface-name:wg0" "interface-name:docker0" "interface-name:virbr*"
       ];
-      packages = with pkgs; [ networkmanager-openvpn ];  
+      packages = with pkgs; [ networkmanager-openvpn ];
     };
 
     programs.dconf.enable = true;
@@ -128,7 +130,7 @@ in
         };
       };
     };
-    
+
     fonts = {
       enableFontDir = true;
       enableGhostscriptFonts = true;
@@ -152,8 +154,7 @@ in
         unifont
       ];
     };
-    
-    
+
     # Polkit.
     security.polkit.extraConfig = ''
       polkit.addRule(function(action, subject) {

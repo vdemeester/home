@@ -28,7 +28,6 @@ with import ../assets/machines.nix; {
       "net.bridge.bridge-nf-call-ip6tables" = 0;
     };
   };
-  hardware.bluetooth.enable = true;
   networking = {
     firewall.enable = false; # we are in safe territory :D
     bridges.br1.interfaces = [ "enp0s31f6" ];
