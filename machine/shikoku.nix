@@ -37,13 +37,11 @@ with import ../assets/machines.nix; {
     };
   };
   profiles = {
-    buildkit.enable = true;
     desktop = {
       enable = true;
       networkmanager = false;
     };
     dev.enable = true;
-    docker.enable = true;
     gaming.enable = true;
     nix-config.buildCores = 4;
     qemu-user = { arm = true; aarch64 = true; };
