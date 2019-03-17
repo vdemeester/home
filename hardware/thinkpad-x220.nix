@@ -3,7 +3,7 @@
 {
   imports = [ ./thinkpad.nix ];
   boot = {
-    kernelParams = [ "i915.enable_psr=0" ];
+    kernelParams = [ "i915.enable_psr=1" ];
     extraModprobeConfig = ''
     options iwlwifi 11n_disable=1
     '';
