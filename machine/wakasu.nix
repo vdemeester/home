@@ -11,10 +11,18 @@ with import ../assets/machines.nix; {
       "net.bridge.bridge-nf-call-ip6tables" = 0;
     };
   };
+  networking = {
+    firewall.enable = false; # we are in safe territory :D
+    bridges.br1.interfaces = [ "enp0s31f6" ];
+    interfaces.enp0s31f6 = {
+      useDHCP = true;
+    };
+  };
   profiles = {
     dev.enable = true;
     docker.enable = true;
     laptop.enable = true;
+    desktop.networkmanager = false;
     desktop.autoLogin = true;
     nix-config.buildCores = 4;
     qemu-user = { arm = true; aarch64 = true; };
@@ -26,14 +34,6 @@ with import ../assets/machines.nix; {
   };
   programs = {
     podman.enable = true;
-  };
-  networking = {
-    firewall.enable = false; # we are in safe territory :D
-    bridges.br1.interfaces = [ "enp0s31f6" ];
-    interfaces.enp0s31f6 = {
-      useDHCP = true;
-    };
-    networkmanager.unmanaged = [ "interface-name:enp0s31f6" ];
   };
   services = {
     logind.extraConfig = ''
