@@ -28,7 +28,7 @@ with import ../assets/machines.nix; {
       "${wireguard.ips.hokkaido}" = [ "hokkaido.vpn" ];
       "${home.ips.kobe}" = [ "kobe.home" ];
       "${wireguard.ips.kobe}" = [ "kobe.vpn" ];
-      "${home.ips.massimo}" = [ "massimo.home" "cache.home" "svc.home" ];
+      "${home.ips.massimo}" = [ "massimo.home" "cache.home" "svc.home" "nix.cache.home" "go.cache.home" ];
       "${wireguard.ips.massimo}" = [ "massimo.vpn" ];
       "${home.ips.synodine}" = [ "synodine.home" ];
       "${home.ips.remarkable}" = [ "remarkable.home" ];
