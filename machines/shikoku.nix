@@ -7,7 +7,6 @@
   profiles.cloud.google.enable = true;
   profiles.containers = {
     enable = true;
-    docker = true;
     podman = true;
     kubernetes = { enable = true; minikube.enable = true; };
     openshift = { enable = true; minishift.enable = true; };
