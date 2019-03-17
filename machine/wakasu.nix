@@ -17,6 +17,24 @@ with import ../assets/machines.nix; {
     interfaces.enp0s31f6 = {
       useDHCP = true;
     };
+    hosts = {
+      "${home.ips.honshu}" = [ "honshu.home" ];
+      "${wireguard.ips.honshu}" = [ "honshu.vpn" ];
+      "${home.ips.shikoku}" = [ "shikoku.home" ];
+      "${wireguard.ips.shikoku}" = [ "shikoku.vpn" ];
+      "${home.ips.wakasu}" = [ "wakasu.home" ];
+      "${wireguard.ips.wakasu}" = [ "wakasu.vpn" ];
+      "${home.ips.hokkaido}" = [ "hokkaido.home" ];
+      "${wireguard.ips.hokkaido}" = [ "hokkaido.vpn" ];
+      "${home.ips.kobe}" = [ "kobe.home" ];
+      "${wireguard.ips.kobe}" = [ "kobe.vpn" ];
+      "${home.ips.massimo}" = [ "massimo.home" "cache.home" "svc.home" ];
+      "${wireguard.ips.massimo}" = [ "massimo.vpn" ];
+      "${home.ips.synodine}" = [ "synodine.home" ];
+      "${home.ips.remarkable}" = [ "remarkable.home" ];
+      "${wireguard.ips.carthage}" = [ "carthage.vpn" ];
+      "${wireguard.ips.kerkouane}" = [ "kerkouane.vpn" ];
+    };
   };
   profiles = {
     dev.enable = true;
