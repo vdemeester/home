@@ -2,7 +2,6 @@
   imports = [
     ./base.nix
   ];
-  profiles.emacs = { daemonService = false; };
   profiles.dev = {
     go.enable = true;
   };
