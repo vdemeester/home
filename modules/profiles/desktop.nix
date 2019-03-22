@@ -147,6 +147,10 @@ in
         hasklig
         inconsolata
         iosevka
+        noto-fonts
+        noto-fonts-cjk
+        noto-fonts-emoji
+        noto-fonts-extra
         overpass
         symbola
         source-code-pro
