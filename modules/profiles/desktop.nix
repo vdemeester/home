@@ -154,6 +154,7 @@ in
         overpass
         symbola
         source-code-pro
+	twemoji-color-font
         ubuntu_font_family
         unifont
       ];
