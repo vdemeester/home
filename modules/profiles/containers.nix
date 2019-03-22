@@ -29,6 +29,7 @@ in
     programs.podman.enable = cfg.podman;
     home.packages = with pkgs; [
       nur.repos.mic92.cntr
+      nur.repos.vdemeester.ko
       nur.repos.vdemeester.go-containerregistry
       nur.repos.vdemeester.yak
       skopeo
