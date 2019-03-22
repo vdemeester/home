@@ -172,6 +172,7 @@ in
           gotest
           hide-mode-line
           key-chord
+          k8s-mode
           #(with melpaPackages; [ pretty-hydra major-mode-hydra ])
           minions
           moody
