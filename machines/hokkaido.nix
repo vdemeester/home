@@ -12,7 +12,10 @@
   };
   profiles.laptop.enable = true;
   profiles.media.enable = true;
-  profiles.mails.enable = true;
+  profiles.mails = {
+    enable = true;
+    frequency = "hourly";
+  };
   programs.podman.enable = true;
   home.packages = with pkgs; [
     ledger
