@@ -15,6 +15,13 @@ in
     };
   };
   config = mkIf cfg.enable {
+    boot.kernel.sysctl = {
+      "vm.swappiness" = 10;
+      "vm.dirty_ratio" = 25;
+      "vm.dirty_background_ratio" = 10;
+      "vm.dirty_writeback_centisecs" = 5000;
+      "vm.dirty_expire_centisecs" = 5000;
+    };
     profiles.desktop.enable = true;
     environment.systemPackages = with pkgs; [
       lm_sensors

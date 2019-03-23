@@ -67,14 +67,4 @@ Option "Ignore" "true"
   boot.extraModprobeConfig = ''
   options snd_hda_intel power_save=1
   '';
-  systemd.services.tune-powermanagement = {
-    description = "Tune Powermanagement";
-    serviceConfig.Type = "oneshot";
-    serviceConfig.RemainAfterExit = true;
-    wantedBy = [ "multi-user.target" ];
-    unitConfig.RequiresMountsFor = "/sys";
-    script = ''
-      echo '1500' > '/proc/sys/vm/dirty_writeback_centisecs'
-    '';
-  };
 }
