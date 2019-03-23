@@ -113,16 +113,10 @@ xdg.configFile."mbsync/postExec" = {
   executable = true;
 };
 
-programs.astroid = {
-  enable = true;
-  externalEditor = "emacsclient -c";
-  extraConfig = {
-    startup.queries.inbox = "tag:Inbox";
-    startup.queries.inbox_perso = "tag:Inbox and tag:perso";
-    startup.queries.inbox_redhat = "tag:Inbox and tag:redhat";
-  };
-};
 programs.mbsync.enable = true;
+programs.notmuch.enable = true;
+programs.msmtp.enable = true;
+
 programs.afew = {
   enable = true;
   extraConfig = ''
@@ -141,9 +135,16 @@ programs.afew = {
     redhat/Inbox = 'NOT tag:Inbox':"redhat/[Gmail]/All Mail"
   '';
 };
-programs.notmuch.enable = true;
-programs.msmtp.enable = true;
-home.packages = with pkgs; [ mu ];
+
+programs.astroid = {
+  enable = true;
+  externalEditor = "emacsclient -c";
+  extraConfig = {
+    startup.queries.inbox = "tag:Inbox";
+    startup.queries.inbox_perso = "folder:perso/Inbox";
+    startup.queries.inbox_redhat = "folder:redhat/Inbox";
+  };
+};
 
 home.file."bin/msmtp" = {
   text = ''
