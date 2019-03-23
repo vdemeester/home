@@ -108,7 +108,7 @@ xdg.configFile."mbsync/postExec" = {
   ${pkgs.notmuch}/bin/notmuch tag -inbox tag:inbox
   #${pkgs.notmuch}/bin/notmuch tag -Inbox "NOT folder:Inbox and tag:Inbox"
 
-  ${pkgs.libnotify}/bin/notify-send "Mails synced 📫"
+  ${pkgs.libnotify}/bin/notify-send "Mails synced 📬"
   '';
   executable = true;
 };
@@ -134,7 +134,7 @@ programs.afew = {
     maildir_separator = /
 
     [MailMover]
-    folders = perso/Inbox redhat/Inbox 
+    folders = perso/Inbox redhat/Inbox
     rename = true
 
     perso/Inbox = 'NOT tag:Inbox':"perso/[Gmail]/All Mail"
@@ -144,10 +144,11 @@ programs.afew = {
 programs.notmuch.enable = true;
 programs.msmtp.enable = true;
 home.packages = with pkgs; [ mu ];
+
 home.file."bin/msmtp" = {
   text = ''
   #!${pkgs.stdenv.shell}
-
+  ${pkgs.libnotify}/bin/notify-send "Sending mail ✉️"
   ${pkgs.msmtp}/bin/msmtp --read-envelope-from $@
   '';
   executable = true;
@@ -156,6 +157,7 @@ home.file."bin/msmtp" = {
 home.file."bin/msync" = {
   text = ''
   #!${pkgs.stdenv.shell}
+  ${pkgs.libnotify}/bin/notify-send "Syncing mails 📫️"
   systemctl --user start mbsync
   '';
   executable = true;
