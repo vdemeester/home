@@ -153,5 +153,13 @@ home.file."bin/msmtp" = {
   executable = true;
 };
 
+home.file."bin/msync" = {
+  text = ''
+  #!${pkgs.stdenv.shell}
+  systemctl --user start mbsync
+  '';
+  executable = true;
+} ;
+
 };
 }
