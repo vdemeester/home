@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-emacsclient -n -e '(org-capture)'
+emacsclient -n -F '((name . "capture") (width . 75) (height . 30))' -e '(org-capture)'

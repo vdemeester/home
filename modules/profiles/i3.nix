@@ -194,6 +194,8 @@ in
         for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position center; move scratchpad
         bindcode $mod+49 [instance="metask"] scratchpad show
 
+        for_window [title="capture"] floating enable;
+
         ## hide those chats !
         for_window [class="Slack"] move scratchpad; [class="Slack"] scratchpad show
         bindcode $mod+Shift+49 [class="Slack"] scratchpad show
