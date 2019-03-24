@@ -20,6 +20,7 @@
     rust.enable = true;
     vscode.enable = true;
   };
+  profiles.finances.enable = true;
   profiles.laptop.enable = true;
   profiles.media.enable = true;
   profiles.mails.enable = true;

@@ -10,6 +10,7 @@
     rust.enable = true;
     java = { enable = true; javaPackage = pkgs.jre; };
   };
+  profiles.finances.enable = true;
   profiles.laptop.enable = true;
   profiles.media.enable = true;
   profiles.mails = {
@@ -18,7 +19,6 @@
   };
   programs.podman.enable = true;
   home.packages = with pkgs; [
-    ledger
     slack
   ];
 }

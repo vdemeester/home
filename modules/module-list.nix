@@ -12,6 +12,7 @@
     ./profiles/dev.rust.nix
     ./profiles/docker.nix
     ./profiles/emacs.nix
+    ./profiles/finances.nix
     ./profiles/fish.nix
     ./profiles/gaming.nix
     ./profiles/gcloud.nix
