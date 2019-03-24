@@ -22,6 +22,11 @@ in
         description = "Enable Xwidgets in emacs build";
         type = types.bool;
       };
+      texlive = mkOption {
+        default = true;
+        description = "Enable Texlive";
+        type = types.bool;
+      };
     };
   };
   config = mkIf cfg.enable (mkMerge [
@@ -31,7 +36,6 @@ in
         ditaa
         graphviz
         pandoc
-        texlive.combined.scheme-full
         zip
       ];
       programs.emacs = {
@@ -201,6 +205,9 @@ in
       services.gpg-agent.extraConfig = ''
         allow-emacs-pinentry
       '';
+    })
+    (mkIf cfg.texlive {
+      home.packages = with pkgs; [ texlive.combined.scheme-full ];
     })
     (mkIf cfg.daemonService {
       systemd.user.services.emacs = {
