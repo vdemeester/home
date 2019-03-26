@@ -22,7 +22,7 @@ in
         type = types.bool;
       };
       lockCmd = mkOption {
-        default = "{pkgs.slim}/bin/slimlock";
+        default = "${pkgs.slim}/bin/slimlock";
         description = "Lock command to use";
         type = types.str;
       };
