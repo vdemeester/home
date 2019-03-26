@@ -2,13 +2,17 @@
 
 {
   imports = [ ./thinkpad.nix ];
-  
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-  hardware.nvidia.optimus_prime.enable = true;
-  hardware.nvidia.optimus_prime.nvidiaBusId = "PCI:1:0:0";
-  hardware.nvidia.optimus_prime.intelBusId = "PCI:0:2:0";
-  
+  hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+    nvidia.optimus_prime = {
+      enable = true;
+      nvidiaBusId = "PCI:1:0:0";
+      intelBusId = "PCI:0:2:0";
+    };
+  };
   services = {
     tlp = {
       extraConfig = ''
@@ -35,12 +39,11 @@ DEVICES_TO_DISABLE_ON_DOCK="wifi"
 DEVICES_TO_ENABLE_ON_UNDOCK="wifi"
 # Make sure it uses the right hard drive
 DISK_DEVICES="nvme0n1p2"
-'';
+      '';
     };
-  };
-  services.udev.extraRules = ''
+    udev.extraRules = ''
   # Rules for Lenovo Thinkpad WS Dock
   SUBSYSTEM=="usb", ACTION=="add|remove", ENV{ID_VENDOR}=="17ef", ENV{ID_MODEL}=="305a", RUN+="${pkgs.vde-thinkpad}/bin/dock"
-  '';
-
+    '';
+  };
 }

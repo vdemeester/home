@@ -28,10 +28,10 @@ DEVICES_TO_DISABLE_ON_DOCK="wifi"
 DEVICES_TO_ENABLE_ON_UNDOCK="wifi"
 # Make sure it uses the right hard drive
 DISK_DEVICES="nvme0n1p3"
-'';
+      '';
     };
-  };
-  services.xserver = {
-    dpi = 128;
+    xserver = {
+      dpi = 128;
+    };
   };
 }

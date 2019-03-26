@@ -2,7 +2,16 @@
 
 {
   boot = {
-    loader.efi.canTouchEfiVariables = true;
+    blacklistedKernelModules = [
+      # Kernel GPU Savings Options (NOTE i915 chipset only)
+      "sierra_net" "cdc_mbim" "cdc_ncm"
+    ];
+    extraModprobeConfig = ''
+    options snd_hda_intel power_save=1
+    '';
+    initrd = {
+      availableKernelModules = [ "aesni-intel" "aes_x86_64" "cryptd" ];
+    };
     kernelModules = [ "kvm_intel" ];
     kernelParams = [
       # Kernel GPU Savings Options (NOTE i915 chipset only)
@@ -12,19 +21,11 @@
       "kvm_intel.nested=1"
       "intel_iommu=on"
     ];
-    blacklistedKernelModules = [
-      # Kernel GPU Savings Options (NOTE i915 chipset only)
-      "sierra_net" "cdc_mbim" "cdc_ncm"
-    ];
-    initrd = {
-      availableKernelModules = [ "aesni-intel" "aes_x86_64" "cryptd" ];
-    };
+    loader.efi.canTouchEfiVariables = true;
   };
-
   environment.systemPackages = with pkgs; [
     linuxPackages.tp_smapi
   ];
-
   hardware = {
     trackpoint.enable = false;
     cpu.intel.updateMicrocode = true;
@@ -34,7 +35,6 @@
       driSupport32Bit = true;
     };
   };
-
   services = {
     acpid = {
       enable = true;
@@ -48,30 +48,27 @@ fi
     tlp = {
       enable = true;
     };
-  };
-  services.xserver = {
-    synaptics.enable = false;
-    config =
-    ''
-Section "InputClass"
-  Identifier     "Enable libinput for TrackPoint"
-  MatchIsPointer "on"
-  Driver         "libinput"
-  Option         "ScrollMethod" "button"
-  Option         "ScrollButton" "8"
-EndSection
-    '';
-    inputClassSections = [
+    xserver = {
+      synaptics.enable = false;
+      config =
       ''
-Identifier "evdev touchpad off"
-MatchIsTouchpad "on"
-MatchDevicePath "/dev/input/event*"
-Driver "evdev"
-Option "Ignore" "true"
-      ''
-    ];
+  Section "InputClass"
+    Identifier     "Enable libinput for TrackPoint"
+    MatchIsPointer "on"
+    Driver         "libinput"
+    Option         "ScrollMethod" "button"
+    Option         "ScrollButton" "8"
+  EndSection
+      '';
+      inputClassSections = [
+        ''
+  Identifier "evdev touchpad off"
+  MatchIsTouchpad "on"
+  MatchDevicePath "/dev/input/event*"
+  Driver "evdev"
+  Option "Ignore" "true"
+        ''
+      ];
+    };
   };
-  boot.extraModprobeConfig = ''
-  options snd_hda_intel power_save=1
-  '';
 }
