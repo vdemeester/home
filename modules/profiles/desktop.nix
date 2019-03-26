@@ -22,7 +22,7 @@ in
         type = types.bool;
       };
       lockCmd = mkOption {
-        default = "-n ${dim-screen} -- ${pkgs.slim}/bin/slimlock";
+        default = "{pkgs.slim}/bin/slimlock";
         description = "Lock command to use";
         type = types.str;
       };
@@ -78,6 +78,7 @@ in
       };
       screen-locker = {
         enable = true;
+        xssLockExtraOptions = [ "-n ${dim-screen}" ];
         lockCmd = cfg.lockCmd;
         inactiveInterval = 15;
       };
