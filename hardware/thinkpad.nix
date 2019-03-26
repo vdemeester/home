@@ -1,14 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  hardware.trackpoint.enable = false;
-  hardware.cpu.intel.updateMicrocode = true;
-  hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
-
-  environment.systemPackages = with pkgs; [
-    linuxPackages.tp_smapi
-  ];
-
   boot = {
     loader.efi.canTouchEfiVariables = true;
     kernelModules = [ "kvm_intel" ];
@@ -28,6 +20,21 @@
       availableKernelModules = [ "aesni-intel" "aes_x86_64" "cryptd" ];
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    linuxPackages.tp_smapi
+  ];
+
+  hardware = {
+    trackpoint.enable = false;
+    cpu.intel.updateMicrocode = true;
+    opengl = {
+      enable = true;
+      extraPackages = [ pkgs.vaapiIntel ];
+      driSupport32Bit = true;
+    };
+  };
+
   services = {
     acpid = {
       enable = true;
