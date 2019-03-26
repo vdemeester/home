@@ -3,6 +3,15 @@
 with lib;
 let
   cfg = config.profiles.desktop;
+  dim-screen = pkgs.writeScript "dim-sreen.sh" ''
+#!${pkgs.stdenv.shell}
+export PATH=${lib.getBin pkgs.xlibs.xbacklight}/bin:$PATH
+trap "exit 0" INT TERM
+trap "kill \$(jobs -p); xbacklight -steps 1 -set $(xbacklight -get);" EXIT
+xbacklight -time 5000 -steps 400 -set 0 &
+sleep 2147483647 &
+wait
+  '';
 in
 {
   options = {
@@ -11,6 +20,11 @@ in
         default = false;
         description = "Enable desktop profile";
         type = types.bool;
+      };
+      lockCmd = mkOption {
+        default = "-n ${dim-screen} -- ${pkgs.slim}/bin/slimlock";
+        description = "Lock command to use";
+        type = types.str;
       };
       xsession = {
         enable = mkOption {
@@ -61,6 +75,11 @@ in
         latitude = "48.3";
         longitude = "7.5";
         tray = true;
+      };
+      screen-locker = {
+        enable = true;
+        lockCmd = cfg.lockCmd;
+        inactiveInterval = 15;
       };
     };
     home.file.".XCompose".source = ./assets/xorg/XCompose;
