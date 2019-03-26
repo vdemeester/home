@@ -23,6 +23,7 @@ in
       systemPackages = with pkgs; [
         cachix
         direnv
+        exa
         file
         htop
         iotop
