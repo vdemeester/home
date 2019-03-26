@@ -44,7 +44,10 @@ with import ../assets/machines.nix; {
     desktop.autoLogin = true;
     nix-config.buildCores = 4;
     qemu-user = { arm = true; aarch64 = true; };
-    ssh.enable = true;
+    ssh = {
+      enable = true;
+      forwardX11 = true;
+    };
     virtualization = {
       enable = true;
       listenTCP = true;
