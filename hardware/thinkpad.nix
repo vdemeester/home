@@ -30,9 +30,9 @@
     trackpoint.enable = false;
     cpu.intel.updateMicrocode = true;
     opengl = {
-      enable = true;
+      #enable = true;
       extraPackages = [ pkgs.vaapiIntel ];
-      driSupport32Bit = true;
+      #driSupport32Bit = true;
     };
   };
   services = {
