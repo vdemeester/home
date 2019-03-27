@@ -27,6 +27,7 @@ with import ../assets/machines.nix; {
       HandleLidSwitch=suspend
       HandleLidSwitchExternalPower=suspend
       HandleLidSwitchDocked=ignore
+      HandlePowerKey=hibernate
     '';
     syncthing-edge.guiAddress = "${wireguard.ips.hokkaido}:8384";
     wireguard = {
