@@ -4,6 +4,17 @@ with lib;
 
 let
   cfg = config.profiles.i3;
+  powermenu = pkgs.writeScript "powermenu.sh" ''
+#!${pkgs.stdenv.shell}
+MENU="$(${pkgs.rofi}/bin/rofi -sep "|" -dmenu -i -p 'System' -location 3 -xoffset -10 -yoffset 32 -width 20 -hide-scrollbar -line-padding 4 -padding 20 -lines 5 <<< "Lock|Suspend|Hibernate|Reboot|Shutdown")"
+case "$MENU" in
+  *Lock) loginctl lock-session;;
+  *Suspend) systemctl suspend;;
+  *Hibernate) systemctl hibernate;;
+  *Reboot) systemctl reboot ;;
+  *Shutdown) systemctl -i poweroff
+esac
+  '';
 in
 {
   options = {
@@ -208,10 +219,8 @@ in
         bindsym $mod+Shift+o restart
         # exit i3 (logs you out of your X session)
         bindsym $mod+Shift+p exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
-        # poweroff
-        bindsym $mod+Shift+F12 exec "i3-nagbar -t warning -m 'You pressed the poweroff shortcut. Do you really want to poweroff?' -b 'Yes, poweroff' 'systemctl poweroff'"
-        # reboot
-        bindsym $mod+Control+F12 exec "i3-nagbar -t warning -m 'You pressed the reboot shortcut. Do you really want to reboot?' -b 'Yes, reboot' 'systemctl reboot'"
+        # powermenu
+        bindsym $mod+F12 exec ${powermenu}
 
         # screen management
         bindsym $mod+F11 exec "autorandr -c on-the-move"
