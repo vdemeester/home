@@ -151,6 +151,14 @@ in
           }
           {
             path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/operator-framework/";
+          }
+          {
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/openshift-knative/";
+          }
+          {
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
             condition = "gitdir:${config.home.homeDirectory}/src/github.com/redhat-developer/";
           }
           {
