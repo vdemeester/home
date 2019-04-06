@@ -17,6 +17,7 @@
     exa
     fd
     htop
+    nur.repos.vdemeester.fhs-std
     scripts
     tree
   ];
