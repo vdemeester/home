@@ -18,7 +18,4 @@
     frequency = "hourly";
   };
   programs.podman.enable = true;
-  home.packages = with pkgs; [
-    slack
-  ];
 }
