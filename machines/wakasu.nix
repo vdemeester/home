@@ -33,6 +33,8 @@
     slack
     awscli
     terraform
+    nur.repos.vdemeester.openshift-installer
+    nur.repos.vdemeester.operator-sdk
   ];
   services.shairport-sync.enable = true;
 }
