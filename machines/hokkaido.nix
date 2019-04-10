@@ -12,7 +12,7 @@
   };
   profiles.containers.openshift = {
     enable = true;
-    package = pkgs.nur.repos.vdemeester.openshift;
+    #package = pkgs.nur.repos.vdemeester.openshift;
   };
   profiles.finances.enable = true;
   profiles.laptop.enable = true;
