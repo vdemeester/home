@@ -23,10 +23,12 @@ with import ../assets/machines.nix; {
     podman.enable = true;
   };
   services = {
+    logind = {
+      lidSwitch = "suspend";
+      lidSwitchExternalPower = "suspend";
+      lidSwitchDocked = "ignore";
+    };
     logind.extraConfig = ''
-      HandleLidSwitch=suspend
-      HandleLidSwitchExternalPower=suspend
-      HandleLidSwitchDocked=ignore
       HandlePowerKey=hibernate
     '';
     syncthing-edge.guiAddress = "${wireguard.ips.hokkaido}:8384";
