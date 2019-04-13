@@ -102,7 +102,6 @@ in
     };
     systemd.packages = [ cfg.package ];
 
-    # NEW
     environment.etc = toNSFile cfg.names
     // toReverseNSFile cfg.names
     // toCorefile cfg.names;
