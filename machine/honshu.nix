@@ -15,7 +15,7 @@ with import ../assets/machines.nix; {
     syncthing.enable = true;
   };
   services = {
-    logind.extraConfig = "HandleLidSwitch=ignore";
+    logind.lidSwitch = "ignore";
     tarsnap = {
       enable = true;
       archives = {
