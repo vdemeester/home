@@ -8,7 +8,8 @@ with import ../assets/machines.nix; {
   networking = {
     firewall = {
       allowPing = true;
-      allowedTCPPorts = [ 5000 ];
+      allowedTCPPorts = [ 5000 53 ];
+      allowedUDPPorts = [ 53 ];
     };
   };
   profiles = {
@@ -19,15 +20,44 @@ with import ../assets/machines.nix; {
     syncthing.enable = true;
   };
   services = {
+    bind = {
+      enable = true;
+      forwarders = [ "8.8.8.8" "8.8.4.4" ];
+      cacheNetworks = [ "192.168.12.0/24" "127.0.0.0/8" "10.100.0.0/24" ];
+      zones = [
+        {
+          # home
+          name = "home";
+          slaves = [];
+          file = ../assets/db.home;
+        }
+        {
+          # home.reverse
+          name = "192.168.12.in-addr.arpa";
+          slaves = [];
+          file = ../assets/db.192.168.12;
+        }
+        {
+          # vpn
+          name = "vpn";
+          slaves = [];
+          file = ../assets/db.vpn;
+        }
+        {
+          # vpn.reverse
+          name = "10.100.0.in-addr.arpa";
+          slaves = [];
+          file = ../assets/db.10.100.0;
+        }
+      ];
+    };
+    /*
     nix-binary-cache = {
       enable = true;
       domain = "nix.cache.home";
       aliases = ["cache.massimo.home" "nix.okinawa.home"];
     };
-    coredns = {
-      enable = true;
-      names = dns;
-    };
+    /*
     athens = {
       enable = true;
       user = "vincent";
@@ -42,6 +72,7 @@ with import ../assets/machines.nix; {
         };
       };
     };
+    */
     syncthing-edge.guiAddress = "${wireguard.ips.okinawa}:8384";
     wireguard = {
       enable = true;
