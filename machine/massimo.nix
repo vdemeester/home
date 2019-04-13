@@ -42,7 +42,7 @@ with import ../assets/machines.nix; {
         };
       };
     };
-    logind.extraConfig = "HandleLidSwitch=ignore";
+    logind.lidSwitch = "ignore";
     syncthing-edge.guiAddress = "${wireguard.ips.massimo}:8384";
     wireguard = {
       enable = true;
