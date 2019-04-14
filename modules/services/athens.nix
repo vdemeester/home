@@ -56,7 +56,7 @@ in
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       preStart = ''
-        mkdir -p /val/lib/athens
+        mkdir -p /var/lib/athens
       '';
       environment = { HOME="/var/lib/athens"; };
       serviceConfig = {
