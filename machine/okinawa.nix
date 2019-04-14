@@ -20,6 +20,10 @@ with import ../assets/machines.nix; {
     syncthing.enable = true;
   };
   services = {
+    athens = {
+      enable = true;
+      user = "vincent";
+    };
     bind = {
       enable = true;
       forwarders = [ "8.8.8.8" "8.8.4.4" ];
@@ -51,15 +55,6 @@ with import ../assets/machines.nix; {
         }
       ];
     };
-    nix-binary-cache = {
-      enable = true;
-      domain = "nix.cache.home";
-      aliases = ["cache.massimo.home" "nix.okinawa.home"];
-    };
-    athens = {
-      enable = true;
-      user = "vincent";
-    };
     dockerRegistry = {
       enable = true;
       enableGarbageCollect = true;
@@ -70,7 +65,32 @@ with import ../assets/machines.nix; {
         };
       };
     };
+    nix-binary-cache = {
+      enable = true;
+      domain = "nix.cache.home";
+      aliases = ["cache.massimo.home" "nix.okinawa.home"];
+    };
     syncthing-edge.guiAddress = "${wireguard.ips.okinawa}:8384";
+    tarsnap = {
+      enable = true;
+      archives = {
+        documents = {
+          directories = [ "/home/vincent/desktop/documents" ];
+          period = "daily";
+          keyfile = "/etc/nixos/assets/tarsnap.documents.key";
+        };
+        org = {
+          directories = [ "/home/vincent/desktop/org" ];
+          period = "daily";
+          keyfile = "/etc/nixos/assets/tarsnap.org.key";
+        };
+        sites = {
+          directories = [ "/home/vincent/desktop/sites" ];
+          period = "daily";
+          keyfile = "/etc/nixos/assets/tarsnap.sites.key";
+        };
+      };
+    };
     wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.okinawa}/24" ];
