@@ -46,18 +46,4 @@ with import ../assets/machines.nix; {
       OnFailure = "status-email-root@%n.service";
     };
   };
-  # ape – sync git mirrors
-  systemd.services.ape = {
-    description = "Ape - sync git mirrors";
-    wantedBy = [ "multi-user.target" ];
-    restartIfChanged = false;
-    startAt = "hourly";
-    serviceConfig = {
-      Type = "oneshot";
-      User = "vincent";
-      ExecStart = "${pkgs.nur.repos.vdemeester.ape}/bin/ape up /home/vincent/var/mirrors/";
-      Environment = "PATH=/run/current-system/sw/bin/";
-      OnFailure = "status-email-root@%n.service";
-    };
-  };
 }
