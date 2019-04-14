@@ -34,25 +34,6 @@ in
       system = {
         stateVersion = cfg.version;
       };
-      # Auto refresh nix-channel each day
-      systemd.services.channel-update = {
-        description = "Update nix-channel daily";
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "/run/current-system/sw/bin/nix-channel --update";
-          Environment = "PATH=/run/current-system/sw/bin";
-        };
-      };
-      systemd.timers.channel-update = {
-        description = "Update nix-channel daily";
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = "daily";
-          Persistent = "true";
-        };
-      };
-      systemd.timers.channel-update.enable = true;
     }
     (mkIf cfg.autoUpgrade {
       systemd.services.nixos-update = {
