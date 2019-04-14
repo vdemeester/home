@@ -8,7 +8,7 @@ with import ../assets/machines.nix; {
   networking = {
     firewall = {
       allowPing = true;
-      allowedTCPPorts = [ 5000 53 ];
+      allowedTCPPorts = [ 5000 53 80 ];
       allowedUDPPorts = [ 53 ];
     };
   };
