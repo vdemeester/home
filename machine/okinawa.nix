@@ -51,13 +51,11 @@ with import ../assets/machines.nix; {
         }
       ];
     };
-    /*
     nix-binary-cache = {
       enable = true;
       domain = "nix.cache.home";
       aliases = ["cache.massimo.home" "nix.okinawa.home"];
     };
-    /*
     athens = {
       enable = true;
       user = "vincent";
@@ -72,7 +70,6 @@ with import ../assets/machines.nix; {
         };
       };
     };
-    */
     syncthing-edge.guiAddress = "${wireguard.ips.okinawa}:8384";
     wireguard = {
       enable = true;

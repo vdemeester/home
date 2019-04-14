@@ -19,25 +19,6 @@ with import ../assets/machines.nix; {
     syncthing.enable = true;
   };
   services = {
-    nix-binary-cache = {
-      enable = true;
-      domain = "massimo.local";
-      aliases = ["cache.massimo.home" "nix.cache.home"];
-    };
-    athens = {
-      enable = true;
-      user = "vincent";
-    };
-    dockerRegistry = {
-      enable = true;
-      enableGarbageCollect = true;
-      listenAddress = "0.0.0.0";
-      extraConfig = {
-        proxy = {
-          remoteurl = "https://registry-1.docker.io";
-        };
-      };
-    };
     logind.lidSwitch = "ignore";
     syncthing-edge.guiAddress = "${wireguard.ips.massimo}:8384";
     wireguard = {
