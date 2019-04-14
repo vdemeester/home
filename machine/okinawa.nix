@@ -102,15 +102,20 @@ with import ../assets/machines.nix; {
   # ape – sync git mirrors
   systemd.services.ape = {
     description = "Ape - sync git mirrors";
-    wantedBy = [ "multi-user.target" ];
+    requires = [ "network-online.target" ];
+    after    = [ "network-online.target" ];
+
     restartIfChanged = false;
+    unitConfig.X-StopOnRemoval = false;
+
+    serviceConfig.Type = "oneshot";
+    serviceConfig.User = "vincent";
+
+    path = with pkgs; [ git ];
+    script = ''
+    ${pkgs.nur.repos.vdemeester.ape}/bin/ape up /home/vincent/var/mirrors
+    '';
+
     startAt = "hourly";
-    serviceConfig = {
-      Type = "oneshot";
-      User = "vincent";
-      ExecStart = "${pkgs.nur.repos.vdemeester.ape}/bin/ape up /home/vincent/var/mirrors/";
-      Environment = "PATH=/run/current-system/sw/bin/";
-      OnFailure = "status-email-root@%n.service";
-    };
   };
 }
