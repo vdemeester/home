@@ -99,6 +99,33 @@ with import ../assets/machines.nix; {
       endpointPublicKey = wireguard.kerkouane.publicKey;
     };
   };
+  # -----------------------------------
+  environment.etc."vrsync".text = ''
+/home/vincent/desktop/pictures/screenshots/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/screenshots/
+/home/vincent/desktop/pictures/wallpapers/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/wallpapers/
+/home/vincent/desktop/documents/ vincent@synodine.local:/volume1/documents/
+/mnt/nyan/photos/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/photos/
+/mnt/nyan/music/ vincent@synodine.local:/volumeUSB2/usbshare/music/
+  '';
+  systemd.services.vrsync = {
+    description = "vrsync - sync folders to NAS";
+    requires = [ "network-online.target" ];
+    after    = [ "network-online.target" ];
+
+    unitConfig.X-StopOnRemoval = false;
+    restartIfChanged = false;
+
+    path = with pkgs; [ rsync ];
+    script = ''
+    ${pkgs.vrsync}/bin/vrsync
+    '';
+
+    startAt = "hourly";
+    serviceConfig = {
+      Type = "oneshot";
+      OnFailure = "status-email-root@%n.service";
+    };
+  };
   # ape – sync git mirrors
   systemd.services.ape = {
     description = "Ape - sync git mirrors";
@@ -108,8 +135,11 @@ with import ../assets/machines.nix; {
     restartIfChanged = false;
     unitConfig.X-StopOnRemoval = false;
 
-    serviceConfig.Type = "oneshot";
-    serviceConfig.User = "vincent";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "vincent";
+      OnFailure = "status-email-root@%n.service";
+    };
 
     path = with pkgs; [ git ];
     script = ''
