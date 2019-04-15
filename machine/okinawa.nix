@@ -115,7 +115,7 @@ with import ../assets/machines.nix; {
     unitConfig.X-StopOnRemoval = false;
     restartIfChanged = false;
 
-    path = with pkgs; [ rsync ];
+    path = with pkgs; [ rsync coreutils bash openssh ];
     script = ''
     ${pkgs.vrsync}/bin/vrsync
     '';
