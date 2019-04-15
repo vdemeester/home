@@ -117,5 +117,19 @@ in
       xdg_utils
       xsel
     ];
+    home.file."bin/pbcopy" = {
+      text = ''
+      #!${pkgs.stdenv.shell}
+      ${pkgs.xsel}/bin/xsel --clipboard --input
+      '';
+      executable = true;
+    };
+    home.file."bin/pbpaste" = {
+      text = ''
+      #!${pkgs.stdenv.shell}
+      ${pkgs.xsel}/bin/xsel --clipboard --output
+      '';
+      executable = true;
+    };
   };
 }
