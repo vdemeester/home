@@ -3,6 +3,11 @@
 with lib;
 let
   cfg = config.profiles.emacs;
+
+  capture = pkgs.writeScriptBin "capture" ''
+  #!${pkgs.stdenv.shell}
+  emacsclient -n -F '((name . "capture") (width . 75) (height . 30))' -e '(org-capture)'
+  '';
 in
 {
   options = {
@@ -195,11 +200,7 @@ in
       };
     }
     (mkIf config.profiles.desktop.enable {
-      home.file."bin/capture" = {
-        source = ./assets/bin/capture;
-        executable = true;
-      };
-      home.packages = with pkgs; [ wmctrl ];
+      home.packages = with pkgs; [ wmctrl capture ];
     })
     (mkIf config.services.gpg-agent.enable {
       services.gpg-agent.extraConfig = ''

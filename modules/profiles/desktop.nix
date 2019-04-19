@@ -3,6 +3,7 @@
 with lib;
 let
   cfg = config.profiles.desktop;
+
   dim-screen = pkgs.writeScript "dim-sreen.sh" ''
 #!${pkgs.stdenv.shell}
 export PATH=${lib.getBin pkgs.xlibs.xbacklight}/bin:$PATH
@@ -11,6 +12,15 @@ trap "kill \$(jobs -p); xbacklight -steps 1 -set $(xbacklight -get);" EXIT
 xbacklight -time 5000 -steps 400 -set 0 &
 sleep 2147483647 &
 wait
+  '';
+
+  pbpaste = pkgs.writeScriptBin "pbcopy" ''
+    #!${pkgs.stdenv.shell}
+    ${pkgs.xsel}/bin/xsel --clipboard --input
+  '';
+  pbcopy = pkgs.writeScriptBin "pbpaste" ''
+    #!${pkgs.stdenv.shell}
+    ${pkgs.xsel}/bin/xsel --clipboard --output
   '';
 in
 {
@@ -111,25 +121,13 @@ in
       gnome3.gnome_themes_standard
       keybase
       mpv
+      pbcopy
+      pbpaste
       peco
       pass
       xdg-user-dirs
       xdg_utils
       xsel
     ];
-    home.file."bin/pbcopy" = {
-      text = ''
-      #!${pkgs.stdenv.shell}
-      ${pkgs.xsel}/bin/xsel --clipboard --input
-      '';
-      executable = true;
-    };
-    home.file."bin/pbpaste" = {
-      text = ''
-      #!${pkgs.stdenv.shell}
-      ${pkgs.xsel}/bin/xsel --clipboard --output
-      '';
-      executable = true;
-    };
   };
 }
