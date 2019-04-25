@@ -35,6 +35,7 @@
     terraform
     nur.repos.vdemeester.openshift-installer
     nur.repos.vdemeester.operator-sdk
+    gnome3.vinagre
   ];
   services.shairport-sync.enable = true;
 }
