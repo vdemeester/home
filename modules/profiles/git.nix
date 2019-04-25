@@ -127,11 +127,7 @@ in
           }
           {
             path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-            condition = "gitdir:${config.home.homeDirectory}/src/github.com/google/";
-          }
-          {
-            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-            condition = "gitdir:${config.home.homeDirectory}/src/github.com/GoogleContainerTools/";
+            condition = "gitdir/i:${config.home.homeDirectory}/src/github.com/google**";
           }
           {
             path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
@@ -147,19 +143,11 @@ in
           }
           {
             path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-            condition = "gitdir:${config.home.homeDirectory}/src/github.com/openshift/";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/openshift**";
           }
           {
             path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-            condition = "gitdir:${config.home.homeDirectory}/src/github.com/operator-framework/";
-          }
-          {
-            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-            condition = "gitdir:${config.home.homeDirectory}/src/github.com/openshift-knative/";
-          }
-          {
-            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-            condition = "gitdir:${config.home.homeDirectory}/src/github.com/redhat-developer/";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/redhat**";
           }
           {
             path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
