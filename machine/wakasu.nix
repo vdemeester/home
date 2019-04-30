@@ -78,4 +78,5 @@ with import ../assets/machines.nix; {
       dpi = 96;
     };
   };
+  #security.apparmor.enable = true;
 }

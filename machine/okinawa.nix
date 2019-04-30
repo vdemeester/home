@@ -99,6 +99,7 @@ with import ../assets/machines.nix; {
       endpointPublicKey = wireguard.kerkouane.publicKey;
     };
   };
+  security.apparmor.enable = true;
   # -----------------------------------
   environment.etc."vrsync".text = ''
 /home/vincent/desktop/pictures/screenshots/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/screenshots/
