@@ -24,6 +24,7 @@
   programs.podman.enable = true;
   home.packages = with pkgs; [
     awscli
+    slack
     terraform
     nur.repos.vdemeester.openshift-installer
   ];
