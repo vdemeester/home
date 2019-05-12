@@ -105,9 +105,10 @@ xdg.configFile."mbsync/postExec" = {
 
   ${pkgs.notmuch}/bin/notmuch new
   ${pkgs.afew}/bin/afew -C ${config.xdg.configHome}/notmuch/notmuchrc --tag --new -v
-  ${pkgs.notmuch}/bin/notmuch tag -inbox tag:inbox
-  #${pkgs.notmuch}/bin/notmuch tag -Inbox "NOT folder:Inbox and tag:Inbox"
-
+  # Remove inbox (lower-case)
+  ${pkgs.notmuch}/bin/notmuch tag -inbox -- tag:inbox
+  # Remove Inbox tagged message that are not in an Inbox
+  ${pkgs.notmuch} tag -Inbox -- not folder:redhat/Inbox and not folder:perso/Inbox and tag:Inbox
   ${pkgs.libnotify}/bin/notify-send "Mails synced 📬"
   '';
   executable = true;
