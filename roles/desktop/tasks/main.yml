@@ -1,0 +1,4 @@
+---
+- include: gnome.yml
+  when: ansible_distribution == 'Fedora'
+- include: media.yml

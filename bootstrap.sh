@@ -74,6 +74,10 @@ EOF
     run_home-manager
     echo ". \"$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh\"" >> $HOME/.bashrc
     . $HOME/.bashrc
+    echo "> install ansible"
+    sudo dnf install -y ansible
+    echo "> run playbook"
+    ansible-playbook -K playbook.yml
 }
 		
 setup_osx() {

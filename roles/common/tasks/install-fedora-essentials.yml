@@ -1,0 +1,6 @@
+---
+- name: Install essentials
+  become: yes
+  package: name={{item}} state=present
+  with_items:
+  - python3-psutil
