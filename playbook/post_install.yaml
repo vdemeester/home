@@ -1,0 +1,84 @@
+# TODO: create a bootstrap script (fedora, nixos support)
+# TODO: tlp, tlp-rdw (+ systemd enabled) – https://www.fosslinux.com/2304/how-to-increase-laptops-battery-life-in-fedora-all-versions.htm
+# TODO: powertop (+ systemd enabled)
+# TODO: rpm-fusion + stuff – https://rpmfusion.org/Configuration
+# TODO: Install nix + home-manager — install commands from README (as user)
+# TODO: gedit configuration
+# TODO: syncthing + syncthing-gtk + service(s)
+# TODO: wireguard — https://github.com/mina-alber/wireguard-ansible
+# TODO: fonts (fira-code, hasklig, … ?) – https://github.com/tonsky/FiraCode/wiki/Linux-instructions#fedora
+# TODO: yubico
+# TODO: fingerprint (hokkaido)
+# TODO: compose key (capslock)
+- hosts: localhost
+  tasks:
+    - name: Install essentials
+      become: yes
+      package: name={{item}} state=present
+      with_items:
+        - vim
+        - htop
+        - tmux
+        - python3-psutil
+        - dconf-editor
+        - redhat-text-fonts
+        - redhat-display-fonts
+        - mozilla-fira-mono-fonts
+        - mozilla-fira-sans-fonts
+        - acpi
+    - name: Enable Night Light
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
+        value: "true"
+        state: present
+    - name: Enable Night Light
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-automatic"
+        value: "true"
+        state: present
+    - name: Enable Night Light
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/color/night-light-temperature"
+        value: "5000"
+        state: present
+    - name: Install dev
+      become: yes
+      package: name={{item}} state=present
+      with_items:
+        - emacs
+        - golang
+        - make
+        - automake
+        - gcc
+        - gcc-c++
+    - name: Install media
+      become: yes
+      package: name={{item}} state=present
+      with_items:
+        - mpv
+    - name: Install containers stuff
+      become: yes
+      package: name={{item}} state=present
+      with_items:
+        - origin-clients
+        - podman
+        - buildah
+        - skopeo
+    - name: Install syncthing
+      become: yes
+      package: name={{item}} state=present
+      with_items:
+        - syncthing
+        - syncthing-gtk
+    - name: Install virtualization packages
+      become: yes
+      package: name={{item}} state=present
+      with_items:
+        - virt-manager
+        - qemu-kvm
+        - qemu-img
+        - virt-install
+        - bridge-utils
+        - libvirt
+        - libvirt-devel
+        - libvirt-daemon-kvm
