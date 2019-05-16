@@ -4,6 +4,8 @@
   - common
   - desktop
   - { role: laptop, when: ansible_form_factor == 'Notebook' }
+  - gcloud
+  - dev
 
 # ansible_hostname == 'hokkaido'
 # ansible_product_version == 'ThinkPad X220'
