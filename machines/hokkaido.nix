@@ -2,30 +2,13 @@
 
 {
   imports = [
-    ./base.nix
+    ./base.fedora.nix
   ];
-  profiles.containers.enable = true;
-  profiles.dev = {
-    go.enable = true;
-    rust.enable = true;
-    java = { enable = true; javaPackage = pkgs.jre; };
-  };
-  profiles.containers.openshift = {
-    enable = true;
-    #package = pkgs.nur.repos.vdemeester.openshift;
-  };
+  xdg.configFile."user-dirs.dirs".source = ../modules/profiles/assets/xorg/user-dirs.dirs;
   profiles.finances.enable = true;
-  profiles.laptop.enable = true;
-  profiles.media.enable = true;
-  profiles.mails = {
+  profiles.emacs = {
     enable = true;
-    frequency = "hourly";
+    texlive = false;
+    daemonService = false;
   };
-  programs.podman.enable = true;
-  home.packages = with pkgs; [
-    awscli
-    slack
-    terraform
-    nur.repos.vdemeester.openshift-installer
-  ];
 }
