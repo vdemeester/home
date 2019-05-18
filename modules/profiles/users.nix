@@ -55,6 +55,10 @@ in
     Port ${toString ssh.carthage.port}
   Host hokkaido.vpn ${wireguard.ips.hokkaido}
     Hostname ${wireguard.ips.hokkaido}
+  Host honshu.vpn ${wireguard.ips.honshu}
+    Hostname ${wireguard.ips.honshu}
+  Host okinawa.vpn ${wireguard.ips.okinawa}
+    Hostname ${wireguard.ips.okinawa}
   Host wakasu.vpn ${wireguard.ips.wakasu}
     Hostname ${wireguard.ips.wakasu}
     '';
