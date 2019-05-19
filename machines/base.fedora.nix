@@ -15,7 +15,6 @@
     direnv
     enchive
     entr
-    envsubst
     exa
     fd
     htop
