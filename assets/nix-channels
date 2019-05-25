@@ -1,1 +1,2 @@
 https://nixos.org/channels/nixpkgs-unstable nixpkgs
+https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
