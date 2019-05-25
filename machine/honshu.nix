@@ -2,6 +2,15 @@
 
 with import ../assets/machines.nix; {
   imports = [ ../hardware/dell-latitude-e6540.nix ./home.nix ];
+  environment.etc."resolv.conf" = with pkgs; with lib; {
+    source = writeText "resolv.conf" ''
+domain home
+nameserver 192.168.12.22
+nameserver 192.168.12.1
+nameserver fe80::327c:b2ff:fec9:4596%br1
+options edns0
+    '';
+  };  
   networking = {
     enableIPv6 = false;
     firewall.allowedTCPPorts = [ 3389 2375 7946 9000 80 ];
