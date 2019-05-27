@@ -165,6 +165,7 @@ in
           yasnippet
           yaml-mode
         ] ++ (with melpaPackages; [
+          company-lsp
           eshell-prompt-extras
           esh-autosuggest
           fish-completion
@@ -182,7 +183,10 @@ in
           hide-mode-line
           key-chord
           k8s-mode
-          #(with melpaPackages; [ pretty-hydra major-mode-hydra ])
+          lsp-mode
+          lsp-ui
+          pretty-hydra
+          major-mode-hydra
           minions
           moody
           mwim
