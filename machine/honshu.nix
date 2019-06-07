@@ -10,10 +10,10 @@ nameserver 192.168.12.1
 nameserver fe80::327c:b2ff:fec9:4596%br1
 options edns0
     '';
-  };  
+  };
   networking = {
     enableIPv6 = false;
-    firewall.allowedTCPPorts = [ 3389 2375 7946 9000 80 ];
+    firewall.allowedTCPPorts = [ 3389 2375 7946 9000 80 6443 ];
     firewall.allowPing = true;
   };
   profiles = {
@@ -24,6 +24,12 @@ options edns0
     syncthing.enable = true;
   };
   services = {
+    kubernetes = {
+      easyCerts = true;
+      addons.dashboard.enable = true;
+      roles = ["master" "node"];
+      masterAddress = "honshu.home";
+    };
     logind.lidSwitch = "ignore";
     syncthing-edge.guiAddress = "${wireguard.ips.honshu}:8384";
     wireguard = {
