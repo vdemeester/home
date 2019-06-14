@@ -25,6 +25,10 @@ options edns0
     nix-config.buildCores = 4;
     ssh.enable = true;
     syncthing.enable = true;
+    virtualization = {
+      enable = true;
+      listenTCP = true;
+    };
   };
   services = {
     logind.lidSwitch = "ignore";
