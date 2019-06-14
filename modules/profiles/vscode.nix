@@ -25,8 +25,27 @@ in
         "editor.minimap.enabled" = false;
         "window.titleBarStyle"= "custom";
         "breadcrumbs.enabled" = true;
+        "go.useLanguageServer" = true;
       };
       extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "remote-ssh";
+            publisher = "ms-vscode-remote";
+            version = "0.42.2";
+            sha256 = "0aqjlbndiq1q8gh4dkj68sbr56ya458c8xh7f8bkhw5rnmz31pj5";
+          }
+          {
+            name = "remote-ssh-edit";
+            publisher = "ms-vscode-remote";
+            version = "0.42.2";
+            sha256 = "0qkdz1ng5mk35x8awa9wavb138hd454da8gsf7m66xyfifsmcn6h";
+          }
+          {
+            name = "remote-ssh-explorer";
+            publisher = "ms-vscode-remote";
+            version = "0.42.2";
+            sha256 = "02wg1bvl9923ldxlkj0qdlpf0njrd2r805561dkw5yp8siiim768";
+          }
           {
             name = "EditorConfig";
             publisher = "EditorConfig";
