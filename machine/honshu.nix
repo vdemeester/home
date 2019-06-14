@@ -13,8 +13,11 @@ options edns0
   };
   networking = {
     enableIPv6 = false;
-    firewall.allowedTCPPorts = [ 3389 2375 7946 9000 80 6443 ];
-    firewall.allowPing = true;
+    firewall.enable = false; # we are in safe territory :D
+    bridges.br1.interfaces = [ "eno1" ];
+    interfaces.eno1 = {
+      useDHCP = true;
+    };
   };
   profiles = {
     avahi.enable = true;
