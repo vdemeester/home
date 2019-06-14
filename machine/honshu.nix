@@ -24,12 +24,6 @@ options edns0
     syncthing.enable = true;
   };
   services = {
-    kubernetes = {
-      easyCerts = true;
-      addons.dashboard.enable = true;
-      roles = ["master" "node"];
-      masterAddress = "honshu.home";
-    };
     logind.lidSwitch = "ignore";
     syncthing-edge.guiAddress = "${wireguard.ips.honshu}:8384";
     wireguard = {
