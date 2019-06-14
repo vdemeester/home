@@ -30,7 +30,7 @@ in
     {
       profiles.containers.enable = true;
       home.packages = with pkgs; [
-        cri-tools
+        #cri-tools
         kail
         kustomize
         nur.repos.vdemeester.knctl
