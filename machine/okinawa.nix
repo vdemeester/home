@@ -20,6 +20,7 @@ with import ../assets/machines.nix; {
     syncthing.enable = true;
     virtualization = {
       enable = true;
+      nested = true;
       listenTCP = true;
     };
   };

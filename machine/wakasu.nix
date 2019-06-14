@@ -58,6 +58,7 @@ options edns0
     };
     virtualization = {
       enable = true;
+      nested = true;
       listenTCP = true;
     };
   };

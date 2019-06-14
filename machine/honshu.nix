@@ -27,6 +27,7 @@ options edns0
     syncthing.enable = true;
     virtualization = {
       enable = true;
+      nested = true;
       listenTCP = true;
     };
   };

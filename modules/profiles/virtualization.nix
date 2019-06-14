@@ -12,6 +12,11 @@ in
         description = "Enable virtualization profile";
         type = types.bool;
       };
+      nested = mkOption {
+        default = false;
+        description = "Enable nested virtualization";
+        type = types.bool;
+      };
       listenTCP = mkOption {
         default = false;
         description = "Make libvirt listen to TCP";
@@ -29,6 +34,11 @@ in
         vde2
       ];
     }
+    (mkIf cfg.nested {
+      environment.etc."modprobe.d/kvm.conf".text = ''
+options kvm_intel nested=1
+      '';
+    })
     (mkIf config.profiles.desktop.enable {
       environment.systemPackages = with pkgs; [ virtmanager ];
     })
