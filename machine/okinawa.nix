@@ -18,6 +18,10 @@ with import ../assets/machines.nix; {
     nix-config.buildCores = 4;
     ssh.enable = true;
     syncthing.enable = true;
+    virtualization = {
+      enable = true;
+      listenTCP = true;
+    };
   };
   services = {
     athens = {
