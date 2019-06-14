@@ -12,7 +12,6 @@ options edns0
     '';
   };
   networking = {
-    enableIPv6 = false;
     firewall.enable = false; # we are in safe territory :D
     bridges.br1.interfaces = [ "eno1" ];
     interfaces.eno1 = {
