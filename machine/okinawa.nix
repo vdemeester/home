@@ -6,10 +6,10 @@ with import ../assets/machines.nix; {
     cleanTmpDir = true;
   };
   networking = {
-    firewall = {
-      allowPing = true;
-      allowedTCPPorts = [ 5000 53 80 ];
-      allowedUDPPorts = [ 53 ];
+    firewall.enable = false; # we are in safe territory :D
+    bridges.br1.interfaces = [ "enp0s31f6" ];
+    interfaces.enp0s31f6 = {
+      useDHCP = true;
     };
   };
   profiles = {
