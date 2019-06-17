@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
@@ -15,6 +15,7 @@ in
     };
   };
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [ gnupg ];
     services = {
       gpg-agent = {
         enable = true;
