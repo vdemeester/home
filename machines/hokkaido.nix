@@ -4,7 +4,10 @@
   imports = [
     ./base.fedora.nix
   ];
-  xdg.configFile."user-dirs.dirs".source = ../modules/profiles/assets/xorg/user-dirs.dirs;
+  home.packages = with pkgs; [
+    kubectx
+    kustomize
+  ];
   profiles.finances.enable = true;
   profiles.dev = {
     enable = true;
@@ -14,4 +17,5 @@
     texlive = false;
     daemonService = false;
   };
+  xdg.configFile."user-dirs.dirs".source = ../modules/profiles/assets/xorg/user-dirs.dirs;
 }
