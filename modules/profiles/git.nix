@@ -119,6 +119,14 @@ in
         includes = [
           {
             path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/github.com/kubernetes/";
+          }
+          {
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/k8s.io/";
+          }
+          {
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
             condition = "gitdir:${config.home.homeDirectory}/src/github.com/knative/";
           }
           {
