@@ -30,7 +30,7 @@ with import ../assets/machines.nix; {
     bind = {
       enable = true;
       forwarders = [ "8.8.8.8" "8.8.4.4" ];
-      cacheNetworks = [ "192.168.12.0/24" "127.0.0.0/8" "10.100.0.0/24" ];
+      cacheNetworks = [ "192.168.1.0/24" "127.0.0.0/8" "10.100.0.0/24" ];
       zones = [
         {
           # home
@@ -40,9 +40,9 @@ with import ../assets/machines.nix; {
         }
         {
           # home.reverse
-          name = "192.168.12.in-addr.arpa";
+          name = "192.168.1.in-addr.arpa";
           slaves = [];
-          file = ../assets/db.192.168.12;
+          file = ../assets/db.192.168.1;
         }
         {
           # vpn
@@ -58,12 +58,6 @@ with import ../assets/machines.nix; {
         }
       ];
     };
-    /*
-    coredns = {
-      enable = true;
-      names = dns;
-    };
-    */
     wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.kobe}/24" ];
