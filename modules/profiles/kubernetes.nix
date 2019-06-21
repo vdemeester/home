@@ -36,6 +36,7 @@ in
         nur.repos.vdemeester.knctl
         kube-prompt
         kubectx
+        nur.repos.vdemeester.tkn
       ];
     }
     (mkIf cfg.minikube.enable {
