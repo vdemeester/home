@@ -27,7 +27,6 @@ in
         binutils
         cmake
         fswatch
-        gcc
         gnumake
         jq
         lnav
