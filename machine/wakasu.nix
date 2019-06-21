@@ -11,15 +11,6 @@ with import ../assets/machines.nix; {
       "net.bridge.bridge-nf-call-ip6tables" = 0;
     };
   };
-  environment.etc."resolv.conf" = with pkgs; with lib; {
-    source = writeText "resolv.conf" ''
-domain home
-nameserver 192.168.12.22
-nameserver 192.168.12.1
-nameserver fe80::327c:b2ff:fec9:4596%br1
-options edns0
-    '';
-  };  
   networking = {
     firewall.enable = false; # we are in safe territory :D
     bridges.br1.interfaces = [ "enp0s31f6" ];
