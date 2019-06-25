@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -e
+[ ! -r ~/.oath/pin ] && echo "No PIN stored." || echo "$(cat ~/.oath/pin)$(authkey)"
