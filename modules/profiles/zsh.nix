@@ -37,13 +37,21 @@ in
         shellAliases = import ./aliases.shell.nix;
         plugins = [
           {
-             # will source emoji-cli.plugin.zsh
              name = "emoji-cli";
              src = pkgs.fetchFromGitHub {
                owner = "b4b4r07";
                repo = "emoji-cli";
                rev = "26e2d67d566bfcc741891c8e063a00e0674abc92";
                sha256 = "0n88w4k5vaz1iyikpmlzdrrkxmfn91x5s4q405k1fxargr1w6bmx";
+             };
+           }
+          {
+             name = "zsh-history-substring-search";
+             src = pkgs.fetchFromGitHub {
+               owner = "zsh-users";
+               repo = "zsh-history-substring-search";
+               rev = "0f80b8eb3368b46e5e573c1d91ae69eb095db3fb";
+               sha256 = "0y8va5kc2ram38hbk2cibkk64ffrabfv1sh4xm7pjspsba9n5p1y";
              };
            }
         ];
@@ -54,6 +62,9 @@ in
           select-word-style bash
           # syntax highlighting
           source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+          # history-substring-search
+          bindkey '^[[A' history-substring-search-up
+          bindkey '^[[B' history-substring-search-down
         '';
         profileExtra = ''
           if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
