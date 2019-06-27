@@ -1,4 +1,15 @@
 ---
+- name: Install gnome essentials
+  become: yes
+  package: name={{item}} state=present
+  with_items:
+  - seahorse
+  - seahorse-nautilus
+  - tilix
+  - tilix-nautilus
+  - nautilus-image-converter
+  - deja-dup
+  - deja-dup-nautilus
 - name: Install dconf-editor
   become: yes
   package: name=dconf-editor state=present
