@@ -8,6 +8,10 @@
     kubectx
     kustomize
   ];
+  profiles.containers.kubernetes = {
+    enable = true;
+    containers = false;
+  };
   profiles.finances.enable = true;
   profiles.zsh = {
     enable = true;

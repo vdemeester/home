@@ -12,6 +12,11 @@ in
         description = "Enable kubernetes profile";
         type = types.bool;
       };
+      containers= mkOption {
+        default = true;
+        description = "Enable containers profile alongside";
+        type = types.bool;
+      };
       minikube = {
         enable = mkOption {
           default = false;
@@ -28,7 +33,7 @@ in
   };
   config = mkIf cfg.enable (mkMerge [
     {
-      profiles.containers.enable = true;
+      profiles.containers.enable = cfg.containers;
       home.packages = with pkgs; [
         #cri-tools
         kail
@@ -39,6 +44,11 @@ in
         nur.repos.vdemeester.tkn
       ];
     }
+    (mkIf config.profiles.zsh.enable {
+      programs.zsh.initExtra = ''
+        source <(tkn completion zsh)
+      '';
+    })
     (mkIf cfg.minikube.enable {
       home.packages = with pkgs; [
         cfg.minikube.package
