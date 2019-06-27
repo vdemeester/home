@@ -10,6 +10,7 @@
     ./profiles/dev.js.nix
     ./profiles/dev.python.nix
     ./profiles/dev.rust.nix
+    ./profiles/direnv.nix
     ./profiles/docker.nix
     ./profiles/emacs.nix
     ./profiles/finances.nix

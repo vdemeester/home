@@ -19,7 +19,6 @@ in
     enable = true;
     shellAliases = import ./aliases.shell.nix;
     shellInit = ''
-      eval (${pkgs.direnv}/bin/direnv hook fish)
       # emacs ansi-term support
       if test -n "$EMACS"
         set -x TERM eterm-color
