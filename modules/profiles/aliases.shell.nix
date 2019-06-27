@@ -6,4 +6,5 @@
   ll = ''exa -l'';
   la = ''exa -a'';
   l = ''exa -lah'';
+  t = ''exa --tree -L 2'';
 }
