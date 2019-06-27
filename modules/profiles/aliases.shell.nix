@@ -3,4 +3,7 @@
   mkdir = ''mkdir -pv'';
   gcd = ''cd (git root)'';
   ls = ''exa'';
+  ll = ''exa -l'';
+  la = ''exa -a'';
+  l = ''exa -lah'';
 }
