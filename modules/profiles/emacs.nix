@@ -43,6 +43,9 @@ in
         pandoc
         zip
       ];
+      home.sessionVariables = {
+        EDITOR = "et";
+      };
       programs.emacs = {
         enable = true;
         package = pkgs.emacs.override { inherit (pkgs) imagemagick; withXwidgets = cfg.withXwidgets; };
