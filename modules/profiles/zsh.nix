@@ -33,6 +33,7 @@ in
         localVariables = {
           EMOJI_CLI_KEYBIND = "^n";
           EMOJI_CLI_USE_EMOJI = "yes";
+          ZSH_HIGHLIGHT_HIGHLIGHTERS = [ "main" "brackets" "pattern" ];
         };
         shellAliases = import ./aliases.shell.nix;
         plugins = [
@@ -62,6 +63,9 @@ in
           select-word-style bash
           # syntax highlighting
           source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+          ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
+          ZSH_HIGHLIGHT_PATTERNS+=('rm -fR *' 'fg=white,bold,bg=red')
+          ZSH_HIGHLIGHT_PATTERNS+=('rm -fr *' 'fg=white,bold,bg=red')
           # history-substring-search
           bindkey '^[[A' history-substring-search-up
           bindkey '^[[B' history-substring-search-down
