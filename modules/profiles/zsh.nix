@@ -18,6 +18,13 @@ in
     programs.zsh = {
       enable = true;
       shellAliases = import ./aliases.shell.nix;
+      initExtra = ''
+        if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
+      '';
+      profileExtra = ''
+        if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
+        export NIX_PATH=$HOME/.nix-defexpr/channels:$NIX_PATH
+      '';
     };
   };
 }
