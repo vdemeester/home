@@ -18,7 +18,7 @@
   profiles.emacs = {
     enable = true;
     texlive = false;
-    daemonService = false;
+    daemonService = true;
   };
   xdg.configFile."user-dirs.dirs".source = ../modules/profiles/assets/xorg/user-dirs.dirs;
 }
