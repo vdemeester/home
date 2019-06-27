@@ -9,6 +9,9 @@
     kustomize
   ];
   profiles.finances.enable = true;
+  profiles.zsh = {
+    enable = true;
+  };
   profiles.dev = {
     enable = true;
   };
