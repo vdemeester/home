@@ -74,6 +74,8 @@ EOF
     run_home-manager
     echo ". \"$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh\"" >> $HOME/.bashrc
     . $HOME/.bashrc
+    dnf copr enable evana/fira-code-fonts
+    dnf install fira-code-fonts
     echo "> install ansible"
     sudo dnf install -y ansible
     echo "> run playbook"

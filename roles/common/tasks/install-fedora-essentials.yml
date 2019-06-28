@@ -4,3 +4,4 @@
   package: name={{item}} state=present
   with_items:
   - python3-psutil
+  - util-linux-user
