@@ -1,4 +1,4 @@
-local root=~/src/github.com/
+local root=~/src/
 local res results args
 
 while getopts "np" opt; do
