@@ -30,3 +30,6 @@
   package: name={{item}} state=present
   with_items:
   - toolbox
+  - podman
+  - buildah
+  - skopeo
