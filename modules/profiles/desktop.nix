@@ -13,15 +13,6 @@ xbacklight -time 5000 -steps 400 -set 0 &
 sleep 2147483647 &
 wait
   '';
-
-  pbpaste = pkgs.writeScriptBin "pbcopy" ''
-    #!${pkgs.stdenv.shell}
-    ${pkgs.xsel}/bin/xsel --clipboard --input
-  '';
-  pbcopy = pkgs.writeScriptBin "pbpaste" ''
-    #!${pkgs.stdenv.shell}
-    ${pkgs.xsel}/bin/xsel --clipboard --output
-  '';
 in
 {
   options = {
@@ -121,8 +112,6 @@ in
       gnome3.gnome_themes_standard
       keybase
       mpv
-      pbcopy
-      pbpaste
       peco
       pass
       xdg-user-dirs
