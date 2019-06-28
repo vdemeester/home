@@ -6,6 +6,7 @@
   - desktop
   - { role: laptop, when: ansible_form_factor == 'Notebook' }
   - gcloud
+  - virtualization
   - dev
   - wireguard
 
