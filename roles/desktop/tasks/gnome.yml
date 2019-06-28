@@ -10,6 +10,9 @@
   - nautilus-image-converter
   - deja-dup
   - deja-dup-nautilus
+  - gnome-tweaks
+  - gnome-shell-extension-pomodoro
+  - snapd
 - name: Install dconf-editor
   become: yes
   package: name=dconf-editor state=present
