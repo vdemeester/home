@@ -197,10 +197,6 @@ in
 
         for_window [title="capture"] floating enable;
 
-        ## hide those chats !
-        for_window [class="Slack"] move scratchpad; [class="Slack"] scratchpad show
-        bindcode $mod+Shift+49 [class="Slack"] scratchpad show
-
         bindsym XF86MonBrightnessUp exec "xbacklight -inc 10"
         bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
         bindsym shift+XF86MonBrightnessUp exec "xbacklight -inc 1"
