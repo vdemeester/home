@@ -4,6 +4,9 @@
   imports = [
     ./base.nix
   ];
+  profiles.zsh = {
+    enable = true;
+  };
   profiles.cloud.google.enable = true;
   profiles.containers = {
     enable = true;
