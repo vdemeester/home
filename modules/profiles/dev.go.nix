@@ -16,6 +16,9 @@ in
   };
   config = mkIf cfg.enable (mkMerge [
     {
+      home.sessionVariables = {
+        GOPATH = "${config.home.homeDirectory}";
+      };
       profiles.dev.enable = true;
       home.packages = with pkgs; [
         gcc

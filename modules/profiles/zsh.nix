@@ -35,6 +35,7 @@ in
           EMOJI_CLI_KEYBIND = "^n";
           EMOJI_CLI_USE_EMOJI = "yes";
           ZSH_HIGHLIGHT_HIGHLIGHTERS = [ "main" "brackets" "pattern" ];
+          GOPATH = "${config.home.homeDirectory}";
         };
         shellAliases = import ./aliases.shell.nix;
         plugins = [
@@ -75,6 +76,9 @@ in
              };
           }
         ];
+        loginExtra = ''
+        export GOPATH=${config.home.homeDirectory}
+        '';
         initExtra = ''
           path+="$HOME/${config.programs.zsh.dotDir}/functions"
           fpath+="$HOME/${config.programs.zsh.dotDir}/functions"
