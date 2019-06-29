@@ -33,3 +33,4 @@
   - podman
   - buildah
   - skopeo
+  - origin-clients

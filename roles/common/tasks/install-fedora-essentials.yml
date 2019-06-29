@@ -5,3 +5,5 @@
   with_items:
   - python3-psutil
   - util-linux-user
+  - oathtool
+  - lm_sensors
