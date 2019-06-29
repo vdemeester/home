@@ -224,7 +224,7 @@ in
         };
         Service = {
           Environment = ''
-            PATH=${config.home.homeDirectory}/bin;${config.home.homeDirectory}/.nix-profile/bin:${config.home.homeDirectory}/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin GOPATH=${config.home.homeDirectory} ASPELL_CONF=dict-dir=${config.home.homeDirectory}/.nix-profile/lib/aspell
+          PATH=${config.home.homeDirectory}/bin;${config.home.homeDirectory}/.nix-profile/bin:${config.home.homeDirectory}/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin GOPATH=${config.home.homeDirectory} NIX_PATH=${config.home.homeDirectory}/.nix-defexpr/channels:nixpkgs=/home/vincent/.nix-defexpr/channels/nixpkgs ASPELL_CONF=dict-dir=${config.home.homeDirectory}/.nix-profile/lib/aspell
           '';
           Type      = "forking";
           ExecStart = "${pkgs.bash}/bin/bash -c 'source /etc/profile; exec ${config.home.homeDirectory}/.nix-profile/bin/emacs --daemon'";
