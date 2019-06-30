@@ -31,7 +31,7 @@ in
                     ++ optionals config.profiles.docker.enable [ "docker" ]
                     ++ optionals config.profiles.buildkit.enable [ "buildkit" ]
                     ++ optionals config.profiles.virtualization.enable [ "libvirtd" "vboxusers" ];
-          shell = if config.programs.fish.enable then pkgs.fish else pkgs.bash;
+          shell = if config.programs.fish.enable then pkgs.fish else pkgs.zsh;
           initialPassword = "changeMe";
           openssh.authorizedKeys.keys =
             with import ../../assets/machines.nix; [ ssh.kerkouane.key ssh.hokkaido.key ssh.california.key ssh.carthage.key ssh.wakasu.key ssh.vincent.key ssh.kobe.key ssh.houbeb.key ssh.phantom.key ssh.okinawa.key ssh.naruhodo.key ];

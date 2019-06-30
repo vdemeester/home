@@ -29,6 +29,7 @@
     ./profiles/virtualization.nix
     ./profiles/wireguard.server.nix
     ./profiles/yubikey.nix
+    ./profiles/zsh.nix
     ./programs/podman.nix
     ./services/athens.nix
     ./services/coredns.nix
