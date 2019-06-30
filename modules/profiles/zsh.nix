@@ -8,7 +8,7 @@ in
   options = {
     profiles.zsh = {
       enable = mkOption {
-        default = false;
+        default = true;
         description = "Enable zsh profile and configuration";
         type = types.bool;
       };
