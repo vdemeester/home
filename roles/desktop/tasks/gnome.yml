@@ -13,6 +13,7 @@
   - gnome-tweaks
   - gnome-shell-extension-pomodoro
   - snapd
+  - xsel
 - name: Install dconf-editor
   become: yes
   package: name=dconf-editor state=present
