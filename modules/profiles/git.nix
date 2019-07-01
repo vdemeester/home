@@ -103,10 +103,10 @@ in
             statusHints = false;
             pushNonFastForward = false;
           };
-          http = {
-            sslCAinfo = "${ca-bundle_crt}";
-            sslverify = true;
-          };
+          #http = {
+          #  sslCAinfo = "${ca-bundle_crt}";
+          #  sslverify = true;
+          #};
           github.user = "vdemeester";
           "filter \"lfs\"" = {
             clean = "${pkgs.git-lfs}/bin/git-lfs clean -- %f";
