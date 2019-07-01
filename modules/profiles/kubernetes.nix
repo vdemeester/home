@@ -47,6 +47,7 @@ in
     (mkIf config.profiles.zsh.enable {
       programs.zsh.initExtra = ''
         source <(tkn completion zsh)
+        source <(kubectl completion zsh)
       '';
     })
     (mkIf cfg.minikube.enable {
