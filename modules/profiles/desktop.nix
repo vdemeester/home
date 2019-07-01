@@ -77,12 +77,6 @@ in
         longitude = "7.5";
         tray = true;
       };
-      screen-locker = {
-        enable = true;
-        xssLockExtraOptions = [ "-n ${dim-screen}" ];
-        lockCmd = cfg.lockCmd;
-        inactiveInterval = 15;
-      };
     };
     home.file.".XCompose".source = ./assets/xorg/XCompose;
     home.file.".Xmodmap".source = ./assets/xorg/Xmodmap;

@@ -18,8 +18,8 @@
     go.enable = true;
     java = { enable = true; idea = true; };
     js.enable = true;
-    haskell.enable = true;
-    python.enable = true;
+    #haskell.enable = true;
+    #python.enable = true;
     rust.enable = true;
     vscode.enable = true;
   };
