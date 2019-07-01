@@ -23,7 +23,6 @@ in
       hashKnownHosts = true;
       userKnownHostsFile = "${config.xdg.configHome}/ssh/known_hosts";
       controlPath = "${config.home.homeDirectory}/.ssh/sockets/%u-%l-%r@%h:%p";
-    
       matchBlocks = {
         "github.com" = {
           hostname = "github.com";
@@ -46,6 +45,9 @@ in
             controlMaster = "auto";
             controlPersist = "360";
           };
+        };
+        "*.redhat.com" = {
+          user = "vdemeest";
         };
       };
     };
