@@ -14,6 +14,7 @@
   - gnome-shell-extension-pomodoro
   - snapd
   - xsel
+  - pavucontrol
 - name: Install dconf-editor
   become: yes
   package: name=dconf-editor state=present

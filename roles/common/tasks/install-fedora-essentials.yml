@@ -7,3 +7,6 @@
   - util-linux-user
   - oathtool
   - lm_sensors
+  - qrencode
+  - caca-utils
+  - ykpers

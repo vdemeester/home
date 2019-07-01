@@ -7,3 +7,6 @@
   - htop
   - tmux
   - zsh
+  - sshfs
+  - krb5-auth-dialog
+  - krb5-workstation
