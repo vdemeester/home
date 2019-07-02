@@ -43,6 +43,7 @@ in
   };
   config = mkIf cfg.enable {
     profiles.gpg.enable = true;
+    profiles.emacs.capture = true;
     xsession = mkIf cfg.xsession.enable {
       enable = true;
       initExtra = ''

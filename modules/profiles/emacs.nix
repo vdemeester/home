@@ -17,6 +17,11 @@ in
         description = "Enable emacs profile";
         type = types.bool;
       };
+      capture = mkOption {
+        default = false;
+        description = "Enable capture script(s)";
+        type = types.bool;
+      };
       daemonService = mkOption {
         default = true;
         description = "Enable emacs daemon service";
@@ -206,7 +211,7 @@ in
         ]);
       };
     }
-    (mkIf config.profiles.desktop.enable {
+    (mkIf config.profiles.emacs.capture {
       home.packages = with pkgs; [ wmctrl capture ];
     })
     (mkIf config.services.gpg-agent.enable {
