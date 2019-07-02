@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.profiles.git;
-  ca-bundle_crt = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+  ca-bundle_crt = "/etc/ssl/certs/ca-bundle.crt";
 in
 {
   options = {
@@ -103,10 +103,10 @@ in
             statusHints = false;
             pushNonFastForward = false;
           };
-          #http = {
-          #  sslCAinfo = "${ca-bundle_crt}";
-          #  sslverify = true;
-          #};
+          http = {
+            sslCAinfo = "${ca-bundle_crt}";
+            sslverify = true;
+          };
           github.user = "vdemeester";
           "filter \"lfs\"" = {
             clean = "${pkgs.git-lfs}/bin/git-lfs clean -- %f";
