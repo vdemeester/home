@@ -25,6 +25,7 @@
   with_items:
   - golang
   - golang-docs
+  - golang-googlecode-tools-goimports
 - name: install toolbox
   become: yes
   package: name={{item}} state=present
