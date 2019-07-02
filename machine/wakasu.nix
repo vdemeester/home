@@ -52,6 +52,7 @@ with import ../assets/machines.nix; {
       nested = true;
       listenTCP = true;
     };
+    yubikey.enable = true;
   };
   programs = {
     podman.enable = true;
