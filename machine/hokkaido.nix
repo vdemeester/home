@@ -9,28 +9,22 @@ with import ../assets/machines.nix; {
       "net.bridge.bridge-nf-call-ip6tables" = 0;
     };
   };
-  hardware.u2f.enable = true;
   profiles = {
+    avahi.enable = true;
     dev.enable = true;
-    laptop.enable = true;
-    desktop.autoLogin = true;
+    ssh.enable = true;
     syncthing.enable = true;
     nix-config.buildCores = 2;
-    yubikey.enable = true;
-    virtualization.enable = true;
-  };
-  programs = {
-    podman.enable = true;
+    virtualization = {
+      enable = true;
+      nested = true;
+      listenTCP = true;
+    };
   };
   services = {
     logind = {
-      lidSwitch = "suspend";
-      lidSwitchExternalPower = "suspend";
-      lidSwitchDocked = "ignore";
+      lidSwitch = "ignore";
     };
-    logind.extraConfig = ''
-      HandlePowerKey=hibernate
-    '';
     syncthing-edge.guiAddress = "${wireguard.ips.hokkaido}:8384";
     wireguard = {
       enable = true;
@@ -40,8 +34,4 @@ with import ../assets/machines.nix; {
       endpointPublicKey = wireguard.kerkouane.publicKey;
     };
   };
-  environment.systemPackages = with pkgs; [
-    nfs-utils
-    sshfs
-  ];
 }
