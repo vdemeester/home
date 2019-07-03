@@ -25,4 +25,5 @@
     daemonService = true;
   };
   xdg.configFile."user-dirs.dirs".source = ../modules/profiles/assets/xorg/user-dirs.dirs;
+  xdg.configFile."ape.conf".source = ../assets/ape.conf;
 }
