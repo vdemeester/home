@@ -34,7 +34,7 @@ in
           shell = if config.programs.fish.enable then pkgs.fish else pkgs.zsh;
           initialPassword = "changeMe";
           openssh.authorizedKeys.keys =
-            with import ../../assets/machines.nix; [ ssh.kerkouane.key ssh.hokkaido.key ssh.california.key ssh.carthage.key ssh.wakasu.key ssh.vincent.key ssh.kobe.key ssh.houbeb.key ssh.phantom.key ssh.okinawa.key ssh.naruhodo.key ];
+            with import ../../assets/machines.nix; [ ssh.yubikey.key ssh.california.key ssh.wakasu.key ssh.vincent.key ssh.houbeb.key ssh.okinawa.key ];
             subUidRanges = [{ startUid = 100000; count = 65536; }];
             subGidRanges = [{ startGid = 100000; count = 65536; }];
         };
