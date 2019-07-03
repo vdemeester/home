@@ -34,4 +34,51 @@ with import ../assets/machines.nix; {
       endpointPublicKey = wireguard.kerkouane.publicKey;
     };
   };
+  # -----------------------------------
+  environment.etc."vrsync".text = ''
+/home/vincent/desktop/pictures/screenshots/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/screenshots/
+/home/vincent/desktop/pictures/wallpapers/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/wallpapers/
+/home/vincent/desktop/documents/ vincent@synodine.local:/volume1/documents/
+  '';
+  systemd.services.vrsync = {
+    description = "vrsync - sync folders to NAS";
+    requires = [ "network-online.target" ];
+    after    = [ "network-online.target" ];
+
+    unitConfig.X-StopOnRemoval = false;
+    restartIfChanged = false;
+
+    path = with pkgs; [ rsync coreutils bash openssh ];
+    script = ''
+    ${pkgs.vrsync}/bin/vrsync
+    '';
+
+    startAt = "hourly";
+    serviceConfig = {
+      Type = "oneshot";
+      OnFailure = "status-email-root@%n.service";
+    };
+  };
+  # ape – sync git mirrors
+  systemd.services.ape = {
+    description = "Ape - sync git mirrors";
+    requires = [ "network-online.target" ];
+    after    = [ "network-online.target" ];
+
+    restartIfChanged = false;
+    unitConfig.X-StopOnRemoval = false;
+
+    serviceConfig = {
+      Type = "oneshot";
+      User = "vincent";
+      OnFailure = "status-email-root@%n.service";
+    };
+
+    path = with pkgs; [ git ];
+    script = ''
+    ${pkgs.nur.repos.vdemeester.ape}/bin/ape up /home/vincent/var/mirrors
+    '';
+
+    startAt = "hourly";
+  };
 }

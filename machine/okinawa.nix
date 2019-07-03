@@ -107,9 +107,6 @@ with import ../assets/machines.nix; {
   security.apparmor.enable = true;
   # -----------------------------------
   environment.etc."vrsync".text = ''
-/home/vincent/desktop/pictures/screenshots/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/screenshots/
-/home/vincent/desktop/pictures/wallpapers/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/wallpapers/
-/home/vincent/desktop/documents/ vincent@synodine.local:/volume1/documents/
 /mnt/nyan/photos/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/photos/
 /mnt/nyan/music/ vincent@synodine.local:/volumeUSB2/usbshare/music/
   '';
