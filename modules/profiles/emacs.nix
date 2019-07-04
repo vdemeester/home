@@ -98,6 +98,7 @@ in
           hardhat
           helpful
           highlight
+          highlight-indentation
           #highlight-escape-sequences
           #highlight-leading-spaces
           highlight-numbers
