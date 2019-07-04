@@ -43,6 +43,7 @@ in
     {
       home.file.".local/share/applications/org-protocol.desktop".source = ./assets/xorg/org-protocol.desktop;
       home.file.".local/share/applications/ec.desktop".source = ./assets/xorg/ec.desktop;
+      home.file.".local/share/applications/capture.desktop".source = ./assets/xorg/capture.desktop;
       home.packages = with pkgs; [
         ditaa
         graphviz

@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Emacs (client)
-Exec=ec
+Name=Emacs capture
+Exec=capture
 Type=Application
 Terminal=false
 Categories=System;
