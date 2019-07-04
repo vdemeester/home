@@ -4,14 +4,22 @@
 # do some magic
 set -e
 export BEMENU_BACKEND=curses
-connection=$(nmcli connection show | grep vpn | nix run nixpkgs.bemenu -c bemenu | awk '{print $3}')
-key=$(authkey)
+connection=$(nmcli connection show | grep vpn | nix run nixpkgs.bemenu -c bemenu)
+uuid=$(echo ${connection} | awk '{print $3}')
+name=$(echo ${connection} | awk '{print $1 $2}')
+VPNSTATUS=$(nmcli connection show --active $uuid | wc -l)
+if [ "$VPNSTATUS" == "0" ]
+then
+    key=$(authkey)
+    passfile=$(mktemp)
 
-passfile=$(mktemp)
+    echo -n "vpn.secrets.password:" > $passfile
+    gpg --decrypt $HOME/desktop/documents/Red\ Hat/naruhodo.pass.gpg 2>/dev/null >>$passfile
+    echo -n "${key}" >> $passfile
 
-echo -n "vpn.secrets.password:" > $passfile
-gpg --decrypt $HOME/desktop/documents/Red\ Hat/naruhodo.pass.gpg 2>/dev/null >>$passfile
-echo -n "${key}" >> $passfile
-
-nmcli connection up ${connection} passwd-file $passfile
-rm $passfile
+    nmcli connection up ${connection} passwd-file $passfile
+    rm $passfile
+    notify-send "VPN ${name} is connected." "You are now connected to the Red Hat VPN, let's work !"
+else
+    notify-send "VPN ${name} is already connected." "You are already connected to the Red Hat VPN, let's work !"
+fi
