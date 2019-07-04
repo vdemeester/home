@@ -42,6 +42,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       home.file.".local/share/applications/org-protocol.desktop".source = ./assets/xorg/org-protocol.desktop;
+      home.file.".local/share/applications/ec.desktop".source = ./assets/xorg/ec.desktop;
       home.packages = with pkgs; [
         ditaa
         graphviz
