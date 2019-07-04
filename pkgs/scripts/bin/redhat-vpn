@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Connect to RedHat VPN
+# This will ask for which VPN to connect (using available tools) and
+# do some magic
+set -e
+export BEMENU_BACKEND=curses
+connection=$(nmcli connection show | grep vpn | nix run nixpkgs.bemenu -c bemenu | awk '{print $3}')
+key=$(authkey)
+
+passfile=$(mktemp)
+
+echo -n "vpn.secrets.password:" > $passfile
+gpg --decrypt $HOME/desktop/documents/Red\ Hat/naruhodo.pass.gpg 2>/dev/null >>$passfile
+echo -n "${key}" >> $passfile
+
+nmcli connection up ${connection} passwd-file $passfile
+rm $passfile

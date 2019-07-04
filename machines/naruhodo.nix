@@ -24,6 +24,7 @@
     daemonService = true;
     capture = true;
   };
+  home.file.".local/share/applications/redhat-vpn.desktop".source = ../assets/redhat-vpn.desktop;
   # FIXME(vdemeester) move this to the bootstrap shell
   # xdg.configFile."user-dirs.dirs".source = ../modules/profiles/assets/xorg/user-dirs.dirs;
 }
