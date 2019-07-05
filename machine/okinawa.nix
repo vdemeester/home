@@ -25,10 +25,6 @@ with import ../assets/machines.nix; {
     };
   };
   services = {
-    athens = {
-      enable = true;
-      user = "vincent";
-    };
     bind = {
       enable = true;
       forwarders = [ "8.8.8.8" "8.8.4.4" ];
@@ -59,16 +55,6 @@ with import ../assets/machines.nix; {
           file = ../assets/db.10.100.0;
         }
       ];
-    };
-    dockerRegistry = {
-      enable = true;
-      enableGarbageCollect = true;
-      listenAddress = "0.0.0.0";
-      extraConfig = {
-        proxy = {
-          remoteurl = "https://registry-1.docker.io";
-        };
-      };
     };
     nix-binary-cache = {
       enable = true;
