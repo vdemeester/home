@@ -36,6 +36,7 @@ in
         vim
         vrsync
         wget
+	gnumake
       ];
     };
     systemd.services."status-email-root@" = {
