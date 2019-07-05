@@ -12,10 +12,15 @@ in
         description = "Enable ssh profile and configuration";
         type = types.bool;
       };
+      machines = mkOption {
+        default = {};
+        type = types.attrs;
+      };
     };
   };
   config = mkIf cfg.enable {
     home.file.".ssh/sockets/.placeholder".text = '''';
+    xdg.configFile.".ssh/.placeholder".text = '''';
     programs.ssh = {
       enable = true;
 
@@ -40,16 +45,10 @@ in
             controlPersist = "360";
           };
         };
-        "*.local" = {
-          extraOptions = {
-            controlMaster = "auto";
-            controlPersist = "360";
-          };
-        };
         "*.redhat.com" = {
           user = "vdemeest";
         };
-      };
+      } //cfg.machines;
     };
   };
 }

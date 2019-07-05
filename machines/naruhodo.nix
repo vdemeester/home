@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-{
+with import ../assets/machines.nix;{
   imports = [
     ./base.fedora.nix
   ];
@@ -15,6 +15,7 @@
   profiles.zsh = {
     enable = true;
   };
+  profiles.ssh.machines = sshConfig;
   profiles.dev = {
     enable = true;
   };
