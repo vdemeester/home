@@ -2,3 +2,4 @@
 result
 home.nix
 *.retry
+assets/machines.nix
