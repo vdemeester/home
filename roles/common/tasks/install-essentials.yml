@@ -8,5 +8,6 @@
   - tmux
   - zsh
   - sshfs
+  - mosh
   - krb5-auth-dialog
   - krb5-workstation
