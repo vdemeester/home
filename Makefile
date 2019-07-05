@@ -5,6 +5,10 @@ assets:
 	mkdir -p assets
 	cp -Rv /home/vincent/sync/nixos/* assets/
 
+.PHONY: update
+update:
+	nix-channel --update
+
 .PHONY: dry-build
 dry-build: assets
 	nixos-rebuild dry-build
