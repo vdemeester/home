@@ -20,6 +20,7 @@ in
         yubico-piv-tool
         yubikey-personalization
         yubioath-desktop
+	yubikey-manager
       ];
     };
     services = {
