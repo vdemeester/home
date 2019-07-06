@@ -93,7 +93,7 @@ in
           ZSH_HIGHLIGHT_PATTERNS+=('rm -fR *' 'fg=white,bold,bg=red')
           ZSH_HIGHLIGHT_PATTERNS+=('rm -fr *' 'fg=white,bold,bg=red')
           zstyle ':completion:*' menu select
-          compinit
+          compinit -u
           source $HOME/${config.programs.zsh.dotDir}/prompt.zsh
           if [ -n "$INSIDE_EMACS" ]; then
             chpwd() { print -P "\033AnSiTc %d" }
