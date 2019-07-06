@@ -17,6 +17,16 @@ function git_stash() {
   git stash list 2> /dev/null | wc -l | sed -e "s/ *\([0-9]*\)/\+\1 /g" | sed -e "s/+0 //"
 }
 
+function prompt_nix-shell() {
+  if [[ -n "$IN_NIX_SHELL" ]]; then
+    if [[ "$IN_NIX_SHELL" == "pure" ]]; then
+      echo "🌠 "
+    else
+      echo "🐚 "
+    fi
+  fi
+}
+
 function prompt_pwd() {
   if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
     local homerepo=${$(git rev-parse --show-toplevel)/#${HOME}/\~}
@@ -86,7 +96,8 @@ local git='%{${fg_bold[yellow]}%}$(git_prompt_info)%{${reset_color}%}'
 local git_stashes='$(git_stash)'
 local bg_job='%{${fg_bold[black]}%}$(prompt_bg_job)%{${reset_color}%}'
 local aws='%{${fg_bold[black]}%}$(aws_vault)%{${reset_color}%}'
+local nix_shell='$(prompt_nix-shell)'
 
-PROMPT="$cwd$usr$bg_job$git_author$git$git_stashes$aws$colored_char"
+PROMPT="$cwd$usr$bg_job$git_author$git$git_stashes$aws$nix_shell$colored_char"
 PROMPT2=$colored_char
 RPROMPT2='[%_]'
