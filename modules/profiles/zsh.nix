@@ -19,7 +19,8 @@ in
       home.packages = with pkgs; [
         zsh-syntax-highlighting
       ];
-      home.file.".config/zsh/functions/j".source = ./assets/zsh/j;
+      home.file."${config.programs.zsh.dotDir}/prompt.zsh".source = ./assets/zsh/prompt.zsh;
+      home.file."${config.programs.zsh.dotDir}/functions/j".source = ./assets/zsh/j;
       programs.zsh = {
         enable = true;
         dotDir = ".config/zsh";
@@ -67,12 +68,12 @@ in
              };
           }
           {
-             name = "pure";
+            name = "zsh-completions";
              src = pkgs.fetchFromGitHub {
-               owner = "sindresorhus";
-               repo = "pure";
-               rev = "v1.10.3";
-               sha256 = "0zjgnlw01ri0brx108n6miw4y0cxd6al1bh28m8v8ygshm94p1zx";
+               owner = "zsh-users";
+               repo = "zsh-completions";
+               rev = "cf565254e26bb7ce03f51889e9a29953b955b1fb";
+               sha256 = "1yf4rz99acdsiy0y1v3bm65xvs2m0sl92ysz0rnnrlbd5amn283l";
              };
           }
         ];
@@ -83,17 +84,6 @@ in
           path+="$HOME/${config.programs.zsh.dotDir}/functions"
           fpath+="$HOME/${config.programs.zsh.dotDir}/functions"
           for func ($HOME/${config.programs.zsh.dotDir}/functions) autoload -U $func/*(x:t)
-          IS_SERIAL=0
-          case $TTY in
-            /dev/ttyS[0-9]*|/dev/ttyUSB[0-9]*)
-            IS_SERIAL=1
-            ;;
-          esac
-          IS_CHROOT=0
-          if [[ $UID == 0 ]] && [[ $(stat -c %d:%i /) != $(stat -c %d:%i /proc/1/root/.) ]]; then
-            IS_CHROOT=1
-          fi
-          PURE_PROMPT='λ'
           autoload -Uz select-word-style; select-word-style bash
           if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
           # make sure navigation using emacs keybindings works on all non-alphanumerics
@@ -102,19 +92,14 @@ in
           ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
           ZSH_HIGHLIGHT_PATTERNS+=('rm -fR *' 'fg=white,bold,bg=red')
           ZSH_HIGHLIGHT_PATTERNS+=('rm -fr *' 'fg=white,bold,bg=red')
-          # prompt
-          PURE_CMD_MAX_EXEC_TIME=10
-          zstyle :prompt:pure:path color white
-          PURE_PROMPT_SYMBOL='λ'
-          if (( IS_CHROOT )); then
-            PURE_PROMPT_SYMBOL='(chroot) λ'
-          fi
-          if (( IS_SERIAL )); then
-            # Serial can't handle beautiful symbols or setting the title ;).
-            PURE_PROMPT_SYMBOL='>'
-            prompt_pure_set_title() {}
-          fi
           zstyle ':completion:*' menu select
+          compinit
+          source $HOME/${config.programs.zsh.dotDir}/prompt.zsh
+          if [ -n "$INSIDE_EMACS" ]; then
+            chpwd() { print -P "\033AnSiTc %d" }
+            print -P "\033AnSiTu %n"
+            print -P "\033AnSiTc %d"
+          fi
         '';
         profileExtra = ''
           if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
