@@ -19,6 +19,7 @@ in
       home.packages = with pkgs; [
         zsh-syntax-highlighting
       ];
+      home.file."${config.programs.zsh.dotDir}/completion.zsh".source = ./assets/zsh/completion.zsh;
       home.file."${config.programs.zsh.dotDir}/prompt.zsh".source = ./assets/zsh/prompt.zsh;
       home.file."${config.programs.zsh.dotDir}/functions/j".source = ./assets/zsh/j;
       programs.zsh = {
@@ -92,7 +93,7 @@ in
           ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
           ZSH_HIGHLIGHT_PATTERNS+=('rm -fR *' 'fg=white,bold,bg=red')
           ZSH_HIGHLIGHT_PATTERNS+=('rm -fr *' 'fg=white,bold,bg=red')
-          zstyle ':completion:*' menu select
+          source $HOME/${config.programs.zsh.dotDir}/completion.zsh
           compinit -u
           source $HOME/${config.programs.zsh.dotDir}/prompt.zsh
           if [ -n "$INSIDE_EMACS" ]; then
