@@ -15,3 +15,6 @@ build: assets
 .PHONY: switch
 switch: assets
 	home-manager switch
+.PHONY: clean
+clean:
+	unlink result
