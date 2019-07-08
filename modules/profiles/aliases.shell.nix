@@ -12,4 +12,5 @@
   t = ''exa --tree -L 2'';
   wget = ''wget -c'';
   map = ''xargs -n1'';
+  chos4 = ''curl -s chmouel.com/tmp/vincent.kubeconfig.gpg|gpg --decrypt > ~/.kube/config.os4 && export KUBECONFIG=~/.kube/config.os4'';
 }

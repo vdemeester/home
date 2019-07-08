@@ -22,6 +22,7 @@ in
       home.file."${config.programs.zsh.dotDir}/completion.zsh".source = ./assets/zsh/completion.zsh;
       home.file."${config.programs.zsh.dotDir}/prompt.zsh".source = ./assets/zsh/prompt.zsh;
       home.file."${config.programs.zsh.dotDir}/functions/j".source = ./assets/zsh/j;
+      home.file."${config.programs.zsh.dotDir}/functions/_rg".source = ./assets/zsh/_rg;
       programs.zsh = {
         enable = true;
         dotDir = ".config/zsh";
