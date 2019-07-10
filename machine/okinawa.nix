@@ -91,28 +91,4 @@ with import ../assets/machines.nix; {
     };
   };
   security.apparmor.enable = true;
-  # -----------------------------------
-  environment.etc."vrsync".text = ''
-/mnt/nyan/photos/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/photos/
-/mnt/nyan/music/ vincent@synodine.local:/volumeUSB2/usbshare/music/
-  '';
-  systemd.services.vrsync = {
-    description = "vrsync - sync folders to NAS";
-    requires = [ "network-online.target" ];
-    after    = [ "network-online.target" ];
-
-    unitConfig.X-StopOnRemoval = false;
-    restartIfChanged = false;
-
-    path = with pkgs; [ rsync coreutils bash openssh ];
-    script = ''
-    ${pkgs.vrsync}/bin/vrsync
-    '';
-
-    startAt = "hourly";
-    serviceConfig = {
-      Type = "oneshot";
-      OnFailure = "status-email-root@%n.service";
-    };
-  };
 }

@@ -36,9 +36,11 @@ with import ../assets/machines.nix; {
   };
   # -----------------------------------
   environment.etc."vrsync".text = ''
-/home/vincent/desktop/pictures/screenshots/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/screenshots/
-/home/vincent/desktop/pictures/wallpapers/ vincent@synodine.local:/volumeUSB2/usbshare/pictures/wallpapers/
-/home/vincent/desktop/documents/ vincent@synodine.local:/volume1/documents/
+/home/vincent/desktop/pictures/screenshots/ vincent@synodine.home:/volumeUSB2/usbshare/pictures/screenshots/
+/home/vincent/desktop/pictures/wallpapers/ vincent@synodine.home:/volumeUSB2/usbshare/pictures/wallpapers/
+/home/vincent/desktop/documents/ vincent@synodine.home:/volume1/documents/
+/mnt/Toshito/photos/ vincent@synodine.home:/volumeUSB2/usbshare/pictures/photos/
+/mnt/Toshito/music/ vincent@synodine.home:/volumeUSB2/usbshare/music/
   '';
   systemd.services.vrsync = {
     description = "vrsync - sync folders to NAS";
