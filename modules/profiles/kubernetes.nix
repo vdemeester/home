@@ -42,6 +42,7 @@ in
         kube-prompt
         kubectx
         nur.repos.vdemeester.tkn
+        nur.repos.vdemeester.ko
       ];
     }
     (mkIf config.profiles.zsh.enable {
