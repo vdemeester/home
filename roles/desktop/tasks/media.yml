@@ -1,4 +1,5 @@
 ---
+# https://rpmfusion.org/Configuration (fix this)
 - name: add rpmfusion repos
   copy:
     src: "{{ item }}"
