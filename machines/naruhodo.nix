@@ -7,6 +7,7 @@ with import ../assets/machines.nix;{
   home.packages = with pkgs; [
     kubectx
     kustomize
+    golangci-lint
   ];
   profiles.containers.kubernetes = {
     enable = true;
