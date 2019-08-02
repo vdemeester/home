@@ -184,6 +184,7 @@ in
           eshell-prompt-extras
           esh-autosuggest
           fish-completion
+          forge
           godoctor
           go-add-tags
           go-eldoc
