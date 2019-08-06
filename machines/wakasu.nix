@@ -39,6 +39,8 @@
     nur.repos.vdemeester.openshift-installer
     nur.repos.vdemeester.operator-sdk
     gnome3.vinagre
+    openvpn
+    krb5
   ];
   services.shairport-sync.enable = true;
 }
