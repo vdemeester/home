@@ -102,6 +102,16 @@ in
             print -P "\033AnSiTu %n"
             print -P "\033AnSiTc %d"
           fi
+          if [[ "$TERM" == "dumb" || "$TERM" == "emacs" ]]
+          then
+            TERM=eterm-color
+            unsetopt zle
+            unsetopt prompt_cr
+            unsetopt prompt_subst
+            unfunction precmd
+            unfunction preexec
+            PS1='$ '
+          fi
         '';
         profileExtra = ''
           if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
