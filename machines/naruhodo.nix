@@ -9,13 +9,11 @@ with import ../assets/machines.nix;{
     kustomize
     golangci-lint
     nur.repos.vdemeester.ram
-    nur.repos.vdemeester.operator-sdk
   ];
   profiles.containers.kubernetes = {
     enable = true;
     containers = false;
-    minikube.enable = true;
-    #minikube.package = pkgs.nur.repos.vdemeester.minikube;
+    minikube.enable = false;
   };
   profiles.zsh = {
     enable = true;
