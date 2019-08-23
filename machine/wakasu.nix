@@ -59,7 +59,7 @@ with import ../assets/machines.nix; {
   };
   services = {
     logind.extraConfig = ''
-      HandleLidSwitch=suspend
+      HandleLidSwitch=ignore
       HandleLidSwitchExternalPower=ignore
       HandleLidSwitchDocked=ignore
     '';
@@ -78,7 +78,12 @@ with import ../assets/machines.nix; {
     xserver = {
       videoDrivers = [ "nvidia" ];
       dpi = 96;
+      serverFlagsSection = ''
+          Option "BlankTime" "0"
+          Option "StandbyTime" "0"
+          Option "SuspendTime" "0"
+          Option "OffTime" "0"
+      '';
     };
   };
-  #security.apparmor.enable = true;
 }
