@@ -45,13 +45,12 @@ in
         { inherit (config.environment.sessionVariables) NIX_PATH;
           HOME = "/root";
         };
-        path = [ pkgs.gnutar pkgs.xz pkgs.git config.nix.package.out pkgs.commonsCompress ];
+        path = [ pkgs.gnutar pkgs.xz pkgs.git pkgs.make config.nix.package.out pkgs.commonsCompress ];
         script = ''
           export PATH=/run/current-system/sw/bin
           cd /etc/nixos/
           git pull --autostash --rebase
-          nix-channel --update
-          /run/current-system/sw/bin/nixos-rebuild switch
+          /run/current-system/sw/bin/make update switcah
         '';
         startAt = cfg.dates;
         onFailure = ["status-email-root@%n.service"];
