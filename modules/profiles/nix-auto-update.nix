@@ -45,7 +45,7 @@ in
         { inherit (config.environment.sessionVariables) NIX_PATH;
           HOME = "/root";
         };
-        path = [ pkgs.gnutar pkgs.xz pkgs.git pkgs.make config.nix.package.out pkgs.commonsCompress ];
+        path = [ pkgs.gnutar pkgs.xz pkgs.git pkgs.gnumake config.nix.package.out pkgs.commonsCompress ];
         script = ''
           export PATH=/run/current-system/sw/bin
           cd /etc/nixos/
