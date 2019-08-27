@@ -48,7 +48,10 @@ in
         "*.redhat.com" = {
           user = "vdemeest";
         };
-      } //cfg.machines;
+        "192.168.1.*" = {
+          forwardAgent = true;
+        };
+      } // cfg.machines;
     };
   };
 }
