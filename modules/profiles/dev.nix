@@ -36,10 +36,5 @@ in
         yq
       ];
     }
-    (mkIf config.profiles.fish.enable {
-      programs.fish.shellAbbrs = {
-        m = "make";
-      };
-    })
   ]);
 }
