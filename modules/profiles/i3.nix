@@ -64,6 +64,7 @@ in
       random-background = {
         enable = true;
         imageDirectory = "${config.home.homeDirectory}/desktop/pictures/walls";
+        interval = "5h";
       };
     };
     xdg.configFile."alacritty/alacritty.yml".source = ./assets/xorg/alacritty.yml;
