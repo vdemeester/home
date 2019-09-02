@@ -50,7 +50,7 @@ in
           export PATH=/run/current-system/sw/bin
           cd /etc/nixos/
           git pull --autostash --rebase
-          /run/current-system/sw/bin/make update switcah
+          /run/current-system/sw/bin/make update switch
         '';
         startAt = cfg.dates;
         onFailure = ["status-email-root@%n.service"];
