@@ -15,12 +15,14 @@ with import ../assets/machines.nix;{
     containers = false;
     minikube.enable = false;
   };
+  profiles.finances.enable = true;
   profiles.zsh = {
     enable = true;
   };
   profiles.ssh.machines = sshConfig;
   profiles.dev = {
     enable = true;
+    js.enable = true;
   };
   profiles.emacs = {
     enable = true;
