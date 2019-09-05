@@ -46,10 +46,8 @@ in
       ];
     }
     (mkIf config.profiles.zsh.enable {
-      programs.zsh.initExtra = ''
-        source <(tkn completion zsh)
-        source <(kubectl completion zsh)
-      '';
+      home.file."${config.programs.zsh.dotDir}/functions/_tkn".source = ./assets/zsh/_tkn;
+      home.file."${config.programs.zsh.dotDir}/functions/_kubectl".source = ./assets/zsh/_kubectl;
     })
     (mkIf cfg.minikube.enable {
       home.packages = with pkgs; [
