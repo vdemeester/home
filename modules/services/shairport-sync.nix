@@ -27,7 +27,7 @@ in
       };
 
       arguments = mkOption {
-        default = "-v -j -o pa";
+        default = "-v -o pa";
         description = ''
           Arguments to pass to the daemon. Defaults to a local pulseaudio
           server.
@@ -65,7 +65,7 @@ in
         Environment = "PATH=${config.home.profileDirectory}/bin";
         ExecStart = "${pkgs.shairport-sync}/bin/shairport-sync ${cfg.arguments}";
         ExecStop = "${pkgs.procps}/bin/pkill shairport-sync";
-        Type = "forking";
+        Type = "simple";
       };
     };
   };
