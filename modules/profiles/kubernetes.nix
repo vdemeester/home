@@ -41,12 +41,10 @@ in
         nur.repos.vdemeester.knctl
         kube-prompt
         kubectx
-        nur.repos.vdemeester.tkn
         nur.repos.vdemeester.ko
       ];
     }
     (mkIf config.profiles.zsh.enable {
-      home.file."${config.programs.zsh.dotDir}/functions/_tkn".source = ./assets/zsh/_tkn;
       home.file."${config.programs.zsh.dotDir}/functions/_kubectl".source = ./assets/zsh/_kubectl;
     })
     (mkIf cfg.minikube.enable {
