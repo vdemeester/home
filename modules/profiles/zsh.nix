@@ -18,11 +18,11 @@ in
     {
       home.packages = with pkgs; [
         zsh-syntax-highlighting
+        nix-zsh-completions
       ];
       home.file."${config.programs.zsh.dotDir}/completion.zsh".source = ./assets/zsh/completion.zsh;
       home.file."${config.programs.zsh.dotDir}/prompt.zsh".source = ./assets/zsh/prompt.zsh;
       home.file."${config.programs.zsh.dotDir}/functions/j".source = ./assets/zsh/j;
-      home.file."${config.programs.zsh.dotDir}/functions/_rg".source = ./assets/zsh/_rg;
       programs.zsh = {
         enable = true;
         dotDir = ".config/zsh";
@@ -74,8 +74,8 @@ in
              src = pkgs.fetchFromGitHub {
                owner = "zsh-users";
                repo = "zsh-completions";
-               rev = "cf565254e26bb7ce03f51889e9a29953b955b1fb";
-               sha256 = "1yf4rz99acdsiy0y1v3bm65xvs2m0sl92ysz0rnnrlbd5amn283l";
+               rev = "922eee0706acb111e9678ac62ee77801941d6df2";
+               sha256 = "04skzxv8j06f1snsx62qnca5f2183w0wfs5kz78rs8hkcyd6g89w";
              };
           }
         ];
@@ -84,6 +84,7 @@ in
         '';
         initExtra = ''
           path+="$HOME/${config.programs.zsh.dotDir}/functions"
+          fpath+="$HOME/.nix-profile/share/zsh/site-functions"
           fpath+="$HOME/${config.programs.zsh.dotDir}/functions"
           for func ($HOME/${config.programs.zsh.dotDir}/functions) autoload -U $func/*(x:t)
           autoload -Uz select-word-style; select-word-style bash
