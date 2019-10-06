@@ -123,7 +123,6 @@ in
           markdown-mode
           multiple-cursors
           no-littering
-          notmuch
           ob-async
           ob-go
           ob-http
@@ -178,10 +177,6 @@ in
           yaml-mode
         ] ++ (with melpaPackages; [
           company-lsp
-          elfeed
-          elfeed-org
-          elfeed-goodies
-          elfeed-web
           eshell-prompt-extras
           esh-autosuggest
           fish-completion
