@@ -76,6 +76,7 @@ in
           deft
           delight
           dired-collapse
+          dired-git-info
           dired-quick-sort
           direnv
           dockerfile-mode
