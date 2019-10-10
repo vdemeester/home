@@ -23,6 +23,8 @@
   home.packages = with pkgs; [
     openvpn
     krb5
+    libosinfo
+    virtmanager
   ];
   services.shairport-sync.enable = true;
 }
