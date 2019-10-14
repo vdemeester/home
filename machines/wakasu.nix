@@ -10,7 +10,6 @@
   profiles.cloud.google.enable = true;
   profiles.dev = {
     go.enable = true;
-    rust.enable = true;
   };
   profiles.finances.enable = true;
   profiles.laptop.enable = true;
