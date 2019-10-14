@@ -15,7 +15,7 @@ in
     };
   };
   config = mkIf cfg.enable {
-    services.syncthing-edge = {
+    services.syncthing = {
       enable = true;
       user = "vincent";
       dataDir = "/home/vincent/.syncthing";

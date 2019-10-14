@@ -37,12 +37,11 @@ with import ../assets/machines.nix; {
   };
   profiles = {
     dev.enable = true;
-    docker.enable = true;
     laptop.enable = true;
     desktop.networkmanager = false;
     desktop.autoLogin = true;
     nix-config.buildCores = 4;
-    qemu-user = { arm = true; aarch64 = true; };
+    #qemu-user = { arm = true; aarch64 = true; };
     ssh = {
       enable = true;
       forwardX11 = true;
@@ -63,7 +62,7 @@ with import ../assets/machines.nix; {
       HandleLidSwitchExternalPower=ignore
       HandleLidSwitchDocked=ignore
     '';
-    syncthing-edge.guiAddress = "${wireguard.ips.wakasu}:8384";
+    syncthing.guiAddress = "${wireguard.ips.wakasu}:8384";
     smartd = {
       enable = true;
       devices = [ { device = "/dev/nvme0n1"; } ];

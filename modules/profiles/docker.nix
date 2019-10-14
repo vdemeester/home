@@ -27,7 +27,7 @@ in
   config = mkIf cfg.enable {
     profiles.containerd.enable = true;
     virtualisation = {
-      mydocker = {
+      docker = {
         enable = true;
         package = cfg.package;
         liveRestore = false;

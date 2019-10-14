@@ -32,6 +32,7 @@ in
       environment.systemPackages = with pkgs; [
         qemu
         vde2
+        libosinfo
       ];
     }
     (mkIf cfg.nested {

@@ -84,7 +84,8 @@ in
     };
 
     programs.dconf.enable = true;
-
+    xdg.portal.enable = cfg.flatpak;
+    
     services = {
       flatpak.enable = cfg.flatpak;
       dbus.packages = [ pkgs.gnome3.dconf ];

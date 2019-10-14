@@ -25,7 +25,7 @@ with import ../assets/machines.nix; {
     logind = {
       lidSwitch = "ignore";
     };
-    syncthing-edge.guiAddress = "${wireguard.ips.hokkaido}:8384";
+    syncthing.guiAddress = "${wireguard.ips.hokkaido}:8384";
     wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.hokkaido}/24" ];

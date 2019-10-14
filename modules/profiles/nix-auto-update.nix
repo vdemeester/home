@@ -23,7 +23,7 @@ in
         type = types.str;
       };
       version = mkOption {
-        default = "19.03";
+        default = "19.09";
         description = "System version (NixOS)";
         type = types.str;
       };
