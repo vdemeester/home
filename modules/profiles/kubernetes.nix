@@ -38,7 +38,6 @@ in
         #cri-tools
         kail
         kustomize
-        nur.repos.vdemeester.knctl
         kube-prompt
         kubectx
         nur.repos.vdemeester.ko
