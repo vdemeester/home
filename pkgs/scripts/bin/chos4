@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Update creds and link to the openshift4 devcluster
+
+set -e
+
+curl -s chmouel.com/tmp/vincent.kubeadmin.password.gpg|gpg --decrypt > ~/.kube/kubeadmin.password.os4
+curl -s chmouel.com/tmp/vincent.webaccess.gpg|gpg --decrypt > ~/.kube/webaccess.os4
+curl -s chmouel.com/tmp/vincent.kubeconfig.gpg|gpg --decrypt > ~/.kube/config.os4 && export KUBECONFIG=~/.kube/config.os4
+
+export KUBECONFIG=~/.kube/config.os4
+oc login -u kubeadmin -p $(cat ~/.kube/kubeadmin.password.os4)
+
+echo ">>> scale machineset to 2"
+for machineset in $(oc get machineset -n openshift-machine-api -o name); do
+    oc scale --replicas=2 ${machineset} -n openshift-machine-api
+done
+
+echo ">>> your cluster is ready :)"
+read
