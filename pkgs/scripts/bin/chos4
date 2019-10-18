@@ -46,5 +46,8 @@ spec:
   sourceNamespace: openshift-marketplace
 EOF
 
+echo ">>>> install tektoncd/triggers in the cluster"
+oc apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+
 echo ">>> your cluster is ready :)"
 read
