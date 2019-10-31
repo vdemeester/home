@@ -177,6 +177,7 @@ in
           yaml-mode
         ] ++ (with melpaPackages; [
           company-lsp
+          doom-themes
           eshell-prompt-extras
           esh-autosuggest
           fish-completion
