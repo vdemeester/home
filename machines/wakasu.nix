@@ -15,6 +15,7 @@
   profiles.laptop.enable = true;
   profiles.media.enable = true;
   profiles.mails.enable = true;
+  profiles.containers.kubernetes.enable = true;
   programs = {
     google-chrome.enable = true;
     podman.enable = true;
