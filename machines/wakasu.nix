@@ -25,6 +25,7 @@
     krb5
     libosinfo
     virtmanager
+    nur.repos.vdemeester.tkn
   ];
   services.shairport-sync.enable = true;
 }
