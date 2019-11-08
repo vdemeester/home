@@ -26,6 +26,7 @@
     libosinfo
     virtmanager
     nur.repos.vdemeester.tkn
+    thunderbird
   ];
   services.shairport-sync.enable = true;
 }
