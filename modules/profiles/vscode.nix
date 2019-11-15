@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.dev.vscode = {
-      enable = mkOption {
-        default = false;
-        description = "Enable VS Code profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable VS Code profile";
     };
   };
   config = mkIf cfg.enable {

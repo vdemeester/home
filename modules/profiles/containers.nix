@@ -7,21 +7,13 @@ in
 {
   options = {
     profiles.containers = {
-      enable = mkOption {
-        default = false;
-        description = "Enable containers profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable containers profile";
       podman = mkOption {
         default = true;
         description = "Enable podman tools";
         type = types.bool;
       };
-      docker = mkOption {
-        default = false;
-        description = "Enable docker tools";
-        type = types.bool;
-      };
+      docker = mkEnableOption "Enable docker tools";
     };
   };
   config = mkIf cfg.enable {

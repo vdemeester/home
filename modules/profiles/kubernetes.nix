@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.containers.kubernetes = {
-      enable = mkOption {
-        default = false;
-        description = "Enable kubernetes profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable kubernetes profile";
       containers= mkOption {
         default = true;
         description = "Enable containers profile alongside";
@@ -21,11 +17,7 @@ in
         enable = mkEnableOption "Enable krew";
       };
       minikube = {
-        enable = mkOption {
-          default = false;
-          description = "Enable minikube";
-          type = types.bool;
-        };
+        enable = mkEnableOption "Enable minikube";
         package = mkOption {
           default = pkgs.minikube;
           description = "Minikube package";

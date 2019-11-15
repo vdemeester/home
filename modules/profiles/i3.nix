@@ -19,11 +19,7 @@ in
 {
   options = {
     profiles.i3 = {
-      enable = mkOption {
-        default = false;
-        description = "Enable i3 profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable i3 profile";
     };
   };
   config = mkIf cfg.enable {

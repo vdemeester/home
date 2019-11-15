@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.dev.go = {
-      enable = mkOption {
-        default = false;
-        description = "Enable go development profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable go development profile";
     };
   };
   config = mkIf cfg.enable (mkMerge [

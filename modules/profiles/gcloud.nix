@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.cloud.google = {
-      enable = mkOption {
-        default = false;
-        description = "Enable google cloud profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable google cloud profile";
     };
   };
   config = mkIf cfg.enable {

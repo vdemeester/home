@@ -7,22 +7,14 @@ in
 {
   options = {
     profiles.containers.openshift = {
-      enable = mkOption {
-        default = false;
-        description = "Enable openshift profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable openshift profile";
       package = mkOption {
         default = pkgs.openshift;
         description = "Openshift package";
         type = types.package;
       };
       minishift = {
-        enable = mkOption {
-          default = false;
-          description = "Enable minishift";
-          type = types.bool;
-        };
+        enable = mkEnableOption "Enable minishift";
         package = mkOption {
           default = pkgs.minishift;
           description = "Minishift package";

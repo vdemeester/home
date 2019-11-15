@@ -7,21 +7,13 @@ in
 {
   options = {
     profiles.dev.java = {
-      enable = mkOption {
-        default = false;
-        description = "Enable java development profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable java development profile";
       javaPackage = mkOption {
         default = pkgs.jdk;
         description = "Java package to use";
         type = types.package;
       };
-      idea = mkOption {
-        default = false;
-        description = "Install intellij idea";
-        type = types.bool;
-      };
+      idea = mkEnableOption "Install intellij idea";
     };
   };
   config = mkIf cfg.enable (mkMerge [

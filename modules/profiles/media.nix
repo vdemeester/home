@@ -7,10 +7,7 @@ in
 {
   options = {
     profiles.media = {
-      enable = mkOption {
-        default = false;
-        description = "Enable media configuration";
-      };
+      enable = mkEnableOption "Enable media configuration";
     };
   };
   config = mkIf cfg.enable (mkMerge [

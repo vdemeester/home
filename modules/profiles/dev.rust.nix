@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.dev.rust = {
-      enable = mkOption {
-        default = false;
-        description = "Enable rust development profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable rust development profile";
     };
   };
   config = mkIf cfg.enable (mkMerge [

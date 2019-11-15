@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.dev.python = {
-      enable = mkOption {
-        default = false;
-        description = "Enable python development profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable python development profile";
     };
   };
   config = mkIf cfg.enable {

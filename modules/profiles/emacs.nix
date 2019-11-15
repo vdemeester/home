@@ -12,26 +12,14 @@ in
 {
   options = {
     profiles.emacs = {
-      enable = mkOption {
-        default = false;
-        description = "Enable emacs profile";
-        type = types.bool;
-      };
-      capture = mkOption {
-        default = false;
-        description = "Enable capture script(s)";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable emacs profile";
+      capture = mkEnableOption "Enable capture script(s)";
       daemonService = mkOption {
         default = true;
         description = "Enable emacs daemon service";
         type = types.bool;
       };
-      withXwidgets = mkOption {
-        default = false;
-        description = "Enable Xwidgets in emacs build";
-        type = types.bool;
-      };
+      withXwidgets = mkEnableOption "Enable Xwidgets in emacs build";
       texlive = mkOption {
         default = true;
         description = "Enable Texlive";

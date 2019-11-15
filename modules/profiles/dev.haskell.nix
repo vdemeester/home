@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.dev.haskell = {
-      enable = mkOption {
-        default = false;
-        description = "Enable haskell development profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable haskell development profile";
     };
   };
   config = mkIf cfg.enable {

@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.dev.js = {
-      enable = mkOption {
-        default = false;
-        description = "Enable js development profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable js development profile";
     };
   };
   config = mkIf cfg.enable (mkMerge [

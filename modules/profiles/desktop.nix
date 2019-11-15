@@ -17,11 +17,7 @@ in
 {
   options = {
     profiles.desktop = {
-      enable = mkOption {
-        default = false;
-        description = "Enable desktop profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable desktop profile";
       lockCmd = mkOption {
         default = "${pkgs.slim}/bin/slimlock";
         description = "Lock command to use";

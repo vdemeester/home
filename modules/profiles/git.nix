@@ -8,11 +8,7 @@ in
 {
   options = {
     profiles.git = {
-      enable = mkOption {
-        default = false;
-        description = "Enable git profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable git profile";
     };
   };
   config = mkIf cfg.enable (mkMerge [

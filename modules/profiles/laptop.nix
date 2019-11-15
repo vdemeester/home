@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.laptop = {
-      enable = mkOption {
-        default = false;
-        description = "Enable laptop profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable laptop profile";
     };
   };
   config = mkIf cfg.enable {
