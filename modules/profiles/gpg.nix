@@ -12,6 +12,11 @@ in
         description = "Enable gpg profile and configuration";
         type = types.bool;
       };
+      pinentry = mkOption {
+        default = "${pkgs.pinentry}/bin/pinentry";
+        description = "Path to pinentry";
+        type = types.str;
+      };
     };
   };
   config = mkIf cfg.enable {
@@ -21,6 +26,10 @@ in
         enable = true;
         enableSshSupport = true;
         defaultCacheTtlSsh = 7200;
+        extraConfig = ''
+allow-emacs-pinentry
+pinentry-program ${cfg.pinentry}
+        '';
       };
     };
   };

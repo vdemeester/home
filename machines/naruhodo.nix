@@ -16,6 +16,7 @@ with import ../assets/machines.nix;{
     minikube.enable = false;
   };
   profiles.finances.enable = true;
+  profiles.gpg.pinentry = "/usr/bin/pinentry";
   profiles.zsh = {
     enable = true;
   };
