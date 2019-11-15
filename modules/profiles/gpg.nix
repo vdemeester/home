@@ -27,7 +27,6 @@ in
         enableSshSupport = true;
         defaultCacheTtlSsh = 7200;
         extraConfig = ''
-allow-emacs-pinentry
 pinentry-program ${cfg.pinentry}
         '';
       };
