@@ -17,6 +17,9 @@ in
         description = "Enable containers profile alongside";
         type = types.bool;
       };
+      krew = {
+        enable = mkEnableOption "Enable krew";
+      };
       minikube = {
         enable = mkOption {
           default = false;
@@ -44,6 +47,9 @@ in
         nur.repos.vdemeester.ko
       ];
     }
+    (mkIf cfg.krew.enable {
+      home.packages = with pkgs; [ nur.repos.vdemeester.krew ];
+    })
     (mkIf config.profiles.zsh.enable {
       home.file."${config.programs.zsh.dotDir}/functions/_kubectl".source = ./assets/zsh/_kubectl;
     })
