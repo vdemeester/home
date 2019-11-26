@@ -67,7 +67,6 @@
       # ram                   # free RAM
       # load                  # CPU load
       time                    # current time
-      battery                 # internal battery
       # =========================[ Line #2 ]=========================
       #newline
       # public_ip             # public IP address
