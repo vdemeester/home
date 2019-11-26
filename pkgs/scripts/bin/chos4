@@ -40,14 +40,11 @@ metadata:
   name: pipelines
   namespace: openshift-operators
 spec:
-  channel: dev-preview
+  channel: canary
   name: openshift-pipelines-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
 EOF
-
-echo ">>>> install tektoncd/triggers in the cluster"
-oc apply --filename https://storage.googleapis.com/tekton-releases/triggers/latest/release.yaml
 
 echo ">>> your cluster is ready :)"
 read
