@@ -78,6 +78,16 @@ in
                sha256 = "04skzxv8j06f1snsx62qnca5f2183w0wfs5kz78rs8hkcyd6g89w";
              };
           }
+          # romkatv/powerlevel10k
+          {
+            name = "powerlevel10k";
+             src = pkgs.fetchFromGitHub {
+               owner = "romkatv";
+               repo = "powerlevel10k";
+               rev = "700910cd0421a7d25d2800cefa76eb6d80dc62a8";
+               sha256 = "011ja4r3a8vbcs42js9nri4p8pi8z4ccqxl2qyf52pn3pfnidigj";
+             };
+          }
         ];
         loginExtra = ''
         export GOPATH=${config.home.homeDirectory}
@@ -96,7 +106,7 @@ in
           ZSH_HIGHLIGHT_PATTERNS+=('rm -fR *' 'fg=white,bold,bg=red')
           ZSH_HIGHLIGHT_PATTERNS+=('rm -fr *' 'fg=white,bold,bg=red')
           source $HOME/${config.programs.zsh.dotDir}/completion.zsh
-          compinit -u
+          source $HOME/${config.programs.zsh.dotDir}/plugins/powerlevel10k/powerlevel10k.zsh-theme
           source $HOME/${config.programs.zsh.dotDir}/prompt.zsh
           if [ -n "$INSIDE_EMACS" ]; then
             chpwd() { print -P "\033AnSiTc %d" }
