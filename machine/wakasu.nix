@@ -40,6 +40,7 @@ with import ../assets/machines.nix; {
     laptop.enable = true;
     desktop.networkmanager = false;
     desktop.autoLogin = true;
+    docker.enable = true;
     nix-config.buildCores = 4;
     #qemu-user = { arm = true; aarch64 = true; };
     ssh = {
