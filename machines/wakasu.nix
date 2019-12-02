@@ -30,6 +30,7 @@
     virtmanager
     nur.repos.vdemeester.tkn
     thunderbird
+    asciinema
   ];
   services.shairport-sync.enable = true;
 }
