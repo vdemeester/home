@@ -123,6 +123,7 @@ in
             unfunction preexec
             PS1='$ '
           fi
+          setopt hist_ignore_space
         '';
         profileExtra = ''
           if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
