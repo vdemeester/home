@@ -13,7 +13,6 @@ with import ../assets/machines.nix; {
     git.enable = true;
     nix-config.localCaches = [];
     nix-config.buildCores = 1;
-    nix-auto-update.autoUpgrade = false;
     ssh.enable = true;
     syncthing.enable = true;
   };
