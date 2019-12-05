@@ -26,11 +26,12 @@ with import ../assets/machines.nix; {
       "${wireguard.ips.wakasu}" = [ "wakasu.vpn" ];
       "${home.ips.hokkaido}" = [ "hokkaido.home" ];
       "${wireguard.ips.hokkaido}" = [ "hokkaido.vpn" ];
-      "${home.ips.kobe}" = [ "kobe.home" ];
-      "${wireguard.ips.kobe}" = [ "kobe.vpn" ];
+      "${home.ips.sakhalin}" = [ "sakhalin.home" ];
+      "${wireguard.ips.sakhalin}" = [ "sakhalin.vpn" ];
       "${wireguard.ips.massimo}" = [ "massimo.vpn" ];
       "${home.ips.synodine}" = [ "synodine.home" ];
       "${home.ips.okinawa}" = [ "okinawa.home" "cache.home" "svc.home" "nix.cache.home" "go.cache.home" ];
+      "${wireguard.ips.okinawa}" = [ "okinawa.vpn" ];
       "${wireguard.ips.carthage}" = [ "carthage.vpn" ];
       "${wireguard.ips.kerkouane}" = [ "kerkouane.vpn" ];
     };
