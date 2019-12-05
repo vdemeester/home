@@ -56,7 +56,7 @@ with import ../assets/machines.nix; {
         }
       ];
     };
-    syncthing.guiAddress = "${wireguard.ips.sakhalin}:8384";
+    syncthing.guiAddress = "0.0.0.0:8384";
     wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.sakhalin}/24" ];

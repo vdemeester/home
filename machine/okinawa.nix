@@ -61,7 +61,7 @@ with import ../assets/machines.nix; {
       domain = "nix.cache.home";
       aliases = ["cache.massimo.home" "nix.okinawa.home"];
     };
-    syncthing.guiAddress = "${wireguard.ips.okinawa}:8384";
+    syncthing.guiAddress = "0.0.0.0:8384";
     tarsnap = {
       enable = true;
       archives = {

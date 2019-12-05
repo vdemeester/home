@@ -45,7 +45,7 @@ with import ../assets/machines.nix; {
     };
     openssh.ports = [ ssh.carthage.port ];
     openssh.permitRootLogin = "without-password";
-    syncthing.guiAddress = "${wireguard.ips.carthage}:8384";
+    syncthing.guiAddress = "127.0.0.1:8384";
     wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.carthage}/24" ];

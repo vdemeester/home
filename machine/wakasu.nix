@@ -64,7 +64,8 @@ with import ../assets/machines.nix; {
       HandleLidSwitchExternalPower=ignore
       HandleLidSwitchDocked=ignore
     '';
-    syncthing.guiAddress = "${wireguard.ips.wakasu}:8384";
+    #syncthing.guiAddress = "${wireguard.ips.wakasu}:8384";
+    syncthing.guiAddress = "0.0.0.0:8384";
     smartd = {
       enable = true;
       devices = [ { device = "/dev/nvme0n1"; } ];

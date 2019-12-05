@@ -23,7 +23,7 @@ with import ../assets/machines.nix; {
   };
   services = {
     logind.lidSwitch = "ignore";
-    syncthing.guiAddress = "${wireguard.ips.honshu}:8384";
+    syncthing.guiAddress = "0.0.0.0:8384";
     wireguard = {
       enable = true;
       ips = [ "${wireguard.ips.honshu}/24" ];

@@ -19,7 +19,7 @@ with import ../assets/machines.nix; {
   services = {
     openssh.ports = [ ssh.kerkouane.port ];
     openssh.permitRootLogin = "without-password";
-    syncthing.guiAddress = "${wireguard.ips.kerkouane}:8384";
+    syncthing.guiAddress = "127.0.0.1:8384";
   };
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGR4dqXwHwPpYgyk6yl9+9LRL3qrBZp3ZWdyKaTiXp0p vincent@shikoku"
