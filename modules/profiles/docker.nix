@@ -32,7 +32,7 @@ in
         package = cfg.package;
         liveRestore = false;
         storageDriver = "overlay2";
-        extraOptions = "--experimental --init --add-runtime docker-runc=${cfg.runcPackage}/bin/runc --default-runtime=docker-runc --containerd=/run/containerd/containerd.sock";
+        extraOptions = "--experimental --add-runtime docker-runc=${cfg.runcPackage}/bin/runc --default-runtime=docker-runc --containerd=/run/containerd/containerd.sock";
       };
     };
     environment.etc."docker/daemon.json".text = ''
