@@ -3,10 +3,14 @@
 
 set -e
 
-BASE_URL="https://openshift-pipelines-install.s3.eu-west-3.amazonaws.com"
+BASE_URL="http://osinstall.chmouel.com"
 curl -s "${BASE_URL}/vincent/kubeadmin.password.gpg"|gpg --decrypt > ~/.kube/kubeadmin.password.os4
 curl -s "${BASE_URL}/vincent/webaccess.gpg"|gpg --decrypt > ~/.kube/webaccess.os4
 curl -s "${BASE_URL}/vincent/kubeconfig.gpg"|gpg --decrypt > ~/.kube/config.os4 && export KUBECONFIG=~/.kube/config.os4
+
+if test -d $HOME/sync/work/chos4/; then
+    cp ~/.kube/*.os4 $HOME/sync/work/chos4/
+fi
 
 export KUBECONFIG=~/.kube/config.os4
 oc login -u kubeadmin -p $(cat ~/.kube/kubeadmin.password.os4)
