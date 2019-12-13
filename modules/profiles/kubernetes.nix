@@ -16,6 +16,9 @@ in
       krew = {
         enable = mkEnableOption "Enable krew";
       };
+      kind = {
+        enable = mkEnableOption "Enable kind";
+      };
       minikube = {
         enable = mkEnableOption "Enable minikube";
         package = mkOption {
@@ -49,6 +52,11 @@ in
       home.packages = with pkgs; [
         cfg.minikube.package
         docker-machine-kvm2
+      ];
+    })
+    (mkIf cfg.kind.enable {
+      home.packages = with pkgs; [
+        kind
       ];
     })
     (mkIf (!config.profiles.containers.openshift.enable) {

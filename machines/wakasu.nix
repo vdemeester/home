@@ -18,6 +18,7 @@
   profiles.containers.kubernetes = {
     enable = true;
     krew.enable = true;
+    kind.enable = true;
   };
   programs = {
     google-chrome.enable = true;
