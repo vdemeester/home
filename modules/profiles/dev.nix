@@ -37,6 +37,7 @@ in
         ];
         onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr dev";
       };
+      services.lorri.enable = true;
     }
   ]);
 }
