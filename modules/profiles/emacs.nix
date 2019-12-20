@@ -105,9 +105,6 @@ in
           ledger-mode
           hledger-mode
           ledger-import
-          magit
-          magit-gitflow
-          magit-popup
           markdown-mode
           multiple-cursors
           no-littering
@@ -186,6 +183,9 @@ in
           k8s-mode
           lsp-mode
           lsp-ui
+          magit
+          magit-gitflow
+          magit-popup
           pretty-hydra
           major-mode-hydra
           minions
