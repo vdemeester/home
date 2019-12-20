@@ -14,6 +14,7 @@
   profiles.finances.enable = true;
   profiles.laptop.enable = true;
   profiles.media.enable = true;
+  profiles.gpg.pinentry = "${pkgs.pinentry-gtk2}/bin/pinentry-gtk-2";
   #profiles.mails.enable = true;
   profiles.containers.kubernetes = {
     enable = true;
