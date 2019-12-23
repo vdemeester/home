@@ -45,13 +45,10 @@ in
         enable = true;
         package = pkgs.emacs.override { inherit (pkgs) imagemagick; withXwidgets = cfg.withXwidgets; };
         extraPackages = epkgs: with epkgs; [
-          ace-link
           ace-window
           aggressive-indent
           async
           avy
-          bm
-          command-log-mode
           company
           company-emoji
           company-ghc
@@ -61,7 +58,6 @@ in
           counsel-projectile
           dash
           define-word
-          deft
           delight
           dired-collapse
           dired-git-info
@@ -69,17 +65,11 @@ in
           direnv
           dockerfile-mode
           easy-kill
-          eshell-bookmark
           exec-path-from-shell
           expand-region
           eyebrowse
-          fish-mode
           flycheck
           flycheck-golangci-lint
-          flycheck-popup-tip
-          flycheck-rust
-          fold-this
-          fullframe
           git-commit
           gitattributes-mode
           gitconfig-mode
@@ -88,68 +78,45 @@ in
           helpful
           highlight
           highlight-indentation
-          #highlight-escape-sequences
-          #highlight-leading-spaces
           highlight-numbers
-          #highlight-symbol
           hydra
           ibuffer-vc
           iedit
           ivy
           ivy-hydra
           ivy-rich
-          js-import
-          js2-mode
-          js2-refactor
           json-mode
-          ledger-mode
-          hledger-mode
-          ledger-import
           markdown-mode
           multiple-cursors
           no-littering
           ob-async
           ob-go
           ob-http
-          ob-rust
-          ob-typescript
-          orca
+          # orca
           org-plus-contrib
-          org-bullets
           org-capture-pop-frame
           org-ref
           org-super-agenda
           org-web-tools
-          ox-epub
+          # ox-epub
           ox-hugo
-          ox-ioslide
           ox-pandoc
           ox-slack
-          ox-tufte
-          ox-twbs
           pandoc-mode
           pinentry
-          popup
+          # popup
           projectile
           projectile-ripgrep
-          pdf-tools
+          # pdf-tools
           python-mode
-          racer
           rainbow-delimiters
           rainbow-mode
           region-bindings-mode
-          request
-          request-deferred
           ripgrep
-          rust-mode
           scratch
           shackle
-          shx
-          smart-jump
+          #smart-jump
           solaire-mode
-          string-edit
-          toml-mode
-          typescript-mode
           try
           visual-fill-column
           visual-regexp
@@ -167,24 +134,11 @@ in
           esh-autosuggest
           fish-completion
           forge
-          godoctor
-          go-add-tags
-          go-eldoc
-          go-errcheck
-          go-fill-struct
-          go-guru
-          # go-impl
           go-mode
-          #gorepl-mode
-          go-tag
-          gotest
           hide-mode-line
-          key-chord
-          k8s-mode
           lsp-mode
           lsp-ui
           magit
-          magit-gitflow
           magit-popup
           pretty-hydra
           major-mode-hydra
@@ -193,9 +147,6 @@ in
           mwim
           nix-buffer
           nix-mode
-          nix-sandbox
-          nix-update
-          nixos-options
           org-super-agenda
           smartparens
           symbol-overlay
