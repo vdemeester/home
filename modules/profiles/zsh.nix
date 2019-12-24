@@ -108,11 +108,11 @@ in
           source $HOME/${config.programs.zsh.dotDir}/completion.zsh
           source $HOME/${config.programs.zsh.dotDir}/plugins/powerlevel10k/powerlevel10k.zsh-theme
           source $HOME/${config.programs.zsh.dotDir}/prompt.zsh
-          if [ -n "$INSIDE_EMACS" ]; then
-            chpwd() { print -P "\033AnSiTc %d" }
-            print -P "\033AnSiTu %n"
-            print -P "\033AnSiTc %d"
-          fi
+          #if [ -n "$INSIDE_EMACS" ]; then
+          #  chpwd() { print -P "\033AnSiTc %d" }
+          #  print -P "\033AnSiTu %n"
+          #  print -P "\033AnSiTc %d"
+          #fi
           if [[ "$TERM" == "dumb" || "$TERM" == "emacs" ]]
           then
             TERM=eterm-color

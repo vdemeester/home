@@ -62,6 +62,8 @@ in
           dired-collapse
           dired-git-info
           dired-quick-sort
+          dired-narrow
+          dired-rsync
           direnv
           dockerfile-mode
           easy-kill
@@ -84,6 +86,7 @@ in
           iedit
           ivy
           ivy-hydra
+          ivy-prescient
           ivy-rich
           json-mode
           markdown-mode
@@ -105,6 +108,7 @@ in
           pandoc-mode
           pinentry
           # popup
+          prescient
           projectile
           projectile-ripgrep
           # pdf-tools
@@ -113,8 +117,6 @@ in
           rainbow-mode
           region-bindings-mode
           ripgrep
-          scratch
-          shackle
           #smart-jump
           solaire-mode
           try
@@ -128,14 +130,19 @@ in
           yasnippet
           yaml-mode
         ] ++ (with melpaPackages; [
+          anzu
           company-lsp
+          company-prescient
+          darkroom
           doom-themes
           eshell-prompt-extras
           esh-autosuggest
           fish-completion
+          flyspell-correct-ivy
           forge
           go-mode
           hide-mode-line
+          ivy-posframe
           lsp-mode
           lsp-ui
           magit
@@ -148,6 +155,8 @@ in
           nix-buffer
           nix-mode
           org-super-agenda
+          org-tree-slide
+          shr-tag-pre-highlight
           smartparens
           symbol-overlay
           undo-tree
