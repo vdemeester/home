@@ -113,7 +113,7 @@ in
           prescient
           projectile
           projectile-ripgrep
-          # pdf-tools
+          pdf-tools
           python-mode
           rainbow-delimiters
           rainbow-mode
