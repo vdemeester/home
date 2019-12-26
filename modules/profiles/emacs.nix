@@ -56,6 +56,7 @@ in
           company-racer
           counsel
           counsel-projectile
+          crux
           dash
           define-word
           delight
@@ -76,6 +77,7 @@ in
           gitattributes-mode
           gitconfig-mode
           gitignore-mode
+          goto-last-change
           hardhat
           helpful
           highlight
