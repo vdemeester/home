@@ -37,6 +37,10 @@ in
         graphviz
         pandoc
         zip
+        hunspell
+        hunspellDicts.en_US-large
+        hunspellDicts.en_GB-ize
+        hunspellDicts.fr-any
       ];
       home.sessionVariables = {
         EDITOR = "et";
