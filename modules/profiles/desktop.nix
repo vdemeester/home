@@ -87,6 +87,7 @@ in
         {cmd = "virt-manager"; pkg = "virtmanager";}
         {cmd = "update-desktop-database"; pkg = "desktop-file-utils"; chan = "unstable";}
         {cmd = "lgogdownloader"; chan = "unstable";}
+        {cmd = "xev"; pkg = "xorg.xev";}
       ];
       onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr desktop";
     };
