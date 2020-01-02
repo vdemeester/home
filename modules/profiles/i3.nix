@@ -130,7 +130,7 @@ in
           "Mod4+Shift+114" = "focus output right";
           # Custom keybinding
           "Mod4+Shift+32" = "exec loginctl lock-session";
-          "Mod4+Shift+39" = "exec sleep 1 && xset dpms force standby";
+          "Mod4+Shift+39" = "exec ~/.screenlayout/home-work.sh && systemctl --user start random-background.service";
           "Mod4+24" = "border toggle";
         };
         modes = {};
