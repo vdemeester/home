@@ -61,6 +61,7 @@ in
           counsel
           counsel-projectile
           crux
+          dap-mode
           dash
           define-word
           delight
