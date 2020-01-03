@@ -44,6 +44,10 @@ accounts.email = {
           channel = {
             Sync = "All";
           };
+          account = {
+            Timeout = 120;
+            PipelineDepth = 1;
+          };
         };
       };
       notmuch.enable = true;
@@ -66,6 +70,10 @@ accounts.email = {
         extraConfig = {
           channel = {
             Sync = "All";
+          };
+          account = {
+            Timeout = 120;
+            PipelineDepth = 1;
           };
         };
       };
