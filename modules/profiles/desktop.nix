@@ -104,8 +104,9 @@ in
       gnome3.gnome_themes_standard
       keybase
       mpv
-      peco
       pass
+      peco
+      profile-sync-daemon
       xdg-user-dirs
       xdg_utils
       xsel
