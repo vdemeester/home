@@ -24,15 +24,15 @@ in
       ];
       programs.git = {
         enable = true;
-    
+
         userName = "Vincent Demeester";
         userEmail = "vincent@sbr.pm";
-    
+
         signing = {
           key = "6EB699A3";
           signByDefault = false;
         };
-    
+
         aliases = {
           b = "branch --color -v";
           br = "branch";
@@ -111,7 +111,7 @@ in
           };
           "url \"git@github.com:\"".insteadOf = "git://github.com/";
         };
-        
+
         includes = [
           {
             path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
@@ -156,6 +156,18 @@ in
           {
             path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
             condition = "gitdir:${config.home.homeDirectory}/src/github.com/containers/";
+          }
+          {
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/gitlab.cee.redhat.com/";
+          }
+          {
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/gitlab.corp.redhat.com/";
+          }
+          {
+            path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+            condition = "gitdir:${config.home.homeDirectory}/src/pkg.devel.redhat.com/";
           }
         ];
         ignores = [
