@@ -52,6 +52,11 @@ in
           forwardAgent = true;
         };
       } // cfg.machines;
+      extraConfig = ''
+PreferredAuthentications gssapi-with-mic,publickey,password
+GSSAPIAuthentication yes
+GSSAPIDelegateCredentials yes
+'';
     };
   };
 }
