@@ -168,6 +168,8 @@ in
           symbol-overlay
           undo-tree
           use-package
+          # Highly experimental
+          emacs-libvterm
         ]);
       };
     }
