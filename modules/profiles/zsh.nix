@@ -40,7 +40,6 @@ in
           ZSH_HIGHLIGHT_HIGHLIGHTERS = [ "main" "brackets" "pattern" ];
         };
         sessionVariables = {
-          FZF_DEFAULT_OPTS = "--bind=ctrl-j:accept";
           GOPATH = "${config.home.homeDirectory}";
         };
         shellAliases = import ./aliases.shell.nix;
@@ -136,6 +135,7 @@ in
       programs.fzf = {
         enable = true;
         enableZshIntegration = true;
+        defaultOptions = [ "--bind=ctrl-j:accept" ];
       };
     }
     (mkIf config.profiles.emacs.enable {
