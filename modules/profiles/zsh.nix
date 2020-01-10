@@ -38,6 +38,9 @@ in
           EMOJI_CLI_KEYBIND = "^n";
           EMOJI_CLI_USE_EMOJI = "yes";
           ZSH_HIGHLIGHT_HIGHLIGHTERS = [ "main" "brackets" "pattern" ];
+        };
+        sessionVariables = {
+          FZF_DEFAULT_OPTS = "--bind=ctrl-j:accept";
           GOPATH = "${config.home.homeDirectory}";
         };
         shellAliases = import ./aliases.shell.nix;
