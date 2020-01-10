@@ -126,6 +126,11 @@ in
             PS1='$ '
           fi
           setopt hist_ignore_space
+          alias -g L="|less"
+          alias -g EEL=' 2>&1 | less'
+          alias -g GB='`git rev-parse --abbrev-ref HEAD`'
+          alias -g GR='`git rev-parse --short-toplevel`'
+          (( $+commands[jq] )) && alias -g MJ="| jq -C '.'"  || alias -g MJ="| ${pkgs.python3}/bin/python -mjson.tool"
         '';
         profileExtra = ''
           if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
