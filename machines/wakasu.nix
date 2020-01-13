@@ -33,6 +33,8 @@
     nur.repos.vdemeester.tkn
     thunderbird
     asciinema
+    gnome3.zenity # use rofi instead
+    oathToolkit
   ];
   services.shairport-sync.enable = true;
 }
