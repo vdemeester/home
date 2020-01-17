@@ -131,6 +131,7 @@ in
           alias -g GB='`git rev-parse --abbrev-ref HEAD`'
           alias -g GR='`git rev-parse --show-toplevel`'
           (( $+commands[jq] )) && alias -g MJ="| jq -C '.'"  || alias -g MJ="| ${pkgs.python3}/bin/python -mjson.tool"
+          export PATH=$HOME/.krew/bin:$PATH
         '';
         profileExtra = ''
           if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
