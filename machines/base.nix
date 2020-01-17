@@ -15,6 +15,7 @@
     exa
     fd
     htop
+    mpw
     scripts
     tree
   ];
