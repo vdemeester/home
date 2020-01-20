@@ -38,6 +38,3 @@ spec:
   source: community-operators
   sourceNamespace: openshift-marketplace
 EOF
-
-echo ">>> your cluster is ready :)"
-read
