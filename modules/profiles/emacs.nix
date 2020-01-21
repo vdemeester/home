@@ -103,6 +103,7 @@ in
           ob-go
           ob-http
           # orca
+          orgit
           org-plus-contrib
           org-capture-pop-frame
           org-ref
