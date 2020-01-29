@@ -137,7 +137,6 @@ in
           xterm-color
           yasnippet
           yaml-mode
-        ] ++ (with melpaPackages; [
           anzu
           company-lsp
           company-prescient
@@ -171,7 +170,7 @@ in
           use-package
           # Highly experimental
           emacs-libvterm
-        ]);
+        ];
       };
     }
     (mkIf config.profiles.emacs.capture {
