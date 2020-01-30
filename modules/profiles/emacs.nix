@@ -170,6 +170,7 @@ in
           use-package
           # Highly experimental
           emacs-libvterm
+          gotest
         ];
       };
     }
