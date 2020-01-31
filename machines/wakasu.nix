@@ -18,8 +18,9 @@
   profiles.mails.enable = true;
   profiles.containers.kubernetes = {
     enable = true;
-    krew.enable = true;
-    kind.enable = true;
+    krew = true;
+    kind = true;
+    nr = true;
   };
   programs = {
     google-chrome.enable = true;
