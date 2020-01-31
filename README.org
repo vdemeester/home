@@ -29,4 +29,8 @@ The goal of is repository is to be able to have a way to setup dotfiles and pack
 /one go/, sharing those configuration between multiple computers.
 
 This means it could become the /monorepo/ of my configuration, slowly migrating other
-repositories into this one (like [[https://github.com/vdemeester/emacs-config][~emacs-config~]]).
+repositories into this one (like [[https://github.com/vdemeester/emacs-config][~emacs-config~]]). This repository should be the source of
+truth of all my configuration.
+
+This will be a all-time work-in-progress, so please beware that things might change
+dramatically or even not working anymore 😛.
