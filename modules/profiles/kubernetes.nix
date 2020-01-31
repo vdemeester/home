@@ -41,6 +41,12 @@ in
         kubectx
         nur.repos.vdemeester.ko
       ];
+      xdg.configFile."nr/kubernetes" = {
+        text = builtins.toJSON [
+          {cmd = "kubectl";} {cmd = "oc"; pkg = "openshift"; }
+        ];
+        onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr -f kubernetes";
+      };
     }
     (mkIf cfg.krew.enable {
       home.packages = with pkgs; [ nur.repos.vdemeester.krew ];
