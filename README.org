@@ -1,0 +1,32 @@
+#+TITLE: Home configuration files
+
+* What is ~home~
+
+This repository is using ~home-manager~ and ~nix~.
+
+If you don't have ~nix~ installed, run ~curl https://nixos.org/nix/install | sh~ to install it.
+
+- clone this repository in ~$HOME/.config/nixpkgs~
+- create a `home.nix` file with the content you want.
+  Some machines files already exists that you can use :
+
+  #+begin_src nix
+    { pkgs, ... }:
+
+    {
+      imports = [
+        ./machines/hokkaido.nix
+      ];
+    }
+  #+end_src
+
+- run ~nix-shell https://github.com/rycee/home-manager/archive/master.tar.gz -A install~ (maybe twice :D)
+- run ~echo -n "Passphrase: "; read -i PASSPHRASE; env PASSPHRASE=$PASSPHRASE home-manager switch;~
+
+* Goal
+
+The goal of is repository is to be able to have a way to setup dotfiles and packages in
+/one go/, sharing those configuration between multiple computers.
+
+This means it could become the /monorepo/ of my configuration, slowly migrating other
+repositories into this one (like [[https://github.com/vdemeester/emacs-config][~emacs-config~]]).
