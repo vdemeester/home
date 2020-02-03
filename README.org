@@ -43,6 +43,24 @@ truth of all my configuration.
 This will be a all-time work-in-progress, so please beware that things might change
 dramatically or even not working anymore 😛.
 
+** TODO Organization of =org-mode=
+:PROPERTIES:
+:CUSTOM_ID: h:b74304bf-e7e6-4425-9123-e50eca3eb8fa
+:END:
+
+As I'm slowly, but _surely_, going to have =org-mode= files for literate configuration
+files in this repository, I have to think of how to organize files in order to end up with
+one huge file.
+
+** TODO Nix files and =ansible=
+:PROPERTIES:
+:CUSTOM_ID: h:daf2fc12-0c9f-4008-9aa1-f0c22bdb616d
+:END:
+
+This repository holds [[https://nixos.org/nix/][nix]] files and [[https://www.ansible.com/][ansible]] configurations too. Those two are targeting
+different machines, although, the nix files are used in almost all my machines (whereas
+ansible configuration is just used on non-NixOS setups).
+
 * COPYING
 :PROPERTIES:
 :CUSTOM_ID: h:716e598e-3b1a-4e48-a72b-608c3a970db9
