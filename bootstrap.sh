@@ -79,9 +79,9 @@ EOF
     echo "> install ansible"
     sudo dnf install -y ansible
     echo "> run playbook"
-    ansible-playbook -K playbook.yml
+    ansible-playbook -K ansible/playbook.yml
 }
-		
+
 setup_osx() {
     echo "Mac OS X detected"
     if [[ "$kernel_name" == "Darwin" ]]; then
