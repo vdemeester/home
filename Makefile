@@ -4,6 +4,10 @@ all: build
 update:
 	nix-channel --update
 
+.PHONY: pull
+pull:
+	(cd overlays/emacs-overlay && git pull --rebase)
+
 .PHONY: assets
 assets:
 	cp -Rv ~/sync/nixos/machines.nix assets/
