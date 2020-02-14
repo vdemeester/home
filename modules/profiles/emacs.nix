@@ -146,7 +146,7 @@ in
           esh-autosuggest
           fish-completion
           flyspell-correct-ivy
-          forge
+          #forge
           go-mode
           hide-mode-line
           ivy-posframe
