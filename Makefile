@@ -19,6 +19,11 @@ build: assets
 .PHONY: switch
 switch: assets
 	home-manager switch
+
 .PHONY: clean
 clean:
 	unlink result
+
+.PHONY: publish
+publish:
+	cp *.org ~/desktop/org/technical/configurations/
