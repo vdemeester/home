@@ -1,5 +1,5 @@
 # Generated from an org file 💃
-# See : https://sbr.pm/technical/mail-setup.html
+# See : https://sbr.pm/technical/configurations/mails.html
 { config, lib, pkgs, ... }:
 
 with lib;
@@ -10,11 +10,8 @@ in
 
 options = {
   profiles.mails = {
-    enable = mkOption {
-      default = false;
-      description = "Enable mails configurations";
-      type = types.bool;
-    };
+    enable = mkEnableOption "Enable mails configuration";
+    sync = mkEnableOption "Enable sync mail service";
     frequency = mkOption {
       default = "*:0/30";
       description = "Frequency at which the mail should be checked";
@@ -23,7 +20,8 @@ options = {
   };
 };
 
-config = mkIf cfg.enable {
+config = mkIf cfg.enable (mkMerge [
+  {
 
 accounts.email = {
   maildirBasePath = "desktop/mails";
@@ -50,8 +48,8 @@ accounts.email = {
           };
         };
       };
-      notmuch.enable = true;
-      astroid.enable = true;
+      notmuch.enable = cfg.sync;
+      astroid.enable = cfg.sync;
       msmtp.enable = true;
     };
     "perso" = {
@@ -77,12 +75,27 @@ accounts.email = {
           };
         };
       };
-      notmuch.enable = true;
-      astroid.enable = true;
+      notmuch.enable = cfg.sync;
+      astroid.enable = cfg.sync;
       msmtp.enable = true;
     };
   };
 };
+
+home.file."bin/msmtp" = {
+  text = ''
+  #!${pkgs.stdenv.shell}
+  ${pkgs.libnotify}/bin/notify-send "Sending mail ✉️"
+  ${pkgs.msmtp}/bin/msmtp --read-envelope-from $@
+  '';
+  executable = true;
+};
+
+programs.msmtp.enable = true;
+
+}
+
+(mkIf cfg.sync {
 
 services.mbsync = {
   enable = true;
@@ -122,9 +135,17 @@ xdg.configFile."mbsync/postExec" = {
   executable = true;
 };
 
+home.file."bin/msync" = {
+  text = ''
+  #!${pkgs.stdenv.shell}
+  ${pkgs.libnotify}/bin/notify-send "Syncing mails 📫️"
+  systemctl --user start mbsync
+  '';
+  executable = true;
+};
+
 programs.mbsync.enable = true;
 programs.notmuch.enable = true;
-programs.msmtp.enable = true;
 
 programs.afew = {
   enable = true;
@@ -155,23 +176,7 @@ programs.astroid = {
   };
 };
 
-home.file."bin/msmtp" = {
-  text = ''
-  #!${pkgs.stdenv.shell}
-  ${pkgs.libnotify}/bin/notify-send "Sending mail ✉️"
-  ${pkgs.msmtp}/bin/msmtp --read-envelope-from $@
-  '';
-  executable = true;
-};
+})
 
-home.file."bin/msync" = {
-  text = ''
-  #!${pkgs.stdenv.shell}
-  ${pkgs.libnotify}/bin/notify-send "Syncing mails 📫️"
-  systemctl --user start mbsync
-  '';
-  executable = true;
-} ;
-
-};
+]);
 }
