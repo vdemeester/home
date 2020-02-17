@@ -43,7 +43,7 @@ truth of all my configuration.
 This will be a all-time work-in-progress, so please beware that things might change
 dramatically or even not working anymore 😛.
 
-** TODO Organization of =org-mode=
+* TODO Organization of =org-mode=
 :PROPERTIES:
 :CUSTOM_ID: h:b74304bf-e7e6-4425-9123-e50eca3eb8fa
 :END:
@@ -52,7 +52,11 @@ As I'm slowly, but _surely_, going to have =org-mode= files for literate configu
 files in this repository, I have to think of how to organize files in order to end up with
 one huge file.
 
-** TODO Nix files and =ansible=
+Let's start by having =org-mode= files in the root folder.
+- [[./mails.org][=mails.org=]] holds mail configuration, that becomes more or less the ~profiles.mail~
+  configuration
+
+* TODO Nix files and =ansible=
 :PROPERTIES:
 :CUSTOM_ID: h:daf2fc12-0c9f-4008-9aa1-f0c22bdb616d
 :END:
