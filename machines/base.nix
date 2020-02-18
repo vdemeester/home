@@ -16,6 +16,7 @@
     fd
     htop
     mpw
+    ncurses
     scripts
     tree
   ];
