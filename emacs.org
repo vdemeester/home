@@ -34,13 +34,14 @@ have a new packaged installed as part of my Emacs package. This is *heavily* ins
 
 ** Required lisp libraries
 :PROPERTIES:
+:header-args: :tangle ~/.emacs.d/lisp/use-package-list.el
 :CUSTOM_ID: h:316fd3ee-ab99-4f01-ba5a-1a91c54bc334
 :END:
 
 We need a way to list packages used in the configuration using ~use-package~. This is
 coming straight from [[https://matthewbauer.us/bauer/][Matthew Bauer's bauer]].
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/use-package-list.el
+#+begin_src emacs-lisp
 ;;; use-package-list.el --- List use-package declarations in config file
 
 ;; Copyright (C) 2017 Matthew Bauer
@@ -105,4 +106,13 @@ coming straight from [[https://matthewbauer.us/bauer/][Matthew Bauer's bauer]].
 
 (provide 'use-package-list)
 ;;; use-package-list.el ends here
+#+end_src
+
+The idea is to run some like the following.
+
+#+begin_src bash :tangle no
+emacs --batch --quick \
+      -L /nix/store/acm9rskhx237xb16zdy7vx6r1m5n8q58-emacs-packages-deps/share/emacs/site-lisp/elpa/use-package-20191126.2034/use-package-* \
+      -l /home/vincent/.emacs.d/lisp/use-package-list.el \
+      --eval "(use-package-list \"/home/vincent/.emacs.d/init.el\")"
 #+end_src
