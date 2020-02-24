@@ -1,5 +1,6 @@
 {
   imports = [
-    ./base.nix
+    ./base.nixos.nix
   ];
+  xdg.configFile."ape.conf".source = ../assets/ape.conf;
 }
