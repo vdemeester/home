@@ -84,6 +84,7 @@ in
     xdg.configFile."nr/desktop" = {
       text = builtins.toJSON [
         {cmd = "surf";} {cmd = "dmenu";} {cmd = "sxiv";} { cmd = "screenkey"; }
+        {cmd = "gimp";}
         {cmd = "virt-manager"; pkg = "virtmanager";}
         {cmd = "update-desktop-database"; pkg = "desktop-file-utils"; chan = "unstable";}
         {cmd = "lgogdownloader"; chan = "unstable";}
