@@ -34,14 +34,6 @@ with import ../assets/machines.nix; {
           index = "index.html";
         };
       };
-      virtualHosts."sbr.pm" = {
-        enableACME = true;
-        forceSSL = true;
-        root = "/home/vincent/desktop/sites/sbr.pm";
-        locations."/" = {
-          index = "index.html";
-        };
-      };
     };
     openssh.ports = [ ssh.carthage.port ];
     openssh.permitRootLogin = "without-password";
@@ -54,7 +46,4 @@ with import ../assets/machines.nix; {
       endpointPublicKey = wireguard.kerkouane.publicKey;
     };
   };
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGR4dqXwHwPpYgyk6yl9+9LRL3qrBZp3ZWdyKaTiXp0p vincent@shikoku"
-  ];
 }

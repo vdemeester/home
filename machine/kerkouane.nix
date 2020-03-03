@@ -16,12 +16,34 @@ with import ../assets/machines.nix; {
     wireguard.server.enable = true;
   };
   networking.firewall.allowPing = true;
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  security = {
+    acme.certs = {
+      "sbr.pm".email = "vincent@sbr.pm";
+    };
+  };
   services = {
+    nginx = {
+      enable = true;
+      virtualHosts."kerkouane.sbr.pm" = {
+        enableACME = true;
+        forceSSL = true;
+        root = "/home/vincent/desktop/sites/kerkouane.sbr.pm";
+        locations."/" = {
+          index = "index.html";
+        };
+      };
+      virtualHosts."sbr.pm" = {
+        enableACME = true;
+        forceSSL = true;
+        root = "/home/vincent/desktop/sites/sbr.pm";
+        locations."/" = {
+          index = "index.html";
+        };
+      };
+    };
     openssh.ports = [ ssh.kerkouane.port ];
     openssh.permitRootLogin = "without-password";
     syncthing.guiAddress = "127.0.0.1:8384";
   };
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGR4dqXwHwPpYgyk6yl9+9LRL3qrBZp3ZWdyKaTiXp0p vincent@shikoku"
-  ];
 }
