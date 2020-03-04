@@ -24,6 +24,7 @@ in
       ];
       programs.git = {
         enable = true;
+        package = pkgs.gitAndTools.gitFull;
 
         userName = "Vincent Demeester";
         userEmail = "vincent@sbr.pm";
