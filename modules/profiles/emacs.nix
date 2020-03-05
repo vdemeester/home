@@ -47,7 +47,7 @@ in
       };
       programs.emacs = {
         enable = true;
-        package = pkgs.emacs.override { inherit (pkgs) imagemagick; withXwidgets = cfg.withXwidgets; };
+        package = pkgs.emacs27.override { inherit (pkgs) imagemagick; withXwidgets = cfg.withXwidgets; };
         extraPackages = epkgs: with epkgs; [
           ace-window
           aggressive-indent
