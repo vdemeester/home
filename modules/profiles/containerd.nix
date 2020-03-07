@@ -18,17 +18,17 @@ in
         type = types.package;
       };
       runcPackage = mkOption {
-        default = pkgs.nur.repos.vdemeester.runc;
+        default = pkgs.runc;
         description = "runc package to be used";
         type = types.package;
       };
       cniPackage = mkOption {
-        default = pkgs.nur.repos.vdemeester.cni;
+        default = pkgs.cni;
         description = "cni package to be used";
         type = types.package;
       };
       cniPluginsPackage = mkOption {
-        default = pkgs.nur.repos.vdemeester.cni-plugins;
+        default = pkgs.cni-plugins;
         description = "cni-plugins package to be used";
         type = types.package;
       };
