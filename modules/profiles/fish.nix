@@ -8,7 +8,7 @@ in
   options = {
     profiles.fish = {
       enable = mkOption {
-        default = true;
+        default = false;
         description = "Enable fish program and configurations";
         type = types.bool;
       };
@@ -22,7 +22,7 @@ in
       # emacs ansi-term support
       if test -n "$EMACS"
         set -x TERM eterm-color
-  
+
         # this function may be required
         function fish_title
           true
