@@ -18,7 +18,7 @@ in
         type = types.package;
       };
       runcPackage = mkOption {
-        default = pkgs.nur.repos.vdemeester.runc;
+        default = pkgs.runc;
         description = "runc package to be used";
         type = types.package;
       };
