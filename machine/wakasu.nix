@@ -13,10 +13,6 @@ with import ../assets/machines.nix; {
   };
   networking = {
     firewall.enable = false; # we are in safe territory :D
-    bridges.br1.interfaces = [ "enp0s31f6" ];
-    interfaces.enp0s31f6 = {
-      useDHCP = true;
-    };
     hosts = {
       "${home.ips.honshu}" = [ "honshu.home" ];
       "${wireguard.ips.honshu}" = [ "honshu.vpn" ];
@@ -39,7 +35,6 @@ with import ../assets/machines.nix; {
   profiles = {
     dev.enable = true;
     laptop.enable = true;
-    desktop.networkmanager = false;
     desktop.autoLogin = true;
     docker.enable = true;
     nix-config.buildCores = 4;

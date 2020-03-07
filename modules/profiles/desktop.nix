@@ -144,7 +144,6 @@ in
         fira-code
         fira-code-symbols
         fira-mono
-        #font-droid
         hasklig
         inconsolata
         iosevka
@@ -207,8 +206,7 @@ in
       unzip
       gnupg
       pinentry
-      # user repositories
-      nur.repos.mic92.inxi
+      inxi
     ];
   };
 }
