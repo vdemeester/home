@@ -15,6 +15,7 @@ with import ../assets/machines.nix;{
     containers = false;
     minikube.enable = false;
     nr = false;
+    kind = true;
   };
   profiles.mails = {
     enable = true;
