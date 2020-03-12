@@ -20,6 +20,11 @@ in
   options = {
     profiles.i3 = {
       enable = mkEnableOption "Enable i3 profile";
+      lockCmd = mkOption {
+        default = "slimlock";
+        description = "Lock command to use";
+        type = types.str;
+      };
     };
   };
   config = mkIf cfg.enable {
@@ -57,6 +62,11 @@ in
       };
       udiskie.enable = true;
       network-manager-applet.enable = true;
+      screen-locker = {
+        enable = true;
+        lockCmd = cfg.lockCmd;
+        inactiveInterval = 60;
+      };
       random-background = {
         enable = true;
         imageDirectory = "${config.home.homeDirectory}/desktop/pictures/walls";
