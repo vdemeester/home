@@ -114,7 +114,6 @@ in
           # ox-epub
           ox-hugo
           ox-pandoc
-          ox-slack
           pandoc-mode
           pinentry
           # popup
