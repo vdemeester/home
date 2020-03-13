@@ -7,6 +7,14 @@
   profiles.zsh = {
     enable = true;
   };
+  profiles.audio = {
+    enable = true;
+    mpd = {
+      enable = true;
+      musicDir = "/mnt/synodine/volumeUSB2/usbshare/music";
+    };
+    shairport-sync = true;
+  };
   profiles.cloud.google.enable = true;
   profiles.dev = {
     go.enable = true;
@@ -40,5 +48,4 @@
     gnome3.zenity # use rofi instead
     oathToolkit
   ];
-  services.shairport-sync.enable = true;
 }
