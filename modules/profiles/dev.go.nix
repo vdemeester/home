@@ -19,17 +19,12 @@ in
       home.packages = with pkgs; [
         gcc
         go
-        gocode
         godef
         golangci-lint
         golint
-        gomodifytags
         gopkgs
-        gotests
-        gotools
         go-outline
         go-symbols
-        goconvey
         delve
         # vendoring tools
         vndr
