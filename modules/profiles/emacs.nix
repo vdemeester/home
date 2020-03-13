@@ -57,7 +57,6 @@ in
           company-emoji
           company-ghc
           company-go
-          company-racer
           counsel
           counsel-projectile
           crux
@@ -98,6 +97,7 @@ in
           ivy-rich
           json-mode
           markdown-mode
+          mpdel
           multiple-cursors
           no-littering
           ob-async
