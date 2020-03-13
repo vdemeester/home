@@ -27,7 +27,6 @@ in
         go-symbols
         delve
         # vendoring tools
-        vndr
         dep
         nur.repos.vdemeester.dep-collector
         # misc
@@ -42,6 +41,7 @@ in
       xdg.configFile."nr/go" = {
         text = builtins.toJSON [
           {cmd = "pprof"; chan = "unstable";}
+          {cmd = "vndr"; chan = "unstable";}
           {cmd = "go2nix"; }
           {cmd = "dep2nix"; }
         ];
