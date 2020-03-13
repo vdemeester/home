@@ -118,6 +118,7 @@ in
             unfunction precmd
             unfunction preexec
             PS1='$ '
+            return
           fi
           # make sure navigation using emacs keybindings works on all non-alphanumerics
           # syntax highlighting
