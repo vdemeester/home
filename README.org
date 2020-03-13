@@ -64,6 +64,10 @@ Let's start by having =org-mode= files in the root folder.
 This repository holds [[https://nixos.org/nix/][nix]] files and [[https://www.ansible.com/][ansible]] configurations too. Those two are targeting
 different machines, although, the nix files are used in almost all my machines (whereas
 ansible configuration is just used on non-NixOS setups).
+* References
+
+- [[https://willschenk.com/articles/2020/leveraging_disposability_for_exploration/][Leveraging disposability for exploration]]
+-
 
 * COPYING
 :PROPERTIES:
