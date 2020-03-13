@@ -53,7 +53,6 @@ accounts.email = {
       msmtp.enable = true;
     };
     "perso" = {
-      primary = true;
       address = "vinc.demeester@gmail.com";
       userName = "vinc.demeester@gmail.com";
       realName = "Vincent Demeester";
@@ -65,6 +64,33 @@ accounts.email = {
         create = "both";
         expunge = "both";
         patterns = ["*" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"];
+        extraConfig = {
+          channel = {
+            Sync = "All";
+          };
+          account = {
+            Timeout = 120;
+            PipelineDepth = 1;
+          };
+        };
+      };
+      notmuch.enable = cfg.sync;
+      astroid.enable = cfg.sync;
+      msmtp.enable = true;
+    };
+    "prv" = {
+      primary = true;
+      address = "vincent@demeester.fr";
+      userName = "vincent@demeester.fr";
+      realName = "Vincent Demeester";
+      passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ${config.home.homeDirectory}/sync/prv.pass -d ${config.home.homeDirectory}/desktop/documents/prv.pass.gpg";
+      imap.host = "mail.gandi.net";
+      smtp.host = "mail.gandi.net";
+      mbsync = {
+        enable = true;
+        create = "both";
+        expunge = "both";
+        patterns = ["*"];
         extraConfig = {
           channel = {
             Sync = "All";
