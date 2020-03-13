@@ -13,7 +13,7 @@ in
         enable = mkEnableOption "Enable mpd";
         musicDir = mkOption {
           description = "Data where to find the music for mpd";
-          type = types.string;
+          type = types.str;
         };
       };
     };
