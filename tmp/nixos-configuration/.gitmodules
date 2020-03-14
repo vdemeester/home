@@ -1,0 +1,3 @@
+[submodule "pkgs/nix-beautify"]
+	path = pkgs/nix-beautify
+	url = git@github.com:vdemeester/nix-beautify

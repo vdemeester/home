@@ -1,0 +1,37 @@
+let
+  wireguard = {
+    ips = {
+      kerkouane = "10.100.0.1";
+      shikoku = "10.100.0.2";
+      # […]
+    };
+    kerkouane = {
+      allowedIPs = [ "${wireguard.ips.kerkouane}/32" ];
+      publicKey = "<kerkouane wireguard public key>";
+    };
+    shikoku = {
+      allowedIPs = [ "${wireguard.ips.shikoku}/32" ];
+      publicKey = "<shikoku wireguard public key>";
+    };
+    # […]
+  };
+  ssh = {
+    kerkouane = {
+      port = <custom ssh port>;
+      key = "<kerkouane ssh public key>";
+    };
+    shikoku = {
+      key = "<shikoku ssh public key>";
+    };
+  };
+in {
+  wireguard = wireguard;
+  wg = {
+    allowedIPs = "10.100.0.0/24";
+    listenPort = <wireguard port to listen to>;
+    endpointIP = "<public remote address>";
+    persistentKeepalive = 25;
+    peers = [ wireguard.shikoku ];
+  };
+  ssh = ssh;
+}
