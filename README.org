@@ -74,8 +74,12 @@ This is probably gonna be a moving target, but this is how it looks (or should l
 soon-ish 👼):
 
 - ~assets~: ignored folder where my /automation/ puts some /secrets/.
-- ~docs~: holds documentation about this code, literate configuration.
-- ~lib~: shared code used during configuration (mostly ~nix~ code), see [[literate configuration][literate configuration]].
+  Most of the =make= commands will try to populate this ahead of time. The assumption is :
+  have a ~sync~ folder where the assets are. /Note: how to bootstrap (as syncthing will
+  not be there, and the ~sync~ folder either)/
+- ~docs~: holds documentation about this code, literate configuration, see [[literate configuration][literate configuration]].
+  =make publish= will publish the =README.org= and the =docs= folder to my website.
+- ~lib~: shared code used during configuration (mostly ~nix~ code).
 - ~machines~: configuration per machines
 - ~modules~: holds nix modules (services, programs, hardware, profiles, …)
 - ~overlays~: holds [[https://nixos.wiki/wiki/Overlays][nix overlays]]
@@ -86,10 +90,6 @@ soon-ish 👼):
 literate configuration files in this repository, I have to think of how to organize files
 in order to end up with one huge file. The goal of having those =org-mode= files, is
 mainly to document my configuration and publish it, most likely on [[https://sbr.pm][sbr.pm]].
-
-Let's start by having =org-mode= files in the root folder.
-- [[./mails.org][=mails.org=]] holds mail configuration, that becomes more or less the ~profiles.mail~
-  configuration
 
 * References
 :PROPERTIES:
