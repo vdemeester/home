@@ -82,7 +82,7 @@ with import ../assets/machines.nix; {
     startAt = "hourly";
   };
   # mr -i u daily
-  systemd.services.ape = {
+  systemd.services.mr = {
     description = "Update configs daily";
     requires = [ "network-online.target" ];
     after    = [ "network-online.target" ];
