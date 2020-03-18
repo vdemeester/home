@@ -100,7 +100,7 @@ with import ../assets/machines.nix; {
     script = ''
     set -e
      cd /mnt/synodine/volumeUSB2/usbshare/src/github.com/vdemeester/configs/
-     mr -t run git reset --hard HEAD
+     mr -t run git reset --hard
      mr -t u
     '';
 
