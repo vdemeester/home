@@ -81,4 +81,29 @@ with import ../assets/machines.nix; {
 
     startAt = "hourly";
   };
+  # mr -i u daily
+  systemd.services.ape = {
+    description = "Update configs daily";
+    requires = [ "network-online.target" ];
+    after    = [ "network-online.target" ];
+
+    restartIfChanged = false;
+    unitConfig.X-StopOnRemoval = false;
+
+    serviceConfig = {
+      Type = "oneshot";
+      User = "vincent";
+      OnFailure = "status-email-root@%n.service";
+    };
+
+    path = with pkgs; [ git mr ];
+    script = ''
+    set -e
+     cd /mnt/synodine/volumeUSB2/usbshare/src/github.com/vdemeester/configs/
+     mr -t run git reset --hard HEAD
+     mr -t u
+    '';
+
+    startAt = "daily";
+  };
 }
