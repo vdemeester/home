@@ -101,7 +101,6 @@ Repositories
 - https://github.com/akirak/home.nix
 - https://github.com/jwiegley/nix-config
 - https://github.com/arianvp/nixos-stuff
-- https://github.com/jwiegley/nix-config
 - https://github.com/leotaku/nixos-config
 - https://github.com/romatthe/ronix
 - https://github.com/rummik/nixos-config
