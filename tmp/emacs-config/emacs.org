@@ -705,6 +705,14 @@ Let's also use =org-id=…
 
 #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCrypt" :range-end "-OrgCrypt" :lines "137-142"
 
+**** TODO Refiling
+:PROPERTIES:
+:CUSTOM_ID: h:da7330fb-2b24-4bc8-a9a8-7bf6b7ef3761
+:END:
+
+Heavily based on [[http://www.howardism.org/Technical/Emacs/getting-more-boxes-done.html][Getting Boxes Done, the Code]] and [[http://www.howardism.org/Technical/Emacs/getting-even-more-boxes-done.html][Refiling Trees to Files]].
+There is also [[https://stackoverflow.com/questions/11902620/org-mode-how-do-i-create-a-new-file-with-org-capture][emacs - Org-Mode - How do I create a new file with org-capture? - Stack Overflow]]
+
 *** TODO Agenda
 :PROPERTIES:
 :CUSTOM_ID: h:ba2a773a-88d1-4df9-a98c-5e547ee50691
