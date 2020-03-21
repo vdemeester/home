@@ -25,7 +25,6 @@ in
         fswatch
         gnumake
         jq
-        lnav
         mercurial
         niv
         ripgrep
@@ -33,7 +32,7 @@ in
       ];
       xdg.configFile."nr/dev" = {
         text = builtins.toJSON [
-          {cmd = "yq";}
+          {cmd = "yq";} {cmd = "lnav";}
           {cmd = "yamllint"; pkg = "python37Packages.yamllint";}
         ];
         onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr dev";
