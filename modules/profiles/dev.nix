@@ -27,6 +27,7 @@ in
         jq
         lnav
         mercurial
+        niv
         ripgrep
         shfmt
       ];
