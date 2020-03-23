@@ -229,6 +229,14 @@ Ivy-powered commands, using `ivy-prescient-re-builder'."
               lsp-diagnostic-package :auto
               lsp-restart 'auto-restart
               lsp-auto-guess-root t
+              lsp-ui-sideline-enable nil
+              lsp-ui-sideline-show-hover nil
+              lsp-ui-sideline-delay 2.0
+              lsp-ui-doc-enable nil
+              lsp-ui-doc-max-width 30
+              lsp-ui-doc-max-height 15
+              lsp-document-highlight-delay 2.0
+              lsp-ui-flycheck-enable nil
               ;; @see https://github.com/emacs-lsp/lsp-mode/pull/1498
               ;; and read code related to auto configure
               ;; require clients could be slow and that's only thing auto configure
