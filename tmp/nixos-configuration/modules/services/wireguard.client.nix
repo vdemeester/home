@@ -52,6 +52,7 @@ in
     boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
     environment.systemPackages = [ pkgs.wireguard ];
     networking.firewall.trustedInterfaces = [ "wg0" ];
+    networking.wireguard.enable = true;
     networking.wireguard.interfaces = {
       wg0 = {
         ips = cfg.ips;
