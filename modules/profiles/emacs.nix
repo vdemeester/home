@@ -142,7 +142,6 @@ in
           company-lsp
           company-prescient
           darkroom
-          doom-themes
           eshell-prompt-extras
           esh-autosuggest
           fish-completion
