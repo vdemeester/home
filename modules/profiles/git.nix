@@ -16,9 +16,8 @@ in
       home.packages = with pkgs; [
         gist
         git-lfs
-        gitAndTools.gitflow
+        gitAndTools.git-annex
         gitAndTools.hub
-        gitAndTools.tig
         nur.repos.vdemeester.prm
         nur.repos.vdemeester.ape
       ];
@@ -180,9 +179,8 @@ in
       xdg.configFile."git/config.d/redhat.gitconfig".source = ./assets/git/redhat.gitconfig;
       xdg.configFile."nr/git" = {
         text = builtins.toJSON [
-          {cmd = "mr";}
+          {cmd = "mr";} {cmd = "tig";}
           {cmd = "grv"; pkg = "gitAndTools.grv";}
-          {cmd = "git-annex"; pkg = "gitAndTools.git-annex";}
           {cmd = "git-appraise"; pkg = "gitAndTools.git-appraise"; chan = "unstable";}
         ];
         onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr git";

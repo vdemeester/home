@@ -16,7 +16,8 @@ in
   };
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      git
+      gitAndTools.gitFull
+      gitAndTools.git-annex
       gitAndTools.git-extras
     ];
     environment.etc."gitconfig" = rec { text = ''
@@ -44,8 +45,8 @@ in
   [color "diff"]
   	meta = white reverse
   	frag = magenta reverse
-  	old = red 
-  	new = green 
+  	old = red
+  	new = green
   [color "status"]
   	added = green
   	changed = yellow
@@ -56,14 +57,14 @@ in
   	default = matching
   [merge]
       tool = vimdiff
-  
+
   [user]
       name = Vincent Demeester
       email = vincent@sbr.pm
-  
+
   [http]
           cookiefile = /home/vincent/.gitcookies
-  	
+
   [url "git@github.com:"]
       pushInsteadOf = git://github.com/
     '';
