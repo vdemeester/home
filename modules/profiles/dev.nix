@@ -32,7 +32,7 @@ in
       ];
       xdg.configFile."nr/dev" = {
         text = builtins.toJSON [
-          {cmd = "yq";} {cmd = "lnav";}
+          {cmd = "yq";} {cmd = "lnav";} {cmd = "miniserve";}
           {cmd = "yamllint"; pkg = "python37Packages.yamllint";}
         ];
         onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr dev";
