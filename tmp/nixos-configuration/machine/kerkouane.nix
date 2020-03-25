@@ -33,6 +33,14 @@ with import ../assets/machines.nix; {
           index = "index.html";
         };
       };
+      virtualHosts."beta.sbr.pm" = {
+        enableACME = true;
+        forceSSL = true;
+        root = "/home/vincent/desktop/sites/beta.sbr.pm";
+        locations."/" = {
+          index = "index.html";
+        };
+      };
       virtualHosts."sbr.pm" = {
         enableACME = true;
         forceSSL = true;
