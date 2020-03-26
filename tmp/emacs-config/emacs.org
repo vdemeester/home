@@ -9,7 +9,6 @@
 
 #+TOC: headlines 3
 
-
 * Overview
 :PROPERTIES:
 :CUSTOM_ID: h:64b142be-1326-479b-ab6e-e88ca298f56d
@@ -686,7 +685,7 @@ Let's setup the base of =org-mode=, with the following things in mind:
 /The =ensure org-plus-contrib= is there to make sure I am loading the =org= module from my
 nix configuration and not the built-in =org= module (that might lag in terms of version)/
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgMain" :range-end "-OrgMain" :lines "25-90"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgMain" :range-end "-OrgMain" :lines "25-92"
 
 I've set-up an =org-mode= hook to add few modes to the default setup.
 - I am really annoyed by trailing white-space so I want them to be shown
@@ -695,15 +694,15 @@ I've set-up an =org-mode= hook to add few modes to the default setup.
   + I turn on =auto-revert-mode= so that the buffer is always up-to-date.
   + I like to have header indented, so I'm enabling =org-indent-mode=.
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgHook" :range-end "-OrgHook" :lines "93-102"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgHook" :range-end "-OrgHook" :lines "95-104"
 
 Let's also use =org-id=…
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgId" :range-end "-OrgId" :lines "105-134"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgId" :range-end "-OrgId" :lines "107-136"
 
 … and =org-crypt= (for encrypted =org-mode= files).
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCrypt" :range-end "-OrgCrypt" :lines "137-142"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCrypt" :range-end "-OrgCrypt" :lines "139-144"
 
 **** TODO Refiling
 :PROPERTIES:
@@ -738,11 +737,11 @@ I am using [[https://github.com/alphapapa/org-super-agenda/][=org-super-agenda=]
 agenda views. This allows to group things and overall set-up the agenda view I want. This
 agenda view uses the =n= key.
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgAgenda" :range-end "-OrgAgenda" :lines "145-182"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgAgenda" :range-end "-OrgAgenda" :lines "147-196"
 
 Let's try to get my work calendar entries in my agenda too. It is a little bit tricky 👼.
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgGcal" :range-end "-OrgGcal" :lines "185-199"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgGcal" :range-end "-OrgGcal" :lines "199-213"
 
 *** Habits                                                         :ATTACH:
 :PROPERTIES:
@@ -775,14 +774,14 @@ This look as followed in the agenda.
 
 [[att:2020-02-29-14-41-59.png]]
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgHabit" :range-end "-OrgHabit" :lines "202-207"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgHabit" :range-end "-OrgHabit" :lines "216-221"
 
 *** TODO Sources
 :PROPERTIES:
 :CUSTOM_ID: h:82c3b800-9d80-408d-b3b6-54dc15b0590c
 :END:
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgSrc" :range-end "-OrgSrc" :lines "210-217"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgSrc" :range-end "-OrgSrc" :lines "224-231"
 
 *** TODO Capture
 :PROPERTIES:
@@ -799,7 +798,7 @@ share a common initial key will produce a second selection list with the remaini
 options. This is very interesting when you want to group some capture template together
 (like templates related to /work/, …).
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureStart" :range-end "-OrgCaptureStart" :lines "220-224"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureStart" :range-end "-OrgCaptureStart" :lines "234-238"
 
 Some of my capture template are big and hard to read if embedded in the =emacs-lisp=
 code. The good thing is that =org-mode= is able to load the template from files too 💃.
@@ -807,44 +806,44 @@ code. The good thing is that =org-mode= is able to load the template from files 
 Here is a list of my templates:
 - Default :: Store a link (mainly used with =org-protocol=) and take a random note
 
-  #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureOldTemplate" :range-end "-OrgCaptureOldTemplate" :lines "227-236"
+  #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureOldTemplate" :range-end "-OrgCaptureOldTemplate" :lines "241-250"
 
 - Tasks :: /work/ task, like reviewing a PR, or cleaning a folder.
 
-  #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureTask" :range-end "-OrgCaptureTask" :lines "239-251"
+  #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureTask" :range-end "-OrgCaptureTask" :lines "253-265"
 
 - journaling :: As I use =org-mode= for my /journal/ too, I need capture entry for
   it. I currently have two types of journal entry :
 
-  #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureJournalBase" :range-end "-OrgCaptureJournalBase" :lines "254-256"
+  #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureJournalBase" :range-end "-OrgCaptureJournalBase" :lines "268-270"
 
   + standard: one title and some text
 
     #+INCLUDE: "etc/orgmode/journal.org" src org
 
-    #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureJournalEntry" :range-end "-OrgCaptureJournalEntry" :lines "259-266"
+    #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureJournalEntry" :range-end "-OrgCaptureJournalEntry" :lines "273-280"
 
   + worklog: related to work, to be able to say what I did, what I wanted to do, problems,
     … during the daily
 
     #+INCLUDE: "etc/orgmode/worklog.org" src org
 
-    #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureWorklog" :range-end "-OrgCaptureWorklog" :lines "269-274"
+    #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureWorklog" :range-end "-OrgCaptureWorklog" :lines "283-288"
 
 - weekly review :: each and every week, I am going through this item to make my review of
   the week.
 
   #+INCLUDE: "etc/orgmode/weekly.org" src org
 
-  #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureWeekly" :range-end "-OrgCaptureWeekly" :lines "277-282"
+  #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureWeekly" :range-end "-OrgCaptureWeekly" :lines "291-296"
 
 - blog posts ::
 
-  #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureBlog" :range-end "-OrgCaptureBlog" :lines "285-295"
+  #+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureBlog" :range-end "-OrgCaptureBlog" :lines "299-309"
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureEnd" :range-end "-OrgCaptureEnd" :lines "298-299"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgCaptureEnd" :range-end "-OrgCaptureEnd" :lines "312-313"
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgProtocol" :range-end "-OrgProtocol" :lines "302-304"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgProtocol" :range-end "-OrgProtocol" :lines "316-318"
 
 *** Clocking
 :PROPERTIES:
@@ -864,32 +863,32 @@ clocking is :
 In addition to that workflow, I want to switch the state of the task to =STARTED= when I
 am clocking-in, if it's not already =STARTED=.
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgClock" :range-end "-OrgClock" :lines "307-400"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgClock" :range-end "-OrgClock" :lines "321-414"
 
 *** TODO Links
 :PROPERTIES:
 :CUSTOM_ID: h:afc81fbb-f7a0-401c-8b56-19f51edebd88
 :END:
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgAttach" :range-end "-OrgAttach" :lines "403-406"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgAttach" :range-end "-OrgAttach" :lines "417-420"
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgLinks" :range-end "-OrgLinks" :lines "409-434"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgLinks" :range-end "-OrgLinks" :lines "423-448"
 
 *** TODO Litterate programming
 :PROPERTIES:
 :CUSTOM_ID: h:b5f6beba-6195-4ff0-a194-502ac2a9e3da
 :END:
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgBabel" :range-end "-OrgBabel" :lines "437-445"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgBabel" :range-end "-OrgBabel" :lines "451-459"
 
 *** TODO Exporting
 :PROPERTIES:
 :CUSTOM_ID: h:afad00e0-367c-4c7b-b191-e3ed72be754b
 :END:
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgExportConstants" :range-end "-OrgExportConstants" :lines "448-450"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgExportConstants" :range-end "-OrgExportConstants" :lines "462-464"
 
-#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgExportCfg" :range-end "-OrgExportCfg" :lines "453-464"
+#+INCLUDE: "./config/setup-org.el" src emacs-lisp :range-begin "OrgExportCfg" :range-end "-OrgExportCfg" :lines "467-478"
 
 ** TODO Email and newsgroup
 :PROPERTIES:

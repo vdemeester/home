@@ -159,22 +159,34 @@
         org-agenda-sticky t
         org-super-agenda-header-separator ""
         org-agenda-custom-commands
-        `(("n" "Personal agenda"
+        `(("w" "Work agenda"
            ((agenda "")
-            (tags-todo "+TODO=\"NEXT\""
+            (tags-todo "@work-goals+TODO=\"NEXT\""
                        ((org-agenda-overriding-header "Next items")))
             (tags-todo "@work-goals"
                        ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
-                        (org-agenda-overriding-header "Work")))
-            (tags-todo "@home-goals"
+                        (org-agenda-overriding-header "Work"))))
+           ((org-super-agenda-groups
+             '((:name "Important" :priority "A")
+               (:name "Done" :log closed)
+               (:name "Scheduled" :time-grid t)
+               (:name "Red Hat" :tag "redhat")
+               (:name "Tekton" :tag "tektoncd")
+               (:habit t))))
+           (org-agenda-list))
+          ("n" "Personal agenda"
+           ((agenda "")
+            (tags-todo "-@home-goals-incubate-inbox+TODO=\"NEXT\""
+                       ((org-agenda-overriding-header "Next items")))
+            (tags-todo "-@home-goals-incubate-inbox"
                        ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
                         (org-agenda-overriding-header "Home"))))
            ((org-super-agenda-groups
              '((:name "Important" :priority "A")
                (:name "Done" :log closed)
                (:name "Scheduled" :time-grid t)
-               (:name "Work" :tag "@work")
-               (:name "Perso" :tag "@home")
+               (:name "Home" :tag "@home")
+               (:name "Writing" :tag "@writing")
                (:habit t))))
            (org-agenda-list))))
   :commands (org-agenda)
