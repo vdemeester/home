@@ -29,8 +29,10 @@
   :config
   (setq org-agenda-files `(,org-default-projects-dir
                            ,user-emacs-directory
-                           "~/.config/nixpkgs/"
-                           "~/.emacs.d/")
+                           "~/src/home"
+                           "~/src/home/docs"
+                           "~/src/www/articles"
+                           "~/src/www/posts")
         org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$"
         org-use-speed-commands t
         org-special-ctrl-a/e t
