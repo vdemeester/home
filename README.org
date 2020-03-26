@@ -97,37 +97,37 @@ mainly to document my configuration and publish it, most likely on [[https://sbr
 :END:
 
 Repositories
-- https://github.com/akirak/nixos-config
-- https://github.com/akirak/home.nix
-- https://github.com/jwiegley/nix-config
-- https://github.com/arianvp/nixos-stuff
-- https://github.com/leotaku/nixos-config
-- https://github.com/romatthe/ronix
-- https://github.com/rummik/nixos-config
-- https://git.tazj.in/about/
-- https://github.com/a-schaefers/nix-config.old
-- https://github.com/auntieNeo/nixrc
-  + https://github.com/glines/nixrc
-- https://github.com/therealpxc/pxc.nix.d
-- https://github.com/tycho01/nix-config
-- https://github.com/ghuntley/dotfiles-nixos
-- https://github.com/budevg/nix-conf
-- https://github.com/cleverca22/nixos-configs
-- https://github.com/coreyoconnor/nix_configs
-- https://github.com/danieldk/nix-home
-- https://github.com/dejanr/dotfiles
-- https://github.com/Ericson2314/nixos-configuration
-- https://gitlab.com/garry-cairns/nixos-config
-- https://github.com/grahamc/nixos-config
-- https://github.com/HugoReeves/nix-home
-- https://github.com/jwiegley/nix-config
-- https://github.com/kampfschlaefer/nixconfig
-- https://github.com/lambdael/nixosconf
-- https://github.com/puffnfresh/nix-files
-- https://github.com/talyz/nixos-config
-- https://github.com/uwap/nixos-configs
-- https://github.com/yacinehmito/yarn-nix
-- https://github.com/yrashk/nix-home
+- [[https://github.com/akirak/nixos-config]]
+- [[https://github.com/akirak/home.nix]]
+- [[https://github.com/jwiegley/nix-config]]
+- [[https://github.com/arianvp/nixos-stuff]]
+- [[https://github.com/leotaku/nixos-config]]
+- [[https://github.com/romatthe/ronix]]
+- [[https://github.com/rummik/nixos-config]]
+- [[https://git.tazj.in/about/]]
+- [[https://github.com/a-schaefers/nix-config.old]]
+- [[https://github.com/auntieNeo/nixrc]]
+  + [[https://github.com/glines/nixrc]]
+- [[https://github.com/therealpxc/pxc.nix.d]]
+- [[https://github.com/tycho01/nix-config]]
+- [[https://github.com/ghuntley/dotfiles-nixos]]
+- [[https://github.com/budevg/nix-conf]]
+- [[https://github.com/cleverca22/nixos-configs]]
+- [[https://github.com/coreyoconnor/nix_configs]]
+- [[https://github.com/danieldk/nix-home]]
+- [[https://github.com/dejanr/dotfiles]]
+- [[https://github.com/Ericson2314/nixos-configuration]]
+- [[https://gitlab.com/garry-cairns/nixos-config]]
+- [[https://github.com/grahamc/nixos-config]]
+- [[https://github.com/HugoReeves/nix-home]]
+- [[https://github.com/jwiegley/nix-config]]
+- [[https://github.com/kampfschlaefer/nixconfig]]
+- [[https://github.com/lambdael/nixosconf]]
+- [[https://github.com/puffnfresh/nix-files]]
+- [[https://github.com/talyz/nixos-config]]
+- [[https://github.com/uwap/nixos-configs]]
+- [[https://github.com/yacinehmito/yarn-nix]]
+- [[https://github.com/yrashk/nix-home]]
 
 
 * COPYING
