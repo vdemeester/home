@@ -126,6 +126,7 @@ in
           rainbow-mode
           region-bindings-mode
           ripgrep
+          rg
           #smart-jump
           solaire-mode
           try
