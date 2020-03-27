@@ -1,6 +1,6 @@
-#+SETUPFILE: ../_setup.org
 #+TITLE: My email setup
 #+SUBTITLE: A very opiniated mail setup
+#+SETUPFILE: ./.setupfile.org
 
 #+BEGIN_abstract
 This article presents my opinionated email setup, client side. By opinionated I mean that

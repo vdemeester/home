@@ -1,0 +1,4 @@
+#+AUTHOR: Vincent Demeester
+#+KEYWORDS: configuration
+#+OPTIONS: toc:t
+#+EXCLUDE_TAGS: noexport

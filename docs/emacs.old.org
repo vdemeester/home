@@ -1,5 +1,5 @@
-#+SETUPFILE: ../_setup.org
 #+TITLE: Vincent Demeester's .emacs.d
+#+SETUPFILE: ./.setupfile.org
 
 * Overview
 :PROPERTIES:
