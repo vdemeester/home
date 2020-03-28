@@ -176,9 +176,9 @@
            (org-agenda-list))
           ("n" "Personal agenda"
            ((agenda "")
-            (tags-todo "-@home-goals-incubate-inbox+TODO=\"NEXT\""
+            (tags-todo "-@work-goals-incubate-inbox+TODO=\"NEXT\""
                        ((org-agenda-overriding-header "Next items")))
-            (tags-todo "-@home-goals-incubate-inbox"
+            (tags-todo "-@work-goals-incubate-inbox"
                        ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
                         (org-agenda-overriding-header "Home"))))
            ((org-super-agenda-groups
