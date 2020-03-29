@@ -26,7 +26,7 @@
          :sitemap-sort-files anti-chronologically
          ;;:sitemap-function sbr/org-publish-sitemap
          :with-footnotes t
-         :with-toc t
+         :with-toc nil
          :with-drawers t
          :html-head-include-scripts nil
          :html-head-include-default-style nil
