@@ -36,13 +36,13 @@
         ("images"
          :base-directory "docs/images"
          :base-extension ,site-attachments
-         :publishing-directory "../www/public/images"
+         :publishing-directory "../www/public/configurations/images"
          :publishing-function org-publish-attachment
          :recursive t)
         ("assets"
          :base-directory "docs/assets"
          :base-extension ,site-attachments
-         :publishing-directory "../www/public/assets"
+         :publishing-directory "../www/public/configurations/assets"
          :publishing-function org-publish-attachment
          :recursive t)
         ("all" :components ("configurations" "images" "assets"))))
