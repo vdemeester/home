@@ -3,4 +3,4 @@ result
 home.nix
 *.retry
 assets/machines.nix
-docs/index.org
+docs/sitemap.org

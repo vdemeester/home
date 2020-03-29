@@ -18,7 +18,13 @@
          :publishing-function org-html-publish-to-html
          :publishing-directory "../www/public/configurations"
          :exclude ,(regexp-opt '("README.org" "draft"))
-         :auto-sitemap nil
+         :auto-sitemap t
+         :sitemap-filename "sitemap.org"
+         :sitemap-title "Configurations"
+         ;;:sitemap-format-entry sbr/org-sitemap-format-entry
+         :sitemap-style tree
+         :sitemap-sort-files anti-chronologically
+         ;;:sitemap-function sbr/org-publish-sitemap
          :with-footnotes t
          :with-toc t
          :with-drawers t
