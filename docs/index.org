@@ -1,5 +1,4 @@
 #+TITLE: Configurations
-#+OPTIONS: toc:nil
 #+FILETAGS: @home infra configuration dotfiles
 
 This set of pages and articles are describing and discussion my
@@ -32,4 +31,4 @@ on anything that can run [[https://nixos.org/nix][Nix]] is available, and where 
 Those are =work-in-progress= document, that needs to be refined, redefined or completed.
 
 - [[file:mails.org][My email setup]]
-- [[file:emacs.old.org][Vincent Demeester's .emacs.d]]
+- [[file:emacs.org][Vincent Demeester's .emacs.d]]
