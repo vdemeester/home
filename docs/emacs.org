@@ -1254,14 +1254,6 @@ emacs --batch --quick \
 :PROPERTIES:
 :CUSTOM_ID: h:96ce2856-182e-42c8-a8b3-418c38124dcc
 :END:
-
-** ~use-package-list.el~
-:PROPERTIES:
-:CUSTOM_ID: h:bd8804a0-df0e-4aca-b748-429ea9402cd6
-:END:
-
-#+INCLUDE: ../tools/emacs/lisp/use-package-list.el src emacs-lisp
-
 ** ~gotest-ui.el~
 :PROPERTIES:
 :CUSTOM_ID: h:a94b8ba9-2d74-4fb3-a43a-58f4cd6e5141
