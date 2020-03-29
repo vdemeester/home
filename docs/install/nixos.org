@@ -1,1 +1,2 @@
 #+TITLE: NixOS installation
+#+SETUPFILE: ../.setupfile.org

@@ -1,5 +1,6 @@
 #+TITLE: Configurations
 #+FILETAGS: @home infra configuration dotfiles
+#+SETUPFILE: ./.setupfile.org
 
 This set of pages and articles are describing and discussion my
 configurations. Configurations means the [[https://dotfiles.github.io/][dotfiles]] for miscellaneous software and operating

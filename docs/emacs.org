@@ -1,10 +1,5 @@
 #+TITLE: Vincent Demeester's .emacs.d
-#+AUTHOR: Vincent Demeester
-#+EMAIL: vincent@sbr.pm
-#+EXPORT_EXCLUDE_TAGS: noexport
-#+CREATOR: Emacs 27.0.90 (Org mode 9.3)
-#+LANGUAGE: en
-#+OPTIONS: html-style:nil
+#+SETUPFILE: ./.setupfile.org
 
 #+TOC: headlines 3
 
