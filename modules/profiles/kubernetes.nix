@@ -37,6 +37,7 @@ in
         kube-prompt
         kubectx
         nur.repos.vdemeester.ko
+        nur.repos.vdemeester.kubernix
       ];
     }
     (mkIf cfg.nr {
