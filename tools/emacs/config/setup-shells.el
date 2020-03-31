@@ -247,4 +247,10 @@ using either KUBECONFIG or ~/.kube/config"
 ;; for fish in ansi-term
 (add-hook 'term-mode-hook 'toggle-truncate-lines)
 
+(use-package tramp
+  :config
+  (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
+  (add-to-list 'tramp-remote-path "~/.nix-profile/bin")
+  (add-to-list 'tramp-remote-path "~/bin"))
+
 (provide 'setup-shells)
