@@ -1,19 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package ivy
   :delight
-  :custom
-  (ivy-count-format "%d/%d ")
-  (ivy-height-alist '((t lambda (_caller) (/ (window-height) 4))))
-  (ivy-use-virtual-buffers t)
-  (ivy-virtual-abbreviate 'full) ;Show the full virtual file paths
-  (ivy-wrap nil)
-  (ivy-re-builders-alist
-   '((counsel-M-x . ivy--regex-fuzzy)
-     (t . ivy--regex-plus)))
-  (ivy-display-style 'fancy)
-  (ivy-use-selectable-prompt t)
-  (ivy-fixed-height-minibuffer nil)
-  (ivy-extra-directories nil) ; Default value: ("../" "./")
   :bind (("C-x b" . vde/switch-buffer)
          ("C-x B" . ivy-switch-buffer)
          ("M-u" . ivy-resume)    ;Override the default binding for `upcase-word'
@@ -29,6 +16,18 @@
   :hook
   (ivy-occur-mode . hl-line-mode)
   :config
+  (setq ivy-count-format "%d/%d "
+        ivy-height-alist '((t lambda (_caller) (/ (window-height) 4)))
+        ivy-use-virtual-buffers t
+        ivy-virtual-abbreviate 'full ;Show the full virtual file paths
+        ivy-wrap nil
+        ivy-re-builders-alist '((counsel-M-x . ivy--regex-fuzzy)
+                                (t . ivy--regex-plus))
+        ivy-display-style 'fancy
+        ivy-use-selectable-prompt t
+        ivy-fixed-height-minibuffer nil
+        ivy-extra-directories '("../" "./")
+        )
   (ivy-set-occur 'ivy-switch-buffer 'ivy-switch-buffer-occur)
   (ivy-set-occur 'swiper 'swiper-occur)
   (ivy-set-occur 'swiper-isearch 'swiper-occur)
