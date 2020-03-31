@@ -41,6 +41,7 @@ in
         hunspellDicts.en_US-large
         hunspellDicts.en_GB-ize
         hunspellDicts.fr-any
+        nixpkgs-fmt
       ];
       home.sessionVariables = {
         EDITOR = "et";
@@ -99,6 +100,7 @@ in
           markdown-mode
           mpdel
           multiple-cursors
+          nixpkgs-fmt
           no-littering
           ob-async
           ob-go
