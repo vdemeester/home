@@ -176,16 +176,13 @@
                (:habit t))))
            (org-agenda-list))
           ("n" "Personal agenda"
-           ((agenda "")
-            (tags-todo "-@work-goals-incubate-inbox+TODO=\"NEXT\""
+           ((tags-todo "-@work-goals-incubate-inbox+TODO=\"NEXT\""
                        ((org-agenda-overriding-header "Next items")))
             (tags-todo "-@work-goals-incubate-inbox"
                        ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
                         (org-agenda-overriding-header "Home"))))
            ((org-super-agenda-groups
              '((:name "Important" :priority "A")
-               (:name "Done" :log closed)
-               (:name "Scheduled" :time-grid t)
                (:name "Home" :tag "@home")
                (:name "Writing" :tag "@writing")
                (:habit t))))
