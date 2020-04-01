@@ -137,7 +137,7 @@ in
           "Mod4+Shift+111" = "focus output up";
           "Mod4+Shift+114" = "focus output right";
           # Custom keybinding
-          "Mod4+Shift+32" = "exec ${lockCmd}";
+          "Mod4+Shift+32" = "exec ${cfg.lockCmd}";
           "Mod4+Shift+39" = "exec ~/.screenlayout/home-work.sh && systemctl --user start random-background.service";
           "Mod4+24" = "border toggle";
         };
