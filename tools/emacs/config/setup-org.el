@@ -162,9 +162,9 @@
         org-agenda-custom-commands
         `(("w" "Work agenda"
            ((agenda "")
-            (tags-todo "@work-goals+TODO=\"NEXT\""
+            (tags-todo "@work-@home-goals+TODO=\"NEXT\""
                        ((org-agenda-overriding-header "Next items")))
-            (tags-todo "@work-goals"
+            (tags-todo "@work-@home-goals"
                        ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
                         (org-agenda-overriding-header "Work"))))
            ((org-super-agenda-groups
