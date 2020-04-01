@@ -1,19 +1,17 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-
 let
   cfg = config.profiles.i3;
   powermenu = pkgs.writeScript "powermenu.sh" ''
-#!${pkgs.stdenv.shell}
-MENU="$(${pkgs.rofi}/bin/rofi -sep "|" -dmenu -i -p 'System' -location 3 -xoffset -10 -yoffset 32 -width 20 -hide-scrollbar -line-padding 4 -padding 20 -lines 5 <<< "Lock|Suspend|Hibernate|Reboot|Shutdown")"
-case "$MENU" in
-  *Lock) loginctl lock-session;;
-  *Suspend) systemctl suspend;;
-  *Hibernate) systemctl hibernate;;
-  *Reboot) systemctl reboot ;;
-  *Shutdown) systemctl -i poweroff
-esac
+    #!${pkgs.stdenv.shell}
+    MENU="$(${pkgs.rofi}/bin/rofi -sep "|" -dmenu -i -p 'System' -location 3 -xoffset -10 -yoffset 32 -width 20 -hide-scrollbar -line-padding 4 -padding 20 -lines 5 <<< "Suspend|Hibernate|Reboot|Shutdown")"
+    case "$MENU" in
+      *Suspend) systemctl suspend;;
+      *Hibernate) systemctl hibernate;;
+      *Reboot) systemctl reboot ;;
+      *Shutdown) systemctl -i poweroff
+    esac
   '';
 in
 {
@@ -78,7 +76,7 @@ in
       package = pkgs.i3-gaps;
       enable = true;
       config = {
-        fonts = ["Fira Code 10"];
+        fonts = [ "Fira Code 10" ];
         focus = {
           followMouse = false;
         };
@@ -139,18 +137,20 @@ in
           "Mod4+Shift+111" = "focus output up";
           "Mod4+Shift+114" = "focus output right";
           # Custom keybinding
-          "Mod4+Shift+32" = "exec loginctl lock-session";
+          "Mod4+Shift+32" = "exec ${lockCmd}";
           "Mod4+Shift+39" = "exec ~/.screenlayout/home-work.sh && systemctl --user start random-background.service";
           "Mod4+24" = "border toggle";
         };
         modes = {};
-        bars = [{
-          mode = "hide";
-          position = "bottom";
-          trayOutput = "primary";
-          statusCommand = "${pkgs.i3status}/bin/i3status";
-          fonts = [ "Fira Code 12" ];
-        }];
+        bars = [
+          {
+            mode = "hide";
+            position = "bottom";
+            trayOutput = "primary";
+            statusCommand = "${pkgs.i3status}/bin/i3status";
+            fonts = [ "Fira Code 12" ];
+          }
+        ];
       };
       extraConfig = ''
           set $mod Mod4
@@ -280,84 +280,84 @@ in
       '';
     };
     xdg.configFile."i3status/config".text = ''
-# i3status configuration file.
-# see "man i3status" for documentation.
+      # i3status configuration file.
+      # see "man i3status" for documentation.
 
-# It is important that this file is edited as UTF-8.
-# The following line should contain a sharp s:
-# ß
-# If the above line is not correctly displayed, fix your editor first!
+      # It is important that this file is edited as UTF-8.
+      # The following line should contain a sharp s:
+      # ß
+      # If the above line is not correctly displayed, fix your editor first!
 
-general {
-	colors = true
-	interval = 2
-}
+      general {
+        colors = true
+        interval = 2
+      }
 
-#order += "disk /"
-#order += "run_watch 🐳"
-order += "path_exists 🔑"
-#order += "wireless _first_"
-#order += "ethernet _first_"
-#order += "volume master"
-order += "battery 0"
-order += "cpu_temperature 0"
-order += "load"
-order += "tztime local"
+      #order += "disk /"
+      #order += "run_watch 🐳"
+      order += "path_exists 🔑"
+      #order += "wireless _first_"
+      #order += "ethernet _first_"
+      #order += "volume master"
+      order += "battery 0"
+      order += "cpu_temperature 0"
+      order += "load"
+      order += "tztime local"
 
-wireless _first_ {
-	format_up = "W: (%quality at %essid) %ip"
-	format_down = "W: down"
-}
+      wireless _first_ {
+        format_up = "W: (%quality at %essid) %ip"
+        format_down = "W: down"
+      }
 
-ethernet _first_ {
-	# if you use %speed, i3status requires root privileges
-	format_up = "E: %ip (%speed)"
-	format_down = "E: down"
-}
+      ethernet _first_ {
+        # if you use %speed, i3status requires root privileges
+        format_up = "E: %ip (%speed)"
+        format_down = "E: down"
+      }
 
-battery 0 {
-	format = "%status %percentage %remaining"
-	format_down = "No battery"
-	status_chr = "⚇"
-	status_bat = "⚡"
-	status_full = "☻"
-  status_unk = "?"
-	path = "/sys/class/power_supply/BAT%d/uevent"
-	low_threshold = 10
-}
+      battery 0 {
+        format = "%status %percentage %remaining"
+        format_down = "No battery"
+        status_chr = "⚇"
+        status_bat = "⚡"
+        status_full = "☻"
+        status_unk = "?"
+        path = "/sys/class/power_supply/BAT%d/uevent"
+        low_threshold = 10
+      }
 
-run_watch 🐳 {
-	pidfile = "/run/docker.pid"
-}
+      run_watch 🐳 {
+        pidfile = "/run/docker.pid"
+      }
 
-path_exists 🔑 {
-	path = "/proc/sys/net/ipv4/conf/wg0"
-}
+      path_exists 🔑 {
+        path = "/proc/sys/net/ipv4/conf/wg0"
+      }
 
-tztime local {
-	format = "%Y-%m-%d %H:%M:%S"
-}
+      tztime local {
+        format = "%Y-%m-%d %H:%M:%S"
+      }
 
-load {
-	format = "%1min"
-}
+      load {
+        format = "%1min"
+      }
 
-cpu_temperature 0 {
-	format = "T: %degrees °C"
-	path = "/sys/class/hwmon/hwmon0/temp1_input"
-}
+      cpu_temperature 0 {
+        format = "T: %degrees °C"
+        path = "/sys/class/hwmon/hwmon0/temp1_input"
+      }
 
-disk "/" {
-	format = "%avail"
-}
+      disk "/" {
+        format = "%avail"
+      }
 
-volume master {
-	format = "♪: %volume"
-	format_muted = "♪: muted (%volume)"
-	device = "default"
-	mixer = "Master"
-	mixer_idx = 0
-}
+      volume master {
+        format = "♪: %volume"
+        format_muted = "♪: muted (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+      }
     '';
-    };
+  };
 }
