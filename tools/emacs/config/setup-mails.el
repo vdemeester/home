@@ -18,6 +18,8 @@
 
 ;; GnusCfg
 (use-package gnus
+  :defer t
+  :commands (gnus)
   :config
   (setq nnml-directory "~/desktop/gnus/mail")
   (setq nnfolder-directory "~/desktop/gnus/archive")
@@ -85,6 +87,7 @@
 
 ;; GnusAgent
 (use-package gnus-agent
+  :defer t
   :after gnus
   :config
   (setq gnus-agent-article-alist-save-format 1)  ; uncompressed
@@ -102,6 +105,7 @@
 
 ;; GnusAsync
 (use-package gnus-async
+  :defer t
   :after gnus
   :config
   (setq gnus-asynchronous t)
@@ -110,6 +114,7 @@
 
 ;; GnusGroup
 (use-package gnus-group
+  :defer t
   :after gnus
   :config
   (setq gnus-level-subscribed 6)
@@ -129,6 +134,7 @@
 
 ;; GnusTopic
 (use-package gnus-topic
+  :defer t
   :after (gnus gnus-group)
   :config
   (setq gnus-topic-display-empty-topics t)
@@ -138,6 +144,7 @@
 
 ;; GnusSummary
 (use-package gnus-sum
+  :defer t
   :after (gnus gnus-group)
   :demand
   :config
@@ -184,6 +191,7 @@
 
 ;; GnusDired
 (use-package gnus-dired
+  :defer t
   :after (gnus dired)
   :hook (dired-mode . gnus-dired-mode))
 ;; -GnusDired
