@@ -421,6 +421,8 @@ Switch projects and subprojects from STARTED back to TODO"
 
 ;; OrgAttach
 (use-package org-attach
+  :defer t
+  :after org
   :config
   (setq org-link-abbrev-alist '(("att" . org-attach-expand-link))))
 ;; -OrgAttach
@@ -428,40 +430,102 @@ Switch projects and subprojects from STARTED back to TODO"
 ;; OrgLinks
 ;; my personal
 (use-package ol-github
+  :defer t
   :after (org))
 (use-package ol-gitlab
+  :defer t
   :after (org))
 (use-package ol-ripgrep
+  :defer t
   :after (org))
 (use-package ol-grep
+  :defer t
   :after (org))
 
 ;; built-in org-mode
 (use-package ol-eshell
+  :defer t
   :after (org))
 (use-package ol-git-link
+  :defer t
   :after (org))
 (use-package ol-gnus
+  :defer t
   :after (org))
 (use-package ol-irc
+  :defer t
   :after (org))
 (use-package ol-info
+  :defer t
   :after (org))
 (use-package ol-man
+  :defer t
   :after (org))
 (use-package ol-notmuch
+  :defer t
   :after (org))
 ;; -OrgLinks
 
 ;; OrgBabel
 (use-package ob-async
+  :defer t
   :after (org))
-
+(use-package ob-css
+  :defer t
+  :after org
+  :commands (org-babel-execute:css))
+(use-package ob-dot
+  :defer t
+  :after org
+  :commands (org-babel-execute:dot))
+(use-package ob-ditaa
+  :defer t
+  :after org
+  :commands (org-babel-execute:ditaa)
+  :config
+  (setq org-ditaa-jar-path "/home/vincent/.nix-profile/lib/ditaa.jar"))
+(use-package ob-emacs-lisp
+  :defer t
+  :after org
+  :commands (org-babel-execute:emacs-lisp org-babel-execute:elisp))
 (use-package ob-go
-  :after (org))
-
+  :defer t
+  :after org
+  :commands (org-babel-execute:go))
+(use-package ob-gnuplot
+  :defer t
+  :after org
+  :commands (org-babel-execute:gnuplot))
 (use-package ob-http
-  :after (org))
+  :defer t
+  :after org
+  :commands (org-babel-execute:http))
+(use-package ob-js
+  :defer t
+  :after org
+  :commands (org-babel-execute:js))
+(use-package ob-latex
+  :defer t
+  :after org
+  :commands (org-babel-execute:latex))
+(use-package ob-python
+  :defer t
+  :after org
+  :commands (org-babel-execute:python))
+(use-package ob-shell
+  :defer t
+  :after org
+  :commands (org-babel-execute:ash
+             org-babel-execute:bash
+             org-babel-execute:csh
+             org-babel-execute:dash
+             org-babel-execute:fish
+             org-babel-execute:ksh
+             org-babel-execute:mksh
+             org-babel-execute:posh
+             org-babel-execute:sh
+             org-babel-execute:shell
+             org-babel-execute:zsh))
 ;; -OrgBabel
 
 ;; OrgExportConstants
@@ -498,24 +562,6 @@ Switch projects and subprojects from STARTED back to TODO"
   ;; Tasks (-> inbox)
 
   ;; Journal
-
-  (setq org-ditaa-jar-path "/home/vincent/.nix-profile/lib/ditaa.jar") ;; FIXME(vdemeester) remove /home/vincent
-  ;; org-babel
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((css . t)
-     (dot . t)
-     (ditaa . t)
-     (emacs-lisp . t)
-     (go . t)
-     (gnuplot . t)
-     (http . t)
-     (js . t)
-     ;;(ledger . t)
-     (latex . t)
-     (python . t)
-     (shell . t)
-     ))
 
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" ":END:"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" "#\\+END_SRC"))
