@@ -11,6 +11,7 @@
 (defconst org-default-incubate-file (concat org-directory "projects/incubate.org") "Ideas simmering on back burner.")
 (defconst org-default-notes-file (concat org-directory "personal/notes.org") "Non-actionable, personal notes.")
 (defconst org-default-journal-file (concat org-directory "personal/journal.org") "Journaling stuff.")
+(defconst org-default-meeting-notes-file (concat org-directory "projects/meetings.org") "Meeting notes stuff.")
 ;; -OrgConstants
 
 ;; OrgRegisters
@@ -77,6 +78,10 @@
         org-archive-location (concat org-default-completed-dir "/%s::datetree/")
         org-use-property-inheritance t
         org-default-priority 67
+        org-priority-faces '((?A . "#ff2600")
+                             (?B . "#ff5900")
+                             (?C . "#ff9200")
+                             (?D . "#747474"))
         org-global-properties (quote (("EFFORT_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
                                       ("STYLE_ALL" . "habit")))
         org-blank-before-new-entry '((heading . t)
@@ -162,8 +167,10 @@
         org-agenda-custom-commands
         `(("w" "Work agenda"
            ((agenda "")
+            (tags-todo "@work-@home-goals+TODO=\"STARTED\""
+                       ((org-agenda-overriding-header "Ongoing")))
             (tags-todo "@work-@home-goals+TODO=\"NEXT\""
-                       ((org-agenda-overriding-header "Next items")))
+                       ((org-agenda-overriding-header "Next")))
             (tags-todo "@work-@home-goals"
                        ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
                         (org-agenda-overriding-header "Work"))))
@@ -176,8 +183,10 @@
                (:habit t))))
            (org-agenda-list))
           ("n" "Personal agenda"
-           ((tags-todo "-@work-goals-incubate-inbox+TODO=\"NEXT\""
-                       ((org-agenda-overriding-header "Next items")))
+           ((tags-todo "-@work-goals-incubate-inbox+TODO=\"STARTED\""
+                       ((org-agenda-overriding-header "Ongoing")))
+            (tags-todo "-@work-goals-incubate-inbox+TODO=\"NEXT\""
+                       ((org-agenda-overriding-header "Next")))
             (tags-todo "-@work-goals-incubate-inbox"
                        ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
                         (org-agenda-overriding-header "Home"))))
@@ -293,17 +302,16 @@
                  :clock-in t :clock-resume t :unnarrowed t))
   ;; -OrgCaptureWeekly
 
+  ;; OrgCaptureMeetingNote
+  (add-to-list 'org-capture-templates
+               `("m" "Meeting notes" entry
+                 (file+datetree ,org-default-meeting-notes-file)
+                 (file ,(concat user-emacs-directory "/etc/orgmode/meeting-notes.org"))))
+  ;; -OrgCaptureMeetingNote
+
   ;; OrgCaptureBlog
   (add-to-list 'org-capture-templates
-               `("b" "Blog post"))
-  (add-to-list 'org-capture-templates
-               `("bp" "Blog post" entry
-                 (file+headline "~/src/github.com/vdemeester/blog/content-org/posts.org" "Blog Ideas")
-                 "* %?\n:PROPERTIES:\n:END:\n"))
-  (add-to-list 'org-capture-templates
-               `("bl" "Blog link post" entry
-                 (file+olp "~/src/github.com/vdemeester/blog/content-org/links.org" "Link")
-                 "* %a\n%?\n%i"))
+               `("w" "Writing"))
   ;; -OrgCaptureBlog
 
   ;; OrgCaptureEnd
