@@ -37,7 +37,7 @@
                          :follow #'org-ripgrep-follow-link
                          :face '(:foreground "DarkGreen" :underline t))
 
-(defun org-ripgrep-follow-link (issue)
+(defun org-ripgrep-follow-link (regexp)
   "Run `ripgrep-regexp` with REXEP and FOLDER as argument,
 like this : [[pt:REGEXP:FOLDER]]"
   (setq expressions (split-string regexp ":"))
