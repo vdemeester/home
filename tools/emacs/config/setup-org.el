@@ -592,9 +592,11 @@ With prefix argument, also display headlines without a TODO keyword."
   )
 
 (use-package smartparens-org
-  :after org-mode)
+  :after org)
 
-(use-package org-capture-pop-frame)
+(use-package org-capture-pop-frame
+  :after org
+  :commands (org-capture))
 
 (use-package darkroom
   :custom
