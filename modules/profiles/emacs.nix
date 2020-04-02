@@ -74,6 +74,7 @@ in
             direnv
             dockerfile-mode
             easy-kill
+            esup
             exec-path-from-shell
             expand-region
             eyebrowse
