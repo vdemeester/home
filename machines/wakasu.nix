@@ -11,7 +11,7 @@
     enable = true;
     mpd = {
       enable = true;
-      musicDir = "/mnt/synodine/volumeUSB2/usbshare/music";
+      musicDir = "/net/sakhalin.home/export/gaia/music";
     };
     shairport-sync = true;
   };
