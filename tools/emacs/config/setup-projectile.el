@@ -1,8 +1,33 @@
 ;;; -*- lexical-binding: t; -*-
-(use-package projectile                 ; Project management
-  :init (projectile-mode)
+(use-package projectile
+  :defer t
+  :commands
+  (projectile-ack
+   projectile-ag
+   projectile-compile-project
+   projectile-dired
+   projectile-find-dir
+   projectile-find-file
+   projectile-find-tag
+   projectile-test-project
+   projectile-grep
+   projectile-invalidate-cache
+   projectile-kill-buffers
+   projectile-multi-occur
+   projectile-project-p
+   projectile-project-root
+   projectile-recentf
+   projectile-regenerate-tags
+   projectile-replace
+   projectile-replace-regexp
+   projectile-run-async-shell-command-in-root
+   projectile-run-shell-command-in-root
+   projectile-switch-project
+   projectile-switch-to-buffer
+   projectile-vc)
   :bind-keymap ("C-c p" . projectile-command-map)
   :config
+  (projectile-mode)
   ;; Remove dead projects when Emacs is idle
   (run-with-idle-timer 10 nil #'projectile-cleanup-known-projects)
   (setq
@@ -21,9 +46,10 @@
     (projectile-compile-project nil)))
 
 (use-package counsel-projectile         ; Ivy integration for Projectile
+  :commands (counsel-projectile-switch-project)
   :bind (:map projectile-command-map
               ("p" . counsel-projectile-switch-project)
               ("r" . counsel-projectile-rg))
-  :init (counsel-projectile-mode))
+  :config (counsel-projectile-mode))
 
 (provide 'setup-projectile)
