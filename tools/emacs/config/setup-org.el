@@ -27,6 +27,12 @@
 (use-package org
   :ensure org-plus-contrib ;; load from the package instead of internal
   :mode (("\\.org$" . org-mode))
+  :commands (org-agenda org-capture)
+  :bind (("C-c o l" . org-store-link)
+         ("C-c o r r" . org-refile)
+         ("C-c o a" . org-agenda)
+         ("<f12>" . org-agenda)
+         ("C-c o c" . org-capture))
   :config
   (setq org-agenda-files `(,org-default-projects-dir
                            ,user-emacs-directory
@@ -92,8 +98,6 @@
         org-startup-with-inline-images nil
         org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
   (setcar (nthcdr 4 org-emphasis-regexp-components) 10)
-  :bind (("C-c o l" . org-store-link)
-         ("C-c o r r" . org-refile))
   :hook (org-mode . vde/org-mode-hook))
 ;; -OrgMain
 
@@ -153,6 +157,9 @@
 (use-package org-agenda
   :after (org)
   :commands (org-agenda)
+  :bind (("C-c o a" . org-agenda)
+         ("<f12>" . org-agenda)
+         ("C-c o r a" . org-agenda-refile))
   :config
   (use-package org-super-agenda
     :config (org-super-agenda-mode))
@@ -195,11 +202,7 @@
                (:name "Home" :tag "@home")
                (:name "Writing" :tag "@writing")
                (:habit t))))
-           (org-agenda-list))))
-  :commands (org-agenda)
-  :bind (("C-c o a" . org-agenda)
-         ("<f12>" . org-agenda)
-         ("C-c o r a" . org-agenda-refile)))
+           (org-agenda-list)))))
 ;; -OrgAgenda
 
 ;; OrgGcal
