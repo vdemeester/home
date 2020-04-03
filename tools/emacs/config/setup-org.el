@@ -587,8 +587,7 @@ With prefix argument, also display headlines without a TODO keyword."
   :after org)
 
 (use-package org-capture-pop-frame
-  :after org
-  :commands (org-capture))
+  :after org)
 
 (use-package darkroom
   :custom
