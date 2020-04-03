@@ -7,6 +7,11 @@ ifndef EMACS
 EMACS = "emacs"
 endif
 
+DOTEMACS =
+ifndef DOTEMACS
+DOTEMACS = "~/.config/emacs"
+endif
+
 PUBLISH_FOLDER =
 ifndef PUBLISH_FOLDER
 PUBLISH_FOLDER=~/desktop/sites/beta.sbr.pm
@@ -38,7 +43,7 @@ clean-www:
 
 build-www: ${HOME}/src/www/publish-common.el publish.el
 	@echo "Publishing... with current Emacs configurations."
-	${EMACS} --batch --directory ${HOME}/.emacs.d/lisp/ \
+	${EMACS} --batch --directory $(DOTEMACS)/lisp/ \
 		--load ${HOME}/src/www/publish-common.el --load publish.el \
 		--funcall org-publish-all
 
