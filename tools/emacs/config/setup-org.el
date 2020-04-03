@@ -433,39 +433,28 @@ Switch projects and subprojects from STARTED back to TODO"
 ;; OrgLinks
 ;; my personal
 (use-package ol-github
-  :defer t
   :after (org))
 (use-package ol-gitlab
-  :defer t
   :after (org))
 (use-package ol-ripgrep
-  :defer t
   :after (org))
 (use-package ol-grep
-  :defer t
   :after (org))
 
 ;; built-in org-mode
 (use-package ol-eshell
-  :defer t
   :after (org))
 (use-package ol-git-link
-  :defer t
   :after (org))
 (use-package ol-gnus
-  :defer t
   :after (org))
 (use-package ol-irc
-  :defer t
   :after (org))
 (use-package ol-info
-  :defer t
   :after (org))
 (use-package ol-man
-  :defer t
   :after (org))
 (use-package ol-notmuch
-  :defer t
   :after (org))
 ;; -OrgLinks
 
