@@ -52,21 +52,6 @@ Otherwise, use `counsel-projectile-switch-project'."
 
 (use-package counsel
   :after ivy
-  :custom
-  (counsel-yank-pop-preselect-last t)
-  (counsel-yank-pop-separator "\n—————————\n")
-  (counsel-describe-function-function 'helpful-function)
-  (counsel-describe-variable-function 'helpful-variable)
-  (counsel-find-file-at-point t)
-  (counsel-find-file-ignore-regexp
-   ;; Note that `ivy-extra-directories' should also not contain the "../" and
-   ;; "./" elements if you don't want to see those in the `counsel-find-file'
-   ;; completion list.
-   (concat
-    ;; file names beginning with # or .
-    "\\(?:\\`[#.]\\)"
-    ;; file names ending with # or ~
-    "\\|\\(?:[#~]\\'\\)"))
   :bind (("M-i" . counsel-semantic-or-imenu)
          ("C-x C-r" . counsel-recentf)
          ("C-M-y" . counsel-yank-pop)
@@ -89,6 +74,20 @@ Otherwise, use `counsel-projectile-switch-project'."
          ("C-r" . counsel-minibuffer-history)
          ("C-SPC" . ivy-restrict-to-matches))
   :config
+  (setq counsel-yank-pop-preselect-last t
+        counsel-yank-pop-separator "\n—————————\n"
+        counsel-describe-function-function 'helpful-function
+        counsel-describe-variable-function 'helpful-variable
+        counsel-find-file-at-point t
+        counsel-find-file-ignore-regexp
+        ;; Note that `ivy-extra-directories' should also not contain the "../" and
+        ;; "./" elements if you don't want to see those in the `counsel-find-file'
+        ;; completion list.
+        (concat
+         ;; file names beginning with # or .
+         "\\(?:\\`[#.]\\)"
+         ;; file names ending with # or ~
+         "\\|\\(?:[#~]\\'\\)"))
   (progn
     (ivy-set-actions
      'counsel-find-file
@@ -166,30 +165,27 @@ Otherwise, use `counsel-projectile-switch-project'."
     (progn
       (use-package ivy-rich
         :after ivy
-        :custom
-        (ivy-virtual-abbreviate 'full
-                                ivy-rich-switch-buffer-align-virtual-buffer t
-                                ivy-rich-path-style 'abbrev)
-        :config (ivy-rich-mode 1))
+        :config
+        (setq ivy-virtual-abbreviate 'full
+              ivy-rich-switch-buffer-align-virtual-buffer t
+              ivy-rich-path-style 'abbrev)
+        (ivy-rich-mode 1))
 
       (use-package prescient
-        :custom
-        (prescient-history-length 50)
-        ;; (prescient-save-file "~/.emacs.d/prescient-items")
-        (prescient-filter-method '(fuzzy initialism regexp))
         :config
+        (setq prescient-history-length 50
+              prescient-filter-method '(fuzzy initialism regexp))
         (prescient-persist-mode 1))
 
 
       (use-package ivy-prescient
         :after (prescient ivy)
-        :custom
-        (ivy-prescient-sort-commands
-         '(:not swiper ivy-switch-buffer counsel-switch-buffer))
-        (ivy-prescient-retain-classic-highlighting t)
-        (ivy-prescient-enable-filtering t)
-        (ivy-prescient-enable-sorting t)
         :config
+        (setq ivy-prescient-sort-commands
+              '(:not swiper ivy-switch-buffer counsel-switch-buffer)
+              ivy-prescient-retain-classic-highlighting t
+              ivy-prescient-enable-filtering t
+              ivy-prescient-enable-sorting t)
         (defun prot/ivy-prescient-filters (str)
           "Specify an exception for `prescient-filter-method'.
 
@@ -265,38 +261,6 @@ Ivy-powered commands, using `ivy-prescient-re-builder'."
           (when lsp--cur-workspace
             (setq projectile-project-root (lsp--workspace-root lsp--cur-workspace))))
         (add-hook 'lsp-before-open-hook #'my-set-projectile-root))
-
-      (use-package dap-mode
-        :disabled
-        :after lsp-mode
-        :bind (:map dap-mode-map
-                    ([f9] . dap-debug)
-                    ;; ([f9] . dap-continue)
-                    ;; ([S-f9] . dap-disconnect)
-                    ;; ([f10] . dap-next)
-                    ;; ([f11] . dap-step-in)
-                    ;; ([S-f11] . dap-step-out)
-                    ([C-f9] . dap-hide/show-ui))
-        :hook (dap-stopped-hook . (lambda (arg) (call-interactively #'dap-hydra)))
-        :config
-        ;; FIXME: Create nice solution instead of a hack
-        (defvar dap-hide/show-ui-hidden? t)
-        (defun dap-hide/show-ui ()
-          "Hide/show dap ui. FIXME"
-          (interactive)
-          (if dap-hide/show-ui-hidden?
-              (progn
-                (setq dap-hide/show-ui-hidden? nil)
-                (dap-ui-locals)
-                (dap-ui-repl))
-            (dolist (buf '("*dap-ui-inspect*" "*dap-ui-locals*" "*dap-ui-repl*" "*dap-ui-sessions*"))
-              (when (get-buffer buf)
-                (kill-buffer buf)))
-            (setq dap-hide/show-ui-hidden? t)))
-
-        (dap-mode)
-        (dap-ui-mode)
-        (dap-tooltip-mode))
 
       ))
 
