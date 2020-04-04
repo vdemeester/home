@@ -35,7 +35,6 @@
          ("C-c o c" . org-capture))
   :config
   (setq org-agenda-files `(,org-default-projects-dir
-                           ,user-emacs-directory
                            "~/src/home"
                            "~/src/home/docs"
                            "~/src/www/articles"
