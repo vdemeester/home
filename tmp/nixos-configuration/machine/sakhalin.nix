@@ -25,11 +25,13 @@ with import ../assets/machines.nix; {
     };
   };
   fileSystems."/export/gaia" = { device = "/mnt/gaia"; options = [ "bind" ]; };
+  fileSystems."/export/toshito" = { device = "/mnt/toshito"; options = [ "bind" ]; };
   services = {
     nfs.server = {
       enable = true;
       exports = ''
         /export/gaia                 192.168.1.0/24(rw,fsid=0,no_subtree_check) 10.100.0.0/24(rw,fsid=0,no_subtree_check)
+        /export/toshito              192.168.1.0/24(rw,fsid=0,no_subtree_check) 10.100.0.0/24(rw,fsid=0,no_subtree_check)
       '';
     };
     bind = {
@@ -78,8 +80,8 @@ with import ../assets/machines.nix; {
     /home/vincent/desktop/pictures/screenshots/ vincent@synodine.home:/volumeUSB2/usbshare/pictures/screenshots/
     /home/vincent/desktop/pictures/wallpapers/ vincent@synodine.home:/volumeUSB2/usbshare/pictures/wallpapers/
     /home/vincent/desktop/documents/ vincent@synodine.home:/volume1/documents/
-    /mnt/Toshito/photos/ vincent@synodine.home:/volumeUSB2/usbshare/pictures/photos/
-    /mnt/Toshito/music/ vincent@synodine.home:/volumeUSB2/usbshare/music/
+    /mnt/gaia/photos/ vincent@synodine.home:/volumeUSB2/usbshare/pictures/photos/
+    /mnt/gaia/music/ vincent@synodine.home:/volumeUSB2/usbshare/music/
   '';
   systemd.services.vrsync = {
     description = "vrsync - sync folders to NAS";
