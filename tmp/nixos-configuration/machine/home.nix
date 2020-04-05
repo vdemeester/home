@@ -11,7 +11,7 @@ with import ../assets/machines.nix; {
     options = [ "x-systemd.automount" "noauto" ];
   };
   # FIXME(vdemeester): I think it acts like this because there is only one export
-  fileSystems."/net/sakhalin.home/" = {
+  fileSystems."/net/sakhalin.home/export/" = {
     device = "${home.ips.sakhalin}:/";
     fsType = "nfs";
     options = [ "x-systemd.automount" "noauto" ];
