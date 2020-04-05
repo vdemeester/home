@@ -8,6 +8,7 @@ endif
 
 DOTEMACS = ~/.config/emacs
 DOTNIXPKGS = ~/.config/nixpkgs
+ETCNIXOS = /etc/nixos
 SYNCDIR = ~/sync/nixos
 PUBLISH_FOLDER = ~/desktop/sites/beta.sbr.pm
 
@@ -30,7 +31,7 @@ assets:
 	cp -Rv ~/sync/nixos/machines.nix assets/
 
 .PHONY: build
-build: assets
+build: assets setup
 	@if test $(USER) = root;\
 	then\
 		nixos-rebuild build;\
@@ -38,8 +39,15 @@ build: assets
 		home-manager build;\
 	fi
 
+.PHONY: dry-build
+dry-build: assets setup
+	@if test $(USER) = root;\
+	then\
+		nixos-rebuild dry-build;\
+	fi
+
 .PHONY: switch
-switch: assets
+switch: assets setup
 	@if test $(USER) = root;\
 	then\
 		nixos-rebuild build;\
@@ -79,8 +87,7 @@ doctor:
 	@readlink $(DOTNIXPKGS) || $(error $(DOTNIXPKGS) is not correctly linked, you may need to run setup)
 
 .PHONY: setup
-setup: $(DOTEMACS) $(DOTNIXPKGS) $(SYNCDIR)
-	@echo $(USER)
+setup: $(DOTEMACS) $(DOTNIXPKGS) $(ETCNIXOS) $(SYNCDIR)
 
 $(DOTEMACS):
 	@echo "Link $(DOTEMACS) to $(CURDIR)/tools/emacs"
@@ -89,6 +96,13 @@ $(DOTEMACS):
 $(DOTNIXPKGS):
 	@echo "Link $(DOTNIXPKGS) to $(CURDIR)"
 	@ln -s $(CURDIR) $(DOTNIXPKGS)
+
+$(ETCNIXOS):
+	@if test $(USER) = root;\
+	then\
+		echo "Link $(ETCNIXOS) $(CURDIR)";\
+		ln -s $(CURDIR) $(ETCNIXOS);\
+	fi
 
 $(SYNCDIR):
 	$(error $(SYNCDIR) is not present, you need to configure syncthing before running this command)

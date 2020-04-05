@@ -1,6 +1,6 @@
 *~
 result
-home.nix
+hostname
 *.retry
 assets/machines.nix
 docs/sitemap.org

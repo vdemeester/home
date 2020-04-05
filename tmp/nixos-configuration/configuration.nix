@@ -3,7 +3,6 @@
 # configuration.
 
 { config, pkgs, ... }:
-
 let
   hostName = "${builtins.readFile ./hostname}";
 in
@@ -16,8 +15,6 @@ rec {
     # Machine specific configuration files
     (./machine + "/${hostName}.nix")
   ];
-  
+
   networking.hostName = "${hostName}";
 }
-
-
