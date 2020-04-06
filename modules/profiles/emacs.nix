@@ -96,8 +96,6 @@ in
             iedit
             ivy
             ivy-hydra
-            ivy-prescient
-            ivy-rich
             json-mode
             markdown-mode
             mpdel
@@ -121,7 +119,6 @@ in
             pandoc-mode
             pinentry
             # popup
-            prescient
             projectile
             projectile-ripgrep
             pdf-tools
@@ -144,8 +141,6 @@ in
             yasnippet
             yaml-mode
             anzu
-            company-lsp
-            company-prescient
             darkroom
             eshell-prompt-extras
             esh-autosuggest
@@ -155,8 +150,6 @@ in
             go-mode
             hide-mode-line
             ivy-posframe
-            lsp-mode
-            lsp-ui
             magit
             magit-popup
             pretty-hydra
