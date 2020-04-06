@@ -58,12 +58,12 @@ switch: assets setup
 # Cleaning
 .PHONY: clean
 clean:
-	unlink result
+	-unlink result
 
 .PHONY: clean-www
 clean-www:
-	@rm -rvf *.elc
-	@rm -rv ~/.org-timestamps/*
+	-rm -rvf *.elc
+	-rm -rv ~/.org-timestamps/*
 
 # Documentatino build and publishing
 .PHONY: build-www
