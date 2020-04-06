@@ -7,6 +7,7 @@ EMACS = "emacs"
 endif
 
 DOTEMACS = ~/.config/emacs
+DOTGNUS = ~/.config/gnus
 DOTNIXPKGS = ~/.config/nixpkgs
 ETCNIXOS = /etc/nixos
 SYNCDIR = ~/sync/nixos
@@ -87,11 +88,15 @@ doctor:
 	@readlink $(DOTNIXPKGS) || $(error $(DOTNIXPKGS) is not correctly linked, you may need to run setup)
 
 .PHONY: setup
-setup: $(DOTEMACS) $(DOTNIXPKGS) $(ETCNIXOS) $(SYNCDIR)
+setup: $(DOTEMACS) $(DOTGNUS) $(DOTNIXPKGS) $(ETCNIXOS) $(SYNCDIR)
 
 $(DOTEMACS):
 	@echo "Link $(DOTEMACS) to $(CURDIR)/tools/emacs"
 	@ln -s $(CURDIR)/tools/emacs $(DOTEMACS)
+
+$(DOTGNUS):
+	@echo "Link $(DOTGNUs) to $(CURDIR)/tools/gnus"
+	@ln -s $(CURDIR)/tools/gnus $(DOTGNUS)
 
 $(DOTNIXPKGS):
 	@echo "Link $(DOTNIXPKGS) to $(CURDIR)"
