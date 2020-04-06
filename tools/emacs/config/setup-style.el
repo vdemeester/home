@@ -81,15 +81,6 @@
   :config
   (load-theme 'shortbrain-light))
 
-(use-package solaire-mode
-  :config
-  (setq solaire-mode-remap-modeline nil)
-  (add-hook 'after-change-major-mode-hook #'turn-on-solaire-mode)
-  (add-hook 'after-revert-hook #'turn-on-solaire-mode)
-  (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
-  (add-hook 'ediff-prepare-buffer-hook #'solaire-mode)
-  (advice-add #'persp-load-state-from-file :after #'solaire-mode-restore-persp-mode-buffers))
-
 ;; Show buffer position percentage starting from top
 (setq mode-line-percent-position '(-3 "%o"))
 (defvar mu-eyebrowse-mode-line

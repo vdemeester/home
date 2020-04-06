@@ -62,7 +62,6 @@ in
             counsel
             counsel-projectile
             crux
-            #dap-mode
             dash
             define-word
             delight
@@ -113,12 +112,10 @@ in
             org-ref
             org-super-agenda
             org-web-tools
-            # ox-epub
             ox-hugo
             ox-pandoc
             pandoc-mode
             pinentry
-            # popup
             projectile
             projectile-ripgrep
             pdf-tools
@@ -128,8 +125,6 @@ in
             region-bindings-mode
             ripgrep
             rg
-            #smart-jump
-            solaire-mode
             try
             visual-fill-column
             visual-regexp
