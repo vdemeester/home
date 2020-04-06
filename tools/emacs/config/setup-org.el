@@ -1,4 +1,7 @@
 ;;; setup-org.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Configuration of orgmode.
+;;; Code:
 
 ;; OrgConstants
 (defconst org-directory "~/desktop/org/" "org-mode directory, where most of the org-mode file lives")
