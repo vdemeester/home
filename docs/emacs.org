@@ -500,9 +500,84 @@ default font.
 
 #+INCLUDE: "../tools/emacs/config/setup-style.el" src emacs-lisp :range-begin "TypeFaceConfiguration" :range-end "-TypeFaceConfiguration" :lines "7-47"
 
+** Typeface suitability test
+:PROPERTIES:
+:CUSTOM_ID: h:293b5c57-a3d4-4d53-ab7d-dd05a264748d
+:END:
+
+ Here is a simple test I have come up with to make an initial assessment of the overall
+ quality of the font: can you discern the character at a quick glance? If yes, your choice
+ of typeface is good prima facie, else search for something else.
+
+
+()[]{}<>«»‹›
+6bB8&0ODdo
+1tiIlL|
+!ij
+5$Ss
+7Zz
+gqp
+nmMN
+uvvwWuuw
+x×X
+.,·°;:¡!¿?
+:;
+`'
+‘’
+''"
+'
+"
+“”
+—-~≈=_.…
+
+Sample character set
+Check for monospacing and Greek glyphs
+
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+1234567890#%^*
+ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ
+αβγδεζηθικλμνξοπρστυφχψω
+
+שלום, السّلام عليكم
+
+ሠላም
+
 * TODO Selection candidates and search methods
 :PROPERTIES:
 :CUSTOM_ID: h:4323a022-5419-48f7-acf9-7af94e43eddf
+:END:
+
+** TODO Completion framework and extras
+:PROPERTIES:
+:CUSTOM_ID: h:f352f694-f22c-4e19-b1ff-fdd8405ef8c0
+:END:
+
+One of the optimal way of using Emacs is through searching and narrowing selection
+candidates. Spend less time worrying about where things are on the screen and more on how
+fast you can bring them into focus. This is, of course, a matter of realigning priorities,
+as we still wish to control every aspect of the interface.
+
+Since the day I started using Emacs, I used multiple completion framework, from the
+/built-in/ =ido-mode=, to =ivy= (and =counsel=) passing through =helm= at some point. I
+never experimented with any sort of customisations to the generic minibuffer
+experience. Nor did I ever bother with the oldest built-in tool of the sort (icomplete)
+that is designed to complement the minibuffer's internal mechanisms for matching
+items, until I've watched [[https://protesilaos.com/codelog/2020-02-26-emacs-icomplete/][Protesilaos video on it]].
+
+It turns out that, despite appearances to the contrary, the defaults are very powerful,
+opening up a range of possibilities to those eager to learn and experiment (a common theme
+in Emacs).
+
+In the following package declarations I am defining several functions that enhance the
+experience of icomplete. These are part of a learning process to (i) explore the internals
+of Emacs and study how various problems are solved with elisp, and (ii) determine how far
+one can go, in terms of efficient functionality, without deviating from the norms inherent
+to the tools that are shipped with Emacs.
+
+*** TODO Minibuffer essentials and Icomplete (built-in completion)
+:PROPERTIES:
+:CUSTOM_ID: h:5fb80d63-6c5b-4d2d-9755-ffe48c851b73
 :END:
 
 * TODO Directory, buffer and window management
