@@ -1,39 +1,50 @@
-;;; -*- lexical-binding: t; -*-
+;;; setup-style.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Setup of the style, from font faces to themes
+;;; Code:
+
+;; TypeFaceConfiguration
 ;;; ¯\_(ツ)_/¯
-;;; - Iosevka (https://github.com/be5invis/Iosevka)
-;;; - Fira Sans (https://github.com/mozilla/Fira/)
-(defconst font-height 130)
-;; Middle/Near East: שלום, السّلام عليكم
-(when (member "Noto Sans Arabic" (font-family-list))
-  (set-fontset-font t 'arabic "Noto Sans Arabic"))
-(when (member "Noto Sans Hebrew" (font-family-list))
-  (set-fontset-font t 'arabic "Noto Sans Hebrew"))
+(defconst font-height 130
+  "Default font-height to use.")
 
-;; Africa: ሠላም
-(when (member "Noto Sans Ethiopic" (font-family-list))
-  (set-fontset-font t 'ethiopic "Noto Sans Ethiopic"))
+(use-package emacs
+  :bind ("C-c f r" . mu-reset-fonts)
+  :config
+  ;; Middle/Near East: שלום, السّلام عليكم
+  (when (member "Noto Sans Arabic" (font-family-list))
+    (set-fontset-font t 'arabic "Noto Sans Arabic"))
+  (when (member "Noto Sans Hebrew" (font-family-list))
+    (set-fontset-font t 'arabic "Noto Sans Hebrew"))
+  ;; Africa: ሠላም
+  (when (member "Noto Sans Ethiopic" (font-family-list))
+    (set-fontset-font t 'ethiopic "Noto Sans Ethiopic"))
 
-(set-face-attribute 'default nil
-                    :family "Ubuntu Mono"
-                    :height font-height)
-(set-face-attribute 'variable-pitch nil
-                    :family "Ubuntu Sans"
-                    :height font-height
-                    :weight 'regular)
+  ;; Default font is Ubuntu Mono (and Ubuntu Sans for variable-pitch)
+  ;; If Ubuntu Mono or Ubuntu Sans are not available, use the default Emacs face
+  (when (member "Ubuntu Mono" (font-family-list))
+    (set-face-attribute 'default nil
+                        :family "Ubuntu Mono"
+                        :height font-height))
+  (when (member "Ubuntu Sans" (font-family-list))
+    (set-face-attribute 'variable-pitch nil
+                        :family "Ubuntu Sans"
+                        :height font-height
+                        :weight 'regular))
 
-;;; Utilities and key bindings
-(defun mu-reset-fonts ()
-  "Reset fonts to my preferences."
-  (interactive)
-  (set-face-attribute 'default nil
-                      :family "Ubuntu Mono"
-                      :height font-height)
-  (set-face-attribute 'variable-pitch nil
-                      :family "Ubuntu Sans"
-                      :height font-height
-                      :weight 'regular))
-
-(bind-key "C-c f r" #'mu-reset-fonts)
+  (defun mu-reset-fonts ()
+    "Reset fonts to my preferences."
+    (interactive)
+    (when when (member "Ubuntu Mono" (font-family-list))
+          (set-face-attribute 'default nil
+                              :family "Ubuntu Mono"
+                              :height font-height))
+    (when when (member "Ubuntu Sans" (font-family-list))
+          (set-face-attribute 'variable-pitch nil
+                              :family "Ubuntu Sans"
+                              :height font-height
+                              :weight 'regular))))
+;; -TypeFaceConfiguration
 
 ;;; Interface
 (use-package frame                      ; Frames
