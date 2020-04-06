@@ -101,4 +101,7 @@ confines of word boundaries (e.g. multiple words)."
   :bind (("C-c s r" . vr/query-replace)
          ("C-c s R" . vr/replace)))
 
+(use-package rg
+  :hook (after-init . rg-enable-default-binding))
+
 (provide 'setup-search)
