@@ -50,15 +50,6 @@
          ("t" . vc-annotate-toggle-annotation-visibility)))
 ;; -UseVcAnnotate
 
-;; UseLogEdit
-(use-package log-edit
-  :config
-  (setq log-edit-confirm 'changed)
-  (setq log-edit-keep-buffer nil)
-  (setq log-edit-require-final-newline t)
-  (setq log-edit-setup-add-author nil))
-;; -UseLogEdit
-
 ;; UseEdiff
 (use-package ediff
   :commands (ediff ediff-files ediff-merge ediff3 ediff-files3 ediff-merge3)
