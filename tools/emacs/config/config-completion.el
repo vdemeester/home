@@ -4,6 +4,7 @@
 ;;; Code
 ;; UseMinibuffer
 (use-package minibuffer
+  :unless noninteractive
   :config
   (setq completion-cycle-threshold 3)
   (setq completion-flex-nospace nil)
@@ -96,6 +97,7 @@ instead."
 ;; UseIComplete
 (use-package icomplete
   :demand
+  :unless noninteractive
   :after minibuffer                     ; Read that section as well
   :config
   (setq icomplete-delay-completions-threshold 0)
@@ -201,6 +203,7 @@ Otherwise, use `projectile-switch-to-project'."
 
 ;; UseCompany
 (use-package company
+  :unless noninteractive
   :hook ((prog-mode . company-mode))
   :commands (global-company-mode company-mode company-indent-or-complete-common)
   :bind (("M-/" . hippie-expand)
@@ -236,6 +239,7 @@ Otherwise, use `projectile-switch-to-project'."
 ;; Same for clang, cmake or xcode, elisp
 
 (use-package company-emoji
+  :unless noninteractive
   :hook ((markdown-mode . my-company-emoji))
   :config
   (defun my-company-emoji ()
