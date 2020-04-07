@@ -74,16 +74,27 @@
   :bind (("C-x +" . balance-windows-area)
          ("<f7>" . window-toggle-side-windows)))
 ;; -UseDisplayBuffer
+
+;; UseSaveHist
+(use-package savehist
+  :unless noninteractive
+  :config
+  (setq-default history-length 10000
+                savehist-save-minibuffer-history t
+                savehist-autosave-interval 180
+                savehist-additional-variables '(extended-command-history
+                                                search-ring
+                                                regexp-search-ring
+                                                comint-input-ring
+                                                compile-history
+                                                last-kbd-macro
+                                                shell-command-history))
+  (savehist-mode 1))
+;; -UseSaveHist
+
 (when nil
   (progn
     ;; Show the minibuffer depth (when larger than 1)
-    (use-package savehist                   ; Save minibuffer history
-      :init (savehist-mode t)
-      :config
-      (setq-default history-length 1000
-                    savehist-save-minibuffer-history t
-                    savehist-autosave-interval 180)
-      (savehist-mode 1))
 
 
 
