@@ -157,6 +157,7 @@ in
             org-super-agenda
             org-tree-slide
             shr-tag-pre-highlight
+            ssh-config-mode
             smartparens
             symbol-overlay
             undo-tree
