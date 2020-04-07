@@ -45,14 +45,19 @@
                 undo-tree-enable-undo-in-region t))
 ;; -UseUndoTree
 
+;; UseWhitespace
 (use-package whitespace
   :hook ((prog-mode . whitespace-mode))
   :config
   (setq-default whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark)))
+;; -UseWhitespace
 
+;; UseExpandRegion
 (use-package expand-region
+  :commands (er/expand-region er/contract-region)
   :bind (("C-=" . er/expand-region)
          ("C--". er/contract-region)))
+;; -UseExpandRegiston
 
 (use-package iedit
   :disabled
@@ -70,12 +75,16 @@
     ("C-n" iedit-next-occurrence "next")
     ("C-g" iedit-quit "toggle" :color blue)))
 
+;; UseVisualRegexp
 (use-package visual-regexp
+  :commands (vr/replace vr/query-replace vr/mc-mark)
   :bind (("C-c r"   . vr/replace)
          ("C-c %"   . vr/query-replace)
          ("C-c m" . vr/mc-mark)))
+;; -UseVisualRegexp
 
 (use-package yasnippet
+  :disabled
   :after (company prog-mode)
   :defer 5
   :bind (("C-c y d" . yas-load-directory)
@@ -98,8 +107,10 @@
   :init
   (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1))))
 
+;; UseHideShow
 (use-package hs-minor-mode
   :hook ((prog-mode . hs-minor-mode)))
+;; -UseHideShow
 
 (use-package easy-kill
   :config
