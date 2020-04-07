@@ -1,6 +1,31 @@
 ;;; -*- lexical-binding: t; -*-
 (setq-default enable-remote-dir-locals t)
 
+;; UseSmartParens
+(use-package smartparens
+  :commands (smartparens-mode smartparens-global-mode show-smartparens-global-mode
+                              sp-split-sexp sp-newline sp-up-sexp)
+  :hook ((prog-mode . turn-on-smartparens-mode)
+         (markdown-mode . turn-on-smartparens-mode)
+         (org-mode . turn-on-smartparens-mode)
+         (prog-mode . turn-on-show-smartparens-mode)
+         (markdown-mode . turn-on-show-smartparens-mode)
+         (org-mode . turn-on-show-smartparens-mode))
+  :config
+  (require 'smartparens-config)
+
+  (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+  (sp-local-pair 'web-mode "{%" "%}")
+  (sp-with-modes '(org-mode)
+    (sp-local-pair "=" "="))
+  (sp-with-modes 'emacs-lisp-mode
+    ;; disable ', it's the quote character!
+    (sp-local-pair "'" nil :actions nil)
+    ;; also only use the pseudo-quote inside strings where it
+    ;; serves as hyperlink.
+    (sp-local-pair "`" "'" :when '(sp-in-string-p sp-in-comment-p))))
+;; -UseSmartParens
+
 (use-package aggressive-indent          ; Automatically indent code
   :bind ("C-c e i" . aggressive-indent-mode)
   :hook ((lisp-mode       . aggressive-indent-mode)
@@ -21,28 +46,6 @@
   :hook ((prog-mode . whitespace-mode))
   :config
   (setq-default whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark)))
-
-(use-package smartparens
-  :defer 1
-  :disabled
-  :init
-  (progn
-    (use-package smartparens-config)
-    (show-smartparens-global-mode 1))
-  :config
-  (progn
-    (require 'smartparens-config)
-    (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
-    (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
-
-    (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
-    (sp-local-pair 'web-mode "{%" "%}")
-    (sp-with-modes 'emacs-lisp-mode
-      ;; disable ', it's the quote character!
-      (sp-local-pair "'" nil :actions nil)
-      ;; also only use the pseudo-quote inside strings where it
-      ;; serves as hyperlink.
-      (sp-local-pair "`" "'" :when '(sp-in-string-p sp-in-comment-p)))))
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)
@@ -156,20 +159,6 @@ Else toggle the comment status of the line at point."
   :after flyspell
   :bind (:map flyspell-mode-map
               ([remap flyspell-correct-word-before-point] . flyspell-correct-previous-word-generic)))
-
-(use-package electric
-  :config
-  (setq-default electric-pair-inhibit-predicate 'electric-pair-default-inhibit
-                electric-pair-pairs '((8216 . 8217)
-                                      (8220 . 8221)
-                                      (171 . 187))
-                electric-pair-skip-self 'electric-pair-default-skip-self
-                electric-quote-context-sensitive t
-                electric-quote-paragraph t
-                electric-quote-string nil)
-  (electric-indent-mode 1)
-  (electric-pair-mode 1)
-  (electric-quote-mode -1))
 
 (use-package emacs
   :init
