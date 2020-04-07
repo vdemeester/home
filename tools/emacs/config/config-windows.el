@@ -44,16 +44,20 @@
         (other-window 1)
         (switch-to-buffer (other-buffer))))))
 
-(bind-key "C-c w t" #'vde/window-split-toggle)
+;;(bind-key "C-c w t" #'vde/window-split-toggle)
 
-(use-package eyebrowse                  ; Easy workspaces creation and switching
-  :disabled
-  :init (eyebrowse-mode t)
+(use-package eyebrowse
+  :commands (eyebrowse-switch-to-window-config)
+  :bind (("C-c w s" . eyebrowse-switch-to-window-config)
+         ("C-c w k" . eyebrowse-close-window-config)
+         ("C-c w w" . eyebrowse-last-window-config)
+         ("C-c w n" . eyebrowse-next-window-config)
+         ("C-c w p" . eyebrowse-prev-window-config))
   :config
-  (setq
-   eyebrowse-mode-line-separator " "
-   eyebrowse-mode-line-style 'always
-   eyebrowse-new-workspace t
-   eyebrowse-wrap-around t))
+  (setq-default eyebrowse-mode-line-separator " "
+                eyebrowse-mode-line-style 'always
+                eyebrowse-new-workspace t
+                eyebrowse-wrap-around t)
+  (eyebrowse-mode 1))
 
 (provide 'setup-windows)

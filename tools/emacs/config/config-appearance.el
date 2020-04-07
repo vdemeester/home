@@ -98,7 +98,7 @@
 
   (setq-default mode-line-format
                 '("%e"
-                  my-eyebrowse-mode-line
+                  mu-eyebrowse-mode-line
                   mode-line-front-space
                   mode-line-client
                   mode-line-modified

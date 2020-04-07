@@ -15,28 +15,6 @@
 
     ;; Show buffer position percentage starting from top
 
-
-    (setq-default mode-line-format
-                  '("%e"
-                    mu-eyebrowse-mode-line
-                    mode-line-front-space
-                    mode-line-mule-info
-                    mode-line-client
-                    mode-line-modified
-                    mode-line-remote
-                    mode-line-frame-identification
-                    mode-line-buffer-identification " " mode-line-position
-                    (vc-mode vc-mode)
-                    (multiple-cursors-mode mc/mode-line)
-                    " " mode-line-modes
-                    mode-line-end-spaces))
-
-    (defmacro rename-modeline (package-name mode new-name)
-      "Rename PACKAGE-NAME with MODE into NEW-NAME in the mode line."
-      `(eval-after-load ,package-name
-         '(defadvice ,mode (after rename-modeline activate)
-            (setq mode-name ,new-name))))
-
     (defun generic-term-init ()
       (visual-line-mode -1)
       (setq-local global-hl-line-mode nil)
