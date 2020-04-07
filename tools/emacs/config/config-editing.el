@@ -229,6 +229,7 @@ instead.  This command can then be followed by the standard
          ("C-S-y" . prot/yank-replace-line-or-region)))
 
 (use-package crux
+  :disabled
   :commands (crux-transpose-windows
              crux-duplicate-current-line-or-region
              crux-rename-file-and-buffer
@@ -240,11 +241,11 @@ instead.  This command can then be followed by the standard
          ("<M-return>" . crux-open-with)))
 
 (use-package goto-last-change
+  :disabled
   :commands goto-last-change
   :bind ("C-z" . goto-last-change))
 
 (use-package pdf-tools
-  :pin manual
   :mode  ("\\.pdf\\'" . pdf-view-mode)
   :config
   (setq-default pdf-view-display-size 'fit-page)
