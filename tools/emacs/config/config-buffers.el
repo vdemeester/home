@@ -92,68 +92,59 @@
   (savehist-mode 1))
 ;; -UseSaveHist
 
-(when nil
-  (progn
-    ;; Show the minibuffer depth (when larger than 1)
+;; UseUniquify
+(use-package uniquify
+  :config
+  (setq-default uniquify-buffer-name-style 'post-forward
+                uniquify-separator ":"
+                uniquify-ignore-buffers-re "^\\*"
+                uniquify-after-kill-buffer-p t))
+;; -UseUniquify
 
+;; UseIBuffer
+(use-package ibuffer
+  :commands (ibuffer)
+  :bind (("C-x C-b" . ibuffer)
+         ([remap list-buffers] . ibuffer))
+  :config
+  (setq-default ibuffer-expert t
+                ibuffer-filter-group-name-face 'font-lock-doc-face
+                ibuffer-default-sorting-mode 'filename/process
+                ibuffer-use-header-line t
+                ibuffer-show-empty-filter-groups nil)
+  ;; Use human readable Size column instead of original one
+  (define-ibuffer-column size-h
+    (:name "Size" :inline t)
+    (cond
+     ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
+     ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
+     (t (format "%8d" (buffer-size)))))
 
+  (setq ibuffer-formats
+        '((mark modified read-only " "
+                (name 18 18 :left :elide)
+                " "
+                (size-h 9 -1 :right)
+                " "
+                (mode 16 16 :left :elide)
+                " "
+                filename-and-process)
+          (mark modified read-only " "
+                (name 18 18 :left :elide)
+                " "
+                (size 9 -1 :right)
+                " "
+                (mode 16 16 :left :elide)
+                " "
+                (vc-status 16 16 :left)
+                " "
+                filename-and-process))))
 
+(use-package ibuffer-vc
+  :hook (ibuffer . (lambda ()
+                     (ibuffer-vc-set-filter-groups-by-vc-root)
+                     (unless (eq ibuffer-sorting-mode 'filename/process)
+                       (ibuffer-do-sort-by-filename/process)))))
+;; -UseIBuffer
 
-    (use-package uniquify
-      :config
-      (setq-default uniquify-buffer-name-style 'post-forward
-                    uniquify-separator ":"
-                    uniquify-ignore-buffers-re "^\\*"
-                    uniquify-after-kill-buffer-p t))
-
-    (use-package ibuf-ext                   ; Extensions for Ibuffer
-      :config
-      ;; Do not show empty groups
-      (setq-default ibuffer-show-empty-filter-groups nil))
-
-    (use-package ibuffer                    ; Buffer management
-      :bind (("C-x C-b" . ibuffer)
-             ([remap list-buffers] . ibuffer))
-      :config
-      (setq-default ibuffer-expert t
-                    ibuffer-filter-group-name-face 'font-lock-doc-face
-                    ibuffer-default-sorting-mode 'filename/process
-                    ibuffer-use-header-line t)
-      ;; Use human readable Size column instead of original one
-      (define-ibuffer-column size-h
-        (:name "Size" :inline t)
-        (cond
-         ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
-         ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
-         (t (format "%8d" (buffer-size)))))
-
-      (setq ibuffer-formats
-            '((mark modified read-only " "
-                    (name 18 18 :left :elide)
-                    " "
-                    (size-h 9 -1 :right)
-                    " "
-                    (mode 16 16 :left :elide)
-                    " "
-                    filename-and-process)
-              (mark modified read-only " "
-                    (name 18 18 :left :elide)
-                    " "
-                    (size 9 -1 :right)
-                    " "
-                    (mode 16 16 :left :elide)
-                    " "
-                    (vc-status 16 16 :left)
-                    " "
-                    filename-and-process))))
-
-    (use-package ibuffer-vc                 ; Group buffers by VC project and status
-      :defer 2
-      :init (add-hook 'ibuffer-hook
-                      (lambda ()
-                        (ibuffer-vc-set-filter-groups-by-vc-root)
-                        (unless (eq ibuffer-sorting-mode 'filename/process)
-                          (ibuffer-do-sort-by-filename/process)))))
-
-    ))
 (provide 'setup-buffers)
