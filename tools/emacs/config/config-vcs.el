@@ -131,17 +131,28 @@
                   overlong-summary-line)))
 ;; -UseGitCommit
 
-(use-package gitconfig-mode             ; Git configuration mode
-  :disabled
-  :defer 2)
+;; UseGitConfig
+(use-package gitconfig-mode
+  :commands (gitconfig-mode)
+  :mode (("/\\.gitconfig\\'"  . gitconfig-mode)
+         ("/\\.git/config\\'" . gitconfig-mode)
+         ("/git/config\\'"    . gitconfig-mode)
+         ("/\\.gitmodules\\'" . gitconfig-mode)))
+;; -UseGitConfig
 
-(use-package gitignore-mode             ; .gitignore mode
-  :disabled
-  :defer 2)
+;; UseGitIgnore
+(use-package gitignore-mode
+  :commands (gitignore-mode)
+  :mode (("/\\.gitignore\\'"        . gitignore-mode)
+         ("/\\.git/info/exclude\\'" . gitignore-mode)
+         ("/git/ignore\\'"          . gitignore-mode)))
+;; -UseGitIgnore
 
-(use-package gitattributes-mode         ; Git attributes mode
-  :disabled
-  :defer 2)
+;; UseGitAttributes
+(use-package gitattributes-mode
+  :commands (gitattributes-mode)
+  :mode (("/\\.gitattributes" . gitattributes-mode)))
+;; -UseGitAttributes
 
 (use-package dired-git-info
   :disabled
