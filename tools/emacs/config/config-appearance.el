@@ -33,15 +33,15 @@
   (defun mu-reset-fonts ()
     "Reset fonts to my preferences."
     (interactive)
-    (when when (member "Ubuntu Mono" (font-family-list))
-          (set-face-attribute 'default nil
-                              :family "Ubuntu Mono"
-                              :height font-height))
-    (when when (member "Ubuntu Sans" (font-family-list))
-          (set-face-attribute 'variable-pitch nil
-                              :family "Ubuntu Sans"
-                              :height font-height
-                              :weight 'regular))))
+    (when (member "Ubuntu Mono" (font-family-list))
+      (set-face-attribute 'default nil
+                          :family "Ubuntu Mono"
+                          :height font-height))
+    (when (member "Ubuntu Sans" (font-family-list))
+      (set-face-attribute 'variable-pitch nil
+                          :family "Ubuntu Sans"
+                          :height font-height
+                          :weight 'regular))))
 ;; -TypeFaceConfiguration
 
 (use-package emacs
