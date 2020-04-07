@@ -56,6 +56,7 @@
     (progn
       (setenv "NOTMUCH_CONFIG" (expand-file-name ".config/notmuch/notmuchrc" (getenv "HOME")))
       (use-package notmuch
+        :disabled
         :defer t
         :bind ("<f6>" . notmuch)
         :config
