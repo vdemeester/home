@@ -1,5 +1,79 @@
 ;;; -*- lexical-binding: t; -*-
 
+;; UseDisplayBuffers
+(use-package emacs
+  :unless noninteractive
+  :config
+  ;; Configure `display-buffer' behaviour for some special buffers
+  (setq-default display-buffer-alist
+                '(;; bottom side window
+                  ("\\*e?shell.*"
+                   (display-buffer-in-side-window)
+                   (window-height . 0.25)
+                   (side . bottom)
+                   (slot . -1))
+                  ("\\*v?term.*"
+                   (display-buffer-in-side-window)
+                   (window-height . 0.25)
+                   (side . bottom)
+                   (slot . -1))
+                  ("\\*\\(Backtrace\\|Warnings\\|Compile-Log\\|[Hh]elp\\|Messages\\)\\*"
+                   (display-buffer-in-side-window)
+                   (window-height . 0.25)
+                   (side . bottom)
+                   (slot . 0))
+                  ("\\*\\(helpful\\).*"
+                   (display-buffer-in-side-window)
+                   (window-height . 0.25)
+                   (side . bottom)
+                   (slot . 0))
+                  ("\\*\\(compilation\\|go test\\).*"
+                   (display-buffer-in-side-window)
+                   (window-height . 0.25)
+                   (side . bottom)
+                   (slot . 0))
+                  ("\\*\\(ielm\\).*"
+                   (display-buffer-in-side-window)
+                   (window-height . 0.25)
+                   (side . bottom)
+                   (slot . 1))
+                  ;; right side window
+                  ("\\*wclock*"
+                   (display-buffer-in-side-window)
+                   (window-width . 0.20)
+                   (side . right)
+                   (slot . -1))
+                  ("\\*undo-tree*"
+                   (display-buffer-in-side-window)
+                   (window-width . 0.20)
+                   (side . right)
+                   (slot . -1))
+                  ("\\*\\(Flycheck\\|Package-Lint\\).*"
+                   (display-buffer-in-side-window)
+                   (window-width . 0.20)
+                   (side . right)
+                   (slot . 0)
+                   (window-parameters . ((no-other-window . t)
+                                         (mode-line-format . (" "
+                                                              mode-line-buffer-identification)))))
+                  ("\\*Faces\\*"
+                   (display-buffer-in-side-window)
+                   (window-width . 0.20)
+                   (side . right)
+                   (slot . 1)
+                   (window-parameters . ((no-other-window . t)
+                                         (mode-line-format . (" "
+                                                              mode-line-buffer-identification)))))
+                  ("\\*Custom.*"
+                   (display-buffer-in-side-window)
+                   (window-width . 0.20)
+                   (side . right)
+                   (slot . 2))))
+  (setq window-sides-vertical nil)
+  (setq window-combination-resize t) ; Size new windows proportionally
+  :bind (("C-x +" . balance-windows-area)
+         ("<f7>" . window-toggle-side-windows)))
+;; -UseDisplayBuffer
 (when nil
   (progn
     ;; Show the minibuffer depth (when larger than 1)
@@ -11,77 +85,8 @@
                     savehist-autosave-interval 180)
       (savehist-mode 1))
 
-    (use-package emacs
-      :init
-      ;; Configure `display-buffer' behaviour for some special buffers
-      (setq display-buffer-alist
-            '(;; bottom side window
-              ("\\*e?shell.*"
-               (display-buffer-in-side-window)
-               (window-height . 0.25)
-               (side . bottom)
-               (slot . -1))
-              ("\\*v?term.*"
-               (display-buffer-in-side-window)
-               (window-height . 0.25)
-               (side . bottom)
-               (slot . -1))
-              ("\\*\\(Backtrace\\|Warnings\\|Compile-Log\\|[Hh]elp\\|Messages\\)\\*"
-               (display-buffer-in-side-window)
-               (window-height . 0.25)
-               (side . bottom)
-               (slot . 0))
-              ("\\*\\(helpful\\).*"
-               (display-buffer-in-side-window)
-               (window-height . 0.25)
-               (side . bottom)
-               (slot . 0))
-              ("\\*\\(compilation\\|go test\\).*"
-               (display-buffer-in-side-window)
-               (window-height . 0.25)
-               (side . bottom)
-               (slot . 0))
-              ("\\*\\(ielm\\).*"
-               (display-buffer-in-side-window)
-               (window-height . 0.25)
-               (side . bottom)
-               (slot . 1))
-              ;; right side window
-              ("\\*wclock*"
-               (display-buffer-in-side-window)
-               (window-width . 0.20)
-               (side . right)
-               (slot . -1))
-              ("\\*undo-tree*"
-               (display-buffer-in-side-window)
-               (window-width . 0.20)
-               (side . right)
-               (slot . -1))
-              ("\\*\\(Flycheck\\|Package-Lint\\).*"
-               (display-buffer-in-side-window)
-               (window-width . 0.20)
-               (side . right)
-               (slot . 0)
-               (window-parameters . ((no-other-window . t)
-                                     (mode-line-format . (" "
-                                                          mode-line-buffer-identification)))))
-              ("\\*Faces\\*"
-               (display-buffer-in-side-window)
-               (window-width . 0.20)
-               (side . right)
-               (slot . 1)
-               (window-parameters . ((no-other-window . t)
-                                     (mode-line-format . (" "
-                                                          mode-line-buffer-identification)))))
-              ("\\*Custom.*"
-               (display-buffer-in-side-window)
-               (window-width . 0.20)
-               (side . right)
-               (slot . 2))))
-      (setq window-sides-vertical nil)
-      (setq window-combination-resize t) ; Size new windows proportionally
-      :bind (("C-x +" . balance-windows-area)
-             ("<f7>" . window-toggle-side-windows)))
+
+
 
     (use-package uniquify
       :config
