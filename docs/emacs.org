@@ -1210,7 +1210,7 @@ Run =C-h m= inside of a Dired buffer that has =gnus-dired-mode= enabled and sear
 :CUSTOM_ID: h:b67b377e-0fbc-4237-857c-641cdf2de1cf
 :END:
 
-#+INCLUDE: "../tools/emacs/config/config-mails.el" src emacs-lisp :range-begin "Notmuch" :range-end "-Notmuch" :lines "55-72"
+#+INCLUDE: "../tools/emacs/config/config-mails.el" src emacs-lisp :range-begin "Notmuch" :range-end "-Notmuch" :lines "55-73"
 
 * User interface and interactions
 :PROPERTIES:
