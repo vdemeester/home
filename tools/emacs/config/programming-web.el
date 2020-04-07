@@ -32,3 +32,8 @@
         (sp-local-tag "%" "<% "  " %>")
         (sp-local-tag "=" "<%= " " %>")
         (sp-local-tag "#" "<%# " " %>")))))
+
+(use-package company-css
+  :after (company css-mode)
+  :config
+  (push 'company-css company-backends))

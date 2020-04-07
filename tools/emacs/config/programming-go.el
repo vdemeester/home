@@ -4,10 +4,6 @@
   :mode "\\.go$"
   :interpreter "go"
   :config
-  (use-package company-go
-    :config
-    (setq company-go-show-annotation t)
-    (push 'company-go company-backends))
                                         ;(setq gofmt-command "goimports")
   (if (not (executable-find "goimports"))
       (warn "go-mode: couldn't find goimports; no code formatting/fixed imports on save")
@@ -15,6 +11,12 @@
   (if (not (string-match "go" compile-command))   ; set compile command default
       (set (make-local-variable 'compile-command)
            "go build -v && go test -v && go vet")))
+
+(use-package company-go
+  :after (go-mode company)
+  :config
+  (setq company-go-show-annotation t)
+  (push 'company-go company-backends))
 
 (use-package flycheck-golangci-lint
   :disabled
