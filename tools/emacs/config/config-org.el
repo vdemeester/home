@@ -112,6 +112,9 @@
     (auto-revert-mode)
     (auto-fill-mode)
     (org-indent-mode)
+    (set (make-local-variable 'company-backends)
+         '(company-emoji company-capf company-files company-dabbrev))
+    (company-mode 1)
     (add-hook 'after-save-hook #'save-and-update-includes nil 'make-it-local)))
 ;; -OrgHook
 

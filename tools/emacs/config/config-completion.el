@@ -236,8 +236,7 @@ Otherwise, use `projectile-switch-to-project'."
 ;; Same for clang, cmake or xcode, elisp
 
 (use-package company-emoji
-  :hook ((org-mode . my-company-emoji)
-         (markdown-mode . my-company-emoji))
+  :hook ((markdown-mode . my-company-emoji))
   :config
   (defun my-company-emoji ()
     (set (make-local-variable 'company-backends) '(company-emoji))
@@ -245,7 +244,7 @@ Otherwise, use `projectile-switch-to-project'."
 
 ;; -UseCompany
 
-
+;; Deprecated for now
 (use-package ivy
   :disabled
   :bind (("C-x B" . ivy-switch-buffer)

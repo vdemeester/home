@@ -40,6 +40,7 @@
 ;; MessageCfg
 (use-package message
   :commands (message-mode message-cite-original-without-signature)
+  :hook ((message-mode . my-message-hook))
   :config
   (setq mail-user-agent 'message-user-agent
         message-wide-reply-confirm-recipients t
@@ -48,7 +49,12 @@
         message-kill-buffer-on-exit t
         message-generate-headers-first t)
   (add-to-list 'mm-body-charset-encoding-alist '(utf-8 . base64))
-  (add-hook 'message-mode-hook 'turn-on-auto-fill))
+  (defun my-message-hook ()
+    "Message mode hook."
+    (turn-on-auto-fill)
+    (set (make-local-variable 'company-backends)
+         '(company-emoji company-capf company-files company-dabbrev))
+    (company-mode 1)))
 ;; -MessageCfg
 
 ;; Notmuch
