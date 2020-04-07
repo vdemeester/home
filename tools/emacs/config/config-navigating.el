@@ -7,7 +7,6 @@
          ("C-c n w" . avy-goto-word-1)))
 
 (use-package winner
-  :disabled
   :unless noninteractive
   :defer 5
   :config
