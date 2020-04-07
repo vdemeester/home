@@ -44,14 +44,45 @@
 ;; UseVCAnnotate
 (use-package vc-annotate
   :config
-  (setq vc-annotate-display-mode 'scale) ; scale to oldest
-  :bind (("C-x v a" . vc-annotate)       ; `vc-update-change-log' is not in git
+  (setq vc-annotate-display-mode 'scale)
+  :bind (("C-x v a" . vc-annotate)
          :map vc-annotate-mode-map
          ("t" . vc-annotate-toggle-annotation-visibility)))
 ;; -UseVcAnnotate
 
-(use-package magit                      ; The best Git client out there
-  :disabled
+;; UseLogEdit
+(use-package log-edit
+  :config
+  (setq log-edit-confirm 'changed)
+  (setq log-edit-keep-buffer nil)
+  (setq log-edit-require-final-newline t)
+  (setq log-edit-setup-add-author nil))
+;; -UseLogEdit
+
+;; UseEdiff
+(use-package ediff
+  :commands (ediff ediff-files ediff-merge ediff3 ediff-files3 ediff-merge3)
+  :config
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (setq ediff-diff-options "-w")
+  (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
+;; -UseEdiff
+
+;; UseDiff
+(use-package diff
+  :config
+  (setq diff-default-read-only t)
+  (setq diff-advance-after-apply-hunk t)
+  (setq diff-update-on-the-fly t)
+  (setq diff-refine 'font-lock)
+  (setq diff-font-lock-prettify nil)
+  (setq diff-font-lock-syntax nil))
+;; -UseDiff
+
+;; UseMagit
+(use-package magit
+  :commands (magit-status magit-clone magit-pull magit-blame magit-log-buffer-file magit-log)
   :bind (("C-c v c" . magit-clone)
          ("C-c v C" . magit-checkout)
          ("C-c v d" . magit-dispatch-popup)
@@ -63,8 +94,7 @@
   (setq-default magit-save-repository-buffers 'dontask
                 magit-refs-show-commit-count 'all
                 magit-branch-prefer-remote-upstream '("master")
-                magit-display-buffer-function #'magit-display-buffer-traditional
-                magit-completing-read-function 'ivy-completing-read)
+                magit-display-buffer-function #'magit-display-buffer-traditional)
 
   (magit-define-popup-option 'magit-rebase-popup
     ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
@@ -87,29 +117,28 @@
   (add-hook 'after-save-hook #'magit-after-save-refresh-status)
 
   ;; Free C-c C-w for Eyebrowse
-  (unbind-key "C-c C-w" git-commit-mode-map)  )
-(put 'magit-diff-edit-hunk-commit 'disabled nil)
+  (unbind-key "C-c C-w" git-commit-mode-map))
+;; -UseMagit
 
-(use-package git-commit                 ; Git commit message mode
-  :disabled
+;; UseGitCommit
+(use-package git-commit
+  :after magit
   :defer 2
-  :init (global-git-commit-mode)
   :config
-  (setq git-commit-summary-max-length 50)
-  (setq git-commit-known-pseudo-headers
-        '("Signed-off-by"
-          "Acked-by"
-          "Modified-by"
-          "Cc"
-          "Suggested-by"
-          "Reported-by"
-          "Tested-by"
-          "Reviewed-by"))
-  (setq git-commit-style-convention-checks
-        '(non-empty-second-line
-          overlong-summary-line))
-  (remove-hook 'git-commit-finish-query-functions
-               #'git-commit-check-style-conventions))
+  (setq-default git-commit-summary-max-length 50
+                git-commit-known-pseudo-headers
+                '("Signed-off-by"
+                  "Acked-by"
+                  "Modified-by"
+                  "Cc"
+                  "Suggested-by"
+                  "Reported-by"
+                  "Tested-by"
+                  "Reviewed-by")
+                git-commit-style-convention-checks
+                '(non-empty-second-line
+                  overlong-summary-line)))
+;; -UseGitCommit
 
 (use-package gitconfig-mode             ; Git configuration mode
   :disabled
@@ -129,13 +158,6 @@
               (")" . dired-git-info-mode))
   :defer 2)
 
-(use-package ediff
-  :disabled
-  :config
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-  (setq ediff-split-window-function 'split-window-horizontally)
-  (setq ediff-diff-options "-w")
-  (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
 
 (defun git-blame-line ()
   "Runs `git blame` on the current line and
