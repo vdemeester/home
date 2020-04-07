@@ -1,11 +1,54 @@
-;;; -*- lexical-binding: t; -*-
-(use-package vc-hooks                   ; Simple version control
-  :disabled
-  :bind (("S-<f5>" . vc-revert)
-         ("C-c v r" . vc-refresh-state))
+;;; config-vcs.el --- -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Version control configuration
+;;; Code:
+
+;; UseVC
+(use-package vc
   :config
-  ;; Always follow symlinks to files in VCS repos
-  (setq-default vc-follow-symlinks t))
+  (setq-default vc-find-revision-no-save t
+                vc-follow-symlinks t)
+  :bind (("C-x v f" . vc-log-incoming)  ;  git fetch
+         ("C-x v F" . vc-update)
+         ("C-x v d" . vc-diff)))
+;; -UseVC
+
+;; UseVCDir
+(use-package vc-dir
+  :config
+  (defun vde/vc-dir-project ()
+    "Unconditionally display `vc-diff' for the current project."
+    (interactive)
+    (vc-dir (vc-root-dir)))
+
+  (defun vde/vc-dir-jump ()
+    "Jump to present directory in a `vc-dir' buffer."
+    (interactive)
+    (vc-dir default-directory))
+  :bind (("C-x v p" . vde/vc-dir-project)
+         ("C-x v j" . vde/vc-dir-jump) ; similar to `dired-jump'
+         :map vc-dir-mode-map
+         ("f" . vc-log-incoming) ; replaces `vc-dir-find-file' (use RET)
+         ("F" . vc-update)       ; symmetric with P: `vc-push'
+         ("d" . vc-diff)         ; align with D: `vc-root-diff'
+         ("k" . vc-dir-clean-files)))
+;; -UseVCDir
+
+;; UseVCGit
+(use-package vc-git
+  :config
+  (setq vc-git-diff-switches "--patch-with-stat")
+  (setq vc-git-print-log-follow t))
+;; -UseVCGit
+
+;; UseVCAnnotate
+(use-package vc-annotate
+  :config
+  (setq vc-annotate-display-mode 'scale) ; scale to oldest
+  :bind (("C-x v a" . vc-annotate)       ; `vc-update-change-log' is not in git
+         :map vc-annotate-mode-map
+         ("t" . vc-annotate-toggle-annotation-visibility)))
+;; -UseVcAnnotate
 
 (use-package magit                      ; The best Git client out there
   :disabled
@@ -117,3 +160,4 @@
     (kill-buffer commit-buf)))
 
 (provide 'setup-vcs)
+;;; setup-vcs.el ends here

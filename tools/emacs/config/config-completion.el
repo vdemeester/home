@@ -172,7 +172,7 @@ With universal argument ARG or when not in project, rely on
 Otherwise, use `projectile-switch-to-project'."
     (interactive "P")
     (if (or arg (not (projectile-project-p)))
-        (switch-to-buffer)
+        (call-interactively 'switch-to-buffer)
       (projectile-switch-to-buffer)))
 
   :bind (:map icomplete-minibuffer-map
