@@ -585,9 +585,6 @@ With prefix argument, also display headlines without a TODO keyword."
               (file-relative-name file dir))))
   )
 
-(use-package smartparens-org
-  :after org)
-
 (use-package org-capture-pop-frame
   :after org)
 

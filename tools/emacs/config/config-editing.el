@@ -10,7 +10,8 @@
          (org-mode . turn-on-smartparens-mode)
          (prog-mode . turn-on-show-smartparens-mode)
          (markdown-mode . turn-on-show-smartparens-mode)
-         (org-mode . turn-on-show-smartparens-mode))
+         (org-mode . turn-on-show-smartparens-mode)
+         (emacs-lisp-mode . turn-on-smartparens-strict-mode))
   :config
   (require 'smartparens-config)
 
@@ -26,21 +27,23 @@
     (sp-local-pair "`" "'" :when '(sp-in-string-p sp-in-comment-p))))
 ;; -UseSmartParens
 
-(use-package aggressive-indent          ; Automatically indent code
+;; UseAggressiveIndent
+(use-package aggressive-indent
   :bind ("C-c e i" . aggressive-indent-mode)
   :hook ((lisp-mode       . aggressive-indent-mode)
-         (emacs-lisp-mode . aggressive-indent-mode)
-         (clojure-mode    . aggressive-indent-mode))
+         (emacs-lisp-mode . aggressive-indent-mode))
   :config
   ;; Free C-c C-q, used in Org and in CIDER
   (unbind-key "C-c C-q" aggressive-indent-mode-map))
+;; -UseAggressiveIndent
 
-(use-package undo-tree                  ; Show buffer changes as a tree
-  :defer 1
-  :init (global-undo-tree-mode)
+;; UseUndoTree
+(use-package undo-tree
+  :hook (after-init . global-undo-tree-mode)
   :config
   (setq-default undo-tree-visualizer-timestamps t
                 undo-tree-enable-undo-in-region t))
+;; -UseUndoTree
 
 (use-package whitespace
   :hook ((prog-mode . whitespace-mode))
