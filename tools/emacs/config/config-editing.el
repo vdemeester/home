@@ -85,7 +85,6 @@
 
 (use-package yasnippet
   :disabled
-  :after (company prog-mode)
   :defer 5
   :bind (("C-c y d" . yas-load-directory)
          ("C-c y i" . yas-insert-snippet)
@@ -106,6 +105,11 @@
   (yas-global-mode 1)
   :init
   (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1))))
+
+(use-package company-yasnippet
+  :after (yasnippet company)
+  :config
+  (push 'company-yasnippet company-backends))
 
 ;; UseHideShow
 (use-package hs-minor-mode

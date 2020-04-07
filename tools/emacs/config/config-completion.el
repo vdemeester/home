@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Setup completion framework
 ;;; Code
+;; UseMinibuffer
 (use-package minibuffer
   :config
   (setq completion-cycle-threshold 3)
@@ -90,7 +91,9 @@ instead."
          ("f" . next-completion)
          ("b" . previous-completion)
          ("M-v" . vde/focus-minibuffer)))
+;; -UseMinibuffer
 
+;; UseIComplete
 (use-package icomplete
   :demand
   :after minibuffer                     ; Read that section as well
@@ -194,6 +197,54 @@ Otherwise, use `projectile-switch-to-project'."
                            (interactive)
                            (let ((current-prefix-arg t))
                              (vde/icomplete-toggle-completion-styles))))))
+;; -UseIComplete
+
+;; UseCompany
+(use-package company
+  :hook ((prog-mode . company-mode))
+  :commands (global-company-mode company-mode company-indent-or-complete-common)
+  :bind (("M-/" . hippie-expand)
+         :map company-active-map
+         ("C-d" . company-show-doc-buffer)
+         ("C-l" . company-show-location)
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)
+         ("C-t" . company-select-next)
+         ("C-s" . company-select-previous)
+         ("TAB" . company-complete))
+  :config
+  (setq-default company-idle-delay 0.2
+                company-selection-wrap-around t
+                company-minimum-prefix-length 2
+                company-require-match nil
+                company-dabbrev-ignore-case nil
+                company-dabbrev-downcase nil
+                company-show-numbers t
+                company-tooltip-align-annotations t)
+  (setq company-backends
+        '(company-capf
+          company-files
+          (company-dabbrev-code
+           company-gtags
+           company-etags)
+          company-dabbrev
+          company-keywords)))
+
+;; FIXME(vdemeester) Do this in programming-*.el
+;; Add company-css to css-mode company-backends
+;; (setq-local company-backends (append '(company-css) company-backends))
+;; Same for clang, cmake or xcode, elisp
+
+(use-package company-emoji
+  :hook ((org-mode . my-company-emoji)
+         (markdown-mode . my-company-emoji))
+  :config
+  (defun my-company-emoji ()
+    (set (make-local-variable 'company-backends) '(company-emoji))
+    (company-mode t)))
+
+;; -UseCompany
+
 
 (use-package ivy
   :disabled
@@ -263,47 +314,6 @@ Otherwise, use `projectile-switch-to-project'."
                   " %s"            ;This MUST be %s, not %S
                                         ;https://github.com/abo-abo/swiper/issues/427
                   ))))
-
-(use-package company
-  :disabled
-  :commands global-company-mode
-  :init
-  (add-hook 'after-init-hook #'global-company-mode)
-  (setq
-   company-idle-delay 0.2
-   company-selection-wrap-around t
-   company-minimum-prefix-length 2
-   company-require-match nil
-   company-dabbrev-ignore-case nil
-   company-dabbrev-downcase nil
-   company-show-numbers t
-   company-tooltip-align-annotations t)
-  :config
-  (bind-keys :map company-active-map
-             ("C-d" . company-show-doc-buffer)
-             ("C-l" . company-show-location)
-             ("C-n" . company-select-next)
-             ("C-p" . company-select-previous)
-             ("C-t" . company-select-next)
-             ("C-s" . company-select-previous)
-             ("TAB" . company-complete))
-  (setq company-backends
-        '(company-css
-          company-clang
-          company-capf
-          company-semantic
-          company-xcode
-          company-cmake
-          company-files
-          company-gtags
-          company-etags
-          company-keywords)))
-
-(use-package company-emoji
-  :disabled
-  :after company
-  :config
-  (add-to-list 'company-backends 'company-emoji))
 
 ;;; Default rg arguments
 ;; https://github.com/BurntSushi/ripgrep
