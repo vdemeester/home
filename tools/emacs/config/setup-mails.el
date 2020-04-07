@@ -20,6 +20,8 @@
 
 ;; SendmailCfg
 (use-package smtpmail
+  :defer t
+  ;;:commands (mail-mode mail-text)
   :config
   (setq message-send-mail-function 'message-send-mail-with-sendmail)
   (setq sendmail-program "msmtp")
@@ -28,7 +30,7 @@
 
 (use-package sendmail
   :defer t
-  :commands (mail-mode mail-text)
+  ;;:commands (mail-mode mail-text)
   :defines (send-mail-function)
   :config
   (setq send-mail-function 'sendmail-send-it

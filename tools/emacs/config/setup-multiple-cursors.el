@@ -1,4 +1,26 @@
+(use-package region-bindings-mode
+  :disabled
+  :config
+  ;; Do not activate `region-bindings-mode' in Special modes like `dired' and
+  ;; `ibuffer'. Single-key bindings like 'm' are useful in those modes even
+  ;; when a region is selected.
+  (setq region-bindings-mode-disabled-modes '(dired-mode ibuffer-mode))
+
+  (region-bindings-mode-enable)
+
+  (defun vde/disable-rbm-deactivate-mark ()
+    "Disable `region-bindings-mode' and deactivate mark."
+    (interactive)
+    (region-bindings-mode -1)
+    (deactivate-mark)
+    (message "Mark deactivated"))
+
+  (bind-keys
+   :map region-bindings-mode-map
+   ("<C-SPC>" . vde/disable-rbm-deactivate-mark)))
+
 (use-package multiple-cursor
+  :disabled
   :bind (:map region-bindings-mode-map
               ("a" . mc/mark-all-like-this)
               ("p" . mc/mark-previous-like-this)

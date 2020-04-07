@@ -1,5 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package dockerfile-mode            ; Edit docker's Dockerfiles
+  :disabled
   :unless *sys/full*
   :mode ("Dockerfile\\'" . dockerfile-mode))
 

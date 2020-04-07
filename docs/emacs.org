@@ -498,7 +498,7 @@ a big fan of the [[https://design.ubuntu.com/font/][=Ubuntu= fonts]], so this is
 the =Ubuntu= font are not available on the system, I am just letting Emacs start with its
 default font.
 
-#+INCLUDE: "../tools/emacs/config/setup-style.el" src emacs-lisp :range-begin "TypeFaceConfiguration" :range-end "-TypeFaceConfiguration" :lines "7-47"
+#+INCLUDE: "../tools/emacs/config/appearance.el" src emacs-lisp :range-begin "TypeFaceConfiguration" :range-end "-TypeFaceConfiguration" :lines "6-45"
 
 ** Typeface suitability test
 :PROPERTIES:
@@ -580,6 +580,11 @@ to the tools that are shipped with Emacs.
 :CUSTOM_ID: h:5fb80d63-6c5b-4d2d-9755-ffe48c851b73
 :END:
 
+ The minibuffer is the locus of extended command interaction. Whether it is about offering
+ input to a prompt, performing a search, executing a function by its name, the minibuffer
+ remains at the epicentre. The default experience is far more powerful than it seems to
+ be. It can get even better by tweaking the available customisation options and defining
+ our own extensions.
 * TODO Directory, buffer and window management
 :PROPERTIES:
 :CUSTOM_ID: h:88c7f450-bb9d-41f6-a8f9-3082a32d3179
@@ -1197,16 +1202,16 @@ Run =C-h m= inside of a Dired buffer that has =gnus-dired-mode= enabled and sear
 :CUSTOM_ID: h:8cd8c972-ba38-40c2-b30f-68a4233593d6
 :END:
 
-#+INCLUDE: "../tools/emacs/config/setup-mails.el" src emacs-lisp :range-begin "SendmailCfg" :range-end "-SendmailCfg" :lines "22-36"
+#+INCLUDE: "../tools/emacs/config/setup-mails.el" src emacs-lisp :range-begin "SendmailCfg" :range-end "-SendmailCfg" :lines "22-38"
 
-#+INCLUDE: "../tools/emacs/config/setup-mails.el" src emacs-lisp :range-begin "MessageCfg" :range-end "-MessageCfg" :lines "39-50"
+#+INCLUDE: "../tools/emacs/config/setup-mails.el" src emacs-lisp :range-begin "MessageCfg" :range-end "-MessageCfg" :lines "41-52"
 
 *** TODO ~notmuch~ configuration
 :PROPERTIES:
 :CUSTOM_ID: h:b67b377e-0fbc-4237-857c-641cdf2de1cf
 :END:
 
-#+INCLUDE: "../tools/emacs/config/setup-mails.el" src emacs-lisp :range-begin "Notmuch" :range-end "-Notmuch" :lines "53-70"
+#+INCLUDE: "../tools/emacs/config/setup-mails.el" src emacs-lisp :range-begin "Notmuch" :range-end "-Notmuch" :lines "55-72"
 
 * User interface and interactions
 :PROPERTIES:

@@ -1,4 +1,5 @@
 (use-package exec-path-from-shell       ; Set up environment variables
+  :disabled
   :if (display-graphic-p)
   :unless (or (eq system-type 'windows-nt) (eq system-type 'gnu/linux))
   :config

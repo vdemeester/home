@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package projectile
-  :defer t
+  :disabled
   :commands
   (projectile-ack
    projectile-ag
@@ -33,7 +33,6 @@
   (setq
    ;; Custom compilation buffer name function
    compilation-buffer-name-function (lambda (mode) (concat "*" (downcase mode) ": " (projectile-project-name) "*"))
-   projectile-completion-system 'ivy
    projectile-find-dir-includes-top-level t
    projectile-switch-project-action #'projectile-commander
    projectile-create-missing-test-files t
@@ -44,12 +43,5 @@
   (def-projectile-commander-method ?c
     "Run `compile' in the project"
     (projectile-compile-project nil)))
-
-(use-package counsel-projectile         ; Ivy integration for Projectile
-  :commands (counsel-projectile-switch-project)
-  :bind (:map projectile-command-map
-              ("p" . counsel-projectile-switch-project)
-              ("r" . counsel-projectile-rg))
-  :config (counsel-projectile-mode))
 
 (provide 'setup-projectile)

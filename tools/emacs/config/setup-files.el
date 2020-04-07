@@ -1,26 +1,27 @@
 ;;; -*- lexical-binding: t; -*-
-(use-package files                      ; Core commands for files
+(use-package files
+  :disabled
   :bind (("<f5>" . revert-buffer)))
 
-(use-package ripgrep
-  :defer 2)
-
-(setq view-read-only t)                 ; View read-only
+(setq-default view-read-only t)                 ; View read-only
 
 (use-package direnv
-  :custom
-  (direnv-always-show-summary t)
-  (direnv-show-paths-in-summary nil)
+  :disabled
   :config
+  (setq-default direnv-always-show-summary t
+                direnv-show-paths-in-summary nil)
   (direnv-mode))
 
-(use-package hardhat                    ; Protect user-writable files
+(use-package hardhat
+  :disabled
   :init (global-hardhat-mode))
 
-(use-package image-file                 ; Visit images as images
+(use-package image-file
+  :disabled
   :init (auto-image-file-mode))
 
-(use-package markdown-mode              ; Edit markdown files
+(use-package markdown-mode
+  :disabled
   :mode ("\\.md\\'" . markdown-mode)
   :config
   (setq markdown-fontify-code-blocks-natively t)
@@ -41,19 +42,21 @@
   (add-hook 'markdown-mode-hook #'auto-fill-mode))
 
 (use-package highlight-indentation
+  :disabled
   :config
   (set-face-background 'highlight-indentation-face "#e3e3d3")
   (set-face-background 'highlight-indentation-current-column-face "#c3b3b3"))
 
 (use-package yaml-mode
+  :disabled
   :mode "\\.ya?ml\\'"
   :hook ((yaml-mode . highlight-indentation-mode)
          (yaml-mode . highlight-indentation-current-column-mode)))
 
 (use-package toml-mode
+  :disabled
   :mode "\\.to?ml\\'")
 
-;;;###autoload
 (defun vde/delete-this-file ()
   "Delete the current file, and kill the buffer."
   (interactive)
@@ -63,7 +66,6 @@
     (delete-file (buffer-file-name))
     (kill-this-buffer)))
 
-;;;###autoload
 (defun vde/rename-this-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")

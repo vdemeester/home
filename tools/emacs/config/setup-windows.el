@@ -1,6 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-;;;###autoload
 (defun vde/window-split-toggle ()
   "Toggle between horizontal and vertical split with two windows."
   (interactive)
@@ -17,21 +16,8 @@
 
 (bind-key "C-c w t" #'vde/window-split-toggle)
 
-(defvar vde/saved-window-configuration nil)
-
-(defun vde/save-wins-then-call (func &optional args)
-  "Save current window configuration, then call FUNC optionally with ARGS."
-  (interactive)
-  (push (current-window-configuration) vde/saved-window-configuration)
-  (cond
-   ;; We have arguments for the function
-   ((bound-and-true-p args) (funcall func args))
-   ;; The function expects exactly one argument, and we want it to be nil
-   ((equal args "nil") (funcall func nil))
-   ;; The function does not expect arguments
-   (t (funcall func))))
-
 (use-package eyebrowse                  ; Easy workspaces creation and switching
+  :disabled
   :init (eyebrowse-mode t)
   :config
   (setq
@@ -41,6 +27,7 @@
    eyebrowse-wrap-around t))
 
 (use-package ace-window                 ; Better movements between windows
+  :disabled
   :custom
   (aw-keys '(?a ?u ?i ?e ?, ?c ?t ?r ?m))
   (aw-scope 'frame)
@@ -59,6 +46,7 @@
          ("C-c w s" . ace-swap-window)))
 
 (use-package windmove
+  :disabled
   :bind (("M-<left>" . windmove-left)
          ("M-<down>" . windmove-down)
          ("M-<up>" . windmove-up)

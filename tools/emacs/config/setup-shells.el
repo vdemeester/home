@@ -1,17 +1,17 @@
 ;;; -*- lexical-binding: t; -*-
-(use-package shell                 ; Specialized comint.el for running the shell
-  :custom
-                                        ;(ansi-color-for-comint-mode 'filter)
-  (explicit-shell-file-name "zsh")
-  (shell-file-name "zsh")
+(use-package shell
+  :disabled
   :bind (("<f1>"      . shell)
          (:map shell-mode-map
                ("<tab>" . completion-at-point)))
   :config
+  (setq-default explicit-shell-file-name "zsh"
+                shell-file-name "zsh")
   (unbind-key "C-c C-l" shell-mode-map)
   (bind-key "C-c C-l" #'counsel-shell-history shell-mode-map))
 
-(use-package eshell                     ; Emacs command shell
+(use-package eshell
+  :disabled
   :bind* ("C-x m t" . eshell-here)
   :config
   (defun eshell-here ()
@@ -85,7 +85,9 @@ The EShell is renamed to match that directory to make multiple windows easier."
 
   (add-hook 'eshell-mode-hook #'with-editor-export-editor))
 
-(use-package em-prompt                  ; EShell command prompts
+(use-package em-prompt
+  :disabled
+  :after eshell
   :defer 2
   :config
   (defun vde/eshell-quit-or-delete-char (arg)
@@ -101,19 +103,42 @@ The EShell is renamed to match that directory to make multiple windows easier."
               (bind-key "C-d"
                         #'vde/eshell-quit-or-delete-char eshell-mode-map))))
 
-(use-package esh-mode                   ; EShell UI customizations
-  :ensure eshell
-  :config (setq eshell-scroll-to-bottom-on-input 'all))
+(use-package esh-mode
+  :disabled
+  :after eshell
+  :bind (:map eshell-mode-map
+              ("<tab>" . vde/esh-mode-completion-at-point))
+  :config
+  (setq-default eshell-scroll-to-bottom-on-input 'all)
+  (defun vde/esh-mode-completion-at-point ()
+    "Same as `completion-at-point' except for some commands."
+    (interactive)
+    ;; unbinding pcomplete/make gives a chance to `bash-completion'
+    ;; to complete make rules. Bash-completion is indeed more
+    ;; powerfull than `pcomplete-make'.
+    (cl-letf (((symbol-function 'pcomplete/make) nil))
+      (completion-at-point))))
 
 (use-package em-smart
-  :ensure eshell)
+  :disabled
+  :after eshell)
 (use-package em-dirs
-  :ensure eshell)
+  :disabled
+  :after eshell)
 
-(use-package em-cmpl                    ; EShell TAB completion
-  :ensure eshell
+(use-package em-cmpl
+  :disabled
+  :after eshell
+  :hook (eshell-mode . eshell-cmpl-initialize)
   :config
-  (add-hook 'eshell-mode-hook #'eshell-cmpl-initialize)
+  (defun my/eshell-bash-completion ()
+    (let ((bash-completion-nospace t))
+      (while (pcomplete-here
+              (nth 2 (bash-completion-dynamic-complete-nocomint
+                      (save-excursion (eshell-bol) (point))
+                      (point)))))))
+  (when (require 'bash-completion nil t)
+    (setq eshell-default-completion-function #'my/eshell-bash-completion))
 
   (add-to-list 'eshell-command-completions-alist
                '("gunzip" "gz\\'"))
@@ -121,11 +146,13 @@ The EShell is renamed to match that directory to make multiple windows easier."
                '("tar" "\\(\\.tar|\\.tgz\\|\\.tar\\.gz\\)\\'")))
 
 (use-package em-hist                    ; EShell History management
-  :ensure eshell
+  :disabled
+  :after eshell
   :config (setq eshell-hist-ignoredups t))
 
 (use-package em-term                    ; Handle visual commands in EShell
-  :ensure eshell
+  :disabled
+  :after eshell
   :config
   (add-to-list 'eshell-visual-commands "ssh")
   (add-to-list 'eshell-visual-commands "htop")
@@ -135,7 +162,8 @@ The EShell is renamed to match that directory to make multiple windows easier."
   (add-to-list 'eshell-visual-commands "ncdu"))
 
 (use-package em-banner
-  :ensure eshell
+  :disabled
+  :after eshell
   :config
   (setq eshell-banner-message "
   Welcome to the Emacs
@@ -148,13 +176,15 @@ The EShell is renamed to match that directory to make multiple windows easier."
 
 "))
 
-(use-package fish-completion            ; Add Fish completion to EShell
+(use-package fish-completion
+  :disabled
   :defer 2
   :when (executable-find "fish")
   :config (add-hook 'eshell-mode-hook #'fish-completion-mode))
 
 (use-package eshell-prompt-extras
-  :defer 1
+  :disabled
+  :after eshell
   :custom
   (eshell-highlight-prompt nil)
   (eshell-prompt-function 'vde-theme-lambda)
@@ -209,9 +239,12 @@ using either KUBECONFIG or ~/.kube/config"
 
 (use-package esh-autosuggest
   :defer 1
+  :disabled
   :hook (eshell-mode . esh-autosuggest-mode))
 
 (use-package xterm-color
+  :disabled
+  :after eshell
   :init
   (setq comint-output-filter-functions
         (remove 'ansi-color-process-output comint-output-filter-functions))
@@ -248,6 +281,7 @@ using either KUBECONFIG or ~/.kube/config"
 (add-hook 'term-mode-hook 'toggle-truncate-lines)
 
 (use-package tramp
+  :defer t
   :config
   (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
   (add-to-list 'tramp-remote-path "~/.nix-profile/bin")

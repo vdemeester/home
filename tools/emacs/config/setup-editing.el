@@ -1,5 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
-(setq enable-remote-dir-locals t)
+(setq-default enable-remote-dir-locals t)
+
 (use-package aggressive-indent          ; Automatically indent code
   :bind ("C-c e i" . aggressive-indent-mode)
   :hook ((lisp-mode       . aggressive-indent-mode)
@@ -12,17 +13,18 @@
 (use-package undo-tree                  ; Show buffer changes as a tree
   :defer 1
   :init (global-undo-tree-mode)
-  :config (setq undo-tree-visualizer-timestamps t
+  :config
+  (setq-default undo-tree-visualizer-timestamps t
                 undo-tree-enable-undo-in-region t))
 
 (use-package whitespace
-  :defer 1
   :hook ((prog-mode . whitespace-mode))
   :config
-  (setq whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark)))
+  (setq-default whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark)))
 
 (use-package smartparens
   :defer 1
+  :disabled
   :init
   (progn
     (use-package smartparens-config)
@@ -47,6 +49,7 @@
          ("C--". er/contract-region)))
 
 (use-package iedit
+  :disabled
   :defines hydra-iedit/body
   :bind* (:map global-map
                ("C-*" . iedit-mode)
@@ -97,20 +100,17 @@
   (global-set-key [remap kill-ring-save] 'easy-kill)
   (global-set-key [remap mark-sexp] 'easy-mark))
 
-(use-package define-word)
-
 (setq display-line-numbers-type 'relative)
 (add-hook 'prog-mode-hook
           'display-line-numbers-mode)
 (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
 (use-package newcomment
-  :custom
-  (comment-empty-lines t)
-  (comment-fill-column nil)
-  (comment-multi-line t)
-  (comment-style 'multi-line)
   :config
+  (setq-default comment-empty-lines t
+                comment-fill-column nil
+                comment-multi-line t
+                comment-style 'multi-line)
   (defun prot/comment-dwim (&optional arg)
     "Alternative to `comment-dwim': offers a simple wrapper
 around `comment-line' and `comment-dwim'.
@@ -158,25 +158,24 @@ Else toggle the comment status of the line at point."
               ([remap flyspell-correct-word-before-point] . flyspell-correct-previous-word-generic)))
 
 (use-package electric
-  :custom
-  (electric-pair-inhibit-predicate 'electric-pair-default-inhibit)
-  (electric-pair-pairs '((8216 . 8217)
-                         (8220 . 8221)
-                         (171 . 187)))
-  (electric-pair-skip-self 'electric-pair-default-skip-self)
-  (electric-quote-context-sensitive t)
-  (electric-quote-paragraph t)
-  (electric-quote-string nil)
   :config
+  (setq-default electric-pair-inhibit-predicate 'electric-pair-default-inhibit
+                electric-pair-pairs '((8216 . 8217)
+                                      (8220 . 8221)
+                                      (171 . 187))
+                electric-pair-skip-self 'electric-pair-default-skip-self
+                electric-quote-context-sensitive t
+                electric-quote-paragraph t
+                electric-quote-string nil)
   (electric-indent-mode 1)
   (electric-pair-mode 1)
   (electric-quote-mode -1))
 
 (use-package emacs
   :init
-  (setq-default tab-always-indent 'complete)
-  (setq-default tab-width 4)
-  (setq-default indent-tabs-mode nil))
+  (setq-default tab-always-indent 'complete
+                tab-width 4
+                indent-tabs-mode nil))
 
 (use-package emacs
   :hook (before-save . delete-trailing-whitespace))

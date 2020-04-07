@@ -1,12 +1,14 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package vc-hooks                   ; Simple version control
+  :disabled
   :bind (("S-<f5>" . vc-revert)
          ("C-c v r" . vc-refresh-state))
   :config
   ;; Always follow symlinks to files in VCS repos
-  (setq vc-follow-symlinks t))
+  (setq-default vc-follow-symlinks t))
 
 (use-package magit                      ; The best Git client out there
+  :disabled
   :bind (("C-c v c" . magit-clone)
          ("C-c v C" . magit-checkout)
          ("C-c v d" . magit-dispatch-popup)
@@ -15,13 +17,11 @@
          ("C-c v p" . magit-pull)
          ("C-c v v" . magit-status))
   :config
-  (setq
-   magit-save-repository-buffers 'dontask
-   magit-refs-show-commit-count 'all
-   magit-branch-prefer-remote-upstream '("master")
-   magit-display-buffer-function #'magit-display-buffer-traditional
-   magit-completing-read-function 'ivy-completing-read
-   )
+  (setq-default magit-save-repository-buffers 'dontask
+                magit-refs-show-commit-count 'all
+                magit-branch-prefer-remote-upstream '("master")
+                magit-display-buffer-function #'magit-display-buffer-traditional
+                magit-completing-read-function 'ivy-completing-read)
 
   (magit-define-popup-option 'magit-rebase-popup
     ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
@@ -33,10 +33,6 @@
                           'magit-insert-unpushed-to-upstream
                           'magit-insert-unpushed-to-upstream-or-recent
                           'replace)
-
-  (use-package magit-files
-    :config
-    (global-magit-file-mode))
 
   ;; Show refined hunks during diffs
   (set-default 'magit-diff-refine-hunk t)
@@ -50,14 +46,9 @@
   ;; Free C-c C-w for Eyebrowse
   (unbind-key "C-c C-w" git-commit-mode-map)  )
 (put 'magit-diff-edit-hunk-commit 'disabled nil)
-(use-package magit-repos
-  :after magit
-  :commands magit-list-repositories
-  :config
-  (setq magit-repository-directories
-        '(("~/src" . 3))))
 
 (use-package git-commit                 ; Git commit message mode
+  :disabled
   :defer 2
   :init (global-git-commit-mode)
   :config
@@ -78,20 +69,25 @@
                #'git-commit-check-style-conventions))
 
 (use-package gitconfig-mode             ; Git configuration mode
+  :disabled
   :defer 2)
 
 (use-package gitignore-mode             ; .gitignore mode
+  :disabled
   :defer 2)
 
 (use-package gitattributes-mode         ; Git attributes mode
+  :disabled
   :defer 2)
 
 (use-package dired-git-info
+  :disabled
   :bind (:map dired-mode-map
               (")" . dired-git-info-mode))
   :defer 2)
 
 (use-package ediff
+  :disabled
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq ediff-split-window-function 'split-window-horizontally)

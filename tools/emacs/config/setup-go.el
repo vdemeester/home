@@ -1,5 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package go-mode
+  :disabled
   :mode "\\.go$"
   :interpreter "go"
   :config
@@ -16,13 +17,16 @@
            "go build -v && go test -v && go vet")))
 
 (use-package flycheck-golangci-lint
+  :disabled
   :hook (go-mode . flycheck-golangci-lint-setup)
   :config (setq flycheck-golangci-lint-tests t))
 
 (use-package gotest
+  :disabled
   :after go-mode)
 
 (use-package gotest-ui
+  :disabled
   :after (go-mode gotest)
   :bind (:map go-mode-map
               ("C-c t t" . gotest-ui-current-test)

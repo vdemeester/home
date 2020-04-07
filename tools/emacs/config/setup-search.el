@@ -7,21 +7,13 @@
 
 ;; Truncate lines during grep
 (add-hook 'grep-mode-hook #'toggle-truncate-lines)
-(use-package isearch
-  :custom
-  (search-whitespace-regexp ".*?")
-  (isearch-lax-whitespace t)
-  (isearch-regexp-lax-whitespace nil)
-  :config
-  (defun prot/isearch-mark-and-exit ()
-    "Marks the current search string.  Can be used as a building
-block for a more complex chain, such as to kill a region, or
-place multiple cursors."
-    (interactive)
-    (push-mark isearch-other-end t 'activate)
-    (setq deactivate-mark nil)
-    (isearch-done))
 
+(use-package isearch
+  :disabled
+  :config
+  (setq-default search-whitespace-regexp ".*?"
+                isearch-lax-whitespace t
+                isearch-regexp-lax-whitespace nil)
   (defun stribb/isearch-region (&optional not-regexp no-recursive-edit)
     "If a region is active, make this the isearch default search
 pattern."
@@ -58,11 +50,11 @@ confines of word boundaries (e.g. multiple words)."
     (when isearch-other-end (goto-char isearch-other-end)))
   :bind (("M-s M-o" . multi-occur)
          :map isearch-mode-map
-         ("C-SPC" . prot/isearch-mark-and-exit)
          ("DEL" . contrib/isearchp-remove-failed-part-or-last-char)
          ("<C-return>" . contrib/isearch-done-opposite-end)))
 
 (use-package anzu
+  :disabled
   :ensure t
   :delight
   :custom
@@ -79,6 +71,7 @@ confines of word boundaries (e.g. multiple words)."
   ("M-s %" . anzu-query-replace-at-cursor))
 
 (use-package swiper
+  :disabled
   :after ivy
   :custom
   (swiper-action-recenter t)
@@ -91,17 +84,15 @@ confines of word boundaries (e.g. multiple words)."
          ("M-y" . yank)
          ("C-." . swiper-avy)))
 
-(use-package wgrep                      ; Editable grep buffer
+(use-package wgrep
+  :disabled
   :defer 2
   :custom
   (wgrep-auto-save-buffer t)
   (wgrep-change-readonly-file t))
 
-(use-package visual-regexp              ; Regexp replace with in-buffer display
-  :bind (("C-c s r" . vr/query-replace)
-         ("C-c s R" . vr/replace)))
-
 (use-package rg
+  :disabled
   :hook (after-init . rg-enable-default-binding))
 
 (provide 'setup-search)
