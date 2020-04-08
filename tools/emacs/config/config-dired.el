@@ -1,7 +1,12 @@
-;;; -*- lexical-binding: t; -*-
+;;; config-dired.el --  -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Configuration of Dired
+;;; Code:
+
+;; UseDired
 (use-package dired
-  :defer t
-  :bind (("<C-return>" . vde/open-in-external-app)
+  :commands (dired find-name-dired)
+  :bind (("C-c RET" . vde/open-in-external-app)
          ("C-c f g"    . vde/dired-get-size)
          ("C-c f f"    . find-name-dired)
          (:map dired-mode-map
@@ -81,24 +86,33 @@
          (progn
            (re-search-backward "\\(^[0-9.,]+[A-Za-z]+\\).*total$")
            (match-string 1)))))))
+;; -UseDired
 
+;; UseFindDired
 (use-package find-dired
   :after dired
+  :commands (find-name-dired)
   :config
   (setq-default find-ls-option ;; applies to `find-name-dired'
                 '("-ls" . "-AFhlv --group-directories-first")
                 find-name-arg "-iname"))
+;; -UseFindDired
 
-(use-package dired-x                    ; Enable some nice Dired features
+;; UseDiredX
+(use-package dired-x
+  :after dired
   :bind ("C-x C-j" . dired-jump)
+  :commands (dired-jump dired-omit-mode)
   :hook
   (dired-mode . dired-omit-mode)
   :config
   (setq-default dired-omit-files (concat dired-omit-files "\\|^\\.+$\\|^\\..+$")
                 dired-omit-verbose nil
                 dired-clean-confirm-killing-deleted-buffers nil))
+;; -UseDiredX
 
-(use-package dired-aux                  ; Other Dired customizations
+;; UseDireAux
+(use-package dired-aux
   :after dired
   :config
   (setq-default
@@ -106,33 +120,42 @@
    dired-create-destination-dirs 'ask
    ;; Search only file names when point is on a file name
    dired-isearch-filenames'dwim))
+;; -UseDireAux
 
+;; UseDiredCollapse
 (use-package dired-collapse
-  :defer 1
   :commands (dired-collapse-mode)
   :hook (dired-mode . dired-collapse-mode))
+;; -UseDiredCollapse
 
+;; Depends on hydra, let's see if we need it or not
 (use-package dired-quick-sort
-  :defer 1
+  :disabled
   :after dired
   :config
   (dired-quick-sort-setup))
 
+;; UseDiredAsync
 (use-package async)
-
 (use-package dired-async
   :after (dired async)
+  :commands (dired-async-mode)
   :hook (dired-mode . dired-async-mode))
+;; -UseDiredAsync
 
+;; UseDiredNarrow
 (use-package dired-narrow
   :after dired
+  :commands (dired-narrow)
   :bind (:map dired-mode-map
               ("M-s n" . dired-narrow))
   :config
   (setq-default dired-narrow-exit-when-one-left t
                 dired-narrow-enable-blinking t
                 dired-narrow-blink-time 0.3))
+;; -UseDiredNarrow
 
+;; UseWDired
 (use-package wdired
   :after dired
   :commands (wdired-mode
@@ -140,10 +163,15 @@
   :config
   (setq-default wdired-allow-to-change-permissions t
                 wdired-create-parent-directories t))
+;; -UseWDired
 
+;; UseDiredRsync
 (use-package dired-rsync
   :after dired
+  :commands (dired-rsync)
   :bind (:map dired-mode-map
               ("r" . dired-rsync)))
+;; -UseDiredRsync
 
 (provide 'setup-dired)
+;; config-dired.el ends here
