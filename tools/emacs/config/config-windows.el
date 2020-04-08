@@ -1,5 +1,13 @@
 ;;; -*- lexical-binding: t; -*-
 
+;; Winner
+(use-package winner
+  :unless noninteractive
+  :defer 5
+  :config
+  (winner-mode 1))
+;; -UseWinner
+
 ;; UseAceWindow
 (use-package ace-window
   :commands (ace-window ace-swap-window)

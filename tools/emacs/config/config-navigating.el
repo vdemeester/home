@@ -6,12 +6,6 @@
          ("C-c n t" . avy-goto-char-timer)
          ("C-c n w" . avy-goto-word-1)))
 
-(use-package winner
-  :unless noninteractive
-  :defer 5
-  :config
-  (winner-mode 1))
-
 (use-package hideshow
   :disabled
   :defer 5
