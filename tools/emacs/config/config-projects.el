@@ -1,6 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package projectile
-  :disabled
   :commands
   (projectile-ack
    projectile-ag
