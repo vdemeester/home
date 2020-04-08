@@ -32,17 +32,6 @@
                 ;; Show three lines of context around the current message
                 compilation-context-lines 3)
   (add-hook 'compilation-filter-hook #'vde/colorize-compilation-buffer)
-  (defun vde/mark-compilation-window-as-dedicated ()
-    "Setup the *compilation* window with custom settings."
-    (when (string-prefix-p "*compilation: " (buffer-name))
-      (save-selected-window
-        (save-excursion
-          (let* ((w (get-buffer-window (buffer-name))))
-            (when w
-              (select-window w)
-              (switch-to-buffer (buffer-name))
-              (set-window-dedicated-p w t)))))))
-  (add-hook 'compilation-mode-hook 'vde/mark-compilation-window-as-dedicated)
   :hook ((compilation-mode . goto-address-mode)))
 ;; -UseCompile
 
