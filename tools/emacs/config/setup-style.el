@@ -24,9 +24,6 @@
     (add-hook 'shell-mode-hook #'generic-term-init)
     (add-hook 'eshell-mode-hook #'generic-term-init)
 
-    (setq-default indicate-buffer-boundaries 'left)
-    (setq-default indicate-empty-lines +1)
-
     (use-package highlight-numbers
       :hook (prog-mode . highlight-numbers-mode))
 
@@ -49,9 +46,6 @@
 
     (use-package visual-fill-column
       :commands visual-fill-column-mode)
-
-    (use-package hide-mode-line-mode
-      :commands hide-mode-line-mode)
 
     (defun set-light-theme ()
       "Set the light theme with some customization if needed."

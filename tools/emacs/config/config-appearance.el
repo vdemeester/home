@@ -50,6 +50,8 @@
                 use-dialog-box nil
                 echo-keystrokes 0.1
                 line-number-display-limit-width 10000
+                indicate-buffer-boundaries 'left
+                indicate-empty-lines +1
                 display-time-world-list '(("Europe/London" "London")
                                           ("Europe/Paris" "Paris")
                                           ("America/New_York" "Boston")
@@ -63,14 +65,17 @@
   (global-unset-key (kbd "C-x C-z"))
   (global-unset-key (kbd "C-h h")))
 
-;;; Theme
+;; SafeTheme
 (setq custom-safe-themes t)    ; Treat themes as safe
+;; -SafeTheme
 
+;; UseTheme
 (use-package shortbrain-light-theme
   :config
   (load-theme 'shortbrain-light))
+;; -UseTheme
 
-
+;; UseMoody
 (use-package moody
   :config
   (setq-default x-underline-at-descent-line t
@@ -142,5 +147,12 @@
 
   (moody-replace-mode-line-buffer-identification)
   (moody-replace-vc-mode))
+;; -UseMoody
+
+;; UseHideModeLine
+(use-package hide-mode-line-mode
+  :commands hide-mode-line-mode
+  :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
+;; -UseHideModeLine
 
 ;;; appearance.el ends here
