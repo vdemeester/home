@@ -35,31 +35,49 @@
   :hook ((compilation-mode . goto-address-mode)))
 ;; -UseCompile
 
-(when nil
-  (progn
+;; UseFlycheck
+(use-package flycheck
+  :if (not (eq system-type 'windows-nt))
+  :hook (prog-mode . flycheck-mode)
+  :commands (flycheck-mode flycheck-next-error flycheck-previous-error)
+  :init
+  (dolist (where '((emacs-lisp-mode-hook . emacs-lisp-mode-map)
+                   (haskell-mode-hook    . haskell-mode-map)
+                   (js2-mode-hook        . js2-mode-map)
+                   (c-mode-common-hook   . c-mode-base-map)))
+    (add-hook (car where)
+              `(lambda ()
+                 (bind-key "M-n" #'flycheck-next-error ,(cdr where))
+                 (bind-key "M-p" #'flycheck-previous-error ,(cdr where)))))
+  :config
+  (defalias 'show-error-at-point-soon
+    'flycheck-show-error-at-point)
+  (setq-default flycheck-idle-change-delay 1.2
+                ;; Remove newline checks, since they would trigger an immediate check
+                ;; when we want the idle-change-delay to be in effect while editing.
+                flycheck-check-syntax-automatically '(save
+                                                      idle-change
+                                                      mode-enabled))
+  ;; Each buffer gets its own idle-change-delay because of the
+  ;; buffer-sensitive adjustment above.
+  (defun magnars/adjust-flycheck-automatic-syntax-eagerness ()
+    "Adjust how often we check for errors based on if there are any.
+  This lets us fix any errors as quickly as possible, but in a
+  clean buffer we're an order of magnitude laxer about checking."
+    (setq flycheck-idle-change-delay
+          (if flycheck-current-errors 0.3 3.0)))
+  (make-variable-buffer-local 'flycheck-idle-change-delay)
+  (add-hook 'flycheck-after-syntax-check-hook
+            #'magnars/adjust-flycheck-automatic-syntax-eagerness)
+  (defun flycheck-handle-idle-change ()
+    "Handle an expired idle time since the last change.
+  This is an overwritten version of the original
+  flycheck-handle-idle-change, which removes the forced deferred.
+  Timers should only trigger inbetween commands in a single
+  threaded system and the forced deferred makes errors never show
+  up before you execute another command."
+    (flycheck-clear-idle-change-timer)
+    (flycheck-buffer-automatically 'idle-change)))
+;; -UseFlycheck
 
-    (use-package flycheck
-      :if (not (eq system-type 'windows-nt))
-      :defer 4
-      :commands (flycheck-mode
-                 flycheck-next-error
-                 flycheck-previous-error)
-      :init
-      (dolist (where '((emacs-lisp-mode-hook . emacs-lisp-mode-map)
-                       (haskell-mode-hook    . haskell-mode-map)
-                       (js2-mode-hook        . js2-mode-map)
-                       (go-mode-hook         . go-mode-map)
-                       (c-mode-common-hook   . c-mode-base-map)))
-        (add-hook (car where)
-                  `(lambda ()
-                     (bind-key "M-n" #'flycheck-next-error ,(cdr where))
-                     (bind-key "M-p" #'flycheck-previous-error ,(cdr where)))
-                  t))
-      :config
-      (add-hook 'prog-mode-hook 'flycheck-mode)
-      (defalias 'show-error-at-point-soon
-        'flycheck-show-error-at-point)
-      (setq flycheck-idle-change-delay 1.2))
-
-    ))
 (provide 'setup-compile)
