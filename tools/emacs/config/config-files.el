@@ -26,16 +26,6 @@
   (set-face-background 'highlight-indentation-face "#e3e3d3")
   (set-face-background 'highlight-indentation-current-column-face "#c3b3b3"))
 
-(use-package yaml-mode
-  :disabled
-  :mode "\\.ya?ml\\'"
-  :hook ((yaml-mode . highlight-indentation-mode)
-         (yaml-mode . highlight-indentation-current-column-mode)))
-
-(use-package toml-mode
-  :disabled
-  :mode "\\.to?ml\\'")
-
 (defun vde/delete-this-file ()
   "Delete the current file, and kill the buffer."
   (interactive)
