@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Setup completion framework
 ;;; Code
+
 ;; UseMinibuffer
 (use-package minibuffer
   :unless noninteractive
@@ -210,12 +211,19 @@ Otherwise, use `projectile-switch-to-project'."
          :map company-active-map
          ("C-d" . company-show-doc-buffer)
          ("C-l" . company-show-location)
-         ("C-n" . company-select-next)
-         ("C-p" . company-select-previous)
          ("C-t" . company-select-next)
          ("C-s" . company-select-previous)
-         ("TAB" . company-complete))
+         ("C-<up>" . company-select-next)
+         ("C-<down>" . company-select-previous)
+         ("TAB" . company-complete-common-or-cycle))
   :config
+  (defun company-complete-common-or-selected ()
+    "Insert the common part, or if none, complete using selection."
+    (interactive)
+    (when (company-manual-begin)
+      (if (not (equal company-common company-prefix))
+          (company--insert-candidate company-common)
+        (company-complete-selection))))
   (setq-default company-idle-delay 0.2
                 company-selection-wrap-around t
                 company-minimum-prefix-length 2
@@ -231,7 +239,13 @@ Otherwise, use `projectile-switch-to-project'."
            company-gtags
            company-etags)
           company-dabbrev
-          company-keywords)))
+          company-keywords))
+
+  ;; We don't want completion to prevent us from actually navigating the code
+  (define-key company-active-map (kbd "<return>") nil)
+  (define-key company-active-map (kbd "RET") nil)
+  (define-key company-active-map (kbd "C-p") nil)
+  (define-key company-active-map (kbd "C-n") nil))
 
 ;; FIXME(vdemeester) Do this in programming-*.el
 ;; Add company-css to css-mode company-backends
