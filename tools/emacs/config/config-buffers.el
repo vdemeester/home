@@ -141,6 +141,7 @@
                 filename-and-process))))
 
 (use-package ibuffer-vc
+  :commands (ibuffer-vc-set-filter-groups-by-vc-root)
   :hook (ibuffer . (lambda ()
                      (ibuffer-vc-set-filter-groups-by-vc-root)
                      (unless (eq ibuffer-sorting-mode 'filename/process)
