@@ -117,6 +117,7 @@
 ;; -UseHideShow
 
 (use-package easy-kill
+  :commands (easy-kill)
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill)
   (global-set-key [remap mark-sexp] 'easy-mark))
