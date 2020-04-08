@@ -114,8 +114,14 @@
 ;; UseGitCommit
 (use-package git-commit
   :after magit
-  :defer 2
+  :commands (git-commit-mode)
+  :hook (git-commit-mode . vde/git-commit-mode-hook)
   :config
+  (defun vde/git-commit-mode-hook ()
+    "git-commit mode hook"
+    (set (make-local-variable 'company-backends)
+         '(company-emoji company-capf company-files company-dabbrev))
+    (company-mode 1))
   (setq-default git-commit-summary-max-length 50
                 git-commit-known-pseudo-headers
                 '("Signed-off-by"
