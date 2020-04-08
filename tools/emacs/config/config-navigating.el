@@ -7,7 +7,7 @@
          ("C-c n w" . avy-goto-word-1)))
 
 (use-package hideshow
-  :disabled
+  :commands (hs-show-all hs-toggle-hiding hs-hide-all hs-hide-block hs-hide-level)
   :defer 5
   :bind (("C-c @ a" . hs-show-all)
          ("C-c @ c" . hs-toggle-hiding)
