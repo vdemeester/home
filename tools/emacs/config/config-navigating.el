@@ -16,7 +16,7 @@
          ("C-c @ l" . hs-hide-level)))
 
 (use-package mwim
-  :disabled
+  :commands (mwim-beginning-of-code-or-line mwim-end-of-code-or-line)
   :bind (:map prog-mode-map
               ("C-a" . mwim-beginning-of-code-or-line)
               ("C-e" . mwim-end-of-code-or-line)))
