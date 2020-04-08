@@ -1,27 +1,35 @@
-;;; -*- lexical-binding: t; -*-
+;;; config-files.el --- -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Files related configurations
+;;; Code:
+
+;; UseFiles
 (use-package files
-  :disabled
-  :bind (("<f5>" . revert-buffer)))
+  :commands (revert-buffer)
+  :bind (("<f5>" . revert-buffer))
+  :config
+  (setq-default view-read-only t))
+;; -UseFiles
 
-(setq-default view-read-only t)                 ; View read-only
-
+;; UseDirenv
 (use-package direnv
-  :disabled
   :config
   (setq-default direnv-always-show-summary t
                 direnv-show-paths-in-summary nil)
   (direnv-mode))
+;; -UseDirenv
 
+;; UseHardHat
 (use-package hardhat
-  :disabled
   :init (global-hardhat-mode))
+;; -UseHardhat
 
 (use-package image-file
   :disabled
   :init (auto-image-file-mode))
 
 (use-package highlight-indentation
-  :disabled
+  :commands (highlight-indentation-mode highlight-indentation-current-column-mode)
   :config
   (set-face-background 'highlight-indentation-face "#e3e3d3")
   (set-face-background 'highlight-indentation-current-column-face "#c3b3b3"))
@@ -77,3 +85,4 @@
 (bind-key "C-c f v r" #'vde/reload-dir-locals-for-all-buffers-in-this-directory)
 
 (provide 'setup-files)
+;;; config-files.el ends here
