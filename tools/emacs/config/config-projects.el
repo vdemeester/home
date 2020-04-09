@@ -26,6 +26,7 @@
    projectile-vc)
   :bind-keymap ("C-c p" . projectile-command-map)
   :config
+  (setq projectile-completion-system 'default)
   (projectile-mode)
   ;; Remove dead projects when Emacs is idle
   (run-with-idle-timer 10 nil #'projectile-cleanup-known-projects)
