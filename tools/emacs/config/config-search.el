@@ -76,7 +76,6 @@ confines of word boundaries (e.g. multiple words)."
   :bind (("M-s r r" . rg)
          ("M-s r p" . rg-project)
          ("M-s r s" . rg-dwiw))
-  :hook (after-init . rg-enable-default-binding)
   :config
   (with-eval-after-load 'projectile
     (defalias 'projectile-ripgrep #'rg-project)))
