@@ -1,5 +1,4 @@
 (use-package region-bindings-mode
-  :disabled
   :config
   ;; Do not activate `region-bindings-mode' in Special modes like `dired' and
   ;; `ibuffer'. Single-key bindings like 'm' are useful in those modes even
@@ -20,7 +19,6 @@
    ("<C-SPC>" . vde/disable-rbm-deactivate-mark)))
 
 (use-package multiple-cursor
-  :disabled
   :bind (:map region-bindings-mode-map
               ("a" . mc/mark-all-like-this)
               ("p" . mc/mark-previous-like-this)
