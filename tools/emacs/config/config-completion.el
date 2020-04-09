@@ -215,6 +215,7 @@ Otherwise, use `projectile-switch-to-project'."
          ("C-s" . company-select-previous)
          ("C-<up>" . company-select-next)
          ("C-<down>" . company-select-previous)
+         ("C-r" . company-complete-selection)
          ("TAB" . company-complete-common-or-cycle))
   :config
   (defun company-complete-common-or-selected ()
