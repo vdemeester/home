@@ -1,6 +1,10 @@
+;;; programming-web.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Web related configuration
+;;; Code:
+
 (use-package web-mode
-  ;; :if *sys/full*
-  :disabled
+  :commands (web-mode)
   :mode
   ("\\.html\\'" . web-mode)
   ("\\.phtml\\'" . web-mode)
@@ -37,3 +41,6 @@
   :after (company css-mode)
   :config
   (push 'company-css company-backends))
+
+(provide 'programming-web)
+;;; programming-web.el ends here

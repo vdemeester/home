@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t; -*-
+;;; programming-nix.el --- -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Nix configuration
+;;; Code:
 (use-package nix-mode
   :if *nix*
   :mode ("\\.nix\\'" "\\.nix.in\\'"))
@@ -19,4 +22,5 @@
   :config
   (add-hook 'nix-mode-hook 'nixpkgs-fmt-on-save-mode))
 
-(provide 'setup-nix)
+(provide 'programming-nix)
+;;; programming-nix.el ends here

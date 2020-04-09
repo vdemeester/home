@@ -1,4 +1,8 @@
-;;; -*- lexical-binding: t; -*-
+;;; config-projects.el --- -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Project related configuration.
+;;; Using projectile now, might use projects later
+;;; Code:
 (use-package projectile
   :commands
   (projectile-ack
@@ -44,4 +48,5 @@
     "Run `compile' in the project"
     (projectile-compile-project nil)))
 
-(provide 'setup-projectile)
+(provide 'config-projects)
+;;; config-projects.el ends here

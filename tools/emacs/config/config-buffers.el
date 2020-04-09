@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t; -*-
+;;; config-buffers.el --- -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Buffer related configurations
+;;; Code:
 
 ;; UseDisplayBuffers
 (use-package emacs
@@ -148,4 +151,5 @@
                        (ibuffer-do-sort-by-filename/process)))))
 ;; -UseIBuffer
 
-(provide 'setup-buffers)
+(provide 'config-buffers)
+;;; config-buffers.el ends here

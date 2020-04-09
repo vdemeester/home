@@ -173,5 +173,5 @@
               ("r" . dired-rsync)))
 ;; -UseDiredRsync
 
-(provide 'setup-dired)
+(provide 'config-dired)
 ;; config-dired.el ends here

@@ -1,4 +1,4 @@
-;;; setup-org.el --- -*- lexical-binding: t -*-
+;;; config-org.el --- -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Configuration of orgmode.
 ;;; Code:
@@ -630,5 +630,5 @@ activation of `org-tree-slide-mode'."
 (use-package orgit
   :after magit)
 
-(provide 'setup-org)
-;;; setup-org.el ends here
+(provide 'config-org)
+;;; config-org.el ends here

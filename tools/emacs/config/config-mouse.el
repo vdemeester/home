@@ -1,3 +1,8 @@
+;;; config-mouse.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Mouse configuration
+;;; Code:
+
 (use-package mouse
   :config
   (setq mouse-wheel-scroll-amount
@@ -9,3 +14,6 @@
         mouse-wheel-progressive-speed t
         mouse-wheel-follow-mouse t)
   :hook (after-init . mouse-wheel-mode))
+
+(provide 'config-mouse)
+;;; config-mouse.el ends here

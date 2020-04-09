@@ -189,5 +189,5 @@
       (kill-buffer log-buf))
     (kill-buffer commit-buf)))
 
-(provide 'setup-vcs)
-;;; setup-vcs.el ends here
+(provide 'config-vcs)
+;;; config-vcs.el ends here

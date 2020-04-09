@@ -1,4 +1,4 @@
-;;; appearance.el --- -*- lexical-binding: t -*-
+;;; config-appearance.el --- -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Appearance configuration
 ;;; Code:
@@ -176,4 +176,5 @@
   :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
 ;; -UseHideModeLine
 
-;;; appearance.el ends here
+(provide 'config-appearance)
+;;; config-appearance.el ends here

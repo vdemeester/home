@@ -1,3 +1,8 @@
+;;; writing.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Writing modes configuration
+;;; Code:
+
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode)
   :config
@@ -17,3 +22,6 @@
                        "--standalone" "-f" "markdown" "-t" "html5")
                      " ")))
   (add-hook 'markdown-mode-hook #'auto-fill-mode))
+
+(provide 'writing)
+;;; writing.el ends here

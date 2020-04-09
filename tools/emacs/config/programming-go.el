@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t; -*-
+;;; programming-go.el --- -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Go programming language configuration
+;;; Code:
 (use-package go-mode
   :commands (go-mode)
   :mode "\\.go$"
@@ -33,4 +36,5 @@
               ("C-c t f" . gotest-ui-current-file)
               ("C-c t p" . gotest-ui-current-project)))
 
-(provide 'setup-go)
+(provide 'programming-go)
+;;; programming-go.el ends here

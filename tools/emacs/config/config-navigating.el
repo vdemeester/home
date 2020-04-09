@@ -1,3 +1,8 @@
+;;; config-navigating.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Navigation related configuration
+;;; Code:
+
 (use-package avy
   :disabled
   :bind (("C-c j"   . avy-goto-word-1)
@@ -21,4 +26,5 @@
               ("C-a" . mwim-beginning-of-code-or-line)
               ("C-e" . mwim-end-of-code-or-line)))
 
-(provide 'setup-navigating)
+(provide 'config-navigating)
+;;; config-navigating.el ends here

@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t; -*-
+;;; config-search.el --- -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Search related configuration
+;;; Code:
 
 ;; UseISearch
 (use-package isearch
@@ -112,4 +115,5 @@ confines of word boundaries (e.g. multiple words)."
   ([remap query-replace-regexp] . anzu-query-replace-regexp)
   ("M-s %" . anzu-query-replace-at-cursor))
 
-(provide 'setup-search)
+(provide 'config-search)
+;;; config-search.el ends here

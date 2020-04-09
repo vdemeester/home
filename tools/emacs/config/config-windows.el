@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t; -*-
+;;; config-windows.el ---  -*- lexical-binding: t; -*-
+;; Commentary:
+;;; Windows configuration
+;; Code:
 
 ;; Winner
 (use-package winner
@@ -68,4 +71,5 @@
                 eyebrowse-wrap-around t)
   (eyebrowse-mode 1))
 
-(provide 'setup-windows)
+(provide 'config-windows)
+;;; config-windows ends here

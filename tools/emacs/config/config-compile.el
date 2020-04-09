@@ -80,4 +80,5 @@
     (flycheck-buffer-automatically 'idle-change)))
 ;; -UseFlycheck
 
-(provide 'setup-compile)
+(provide 'config-compile)
+;;; config-compile.el ends here

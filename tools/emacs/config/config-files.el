@@ -84,5 +84,5 @@
 (bind-key "C-c f v r" #'vde/reload-dir-locals-for-current-buffer)
 (bind-key "C-c f v r" #'vde/reload-dir-locals-for-all-buffers-in-this-directory)
 
-(provide 'setup-files)
+(provide 'config-files)
 ;;; config-files.el ends here

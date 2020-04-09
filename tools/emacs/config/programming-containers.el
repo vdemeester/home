@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t; -*-
+;;; programming-containers.el --- -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Containers configuration
+;;; Code:
 (use-package dockerfile-mode
   :mode ("Dockerfile\\'" . dockerfile-mode))
 
@@ -24,4 +27,5 @@
       (setenv "KUBECONFIG" kubeconfig)
     (error "Cannot find kubeconfig: %s" kubeconfig)))
 
-(provide 'setup-docker)
+(provide 'programming-containers)
+;;; programming-containers.el ends here

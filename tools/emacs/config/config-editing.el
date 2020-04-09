@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t; -*-
+;;; config-editing.el --- -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Editing configuration
+;;; Code:
 (setq-default enable-remote-dir-locals t)
 
 ;; UseSmartParens
@@ -259,4 +262,5 @@ instead.  This command can then be followed by the standard
   (pdf-tools-install :no-query)
   (require 'pdf-occur))
 
-(provide 'setup-editing)
+(provide 'config-editing)
+;;; config-editing.el ends here

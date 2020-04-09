@@ -1,4 +1,4 @@
-;;; setup-completion.el --- -*- lexical-binding: t -*-
+;;; config-completion.el --- -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Setup completion framework
 ;;; Code
@@ -108,8 +108,8 @@ instead."
   (setq icomplete-hide-common-prefix nil)
   (setq icomplete-prospects-height 1)
   (setq icomplete-separator " · ")      ; mid dot, not full stop
+  (setq icomplete-in-buffer nil)
   (setq icomplete-with-completion-tables t)
-  (setq icomplete-in-buffer t)
 
   (fido-mode -1)                        ; Emacs 27.1
   (icomplete-mode 1)
@@ -343,4 +343,5 @@ Otherwise, use `projectile-switch-to-project'."
     "--ignore-file" ,(expand-file-name ".ignore" (getenv "HOME")))
   "Default rg arguments used in the functions in `counsel' and `projectile' packages.")
 
-(provide 'setup-completion)
+(provide 'config-completion)
+;;; config-completion.el ends here

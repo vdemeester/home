@@ -25,4 +25,5 @@
          ("authorized_keys2?\\'" . ssh-authorized-keys-mode)))
 ;; -UseSSHConfig
 
+(provide 'config-misc)
 ;;; config-misc.el ends here

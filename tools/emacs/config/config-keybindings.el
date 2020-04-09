@@ -1,3 +1,7 @@
+;;; config-keybindings.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Key binding specific configuration
+;;; Code:
 (use-package which-key
   :disabled
   :init (which-key-mode)
@@ -19,4 +23,5 @@
 ;; Disable C-x C-n to avoid the disabled command buffer
 (unbind-key "C-x C-n" global-map)
 
-(provide 'setup-keybindings)
+(provide 'config-keybindings)
+;;; config-keybindings.el ends here

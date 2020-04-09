@@ -1,4 +1,8 @@
-;;; -*- lexical-binding: t; -*-
+;;; config-shells.el --- -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Shell scripting
+;;; Code:
+
 (use-package shell
   :commands (shell)
   :bind (("<f1>"      . shell)

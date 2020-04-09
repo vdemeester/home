@@ -1,4 +1,7 @@
-;;; setup-mails.el --- -*- lexical-binding: t -*-
+;;; config-mails.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Mails configuration
+;;; Code:
 
 ;; AuthSource
 (use-package auth-source
@@ -78,5 +81,5 @@
                 (:key "S" :name "sent" :query "tag:Sent Mail"))))))
 ;; -Notmuch
 
-(provide 'setup-mails)
-;;; setup-mails ends here
+(provide 'config-mails)
+;;; config-mails ends here
