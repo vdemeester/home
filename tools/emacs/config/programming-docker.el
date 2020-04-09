@@ -1,7 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
-(use-package dockerfile-mode            ; Edit docker's Dockerfiles
-  :disabled
-  :unless *sys/full*
+(use-package dockerfile-mode
   :mode ("Dockerfile\\'" . dockerfile-mode))
 
 ;; I have a bunch of different 'profiles' for kubernetes by different cluster so
