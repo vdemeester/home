@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package shell
-  :disabled
+  :commands (shell)
   :bind (("<f1>"      . shell)
          (:map shell-mode-map
                ("<tab>" . completion-at-point)))
@@ -10,8 +10,9 @@
   (unbind-key "C-c C-l" shell-mode-map)
   (bind-key "C-c C-l" #'counsel-shell-history shell-mode-map))
 
+;; TODO: understand and rework eshell completion
 (use-package eshell
-  :disabled
+  :commands (eshell eshell-here)
   :bind* ("C-x m t" . eshell-here)
   :config
   (defun eshell-here ()
@@ -75,7 +76,8 @@ The EShell is renamed to match that directory to make multiple windows easier."
      (eshell-dirs-initialize)
      (bind-keys :map eshell-mode-map
                 ("C-c C-l"                . counsel-esh-history)
-                ([remap eshell-pcomplete] . completion-at-point))))
+                ([remap eshell-pcomplete] . completion-at-point)
+                )))
 
   ;; Use system su/sudo
   (with-eval-after-load "em-unix"
@@ -86,9 +88,7 @@ The EShell is renamed to match that directory to make multiple windows easier."
   (add-hook 'eshell-mode-hook #'with-editor-export-editor))
 
 (use-package em-prompt
-  :disabled
   :after eshell
-  :defer 2
   :config
   (defun vde/eshell-quit-or-delete-char (arg)
     "Use C-d to either delete forward char or exit EShell."
@@ -120,14 +120,11 @@ The EShell is renamed to match that directory to make multiple windows easier."
       (completion-at-point))))
 
 (use-package em-smart
-  :disabled
   :after eshell)
 (use-package em-dirs
-  :disabled
   :after eshell)
 
 (use-package em-cmpl
-  :disabled
   :after eshell
   :hook (eshell-mode . eshell-cmpl-initialize)
   :config
@@ -145,13 +142,11 @@ The EShell is renamed to match that directory to make multiple windows easier."
   (add-to-list 'eshell-command-completions-alist
                '("tar" "\\(\\.tar|\\.tgz\\|\\.tar\\.gz\\)\\'")))
 
-(use-package em-hist                    ; EShell History management
-  :disabled
+(use-package em-hist
   :after eshell
   :config (setq eshell-hist-ignoredups t))
 
-(use-package em-term                    ; Handle visual commands in EShell
-  :disabled
+(use-package em-term
   :after eshell
   :config
   (add-to-list 'eshell-visual-commands "ssh")
@@ -162,7 +157,6 @@ The EShell is renamed to match that directory to make multiple windows easier."
   (add-to-list 'eshell-visual-commands "ncdu"))
 
 (use-package em-banner
-  :disabled
   :after eshell
   :config
   (setq eshell-banner-message "
@@ -176,14 +170,7 @@ The EShell is renamed to match that directory to make multiple windows easier."
 
 "))
 
-(use-package fish-completion
-  :disabled
-  :defer 2
-  :when (executable-find "fish")
-  :config (add-hook 'eshell-mode-hook #'fish-completion-mode))
-
 (use-package eshell-prompt-extras
-  :disabled
   :after eshell
   :custom
   (eshell-highlight-prompt nil)
@@ -238,12 +225,10 @@ using either KUBECONFIG or ~/.kube/config"
      " ")))
 
 (use-package esh-autosuggest
-  :defer 1
-  :disabled
+  :after eshell
   :hook (eshell-mode . esh-autosuggest-mode))
 
 (use-package xterm-color
-  :disabled
   :after eshell
   :init
   (setq comint-output-filter-functions
