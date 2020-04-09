@@ -57,13 +57,8 @@ in
             avy
             company
             company-emoji
-            company-ghc
             company-go
-            counsel
-            counsel-projectile
-            crux
             dash
-            define-word
             delight
             dired-collapse
             dired-git-info
@@ -74,7 +69,6 @@ in
             dockerfile-mode
             easy-kill
             esup
-            exec-path-from-shell
             expand-region
             eyebrowse
             flycheck
@@ -90,11 +84,8 @@ in
             highlight
             highlight-indentation
             highlight-numbers
-            hydra
             ibuffer-vc
             iedit
-            ivy
-            ivy-hydra
             json-mode
             markdown-mode
             mpdel
@@ -104,7 +95,6 @@ in
             ob-async
             ob-go
             ob-http
-            # orca
             orgit
             org-plus-contrib
             org-capture-pop-frame
@@ -135,20 +125,15 @@ in
             xterm-color
             yasnippet
             yaml-mode
-            anzu
             darkroom
             eshell-prompt-extras
             esh-autosuggest
-            fish-completion
             flyspell-correct-ivy
             forge
             go-mode
             hide-mode-line
-            ivy-posframe
             magit
             magit-popup
-            pretty-hydra
-            major-mode-hydra
             minions
             moody
             mwim
