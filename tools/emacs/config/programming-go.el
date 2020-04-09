@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package go-mode
-  :disabled
+  :commands (go-mode)
   :mode "\\.go$"
   :interpreter "go"
   :config
@@ -14,21 +14,19 @@
 
 (use-package company-go
   :after (go-mode company)
-  :config
-  (setq company-go-show-annotation t)
+  (setq-default company-go-show-annotation t)
   (push 'company-go company-backends))
 
 (use-package flycheck-golangci-lint
-  :disabled
+  :commands (flycheck-golangci-lint-setup)
   :hook (go-mode . flycheck-golangci-lint-setup)
   :config (setq flycheck-golangci-lint-tests t))
 
 (use-package gotest
-  :disabled
   :after go-mode)
 
 (use-package gotest-ui
-  :disabled
+  :commands (gotest-ui-current-test gotest-ui-current-file gotest-ui-current-project)
   :after (go-mode gotest)
   :bind (:map go-mode-map
               ("C-c t t" . gotest-ui-current-test)
