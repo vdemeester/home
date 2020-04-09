@@ -1,4 +1,7 @@
 ;;; init.el --- -*- lexical-binding: t -*-
+;;; Commentary:
+;;; init configuration file for GNU Emacs
+;;; Code:
 ;; +CheckVer
 (let ((minver 26))
   (unless (>= emacs-major-version minver)
@@ -193,3 +196,5 @@
                (message "Loading %s...done (%.3fs) [after-init]"
                         ,load-file-name elapsed))) t)
 ;; -LastInit
+
+;;; init.el ends here
