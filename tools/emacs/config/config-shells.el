@@ -272,4 +272,13 @@ using either KUBECONFIG or ~/.kube/config"
   (add-to-list 'tramp-remote-path "~/.nix-profile/bin")
   (add-to-list 'tramp-remote-path "~/bin"))
 
+(defun generic-term-init ()
+  (visual-line-mode -1)
+  (setq-local global-hl-line-mode nil)
+  (setq-local scroll-margin 0))
+
+(add-hook 'term-mode-hook #'generic-term-init)
+(add-hook 'shell-mode-hook #'generic-term-init)
+(add-hook 'eshell-mode-hook #'generic-term-init)
+
 (provide 'setup-shells)
