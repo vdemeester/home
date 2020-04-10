@@ -38,6 +38,7 @@ in
     };
   };
   config = mkIf cfg.enable {
+    home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
     profiles.gpg.enable = true;
     profiles.emacs.capture = true;
     xsession = mkIf cfg.xsession.enable {
