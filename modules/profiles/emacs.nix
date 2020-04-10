@@ -46,6 +46,7 @@ in
         ];
         home.sessionVariables = {
           EDITOR = "et";
+          ALTERNATE_EDITOR = "et";
         };
         programs.emacs = {
           enable = true;
