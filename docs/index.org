@@ -1,5 +1,5 @@
 #+TITLE: Configurations
-#+FILETAGS: @home infra configuration dotfiles
+#+FILETAGS: #home infra configuration dotfiles
 #+SETUPFILE: ./.setupfile.org
 
 This set of pages and articles are describing and discussion my

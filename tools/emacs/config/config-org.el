@@ -60,10 +60,10 @@
                         ("openshift") ("redhat") ("tektoncd") ("kubernetes") ("knative" ) ("docker")
                         ("docs") ("code") ("review")
                         (:startgroup . nil)
-                        ("@home" . ?h) ("@work" . ?w) ("@errand" . ?e) ("@health" . ?l)
+                        ("#home" . ?h) ("#work" . ?w) ("#errand" . ?e) ("#health" . ?l)
                         (:endgroup . nil)
                         (:startgroup . nil)
-                        ("@link" . ?i) ("@read" . ?r) ("@project" . ?p)
+                        ("#link" . ?i) ("#read" . ?r) ("#project" . ?p)
                         (:endgroup . nil))
         org-log-done 'time
         org-log-redeadline 'time
@@ -179,11 +179,11 @@
         org-agenda-custom-commands
         `(("w" "Work agenda"
            ((agenda "")
-            (tags-todo "@work-@home-goals+TODO=\"STARTED\""
+            (tags-todo "#work-#home-goals+TODO=\"STARTED\""
                        ((org-agenda-overriding-header "Ongoing")))
-            (tags-todo "@work-@home-goals+TODO=\"NEXT\""
+            (tags-todo "#work-#home-goals+TODO=\"NEXT\""
                        ((org-agenda-overriding-header "Next")))
-            (tags-todo "@work-@home-goals"
+            (tags-todo "#work-#home-goals"
                        ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
                         (org-agenda-overriding-header "Work"))))
            ((org-super-agenda-groups
@@ -195,17 +195,17 @@
                (:habit t))))
            (org-agenda-list))
           ("n" "Personal agenda"
-           ((tags-todo "-@work-goals-incubate-inbox+TODO=\"STARTED\""
+           ((tags-todo "-#work-goals-incubate-inbox+TODO=\"STARTED\""
                        ((org-agenda-overriding-header "Ongoing")))
-            (tags-todo "-@work-goals-incubate-inbox+TODO=\"NEXT\""
+            (tags-todo "-#work-goals-incubate-inbox+TODO=\"NEXT\""
                        ((org-agenda-overriding-header "Next")))
-            (tags-todo "-@work-goals-incubate-inbox"
+            (tags-todo "-#work-goals-incubate-inbox"
                        ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
                         (org-agenda-overriding-header "Home"))))
            ((org-super-agenda-groups
              '((:name "Important" :priority "A")
-               (:name "Home" :tag "@home")
-               (:name "Writing" :tag "@writing")
+               (:name "Home" :tag "#home")
+               (:name "Writing" :tag "#writing")
                (:habit t))))
            (org-agenda-list)))))
 ;; -OrgAgenda
