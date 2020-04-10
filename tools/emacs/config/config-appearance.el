@@ -69,6 +69,12 @@
 (setq custom-safe-themes t)    ; Treat themes as safe
 ;; -SafeTheme
 
+;; LoadTheme
+(defadvice load-theme (before clear-previous-themes activate)
+  "Clear existing theme settings instead of layering them."
+  (mapc #'disable-theme custom-enabled-themes))
+;; -LoadTheme
+
 ;; UseTheme
 (use-package shortbrain-light-theme
   :config
