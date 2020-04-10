@@ -23,7 +23,7 @@ update:
 
 .PHONY: pull
 pull:
-	(cd overlays/emacs-overlay && git pull --rebase)
+	(cd overlays/emacs-overlay && git checkout master && git pull --rebase)
 
 # home-manager setup
 .PHONY: assets
