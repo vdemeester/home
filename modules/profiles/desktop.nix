@@ -5,13 +5,13 @@ let
   cfg = config.profiles.desktop;
 
   dim-screen = pkgs.writeScript "dim-sreen.sh" ''
-#!${pkgs.stdenv.shell}
-export PATH=${lib.getBin pkgs.xlibs.xbacklight}/bin:$PATH
-trap "exit 0" INT TERM
-trap "kill \$(jobs -p); xbacklight -steps 1 -set $(xbacklight -get);" EXIT
-xbacklight -time 5000 -steps 400 -set 0 &
-sleep 2147483647 &
-wait
+    #!${pkgs.stdenv.shell}
+    export PATH=${lib.getBin pkgs.xlibs.xbacklight}/bin:$PATH
+    trap "exit 0" INT TERM
+    trap "kill \$(jobs -p); xbacklight -steps 1 -set $(xbacklight -get);" EXIT
+    xbacklight -time 5000 -steps 400 -set 0 &
+    sleep 2147483647 &
+    wait
   '';
 in
 {
@@ -30,9 +30,9 @@ in
           type = types.bool;
         };
         i3 = mkOption {
-           default = true;
-           description = "Enable i3 managed window manager";
-           type = types.bool;
+          default = true;
+          description = "Enable i3 managed window manager";
+          type = types.bool;
         };
       };
     };
@@ -54,7 +54,7 @@ in
     home.keyboard = mkIf cfg.xsession.enable {
       layout = "fr(bepo),fr";
       variant = "oss";
-      options = ["grp:menu_toggle" "grp_led:caps" "compose:caps"];
+      options = [ "grp:menu_toggle" "grp_led:caps" "compose:caps" ];
     };
     gtk = {
       enable = true;
@@ -84,12 +84,16 @@ in
     xdg.configFile."user-dirs.dirs".source = ./assets/xorg/user-dirs.dirs;
     xdg.configFile."nr/desktop" = {
       text = builtins.toJSON [
-        {cmd = "surf";} {cmd = "dmenu";} {cmd = "sxiv";} { cmd = "screenkey"; }
-        {cmd = "gimp";}
-        {cmd = "virt-manager"; pkg = "virtmanager";}
-        {cmd = "update-desktop-database"; pkg = "desktop-file-utils"; chan = "unstable";}
-        {cmd = "lgogdownloader"; chan = "unstable";}
-        {cmd = "xev"; pkg = "xorg.xev";}
+        { cmd = "surf"; }
+        { cmd = "next"; }
+        { cmd = "dmenu"; }
+        { cmd = "sxiv"; }
+        { cmd = "screenkey"; }
+        { cmd = "gimp"; }
+        { cmd = "virt-manager"; pkg = "virtmanager"; }
+        { cmd = "update-desktop-database"; pkg = "desktop-file-utils"; chan = "unstable"; }
+        { cmd = "lgogdownloader"; chan = "unstable"; }
+        { cmd = "xev"; pkg = "xorg.xev"; }
       ];
       onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr desktop";
     };
