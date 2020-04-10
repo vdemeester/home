@@ -51,9 +51,9 @@ dry-build: assets setup
 switch: assets setup
 	@if test $(USER) = root;\
 	then\
-		nixos-rebuild build;\
+		nixos-rebuild switch;\
 	else\
-		home-manager build;\
+		home-manager switch;\
 	fi
 
 # Cleaning
