@@ -181,25 +181,27 @@ Otherwise, use `projectile-switch-to-project'."
         (call-interactively 'switch-to-buffer)
       (projectile-switch-to-buffer)))
 
-  :bind (:map icomplete-minibuffer-map
-              ("C-m" . minibuffer-complete-and-exit) ; force current input
-              ("C-n" . icomplete-forward-completions)
-              ("<right>" . icomplete-forward-completions)
-              ("<down>" . icomplete-forward-completions)
-              ("C-p" . icomplete-backward-completions)
-              ("<left>" . icomplete-backward-completions)
-              ("<up>" . icomplete-backward-completions)
-              ("<return>" . vde/icomplete-force-complete-and-exit)
-              ("M-o w" . vde/icomplete-kill-ring-save)
-              ("M-o i" . (lambda ()
-                           (interactive)
-                           (let ((current-prefix-arg t))
-                             (vde/icomplete-kill-ring-save))))
-              ("C-M-," . vde/icomplete-toggle-completion-styles)
-              ("C-M-." . (lambda ()
-                           (interactive)
-                           (let ((current-prefix-arg t))
-                             (vde/icomplete-toggle-completion-styles))))))
+  :bind (("C-x b" . vde/switch-buffer)
+         ("C-x B" . switch-to-buffer)
+         :map icomplete-minibuffer-map
+         ("C-m" . minibuffer-complete-and-exit) ; force current input
+         ("C-n" . icomplete-forward-completions)
+         ("<right>" . icomplete-forward-completions)
+         ("<down>" . icomplete-forward-completions)
+         ("C-p" . icomplete-backward-completions)
+         ("<left>" . icomplete-backward-completions)
+         ("<up>" . icomplete-backward-completions)
+         ("<return>" . vde/icomplete-force-complete-and-exit)
+         ("M-o w" . vde/icomplete-kill-ring-save)
+         ("M-o i" . (lambda ()
+                      (interactive)
+                      (let ((current-prefix-arg t))
+                        (vde/icomplete-kill-ring-save))))
+         ("C-M-," . vde/icomplete-toggle-completion-styles)
+         ("C-M-." . (lambda ()
+                      (interactive)
+                      (let ((current-prefix-arg t))
+                        (vde/icomplete-toggle-completion-styles))))))
 ;; -UseIComplete
 
 ;; UseCompany
