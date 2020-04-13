@@ -13,7 +13,7 @@
 :END:
 
 + HTML version :: [[https://sbr.pm/dotemacs][sbr.pm/dotemacs]]
-+ Git repo :: [[https://github.com/vdemeester/emacs-config.git][github.com/vdemeester/emacs-config]]
++ Git repo :: [[https://gitlab.com/vdemeester/home/-/tree/master/tools/emacs][https://gitlab.com/vdemeester/home/-/tree/master/tools/emacs]]
 
 ** What is this
 :PROPERTIES:
