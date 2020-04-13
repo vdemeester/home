@@ -52,7 +52,7 @@ with import ../assets/machines.nix; {
       virtualHosts."vincent.demeester.fr" = {
         enableACME = true;
         forceSSL = true;
-        root = "/home/vincent/desktop/sites/sbr.pm";
+        root = "/home/vincent/desktop/sites/vincent.demeester.fr";
         locations."/" = {
           index = "index.html";
         };
