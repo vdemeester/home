@@ -149,7 +149,7 @@ in
             undo-tree
             use-package
             # Highly experimental
-            emacs-libvterm
+            vterm
             gotest
           ];
         };
