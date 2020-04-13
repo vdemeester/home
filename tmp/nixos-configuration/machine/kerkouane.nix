@@ -49,6 +49,14 @@ with import ../assets/machines.nix; {
           index = "index.html";
         };
       };
+      virtualHosts."vincent.demeester.fr" = {
+        enableACME = true;
+        forceSSL = true;
+        root = "/home/vincent/desktop/sites/sbr.pm";
+        locations."/" = {
+          index = "index.html";
+        };
+      };
     };
     openssh.ports = [ ssh.kerkouane.port ];
     openssh.permitRootLogin = "without-password";
