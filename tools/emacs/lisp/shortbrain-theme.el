@@ -99,6 +99,7 @@
       (default-bg               (shortbrain-theme-color 'grey-900))
       (minor-fg                 (shortbrain-theme-color 'grey-700))
       (inactive-fg              (shortbrain-theme-color 'grey-600))
+      (inactive-bg              (shortbrain-theme-color 'grey-800))
       (border-fg                (shortbrain-theme-color 'grey-850))
       (frame-fg                 (shortbrain-theme-color 'grey-500))
       (cursor-fg                (shortbrain-theme-color 'grey-500))
@@ -167,6 +168,9 @@
                                               :box (:line-width -1 :color ,default-bg)))))
    `(nlinum-relative-current-face ((,class (:foreground ,frame-fg :background ,default-bg))))
    `(vertical-border ((,class (:foreground ,border-fg :background ,default-bg))))
+   `(tab-bar ((,class (:background ,default-bg))))
+   `(tab-bar-tab ((,class (:background ,default-bg :inherit shadow :weight bold))))
+   `(tab-bar-tab-inactive ((,class (:background ,inactive-bg :inherit shadow :weight normal))))
 
    ;; Highlighting
    `(highlight ((,class (:foreground ,highlight-fg :background ,highlight-bg))))

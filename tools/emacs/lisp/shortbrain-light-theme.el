@@ -193,6 +193,9 @@
                                               :box (:line-width -1 :color ,inactive-bg)))))
    `(nlinum-relative-current-face ((,class (:foreground ,frame-fg :background ,default-bg))))
    `(vertical-border ((,class (:foreground ,border-fg :background ,default-bg))))
+   `(tab-bar ((,class (:background ,default-bg))))
+   `(tab-bar-tab ((,class (:background ,default-bg :inherit shadow :weight bold))))
+   `(tab-bar-tab-inactive ((,class (:background ,inactive-bg :inherit shadow :weight normal))))
 
    ;; Highlighting
    `(highlight ((,class (:foreground ,highlight-fg :background ,highlight-bg))))
