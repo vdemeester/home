@@ -164,7 +164,7 @@
    `(linum ((,class (:inherit shadow :background ,default-bg))))
    `(mode-line ((,class (:foreground ,frame-fg :background ,default-bg
                                      :box (:line-width -1 :color ,default-bg)))))
-   `(mode-line-inactive ((,class (:foreground ,inactive-fg :background ,default-bg
+   `(mode-line-inactive ((,class (:foreground ,inactive-fg :background ,inactive-bg
                                               :box (:line-width -1 :color ,default-bg)))))
    `(nlinum-relative-current-face ((,class (:foreground ,frame-fg :background ,default-bg))))
    `(vertical-border ((,class (:foreground ,border-fg :background ,default-bg))))
