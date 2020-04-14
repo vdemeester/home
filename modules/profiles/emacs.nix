@@ -56,6 +56,7 @@ in
             aggressive-indent
             async
             avy
+            pkgs.bookmark-plus
             company
             company-emoji
             company-go
@@ -66,6 +67,7 @@ in
             dired-quick-sort
             dired-narrow
             dired-rsync
+            pkgs.dired-plus
             direnv
             dockerfile-mode
             easy-kill
