@@ -57,19 +57,5 @@
 
 ;;(bind-key "C-c w t" #'vde/window-split-toggle)
 
-(use-package eyebrowse
-  :commands (eyebrowse-switch-to-window-config)
-  :bind (("C-c w s" . eyebrowse-switch-to-window-config)
-         ("C-c w k" . eyebrowse-close-window-config)
-         ("C-c w w" . eyebrowse-last-window-config)
-         ("C-c w n" . eyebrowse-next-window-config)
-         ("C-c w p" . eyebrowse-prev-window-config))
-  :config
-  (setq-default eyebrowse-mode-line-separator " "
-                eyebrowse-mode-line-style 'always
-                eyebrowse-new-workspace t
-                eyebrowse-wrap-around t)
-  (eyebrowse-mode 1))
-
 (provide 'config-windows)
 ;;; config-windows ends here

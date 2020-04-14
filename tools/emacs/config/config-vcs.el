@@ -88,9 +88,9 @@
                 magit-display-buffer-function #'magit-display-buffer-traditional)
 
   (magit-define-popup-option 'magit-rebase-popup
-    ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
+                             ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
   (magit-define-popup-switch 'magit-log-popup
-    ?m "Omit merge commits" "--no-merges")
+                             ?m "Omit merge commits" "--no-merges")
 
   ;; Hide "Recent Commits"
   (magit-add-section-hook 'magit-status-sections-hook
@@ -105,10 +105,7 @@
             #'mu-magit-set-repo-dirs-from-projectile)
 
   ;; Refresh `magit-status' after saving a buffer
-  (add-hook 'after-save-hook #'magit-after-save-refresh-status)
-
-  ;; Free C-c C-w for Eyebrowse
-  (unbind-key "C-c C-w" git-commit-mode-map))
+  (add-hook 'after-save-hook #'magit-after-save-refresh-status))
 ;; -UseMagit
 
 ;; UseGitCommit

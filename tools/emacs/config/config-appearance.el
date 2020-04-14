@@ -109,28 +109,8 @@
                 ;; Show buffer position percentage starting from top
                 mode-line-percent-position '(-3 "%o"))
 
-  (defvar mu-eyebrowse-mode-line
-    '(:propertize
-      (:eval
-       (when (bound-and-true-p eyebrowse-mode)
-         (let* ((num (eyebrowse--get 'current-slot))
-                (tag (when num
-                       (nth 2 (assoc num (eyebrowse--get 'window-configs)))))
-                (str (concat
-                      " "
-                      (if (and tag (< 0 (length tag)))
-                          tag
-                        (when num (int-to-string num)))
-                      " ")))
-           str)))
-      face (:background "#81a2be" :foreground "#373b41"))
-    "Mode line format for Eyebrowse.")
-
-  (put 'mu-eyebrowse-mode-line 'risky-local-variable t)
-
   (setq-default mode-line-format
                 '("%e"
-                  mu-eyebrowse-mode-line
                   mode-line-front-space
                   mode-line-client
                   mode-line-modified

@@ -71,7 +71,6 @@ in
             easy-kill
             esup
             expand-region
-            eyebrowse
             flycheck
             flycheck-golangci-lint
             git-commit
