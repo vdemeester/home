@@ -88,9 +88,9 @@
                 magit-display-buffer-function #'magit-display-buffer-traditional)
 
   (magit-define-popup-option 'magit-rebase-popup
-                             ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
+    ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
   (magit-define-popup-switch 'magit-log-popup
-                             ?m "Omit merge commits" "--no-merges")
+    ?m "Omit merge commits" "--no-merges")
 
   ;; Hide "Recent Commits"
   (magit-add-section-hook 'magit-status-sections-hook
@@ -107,6 +107,17 @@
   ;; Refresh `magit-status' after saving a buffer
   (add-hook 'after-save-hook #'magit-after-save-refresh-status))
 ;; -UseMagit
+
+;; UseMagitAnnex
+(use-package magit-annex
+  :after magit)
+;; -UseMagitAnnex
+
+;; UseGitAnnex
+(use-package git-annex
+  :after dired
+  :defer t)
+;; -UseGitAnnex
 
 ;; UseGitCommit
 (use-package git-commit
@@ -133,6 +144,7 @@
                 '(non-empty-second-line
                   overlong-summary-line)))
 ;; -UseGitCommit
+
 
 ;; UseGitConfig
 (use-package gitconfig-mode

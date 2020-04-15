@@ -75,6 +75,7 @@ in
             expand-region
             flycheck
             flycheck-golangci-lint
+            git-annex
             git-commit
             gitattributes-mode
             gitconfig-mode
@@ -135,6 +136,7 @@ in
             go-mode
             hide-mode-line
             magit
+            magit-annex
             magit-popup
             minions
             moody
