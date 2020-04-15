@@ -36,8 +36,8 @@
   ;;:commands (mail-mode mail-text)
   :defines (send-mail-function)
   :config
-  (setq send-mail-function 'sendmail-send-it
-        sendmail-program "/home/vincent/bin/msmtp"))
+  (setq-default send-mail-function 'sendmail-send-it
+                sendmail-program "/home/vincent/bin/msmtp"))
 ;; -SendmailCfg
 
 ;; MessageCfg
