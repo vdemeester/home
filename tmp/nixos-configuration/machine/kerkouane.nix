@@ -25,10 +25,10 @@ with import ../assets/machines.nix; {
   services = {
     nginx = {
       enable = true;
-      virtualHosts."kerkouane.sbr.pm" = {
+      virtualHosts."dl.sbr.pm" = {
         enableACME = true;
         forceSSL = true;
-        root = "/home/vincent/desktop/sites/kerkouane.sbr.pm";
+        root = "/home/vincent/desktop/sites/dl.sbr.pm";
         locations."/" = {
           index = "index.html";
         };
