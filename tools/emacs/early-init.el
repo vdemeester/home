@@ -24,6 +24,23 @@
 (setq file-name-handler-alist nil)
 ;; -FileNameHandler
 
+;; Default font is Ubuntu Mono (and Ubuntu Sans for variable-pitch)
+;; If Ubuntu Mono or Ubuntu Sans are not available, use the default Emacs face
+(when (member "Ubuntu Mono" (font-family-list))
+  (set-face-attribute 'default nil
+                      :family "Ubuntu Mono"
+                      :height font-height))
+(when (member "Ubuntu Sans" (font-family-list))
+  (set-face-attribute 'variable-pitch nil
+                      :family "Ubuntu Sans"
+                      :height font-height
+                      :weight 'regular))
+
+;; Ignore X resources; its settings would be redundant with the other settings
+;; in this file and can conflict with later config (particularly where the
+;; cursor color is concerned).
+(advice-add #'x-apply-session-resources :override #'ignore)
+
 ;; AfterInitHook
 (add-hook 'after-init-hook
           `(lambda ()
