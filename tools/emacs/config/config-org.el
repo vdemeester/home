@@ -29,7 +29,8 @@
 (use-package s)
 (use-package org
   :ensure org-plus-contrib ;; load from the package instead of internal
-  :mode (("\\.org$" . org-mode))
+  :mode (("\\.org$" . org-mode)
+         ("\\.org.draft$" . org-mode))
   :commands (org-agenda org-capture)
   :bind (("C-c o l" . org-store-link)
          ("C-c o r r" . org-refile)
