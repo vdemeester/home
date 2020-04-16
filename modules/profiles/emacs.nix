@@ -134,7 +134,6 @@ in
             flyspell-correct-ivy
             forge
             go-mode
-            hide-mode-line
             magit
             magit-annex
             magit-popup

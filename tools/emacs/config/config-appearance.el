@@ -156,11 +156,5 @@
   (moody-replace-vc-mode))
 ;; -UseMoody
 
-;; UseHideModeLine
-(use-package hide-mode-line-mode
-  :commands hide-mode-line-mode
-  :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
-;; -UseHideModeLine
-
 (provide 'config-appearance)
 ;;; config-appearance.el ends here
