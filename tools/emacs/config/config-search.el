@@ -5,7 +5,6 @@
 
 ;; UseISearch
 (use-package isearch
-  :disabled
   :config
   (setq-default search-whitespace-regexp ".*?"
                 isearch-lax-whitespace t
