@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=org-protocol
-Exec=emacsclient -n %u
+Exec=emacsclient -s /run/user/1000/emacs/org -n %u
 Type=Application
 Terminal=false
 Categories=System;
