@@ -30,7 +30,9 @@
    projectile-vc)
   :bind-keymap ("C-c p" . projectile-command-map)
   :config
-  (setq projectile-completion-system 'default)
+  (setq-default projectile-completion-system 'default
+                ;; Do not track known projects automatically, instead call projectile-add-known-project
+                projectile-track-known-projects-automatically nil)
   (projectile-mode)
   ;; Remove dead projects when Emacs is idle
   (run-with-idle-timer 10 nil #'projectile-cleanup-known-projects)
