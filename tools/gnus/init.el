@@ -15,6 +15,7 @@
   (setq gnus-registry-cache-file "~/desktop/gnus/gnus.registry.eld")
   (setq gnus-select-method '(nnnil))
   (setq nntp-authinfo-file "~/.authinfo.gpg")
+  (setq gnus-use-bbdb t)
   (setq gnus-secondary-select-methods
         '((nntp "news.gwene.org")
           (nnimap "prv"
@@ -170,3 +171,36 @@
   :after (gnus dired)
   :hook (dired-mode . gnus-dired-mode))
 ;; -GnusDired
+
+;; GnusDemon
+(use-package gnus-demon
+  :after (gnus)
+  :config
+  ;; Get mail every 30min
+  (gnus-demon-add-handler 'gnus-group-get-new-news 30 t)
+  (gnus-demon-init))
+;; -GnusDemon
+
+;; UseBBDB
+(use-package bbdb
+  :config
+  (setq-default bbdb-file "~/desktop/gnus/bbdb")
+  (bbdb-initialize 'message 'gnus 'com 'anniv)
+  (bbdb-mua-auto-update-init 'message 'gnus 'com 'anniv)
+
+  (setq-default bbdb-offer-save 1                   ;; 1 means save-without-asking
+                bbdb-always-add-addresses t
+                bbdb-update-records-p 'create       ;; Auto-create
+                bbdb-snarf-rule-default 'mail       ;; Just snarf with mail by default
+                bbdb-mail-avoid-redundancy nil      ;; always use full name
+                bbdb-add-name 2                     ;; show name-mismatches for 2 secs
+                bbdb-add-mails t                    ;; add new addresses to existing...
+                bbdb-canonicalize-redundant-mails t ;; x@foo.bar.cx => x@bar.cx
+                bbdb-completion-list t              ;; complete on anything
+                bbdb-complete-mail-allow-cycling t  ;; cycle trough matches
+                bbdb-phone-style nil                ;; No north american
+                bbdb-mua-pop-up nil
+                bbdb-mua-pop-up-window-size 2
+                bbdb-mua-update-interactive-p '(query . query)
+                bbdb-pop-up-layout 'one-line))
+;; -UseBBDB

@@ -56,6 +56,7 @@ in
             aggressive-indent
             async
             avy
+            bbdb
             pkgs.bookmark-plus
             company
             company-emoji
