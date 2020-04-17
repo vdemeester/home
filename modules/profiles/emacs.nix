@@ -126,7 +126,6 @@ in
             which-key
             with-editor
             xterm-color
-            yasnippet
             yaml-mode
             darkroom
             eshell-prompt-extras
