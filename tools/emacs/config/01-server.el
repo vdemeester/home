@@ -5,6 +5,7 @@
 
 ;; UseServer
 (use-package server
+  :disabled
   :config (or (server-running-p) (server-mode)))
 ;; -UseServer
 
