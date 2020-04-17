@@ -3,6 +3,11 @@
 ;;; Mails configuration
 ;;; Code:
 
+;; ReadingEmail
+(use-package simple
+  :custom (read-mail-command #'gnus))
+;; -ReadingEmail
+
 ;; AuthSource
 (use-package auth-source
   :config
@@ -52,6 +57,7 @@
         message-kill-buffer-on-exit t
         message-generate-headers-first t)
   (add-to-list 'mm-body-charset-encoding-alist '(utf-8 . base64))
+
   (defun my-message-hook ()
     "Message mode hook."
     (turn-on-auto-fill)
