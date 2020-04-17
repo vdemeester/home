@@ -5,6 +5,7 @@
 ;; TypeFaceConfiguration
 (use-package emacs
   :bind ("C-c f r" . mu-reset-fonts)
+  :commands (mu-reset-fonts)
   :config
 ;;; ¯\_(ツ)_/¯
   (defconst font-height 130

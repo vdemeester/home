@@ -24,6 +24,18 @@
 (setq file-name-handler-alist nil)
 ;; -FileNameHandler
 
+;;-EarlyFontSetup
+(defconst font-height 130
+  "Default font-height to use.")
+;; Middle/Near East: שלום, السّلام عليكم
+(when (member "Noto Sans Arabic" (font-family-list))
+  (set-fontset-font t 'arabic "Noto Sans Arabic"))
+(when (member "Noto Sans Hebrew" (font-family-list))
+  (set-fontset-font t 'arabic "Noto Sans Hebrew"))
+;; Africa: ሠላም
+(when (member "Noto Sans Ethiopic" (font-family-list))
+  (set-fontset-font t 'ethiopic "Noto Sans Ethiopic"))
+
 ;; Default font is Ubuntu Mono (and Ubuntu Sans for variable-pitch)
 ;; If Ubuntu Mono or Ubuntu Sans are not available, use the default Emacs face
 (when (member "Ubuntu Mono" (font-family-list))
@@ -40,6 +52,7 @@
 ;; in this file and can conflict with later config (particularly where the
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
+;;+EarlyFontSetup
 
 ;; AfterInitHook
 (add-hook 'after-init-hook
