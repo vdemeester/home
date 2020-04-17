@@ -84,36 +84,5 @@ confines of word boundaries (e.g. multiple words)."
     (defalias 'projectile-ripgrep #'rg-project)))
 ;; -UseRG
 
-(use-package swiper
-  :disabled
-  :after ivy
-  :custom
-  (swiper-action-recenter t)
-  (swiper-goto-start-of-match t)
-  (swiper-include-line-number-in-search t)
-  :bind (("C-S-s" . swiper)
-         ("M-s s" . swiper-multi)
-         ("M-s w" . swiper-thing-at-point)
-         :map swiper-map
-         ("M-y" . yank)
-         ("C-." . swiper-avy)))
-
-(use-package anzu
-  :disabled
-  :ensure t
-  :delight
-  :custom
-  (anzu-search-threshold 100)
-  (anzu-replace-threshold nil)
-  (anzu-deactivate-region nil)
-  (anzu-replace-to-string-separator "")
-  :config
-  (global-anzu-mode 1)
-  :bind (([remap isearch-query-replace] . anzu-isearch-query-replace)
-         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
-  ([remap query-replace] . anzu-query-replace)
-  ([remap query-replace-regexp] . anzu-query-replace-regexp)
-  ("M-s %" . anzu-query-replace-at-cursor))
-
 (provide 'config-search)
 ;;; config-search.el ends here
