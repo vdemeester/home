@@ -14,12 +14,10 @@
      ,@else))
 
 (sbr-if-dump
- (progn
-   (setq load-path sbr-dumped-load-path)
-   (global-font-lock-mode)
-   (transient-mark-mode))
- ;; add load-path’s and load autoload files
- (package-initialize))
+    (progn
+      (setq load-path sbr-dumped-load-path))
+  ;; add load-path’s and load autoload files
+  (package-initialize))
 
 ;; +CheckVer
 (let ((minver 26))
