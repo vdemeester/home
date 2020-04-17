@@ -2,6 +2,25 @@
 ;;; Commentary:
 ;;; init configuration file for GNU Emacs
 ;;; Code:
+
+(defvar sbr-dumped nil
+  "non-nil when a dump file is loaded (because dump.el sets this variable).")
+
+(defmacro sbr-if-dump (then &rest else)
+  "Evaluate IF if running with a dump file, else evaluate ELSE."
+  (declare (indent 1))
+  `(if sbr-dumped
+       ,then
+     ,@else))
+
+(sbr-if-dump
+ (progn
+   (setq load-path sbr-dumped-load-path)
+   (global-font-lock-mode)
+   (transient-mark-mode))
+ ;; add load-path’s and load autoload files
+ (package-initialize))
+
 ;; +CheckVer
 (let ((minver 26))
   (unless (>= emacs-major-version minver)
