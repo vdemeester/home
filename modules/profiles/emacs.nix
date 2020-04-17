@@ -57,6 +57,7 @@ in
             async
             avy
             bbdb
+            beginend
             pkgs.bookmark-plus
             company
             company-emoji

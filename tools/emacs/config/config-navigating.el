@@ -26,5 +26,10 @@
               ("C-a" . mwim-beginning-of-code-or-line)
               ("C-e" . mwim-end-of-code-or-line)))
 
+(use-package beginend
+  :defer 5
+  :config
+  (beginend-global-mode 1))
+
 (provide 'config-navigating)
 ;;; config-navigating.el ends here
