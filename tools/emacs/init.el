@@ -15,6 +15,7 @@
 
 (sbr-if-dump
     (progn
+      (global-font-lock-mode)
       (setq load-path sbr-dumped-load-path))
   ;; add load-path’s and load autoload files
   (package-initialize))
