@@ -15,7 +15,7 @@ PUBLISH_FOLDER = ~/desktop/sites/beta.sbr.pm
 
 # Targets
 .PHONY: all
-all: build
+all: switch emacs-dump
 
 .PHONY: update
 update:
@@ -24,6 +24,10 @@ update:
 .PHONY: pull
 pull:
 	(cd overlays/emacs-overlay && git checkout master && git pull --rebase)
+
+.PHONY: emacs-dump
+emacs-dump:
+	emacs --batch -q -l ~/.config/emacs/dump.el
 
 # home-manager setup
 .PHONY: assets
