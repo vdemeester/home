@@ -234,5 +234,9 @@ instead.  This command can then be followed by the standard
   (pdf-tools-install :no-query)
   (require 'pdf-occur))
 
+(use-package paste-sbr
+  :commands (htmlize-paste-it)
+  :bind ("C-c e p" . htmlize-paste-it))
+
 (provide 'config-editing)
 ;;; config-editing.el ends here
