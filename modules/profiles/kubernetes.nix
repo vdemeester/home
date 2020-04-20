@@ -38,7 +38,7 @@ in
           kube-prompt
           kubectx
           nur.repos.vdemeester.oc
-          nur.repos.vdemeester.openshift-install
+          #nur.repos.vdemeester.openshift-install
           nur.repos.vdemeester.operator-sdk
           nur.repos.vdemeester.ko
           nur.repos.vdemeester.kss
