@@ -45,7 +45,7 @@ in
         User = cfg.user;
         Restart = "on-failure";
         ExecStart = ''
-          ${cfg.package}/bin/vvanityurl /etc/govanityurl/config.yaml
+          ${cfg.package}/bin/vanityurl /etc/govanityurl/config.yaml
         '';
       };
       path = [ cfg.package ];
