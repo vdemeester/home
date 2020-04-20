@@ -26,7 +26,7 @@ with import ../assets/machines.nix; {
     govanityurl = {
       enable = true;
       user = "nginx";
-      host = "pkg.sbr.pm";
+      host = "go.sbr.pm";
       config = ''
         paths:
           /ape:
