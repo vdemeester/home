@@ -32,6 +32,7 @@
     ./profiles/zsh.nix
     ./programs/podman.nix
     ./services/athens.nix
+    ./services/govanityurl.nix
     ./services/nix-binary-cache.nix
     ./services/wireguard.client.nix
     ./virtualisation/buildkit.nix

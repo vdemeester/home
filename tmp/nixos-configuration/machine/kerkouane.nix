@@ -23,6 +23,22 @@ with import ../assets/machines.nix; {
     };
   };
   services = {
+    govanityurl = {
+      enable = true;
+      user = "nginx";
+      host = "pkg.sbr.pm";
+      config = ''
+        paths:
+          /ape:
+            repo: https://github.com/vdemeester/ape
+          /nr:
+            repo: https://github.com/vdemeester/nr
+          /ram:
+            repo: https://github.com/vdemeester/ram
+          /sec:
+            repo: https://github.com/vdemeester/sec
+      '';
+    };
     nginx = {
       enable = true;
       virtualHosts."dl.sbr.pm" = {
@@ -40,6 +56,11 @@ with import ../assets/machines.nix; {
         locations."/" = {
           index = "index.html";
         };
+      };
+      virtualHosts."go.sbr.pm" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = { proxyPass = "http://127.0.0.1:8080"; };
       };
       virtualHosts."sbr.pm" = {
         enableACME = true;
