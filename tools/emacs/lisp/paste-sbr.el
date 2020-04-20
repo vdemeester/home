@@ -41,13 +41,10 @@
          (end (if (region-active-p)
                   (region-end) (point-max)))
 
-         (message end)
-         (message start)
          ;; We use a basename-hash.ext.html format
          (basename (file-name-base (buffer-name)))
          (extension (file-name-extension (buffer-name)))
          (hash (sha1 (current-buffer) start end))
-         (message hash)
          (file-name (concat basename
                             "-" (substring hash 0 6)
                             "." extension
