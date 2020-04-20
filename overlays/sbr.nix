@@ -16,12 +16,12 @@ rec {
   emacs27 = (self.emacs.override { srcRepo = true; }).overrideAttrs (
     old: {
       name = "emacs-dev";
-      version = "27.0.99";
+      version = "27.0.91";
       src = super.fetchFromGitHub {
         owner = "emacs-mirror";
         repo = "emacs";
-        rev = "emacs-27.0.90";
-        sha256 = "13n82lxbhmkcmlzbh0nml8ydxyfvz8g7wsdq7nszlwmq914gb5nk";
+        rev = "emacs-27.0.91";
+        sha256 = "0mlrg2npy1r79laahkgzhxd1qassfcdz8qk1cpw7mqgf6y5x505h";
       };
       buildInputs = old.buildInputs ++ [ super.jansson ];
       patches = [
