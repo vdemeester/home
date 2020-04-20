@@ -37,7 +37,7 @@ in
       host: ${cfg.host}
       ${cfg.config}
     '';
-    systemd.services.athens = {
+    systemd.services.govanityurl = {
       description = "Govanity service";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
