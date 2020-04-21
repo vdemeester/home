@@ -30,13 +30,13 @@ with import ../assets/machines.nix; {
       config = ''
         paths:
           /ape:
-            repo: https://github.com/vdemeester/ape
+            repo: https://gitlab.com/vdemeester/ape
           /nr:
-            repo: https://github.com/vdemeester/nr
+            repo: https://gitlab.com/vdemeester/nr
           /ram:
-            repo: https://github.com/vdemeester/ram
+            repo: https://gitlab.com/vdemeester/ram
           /sec:
-            repo: https://github.com/vdemeester/sec
+            repo: https://gitlab.com/vdemeester/sec
       '';
     };
     nginx = {
