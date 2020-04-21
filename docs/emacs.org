@@ -59,6 +59,16 @@ in. [[https://protesilaos.com/][Protesilaos Stavrou]] is not my only source, her
 + https://github.com/hlissner/doom-emacs
 + http://doc.norang.ca/org-mode.html
 
+And also:
+
+- [[https://sriramkswamy.github.io/dotemacs/][Emacs configuration file]]
+- [[https://blog.d46.us/advanced-emacs-startup/][Advanced Techniques for Reducing Emacs Startup Time]]
+- [[https://www.bartuka.com/posts/emacs-config/index.html][@bartuka: emacs.d]]
+- [[http://www.howardism.org/Technical/Emacs/getting-boxes-done.html][Getting Boxes Done]]
+- [[https://idiocy.org/emacs-fonts-and-fontsets.html][Emacs, fonts and fontsets]]
+- [[https://spin.atomicobject.com/2016/05/27/write-emacs-package/][A Simple Guide to Writing & Publishing Emacs Packages]]
+- [[https://alphapapa.github.io/emacs-package-dev-handbook/][The Emacs Package Developer's Handbook]]
+
 ** Why using GNU/Emacs ?
 :PROPERTIES:
 :CUSTOM_ID: h:165fca5a-b87d-4140-963b-658a2438e769
@@ -150,6 +160,11 @@ be =C-c v=, for projects it's gonna be =C-c p=, etc…
 | =C-c v= | Version control (=vc=, =magit=, …)  |
 | =C-c w= | Window management (=ace-window=, …) |
 | =C-x p= | Bookmarks (=bookmark-plus=, …)      |
+
+See also:
+- https://karl-voit.at/2018/07/08/emacs-key-bindings/
+- https://www.masteringemacs.org/article/mastering-key-bindings-emacs
+- http://www.wilfred.me.uk/blog/2018/01/06/the-emacs-guru-guide-to-key-bindings/
 
 ** COPYING
 :PROPERTIES:
