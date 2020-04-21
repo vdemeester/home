@@ -132,7 +132,6 @@ in
             darkroom
             eshell-prompt-extras
             esh-autosuggest
-            flyspell-correct-ivy
             forge
             go-mode
             magit
