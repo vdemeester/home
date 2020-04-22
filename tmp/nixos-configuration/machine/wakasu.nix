@@ -53,6 +53,11 @@ with import ../assets/machines.nix; {
   programs = {
     podman.enable = true;
   };
+  security.sudo = {
+    extraConfig = ''
+      %users ALL = (root) NOPASSWD: /home/vincent/.nix-profile/bin/kubernix
+    '';
+  };
   services = {
     logind.extraConfig = ''
       HandleLidSwitch=ignore
@@ -76,10 +81,10 @@ with import ../assets/machines.nix; {
       videoDrivers = [ "nvidia" ];
       dpi = 96;
       serverFlagsSection = ''
-          Option "BlankTime" "0"
-          Option "StandbyTime" "0"
-          Option "SuspendTime" "0"
-          Option "OffTime" "0"
+        Option "BlankTime" "0"
+        Option "StandbyTime" "0"
+        Option "SuspendTime" "0"
+        Option "OffTime" "0"
       '';
     };
   };
