@@ -19,7 +19,7 @@ in
     profiles.desktop = {
       enable = mkEnableOption "Enable desktop profile";
       lockCmd = mkOption {
-        default = "${pkgs.slim}/bin/slimlock";
+        default = "-n ${dim-screen} -- ${pkgs.i3lock-color}/bin/i3lock-color -c 666666";
         description = "Lock command to use";
         type = types.str;
       };

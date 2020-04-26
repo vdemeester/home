@@ -19,7 +19,7 @@ in
     profiles.i3 = {
       enable = mkEnableOption "Enable i3 profile";
       lockCmd = mkOption {
-        default = "slimlock";
+        default = "${pkgs.i3lock-color}/bin/i3lock-color -c 666666";
         description = "Lock command to use";
         type = types.str;
       };
