@@ -15,9 +15,9 @@ in
     };
   };
   config = mkIf cfg.enable {
+    console.keyMap = "fr-bepo";
+    console.font = "Lat2-Terminus16";
     i18n = {
-      consoleFont = "Lat2-Terminus16";
-      consoleKeyMap = "fr-bepo";
       defaultLocale = "en_US.UTF-8";
     };
   };
