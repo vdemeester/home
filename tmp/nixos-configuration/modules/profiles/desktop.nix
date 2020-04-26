@@ -52,13 +52,6 @@ in
         description = "Enable auto login";
         type = types.bool;
       };
-      slimTheme = mkOption {
-        default = {
-          url = "https://github.com/vdemeester/slim-themes/raw/master/v-theme-0.1.tar.xz";
-          sha256 = "1648krzmh6y2khbcf1zyik3znjpa8rckchbq49z1vqcg8zi587xi";
-        };
-        description = "Slim theme to use";
-      };
     };
   };
   config = mkIf cfg.enable {
@@ -77,15 +70,19 @@ in
 
     networking.networkmanager = {
       enable = cfg.networkmanager;
-      unmanaged =  [
-        "interface-name:ve-*" "interface-name:veth*" "interface-name:wg0" "interface-name:docker0" "interface-name:virbr*"
+      unmanaged = [
+        "interface-name:ve-*"
+        "interface-name:veth*"
+        "interface-name:wg0"
+        "interface-name:docker0"
+        "interface-name:virbr*"
       ];
       packages = with pkgs; [ networkmanager-openvpn ];
     };
 
     programs.dconf.enable = true;
     xdg.portal.enable = cfg.flatpak;
-    
+
     services = {
       flatpak.enable = cfg.flatpak;
       dbus.packages = [ pkgs.gnome3.dconf ];
@@ -121,17 +118,17 @@ in
           ''
         ];
         displayManager = {
-          slim = {
+          # defaultSession = "none+i3";
+          lightdm = {
             enable = true;
-            autoLogin = cfg.autoLogin;
-            # Probably put this into users instead ?
-            defaultUser = "vincent";
-            theme = pkgs.fetchurl cfg.slimTheme;
+            autoLogin = {
+              enable = true;
+              user = "vincent";
+            };
           };
         };
       };
     };
-
     fonts = {
       enableFontDir = true;
       enableGhostscriptFonts = true;
@@ -154,7 +151,7 @@ in
         overpass
         symbola
         source-code-pro
-	twemoji-color-font
+        twemoji-color-font
         ubuntu_font_family
         unifont
       ];
