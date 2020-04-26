@@ -8,7 +8,8 @@ with import ../assets/machines.nix; {
   networking = {
     firewall.enable = false; # we are in safe territory :D
     bridges.br1.interfaces = [ "enp0s31f6" ];
-    interfaces.enp0s31f6 = {
+    useDHCP = false;
+    interfaces.br1 = {
       useDHCP = true;
     };
   };

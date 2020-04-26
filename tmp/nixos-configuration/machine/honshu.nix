@@ -5,7 +5,8 @@ with import ../assets/machines.nix; {
   networking = {
     firewall.enable = false; # we are in safe territory :D
     bridges.br1.interfaces = [ "eno1" ];
-    interfaces.eno1 = {
+    useDHCP = false;
+    interfaces.br1 = {
       useDHCP = true;
     };
   };
