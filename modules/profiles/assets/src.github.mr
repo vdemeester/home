@@ -1,0 +1,11 @@
+include = cat ${HOME}/.config/mr
+
+[DEFAULT]
+lib =
+    export BASE_HOST="github.com"
+
+[tektoncd/pipeline]
+[tektoncd/triggers]
+[tektoncd/experimental]
+[tektoncd/website]
+[tektoncd/cli]

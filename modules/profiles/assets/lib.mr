@@ -1,0 +1,23 @@
+# -*- mode: sh -*-
+[DEFAULT]
+lib =
+    BASE="${HOME}/src/"
+    my_git_clone() {
+        URL="${BASE_HOST}${MR_REPO//${BASE}${BASE_HOST}/}.git"
+        git clone $URL $MR_REPO
+    }
+
+checkout = my_git_clone
+git_gc = git gc "$@"
+# git_u = git pull --rebase --autostash "$@"
+git_u =
+    git fetch -p --all
+    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    echo "On $CURRENT_BRANCH"
+    git stash
+    REMOTE="upstream"
+    git config remote.upstream.url || REMOTE="origin"
+    echo "Rebase ${REMOTE}/master on master"
+    git rebase ${REMOTE}/master master
+    git co $CURRENT_BRANCH
+skip = [ $1 = "clone" ] && lazy
