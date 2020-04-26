@@ -3,6 +3,11 @@ include = cat ${HOME}/.config/mr
 [DEFAULT]
 lib =
     export BASE_HOST="github.com"
+    export GIT_BASE="github.com:"
+
+[openshift]
+chain = true
+skip = true
 
 [tektoncd/catalog]
 [tektoncd/cli]

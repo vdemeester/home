@@ -12,6 +12,10 @@ skip = true
 chain = true
 skip = true
 
+[knative.dev]
+chain = true
+skip = true
+
 [pkgs.devel.redhat.com]
 chain = true
 skip = true
