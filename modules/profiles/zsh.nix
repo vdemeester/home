@@ -92,6 +92,7 @@ in
           envExtra = ''
             export GOPATH=${config.home.homeDirectory}
             export WEBKIT_DISABLE_COMPOSITING_MODE=1;
+            export PATH=$HOME/bin:$PATH
             if [ -d $HOME/.krew/bin ]; then
               export PATH=$HOME/.krew/bin:$PATH
             fi
