@@ -8,6 +8,7 @@ with import ../assets/machines.nix; {
   networking = {
     firewall.enable = false; # we are in safe territory :D
     bridges.br1.interfaces = [ "enp0s31f6" ];
+    networking.useDHCP = false;
     interfaces.enp0s31f6 = {
       useDHCP = true;
     };
@@ -59,7 +60,7 @@ with import ../assets/machines.nix; {
     nix-binary-cache = {
       enable = true;
       domain = "nix.cache.home";
-      aliases = ["cache.massimo.home" "nix.okinawa.home"];
+      aliases = [ "cache.massimo.home" "nix.okinawa.home" ];
     };
     syncthing.guiAddress = "0.0.0.0:8384";
     tarsnap = {
