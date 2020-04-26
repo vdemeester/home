@@ -23,6 +23,7 @@ in
         xdg.configFile."mr".source = ./assets/lib.mr;
         home.file."src/.mrconfig".source = ./assets/src.mr;
         home.file."src/github.com/.mrconfig".source = ./assets/src.github.mr;
+        home.file."src/pkgs.devel.redhat.com/.mrconfig".source = ./assets/src.pkgs.devel.redhat.mr;
         home.packages = with pkgs;
           [
             binutils

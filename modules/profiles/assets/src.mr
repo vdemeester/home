@@ -11,3 +11,7 @@ skip = true
 [git.sr.ht]
 chain = true
 skip = true
+
+[pkgs.devel.redhat.com]
+chain = true
+skip = true
