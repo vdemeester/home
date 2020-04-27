@@ -242,7 +242,7 @@
   :config
   (setq org-src-fontify-natively t
         org-src-tab-acts-natively t
-        org-src-window-setup 'split-window-right
+        org-src-window-setup 'current-window
         org-edit-src-content-indentation 0))
 ;; -OrgSrc
 
