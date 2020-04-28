@@ -94,8 +94,10 @@
 
   ;; Hide "Recent Commits"
   (magit-add-section-hook 'magit-status-sections-hook
+                          'magit-insert-unpulled-from-upstream
                           'magit-insert-unpushed-to-upstream
                           'magit-insert-unpushed-to-upstream-or-recent
+                          'magit-insert-submodules
                           'replace)
 
   ;; Show refined hunks during diffs
