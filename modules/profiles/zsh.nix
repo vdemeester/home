@@ -78,7 +78,6 @@ in
                 sha256 = "04skzxv8j06f1snsx62qnca5f2183w0wfs5kz78rs8hkcyd6g89w";
               };
             }
-            # romkatv/powerlevel10k
             {
               name = "powerlevel10k";
               src = pkgs.fetchFromGitHub {
@@ -86,6 +85,15 @@ in
                 repo = "powerlevel10k";
                 rev = "700910cd0421a7d25d2800cefa76eb6d80dc62a8";
                 sha256 = "011ja4r3a8vbcs42js9nri4p8pi8z4ccqxl2qyf52pn3pfnidigj";
+              };
+            }
+            {
+              name = "zsh-nix-shell";
+              src = pkgs.fetchFromGitHub {
+                owner = "chisui";
+                repo = "zsh-nix-shell";
+                rev = "v0.1.0";
+                sha256 = "0snhch9hfy83d4amkyxx33izvkhbwmindy0zjjk28hih1a9l2jmx";
               };
             }
           ];
@@ -125,6 +133,7 @@ in
             fi
             # make sure navigation using emacs keybindings works on all non-alphanumerics
             # syntax highlighting
+            source $HOME/${config.programs.zsh.dotDir}/plugins/zsh-nix-shell/nix-shell.plugin.zsh
             source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
             ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
             ZSH_HIGHLIGHT_PATTERNS+=('rm -fR *' 'fg=white,bold,bg=red')
