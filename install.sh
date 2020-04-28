@@ -1,5 +1,5 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i git
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p git
 # This scripts tries to automate the NixOS installation
 # as much as possible.
 # curl https://gitlab.com/vdemeester/home/-/raw/master/install.sh | sh
