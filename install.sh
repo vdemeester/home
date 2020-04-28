@@ -6,6 +6,10 @@
 
 set -euo pipefail
 
+name=""
+disk=""
+swap=""
+
 read -p "Hostname: " name
 read -p "Disk:" disk
 read -p "Swap size (8GiB)": swap
