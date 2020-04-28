@@ -6,3 +6,4 @@ assets/machines.nix
 docs/sitemap.org
 tools/emacs/emacs.pdmp
 tools/emacs/recentf
+qemu

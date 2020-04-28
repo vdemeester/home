@@ -6,9 +6,13 @@ let
 in
 rec {
   imports = [
+    # Generated hardware configuration
+    ./hardware-configuration.nix
     # Default profile with default configuration
     ./modules/module-list.nix
     # Machine specific configuration files
-    (./machines + "/${hostName}.nix")
+    (./machine + "/${hostName}.nix")
   ];
+
+  networking.hostName = "${hostName}";
 }
