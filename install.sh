@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#! nix-shell -i git
 # This scripts tries to automate the NixOS installation
 # as much as possible.
 # curl https://gitlab.com/vdemeester/home/-/raw/master/install.sh | sh
@@ -26,6 +27,7 @@ set -x
 mkfs.ext4 -L nixos ${disk}1
 mkswap -L swap ${disk}2
 mkfs.fat -F 32 -n boot ${disk}3
+sleep 20
 
 set +x
 echo "Mount filesystems"
