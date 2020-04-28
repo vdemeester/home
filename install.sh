@@ -4,11 +4,7 @@
 # as much as possible.
 # curl https://gitlab.com/vdemeester/home/-/raw/master/install.sh | sh
 
-set -euo pipefail
-
-name=""
-disk=""
-swap=""
+set -eo pipefail
 
 read -p "Hostname: " name
 read -p "Disk:" disk
