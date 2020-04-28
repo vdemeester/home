@@ -99,7 +99,8 @@
         org-yank-adjusted-subtrees t
         org-image-actual-width nil
         org-startup-with-inline-images nil
-        org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
+        org-list-demote-modify-bullet '(("+" . "-") ("-" . "+"))
+        org-catch-invisible-edits 'error)
   (setcar (nthcdr 4 org-emphasis-regexp-components) 10)
   :hook (org-mode . vde/org-mode-hook))
 ;; -OrgMain
