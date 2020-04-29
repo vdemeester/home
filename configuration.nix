@@ -4,14 +4,14 @@
 let
   hostName = "${builtins.readFile ./hostname}";
 in
-rec {
+{
   imports = [
     # Generated hardware configuration
     ./hardware-configuration.nix
     # Default profile with default configuration
-    ./modules/module-list.nix
+    ./modules/module-list.nixos.nix
     # Machine specific configuration files
-    (./machine + "/${hostName}.nix")
+    (./machines + "/${hostName}.nixos.nix")
   ];
 
   networking.hostName = "${hostName}";
