@@ -146,7 +146,6 @@
                   overlong-summary-line)))
 ;; -UseGitCommit
 
-
 ;; UseGitConfig
 (use-package gitconfig-mode
   :commands (gitconfig-mode)
@@ -175,7 +174,6 @@
   :bind (:map dired-mode-map
               (")" . dired-git-info-mode))
   :defer 2)
-
 
 (defun git-blame-line ()
   "Runs `git blame` on the current line and
