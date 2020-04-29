@@ -6,7 +6,7 @@ let
 
   capture = pkgs.writeScriptBin "capture" ''
     #!${pkgs.stdenv.shell}
-    emacsclient -n -F '((name . "capture") (width . 75) (height . 30))' -e '(org-capture)'
+    emacsclient -s /run/user/1000/emacs/org -n -F '((name . "capture") (width . 150) (height . 90))' -e '(org-capture)'
   '';
 in
 {
