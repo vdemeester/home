@@ -10,9 +10,8 @@
 (dolist (package '(use-package company recentf moody helpful undo-tree cus-edit pinentry hardhat diff
                     use-package aggressive-indent savehist minions expand-region time uniquify isearch
                     minibuffer icomplete dired delsel direnv auth-source simple epa-file message
-                    vc vc-dir vc-git
-                    shortbrain-light-theme shortbrain-theme))
+                    vc vc-dir vc-git modus-operandi-theme modus-vivendi-theme))
   (require package))
-(load-theme 'shortbrain-light t t)
+(load-theme 'modus-operandi t t)
 ;; dump image
 (dump-emacs-portable (expand-file-name "emacs.pdmp" user-emacs-directory))

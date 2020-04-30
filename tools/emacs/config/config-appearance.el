@@ -56,31 +56,63 @@
 ;; -LoadTheme
 
 ;; UseTheme
-(use-package shortbrain-light-theme
+(use-package emacs
   :config
-  (load-theme 'shortbrain-light)
+  (setq custom-safe-themes t)
 
-  (defun set-light-theme ()
-    "Set the light theme with some customization if needed."
-    (interactive)
-    (use-package shortbrain-light-theme
-      :config
-      (load-theme 'shortbrain-light t)))
+  (defun sbr/modus-operandi ()
+    "Enable some Modus Operandi variables and load the theme.
+This is used internally by `sbr/modus-themes-toggle'."
+    (setq modus-operandi-theme-slanted-constructs t
+          modus-operandi-theme-bold-constructs t
+          modus-operandi-theme-visible-fringes nil
+          modus-operandi-theme-3d-modeline t
+          modus-operandi-theme-subtle-diffs t
+          modus-operandi-theme-distinct-org-blocks nil
+          modus-operandi-theme-proportional-fonts nil
+          modus-operandi-theme-rainbow-headings t
+          modus-operandi-theme-section-headings nil
+          modus-operandi-theme-scale-headings nil
+          modus-operandi-theme-scale-1 1.05
+          modus-operandi-theme-scale-2 1.1
+          modus-operandi-theme-scale-3 1.15
+          modus-operandi-theme-scale-4 1.2)
+    (load-theme 'modus-operandi t))
 
-  (defun set-dark-theme ()
-    "Set the dark theme with some customization if needed."
-    (interactive)
-    (use-package shortbrain-theme
-      :config
-      (load-theme 'shortbrain t)))
+  (defun sbr/modus-vivendi ()
+    "Enable some Modus Vivendi variables and load the theme.
+This is used internally by `sbr/modus-themes-toggle'."
+    (setq modus-vivendi-theme-slanted-constructs t
+          modus-vivendi-theme-bold-constructs t
+          modus-vivendi-theme-visible-fringes nil
+          modus-vivendi-theme-3d-modeline t
+          modus-vivendi-theme-subtle-diffs t
+          modus-vivendi-theme-distinct-org-blocks nil
+          modus-vivendi-theme-proportional-fonts nil
+          modus-vivendi-theme-rainbow-headings nil
+          modus-vivendi-theme-section-headings nil
+          modus-vivendi-theme-scale-headings nil
+          modus-vivendi-theme-scale-1 1.05
+          modus-vivendi-theme-scale-2 1.1
+          modus-vivendi-theme-scale-3 1.15
+          modus-vivendi-theme-scale-4 1.2)
+    (load-theme 'modus-vivendi t))
 
-  (defun theme-switcher ()
+  (defcustom sbr/modus-themes-toggle-hook nil
+    "Hook that runs after `prot/modus-themes-toggle' is invoked."
+    :type 'hook)
+
+  (defun sbr/modus-themes-toggle ()
+    "Toggle between `sbr/modus-operandi' and `sbr/modus-vivendi'.
+Also run `sbr/modus-themes-toggle-hook'."
     (interactive)
-    (let ((current-hour (string-to-number (format-time-string "%H"))))
-      (if (and (> current-hour 6) (< current-hour 20))
-          (set-light-theme)
-        (set-dark-theme)))))
-;; -UseTheme
+    (if (eq (car custom-enabled-themes) 'modus-operandi)
+        (sbr/modus-vivendi)
+      (sbr/modus-operandi))
+    (run-hooks 'sbr/modus-themes-toggle-hook))
+  :bind ("<f10>" . sbr/modus-themes-toggle)
+  :hook (after-init-hook . sbr/modus-operandi))
+;; -UseTheme0
 
 ;; UseMoody
 (use-package moody
