@@ -1,13 +1,9 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-
 let
-
   cfg = config.services.shairport-sync;
-
 in
-
 {
 
   ###### interface

@@ -23,20 +23,24 @@ in
       };
     };
   };
-  config = mkIf cfg.enable (mkMerge [
-    {
-      profiles.containers.kubernetes.enable = true;
-      home.packages = with pkgs; [
-        nur.repos.vdemeester.s2i
-        cfg.package
-      ];
-    }
-    (mkIf cfg.minishift.enable {
-      home.packages = with pkgs; [
-        cfg.minishift.package
-        docker-machine-kvm
-        docker-machine-kvm2
-      ];
-    })
-  ]);
+  config = mkIf cfg.enable (
+    mkMerge [
+      {
+        profiles.containers.kubernetes.enable = true;
+        home.packages = with pkgs; [
+          nur.repos.vdemeester.s2i
+          cfg.package
+        ];
+      }
+      (
+        mkIf cfg.minishift.enable {
+          home.packages = with pkgs; [
+            cfg.minishift.package
+            docker-machine-kvm
+            docker-machine-kvm2
+          ];
+        }
+      )
+    ]
+  );
 }

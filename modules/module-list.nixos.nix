@@ -1,5 +1,3 @@
-{ pkgs, lib, ... }:
-
 {
   imports = [
     ./hardware/sane-extra-config.nixos.nix

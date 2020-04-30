@@ -8,7 +8,7 @@ in
   options = {
     services.athens = {
       enable = mkEnableOption ''
-      Athens is a go module proxy
+        Athens is a go module proxy
       '';
       package = mkOption {
         type = types.package;
@@ -58,7 +58,7 @@ in
       preStart = ''
         mkdir -p /var/lib/athens
       '';
-      environment = { HOME="/var/lib/athens"; };
+      environment = { HOME = "/var/lib/athens"; };
       serviceConfig = {
         User = cfg.user;
         Restart = "on-failure";

@@ -39,11 +39,11 @@ in
       };
     };
     sound.mediaKeys.enable = true;
-  
+
     security.pam.loginLimits = [
       { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
-      { domain = "@audio"; item = "rtprio";  type = "-"; value = "99"; }
-      { domain = "@audio"; item = "nofile";  type = "-"; value = "99999"; }
+      { domain = "@audio"; item = "rtprio"; type = "-"; value = "99"; }
+      { domain = "@audio"; item = "nofile"; type = "-"; value = "99999"; }
     ];
 
     # spotify & pulseaudio
@@ -52,9 +52,9 @@ in
       allowedUDPPorts = [ 57621 57622 ];
     };
     environment.systemPackages = with pkgs; [
-      apulse       # allow alsa application to use pulse
-      pavucontrol  # pulseaudio volume control
-      pasystray    # systray application
+      apulse # allow alsa application to use pulse
+      pavucontrol # pulseaudio volume control
+      pasystray # systray application
       playerctl
     ];
     # We assume xserver runs when pulseaudio does

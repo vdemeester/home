@@ -18,7 +18,8 @@ let
     magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'';
     mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\x00\xff\xfe\xff\xff\xff'';
   };
-in {
+in
+{
   options = {
     profiles.qemu-user = {
       arm = mkEnableOption "enable 32bit arm emulation";
@@ -36,11 +37,11 @@ in {
       overlays = [ (import ../../overlays/qemu/default.nix) ];
     };
     boot.binfmt.registrations =
-      optionalAttrs cfg.arm { inherit arm; } //
-      optionalAttrs cfg.aarch64 { inherit aarch64; } //
-      optionalAttrs cfg.riscv64 { inherit riscv64; };
+      optionalAttrs cfg.arm { inherit arm; }
+      // optionalAttrs cfg.aarch64 { inherit aarch64; }
+      // optionalAttrs cfg.riscv64 { inherit riscv64; };
     nix.supportedPlatforms = (optionals cfg.arm [ "armv6l-linux" "armv7l-linux" ])
-      ++ (optional cfg.aarch64 "aarch64-linux");
+    ++ (optional cfg.aarch64 "aarch64-linux");
     nix.extraOptions = ''
       extra-platforms = ${toString config.nix.supportedPlatforms} i686-linux
     '';

@@ -53,10 +53,10 @@ in
         };
       } // cfg.machines;
       extraConfig = ''
-PreferredAuthentications gssapi-with-mic,publickey,password
-GSSAPIAuthentication yes
-GSSAPIDelegateCredentials yes
-'';
+        PreferredAuthentications gssapi-with-mic,publickey,password
+        GSSAPIAuthentication yes
+        GSSAPIDelegateCredentials yes
+      '';
     };
   };
 }

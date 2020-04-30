@@ -16,16 +16,20 @@ in
       idea = mkEnableOption "Install intellij idea";
     };
   };
-  config = mkIf cfg.enable (mkMerge [
-    {
-      profiles.dev.enable = true;
-      home.packages = with pkgs; [
-        cfg.javaPackage
-        gradle
-      ];
-    }
-    (mkIf cfg.idea {
-      home.packages = with pkgs; [ jetbrains.idea-ultimate ];
-    })
-  ]);
+  config = mkIf cfg.enable (
+    mkMerge [
+      {
+        profiles.dev.enable = true;
+        home.packages = with pkgs; [
+          cfg.javaPackage
+          gradle
+        ];
+      }
+      (
+        mkIf cfg.idea {
+          home.packages = with pkgs; [ jetbrains.idea-ultimate ];
+        }
+      )
+    ]
+  );
 }

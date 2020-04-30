@@ -38,11 +38,11 @@ in
     '';
 
     xdg.configFile."containers/policy.json".text = ''
-    {
-      "default": [
-        { "type": "insecureAcceptAnything" }
-      ]
-    }
+      {
+        "default": [
+          { "type": "insecureAcceptAnything" }
+        ]
+      }
     '';
   };
 }

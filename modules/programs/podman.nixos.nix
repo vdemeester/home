@@ -1,13 +1,9 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-
 let
-
   cfg = config.programs.podman;
-
 in
-
 {
   options = {
     programs.podman = {
@@ -70,39 +66,39 @@ in
     '';
 
     environment.etc."containers/policy.json".text = ''
-    {
-      "default": [
-        { "type": "insecureAcceptAnything" }
-      ]
-    }
+      {
+        "default": [
+          { "type": "insecureAcceptAnything" }
+        ]
+      }
     '';
 
     environment.etc."cni/net.d/87-podman-bridge.conflist".text = ''
-{
-    "cniVersion": "0.3.0",
-    "name": "podman",
-    "plugins": [
       {
-        "type": "bridge",
-        "bridge": "cni0",
-        "isGateway": true,
-        "ipMasq": true,
-        "ipam": {
-            "type": "host-local",
-            "subnet": "10.88.0.0/16",
-            "routes": [
-                { "dst": "0.0.0.0/0" }
-            ]
-        }
-      },
-      {
-        "type": "portmap",
-        "capabilities": {
-          "portMappings": true
-        }
+          "cniVersion": "0.3.0",
+          "name": "podman",
+          "plugins": [
+            {
+              "type": "bridge",
+              "bridge": "cni0",
+              "isGateway": true,
+              "ipMasq": true,
+              "ipam": {
+                  "type": "host-local",
+                  "subnet": "10.88.0.0/16",
+                  "routes": [
+                      { "dst": "0.0.0.0/0" }
+                  ]
+              }
+            },
+            {
+              "type": "portmap",
+              "capabilities": {
+                "portMappings": true
+              }
+            }
+          ]
       }
-    ]
-}
     '';
 
     environment.systemPackages = with pkgs; [ cfg.package cfg.conmonPackage cfg.runcPackage iptables ];

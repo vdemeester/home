@@ -2,14 +2,14 @@
 
 stdenv.mkDerivation rec {
   name = "tmux-tpm";
-  rev = "95f78336c3972f3e6648b7b3db754f2224320a5e";
-  version = "20170902-${lib.strings.substring 0 7 rev}";
+  rev = "06d41226af02ca4f5bcf58169dd4f0a2aa42218c";
+  version = "20200218-${lib.strings.substring 0 7 rev}";
 
   src = fetchFromGitHub {
     inherit rev;
     owner = "tmux-plugins";
     repo = "tpm";
-    sha256 = "01jjbvzrjqlxxdgszkrnx4rapcqh1sh7k7y6mk42ymrzfkrbi0rd";
+    sha256 = "1ap5x761abcpw6wd6jb575rws88prkpjygjks9cibvws59xsnki4";
   };
 
   builder = ./builder.sh;

@@ -28,12 +28,12 @@ in
     ];
     home.file."bin/kontain.me" = {
       text = ''
-      #!${pkgs.stdenv.shell}
-      command -v docker >/dev/null && {
-        docker run -ti --rm kontain.me/ko/$@
-      } || {
-        podman run -ti --rm kontain.me/ko/$@
-      }
+        #!${pkgs.stdenv.shell}
+        command -v docker >/dev/null && {
+          docker run -ti --rm kontain.me/ko/$@
+        } || {
+          podman run -ti --rm kontain.me/ko/$@
+        }
       '';
       executable = true;
     };

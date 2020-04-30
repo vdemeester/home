@@ -24,7 +24,7 @@ in
     };
   };
   config = mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [ 80 443];
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
     services.nginx = {
       enable = true;
       appendHttpConfig = ''
@@ -39,7 +39,7 @@ in
         access_log logs/access.log;
       '';
       virtualHosts."${cfg.domain}" = {
-      serverAliases = cfg.aliases;
+        serverAliases = cfg.aliases;
         # enableACME = true;
 
         locations."/" = {
@@ -89,6 +89,6 @@ in
           '';
         };
       };
-    };    
+    };
   };
 }

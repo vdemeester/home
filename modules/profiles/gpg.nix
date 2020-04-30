@@ -27,7 +27,7 @@ in
         enableSshSupport = true;
         defaultCacheTtlSsh = 7200;
         extraConfig = ''
-pinentry-program ${cfg.pinentry}
+          pinentry-program ${cfg.pinentry}
         '';
       };
     };

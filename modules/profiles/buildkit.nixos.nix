@@ -33,7 +33,7 @@ in
       cfg.package
     ];
     virtualisation = {
-      buildkitd= {
+      buildkitd = {
         enable = true;
         package = cfg.package;
         packages = [ cfg.runcPackage pkgs.git ];

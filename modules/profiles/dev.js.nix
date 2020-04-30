@@ -10,20 +10,24 @@ in
       enable = mkEnableOption "Enable js development profile";
     };
   };
-  config = mkIf cfg.enable (mkMerge [
-    {
-      home.file.".npmrc".text = ''
-        prefix = ${config.home.homeDirectory}/.local/npm
-      '';
-      home.packages = with pkgs; [
-        nodejs-10_x
-        yarn
-      ];
-    }
-    (mkIf config.profiles.fish.enable {
-      xdg.configFile."fish/conf.d/js.fish".text = ''
-        set -gx PATH ${config.home.homeDirectory}/.local/npm/bin $PATH
-      '';
-    })
-  ]);
+  config = mkIf cfg.enable (
+    mkMerge [
+      {
+        home.file.".npmrc".text = ''
+          prefix = ${config.home.homeDirectory}/.local/npm
+        '';
+        home.packages = with pkgs; [
+          nodejs-10_x
+          yarn
+        ];
+      }
+      (
+        mkIf config.profiles.fish.enable {
+          xdg.configFile."fish/conf.d/js.fish".text = ''
+            set -gx PATH ${config.home.homeDirectory}/.local/npm/bin $PATH
+          '';
+        }
+      )
+    ]
+  );
 }
