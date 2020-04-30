@@ -86,6 +86,7 @@ in
       text = builtins.toJSON [
         { cmd = "surf"; }
         { cmd = "next"; }
+        { cmd = "xclip"; }
         { cmd = "dmenu"; }
         { cmd = "sxiv"; }
         { cmd = "screenkey"; }
