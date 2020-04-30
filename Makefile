@@ -64,7 +64,12 @@ switch: assets setup
 # Cleaning
 .PHONY: clean
 clean:
-	-unlink result
+	@if test $(USER) = root;\
+	then\
+		nix-env --profile /nix/var/nix/profiles/system --delete-generations 15d;\
+	else\
+		unlink result;\
+	fi
 
 .PHONY: clean-www
 clean-www:
