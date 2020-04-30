@@ -2,7 +2,7 @@
 
 with import ../assets/machines.nix; {
   imports = [
-    ./base.nix
+    ./nixos-base.nix
   ];
   home.packages = with pkgs; [
     ripgrep

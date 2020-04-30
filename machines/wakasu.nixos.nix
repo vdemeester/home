@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 with import ../assets/machines.nix; {
-  imports = [ ../hardware/lenovo-p50.nix ./home.nix ];
+  imports = [ ../hardware/lenovo-p50.nix ./home.nixos.nix ];
   boot = {
     kernelModules = [ "kvm_intel" ];
     kernelParams = [ "kvm_intel.nested=1" ];

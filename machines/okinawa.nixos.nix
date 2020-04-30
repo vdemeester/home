@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 with import ../assets/machines.nix; {
-  imports = [ ./home.nix ];
+  imports = [ ./home.nixos.nix ];
   boot = {
     cleanTmpDir = true;
   };

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./base.nix
+    ./nixos-base.nix
   ];
   profiles.zsh = {
     enable = true;

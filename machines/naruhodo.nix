@@ -2,7 +2,7 @@
 
 with import ../assets/machines.nix;{
   imports = [
-    ./base.fedora.nix
+    ./fedora-base.nix
   ];
   home.packages = with pkgs; [
     kubectx
