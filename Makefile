@@ -68,7 +68,7 @@ clean:
 	then\
 		nix-env --profile /nix/var/nix/profiles/system --delete-generations 15d;\
 	else\
-		unlink result;\
+		unlink result || true;\
 	fi
 
 .PHONY: clean-www
