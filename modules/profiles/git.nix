@@ -19,6 +19,7 @@ in
           git-lfs
           gitAndTools.git-annex
           gitAndTools.hub
+          mr
           nur.repos.vdemeester.prm
           nur.repos.vdemeester.ape
         ];
@@ -194,7 +195,6 @@ in
         xdg.configFile."git/config.d/redhat.gitconfig".source = ./assets/git/redhat.gitconfig;
         xdg.configFile."nr/git" = {
           text = builtins.toJSON [
-            { cmd = "mr"; }
             { cmd = "tig"; }
             { cmd = "grv"; pkg = "gitAndTools.grv"; }
             { cmd = "git-appraise"; pkg = "gitAndTools.git-appraise"; chan = "unstable"; }
