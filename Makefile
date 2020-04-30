@@ -34,6 +34,7 @@ emacs-dump:
 assets:
 	mkdir -p assets
 	cp -Rv $(SYNCDIR)/* assets/
+	chown -R vincent:users assets || true
 
 .PHONY: build
 build: assets setup
