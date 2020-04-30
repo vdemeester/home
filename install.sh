@@ -45,8 +45,9 @@ set -x
 mkdir -p /mnt/etc
 git clone https://gitlab.com/vdemeester/home.git /mnt/etc/nixos
 echo -n ${name} > /mnt/etc/nixos/hostname
+nixos-generate-config --root /mnt
 
 set +x
 echo "Run the following:"
-echo "- nixos-generate-config --root /mnt"
+echo "- populate assets/ folder"
 echo "- (once ready) nixos-install"
