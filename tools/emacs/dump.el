@@ -10,7 +10,7 @@
 (dolist (package '(use-package company recentf moody helpful undo-tree cus-edit pinentry hardhat diff
                     use-package aggressive-indent savehist minions expand-region time uniquify isearch
                     minibuffer icomplete dired delsel direnv auth-source simple epa-file message
-                    vc vc-dir vc-git modus-operandi-theme modus-vivendi-theme))
+                    vc vc-dir vc-git modus-operandi-theme))
   (require package))
 (load-theme 'modus-operandi t t)
 ;; dump image
