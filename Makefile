@@ -10,7 +10,7 @@ DOTEMACS = ~/.config/emacs
 DOTGNUS = ~/.config/gnus
 DOTNIXPKGS = ~/.config/nixpkgs
 ETCNIXOS = /etc/nixos
-SYNCDIR = ~/sync/nixos
+SYNCDIR = /home/vincent/sync/nixos
 PUBLISH_FOLDER = ~/desktop/sites/beta.sbr.pm
 
 # Targets
