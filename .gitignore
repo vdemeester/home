@@ -12,3 +12,4 @@ assets/*
 networking.nix
 wireguard*.key
 .envrc
+hardware-configuration.nix
