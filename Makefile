@@ -33,7 +33,7 @@ emacs-dump:
 .PHONY: assets
 assets:
 	mkdir -p assets
-	cp -Rv $(SYNCDIR)/machines.nix assets/
+	cp -Rv $(SYNCDIR)/* assets/
 
 .PHONY: build
 build: assets setup
