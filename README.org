@@ -49,13 +49,13 @@ If you don't have ~nix~ installed, run ~curl https://nixos.org/nix/install | sh~
   Some machines files already exists that you can use :
 
   #+begin_src nix
-    { pkgs, ... }:
+  { pkgs, ... }:
 
-    {
-      imports = [
-        ./machines/hokkaido.nix
-      ];
-    }
+  {
+    imports = [
+      ./machines/hokkaido.nix
+    ];
+  }
   #+end_src
 
 - run ~nix-shell https://github.com/rycee/home-manager/archive/master.tar.gz -A install~ (maybe twice :D)
