@@ -1,5 +1,6 @@
 {
   imports = [
+    ./machines.nix
     ./profiles/audio.nix
     ./profiles/bash.nix
     ./profiles/containers.nix

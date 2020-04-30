@@ -10,6 +10,8 @@ in
     ./hardware-configuration.nix
     # Default profile with default configuration
     ./modules/module-list.nixos.nix
+    # Set the machine to nixos
+    ./machines/is-nixos.nix
     # Machine specific configuration files
     (./machines + "/${hostName}.nixos.nix")
   ];

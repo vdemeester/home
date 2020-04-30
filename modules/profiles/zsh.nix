@@ -166,6 +166,11 @@ in
           '';*/
         }
       )
+      (
+        mkIf config.machine.home-manager {
+          home.packages = with pkgs; [ hello ];
+        }
+      )
     ]
   );
 }
