@@ -114,6 +114,13 @@ Also run `sbr/modus-themes-toggle-hook'."
   :hook (after-init-hook . sbr/modus-operandi))
 ;; -UseTheme0
 
+(use-package emacs
+  :config
+  (setq window-divider-default-right-width 1)
+  (setq window-divider-default-bottom-width 1)
+  (setq window-divider-default-places 'right-only)
+  :hook (after-init-hook . window-divider-mode))
+
 ;; UseMoody
 (use-package moody
   :config
