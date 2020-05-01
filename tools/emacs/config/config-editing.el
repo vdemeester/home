@@ -50,9 +50,16 @@
 
 ;; UseWhitespace
 (use-package whitespace
-  :hook ((prog-mode . whitespace-mode))
+  :commands (whitespace-mode sbr/toggle-invisibles)
   :config
-  (setq-default whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark)))
+  (setq-default whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark))
+  (defun sbr/toggle-invisibles ()
+    "Toggles the display of indentation and space characters."
+    (interactive)
+    (if (bound-and-true-p whitespace-mode)
+        (whitespace-mode -1)
+      (whitespace-mode)))
+  :bind ("<f6>" . sbr/toggle-invisibles))
 ;; -UseWhitespace
 
 ;; UseExpandRegion
@@ -205,7 +212,7 @@ instead.  This command can then be followed by the standard
          ("<C-S-return>" . prot/new-line-above)
          ("M-SPC" . cycle-spacing)
          ("M-o" . delete-blank-lines)
-         ("<f6>" . tear-off-window)
+         ("<C-f6>" . tear-off-window)
          ("C-S-y" . prot/yank-replace-line-or-region)))
 
 (use-package crux
