@@ -104,9 +104,18 @@
   (global-set-key [remap kill-ring-save] 'easy-kill)
   (global-set-key [remap mark-sexp] 'easy-mark))
 
-(setq display-line-numbers-type 'relative)
-(add-hook 'prog-mode-hook
-          'display-line-numbers-mode)
+(use-package display-line-numbers
+  :hook (prog-mode . display-line-numbers-mode)
+  :config
+  (setq-default display-line-numbers-type 'relative)
+  (defun sbr/toggle-line-numbers ()
+    "Toggles the display of line numbers.  Applies to all buffers."
+    (interactive)
+    (if (bound-and-true-p display-line-numbers-mode)
+        (display-line-numbers-mode -1)
+      (display-line-numbers-mode)))
+  :bind ("<f7>" . sbr/toggle-line-numbers))
+
 (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
 (use-package newcomment
