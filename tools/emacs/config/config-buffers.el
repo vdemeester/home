@@ -75,7 +75,7 @@
   (setq window-sides-vertical nil)
   (setq window-combination-resize t) ; Size new windows proportionally
   :bind (("C-x +" . balance-windows-area)
-         ("<f7>" . window-toggle-side-windows)))
+         ("<C-f7>" . window-toggle-side-windows)))
 ;; -UseDisplayBuffer
 
 ;; UseSaveHist
