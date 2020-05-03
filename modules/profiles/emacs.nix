@@ -165,9 +165,9 @@ in
       )
       (
         mkIf config.services.gpg-agent.enable {
-          services.gpg-agent.extraConfig = ''
-            allow-emacs-pinentry
-          '';
+          #services.gpg-agent.extraConfig = ''
+          #  allow-emacs-pinentry
+          #'';
         }
       )
       (
