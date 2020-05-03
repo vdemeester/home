@@ -58,6 +58,7 @@ with import ../assets/machines.nix; {
       %users ALL = (root) NOPASSWD: /home/vincent/.nix-profile/bin/kubernix
     '';
   };
+  security.pam.u2fAuth = true;
   services = {
     logind.extraConfig = ''
       HandleLidSwitch=ignore

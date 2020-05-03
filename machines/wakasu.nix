@@ -48,5 +48,4 @@
     gnome3.zenity # use rofi instead
     oathToolkit
   ];
-  security.pam.u2fAuth = true;
 }
