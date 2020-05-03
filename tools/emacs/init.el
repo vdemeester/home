@@ -137,13 +137,6 @@
        load-path))
 ;; -NoBuiltinOrg
 
-;; PinEntry
-(use-package pinentry
-  :config
-  (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
-  (pinentry-start))
-;; -PinEntry
-
 ;; LoadCfgFunc
 (defun vde/el-load-dir (dir)
   "Load el files from the given folder"
