@@ -26,6 +26,7 @@ with import ../assets/machines.nix; {
     #  "sbr.pm".email = "vincent@sbr.pm";
     #};
   };
+  security.pam.enableSSHAgentAuth = true;
   services = {
     govanityurl = {
       enable = true;
