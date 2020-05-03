@@ -16,6 +16,9 @@
     (when (member "Ubuntu Mono" (font-family-list))
       (set-face-attribute 'default nil
                           :family "Ubuntu Mono"
+                          :height font-height)
+      (set-face-attribute 'fixed-pitch nil
+                          :family "Ubuntu Mono"
                           :height font-height))
     (when (member "Ubuntu Sans" (font-family-list))
       (set-face-attribute 'variable-pitch nil
