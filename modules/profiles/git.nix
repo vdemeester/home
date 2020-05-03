@@ -53,12 +53,16 @@ in
             st = "status";
             w = "status -sb";
           };
+          attributes = [
+            "*.org   diff=org"
+            "*.lisp  diff=lisp"
+            "*.el    diff=lisp"
+            "*.hy    diff=lisp"
+            "*.scm   diff=lisp"
+          ];
           extraConfig = {
             core = {
               editor = "${pkgs.emacs}/bin/emacsclient -t";
-            };
-            forge = {
-              remote = "upstream";
             };
             color = {
               status = "auto";
@@ -83,6 +87,15 @@ in
               added = "green";
               changed = "yellow";
               untracked = "red";
+            };
+            "diff.org" = {
+              xfuncname = "^\\\\*+.*";
+            };
+            "diff.lisp" = {
+              xfuncname = "^\\\\([^ ]+ [^ ]+";
+            };
+            forge = {
+              remote = "upstream";
             };
             hub = {
               protocol = true;
