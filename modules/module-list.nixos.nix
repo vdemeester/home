@@ -1,5 +1,6 @@
 {
   imports = [
+    ./machines.nix
     ./hardware/sane-extra-config.nixos.nix
     ./profiles/avahi.nixos.nix
     ./profiles/base.nixos.nix
