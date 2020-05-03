@@ -89,10 +89,10 @@ in
               untracked = "red";
             };
             "diff.org" = {
-              xfuncname = "^\\\\*+.*";
+              xfuncname = "\"^\\\\*+.*\"";
             };
             "diff.lisp" = {
-              xfuncname = "^\\\\([^ ]+ [^ ]+";
+              xfuncname = "\"^\\\\([^ ]+ [^ ]+\"";
             };
             forge = {
               remote = "upstream";
