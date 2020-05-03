@@ -92,4 +92,5 @@ with import ../assets/machines.nix; {
     };
   };
   security.apparmor.enable = true;
+  security.pam.sshAgentAuth = true;
 }
