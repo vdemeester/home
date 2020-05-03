@@ -18,9 +18,13 @@ with import ../assets/machines.nix; {
   networking.firewall.allowPing = true;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   security = {
-    acme.certs = {
-      "sbr.pm".email = "vincent@sbr.pm";
+    acme = {
+      acceptTerms = true;
+      email = "vincent@sbr.pm";
     };
+    #acme.certs = {
+    #  "sbr.pm".email = "vincent@sbr.pm";
+    #};
   };
   services = {
     govanityurl = {
