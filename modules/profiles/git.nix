@@ -72,18 +72,18 @@ in
               ui = "auto";
               sh = "auto";
             };
-            "color \"branch\"" = {
+            "color.branch" = {
               current = "cyan reverse";
               local = "cyan";
               remote = "green";
             };
-            "color \"diff\"" = {
+            "color.diff" = {
               current = "white reverse";
               frag = "magenta reverse";
               old = "red";
               new = "green";
             };
-            "color \"status\"" = {
+            "color.status" = {
               added = "green";
               changed = "yellow";
               untracked = "red";
