@@ -39,6 +39,11 @@ in
         gnumake
       ];
     };
+    security.sudo = {
+      extraConfig = ''
+        Defaults env_keep += SSH_AUTH_SOCK
+      '';
+    };
     systemd.services."status-email-root@" = {
       description = "status email for %i to vincent";
       serviceConfig = {
