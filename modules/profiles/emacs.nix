@@ -93,8 +93,8 @@ in
             iedit
             json-mode
             markdown-mode
-            modus-operandi-theme
-            modus-vivendi-theme
+            #modus-operandi-theme
+            #modus-vivendi-theme
             mpdel
             multiple-cursors
             nixpkgs-fmt
@@ -109,10 +109,8 @@ in
             org-ref
             org-super-agenda
             org-web-tools
-            ox-hugo
             ox-pandoc
             pandoc-mode
-            pinentry
             projectile
             projectile-ripgrep
             pdf-tools
@@ -127,7 +125,6 @@ in
             visual-regexp
             web-mode
             wgrep
-            which-key
             with-editor
             xterm-color
             yaml-mode
