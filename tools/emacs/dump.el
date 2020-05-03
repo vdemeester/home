@@ -7,7 +7,7 @@
 (package-initialize)
 ;; (package-initialize) doens’t require each package, we need to load
 ;; those we want manually
-(dolist (package '(use-package company recentf moody helpful undo-tree cus-edit pinentry hardhat diff
+(dolist (package '(use-package company recentf moody helpful undo-tree cus-edit hardhat diff
                     use-package aggressive-indent savehist minions expand-region time uniquify isearch
                     minibuffer icomplete dired delsel direnv auth-source simple epa-file message
                     vc vc-dir vc-git modus-operandi-theme))
