@@ -52,8 +52,8 @@ in
             script = ''
               export PATH=/run/current-system/sw/bin
               cd /etc/nixos/
-              git pull --autostash --rebase
-              /run/current-system/sw/bin/make update switch
+              runuser -l vincent -c 'git pull --autostash --rebase'
+              make update switch
             '';
             startAt = cfg.dates;
             onFailure = [ "status-email-root@%n.service" ];
