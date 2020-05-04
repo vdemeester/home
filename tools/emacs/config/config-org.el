@@ -537,13 +537,6 @@ Switch projects and subprojects from STARTED back to TODO"
   :after (org ox)
   :config
   (setq org-html-coding-system 'utf-8-unix))
-(use-package ox-slack
-  :after ox)
-(use-package ox-hugo
-  :after ox
-  :commands (org-hugo-slug)
-  :config
-  (use-package ox-hugo-auto-export))
 ;; -OrgExportCfg
 
 (use-package org
@@ -593,44 +586,8 @@ With prefix argument, also display headlines without a TODO keyword."
 (use-package org-capture-pop-frame
   :after org)
 
-(use-package darkroom
-  :custom
-  (darkroom-text-scale-increase 2))
-(use-package org-tree-slide
-  :after (org darkroom)
-  :custom
-  (org-tree-slide-breadcrumbs nil)
-  (org-tree-slide-header nil)
-  (org-tree-slide-slide-in-effect nil)
-  (org-tree-slide-heading-emphasis nil)
-  (org-tree-slide-cursor-init t)
-  (org-tree-slide-modeline-display nil)
-  (org-tree-slide-skip-done nil)
-  (org-tree-slide-skip-comments t)
-  (org-tree-slide-fold-subtrees-skipped t)
-  (org-tree-slide-skip-outline-level 8)
-  (org-tree-slide-never-touch-face t)
-  :config
-  (defun prot/org-presentation ()
-    "Specifies conditions that should apply locally upon
-activation of `org-tree-slide-mode'."
-    (if (eq darkroom-tentative-mode nil)
-        (progn
-          (darkroom-tentative-mode 1)
-          (org-indent-mode 1)
-          (set-frame-font "Hack-14" t t)
-          (setq cursor-type '(bar . 1)))
-      (darkroom-tentative-mode -1)
-      (org-indent-mode -1)
-      (setq cursor-type 'box)))
-  :bind (("<f8>" . org-tree-slide-mode)
-         :map org-tree-slide-mode-map
-         ("<C-right>" . org-tree-slide-move-next-tree)
-         ("<C-left>" . org-tree-slide-move-previous-tree))
-  :hook (org-tree-slide-mode . prot/org-presentation))
-
-(use-package orgit
-  :after magit)
+;; (use-package orgit
+;;   :after magit)
 
 (provide 'config-org)
 ;;; config-org.el ends here
