@@ -28,8 +28,6 @@ add it to `before-save-hook'."
               (goto-char (line-end-position))
               (insert " :lines \"" lines "\""))))))))
 
-(add-hook 'before-save-hook #'save-and-update-includes)
-
 (defun decide-line-range (file begin end)
   "Visit FILE and decide which lines to include.
 BEGIN and END are regexps which define the line range to use."
