@@ -8,6 +8,7 @@ lib =
 
 [containers/openshift-pipelines-bash]
 [containers/openshift-pipelines-catalog-buildah]
+[containers/openshift-pipelines-catalog-oc]
 [containers/openshift-pipelines-controller]
 [containers/openshift-pipelines-creds-init]
 [containers/openshift-pipelines-entrypoint]
@@ -18,7 +19,9 @@ lib =
 [containers/openshift-pipelines-kubeconfigwriter]
 [containers/openshift-pipelines-nop]
 [containers/openshift-pipelines-operator]
+[containers/openshift-pipelines-operator-dev-operator-metadata]
 [containers/openshift-pipelines-operator-prod-operator-metadata]
+[containers/openshift-pipelines-operator-stage-operator-metadata]
 [containers/openshift-pipelines-pullrequest-init]
 [containers/openshift-pipelines-triggers-controller]
 [containers/openshift-pipelines-triggers-eventlistenersink]
