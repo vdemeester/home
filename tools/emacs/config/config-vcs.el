@@ -102,9 +102,6 @@
   ;; Show refined hunks during diffs
   (set-default 'magit-diff-refine-hunk t)
 
-  (add-hook 'projectile-switch-project-hook
-            #'mu-magit-set-repo-dirs-from-projectile)
-
   ;; Refresh `magit-status' after saving a buffer
   (add-hook 'after-save-hook #'magit-after-save-refresh-status))
 ;; -UseMagit
