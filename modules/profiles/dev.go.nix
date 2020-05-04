@@ -27,6 +27,7 @@ in
           go-outline
           go-symbols
           delve
+          goimports
           # vendoring tools
           dep
           nur.repos.vdemeester.dep-collector
