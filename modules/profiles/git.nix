@@ -55,10 +55,6 @@ in
           };
           attributes = [
             "*.org   diff=org"
-            "*.lisp  diff=lisp"
-            "*.el    diff=lisp"
-            "*.hy    diff=lisp"
-            "*.scm   diff=lisp"
           ];
           extraConfig = {
             core = {
@@ -90,9 +86,6 @@ in
             };
             "diff.org" = {
               xfuncname = "\"^\\\\*+.*\"";
-            };
-            "diff.lisp" = {
-              xfuncname = "\"^\\\\([^ ]+ [^ ]+\"";
             };
             forge = {
               remote = "upstream";
