@@ -162,7 +162,6 @@
 
 ;; OrgAgenda
 (use-package org-agenda
-  :after (org)
   :commands (org-agenda)
   :bind (("C-c o a" . org-agenda)
          ("<f12>" . org-agenda)
@@ -214,7 +213,6 @@
 
 ;; OrgGcal
 (use-package org-gcal
-  :after (org)
   :commands (org-gcal-fetch)
   :config
   (require 'netrc)
@@ -335,7 +333,6 @@
 
 ;; OrgClock
 (use-package org-clock
-  :after org
   :commands (org-clock-in org-clock-out org-clock-goto)
   :config
   ;; Setup hooks for clock persistance
