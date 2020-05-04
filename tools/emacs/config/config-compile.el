@@ -27,7 +27,7 @@
                 ;; I'm not scared of saving everything.
                 compilation-ask-about-save nil
                 ;; Automatically scroll and jump to the first error
-                compilation-scroll-output 'next-error
+                ;; compilation-scroll-output 'next-error
                 ;; compilation-scroll-output 'first-error
                 ;; compilation-auto-jump-to-first-error t
                 ;; Skip over warnings and info messages in compilation
@@ -35,7 +35,8 @@
                 ;; Don't freeze when process reads from stdin
                 compilation-disable-input t
                 ;; Show three lines of context around the current message
-                compilation-context-lines 3)
+                compilation-context-lines 3
+                )
   (add-hook 'compilation-filter-hook #'vde/colorize-compilation-buffer)
   (add-hook 'compilation-mode-hook #'vde/goto-address-mode))
 ;; -UseCompile
