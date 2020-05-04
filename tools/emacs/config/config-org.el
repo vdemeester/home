@@ -449,7 +449,6 @@ Switch projects and subprojects from STARTED back to TODO"
 
 ;; built-in org-mode
 (use-package ol-eshell
-  :disabled ;; mess with rg.el
   :after (org))
 (use-package ol-git-link
   :defer 2
