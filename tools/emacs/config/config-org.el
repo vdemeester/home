@@ -154,6 +154,7 @@
 
 ;; OrgCrypt
 (use-package org-crypt
+  :disabled
   :after (org)
   :config
   (org-crypt-use-before-save-magic)
@@ -428,8 +429,6 @@ Switch projects and subprojects from STARTED back to TODO"
 
 ;; OrgAttach
 (use-package org-attach
-  :defer t
-  :after org
   :config
   (setq org-link-abbrev-alist '(("att" . org-attach-expand-link))))
 ;; -OrgAttach
@@ -442,75 +441,62 @@ Switch projects and subprojects from STARTED back to TODO"
   :after (org))
 (use-package ol-ripgrep
   :after (org))
+(use-package ol-rg
+  :disabled
+  :after (org))
 (use-package ol-grep
   :after (org))
 
 ;; built-in org-mode
 (use-package ol-eshell
+  :disabled ;; mess with rg.el
   :after (org))
 (use-package ol-git-link
+  :defer 2
   :after (org))
 (use-package ol-gnus
+  :defer 2
   :after (org))
 (use-package ol-irc
+  :defer 2
   :after (org))
 (use-package ol-info
+  :defer 2
   :after (org))
 (use-package ol-man
+  :defer 2
   :after (org))
 (use-package ol-notmuch
+  :defer 2
   :after (org))
 ;; -OrgLinks
 
 ;; OrgBabel
 (use-package ob-async
-  :defer t
-  :after (org))
+  :commands (ob-async-org-babel-execute-src-block))
 (use-package ob-css
-  :defer t
-  :after org
   :commands (org-babel-execute:css))
 (use-package ob-dot
-  :defer t
-  :after org
   :commands (org-babel-execute:dot))
 (use-package ob-ditaa
-  :defer t
-  :after org
   :commands (org-babel-execute:ditaa)
   :config
   (setq org-ditaa-jar-path "/home/vincent/.nix-profile/lib/ditaa.jar"))
 (use-package ob-emacs-lisp
-  :defer t
-  :after org
   :commands (org-babel-execute:emacs-lisp org-babel-execute:elisp))
 (use-package ob-go
-  :defer t
-  :after org
   :commands (org-babel-execute:go))
 (use-package ob-gnuplot
-  :defer t
-  :after org
   :commands (org-babel-execute:gnuplot))
 (use-package ob-http
-  :defer t
-  :after org
   :commands (org-babel-execute:http))
 (use-package ob-js
-  :defer t
-  :after org
   :commands (org-babel-execute:js))
 (use-package ob-latex
-  :defer t
-  :after org
   :commands (org-babel-execute:latex))
 (use-package ob-python
-  :defer t
-  :after org
   :commands (org-babel-execute:python))
 (use-package ob-shell
-  :defer t
-  :after org
   :commands (org-babel-execute:ash
              org-babel-execute:bash
              org-babel-execute:csh
@@ -531,14 +517,14 @@ Switch projects and subprojects from STARTED back to TODO"
 
 ;; OrgExportCfg
 (use-package ox-publish
-  :after (org ox)
+  :commands (org-publish org-publish-all org-publish-project org-publish-current-project org-publish-current-file)
   :config
   (setq org-html-coding-system 'utf-8-unix))
 ;; -OrgExportCfg
 
 (use-package org
   :defer t
-  :ensure org-plus-contrib
+  :disabled
   :config
 
   (defvar org-capture-templates (list))
