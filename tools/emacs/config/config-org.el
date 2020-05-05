@@ -154,7 +154,6 @@
 
 ;; OrgCrypt
 (use-package org-crypt
-  :disabled
   :after (org)
   :config
   (org-crypt-use-before-save-magic)
@@ -163,6 +162,7 @@
 
 ;; OrgAgenda
 (use-package org-agenda
+  :after org
   :commands (org-agenda)
   :bind (("C-c o a" . org-agenda)
          ("<f12>" . org-agenda)
@@ -214,6 +214,7 @@
 
 ;; OrgGcal
 (use-package org-gcal
+  :after (org)
   :commands (org-gcal-fetch)
   :config
   (require 'netrc)
@@ -334,6 +335,7 @@
 
 ;; OrgClock
 (use-package org-clock
+  :after org
   :commands (org-clock-in org-clock-out org-clock-goto)
   :config
   ;; Setup hooks for clock persistance
@@ -429,6 +431,7 @@ Switch projects and subprojects from STARTED back to TODO"
 
 ;; OrgAttach
 (use-package org-attach
+  :after org
   :config
   (setq org-link-abbrev-alist '(("att" . org-attach-expand-link))))
 ;; -OrgAttach
@@ -472,30 +475,42 @@ Switch projects and subprojects from STARTED back to TODO"
 
 ;; OrgBabel
 (use-package ob-async
+  :after org
   :commands (ob-async-org-babel-execute-src-block))
 (use-package ob-css
+  :after org
   :commands (org-babel-execute:css))
 (use-package ob-dot
+  :after org
   :commands (org-babel-execute:dot))
 (use-package ob-ditaa
+  :after org
   :commands (org-babel-execute:ditaa)
   :config
   (setq org-ditaa-jar-path "/home/vincent/.nix-profile/lib/ditaa.jar"))
 (use-package ob-emacs-lisp
+  :after org
   :commands (org-babel-execute:emacs-lisp org-babel-execute:elisp))
 (use-package ob-go
+  :after org
   :commands (org-babel-execute:go))
 (use-package ob-gnuplot
+  :after org
   :commands (org-babel-execute:gnuplot))
 (use-package ob-http
+  :after org
   :commands (org-babel-execute:http))
 (use-package ob-js
+  :after org
   :commands (org-babel-execute:js))
 (use-package ob-latex
+  :after org
   :commands (org-babel-execute:latex))
 (use-package ob-python
+  :after org
   :commands (org-babel-execute:python))
 (use-package ob-shell
+  :after org
   :commands (org-babel-execute:ash
              org-babel-execute:bash
              org-babel-execute:csh
@@ -516,6 +531,7 @@ Switch projects and subprojects from STARTED back to TODO"
 
 ;; OrgExportCfg
 (use-package ox-publish
+  :after org
   :commands (org-publish org-publish-all org-publish-project org-publish-current-project org-publish-current-file)
   :config
   (setq org-html-coding-system 'utf-8-unix))
@@ -523,7 +539,6 @@ Switch projects and subprojects from STARTED back to TODO"
 
 (use-package org
   :defer t
-  :disabled
   :config
 
   (defvar org-capture-templates (list))
@@ -568,8 +583,9 @@ With prefix argument, also display headlines without a TODO keyword."
 (use-package org-capture-pop-frame
   :after org)
 
-;; (use-package orgit
-;;   :after magit)
+
+(use-package orgit
+  :after org)
 
 (provide 'config-org)
 ;;; config-org.el ends here
