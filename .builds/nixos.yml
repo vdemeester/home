@@ -12,3 +12,4 @@ tasks:
     nix-env -iA cachix -f https://cachix.org/api/v1/install
     cachix use shortbrain
     nix-build home/ci.nix -A cacheOutputs | cachix push shortbrain
+    curl -XPOST "https://nur-update.herokuapp.com/update?repo=vdemeester"
