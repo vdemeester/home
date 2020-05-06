@@ -1,4 +1,6 @@
 image: nixos/latest
+sources:
+  - https://gitlab.com/vdemeester/home.git
 tasks:
 - pkgs: |
     env
