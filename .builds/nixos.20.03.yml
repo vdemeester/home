@@ -1,9 +1,0 @@
-image: nixos/20.03
-sources:
-  - https://gitlab.com/vdemeester/home.git
-secrets:
-  - 0818d60d-b587-4d4e-81d8-dc15072ccb97
-tasks:
-- pkgs: |
-    export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
-    nix-build home/pkgs | cachix push shortbrain

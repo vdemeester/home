@@ -1,4 +1,4 @@
-image: nixos/19.09
+image: nixos/20.03
 sources:
   - https://gitlab.com/vdemeester/home.git
 secrets:
@@ -6,4 +6,4 @@ secrets:
 tasks:
 - pkgs: |
     export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
-    nix-build home/pkgs | cachix push shortbrain
+    nix-build ci.nix -A cacheOutputs | cachix push shortbrain

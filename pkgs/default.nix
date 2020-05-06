@@ -1,7 +1,5 @@
-{ system ? builtins.currentSystem }:
-let
-  pkgs = import <nixpkgs> { inherit system; };
-in
+{ pkgs ? import <nixpkgs> {} }:
+
 rec {
   # pre nur-packages import
   scripts = pkgs.callPackage ./scripts {};
