@@ -67,8 +67,9 @@ in
     };
     nixpkgs = {
       overlays = [
-        (import ../../overlays/sbr.overlay.nix)
-        (import ../../overlays/unstable.overlay.nix)
+        (import ../../overlays/sbr.nix)
+        (import ../../overlays/unstable.nix)
+        (import ../../overlays/emacs-overlay)
       ];
       config = {
         allowUnfree = true;

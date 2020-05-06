@@ -30,7 +30,7 @@ in
           goimports
           # vendoring tools
           dep
-          m.dep-collector
+          my.dep-collector
           # misc
           protobuf
           my.protobuild

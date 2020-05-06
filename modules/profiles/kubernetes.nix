@@ -57,7 +57,7 @@ in
       )
       (
         mkIf cfg.krew {
-          home.packages = with pkgs; [ nur.my.krew ];
+          home.packages = with pkgs; [ my.krew ];
         }
       )
       (
