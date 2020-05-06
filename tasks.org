@@ -259,3 +259,20 @@ Reduce the sh script to the minimum and use =nix-shell= with a =.nix= file as mu
 possible.
 To run the install script from a NixOS livecd, =nix-shell= can be used, same in bootstrap
 as soon as we have installed nix.
+
+* TODO virtualization.buildkit options
+
+- [ ] with containerd, default is to use runc only
+
+* TODO pkgs: support stdenv.isLinux, …
+
+stdenv.lib.optionals stdenv.isLinux
+
+* TODO =ci.nix= with build.sr.ht
+
+* TODO self-contained configuration
+
+- Pin different channels in the configuration (?)
+- Run the configuration against multiple channels (?)
+
+* TODO =private= folder for nix (instead of =assets=)
