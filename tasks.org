@@ -243,10 +243,10 @@ For zsh on nixos:
 From: [[file:~/desktop/org/technical/tekton-dev.org::*Environments][Environments]]
 * TODO Migrate nur-package here
 
-- Have a CI setup for it (using sr.ht)
+- [X] Have a CI setup for it (using sr.ht)
   + Automate cachix push (nixos + nixos-unstable + nixpkgs-unstable + …)
   + =curl= on nur-community in case of nur file changed (and only for it)
-- Update nur-community
+- [ ] Update nur-community
 
 * TODO better overlays
 
