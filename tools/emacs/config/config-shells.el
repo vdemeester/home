@@ -235,8 +235,8 @@ using either KUBECONFIG or ~/.kube/config"
 (use-package xterm-color
   :after eshell
   :init
-  (setq comint-output-filter-functions
-        (remove 'ansi-color-process-output comint-output-filter-functions))
+  ;; (setq comint-output-filter-functions
+  ;;       (remove 'ansi-color-process-output comint-output-filter-functions))
   (add-hook 'shell-mode-hook
             (lambda ()
               ;; Disable font-locking in this buffer to improve performance
