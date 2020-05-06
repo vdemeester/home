@@ -3,6 +3,7 @@
 rustPlatform.buildRustPackage rec {
   pname = "kubernix";
   version = "dev-2020-04-30";
+  preferLocalBuild = true;
 
   src = fetchFromGitHub {
     owner = "saschagrunert";
