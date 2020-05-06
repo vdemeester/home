@@ -18,7 +18,6 @@ rec {
 
   # Maybe upstream
   athens = pkgs.callPackage ./athens {};
-  dobi = pkgs.callPackage ./dobi {};
   dep-collector = pkgs.callPackage ./dep-collector {};
   envbox = pkgs.callPackage ./envbox {};
   esc = pkgs.callPackage ./esc {};
@@ -26,7 +25,6 @@ rec {
   goreturns = pkgs.callPackage ./goreturns {};
   gorun = pkgs.callPackage ./gorun {};
   govanityurl = pkgs.callPackage ./govanityurl {};
-  knctl = pkgs.callPackage ./knctl {};
   ko = pkgs.callPackage ./ko {};
   kss = pkgs.callPackage ./kss {};
   kubernix = pkgs.callPackage ./kubernix {};
