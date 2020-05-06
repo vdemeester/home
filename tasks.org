@@ -247,3 +247,8 @@ From: [[file:~/desktop/org/technical/tekton-dev.org::*Environments][Environments
   + Automate cachix push (nixos + nixos-unstable + nixpkgs-unstable + …)
   + =curl= on nur-community in case of nur file changed (and only for it)
 - Update nur-community
+
+* TODO better overlays
+
+- [ ] =default.nix= to import others
+- [ ] =pkgs= and overlay smooth integration (aka no prefix =my=)
