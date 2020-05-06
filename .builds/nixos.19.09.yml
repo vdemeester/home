@@ -1,4 +1,4 @@
-image: nixos/latest
+image: nixos/19.09
 sources:
   - https://gitlab.com/vdemeester/home.git
 secrets:
