@@ -51,7 +51,7 @@ in
         { cmd = "nix-prefetch-hg"; pkg = "nix-prefetch-scripts"; }
         { cmd = "op"; pkg = "_1password"; chan = "unstable"; }
       ];
-      onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr default";
+      onChange = "${pkgs.my.nr}/bin/nr default";
     };
   };
 }

@@ -96,7 +96,7 @@ in
         { cmd = "lgogdownloader"; chan = "unstable"; }
         { cmd = "xev"; pkg = "xorg.xev"; }
       ];
-      onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr desktop";
+      onChange = "${pkgs.my.nr}/bin/nr desktop";
     };
     programs = {
       firefox.enable = true;

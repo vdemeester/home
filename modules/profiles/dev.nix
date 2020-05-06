@@ -50,7 +50,7 @@ in
             { cmd = "nix-prefetch-hg"; pkg = "nix-prefetch-scripts"; }
             { cmd = "http"; pkg = "httpie"; }
           ];
-          onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr dev";
+          onChange = "${pkgs.my.nr}/bin/nr dev";
         };
         services.lorri.enable = true;
       }

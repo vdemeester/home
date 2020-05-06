@@ -51,13 +51,13 @@ in
             text = builtins.toJSON [
               { cmd = "kubectl"; }
             ];
-            onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr -force kubernetes";
+            onChange = "${pkgs.my.nr}/bin/nr -force kubernetes";
           };
         }
       )
       (
         mkIf cfg.krew {
-          home.packages = with pkgs; [ nur.repos.vdemeester.krew ];
+          home.packages = with pkgs; [ nur.my.krew ];
         }
       )
       (

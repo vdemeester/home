@@ -28,7 +28,7 @@ in
       {
         profiles.containers.kubernetes.enable = true;
         home.packages = with pkgs; [
-          nur.repos.vdemeester.s2i
+          my..s2i
           cfg.package
         ];
       }

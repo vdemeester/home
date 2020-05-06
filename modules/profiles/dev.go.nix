@@ -30,15 +30,15 @@ in
           goimports
           # vendoring tools
           dep
-          nur.repos.vdemeester.dep-collector
+          m.dep-collector
           # misc
           protobuf
-          nur.repos.vdemeester.protobuild
-          nur.repos.vdemeester.ram
-          nur.repos.vdemeester.sec
-          nur.repos.vdemeester.goreturns
-          nur.repos.vdemeester.esc
-          nur.repos.vdemeester.yaspell
+          my.protobuild
+          my.ram
+          my.sec
+          my.goreturns
+          my.esc
+          my.yaspell
         ];
         xdg.configFile."nr/go" = {
           text = builtins.toJSON [
@@ -47,7 +47,7 @@ in
             { cmd = "go2nix"; }
             { cmd = "dep2nix"; }
           ];
-          onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr go";
+          onChange = "${pkgs.my.nr}/bin/nr go";
         };
       }
       (

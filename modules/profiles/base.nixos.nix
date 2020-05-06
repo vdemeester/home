@@ -49,7 +49,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         ExecStart = ''
-          ${pkgs.nur.repos.vdemeester.systemd-email}/bin/systemd-email vincent@demeester.fr %i
+          ${pkgs.my.systemd-email}/bin/systemd-email vincent@demeester.fr %i
         '';
         User = "root";
         Environment = "PATH=/run/current-system/sw/bin";

@@ -20,8 +20,8 @@ in
           gitAndTools.git-annex
           gitAndTools.hub
           mr
-          nur.repos.vdemeester.prm
-          nur.repos.vdemeester.ape
+          my.prm
+          my.ape
         ];
         programs.git = {
           enable = true;
@@ -205,7 +205,7 @@ in
             { cmd = "grv"; pkg = "gitAndTools.grv"; }
             { cmd = "git-appraise"; pkg = "gitAndTools.git-appraise"; chan = "unstable"; }
           ];
-          onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr git";
+          onChange = "${pkgs.my.nr}/bin/nr git";
         };
       }
       (
