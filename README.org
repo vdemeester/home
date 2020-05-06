@@ -129,7 +129,6 @@ Repositories
 - [[https://github.com/yacinehmito/yarn-nix]]
 - [[https://github.com/yrashk/nix-home]]
 
-
 * COPYING
 :PROPERTIES:
 :CUSTOM_ID: h:716e598e-3b1a-4e48-a72b-608c3a970db9

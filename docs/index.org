@@ -25,7 +25,7 @@ on anything that can run [[https://nixos.org/nix][Nix]] is available, and where 
 - [[file:install/nixos.org][How to install on NixOS]] explains how to setup and use the monorepo when installing NixOS
 - [[file:install/fedora.org][How to install on Fedora]] explains how to setup and use the monorepo when installing on
   Fedora (after the installation)
-- [[file:install/bootstrap.org][Bootstrap]] script explained
+- [[file:install/bootstrap.org][Bootstrap & install]] scripts explained
 
 * Triage
 

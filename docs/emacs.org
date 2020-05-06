@@ -1,5 +1,6 @@
 #+TITLE: Vincent Demeester's .emacs.d
 #+SETUPFILE: ./.setupfile.org
+#+FILETAGS: emacs
 
 #+TOC: headlines 3
 
@@ -252,7 +253,7 @@ We can use this to our advantage and optimize the initial loading of emacs.
   collection freezes during long-term interactive use. Conversely, a ~gc-cons-threshold~
   that is too small will cause stuttering.
 
-  #+INCLUDE: "../tools/emacs/early-init.el" src emacs-lisp :range-begin "AfterInitHook" :range-end "-AfterInitHook" :lines "58-64"
+  #+INCLUDE: "../tools/emacs/early-init.el" src emacs-lisp :range-begin "AfterInitHook" :range-end "-AfterInitHook" :lines "61-67"
 
 One thing though, I am currently not necessarily running Emacs 27, so I am going to need
 to have the same configuration in ~init.el~ for a little bit of time.
