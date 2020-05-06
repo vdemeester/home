@@ -1,4 +1,5 @@
 image: nixos/latest
 tasks:
 - pkgs: |
-   nix-build pkgs
+    env
+    nix-build pkgs
