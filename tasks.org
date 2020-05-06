@@ -179,6 +179,17 @@ After importing modules, import a file conditionnally (home & nixos) that set a 
 true or false. This would also allow to support more things, like specifics for ubunt,
 fedora, …
 
+* DONE Migrate nur-package here
+CLOSED: [2020-05-06 Wed 09:51]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-06 Wed 09:51]
+:END:
+
+- [X] Have a CI setup for it (using sr.ht)
+  + Automate cachix push (nixos + nixos-unstable + nixpkgs-unstable + …)
+  + =curl= on nur-community in case of nur file changed (and only for it)
+- [X] Update nur-community
+
 * TODO Where should be the cloned ?
 
 That's a real interesting question.
@@ -241,13 +252,6 @@ For zsh on nixos:
 3. Can put build and pushed to nix, making updates (~home-manager~) less verbose and long.
 
 From: [[file:~/desktop/org/technical/tekton-dev.org::*Environments][Environments]]
-* TODO Migrate nur-package here
-
-- [X] Have a CI setup for it (using sr.ht)
-  + Automate cachix push (nixos + nixos-unstable + nixpkgs-unstable + …)
-  + =curl= on nur-community in case of nur file changed (and only for it)
-- [ ] Update nur-community
-
 * TODO better overlays
 
 - [ ] =default.nix= to import others
