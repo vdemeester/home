@@ -22,7 +22,6 @@ in
     home.packages = with pkgs; [
       nur.repos.mic92.cntr
       my.ko
-      my.go-containerregistry
       my.yak
       skopeo
     ];

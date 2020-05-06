@@ -22,7 +22,6 @@ rec {
   dep-collector = pkgs.callPackage ./dep-collector {};
   envbox = pkgs.callPackage ./envbox {};
   esc = pkgs.callPackage ./esc {};
-  go-containerregistry = pkgs.callPackage ./go-containerregistry {};
   gogo-protobuf = pkgs.callPackage ./gogo-protobuf {};
   goreturns = pkgs.callPackage ./goreturns {};
   gorun = pkgs.callPackage ./gorun {};
