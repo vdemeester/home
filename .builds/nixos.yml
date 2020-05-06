@@ -3,5 +3,6 @@ sources:
   - https://gitlab.com/vdemeester/home.git
 tasks:
 - pkgs: |
-    env
+    pwd
+    ls -l
     nix-build pkgs
