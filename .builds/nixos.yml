@@ -9,4 +9,5 @@ tasks:
     export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
     set -x
     nix-env -iA cachix -f https://cachix.org/api/v1/install
+    cachix use shortbrain
     nix-build home/ci.nix -A cacheOutputs | cachix push shortbrain
