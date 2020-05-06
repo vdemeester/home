@@ -6,4 +6,4 @@ secrets:
 tasks:
 - pkgs: |
     export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
-    nix-build ci.nix -A cacheOutputs | cachix push shortbrain
+    nix-build home/ci.nix -A cacheOutputs | cachix push shortbrain
