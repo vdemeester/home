@@ -35,10 +35,10 @@
 ;; UseWindmove
 (use-package windmove
   :commands (windmove-left windmove-right windmove-down windmove-up)
-  :bind (("M-<left>" . windmove-left)
-         ("M-<down>" . windmove-down)
-         ("M-<up>" . windmove-up)
-         ("M-<right>" . windmove-right)))
+  :bind (("S-<left>" . windmove-left)
+         ("S-<down>" . windmove-down)
+         ("S-<up>" . windmove-up)
+         ("S-<right>" . windmove-right)))
 ;; -UseWindmove
 
 (defun vde/window-split-toggle ()
