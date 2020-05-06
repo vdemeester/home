@@ -13,7 +13,7 @@ in
         type = types.bool;
       };
       package = mkOption {
-        default = pkgs.nur.repos.vdemeester.containerd;
+        default = pkgs.my.containerd;
         description = "containerd package to be used";
         type = types.package;
       };

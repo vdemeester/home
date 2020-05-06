@@ -5,10 +5,8 @@ with import ../assets/machines.nix;{
     ./fedora-base.nix
   ];
   home.packages = with pkgs; [
-    kubectx
-    kustomize
     golangci-lint
-    nur.repos.vdemeester.ram
+    my.ram
   ];
   profiles.containers.kubernetes = {
     enable = true;

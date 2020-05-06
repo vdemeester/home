@@ -2,6 +2,7 @@
 
 {
   imports = [ ./base.nix ];
+  machine.base.fedora = true;
   programs = {
     man.enable = false;
   };

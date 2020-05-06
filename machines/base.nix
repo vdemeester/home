@@ -34,6 +34,6 @@
       { cmd = "wakeonlan"; pkg = "python36Packages.wakeonlan"; }
       { cmd = "beet"; pkg = "beets"; }
     ];
-    onChange = "${pkgs.nur.repos.vdemeester.nr}/bin/nr default";
+    onChange = "${pkgs.my.nr}/bin/nr default";
   };
 }

@@ -42,7 +42,6 @@
     krb5
     libosinfo
     virtmanager
-    nur.repos.vdemeester.tkn
     thunderbird
     asciinema
     gnome3.zenity # use rofi instead

@@ -121,7 +121,7 @@ with import ../assets/machines.nix; {
 
     path = with pkgs; [ git ];
     script = ''
-      ${pkgs.nur.repos.vdemeester.ape}/bin/ape up /home/vincent/var/mirrors
+      ${pkgs.my.ape}/bin/ape up /home/vincent/var/mirrors
     '';
 
     startAt = "hourly";

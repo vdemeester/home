@@ -12,6 +12,14 @@ rec {
   vscodeliveshare = import ../pkgs/vscodeliveshare {
     inherit (self) stdenv vscode-utils autoPatchelfHook xorg gnome3 utillinux openssl icu zlib curl lttng-ust libsecret libkrb5 gcc libunwind binutils;
   };
+  vrsync = import ../pkgs/vrsync {
+    inherit (self) stdenv lib;
+  };
+  vde-thinkpad = import ../pkgs/vde-thinkpad {
+    inherit (self) stdenv lib;
+  };
+
+  my = import ../pkgs {};
 
   emacs27 = (self.emacs.override { srcRepo = true; }).overrideAttrs (
     old: {

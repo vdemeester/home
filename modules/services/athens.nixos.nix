@@ -12,7 +12,7 @@ in
       '';
       package = mkOption {
         type = types.package;
-        default = pkgs.nur.repos.vdemeester.athens;
+        default = pkgs.my.athens;
         description = ''
           Athens package to use.
         '';

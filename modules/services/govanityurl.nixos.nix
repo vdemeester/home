@@ -12,7 +12,7 @@ in
       '';
       package = mkOption {
         type = types.package;
-        default = pkgs.nur.repos.vdemeester.govanityurl;
+        default = pkgs.my.govanityurl;
         description = ''
           govanityurl package to use.
         '';
