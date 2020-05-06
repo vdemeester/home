@@ -1,6 +1,4 @@
 image: nixos/latest
 tasks:
-- say-hello: |
-   echo hello
-- say-world: |
-   echo world
+- pkgs: |
+   nix-build pkgs

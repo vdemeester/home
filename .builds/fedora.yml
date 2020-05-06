@@ -1,0 +1,4 @@
+image: fedora/latest
+tasks:
+- hello: |
+    echo "do something with fedora at some point"
