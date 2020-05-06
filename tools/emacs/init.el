@@ -110,6 +110,8 @@
   (require 'use-package))
 ;; -UsePackageSetup
 
+(setenv "SSH_AUTH_SOCK" "/run/user/1000/gnupg/S.gpg-agent.ssh")
+
 ;; CustomFile
 (defconst vde/custom-file (locate-user-emacs-file "custom.el")
   "File used to store settings from Customization UI.")
