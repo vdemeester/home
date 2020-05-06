@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   name = "prm-${version}";
-  version = "2.6.1";
+  version = "3.3.0";
   rev = "v${version}";
 
   goPackagePath = "github.com/ldez/prm";
@@ -17,9 +17,9 @@ buildGoModule rec {
     inherit rev;
     owner = "ldez";
     repo = "prm";
-    sha256 = "02r0cc8nacp9mhnjbrg495p92g1pzxs2b7b2dgsclx00mfd1qpn5";
+    sha256 = "0biqr091yxpmq6z2pw6xnzilqa3cbkryj4rc7gqc7dvp24farr1h";
   };
-  modSha256 = "0qrgq1453ngkwshyyihj5dz6hdwr0k2alz3s2qpj0qic9n7zx7sn";
+  modSha256 = "1vdq07ml5s5anbkybwx08s1j3dssv4c1pdkp8dcbarlp07d5y7n1";
 
   meta = {
     description = "Pull Request Manager for Maintainers";
