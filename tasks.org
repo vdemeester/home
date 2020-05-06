@@ -252,3 +252,10 @@ From: [[file:~/desktop/org/technical/tekton-dev.org::*Environments][Environments
 
 - [ ] =default.nix= to import others
 - [ ] =pkgs= and overlay smooth integration (aka no prefix =my=)
+
+* TODO bootstrap.nix (and install.nix)
+
+Reduce the sh script to the minimum and use =nix-shell= with a =.nix= file as much as
+possible.
+To run the install script from a NixOS livecd, =nix-shell= can be used, same in bootstrap
+as soon as we have installed nix.
