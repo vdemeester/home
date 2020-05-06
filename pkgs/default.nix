@@ -52,7 +52,11 @@ rec {
   crc = crc_1_10;
 
   # Operator SDK
-  operator-sdk = pkgs.callPackage ./operator-sdk {};
+  inherit (pkgs.callPackage ./operator-sdk {})
+    operator-sdk_0_16
+    operator-sdk_0_17
+    ;
+  operator-sdk = operator-sdk_0_17;
 
   # Tekton
   inherit (pkgs.callPackage ./tkn {})
