@@ -1,11 +1,8 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-
 let
-
   cfg = config.virtualisation.buildkitd;
-
 in
 {
   ###### interface
@@ -13,31 +10,29 @@ in
   options.virtualisation.buildkitd = {
     enable =
       mkOption {
-      type = types.bool;
-      default = false;
-      description =
-      ''
-        This option enables buildkitd
-      '';
-    };
+        type = types.bool;
+        default = false;
+        description =
+          ''
+            This option enables buildkitd
+          '';
+      };
 
     listenOptions =
       mkOption {
-      type = types.listOf types.str;
-      default = ["/run/buildkitd/buildkitd.sock"];
-      description =
-      ''
-        A list of unix and tcp buildkitd should listen to. The format follows
-        ListenStream as described in systemd.socket(5).
-      '';
-    };
-
-
+        type = types.listOf types.str;
+        default = [ "/run/buildkitd/buildkitd.sock" ];
+        description =
+          ''
+            A list of unix and tcp buildkitd should listen to. The format follows
+            ListenStream as described in systemd.socket(5).
+          '';
+      };
 
     package = mkOption {
-      default = pkgs.buildkitd;
+      default = pkgs.buildkit;
       type = types.package;
-      example = pkgs.buildkitd;
+      example = pkgs.buildkit;
       description = ''
         Buildkitd package to be used in the module
       '';
@@ -51,25 +46,26 @@ in
 
     extraOptions =
       mkOption {
-      type = types.separatedString " ";
-      default = "";
-      description =
-      ''
-        The extra command-line options to pass to
-        <command>buildkitd</command> daemon.
-      '';
-    };
+        type = types.separatedString " ";
+        default = "";
+        description =
+          ''
+            The extra command-line options to pass to
+            <command>buildkitd</command> daemon.
+          '';
+      };
   };
 
   ###### implementation
 
   config = mkIf cfg.enable {
     users.groups = [
-      { name = "buildkit";
+      {
+        name = "buildkit";
         gid = 350;
       }
     ];
-    environment.systemPackages = [ cfg.package];
+    environment.systemPackages = [ cfg.package ];
     systemd.packages = [ cfg.package ];
 
     systemd.services.buildkitd = {
@@ -79,12 +75,13 @@ in
       serviceConfig = {
         ExecStart = [
           ""
-        ''
-        ${cfg.package}/bin/buildkitd \
-          ${cfg.extraOptions}
-        ''];
+          ''
+            ${cfg.package}/bin/buildkitd \
+              ${cfg.extraOptions}
+          ''
+        ];
       };
-      path = [cfg.package] ++ cfg.packages;
+      path = [ cfg.package ] ++ cfg.packages;
     };
 
 
