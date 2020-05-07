@@ -49,15 +49,18 @@
   (global-unset-key (kbd "C-h h")))
 
 ;; LoadTheme
-(defadvice load-theme (before clear-previous-themes activate)
-  "Clear existing theme settings instead of layering them."
-  (mapc #'disable-theme custom-enabled-themes))
 ;; -LoadTheme
 
 ;; UseTheme
 (use-package emacs
   :config
   (setq custom-safe-themes t)
+
+  (defun sbr/before-load-theme (&rest args)
+    "Clear existing theme settings instead of layering them."
+    (mapc #'disable-theme custom-enabled-themes))
+
+  (advice-add 'load-theme :before #'sbr/before-load-theme)
 
   (defvar contrib/after-load-theme-hook nil
     "Hook run after a color theme is loaded using `load-theme'.")
