@@ -57,7 +57,8 @@
   (setq custom-safe-themes t)
 
   (defun sbr/before-load-theme (&rest args)
-    "Clear existing theme settings instead of layering them."
+    "Clear existing theme settings instead of layering them.
+Ignores `ARGS'."
     (mapc #'disable-theme custom-enabled-themes))
 
   (advice-add 'load-theme :before #'sbr/before-load-theme)
