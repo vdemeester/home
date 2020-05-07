@@ -21,7 +21,6 @@ rec {
   envbox = pkgs.callPackage ./envbox { };
   esc = pkgs.callPackage ./esc { };
   gogo-protobuf = pkgs.callPackage ./gogo-protobuf { };
-  goreturns = pkgs.callPackage ./goreturns { };
   gorun = pkgs.callPackage ./gorun { };
   govanityurl = pkgs.callPackage ./govanityurl { };
   ko = pkgs.callPackage ./ko { };
