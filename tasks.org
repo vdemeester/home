@@ -207,7 +207,7 @@ think it's ok to use sudo for this.
 
 The real question is :
 - =/etc/home= everywhere ? or…
-- =~/src/home= on fedora and =/etc/nixos= on nixos
+- =~/src/home= on fedora/ubuntu and =/etc/nixos= on nixos
 
 It could also be in =/etc/nixos= if it is writable for the user (=vincent= in most case)
 
@@ -231,6 +231,11 @@ Make it simpler
 - start a system with nixos iso (cache and download)
 - start a system with nixos pre-installed (cached)
 - start a system with fedora pre-installed (cached)
+
+- https://github.com/Xe/nixos-configs
+- https://rycee.gitlab.io/home-manager/
+- [[https://www.tomas.io/articles/try-fedora][Try fedora | tomas.io]]
+
 
 * TODO Makefile executable from anywhere
 
@@ -288,3 +293,11 @@ Daily or weekly build
 - Run the configuration against multiple channels (?)
 
 * TODO =private= folder for nix (instead of =assets=)
+* TODO Setup nur-package and cachix push
+:PROPERTIES:
+:CREATED:[2020-05-05 Tue 12:45]
+:END:
+
+Automatic =nix-build . | cachix push shortbrain=, on nixos-unstable and nixpkgs-unstable too.
+
+From: [[eshell:*eshell nur-packages*:cd /home/vincent/src/github.com/vdemeester/nur-packages][cd /home/vincent/src/github.com/vdemeester/nur-packages]]
