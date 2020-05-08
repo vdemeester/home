@@ -69,7 +69,7 @@ with import ../assets/machines.nix; {
     syncthing.guiAddress = "0.0.0.0:8384";
     smartd = {
       enable = true;
-      devices = [ { device = "/dev/nvme0n1"; } ];
+      devices = [{ device = "/dev/nvme0n1"; }];
     };
     wireguard = {
       enable = true;

@@ -17,7 +17,7 @@ in
         type = types.str;
       };
       aliases = mkOption {
-        default = [];
+        default = [ ];
         description = "server aliases to serve";
         type = types.listOf types.str;
       };

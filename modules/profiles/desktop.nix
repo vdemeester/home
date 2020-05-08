@@ -3,7 +3,6 @@
 with lib;
 let
   cfg = config.profiles.desktop;
-
   dim-screen = pkgs.writeScript "dim-sreen.sh" ''
     #!${pkgs.stdenv.shell}
     export PATH=${lib.getBin pkgs.xlibs.xbacklight}/bin:$PATH

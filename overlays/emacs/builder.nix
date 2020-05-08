@@ -2,8 +2,8 @@
 , emacs
 , name
 , src
-, buildInputs ? []
-, patches ? []
+, buildInputs ? [ ]
+, patches ? [ ]
 , preBuild ? ""
 }:
 
@@ -16,7 +16,7 @@ stdenv.mkDerivation {
   buildPhase = ''
     ${preBuild}
     ARGS=$(find ${stdenv.lib.concatStrings
-    (builtins.map (arg: arg + "/share/emacs/site-lisp ") buildInputs)} \
+      (builtins.map (arg: arg + "/share/emacs/site-lisp ") buildInputs)} \
                  -type d -exec echo -L {} \;)
     mkdir $out
     export HOME=$out

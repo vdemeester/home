@@ -18,41 +18,42 @@ in
       };
     };
   };
-  config = mkIf cfg.enable (
-    mkMerge [
-      {
-        services.shairport-sync.enable = cfg.shairport-sync;
-      }
-      (
-        mkIf cfg.mpd.enable {
-          services.mpd = {
-            enable = true;
-            musicDirectory = cfg.mpd.musicDir;
-            network.listenAddress = "any";
-            extraConfig = ''
-              audio_output {
-                type    "pulse"
-                name    "Local MPD"
-              }
-            '';
-          };
-          services.mpdris2 = {
-            enable = true;
-            mpd.host = "127.0.0.1";
-          };
-          home.packages = with pkgs; [
-            mpc_cli
-            ncmpcpp
-          ];
+  config = mkIf cfg.enable
+    (
+      mkMerge [
+        {
+          services.shairport-sync.enable = cfg.shairport-sync;
         }
-      )
-      (
-        mkIf (cfg.mpd.enable && config.profiles.desktop.enable) {
-          home.packages = with pkgs; [
-            ario
-          ];
-        }
-      )
-    ]
-  );
+        (
+          mkIf cfg.mpd.enable {
+            services.mpd = {
+              enable = true;
+              musicDirectory = cfg.mpd.musicDir;
+              network.listenAddress = "any";
+              extraConfig = ''
+                audio_output {
+                  type    "pulse"
+                  name    "Local MPD"
+                }
+              '';
+            };
+            services.mpdris2 = {
+              enable = true;
+              mpd.host = "127.0.0.1";
+            };
+            home.packages = with pkgs; [
+              mpc_cli
+              ncmpcpp
+            ];
+          }
+        )
+        (
+          mkIf (cfg.mpd.enable && config.profiles.desktop.enable) {
+            home.packages = with pkgs; [
+              ario
+            ];
+          }
+        )
+      ]
+    );
 }

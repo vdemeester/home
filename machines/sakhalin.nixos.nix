@@ -44,25 +44,25 @@ with import ../assets/machines.nix; {
         {
           # home
           name = "home";
-          slaves = [];
+          slaves = [ ];
           file = ../assets/db.home;
         }
         {
           # home.reverse
           name = "192.168.1.in-addr.arpa";
-          slaves = [];
+          slaves = [ ];
           file = ../assets/db.192.168.1;
         }
         {
           # vpn
           name = "vpn";
-          slaves = [];
+          slaves = [ ];
           file = ../assets/db.vpn;
         }
         {
           # vpn.reverse
           name = "10.100.0.in-addr.arpa";
-          slaves = [];
+          slaves = [ ];
           file = ../assets/db.10.100.0;
         }
       ];

@@ -13,7 +13,7 @@ in
         type = types.bool;
       };
       machines = mkOption {
-        default = {};
+        default = { };
         type = types.attrs;
       };
     };

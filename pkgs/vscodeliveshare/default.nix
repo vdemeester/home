@@ -33,12 +33,13 @@ in
       sha256 = "1y24q5id9hkgdndh2v8z1rpw736bi16yk66n260s44qd3w5yss8r";
     };
   }
-).overrideAttrs (
-  attrs:
+).overrideAttrs
+  (
+    attrs:
     {
       buildInputs = attrs.buildInputs
-      ++ [ autoPatchelfHook ]
-      ++ [ icu curl lttng-ust xorg.libX11 ];
+        ++ [ autoPatchelfHook ]
+        ++ [ icu curl lttng-ust xorg.libX11 ];
 
       installPhase = attrs.installPhase + ''
 
@@ -89,4 +90,4 @@ in
 
       propagatedBuildInputs = with gnome3; [ gnome-keyring ];
     }
-)
+  )

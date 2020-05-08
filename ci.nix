@@ -9,7 +9,7 @@
 # then your CI will be able to build and cache only those packages for
 # which this is possible.
 
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> { } }:
 
 with builtins;
 let
@@ -18,24 +18,18 @@ let
   isBuildable = p: !(p.meta.broken or false) && p.meta.license.free or true;
   isCacheable = p: !(p.preferLocalBuild or false);
   shouldRecurseForDerivations = p: isAttrs p && p.recurseForDerivations or false;
-
   nameValuePair = n: v: { name = n; value = v; };
-
   concatMap = builtins.concatMap or (f: xs: concatLists (map f xs));
-
   flattenPkgs = s:
     let
       f = p:
         if shouldRecurseForDerivations p then flattenPkgs p
         else if isDerivation p then [ p ]
-        else [];
+        else [ ];
     in
-      concatMap f (attrValues s);
-
+    concatMap f (attrValues s);
   outputsOf = p: map (o: p.${o}) p.outputs;
-
   nurAttrs = import ./pkgs/default.nix { inherit pkgs; };
-
   nurPkgs =
     flattenPkgs
       (

@@ -29,7 +29,7 @@ in
     nix.supportedPlatforms = mkOption {
       type = types.listOf types.str;
       description = "extra platforms that nix will run binaries for";
-      default = [];
+      default = [ ];
     };
   };
   config = mkIf (cfg.arm || cfg.aarch64) {
@@ -41,7 +41,7 @@ in
       // optionalAttrs cfg.aarch64 { inherit aarch64; }
       // optionalAttrs cfg.riscv64 { inherit riscv64; };
     nix.supportedPlatforms = (optionals cfg.arm [ "armv6l-linux" "armv7l-linux" ])
-    ++ (optional cfg.aarch64 "aarch64-linux");
+      ++ (optional cfg.aarch64 "aarch64-linux");
     nix.extraOptions = ''
       extra-platforms = ${toString config.nix.supportedPlatforms} i686-linux
     '';

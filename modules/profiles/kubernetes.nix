@@ -26,65 +26,66 @@ in
       };
     };
   };
-  config = mkIf cfg.enable (
-    mkMerge [
-      {
-        home.file.".local/share/applications/chos4.desktop".source = ../../assets/chos4.desktop;
-        profiles.containers.enable = cfg.containers;
-        home.packages = with pkgs; [
-          #cri-tools
-          kail
-          kustomize
-          kube-prompt
-          kubectx
-          my.oc
-          #my.openshift-install
-          my.operator-sdk
-          my.ko
-          my.kss
-          my.kubernix
-        ];
-      }
-      (
-        mkIf cfg.nr {
-          xdg.configFile."nr/kubernetes" = {
-            text = builtins.toJSON [
-              { cmd = "kubectl"; }
+  config = mkIf cfg.enable
+    (
+      mkMerge [
+        {
+          home.file.".local/share/applications/chos4.desktop".source = ../../assets/chos4.desktop;
+          profiles.containers.enable = cfg.containers;
+          home.packages = with pkgs; [
+            #cri-tools
+            kail
+            kustomize
+            kube-prompt
+            kubectx
+            my.oc
+            #my.openshift-install
+            my.operator-sdk
+            my.ko
+            my.kss
+            my.kubernix
+          ];
+        }
+        (
+          mkIf cfg.nr {
+            xdg.configFile."nr/kubernetes" = {
+              text = builtins.toJSON [
+                { cmd = "kubectl"; }
+              ];
+              onChange = "${pkgs.my.nr}/bin/nr -force kubernetes";
+            };
+          }
+        )
+        (
+          mkIf cfg.krew {
+            home.packages = with pkgs; [ my.krew ];
+          }
+        )
+        (
+          mkIf config.profiles.zsh.enable {
+            home.file."${config.programs.zsh.dotDir}/functions/_kubectl".source = ./assets/zsh/_kubectl;
+          }
+        )
+        (
+          mkIf cfg.minikube.enable {
+            home.packages = with pkgs; [
+              cfg.minikube.package
+              docker-machine-kvm2
             ];
-            onChange = "${pkgs.my.nr}/bin/nr -force kubernetes";
-          };
-        }
-      )
-      (
-        mkIf cfg.krew {
-          home.packages = with pkgs; [ my.krew ];
-        }
-      )
-      (
-        mkIf config.profiles.zsh.enable {
-          home.file."${config.programs.zsh.dotDir}/functions/_kubectl".source = ./assets/zsh/_kubectl;
-        }
-      )
-      (
-        mkIf cfg.minikube.enable {
-          home.packages = with pkgs; [
-            cfg.minikube.package
-            docker-machine-kvm2
-          ];
-        }
-      )
-      (
-        mkIf cfg.kind {
-          home.packages = with pkgs; [
-            kind
-          ];
-        }
-      )
-      (
-        mkIf (!config.profiles.containers.openshift.enable) {
-          home.packages = with pkgs; [ kubectl ];
-        }
-      )
-    ]
-  );
+          }
+        )
+        (
+          mkIf cfg.kind {
+            home.packages = with pkgs; [
+              kind
+            ];
+          }
+        )
+        (
+          mkIf (!config.profiles.containers.openshift.enable) {
+            home.packages = with pkgs; [ kubectl ];
+          }
+        )
+      ]
+    );
 }

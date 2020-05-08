@@ -141,7 +141,7 @@ in
           "Mod4+Shift+39" = "exec ~/.screenlayout/home-work.sh && systemctl --user start random-background.service";
           "Mod4+24" = "border toggle";
         };
-        modes = {};
+        modes = { };
         bars = [
           {
             mode = "hide";

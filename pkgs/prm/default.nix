@@ -7,11 +7,12 @@ buildGoModule rec {
 
   goPackagePath = "github.com/ldez/prm";
 
-  buildFlagsArray = let t = "${goPackagePath}/meta"; in ''
-    -ldflags=
-       -X ${t}.Version=${version}
-       -X ${t}.BuildDate=unknown
-  '';
+  buildFlagsArray = let t = "${goPackagePath}/meta"; in
+    ''
+      -ldflags=
+         -X ${t}.Version=${version}
+         -X ${t}.BuildDate=unknown
+    '';
 
   src = fetchFromGitHub {
     inherit rev;

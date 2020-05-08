@@ -3,38 +3,36 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-
 let
 
   cfg = config.virtualisation.containerd;
 
 in
-
 {
   ###### interface
 
   options.virtualisation.containerd = {
     enable =
       mkOption {
-      type = types.bool;
-      default = false;
-      description =
-      ''
-        This option enables containerd, a daemon that manages
-        linux containers.
-      '';
-    };
+        type = types.bool;
+        default = false;
+        description =
+          ''
+            This option enables containerd, a daemon that manages
+            linux containers.
+          '';
+      };
 
     listenOptions =
       mkOption {
-      type = types.listOf types.str;
-      default = ["/run/containerd/containerd.sock"];
-      description =
-      ''
-        A list of unix and tcp containerd should listen to. The format follows
-        ListenStream as described in systemd.socket(5).
-      '';
-    };
+        type = types.listOf types.str;
+        default = [ "/run/containerd/containerd.sock" ];
+        description =
+          ''
+            A list of unix and tcp containerd should listen to. The format follows
+            ListenStream as described in systemd.socket(5).
+          '';
+      };
 
     package = mkOption {
       default = pkgs.containerd;
@@ -53,33 +51,34 @@ in
 
     extraOptions =
       mkOption {
-      type = types.separatedString " ";
-      default = "";
-      description =
-      ''
-        The extra command-line options to pass to
-        <command>containerd</command> daemon.
-      '';
-    };
+        type = types.separatedString " ";
+        default = "";
+        description =
+          ''
+            The extra command-line options to pass to
+            <command>containerd</command> daemon.
+          '';
+      };
   };
 
   ###### implementation
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [ cfg.package];
-    systemd.packages = [ cfg.package];
+    environment.systemPackages = [ cfg.package ];
+    systemd.packages = [ cfg.package ];
 
     systemd.services.containerd = {
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         ExecStart = [
           ""
-        ''
-          ${cfg.package}/bin/containerd \
-          ${cfg.extraOptions}
-        ''];
+          ''
+            ${cfg.package}/bin/containerd \
+            ${cfg.extraOptions}
+          ''
+        ];
       };
-      path = [cfg.package] ++ cfg.packages;
+      path = [ cfg.package ] ++ cfg.packages;
     };
 
 

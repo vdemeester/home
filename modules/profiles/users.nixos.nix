@@ -28,15 +28,15 @@ in
           uid = 1000;
           createHome = true;
           extraGroups = [ "wheel" "input" ] ++ optionals config.profiles.desktop.enable [ "audio" "video" "lp" "scanner" "networkmanager" ]
-          ++ optionals config.profiles.docker.enable [ "docker" ]
-          ++ optionals config.profiles.buildkit.enable [ "buildkit" ]
-          ++ optionals config.profiles.virtualization.enable [ "libvirtd" "vboxusers" ];
+            ++ optionals config.profiles.docker.enable [ "docker" ]
+            ++ optionals config.profiles.buildkit.enable [ "buildkit" ]
+            ++ optionals config.profiles.virtualization.enable [ "libvirtd" "vboxusers" ];
           shell = if config.programs.fish.enable then pkgs.fish else pkgs.zsh;
           initialPassword = "changeMe";
           openssh.authorizedKeys.keys =
             with import ../../assets/machines.nix; [ ssh.yubikey.key ssh.yubikey5.key ssh.wakasu.key ssh.vincent.key ssh.houbeb.key ssh.hokkaido.key ssh.okinawa.key ];
-          subUidRanges = [ { startUid = 100000; count = 65536; } ];
-          subGidRanges = [ { startGid = 100000; count = 65536; } ];
+          subUidRanges = [{ startUid = 100000; count = 65536; }];
+          subGidRanges = [{ startGid = 100000; count = 65536; }];
         };
       };
     };

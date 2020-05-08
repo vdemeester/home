@@ -9,7 +9,7 @@ with import ../assets/machines.nix; {
   };
   profiles = {
     git.enable = true;
-    nix-config.localCaches = [];
+    nix-config.localCaches = [ ];
     nix-config.buildCores = 1;
     ssh.enable = true;
     syncthing.enable = true;
