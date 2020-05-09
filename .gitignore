@@ -9,6 +9,7 @@ tools/emacs/recentf
 qemu
 accounts.nix
 assets/*
+private/*
 networking.nix
 wireguard*.key
 .envrc

@@ -220,13 +220,13 @@ It could also be in =/etc/nixos= if it is writable for the user (=vincent= in mo
 
 * TODO Handle machines.nix better (somehow?)
 
-* TODO Update auto-update service
+* TODO [#A] Update auto-update service
 
 Make it simpler
 - auto-update simple
 - a nightly git pull --rebase … as *user*
 
-* TODO =qemu=/=kvm= setup to tests things
+* TODO [#B] =qemu=/=kvm= setup to tests things
 
 - start a system with nixos iso (cache and download)
 - start a system with nixos pre-installed (cached)
@@ -247,7 +247,7 @@ For zsh on nixos:
 - [ ] completion
 - [ ] take some stuff from ~home~ configuration
 
-* TODO [#B] Have a ~emacs.nix~ aware config                     :nixos:emacs:
+* TODO Have a ~emacs.nix~ aware config                          :nixos:emacs:
 :PROPERTIES:
 :CREATED:[2019-03-16 Sat 11:57]
 :END:
@@ -262,12 +262,14 @@ From: [[file:~/desktop/org/technical/tekton-dev.org::*Environments][Environments
 - [ ] =default.nix= to import others
 - [ ] =pkgs= and overlay smooth integration (aka no prefix =my=)
 
-* TODO bootstrap.nix (and install.nix)
+* TODO [#B] bootstrap.nix (and install.nix)
 
 Reduce the sh script to the minimum and use =nix-shell= with a =.nix= file as much as
 possible.
 To run the install script from a NixOS livecd, =nix-shell= can be used, same in bootstrap
 as soon as we have installed nix.
+
+* TODO [#A] Add =.githooks= support
 
 * TODO virtualization.buildkit options
 
@@ -283,17 +285,17 @@ CLOSED: [2020-05-06 Wed 10:13]
 - State "DONE"       from "TODO"       [2020-05-06 Wed 10:13]
 :END:
 
-* TODO cron-job to schedule a build at build.sr.ht 👼
+* TODO [#B] cron-job to schedule a build at build.sr.ht 👼
 
 Daily or weekly build
 
-* TODO self-contained configuration
+* TODO [#A] self-contained configuration
 
 - Pin different channels in the configuration (?)
 - Run the configuration against multiple channels (?)
 
 * TODO =private= folder for nix (instead of =assets=)
-* TODO Setup nur-package and cachix push
+* TODO [#A] =ci.nix= build on multiple channels
 :PROPERTIES:
 :CREATED:[2020-05-05 Tue 12:45]
 :END:

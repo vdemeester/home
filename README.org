@@ -6,17 +6,14 @@
 :CUSTOM_ID: h:0272c5ac-0b7f-4ebb-91f0-defa66c2d285
 :END:
 
-This repository is my dotfiles, using ~home-manager~, ~nix~, some shell script and maybe
-sometimes ansible — especially on non-NixOS system.
+This repository is the monorepo for my personal tools and infrastructure. It containers my
+dotfiles, some tools and scripts. It is mainly based on =nix= and =home-manager=some shell
+script and maybe sometimes ansible — especially on non-NixOS system.
 
 The goal of is repository is to be able to have a way to setup dotfiles and packages in
 /one go/, sharing those configuration between multiple computers. The documentation part
 is using (or /will/) =org-mode= following principles of "literate programming": a
 combination of ordinary language and inline code blocks.
-
-This means it could become the /monorepo/ of my configuration, slowly migrating other
-repositories into this one (like [[https://github.com/vdemeester/emacs-config][~emacs-config~]]). This repository should be the source of
-truth of all my configuration.
 
 On idea is also to try to do something like "[[https://willschenk.com/articles/2020/leveraging_disposability_for_exploration/][Leveraging disposability for exploration]]",
 aka "how to play around without leaving a mess". I'll try my best to make everything
@@ -25,10 +22,12 @@ reproducible and easily testable without making /a mess/. Nix/NixOS should help 
 This will be a all-time work-in-progress, so please beware that things might change
 dramatically or even not working anymore 😛.
 
-* Installation
+* TODO Installation
 :PROPERTIES:
 :CUSTOM_ID: h:e289aa81-d0ec-49a0-ba94-933e85d4ee8c
 :END:
+
+/todo: rework that part/
 
 You should be able to run the =bootstrap.sh= script as is. And if you feel adventurous,
 you can use ~curl~ for this.
@@ -40,7 +39,9 @@ curl https://gitlab.com/vdemeester/home/-/raw/master/bootstrap.sh | sh
 Otherwise, clone this repository somewhere, read the =bootstrap.sh= file and execute it if
 you feel safe
 
-** ~home-manager~ only
+** TODO ~home-manager~ only
+
+/todo: rework that part/
 
 If you don't have ~nix~ installed, run ~curl https://nixos.org/nix/install | sh~ to install it.
 
@@ -63,7 +64,7 @@ If you don't have ~nix~ installed, run ~curl https://nixos.org/nix/install | sh~
 
 ** TODO ~nixos~ only
 
-TBD: migrate ~nixos-configuration~ here.
+/todo: rework that part/
 
 * Organization of the repository
 :PROPERTIES:
@@ -84,6 +85,7 @@ soon-ish 👼):
 - ~modules~: holds nix modules (services, programs, hardware, profiles, …)
 - ~overlays~: holds [[https://nixos.wiki/wiki/Overlays][nix overlays]]
 - ~pkgs~: holds nix packages (those should migrate under ~overlays~ or on ~nur-packages~)
+- ~private~: holds non-shareable code, like /secrets/.
 - ~tmp~: things to… organize (e.g. where I import my other /legacy/ configuration)
 
 <<literate configuration>>As I'm slowly, but _surely_, going to have =org-mode= files for
