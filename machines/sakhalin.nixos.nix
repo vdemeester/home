@@ -104,6 +104,28 @@ with import ../assets/machines.nix; {
       OnFailure = "status-email-root@%n.service";
     };
   };
+  # builds.sr.ht: daily builds
+  systemd.services.builds-srht = {
+    description = "Daily builds.sr.ht";
+    requires = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+
+    restartIfChanged = false;
+    unitConfig.X-StopOnRemoval = false;
+
+    serviceConfig = {
+      Type = "oneshot";
+      User = "vincent";
+      OnFailure = "status-email-root@%n.service";
+    };
+
+    path = with pkgs; [ httpie ];
+    script = ''
+      http POST https://builds.sr.ht/api/jobs manifest="$(cat /etc/nixos/.builds/nixos.yml)" Authorization:"token ${token_srht}"
+    '';
+
+    startAt = "daily";
+  };
   # ape – sync git mirrors
   systemd.services.ape = {
     description = "Ape - sync git mirrors";

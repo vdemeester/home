@@ -220,7 +220,11 @@ It could also be in =/etc/nixos= if it is writable for the user (=vincent= in mo
 
 * TODO Handle machines.nix better (somehow?)
 
-* TODO [#A] Update auto-update service
+* DONE [#A] Update auto-update service
+CLOSED: [2020-05-09 Sat 22:51]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-09 Sat 22:51]
+:END:
 
 Make it simpler
 - auto-update simple
@@ -293,7 +297,7 @@ CLOSED: [2020-05-06 Wed 10:13]
 
 Daily or weekly build
 
-* TODO [#A] self-contained configuration
+* TODO [#B] self-contained configuration
 
 - Pin different channels in the configuration (?)
 - Run the configuration against multiple channels (?)
