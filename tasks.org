@@ -269,7 +269,11 @@ possible.
 To run the install script from a NixOS livecd, =nix-shell= can be used, same in bootstrap
 as soon as we have installed nix.
 
-* TODO [#A] Add =.githooks= support
+* DONE [#A] Add =.githooks= support
+CLOSED: [2020-05-09 Sat 15:08]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-09 Sat 15:08]
+:END:
 
 * TODO virtualization.buildkit options
 
@@ -295,7 +299,7 @@ Daily or weekly build
 - Run the configuration against multiple channels (?)
 
 * TODO =private= folder for nix (instead of =assets=)
-* TODO [#A] =ci.nix= build on multiple channels
+* TODO [#B] =ci.nix= build on multiple channels
 :PROPERTIES:
 :CREATED:[2020-05-05 Tue 12:45]
 :END:

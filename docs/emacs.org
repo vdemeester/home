@@ -13,8 +13,8 @@
 :CUSTOM_ID: h:9e025e71-b8c5-4cd3-88cc-c81f1e026d13
 :END:
 
-+ HTML version :: [[https://vincent.demeester.fr/configurations/emacs.html][vincent.demeester.fr/configurations/emacs.html]]
-+ Git repo :: [[https://gitlab.com/vdemeester/home/-/tree/master/tools/emacs][https://gitlab.com/vdemeester/home/-/tree/master/tools/emacs]]
+- HTML version :: [[https://vincent.demeester.fr/configurations/emacs.html][vincent.demeester.fr/configurations/emacs.html]]
+- Git repo :: [[https://gitlab.com/vdemeester/home/-/tree/master/tools/emacs][https://gitlab.com/vdemeester/home/-/tree/master/tools/emacs]]
 
 ** What is this
 :PROPERTIES:
@@ -365,19 +365,19 @@ use those later on to skip some package or change some configuration accordingly
 Now, in order to load ~lisp~ and ~config~ files, it's just a matter of calling this
 function with the right argument.
 
-#+INCLUDE: "../tools/emacs/init.el" src emacs-lisp :range-begin "CfgLoad" :range-end "-CfgLoad" :lines "190-193"
+#+INCLUDE: "../tools/emacs/init.el" src emacs-lisp :range-begin "CfgLoad" :range-end "-CfgLoad" :lines "190-195"
 
 Finally, I want to be able to load files for a specific machine, in case I need it (not
 entirely sure why yet but…)
 
-#+INCLUDE: "../tools/emacs/init.el" src emacs-lisp :range-begin "CfgHostLoad" :range-end "-CfgHostLoad" :lines "196-198"
+#+INCLUDE: "../tools/emacs/init.el" src emacs-lisp :range-begin "CfgHostLoad" :range-end "-CfgHostLoad" :lines "198-200"
 
 *** Counting the time of loading
 :PROPERTIES:
 :CUSTOM_ID: h:2b645e95-6776-4f5b-a318-e5a915943881
 :END:
 
-#+INCLUDE: "../tools/emacs/init.el" src emacs-lisp :range-begin "LastInit" :range-end "-LastInit" :lines "201-212"
+#+INCLUDE: "../tools/emacs/init.el" src emacs-lisp :range-begin "LastInit" :range-end "-LastInit" :lines "203-214"
 
 ** ~PATH~'s customization
 :PROPERTIES:
