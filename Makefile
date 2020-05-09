@@ -61,6 +61,9 @@ switch: assets setup
 		home-manager switch;\
 	fi
 
+install-hooks:
+	if [ -e .git ]; then nix-shell -p git --run 'git config core.hooksPath .githooks'; fi
+
 # Cleaning
 .PHONY: clean
 clean:
