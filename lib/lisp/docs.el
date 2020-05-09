@@ -8,7 +8,6 @@
 ;;; Code:
 (defun update-docs ()
   "Updates #+INCLUDE in docs/ org-mode files"
-  (message "TODO")
   (mapc (lambda (x) (update-org-include x))
         (directory-files-recursively "docs" "\.org$")))
 

@@ -11,7 +11,6 @@ DOTGNUS = ~/.config/gnus
 DOTNIXPKGS = ~/.config/nixpkgs
 ETCNIXOS = /etc/nixos
 SYNCDIR = /home/vincent/sync/nixos
-PUBLISH_FOLDER = ~/desktop/sites/beta.sbr.pm
 SRCWWW = ~/src/www
 
 # Targets
