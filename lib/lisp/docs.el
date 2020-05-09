@@ -3,11 +3,19 @@
 
 ;;; Commentary:
 ;; This contains a group of function to update docs/ org includes.
+(require 'init-func)
 
 ;;; Code:
-(defun update-org-include ()
+(defun update-docs ()
   "Updates #+INCLUDE in docs/ org-mode files"
-  (message "TODO"))
+  (message "TODO")
+  (mapc (lambda (x) (update-org-include x))
+        (directory-files-recursively "docs" "\.org$")))
+
+(defun update-org-include (file)
+  "Updates #+INCLUDE in docs/ org-mode of FILE."
+  (with-current-buffer (find-file-noselect file)
+    (save-and-update-includes)))
 
 (provide 'docs)
 ;;; docs.el ends here

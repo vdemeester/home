@@ -86,7 +86,7 @@ update-docs:
 	@echo "Updating docs references…"
 	$(EMACS) --batch --directory $(DOTEMACS)/lisp/ \
 		--load lib/lisp/docs.el \
-		--funcall update-org-include
+		--funcall update-docs
 
 .PHONY: build-www
 build-www: $(SRCWWW)/publish-common.el lib/lisp/publish.el update-docs
