@@ -12,6 +12,7 @@ DOTNIXPKGS = ~/.config/nixpkgs
 ETCNIXOS = /etc/nixos
 SYNCDIR = /home/vincent/sync/nixos
 PUBLISH_FOLDER = ~/desktop/sites/beta.sbr.pm
+SRCWWW = ~/src/www
 
 # Targets
 .PHONY: all
@@ -79,19 +80,26 @@ clean-www:
 	-rm -rvf *.elc
 	-rm -rv ~/.org-timestamps/*
 
-# Documentatino build and publishing
+# Documentation build and publishing
+.PHONY: update-docs
+update-docs:
+	@echo "Updating docs references…"
+	$(EMACS) --batch --directory $(DOTEMACS)/lisp/ \
+		--load lib/lisp/docs.el \
+		--funcall update-org-include
+
 .PHONY: build-www
-build-www: ${HOME}/src/www/publish-common.el publish.el
+build-www: $(SRCWWW)/publish-common.el lib/lisp/publish.el update-docs
 	@echo "Publishing... with current Emacs configurations."
 	${EMACS} --batch --directory $(DOTEMACS)/lisp/ \
-		--load ${HOME}/src/www/publish-common.el --load publish.el \
+		--load $(SRCWWW)/publish-common.el --load lib/lisp/publish.el \
 		--funcall org-publish-all
 
-${HOME}/src/www/Makefile: ${HOME}/src/www/
-${HOME}/src/www/publish-common.el: ${HOME}/src/www/
+$(SRCWWW)/Makefile: $(SRCWWW)
+$(SRCWWW)/publish-common.el: $(SRCWWW)
 
-${HOME}/src/www/:
-	test -d ${HOME}/src/www || git clone git@git.sr.ht:~vdemeester/www.git ${HOME}/src/www/
+$(SRCWWW):
+	test -d $(SRCWWW) || git clone git@git.sr.ht:~vdemeester/www.git $(SRCWWW)
 
 # Setup and doctor
 .PHONY: doctor
