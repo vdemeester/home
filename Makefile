@@ -64,6 +64,9 @@ switch: assets setup
 install-hooks:
 	if [ -e .git ]; then nix-shell -p git --run 'git config core.hooksPath .githooks'; fi
 
+fmt:
+	nixpkgs-fmt *.nix lib machines modules overlays/*.nix overlays/emacs pkgs tmp tools
+
 # Cleaning
 .PHONY: clean
 clean:
