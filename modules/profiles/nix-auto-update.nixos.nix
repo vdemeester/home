@@ -53,10 +53,28 @@ in
               script = ''
                 export PATH=/run/current-system/sw/bin
                 cd /etc/nixos/
-                runuser -l vincent -c 'git pull --autostash --rebase'
                 make update switch
               '';
               startAt = cfg.dates;
+              onFailure = [ "status-email-root@%n.service" ];
+            };
+            systemd.services.etc-nixos-git-update = {
+              description = "Update NixOS source git repository";
+              unitConfig.X-StopOnRemoval = false;
+              restartIfChanged = false;
+              serviceConfig.Type = "oneshot";
+              serviceConfig.User = "vincent";
+              environment = config.nix.envVars
+                // {
+                inherit (config.environment.sessionVariables) NIX_PATH;
+              };
+              path = [ pkgs.gnutar pkgs.xz pkgs.git ];
+              script = ''
+                export PATH=/run/current-system/sw/bin
+                cd /etc/nixos/
+                git pull --rebase --autostash --recurse-submodules
+              '';
+              startAt = "daily";
               onFailure = [ "status-email-root@%n.service" ];
             };
           }
