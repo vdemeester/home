@@ -293,7 +293,11 @@ CLOSED: [2020-05-06 Wed 10:13]
 - State "DONE"       from "TODO"       [2020-05-06 Wed 10:13]
 :END:
 
-* TODO [#B] cron-job to schedule a build at build.sr.ht 👼
+* DONE [#B] cron-job to schedule a build at build.sr.ht 👼
+CLOSED: [2020-05-10 Sun 13:55]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-10 Sun 13:55]
+:END:
 
 Daily or weekly build
 

@@ -104,7 +104,7 @@ with import ../assets/machines.nix; {
       OnFailure = "status-email-root@%n.service";
     };
   };
-  environment.etc."secrets/srht-token".text = "${tokten_srht}";
+  environment.etc."secrets/srht-token".text = "${token_srht}";
   # builds.sr.ht: daily builds
   systemd.services.builds-srht = {
     description = "Daily builds.sr.ht";
