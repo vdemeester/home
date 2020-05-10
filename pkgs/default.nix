@@ -6,6 +6,7 @@ rec {
   tmux-tpm = pkgs.callPackage ./tmux-tpm { };
   vrsync = pkgs.callPackage ./vrsync { };
   vde-thinkpad = pkgs.callPackage ./vde-thinkpad { };
+  bus = pkgs.callPackage ../tools/bus { };
 
   # Mine
   ape = pkgs.callPackage ./ape { };

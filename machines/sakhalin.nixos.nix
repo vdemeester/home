@@ -104,6 +104,7 @@ with import ../assets/machines.nix; {
       OnFailure = "status-email-root@%n.service";
     };
   };
+  environment.etc."secrets/srht-token".text = "${tokten_srht}";
   # builds.sr.ht: daily builds
   systemd.services.builds-srht = {
     description = "Daily builds.sr.ht";
@@ -119,11 +120,7 @@ with import ../assets/machines.nix; {
       OnFailure = "status-email-root@%n.service";
     };
 
-    path = with pkgs; [ httpie ];
-    script = ''
-      manifest=$(cat /etc/nixos/.builds/nixos.yml)
-      http POST https://builds.sr.ht/api/jobs manifest="${manifest}" Authorization:"token ${token_srht}"
-    '';
+    script = "${pkgs.my.bus}/bin/bus";
 
     startAt = "daily";
   };
