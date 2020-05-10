@@ -4,3 +4,7 @@ sources:
 tasks:
 - hello: |
     echo "do something with fedora at some point"
+triggers:
+- action: email
+  condition: failure
+  to: vincent@sbr.pm

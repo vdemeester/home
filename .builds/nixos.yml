@@ -13,3 +13,7 @@ tasks:
     cachix use shortbrain
     nix-build home/ci.nix -A cacheOutputs | cachix push shortbrain
     curl -XPOST "https://nur-update.herokuapp.com/update?repo=vdemeester"
+triggers:
+- action: email
+  condition: failure
+  to: vincent@sbr.pm
