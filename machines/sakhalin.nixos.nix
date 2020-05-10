@@ -121,7 +121,8 @@ with import ../assets/machines.nix; {
 
     path = with pkgs; [ httpie ];
     script = ''
-      http POST https://builds.sr.ht/api/jobs manifest="$(cat /etc/nixos/.builds/nixos.yml)" Authorization:"token ${token_srht}"
+      manifest=$(cat /etc/nixos/.builds/nixos.yml)
+      http POST https://builds.sr.ht/api/jobs manifest="${manifest}" Authorization:"token ${token_srht}"
     '';
 
     startAt = "daily";
