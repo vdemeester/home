@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t -*-
 (add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp/modus-themes" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp/vorg" user-emacs-directory))
 (require 'package)
 ;; load autoload files and populate load-path’s
 (setq sbr-dumped-load-path load-path
