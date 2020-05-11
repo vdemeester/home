@@ -10,17 +10,14 @@ in
       enable = mkEnableOption "Enable media configuration";
     };
   };
-  config = mkIf cfg.enable
+  config = mkIf cfg.enable (mkMerge [
+    {
+      home.packages = with pkgs; [ youtube-dl ];
+    }
     (
-      mkMerge [
-        {
-          home.packages = with pkgs; [ youtube-dl ];
-        }
-        (
-          mkIf config.profiles.desktop.enable {
-            home.packages = with pkgs; [ spotify ];
-          }
-        )
-      ]
-    );
+      mkIf config.profiles.desktop.enable {
+        home.packages = with pkgs; [ spotify ];
+      }
+    )
+  ]);
 }

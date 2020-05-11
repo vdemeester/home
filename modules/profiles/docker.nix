@@ -10,25 +10,22 @@ in
       enable = mkEnableOption "Enable docker profile";
     };
   };
-  config = mkIf cfg.enable
+  config = mkIf cfg.enable (mkMerge [
+    {
+      home.packages = with pkgs; [
+        docker
+        docker-machine
+        docker-machine-kvm
+        docker-machine-kvm2
+        docker-compose
+      ];
+    }
     (
-      mkMerge [
-        {
-          home.packages = with pkgs; [
-            docker
-            docker-machine
-            docker-machine-kvm
-            docker-machine-kvm2
-            docker-compose
-          ];
-        }
-        (
-          mkIf config.profiles.fish.enable {
-            xdg.configFile."fish/conf.d/docker.fish".text = ''
-              # set -gx DOCKER_BUILDKIT 1
-            '';
-          }
-        )
-      ]
-    );
+      mkIf config.profiles.fish.enable {
+        xdg.configFile."fish/conf.d/docker.fish".text = ''
+          # set -gx DOCKER_BUILDKIT 1
+        '';
+      }
+    )
+  ]);
 }

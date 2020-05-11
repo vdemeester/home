@@ -1,9 +1,9 @@
 let
-  mapAttrs = f: set: builtins.listToAttrs
-    (
-      map (attr: { name = attr; value = f set.${attr}; })
-        (builtins.attrNames set)
-    );
+  mapAttrs = f: set: builtins.listToAttrs (
+    map
+      (attr: { name = attr; value = f set.${attr}; })
+      (builtins.attrNames set)
+  );
   channels = {
     aardvark = "13.10";
     baboon = "14.04";

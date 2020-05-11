@@ -31,17 +31,17 @@ let
   outputsOf = p: map (o: p.${o}) p.outputs;
   nurAttrs = import ./pkgs/default.nix { inherit pkgs; };
   nurPkgs =
-    flattenPkgs
-      (
-        listToAttrs
+    flattenPkgs (
+      listToAttrs (
+        map
+          (n: nameValuePair n nurAttrs.${n})
           (
-            map (n: nameValuePair n nurAttrs.${n})
-              (
-                filter (n: !isReserved n)
-                  (attrNames nurAttrs)
-              )
+            filter
+              (n: !isReserved n)
+              (attrNames nurAttrs)
           )
-      );
+      )
+    );
 in
 rec {
   buildPkgs = filter isBuildable nurPkgs;

@@ -21,23 +21,22 @@ rec {
 
   my = import ../pkgs { };
 
-  emacs27 = (self.emacs.override { srcRepo = true; }).overrideAttrs
-    (
-      old: {
-        name = "emacs-dev";
-        version = "27.0.91";
-        src = super.fetchFromGitHub {
-          owner = "emacs-mirror";
-          repo = "emacs";
-          rev = "emacs-27.0.91";
-          sha256 = "0mlrg2npy1r79laahkgzhxd1qassfcdz8qk1cpw7mqgf6y5x505h";
-        };
-        buildInputs = old.buildInputs ++ [ super.jansson ];
-        patches = [
-          ./patches/clean-env.patch
-        ];
-      }
-    );
+  emacs27 = (self.emacs.override { srcRepo = true; }).overrideAttrs (
+    old: {
+      name = "emacs-dev";
+      version = "27.0.91";
+      src = super.fetchFromGitHub {
+        owner = "emacs-mirror";
+        repo = "emacs";
+        rev = "emacs-27.0.91";
+        sha256 = "0mlrg2npy1r79laahkgzhxd1qassfcdz8qk1cpw7mqgf6y5x505h";
+      };
+      buildInputs = old.buildInputs ++ [ super.jansson ];
+      patches = [
+        ./patches/clean-env.patch
+      ];
+    }
+  );
 
   bookmark-plus = compileEmacsFiles {
     name = "bookmark-plus";

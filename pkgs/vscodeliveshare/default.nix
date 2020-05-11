@@ -33,61 +33,60 @@ in
       sha256 = "1y24q5id9hkgdndh2v8z1rpw736bi16yk66n260s44qd3w5yss8r";
     };
   }
-).overrideAttrs
-  (
-    attrs:
-    {
-      buildInputs = attrs.buildInputs
-        ++ [ autoPatchelfHook ]
-        ++ [ icu curl lttng-ust xorg.libX11 ];
+).overrideAttrs (
+  attrs:
+  {
+    buildInputs = attrs.buildInputs
+      ++ [ autoPatchelfHook ]
+      ++ [ icu curl lttng-ust xorg.libX11 ];
 
-      installPhase = attrs.installPhase + ''
+    installPhase = attrs.installPhase + ''
 
     runHook postInstall
     '';
 
-      postInstall = ''
-        bash -s <<ENDSUBSHELL
-        shopt -s extglob
-        cd $out/share/*/extensions/*
-        cp \
-            "${runtime}"/shared/Microsoft.NETCore.App/2.1.1/* \
-            dotnet_modules/runtimes/linux-x64/!(native) \
-            dotnet_modules/runtimes/linux-x64/native/* \
-            dotnet_modules/runtimes/unix/lib/netstandard1.3/* \
-            "dotnet_modules"
-        chmod +x \
-            dotnet_modules/vsls-agent \
-            dotnet_modules/Microsoft.Cascade.VSCodeAdapter \
-            dotnet_modules/createdump \
-            dotnet_modules/Microsoft.Cascade.VSCodeHostAdapter \
-            dotnet_modules/runtimes/linux-x64/vsls-agent \
-            dotnet_modules/runtimes/linux-x64/Microsoft.Cascade.VSCodeHostAdapter \
-            dotnet_modules/runtimes/linux-x64/Microsoft.Cascade.VSCodeAdapter \
+    postInstall = ''
+      bash -s <<ENDSUBSHELL
+      shopt -s extglob
+      cd $out/share/*/extensions/*
+      cp \
+          "${runtime}"/shared/Microsoft.NETCore.App/2.1.1/* \
+          dotnet_modules/runtimes/linux-x64/!(native) \
+          dotnet_modules/runtimes/linux-x64/native/* \
+          dotnet_modules/runtimes/unix/lib/netstandard1.3/* \
+          "dotnet_modules"
+      chmod +x \
+          dotnet_modules/vsls-agent \
+          dotnet_modules/Microsoft.Cascade.VSCodeAdapter \
+          dotnet_modules/createdump \
+          dotnet_modules/Microsoft.Cascade.VSCodeHostAdapter \
+          dotnet_modules/runtimes/linux-x64/vsls-agent \
+          dotnet_modules/runtimes/linux-x64/Microsoft.Cascade.VSCodeHostAdapter \
+          dotnet_modules/runtimes/linux-x64/Microsoft.Cascade.VSCodeAdapter \
 
-        touch "install.Lock"
-        cat <<EOF > dotnet_modules/.version
-        ${runtimeHash}
-        ${runtimeVersion}
-        EOF
-        sed -i out/src/launcher.js \
-            -e "s|path.join(Launcher.extensionRootPath, 'cascade.json')|'/tmp/cascade.json'|"
-        sed -i out/src/extension.js \
-            -e "s|yield downloader_1.ExternalDownloader.ensureRuntimeDependenciesAsync(liveShareExtension)|downloader_1.EnsureRuntimeDependenciesResult.Success|" \
-            -e "s|yield downloader_1.isInstallCorrupt(traceSource_1.traceSource)|false|"
-        sed -i out/src/internalConfig.js \
-            -e "s|path.join(__dirname, '..', '..', 'modifiedInternalSettings.json')|'/tmp/modifiedInternalSettings.json'|"
-        ENDSUBSHELL
-      '';
+      touch "install.Lock"
+      cat <<EOF > dotnet_modules/.version
+      ${runtimeHash}
+      ${runtimeVersion}
+      EOF
+      sed -i out/src/launcher.js \
+          -e "s|path.join(Launcher.extensionRootPath, 'cascade.json')|'/tmp/cascade.json'|"
+      sed -i out/src/extension.js \
+          -e "s|yield downloader_1.ExternalDownloader.ensureRuntimeDependenciesAsync(liveShareExtension)|downloader_1.EnsureRuntimeDependenciesResult.Success|" \
+          -e "s|yield downloader_1.isInstallCorrupt(traceSource_1.traceSource)|false|"
+      sed -i out/src/internalConfig.js \
+          -e "s|path.join(__dirname, '..', '..', 'modifiedInternalSettings.json')|'/tmp/modifiedInternalSettings.json'|"
+      ENDSUBSHELL
+    '';
 
-      #-e "s|launcher_1.Launcher.safelyDeleteCascadeUrlFile();||" \
-      #-e "s|yield launcher_1.Launcher.readCascadeURL()|void 0|" \
+    #-e "s|launcher_1.Launcher.safelyDeleteCascadeUrlFile();||" \
+    #-e "s|yield launcher_1.Launcher.readCascadeURL()|void 0|" \
 
-      postFixup = ''
-        cd $out/share/*/extensions/*
-        find . -iname '*.so' -ls -exec patchelf --set-rpath ${rpath} '{}' \;
-      '';
+    postFixup = ''
+      cd $out/share/*/extensions/*
+      find . -iname '*.so' -ls -exec patchelf --set-rpath ${rpath} '{}' \;
+    '';
 
-      propagatedBuildInputs = with gnome3; [ gnome-keyring ];
-    }
-  )
+    propagatedBuildInputs = with gnome3; [ gnome-keyring ];
+  }
+)
