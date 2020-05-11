@@ -168,13 +168,18 @@ Whenever a test enters this state, it is automatically expanded."
         (error "No file chosen"))
     (with-current-buffer (window-buffer window)
       (goto-char pos)
-      (setq file (gotest-ui-get-file-for-visit))
-      (setq line (gotest-ui-get-line-for-visit)))
+      (gotest-ui-open-file-at-point))))
+
+(defun gotest-ui-open-file-at-point ()
+  (interactive)
+  (let ((file (gotest-ui-get-file-for-visit))
+        (line (gotest-ui-get-line-for-visit)))
     (unless (file-exists-p file)
       (error "Could not open %s:%d" file line))
     (with-current-buffer (find-file-other-window file)
       (goto-char (point-min))
-      (forward-line (1- line)))))
+      (when line
+        (forward-line (1- line))))))
 
 (defun gotest-ui-get-file-for-visit ()
   (get-text-property (point) 'gotest-ui-file))
@@ -233,6 +238,7 @@ Whenever a test enters this state, it is automatically expanded."
     ;; key bindings go here
     (define-key m (kbd "TAB") 'gotest-ui-toggle-expanded)
     (define-key m (kbd "g") 'gotest-ui-rerun)
+    (define-key m (kbd "RET") 'gotest-ui-open-file-at-point)
     m))
 
 (define-derived-mode gotest-ui-mode special-mode "go test UI"
@@ -312,8 +318,8 @@ Whenever a test enters this state, it is automatically expanded."
         (let ((insertion-node (if (car insertion-cons)
                                   (gotest-ui-thing-node (car insertion-cons))
                                 (gotest-ui-section-node section))))
-          (setf (gotest-ui-thing-node test)
-                (ewoc-enter-after gotest-ui--ewoc insertion-node test)))
+         (setf (gotest-ui-thing-node test)
+               (ewoc-enter-after gotest-ui--ewoc insertion-node test)))
         (when (null (cddr (gotest-ui-section-tests section)))
           (push (gotest-ui-section-node section) invalidate-nodes))))
     (unless (null invalidate-nodes)
