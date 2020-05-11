@@ -27,7 +27,6 @@ in
     {
       profiles.containers.kubernetes.enable = true;
       home.packages = with pkgs; [
-        my.s2i
         cfg.package
         #my.openshift-install
         my.operator-sdk
