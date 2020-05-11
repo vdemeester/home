@@ -38,28 +38,23 @@ assets:
 
 .PHONY: build
 build: assets setup
-	@if test $(USER) = root;\
-	then\
-		nixos-rebuild build;\
-	else\
-		home-manager build;\
-	fi
+	home-manager build
 
-.PHONY: dry-build
-dry-build: assets setup
-	@if test $(USER) = root;\
-	then\
-		nixos-rebuild dry-build;\
-	fi
+.PHONY: nixos-build
+nixos-build: assets setup
+	nixos-rebuild build
+
+.PHONY: nixos-dry-build
+nixos-dry-build: assets setup
+	nixos-rebuild dry-build
 
 .PHONY: switch
 switch: assets setup
-	@if test $(USER) = root;\
-	then\
-		nixos-rebuild switch;\
-	else\
-		home-manager switch;\
-	fi
+	home-manager switch
+
+.PHONY: nixos-switch
+nixos-switch: assets setup
+	nixos-rebuild switch
 
 install-hooks:
 	if [ -e .git ]; then nix-shell -p git --run 'git config core.hooksPath .githooks'; fi
@@ -111,7 +106,7 @@ doctor:
 	@readlink $(DOTNIXPKGS) || $(error $(DOTNIXPKGS) is not correctly linked, you may need to run setup)
 
 .PHONY: setup
-setup: $(DOTEMACS) $(DOTGNUS) $(DOTNIXPKGS) $(ETCNIXOS) $(SYNCDIR)
+setup: $(DOTEMACS) $(DOTGNUS) $(DOTNIXPKGS) $(SYNCDIR)
 
 $(DOTEMACS):
 	@echo "Link $(DOTEMACS) to $(CURDIR)/tools/emacs"
@@ -124,13 +119,6 @@ $(DOTGNUS):
 $(DOTNIXPKGS):
 	@echo "Link $(DOTNIXPKGS) to $(CURDIR)"
 	@ln -s $(CURDIR) $(DOTNIXPKGS)
-
-$(ETCNIXOS):
-	@if test $(USER) = root;\
-	then\
-		echo "Link $(ETCNIXOS) $(CURDIR)";\
-		ln -s $(CURDIR) $(ETCNIXOS);\
-	fi
 
 $(SYNCDIR):
 	$(error $(SYNCDIR) is not present, you need to configure syncthing before running this command)
