@@ -9,7 +9,7 @@ in
     profiles.containers.openshift = {
       enable = mkEnableOption "Enable openshift profile";
       package = mkOption {
-        default = pkgs.openshift;
+        default = pkgs.my.oc;
         description = "Openshift package";
         type = types.package;
       };
@@ -29,6 +29,8 @@ in
       home.packages = with pkgs; [
         my.s2i
         cfg.package
+        #my.openshift-install
+        my.operator-sdk
       ];
     }
     (

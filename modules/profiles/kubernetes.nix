@@ -36,9 +36,6 @@ in
         kustomize
         kube-prompt
         kubectx
-        my.oc
-        #my.openshift-install
-        my.operator-sdk
         my.ko
         my.kss
         my.kubernix
