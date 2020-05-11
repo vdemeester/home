@@ -19,6 +19,7 @@
   profiles.dev = {
     go.enable = true;
   };
+  profiles.emacs.withXwidgets = true;
   profiles.finances.enable = true;
   profiles.laptop.enable = true;
   profiles.media.enable = true;
@@ -33,6 +34,7 @@
     kind = true;
     nr = true;
   };
+  profiles.containers.openshift.enable = true;
   programs = {
     google-chrome.enable = true;
     podman.enable = true;
