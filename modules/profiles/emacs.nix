@@ -7,6 +7,7 @@ let
     #!${pkgs.stdenv.shell}
     emacsclient -s /run/user/1000/emacs/org -n -F '((name . "capture") (width . 150) (height . 90))' -e '(org-capture)'
   '';
+  myEmacs = pkgs.emacs27.override { inherit (pkgs) imagemagick; withXwidgets = cfg.withXwidgets; };
 in
 {
   options = {
@@ -26,173 +27,159 @@ in
       };
     };
   };
-  config = mkIf cfg.enable
+  config = mkIf cfg.enable (mkMerge [
+    {
+      home.file.".local/share/applications/org-protocol.desktop".source = ./assets/xorg/org-protocol.desktop;
+      home.file.".local/share/applications/ec.desktop".source = ./assets/xorg/ec.desktop;
+      home.file.".local/share/applications/capture.desktop".source = ./assets/xorg/capture.desktop;
+      home.packages = with pkgs; [
+        ditaa
+        graphviz
+        pandoc
+        zip
+        hunspell
+        hunspellDicts.en_US-large
+        hunspellDicts.en_GB-ize
+        hunspellDicts.fr-any
+        nixpkgs-fmt
+      ];
+      home.sessionVariables = {
+        EDITOR = "et";
+        ALTERNATE_EDITOR = "et";
+      };
+      programs.emacs = {
+        enable = true;
+        package = myEmacs;
+        extraPackages = epkgs: with epkgs; [
+          ace-window
+          aggressive-indent
+          async
+          avy
+          bbdb
+          beginend
+          pkgs.bookmark-plus
+          company
+          company-emoji
+          company-go
+          dash
+          delight
+          dired-collapse
+          dired-git-info
+          dired-quick-sort
+          dired-narrow
+          dired-rsync
+          pkgs.dired-plus
+          direnv
+          dockerfile-mode
+          easy-kill
+          esup
+          expand-region
+          flycheck
+          flycheck-golangci-lint
+          git-annex
+          git-commit
+          gitattributes-mode
+          gitconfig-mode
+          gitignore-mode
+          github-review
+          goto-last-change
+          hardhat
+          helpful
+          highlight
+          highlight-indentation
+          highlight-numbers
+          ibuffer-vc
+          iedit
+          json-mode
+          markdown-mode
+          #modus-operandi-theme
+          #modus-vivendi-theme
+          mpdel
+          multiple-cursors
+          nixpkgs-fmt
+          no-littering
+          ob-async
+          ob-go
+          ob-http
+          orgit
+          org-plus-contrib
+          org-capture-pop-frame
+          org-gcal
+          org-ref
+          org-super-agenda
+          org-web-tools
+          ox-pandoc
+          pandoc-mode
+          projectile
+          projectile-ripgrep
+          pdf-tools
+          python-mode
+          rainbow-delimiters
+          rainbow-mode
+          region-bindings-mode
+          ripgrep
+          rg
+          try
+          visual-fill-column
+          visual-regexp
+          web-mode
+          wgrep
+          with-editor
+          xterm-color
+          yaml-mode
+          darkroom
+          eshell-prompt-extras
+          esh-autosuggest
+          forge
+          go-mode
+          magit
+          magit-annex
+          magit-popup
+          minions
+          moody
+          mwim
+          nix-buffer
+          nix-mode
+          org-super-agenda
+          org-tree-slide
+          shr-tag-pre-highlight
+          ssh-config-mode
+          smartparens
+          symbol-overlay
+          undo-tree
+          use-package
+          # Highly experimental
+          vterm
+          gotest
+        ];
+      };
+    }
     (
-      mkMerge [
-        {
-          home.file.".local/share/applications/org-protocol.desktop".source = ./assets/xorg/org-protocol.desktop;
-          home.file.".local/share/applications/ec.desktop".source = ./assets/xorg/ec.desktop;
-          home.file.".local/share/applications/capture.desktop".source = ./assets/xorg/capture.desktop;
-          home.packages = with pkgs; [
-            ditaa
-            graphviz
-            pandoc
-            zip
-            hunspell
-            hunspellDicts.en_US-large
-            hunspellDicts.en_GB-ize
-            hunspellDicts.fr-any
-            nixpkgs-fmt
-          ];
-          home.sessionVariables = {
-            EDITOR = "et";
-            ALTERNATE_EDITOR = "et";
-          };
-          programs.emacs = {
-            enable = true;
-            package = pkgs.emacs27.override { inherit (pkgs) imagemagick; withXwidgets = cfg.withXwidgets; };
-            extraPackages = epkgs: with epkgs; [
-              ace-window
-              aggressive-indent
-              async
-              avy
-              bbdb
-              beginend
-              pkgs.bookmark-plus
-              company
-              company-emoji
-              company-go
-              dash
-              delight
-              dired-collapse
-              dired-git-info
-              dired-quick-sort
-              dired-narrow
-              dired-rsync
-              pkgs.dired-plus
-              direnv
-              dockerfile-mode
-              easy-kill
-              esup
-              expand-region
-              flycheck
-              flycheck-golangci-lint
-              git-annex
-              git-commit
-              gitattributes-mode
-              gitconfig-mode
-              gitignore-mode
-              github-review
-              goto-last-change
-              hardhat
-              helpful
-              highlight
-              highlight-indentation
-              highlight-numbers
-              ibuffer-vc
-              iedit
-              json-mode
-              markdown-mode
-              #modus-operandi-theme
-              #modus-vivendi-theme
-              mpdel
-              multiple-cursors
-              nixpkgs-fmt
-              no-littering
-              ob-async
-              ob-go
-              ob-http
-              orgit
-              org-plus-contrib
-              org-capture-pop-frame
-              org-gcal
-              org-ref
-              org-super-agenda
-              org-web-tools
-              ox-pandoc
-              pandoc-mode
-              projectile
-              projectile-ripgrep
-              pdf-tools
-              python-mode
-              rainbow-delimiters
-              rainbow-mode
-              region-bindings-mode
-              ripgrep
-              rg
-              try
-              visual-fill-column
-              visual-regexp
-              web-mode
-              wgrep
-              with-editor
-              xterm-color
-              yaml-mode
-              darkroom
-              eshell-prompt-extras
-              esh-autosuggest
-              forge
-              go-mode
-              magit
-              magit-annex
-              magit-popup
-              minions
-              moody
-              mwim
-              nix-buffer
-              nix-mode
-              org-super-agenda
-              org-tree-slide
-              shr-tag-pre-highlight
-              ssh-config-mode
-              smartparens
-              symbol-overlay
-              undo-tree
-              use-package
-              # Highly experimental
-              vterm
-              gotest
-            ];
-          };
-        }
-        (
-          mkIf config.profiles.emacs.capture {
-            home.packages = with pkgs; [ wmctrl capture ];
-          }
-        )
-        (
-          mkIf config.services.gpg-agent.enable {
-            #services.gpg-agent.extraConfig = ''
-            #  allow-emacs-pinentry
-            #'';
-          }
-        )
-        (
-          mkIf cfg.texlive {
-            home.packages = with pkgs; [ texlive.combined.scheme-full ];
-          }
-        )
-        (
-          mkIf cfg.daemonService {
-            systemd.user.services.emacs = {
-              Unit = {
-                Description = "Emacs: the extensible, self-documenting text editor";
-              };
-              Service = {
-                Environment = ''
-                  PATH=${config.home.homeDirectory}/.nix-profile/bin:${config.home.homeDirectory}/.local/npm/bin:/run/wrappers/bin:/etc/profiles/per-user/vincent/bin:${config.home.profileDirectory}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:${config.home.homeDirectory}/bin GOPATH=${config.home.homeDirectory} NIX_PATH=${config.home.homeDirectory}/.nix-defexpr/channels:nixpkgs=/home/vincent/.nix-defexpr/channels/nixpkgs ASPELL_CONF=dict-dir=${config.home.homeDirectory}/.nix-profile/lib/aspell SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
-                '';
-                Type = "forking";
-                ExecStart = "${pkgs.bash}/bin/bash -c 'source /etc/profile; exec ${config.home.homeDirectory}/.nix-profile/bin/emacs --dump-file=${config.home.homeDirectory}/.config/emacs/emacs.pdmp --daemon=org'";
-                ExecStop = "${config.home.homeDirectory}/.nix-profile/bin/emacsclient --eval (kill-emacs)";
-                Restart = "always";
-              };
-              Install = {
-                WantedBy = [ "default.target" ];
-              };
-            };
-          }
-        )
-      ]
-    );
+      mkIf config.profiles.emacs.capture {
+        home.packages = with pkgs; [ wmctrl capture ];
+      }
+    )
+    (
+      mkIf config.services.gpg-agent.enable {
+        #services.gpg-agent.extraConfig = ''
+        #  allow-emacs-pinentry
+        #'';
+      }
+    )
+    (
+      mkIf cfg.texlive {
+        home.packages = with pkgs; [ texlive.combined.scheme-full ];
+      }
+    )
+    (
+      mkIf cfg.daemonService {
+        services.emacs-server = {
+          enable = true;
+          package = myEmacs;
+          shell = pkgs.zsh + "/bin/zsh -i -c";
+          extraOptions = "--dump-file=${config.home.homeDirectory}/.config/emacs/emacs.pdmp --daemon=org";
+        };
+      }
+    )
+  ]);
 }

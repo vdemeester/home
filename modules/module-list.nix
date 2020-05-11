@@ -33,5 +33,6 @@
     ./profiles/zsh.nix
     ./programs/podman.nix
     ./services/shairport-sync.nix
+    ./services/emacs-server.nix
   ];
 }
