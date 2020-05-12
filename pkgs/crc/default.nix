@@ -19,6 +19,8 @@ rec {
         sha256 = "${sha256}";
       };
 
+      patches = [ ./0001-checkLibvirtEnabled-support-linked-too.patch ];
+
       goPackagePath = "github.com/code-ready/crc";
       subPackages = [ "cmd/crc" ];
       buildFlagsArray = let t = "${goPackagePath}/pkg/crc/version"; in

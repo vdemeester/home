@@ -1,0 +1,26 @@
+From 4b17b5b83dd7c10554da4d0541f2b91d4a3ff981 Mon Sep 17 00:00:00 2001
+From: Vincent Demeester <vincent@sbr.pm>
+Date: Tue, 12 May 2020 18:14:17 +0200
+Subject: [PATCH] checkLibvirtEnabled: support linked too
+
+Signed-off-by: Vincent Demeester <vincent@sbr.pm>
+---
+ pkg/crc/preflight/preflight_checks_linux.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pkg/crc/preflight/preflight_checks_linux.go b/pkg/crc/preflight/preflight_checks_linux.go
+index ecb699a..d949be8 100644
+--- a/pkg/crc/preflight/preflight_checks_linux.go
++++ b/pkg/crc/preflight/preflight_checks_linux.go
+@@ -124,7 +124,7 @@ func checkLibvirtEnabled() error {
+ 	if err != nil {
+ 		return fmt.Errorf("Error checking if libvirtd service is enabled")
+ 	}
+-	if strings.TrimSpace(stdOut) != "enabled" {
++	if strings.TrimSpace(stdOut) != "enabled" || strings.TrimSpace(stdOut) != "linked" {
+ 		return fmt.Errorf("libvirtd.service is not enabled")
+ 	}
+ 	logging.Debug("libvirtd.service is already enabled")
+-- 
+2.26.2
+
