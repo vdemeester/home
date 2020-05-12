@@ -176,8 +176,9 @@ in
         services.emacs-server = {
           enable = true;
           package = myEmacs;
+          name = "org";
           shell = pkgs.zsh + "/bin/zsh -i -c";
-          extraOptions = "--dump-file=${config.home.homeDirectory}/.config/emacs/emacs.pdmp --daemon=org";
+          extraOptions = "--dump-file=${config.home.homeDirectory}/.config/emacs/emacs.pdmp";
         };
       }
     )

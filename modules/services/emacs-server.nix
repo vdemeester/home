@@ -6,6 +6,11 @@ in
 {
   options.services.emacs-server = {
     enable = mkEnableOption "the Emacs daemon";
+    name = mkOption {
+      type = types.str;
+      description = "Name of the emacs server";
+      default = "default";
+    };
     package = mkOption {
       type = types.package;
       description = "The Emacs package to use for running the daemon.";
@@ -39,7 +44,7 @@ in
 
       Service = {
         ExecStart =
-          "${cfg.shell} 'exec ${cfg.package}/bin/emacs --fg-daemon ${cfg.extraOptions}'";
+          "${cfg.shell} 'exec ${cfg.package}/bin/emacs --fg-daemon=${cfg.name} ${cfg.extraOptions}'";
         ExecStop = "${cfg.package}/bin/emacsclient --eval '(kill-emacs)'";
         Restart = "on-failure";
       };
