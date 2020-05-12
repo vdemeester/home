@@ -11,6 +11,10 @@ with import ../assets/machines.nix; {
       "net.bridge.bridge-nf-call-ip6tables" = 0;
     };
   };
+  environment.etc."NetworkManager/dnsmasq.d/crc.conf".text = ''
+    server=/apps-crc.testing/192.168.130.11
+    server=/crc.testing/192.168.130.11
+  '';
   networking = {
     firewall.enable = false; # we are in safe territory :D
     hosts = {
@@ -30,6 +34,9 @@ with import ../assets/machines.nix; {
       "${wireguard.ips.okinawa}" = [ "okinawa.vpn" ];
       "${wireguard.ips.carthage}" = [ "carthage.vpn" ];
       "${wireguard.ips.kerkouane}" = [ "kerkouane.vpn" ];
+    };
+    networkmanager = {
+      dns = "dnsmasq";
     };
   };
   profiles = {
