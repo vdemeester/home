@@ -1,4 +1,4 @@
-{ stdenv, lib, buildGoPackage, fetchFromGitHub }:
+{ stdenv, lib, buildGoPackage, buildGoModule, fetchFromGitHub, pkg-config, libvirt }:
 
 with lib;
 rec {
@@ -48,5 +48,22 @@ rec {
     version = "1.10.0";
     sha256 = "11vy42zb2xzhwsgnz17894gfn03knvp2yr094k3zhly6wkxbwbk3";
     bundle = "4.4.3";
+  };
+  crc_driver_libvirt = buildGoModule rec {
+    pname = "tkn";
+    name = "${pname}-${version}";
+
+    nativeBuildInputs = [ pkg-config ];
+    buildInputs = [ libvirt ];
+
+    subPackages = [ "cmd/machine-driver-libvirt" ];
+    src = fetchFromGitHub {
+      owner = "code-ready";
+      repo = "machine-driver-libvirt";
+      rev = "0.12.7";
+      sha256 = "1mv6wqyzsc24y2gnw0nxmiy52sf3lgfnqkq98v8jdvq3fn6lgacm";
+    };
+    modSha256 = "04nnmsvillavcq1wfjc38r7hgq1mx0zhp4anz6q1j78rdcd6aigy";
+
   };
 }

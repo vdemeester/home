@@ -47,6 +47,7 @@ rec {
   inherit (pkgs.callPackage ./crc { })
     crc_1_9
     crc_1_10
+    crc_driver_libvirt
     ;
   crc = crc_1_10;
 
