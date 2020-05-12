@@ -1,8 +1,9 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
   cfg = config.profiles.ssh;
+  patchedOpenSSH = pkgs.openssh.override { withKerberos = true; withGssapiPatches = true; };
 in
 {
   options = {
@@ -19,6 +20,9 @@ in
     };
   };
   config = mkIf cfg.enable {
+    home.packages = [
+      patchedOpenSSH
+    ];
     home.file.".ssh/sockets/.placeholder".text = '''';
     xdg.configFile.".ssh/.placeholder".text = '''';
     programs.ssh = {
