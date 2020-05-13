@@ -315,3 +315,7 @@ Daily or weekly build
 Automatic =nix-build . | cachix push shortbrain=, on nixos-unstable and nixpkgs-unstable too.
 
 From: [[eshell:*eshell nur-packages*:cd /home/vincent/src/github.com/vdemeester/nur-packages][cd /home/vincent/src/github.com/vdemeester/nur-packages]]
+
+* TODO add crc profile on nixos
+
+Mainy for the dnsmasq configuration, …
