@@ -1,6 +1,6 @@
-From e6b235bf7c196eee68647dffb0d03b9197c6139b Mon Sep 17 00:00:00 2001
+From d9d8c0666fd8feb3a606bf960c16b212eb7a1db7 Mon Sep 17 00:00:00 2001
 From: Vincent Demeester <vincent@sbr.pm>
-Date: Wed, 13 May 2020 13:02:24 +0200
+Date: Wed, 13 May 2020 13:06:13 +0200
 Subject: [PATCH] checkLibvirtEnabled: support linked too
 
 Signed-off-by: Vincent Demeester <vincent@sbr.pm>
@@ -9,8 +9,8 @@ Signed-off-by: Vincent Demeester <vincent@sbr.pm>
  pkg/crc/machine/libvirt/constants.go        |  2 +-
  pkg/crc/oc/oc.go                            |  6 +-
  pkg/crc/oc/oc_cache.go                      |  3 +
- pkg/crc/preflight/preflight_checks_linux.go | 82 +++++++++++----------
- 5 files changed, 55 insertions(+), 40 deletions(-)
+ pkg/crc/preflight/preflight_checks_linux.go | 84 ++++++++++++---------
+ 5 files changed, 57 insertions(+), 40 deletions(-)
 
 diff --git a/pkg/crc/constants/constants_linux.go b/pkg/crc/constants/constants_linux.go
 index 2598e34..26cf87a 100644
@@ -73,7 +73,7 @@ index ecf6f63..4d0e6c9 100644
  		return false
  	}
 diff --git a/pkg/crc/preflight/preflight_checks_linux.go b/pkg/crc/preflight/preflight_checks_linux.go
-index ecb699a..d9529a4 100644
+index ecb699a..2f119d1 100644
 --- a/pkg/crc/preflight/preflight_checks_linux.go
 +++ b/pkg/crc/preflight/preflight_checks_linux.go
 @@ -116,18 +116,18 @@ func fixLibvirtInstalled() error {
@@ -136,22 +136,24 @@ index ecb699a..d9529a4 100644
  	logging.Debug("libvirtd.service is already running")
  	return nil
  }
-@@ -246,6 +246,14 @@ func checkMachineDriverLibvirtInstalled() error {
+@@ -246,6 +246,16 @@ func checkMachineDriverLibvirtInstalled() error {
  
  	// Check if crc-driver-libvirt is available
  	libvirtDriverPath := filepath.Join(constants.CrcBinDir, libvirt.MachineDriverCommand)
 +	if filepath.IsAbs(libvirt.MachineDriverCommand) {
 +		libvirtDriverPath = filepath.Join(constants.CrcBinDir, "crc-driver-libvirt")
-+		if stdOut, stdErr, err := crcos.RunWithDefaultLocale("ln", "-s", libvirt.MachineDriverCommand, libvirtDriverPath); err != nil {
-+			fmt.Println("stdout", stdOut)
-+			fmt.Println("stderr", stdErr)
-+			return fmt.Errorf("%s symbolic link to %s failed", libvirt.MachineDriverCommand, libvirtDriverPath)
++
++		err := unix.Access(libvirtDriverPath, unix.X_OK)
++		if err != nil {
++			if _, _, err := crcos.RunWithDefaultLocale("ln", "-s", libvirt.MachineDriverCommand, libvirtDriverPath); err != nil {
++				return fmt.Errorf("%s symbolic link to %s failed", libvirt.MachineDriverCommand, libvirtDriverPath)
++			}
 +		}
 +	}
  	err := unix.Access(libvirtDriverPath, unix.X_OK)
  	if err != nil {
  		return fmt.Errorf("%s is not executable", libvirtDriverPath)
-@@ -550,20 +558,20 @@ func removeCrcDnsmasqConfigFile() error {
+@@ -550,20 +560,20 @@ func removeCrcDnsmasqConfigFile() error {
  }
  
  func checkCrcNetworkManagerConfig() error {
