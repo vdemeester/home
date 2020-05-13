@@ -1,4 +1,4 @@
-{ stdenv, lib, buildGoPackage, buildGoModule, fetchFromGitHub, pkg-config, libvirt, podman, my }:
+{ stdenv, lib, buildGoPackage, buildGoModule, fetchFromGitHub, pkg-config, libvirt, podman, oc_4_4, oc_4_3 }:
 
 with lib;
 rec {
@@ -6,6 +6,7 @@ rec {
     { version
     , sha256
     , bundle
+    , oc
     }:
 
     buildGoPackage rec {
@@ -28,7 +29,7 @@ rec {
           -ldflags=
             -X ${t}/version.crcVersion=${version}
             -X ${t}/version.bundleVersion=${bundle}
-            -X ${t}/constants.OcBinaryName=${my.oc}/bin/oc
+            -X ${t}/constants.OcBinaryName=${oc}/bin/oc
             -X ${t}/constants.PodmanBinaryName=${podman}/bin/podman
             -X ${t}/machine/libvirt.MachineDriverCommand=${crc_driver_libvirt}/bin/machine-driver-libvirt
         '';
@@ -46,11 +47,13 @@ rec {
     version = "1.9.0";
     sha256 = "1q2jdm847snjj7wqchsik7qpczvx4awgi5rgvw930mm2b635r3aq";
     bundle = "4.3.10";
+    oc = oc_4_3;
   };
   crc_1_10 = makeOverridable crcGen {
     version = "1.10.0";
     sha256 = "11vy42zb2xzhwsgnz17894gfn03knvp2yr094k3zhly6wkxbwbk3";
     bundle = "4.4.3";
+    oc = oc_4_4;
   };
   crc_driver_libvirt = buildGoModule rec {
     pname = "crc_driver_libvirt";
