@@ -1,4 +1,4 @@
-{ stdenv, lib, buildGoPackage, buildGoModule, fetchFromGitHub, pkg-config, libvirt }:
+{ stdenv, lib, buildGoPackage, buildGoModule, fetchFromGitHub, pkg-config, libvirt, podman, my }:
 
 with lib;
 rec {
@@ -23,11 +23,14 @@ rec {
 
       goPackagePath = "github.com/code-ready/crc";
       subPackages = [ "cmd/crc" ];
-      buildFlagsArray = let t = "${goPackagePath}/pkg/crc/version"; in
+      buildFlagsArray = let t = "${goPackagePath}/pkg/crc"; in
         ''
           -ldflags=
-            -X ${t}.crcVersion=${version}
-            -X ${t}.bundleVersion=${bundle}
+            -X ${t}/version.crcVersion=${version}
+            -X ${t}/version.bundleVersion=${bundle}
+            -X ${t}/constants.OcBinaryName=${my.oc}/bin/oc
+            -X ${t}/constants.PodmanBinaryName=${podman}/bin/podman
+            -X ${t}/machine/libvirt.MachineDriverCommand=${crc_driver_libvirt}/bin/machine-driver-libvirt
         '';
 
       meta = with stdenv.lib; {
@@ -50,7 +53,7 @@ rec {
     bundle = "4.4.3";
   };
   crc_driver_libvirt = buildGoModule rec {
-    pname = "tkn";
+    pname = "crc_driver_libvirt";
     name = "${pname}-${version}";
 
     nativeBuildInputs = [ pkg-config ];
