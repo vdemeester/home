@@ -21,6 +21,7 @@ in
           type = types.package;
         };
       };
+      crc = mkEnableOption "Enable crc";
     };
   };
   config = mkIf cfg.enable (mkMerge [
@@ -38,6 +39,13 @@ in
           cfg.minishift.package
           docker-machine-kvm
           docker-machine-kvm2
+        ];
+      }
+    )
+    (
+      mkIf cfg.crc {
+        home.packages = with pkgs; [
+          my.crc
         ];
       }
     )

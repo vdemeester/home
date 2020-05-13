@@ -34,7 +34,10 @@
     kind = true;
     nr = true;
   };
-  profiles.containers.openshift.enable = true;
+  profiles.containers.openshift = {
+    enable = true;
+    crc = true;
+  };
   programs = {
     google-chrome.enable = true;
     podman.enable = true;
