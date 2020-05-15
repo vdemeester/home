@@ -148,23 +148,59 @@ This is used internally by `sbr/modus-themes-toggle'."
     "Customize modus-vivendi theme"
     (if (member 'modus-vivendi custom-enabled-themes)
         (modus-vivendi-theme-with-color-variables ; this macro allows us to access the colour palette
-         (custom-theme-set-faces
-          'modus-vivendi
-          `(whitespace-tab ((,class (:background "#000000" :foreground "#666666"))))
-          `(whitespace-space ((,class (:background "#000000" :foreground "#666666"))))
-          `(whitespace-hspace ((,class (:background "#000000" :foreground "#666666"))))
-          `(whitespace-newline ((,class (:background "#000000" :foreground "#666666"))))
-          `(whitespace-indentation ((,class (:background "#000000" :foreground "#666666"))))
-          ))))
+          (custom-theme-set-faces
+           'modus-vivendi
+           `(whitespace-tab ((,class (:background "#000000" :foreground "#666666"))))
+           `(whitespace-space ((,class (:background "#000000" :foreground "#666666"))))
+           `(whitespace-hspace ((,class (:background "#000000" :foreground "#666666"))))
+           `(whitespace-newline ((,class (:background "#000000" :foreground "#666666"))))
+           `(whitespace-indentation ((,class (:background "#000000" :foreground "#666666"))))
+           ))))
   (add-hook 'contrib/after-load-theme-hook 'sbr/modus-vivendi-custom))
 ;; -UseTheme
 
+;; UseWindowDivider
 (use-package emacs
   :config
   (setq window-divider-default-right-width 1)
   (setq window-divider-default-bottom-width 1)
   (setq window-divider-default-places 'right-only)
   :hook (after-init-hook . window-divider-mode))
+;; -UseWindowDivider
+
+;; UseTabbar
+(use-package tab-bar
+  :config
+  (setq-default tab-bar-close-button-show nil)
+  (setq-default tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
+  (setq-default tab-bar-close-tab-select 'recent)
+  (setq-default tab-bar-new-tab-choice t)
+  (setq-default tab-bar-new-tab-to 'right)
+  (setq-default tab-bar-position nil)
+  (setq-default tab-bar-show t)
+  (setq-default tab-bar-tab-hints nil)
+  (setq-default tab-bar-tab-name-function 'tab-bar-tab-name-all)
+
+  (defun sbr/icomplete-tab-bar-tab-dwim ()
+    "Do-What-I-Mean function for getting to a `tab-bar-mode' tab.
+If no other tab exists, create one and switch to it.  If there is
+one other tab (so two in total) switch to it without further
+questions.  Else use completion to select the tab to switch to."
+    (interactive)
+    (let ((tabs (mapcar (lambda (tab)
+                          (alist-get 'name tab))
+                        (tab-bar--tabs-recent))))
+      (cond ((eq tabs nil)
+             (tab-new))
+            ((eq (length tabs) 1)
+             (tab-next))
+            (t
+             (tab-bar-switch-to-tab
+              (completing-read "Select tab: " tabs nil t))))))
+
+  :bind (("C-x t t" . prot/icomplete-tab-bar-tab-dwim)
+         ("C-x t s" . tab-switcher)))
+;; -UseTabbar
 
 ;; UseMoody
 (use-package moody
