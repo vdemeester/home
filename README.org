@@ -22,6 +22,8 @@ reproducible and easily testable without making /a mess/. Nix/NixOS should help 
 This will be a all-time work-in-progress, so please beware that things might change
 dramatically or even not working anymore 😛.
 
+See [[tasks.org][=tasks.org=]] for the /work-in-progress/.
+
 * TODO Installation
 :PROPERTIES:
 :CUSTOM_ID: h:e289aa81-d0ec-49a0-ba94-933e85d4ee8c

@@ -190,7 +190,71 @@ CLOSED: [2020-05-06 Wed 09:51]
   + =curl= on nur-community in case of nur file changed (and only for it)
 - [X] Update nur-community
 
-* TODO Where should be the cloned ?
+* DONE [#A] Update auto-update service
+CLOSED: [2020-05-09 Sat 22:51]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-09 Sat 22:51]
+:END:
+
+Make it simpler
+- auto-update simple
+- a nightly git pull --rebase … as *user*
+
+* DONE [#A] Add =.githooks= support
+CLOSED: [2020-05-09 Sat 15:08]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-09 Sat 15:08]
+:END:
+
+* DONE =ci.nix= with build.sr.ht
+CLOSED: [2020-05-06 Wed 10:13]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-06 Wed 10:13]
+:END:
+
+* DONE [#B] cron-job to schedule a build at build.sr.ht 👼
+CLOSED: [2020-05-10 Sun 13:55]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-10 Sun 13:55]
+:END:
+
+Daily or weekly build
+
+* TODO [#A] Pin channel versions
+
+Instead of relying on =nix-channel=, this should pin the version of all channel required
+(nixos, nixos-unstable, nixpkgs, nixpkgs-unstable, home-manager, nur, …).
+
+- This would allow more reproducibility on all the machines.
+- This would also allow to create a bot to automatically update those channels…
+  + … and run smoke tests using qemu for the configuration (automatically too)
+- This would allow to cache pkgs more efficiently…
+  + … as the ci could build against multiple /channels/
+  + … as the machines would have the exact same /channels/ as the ci
+- This would allow to run =nixos-rebuild switch= as a user without the mess of channels
+
+** TODO self-contained configuration
+
+- Pin different channels in the configuration (?)
+- Run the configuration against multiple channels (?)
+- Use =nix.path= or à-la-tazjin or [[https://github.com/nmattia/niv][=niv=]] (which is close to tazjin's approach)
+
+** TODO =ci.nix= build on multiple channels
+:PROPERTIES:
+:CREATED:[2020-05-05 Tue 12:45]
+:END:
+
+Automatic =nix-build . | cachix push shortbrain=, on nixos-unstable and nixpkgs-unstable too.
+
+From: [[eshell:*eshell nur-packages*:cd /home/vincent/src/github.com/vdemeester/nur-packages][cd /home/vincent/src/github.com/vdemeester/nur-packages]]
+
+* TODO [#A] Decide on home-manager for NixOS
+
+- Should we use home-manager as a nixos module when the host is NixOS ?
+- Experiment with that on a clean setup (VM, …)
+- If we pin channels, I feel it make sense :)
+
+* TODO [#A] Where should be the cloned ?
 
 That's a real interesting question.
 The next question is then, what do we do with the existing setup ?
@@ -211,25 +275,6 @@ The real question is :
 
 It could also be in =/etc/nixos= if it is writable for the user (=vincent= in most case)
 
-* TODO De-duplicate modules
-
-* TODO Better wireguard support
-
-- support for creating key
-- support for importing keys
-
-* TODO Handle machines.nix better (somehow?)
-
-* DONE [#A] Update auto-update service
-CLOSED: [2020-05-09 Sat 22:51]
-:LOGBOOK:
-- State "DONE"       from "TODO"       [2020-05-09 Sat 22:51]
-:END:
-
-Make it simpler
-- auto-update simple
-- a nightly git pull --rebase … as *user*
-
 * TODO [#B] =qemu=/=kvm= setup to tests things
 
 - start a system with nixos iso (cache and download)
@@ -240,6 +285,32 @@ Make it simpler
 - https://rycee.gitlab.io/home-manager/
 - [[https://www.tomas.io/articles/try-fedora][Try fedora | tomas.io]]
 
+Can be using =virsh= and =libvirt=
+
+* TODO [#B] bootstrap.nix (and install.nix)
+
+Reduce the sh script to the minimum and use =nix-shell= with a =.nix= file as much as
+possible.
+To run the install script from a NixOS livecd, =nix-shell= can be used, same in bootstrap
+as soon as we have installed nix.
+
+* TODO De-duplicate modules
+
+* TODO Manage firefox in home-manager
+
+- See [[https://cmacr.ae/post/2020-05-09-managing-firefox-on-macos-with-nix/][Managing Firefox on macOS with Nix - Calum MacRae]]
+- Create a post for it (or put it in the docs)
+
+* TODO Build and use more NixOS container
+
+See https://github.com/google/nixery (layered, )…
+
+* TODO Better wireguard support
+
+- support for creating key
+- support for importing keys
+
+* TODO Handle machines.nix better (somehow?)
 
 * TODO Makefile executable from anywhere
 
@@ -266,19 +337,6 @@ From: [[file:~/desktop/org/technical/tekton-dev.org::*Environments][Environments
 - [ ] =default.nix= to import others
 - [ ] =pkgs= and overlay smooth integration (aka no prefix =my=)
 
-* TODO [#B] bootstrap.nix (and install.nix)
-
-Reduce the sh script to the minimum and use =nix-shell= with a =.nix= file as much as
-possible.
-To run the install script from a NixOS livecd, =nix-shell= can be used, same in bootstrap
-as soon as we have installed nix.
-
-* DONE [#A] Add =.githooks= support
-CLOSED: [2020-05-09 Sat 15:08]
-:LOGBOOK:
-- State "DONE"       from "TODO"       [2020-05-09 Sat 15:08]
-:END:
-
 * TODO virtualization.buildkit options
 
 - [ ] with containerd, default is to use runc only
@@ -287,35 +345,7 @@ CLOSED: [2020-05-09 Sat 15:08]
 
 stdenv.lib.optionals stdenv.isLinux
 
-* DONE =ci.nix= with build.sr.ht
-CLOSED: [2020-05-06 Wed 10:13]
-:LOGBOOK:
-- State "DONE"       from "TODO"       [2020-05-06 Wed 10:13]
-:END:
-
-* DONE [#B] cron-job to schedule a build at build.sr.ht 👼
-CLOSED: [2020-05-10 Sun 13:55]
-:LOGBOOK:
-- State "DONE"       from "TODO"       [2020-05-10 Sun 13:55]
-:END:
-
-Daily or weekly build
-
-* TODO [#B] self-contained configuration
-
-- Pin different channels in the configuration (?)
-- Run the configuration against multiple channels (?)
-
 * TODO =private= folder for nix (instead of =assets=)
-* TODO [#B] =ci.nix= build on multiple channels
-:PROPERTIES:
-:CREATED:[2020-05-05 Tue 12:45]
-:END:
-
-Automatic =nix-build . | cachix push shortbrain=, on nixos-unstable and nixpkgs-unstable too.
-
-From: [[eshell:*eshell nur-packages*:cd /home/vincent/src/github.com/vdemeester/nur-packages][cd /home/vincent/src/github.com/vdemeester/nur-packages]]
-
 * TODO add crc profile on nixos
 
 Mainy for the dnsmasq configuration, …
