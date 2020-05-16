@@ -296,6 +296,11 @@ as soon as we have installed nix.
 
 * TODO De-duplicate modules
 
+* TODO make modules-list automatic
+
+Look at tazjin and other configurations, we can read tree and load/import all the nix
+files. This will simplify =module-list.nix= and easy my pain.
+
 * TODO Manage firefox in home-manager
 
 - See [[https://cmacr.ae/post/2020-05-09-managing-firefox-on-macos-with-nix/][Managing Firefox on macOS with Nix - Calum MacRae]]
