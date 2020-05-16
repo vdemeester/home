@@ -135,6 +135,7 @@ in
           magit
           magit-annex
           magit-popup
+          magit-todos
           minions
           moody
           mwim
