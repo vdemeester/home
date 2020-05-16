@@ -105,6 +105,7 @@ in
           org-plus-contrib
           org-capture-pop-frame
           org-gcal
+          org-ql
           org-ref
           org-super-agenda
           org-web-tools
