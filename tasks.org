@@ -296,6 +296,14 @@ as soon as we have installed nix.
 
 * TODO De-duplicate modules
 
+* TODO More defaults in configuration
+
+In [[https://hugoreeves.com/posts/2019/nix-home/][Your home in Nix (dotfile management) - Hugo Reeves]] he defines some defaults (in nix
+even) and allow his modules to overwrite the defaults.
+
+This is very good because it allows to customize some small parts of the configuration
+only for specific host — this will reduce duplication.
+
 * TODO make modules-list automatic
 
 Look at tazjin and other configurations, we can read tree and load/import all the nix
