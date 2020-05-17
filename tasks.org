@@ -254,6 +254,18 @@ From: [[eshell:*eshell nur-packages*:cd /home/vincent/src/github.com/vdemeester/
 - Experiment with that on a clean setup (VM, …)
 - If we pin channels, I feel it make sense :)
 
+
+* TODO nur-package automatic -git package updates
+:PROPERTIES:
+:CREATED:[2020-04-30 Thu 20:58]
+:END:
+
+For packages that track master, create a =-git= version and have an automate that is able
+to update those daily (or weekly ?), using =nix-update= (and maybe more for modSha256)
+
+** TODO [[https://berfr.me/posts/watch-diff/][watch-diff: Watch command output and get notified on changes | berfr blog]]
+[2020-05-07 Thu 16:42]
+
 * TODO [#A] Where should be the cloned ?
 
 That's a real interesting question.
@@ -362,3 +374,58 @@ stdenv.lib.optionals stdenv.isLinux
 * TODO add crc profile on nixos
 
 Mainy for the dnsmasq configuration, …
+* TODO [#B] Emacs shell environment                           :emacs:project:
+
+** TODO Enhance eshell
+
+- Better prompt
+- More functions
+- Better completion (pcomplete, …)
+
+** TODO More vterm
+
+Make vterm more useful
+
+** TODO Less zsh-only wonders
+
+more generic stuff
+* TODO [#B] Nix desktop VM                                    :nixos:project:
+
+https://github.com/Xe/nixos-configs
+https://rycee.gitlab.io/home-manager/
+
+** TODO Specific simple configuration (bankruptcy)
+
+** TODO Try gnome3 ?
+* TODO [#B] kubernix setup project                         :nixos:kubernetes:
+:LOGBOOK:
+- New deadline from "[2020-05-08 Fri]" on [2020-05-11 Mon 11:18]
+- New deadline from "[2020-05-02 Sat]" on [2020-05-03 Sun 13:20]
+- New deadline from "[2020-04-26 Sun]" on [2020-04-27 Mon 09:55]
+- New deadline from "[2020-04-24 Fri]" on [2020-04-24 Fri 17:49]
+- New deadline from "[2020-04-17 Fri]" on [2020-04-20 Mon 11:45]
+- New deadline from "[2020-04-11 Sat]" on [2020-04-13 Mon 16:06]
+- New deadline from "[2020-04-04 Sat]" on [2020-04-05 Sun 18:13]
+- New deadline from "[2020-04-03 Fri]" on [2020-04-03 Fri 07:43]
+- New deadline from "[2020-03-29 Sun]" on [2020-03-29 Sun 17:34]
+- New deadline from "[2020-03-27 Fri]" on [2020-03-27 Fri 17:28]
+- New deadline from "[2020-03-21 Sat]" on [2020-03-23 Mon 15:07]
+:END:
+:PROPERTIES:
+:CREATED:[2020-03-18 Wed 10:31]
+:END:
+
+1. use a tmux for this :)
+   https://bytes.zone/posts/tmux-session/
+2. package script in ~home~
+3. have a quick switch to target it (zsh, emacs)
+   Done using the same as the rest
+4. write an article about it, based on the project
+
+What is the flow I want ?
+
+- A simple command (=yak=)
+- A profile (like =tektoncd=, …)
+- A way to list the kubernix profile and their status
+
+Use http://tmuxp.git-pull.com/en/latest/ or
