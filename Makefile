@@ -88,7 +88,7 @@ update-docs:
 .PHONY: build-www
 build-www: $(SRCWWW)/publish-common.el lib/lisp/publish.el update-docs
 	@echo "Publishing... with current Emacs configurations."
-	${EMACS} --batch --directory $(DOTEMACS)/lisp/ \
+	${EMACS} --batch --directory $(DOTEMACS)/lisp/ --directory $(DOTEMACS)/lisp/vorg/ \
 		--load $(SRCWWW)/publish-common.el --load lib/lisp/publish.el \
 		--funcall org-publish-all
 
