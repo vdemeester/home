@@ -326,6 +326,12 @@ files. This will simplify =module-list.nix= and easy my pain.
 - See [[https://cmacr.ae/post/2020-05-09-managing-firefox-on-macos-with-nix/][Managing Firefox on macOS with Nix - Calum MacRae]]
 - Create a post for it (or put it in the docs)
 
+** TODO [[https://rakhim.org/2018/10/improve-performance-of-firefox-on-macos/][Make Firefox faster and nicer on macOS - Rakhim.org]]        :firefox:
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2019-04-25 Thu 18:37]
+:END:
+
+Really useful tip, I should do the same with my own (aka an ode to firefox)
 * TODO Build and use more NixOS container
 
 See https://github.com/google/nixery (layered, )…
