@@ -90,7 +90,7 @@ Also run `sbr/modus-themes-toggle-hook'."
   :hook ((after-init-hook . sbr/modus-operandi)))
 
 (use-package modus-operandi-theme
-  :config
+  :init
   (defun sbr/modus-operandi ()
     "Enable some Modus Operandi variables and load the theme.
 This is used internally by `sbr/modus-themes-toggle'."
@@ -109,23 +109,24 @@ This is used internally by `sbr/modus-themes-toggle'."
           modus-operandi-theme-scale-3 1.15
           modus-operandi-theme-scale-4 1.2)
     (load-theme 'modus-operandi t))
+  :config
   (defun sbr/modus-operandi-custom ()
     "Customize modus-operandi theme"
     (if (member 'modus-operandi custom-enabled-themes)
         (modus-operandi-theme-with-color-variables ; this macro allows us to access the colour palette
-          (custom-theme-set-faces
-           'modus-operandi
-           `(whitespace-tab ((,class (:background "#ffffff" :foreground "#cccccc"))))
-           `(whitespace-space ((,class (:background "#ffffff" :foreground "#cccccc"))))
-           `(whitespace-hspace ((,class (:background "#ffffff" :foreground "#cccccc"))))
-           `(whitespace-newline ((,class (:background "#ffffff" :foreground "#cccccc"))))
-           `(whitespace-indentation ((,class (:background "#ffffff" :foreground "#cccccc"))))
-           ))))
+         (custom-theme-set-faces
+          'modus-operandi
+          `(whitespace-tab ((,class (:background "#ffffff" :foreground "#cccccc"))))
+          `(whitespace-space ((,class (:background "#ffffff" :foreground "#cccccc"))))
+          `(whitespace-hspace ((,class (:background "#ffffff" :foreground "#cccccc"))))
+          `(whitespace-newline ((,class (:background "#ffffff" :foreground "#cccccc"))))
+          `(whitespace-indentation ((,class (:background "#ffffff" :foreground "#cccccc"))))
+          ))))
   (add-hook 'contrib/after-load-theme-hook 'sbr/modus-operandi-custom)
   (sbr/modus-operandi))
 
 (use-package modus-vivendi-theme
-  :config
+  :init
   (defun sbr/modus-vivendi ()
     "Enable some Modus Vivendi variables and load the theme.
 This is used internally by `sbr/modus-themes-toggle'."
@@ -144,18 +145,19 @@ This is used internally by `sbr/modus-themes-toggle'."
           modus-vivendi-theme-scale-3 1.15
           modus-vivendi-theme-scale-4 1.2)
     (load-theme 'modus-vivendi t))
+  :config
   (defun sbr/modus-vivendi-custom ()
     "Customize modus-vivendi theme"
     (if (member 'modus-vivendi custom-enabled-themes)
         (modus-vivendi-theme-with-color-variables ; this macro allows us to access the colour palette
-          (custom-theme-set-faces
-           'modus-vivendi
-           `(whitespace-tab ((,class (:background "#000000" :foreground "#666666"))))
-           `(whitespace-space ((,class (:background "#000000" :foreground "#666666"))))
-           `(whitespace-hspace ((,class (:background "#000000" :foreground "#666666"))))
-           `(whitespace-newline ((,class (:background "#000000" :foreground "#666666"))))
-           `(whitespace-indentation ((,class (:background "#000000" :foreground "#666666"))))
-           ))))
+         (custom-theme-set-faces
+          'modus-vivendi
+          `(whitespace-tab ((,class (:background "#000000" :foreground "#666666"))))
+          `(whitespace-space ((,class (:background "#000000" :foreground "#666666"))))
+          `(whitespace-hspace ((,class (:background "#000000" :foreground "#666666"))))
+          `(whitespace-newline ((,class (:background "#000000" :foreground "#666666"))))
+          `(whitespace-indentation ((,class (:background "#000000" :foreground "#666666"))))
+          ))))
   (add-hook 'contrib/after-load-theme-hook 'sbr/modus-vivendi-custom))
 ;; -UseTheme
 
