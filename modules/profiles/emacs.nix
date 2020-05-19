@@ -92,8 +92,6 @@ in
           iedit
           json-mode
           markdown-mode
-          #modus-operandi-theme
-          #modus-vivendi-theme
           mpdel
           multiple-cursors
           nixpkgs-fmt
