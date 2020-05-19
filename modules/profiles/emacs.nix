@@ -89,6 +89,7 @@ in
           highlight-indentation
           highlight-numbers
           ibuffer-vc
+          icomplete-vertical
           iedit
           json-mode
           markdown-mode
@@ -99,6 +100,7 @@ in
           ob-async
           ob-go
           ob-http
+          orderless
           orgit
           org-plus-contrib
           org-capture-pop-frame
