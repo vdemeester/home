@@ -266,6 +266,10 @@ to update those daily (or weekly ?), using =nix-update= (and maybe more for modS
 ** TODO [[https://berfr.me/posts/watch-diff/][watch-diff: Watch command output and get notified on changes | berfr blog]]
 [2020-05-07 Thu 16:42]
 
+
+
+** TODO [[https://www.nmattia.com/posts/2019-09-10-autoupdate.html][Nicolas Mattia – Triggered CI Builds: Automatically Update your Project's Dependencies]]
+[2019-10-15 Tue 08:24]
 * TODO [#A] Where should be the cloned ?
 
 That's a real interesting question.
