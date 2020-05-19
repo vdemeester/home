@@ -7,3 +7,6 @@
 [submodule "tools/emacs/lisp/vorg"]
 	path = tools/emacs/lisp/vorg
 	url = https://gitlab.com/vdemeester/vorg.git
+[submodule "tools/emacs/lisp/emark"]
+	path = tools/emacs/lisp/emark
+	url = https://github.com/oantolin/embark/
