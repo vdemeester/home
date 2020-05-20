@@ -200,7 +200,7 @@ questions.  Else use completion to select the tab to switch to."
              (tab-bar-switch-to-tab
               (completing-read "Select tab: " tabs nil t))))))
 
-  :bind (("C-x t t" . prot/icomplete-tab-bar-tab-dwim)
+  :bind (("C-x t t" . sbr/icomplete-tab-bar-tab-dwim)
          ("C-x t s" . tab-switcher)))
 ;; -UseTabbar
 
