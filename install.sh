@@ -52,7 +52,8 @@ echo "Run the following:"
 echo "- populate assets/ folder"
 echo "- do last minutes changes"
 echo "Once you are done, just exit the shell (C-D or exit)"
-bash
+bash || true
 
 echo "Run nixos-install"
-nixos-install --channel $(nix eval --raw '(import nix/sources.nix).nixos.outPath') --no-channel-copy
+set -x
+nixos-install --channel $(nix eval --raw '(import /mnt/etc/nixos/nix/sources.nix).nixos.outPath') --no-channel-copy
