@@ -50,4 +50,9 @@ nixos-generate-config --root /mnt
 set +x
 echo "Run the following:"
 echo "- populate assets/ folder"
-echo "- (once ready) nixos-install"
+echo "- do last minutes changes"
+echo "Once you are done, just exit the shell (C-D or exit)"
+bash
+
+echo "Run nixos-install"
+nixos-install --channel $(nix eval --raw '(import nix/sources.nix).nixos.outPath') --no-channel-copy
