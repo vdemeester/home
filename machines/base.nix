@@ -7,7 +7,6 @@
     };
   };
   home.file.".nix-channels".source = ../assets/nix-channels;
-  home.file."Makefile".source = ../assets/Makefile;
   home.packages = with pkgs; [
     direnv
     enchive
