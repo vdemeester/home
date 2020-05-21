@@ -1,7 +1,8 @@
-{ sources ? import ../../nix/sources.nix, config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
+  sources = import ../../nix/sources.nix;
   cfg = config.profiles.nix-config;
 in
 {
