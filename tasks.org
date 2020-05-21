@@ -237,6 +237,10 @@ Instead of relying on =nix-channel=, this should pin the version of all channel 
 nix.nixPath = [ "nixpkgs=${sources.nixos}" ];
 #+end_src
 
+#+begin_src bash
+nixos-rebuild dry-build -I nixpkgs=$(nix eval --raw '(import nix/sources.nix).nixos.outPath') -I nixos-config=/etc/nixos/configuration.nix
+#+end_src
+
 ** TODO self-contained configuration
 
 - Pin different channels in the configuration (?)

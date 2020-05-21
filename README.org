@@ -29,7 +29,7 @@ See [[tasks.org][=tasks.org=]] for the /work-in-progress/.
 :CUSTOM_ID: h:e289aa81-d0ec-49a0-ba94-933e85d4ee8c
 :END:
 
-/todo: rework that part/
+/todo: rework that part, link to the =docs= folder/
 
 You should be able to run the =bootstrap.sh= script as is. And if you feel adventurous,
 you can use ~curl~ for this.
