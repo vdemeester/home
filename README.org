@@ -101,8 +101,13 @@ mainly to document my configuration and publish it, most likely on [[https://sbr
 :END:
 
 Repositories
+- https://github.com/utdemir/dotfiles
+- https://github.com/davidtwco/veritas
+- https://gitlab.com/samueldr/nixos-configuration
+- https://github.com/rasendubi/dotfiles
 - [[https://github.com/akirak/nixos-config]]
 - [[https://github.com/akirak/home.nix]]
+- https://github.com/cstrahan/nixos-config
 - [[https://github.com/jwiegley/nix-config]]
 - [[https://github.com/arianvp/nixos-stuff]]
 - [[https://github.com/leotaku/nixos-config]]
@@ -132,6 +137,11 @@ Repositories
 - [[https://github.com/uwap/nixos-configs]]
 - [[https://github.com/yacinehmito/yarn-nix]]
 - [[https://github.com/yrashk/nix-home]]
+- https://github.com/pSub/configs
+- https://github.com/periklis/nix-config
+- https://github.com/peel/dotfiles
+- https://github.com/bennofs/etc-nixos
+- https://github.com/Baughn/machine-config
 
 * COPYING
 :PROPERTIES:

@@ -1,4 +1,7 @@
-{ config, pkgs, ... }:
+{ sources ? import ../nix/sources.nix
+, pkgs ? import sources.nixos { }
+, ...
+}:
 
 with import ../assets/machines.nix; {
   imports = [ ../hardware/lenovo-p50.nix ./home.nixos.nix ];

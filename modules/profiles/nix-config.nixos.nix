@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ sources ? import ../../nix/sources.nix, config, lib, pkgs, ... }:
 
 with lib;
 let
@@ -46,6 +46,7 @@ in
         dates = cfg.gcDates;
         options = "--delete-older-than ${cfg.olderThan}";
       };
+      nixPath = [ "nixpkgs=${sources.nixos}" "nixos-config=/etc/nixos/configuration.nix" ];
       # if hydra is down, don't wait forever
       extraOptions = ''
         connect-timeout = 20

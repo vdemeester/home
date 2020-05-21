@@ -233,6 +233,10 @@ Instead of relying on =nix-channel=, this should pin the version of all channel 
   + … as the machines would have the exact same /channels/ as the ci
 - This would allow to run =nixos-rebuild switch= as a user without the mess of channels
 
+#+begin_src nix
+nix.nixPath = [ "nixpkgs=${sources.nixos}" ];
+#+end_src
+
 ** TODO self-contained configuration
 
 - Pin different channels in the configuration (?)
