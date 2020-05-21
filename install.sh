@@ -43,7 +43,7 @@ echo "Setup configuration"
 set -x
 
 mkdir -p /mnt/etc
-git clone https://gitlab.com/vdemeester/home.git /mnt/etc/nixos
+git clone --recurse-submodules https://gitlab.com/vdemeester/home.git /mnt/etc/nixos
 echo -n ${name} > /mnt/etc/nixos/hostname
 nixos-generate-config --root /mnt
 
