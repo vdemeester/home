@@ -15,4 +15,8 @@
       forwardX11 = true;
     };
   };
+  home-manager.users.vincent = import ./kerkouane.nix;
+  home-manager.users.root = { pkgs, ... }: {
+    home.packages = with pkgs; [ htop ];
+  };
 }
