@@ -355,6 +355,11 @@ See https://github.com/google/nixery (layered, )…
 
 * TODO Handle machines.nix better (somehow?)
 
+I should not need to have =with import ../assets/machines.nix= each time I need to access
+attributes from it. I need to load it as the other files instead.
+
+This means using types and the options/config system
+
 * TODO Makefile executable from anywhere
 
 aka ~make -C ~/.config/nixpkgs~ should work
