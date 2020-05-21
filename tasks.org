@@ -256,28 +256,20 @@ Automatic =nix-build . | cachix push shortbrain=, on nixos-unstable and nixpkgs-
 
 From: [[eshell:*eshell nur-packages*:cd /home/vincent/src/github.com/vdemeester/nur-packages][cd /home/vincent/src/github.com/vdemeester/nur-packages]]
 
-* TODO [#A] Decide on home-manager for NixOS
+* DONE [#A] Decide on home-manager for NixOS
+CLOSED: [2020-05-21 Thu 13:56]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-21 Thu 13:56]
+:END:
 
 - Should we use home-manager as a nixos module when the host is NixOS ?
 - Experiment with that on a clean setup (VM, …)
 - If we pin channels, I feel it make sense :)
 
+As we are going to pin channel and use our =NIX_PATH= (based on =niv= files ; and later
+most likely *flake*), we can safely assume we should be able to manage home-manager
+through the nixos module. If I can use =nixos-rebuild …= as a user, it's even better.
 
-* TODO nur-package automatic -git package updates
-:PROPERTIES:
-:CREATED:[2020-04-30 Thu 20:58]
-:END:
-
-For packages that track master, create a =-git= version and have an automate that is able
-to update those daily (or weekly ?), using =nix-update= (and maybe more for modSha256)
-
-** TODO [[https://berfr.me/posts/watch-diff/][watch-diff: Watch command output and get notified on changes | berfr blog]]
-[2020-05-07 Thu 16:42]
-
-
-
-** TODO [[https://www.nmattia.com/posts/2019-09-10-autoupdate.html][Nicolas Mattia – Triggered CI Builds: Automatically Update your Project's Dependencies]]
-[2019-10-15 Tue 08:24]
 * TODO [#A] Where should be the cloned ?
 
 That's a real interesting question.
@@ -299,6 +291,23 @@ The real question is :
 
 It could also be in =/etc/nixos= if it is writable for the user (=vincent= in most case)
 
+* TODO [#B] Create a custom iso for easier insteall
+* TODO [#B] nur-package automatic -git package updates
+:PROPERTIES:
+:CREATED:[2020-04-30 Thu 20:58]
+:END:
+
+For packages that track master, create a =-git= version and have an automate that is able
+to update those daily (or weekly ?), using =nix-update= (and maybe more for modSha256)
+
+** TODO [[https://berfr.me/posts/watch-diff/][watch-diff: Watch command output and get notified on changes | berfr blog]]
+[2020-05-07 Thu 16:42]
+
+
+
+** TODO [[https://www.nmattia.com/posts/2019-09-10-autoupdate.html][Nicolas Mattia – Triggered CI Builds: Automatically Update your Project's Dependencies]]
+[2019-10-15 Tue 08:24]
+
 * TODO [#B] =qemu=/=kvm= setup to tests things
 
 - start a system with nixos iso (cache and download)
@@ -309,7 +318,8 @@ It could also be in =/etc/nixos= if it is writable for the user (=vincent= in mo
 - https://rycee.gitlab.io/home-manager/
 - [[https://www.tomas.io/articles/try-fedora][Try fedora | tomas.io]]
 
-Can be using =virsh= and =libvirt=
+Can be using =virsh= and =libvirt=. Maybe the best thing will be to use the test
+capabilities of nixos itself.
 
 * TODO [#B] bootstrap.nix (and install.nix)
 
