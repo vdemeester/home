@@ -370,6 +370,13 @@ attributes from it. I need to load it as the other files instead.
 
 This means using types and the options/config system
 
+* TODO Have a simple url for bootstrap/install scripts
+
+Using sbr.systems
+- get.sbr.systems/install
+- sbr.sytems/install sbr.systems/bootstrap
+- install.sbr.system
+
 * TODO Makefile executable from anywhere
 
 aka ~make -C ~/.config/nixpkgs~ should work
