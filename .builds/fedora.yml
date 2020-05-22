@@ -1,6 +1,8 @@
 image: fedora/latest
+secrets:
+  - 67527e1f-d69c-4f8e-a26d-21685f4ed380
 sources:
-  - https://gitlab.com/vdemeester/home.git
+  - git@git.sr.ht:~vdemeester/secrets
 tasks:
 - hello: |
     echo "do something with fedora at some point"
