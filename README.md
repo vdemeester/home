@@ -31,7 +31,7 @@ reproducible and easily testable without making *a mess*. Nix/NixOS should help 
 This will be a all-time work-in-progress, so please beware that things might change
 dramatically or even not working anymore 😛.
 
-See [`./tasks.org`](./tasks.md) for the *work-in-progress* — and there is **a lot of work-in-progress**.
+See [`./tasks.org`](./tasks.md) for the *work-in-progress* — and there is **a lot of work-in-progress** 👼.
 
 
 <a id="h:e289aa81-d0ec-49a0-ba94-933e85d4ee8c"></a>
@@ -91,7 +91,7 @@ soon-ish 👼):
     Most of the `make` commands will try to populate this ahead of time. The assumption is :
     have a `sync` folder where the assets are. *Note: how to bootstrap (as syncthing will
     not be there, and the `sync` folder either)*
--   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#orgc18f61e).
+-   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#org6f7fd26).
     `make publish` will publish the `README.org` and the `docs` folder to my website.
 -   `lib`: shared code used during configuration (mostly `nix` code).
 -   `machines`: configuration per machines
@@ -101,7 +101,7 @@ soon-ish 👼):
 -   `private`: holds non-shareable code, like *secrets*.
 -   `tmp`: things to… organize (e.g. where I import my other *legacy* configuration)
 
-<a id="orgc18f61e"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
+<a id="org6f7fd26"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
 literate configuration files in this repository, I have to think of how to organize files
 in order to end up with one huge file. The goal of having those `org-mode` files, is
 mainly to document my configuration and publish it, most likely on [sbr.pm](https://sbr.pm).
