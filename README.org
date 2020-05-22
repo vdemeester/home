@@ -22,7 +22,7 @@ reproducible and easily testable without making /a mess/. Nix/NixOS should help 
 This will be a all-time work-in-progress, so please beware that things might change
 dramatically or even not working anymore 😛.
 
-See [[tasks.org][=tasks.org=]] for the /work-in-progress/.
+See [[./tasks.org][=./tasks.org=]] for the /work-in-progress/.
 
 * TODO Installation
 :PROPERTIES:
@@ -42,6 +42,9 @@ Otherwise, clone this repository somewhere, read the =bootstrap.sh= file and exe
 you feel safe
 
 ** TODO ~home-manager~ only
+:PROPERTIES:
+:CUSTOM_ID: h:62ee62f0-7e1a-4abc-b289-ac24d12e733c
+:END:
 
 /todo: rework that part/
 
@@ -65,6 +68,9 @@ If you don't have ~nix~ installed, run ~curl https://nixos.org/nix/install | sh~
 - run ~home-manager switch;~
 
 ** TODO ~nixos~ only
+:PROPERTIES:
+:CUSTOM_ID: h:5529fb57-a55d-4b81-a164-e5d1104b7e0b
+:END:
 
 /todo: rework that part/
 
@@ -101,6 +107,7 @@ mainly to document my configuration and publish it, most likely on [[https://sbr
 :END:
 
 Repositories
+- [[https://github.com/lovesegfault/nix-config][https://github.com/lovesegfault/nix-config]]
 - [[https://github.com/utdemir/dotfiles]]
 - [[https://github.com/davidtwco/veritas]]
 - [[https://gitlab.com/samueldr/nixos-configuration]]

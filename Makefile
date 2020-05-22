@@ -84,6 +84,10 @@ update-docs:
 	$(EMACS) --batch --directory $(DOTEMACS)/lisp/ \
 		--load lib/lisp/docs.el \
 		--funcall update-docs
+	@echo "Updating README.md…"
+	$(EMACS) --batch --directory $(DOTEMACS)/lisp/ \
+		--load lib/lisp/docs.el \
+		--funcall update-readme-md
 
 .PHONY: build-www
 build-www: $(SRCWWW)/publish-common.el lib/lisp/publish.el update-docs
