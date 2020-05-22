@@ -220,7 +220,7 @@ CLOSED: [2020-05-10 Sun 13:55]
 
 Daily or weekly build
 
-* TODO [#A] Pin channel versions
+* TODO [#A] self-contained configuration (with pinned channel versions)
 
 Instead of relying on =nix-channel=, this should pin the version of all channel required
 (nixos, nixos-unstable, nixpkgs, nixpkgs-unstable, home-manager, nur, …).
@@ -233,6 +233,25 @@ Instead of relying on =nix-channel=, this should pin the version of all channel 
   + … as the machines would have the exact same /channels/ as the ci
 - This would allow to run =nixos-rebuild switch= as a user without the mess of channels
 
+Let's define a plan to experiment and work this out iteratively.
+
+** DONE Gather information
+CLOSED: [2020-05-22 Fri 13:43]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-22 Fri 13:43]
+:END:
+- Pin different channels in the configuration (?)
+- Run the configuration against multiple channels (?)
+- Use =nix.path= or à-la-tazjin or [[https://github.com/nmattia/niv][=niv=]] (which is close to tazjin's approach)
+
+Some "good" examples
+
+- [[https://github.com/lovesegfault/nix-config][https://github.com/lovesegfault/nix-config]]
+- [[https://github.com/utdemir/dotfiles]]
+- [[https://github.com/davidtwco/veritas]]
+
+Those commands would work
+
 #+begin_src nix
 nix.nixPath = [ "nixpkgs=${sources.nixos}" ];
 #+end_src
@@ -241,13 +260,58 @@ nix.nixPath = [ "nixpkgs=${sources.nixos}" ];
 nixos-rebuild dry-build -I nixpkgs=$(nix eval --raw '(import nix/sources.nix).nixos.outPath') -I nixos-config=/etc/nixos/configuration.nix
 #+end_src
 
-** TODO self-contained configuration
+One trick to using =home-manager= as NixOS module makes it a bit tricky to use a different
+package set. The question (to be answered at some point) is wether to use nixos-20.03 or
+nixos-unstable. =nixos-20.03= with being able to use =unstable= package seems to be the
+safest bet.
 
-- Pin different channels in the configuration (?)
-- Run the configuration against multiple channels (?)
-- Use =nix.path= or à-la-tazjin or [[https://github.com/nmattia/niv][=niv=]] (which is close to tazjin's approach)
+** TODO Define a plan to experiment with this
 
-** TODO =ci.nix= build on multiple channels
+The main requirement is that /while experimenting/, it should not affect the rest of the
+machines. [[https://github.com/lovesegfault/nix-config][lovesegfault/dotfiles]] is a good idea to follow as I can keep the current
+behavior for most machines and experiment separately on another one. I shouldn't even need
+to branch out.
+
+The goal is:
+- using niv =nix/= to update different sources
+- being able to do =nix-build -A hokkaido= to build hokkaido from anywhere
+  + having a =switch= script to run this locally (so that we can automate this in a timer)
+- being able to use different sources for different machines (nixpkgs, nixos-20.03, …)
+- sharing (still) a lot of the code (modules, pkgs, …)
+- having a CI that build and cache to cachix.org
+  + ideal world, auto-generate the ci configuration
+- Use as much as =nix= as possible (most likely use scripts and nix)
+- Still support using =home-manager= alone
+
+Open questions:
+- How to manage secrets ? for bootstrap && on change. This is especially important in the
+  context of CI, if CI has to be able to build a configuration.
+
+Let's use =hokkaido= for this (thinkpad x220s). Long term, =hokkaido= might be the
+nixos-unstable machine and the rest more stable (servers, …). Also let's make sure we
+document this all the way (litterate configuration).
+
+** TODO Bootstrap =hokkaido.nix= machine file
+
+- Being able to do =nix-build -A hokkaido=
+- Use nixos-20.30 as base
+
+** TODO Create switch script
+
+Being able to do =switch= (or =make -C Makefile.new switch=, or whatever)
+
+** TODO Try to use =nixos-unstable= as base
+
+** TODO How to manage secrets
+
+** TODO Define CI (where, how)
+
+* CANCELED =ci.nix= build on multiple channels
+CLOSED: [2020-05-22 Fri 13:55]
+:LOGBOOK:
+- State "CANCELED"   from "TODO"       [2020-05-22 Fri 13:55] \\
+  This will be done differently
+:END:
 :PROPERTIES:
 :CREATED:[2020-05-05 Tue 12:45]
 :END:
