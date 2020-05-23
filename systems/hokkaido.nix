@@ -11,6 +11,12 @@
     hostName = "hokkaido";
   };
 
+  # FIXME move this away
+  home-manager.users.vincent = import ../home.nix;
+  home-manager.users.root = { pkgs, ... }: {
+    home.packages = with pkgs; [ htop ];
+  };
+
   fileSystems."/" =
     {
       device = "/dev/disk/by-uuid/884a3d57-f652-49b2-9c8b-f6eebd5edbeb";
