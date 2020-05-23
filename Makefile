@@ -79,11 +79,13 @@ clean-www:
 
 # Documentation build and publishing
 .PHONY: update-docs
-update-docs:
+update-docs: README.md
 	@echo "Updating docs references…"
 	$(EMACS) --batch --directory $(DOTEMACS)/lisp/ \
 		--load lib/lisp/docs.el \
 		--funcall update-docs
+
+README.md: README.org
 	@echo "Updating README.md…"
 	$(EMACS) --batch --directory $(DOTEMACS)/lisp/ \
 		--load lib/lisp/docs.el \
