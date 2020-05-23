@@ -57,9 +57,9 @@ in
 
   nixpkgs = {
     overlays = [
-      (import ../../overlays/sbr.nix)
-      (import ../../overlays/unstable.nix)
-      (import ../../overlays/emacs-overlay)
+      (import ../overlays/sbr.nix)
+      (import ../overlays/unstable.nix)
+      (import ../overlays/emacs-overlay)
     ];
     config = {
       allowUnfree = true;
