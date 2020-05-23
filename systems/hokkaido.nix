@@ -55,6 +55,22 @@ in
     "nixpkgs-overlays=/run/current-system/overlays/compat"
   ];
 
+  nixpkgs = {
+    overlays = [
+      (import ../../overlays/sbr.nix)
+      (import ../../overlays/unstable.nix)
+      (import ../../overlays/emacs-overlay)
+    ];
+    config = {
+      allowUnfree = true;
+      packageOverrides = pkgs: {
+        nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+          inherit pkgs;
+        };
+      };
+    };
+  };
+
   # FIXME: put this in a common
   system = {
     extraSystemBuilderCmds = ''
