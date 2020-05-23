@@ -15,6 +15,10 @@ to use [[https://nixos.org/nix/][Nix]] as much as possible for those configurati
 - One repository to rule all my configurations, for all my machines.
 - Reproductible and testable configurations
 
+On idea is also to try to do something like "[[https://willschenk.com/articles/2020/leveraging_disposability_for_exploration/][Leveraging disposability for exploration]]",
+aka "how to play around without leaving a mess". I'll try my best to make everything
+reproducible and easily testable without making /a mess/. Nix/NixOS should help with that…
+
 The following part of this page tries to present an organization to all my
 configurations ; but there is a [[file:sitemap.org][sitemap]] if you want to see all the content.
 

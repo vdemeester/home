@@ -15,24 +15,21 @@
 
 # What is `home`
 
-This repository is the monorepo for my personal tools and infrastructure. It containers my
-dotfiles, some tools and scripts. It is mainly based on `nix` and =home-manager=some shell
-script and maybe sometimes ansible — especially on non-NixOS system.
+Veritas is the declarative configuration of my servers, desktops and laptops. This project is based
+on the NixOS operating system and uses home-manager to manage my dotfiles, for both NixOS and
+non-NixOS hosts (like WSL).
 
-The goal of is repository is to be able to have a way to setup dotfiles and packages in
-*one go*, sharing those configuration between multiple computers. The documentation part
-is using (or *will*) `org-mode` following principles of "literate programming": a
-combination of ordinary language and inline code blocks.
+This repository is the monorepo for my personal tools and the declarative configuration of
+my servers, desktops and laptops. It is based on the NixOS operating system and
+`home-manager` (and some scripts) to manage my dotfiles, for both NixOS and non-NixOS
+hosts (like Fedora, …).
 
-On idea is also to try to do something like "[Leveraging disposability for exploration](https://willschenk.com/articles/2020/leveraging_disposability_for_exploration/)",
-aka "how to play around without leaving a mess". I'll try my best to make everything
-reproducible and easily testable without making *a mess*. Nix/NixOS should help with that…
+It is fully reproducible (utilizing [niv](https://github.com/nmattia/niv)) and position-independent, meaning there is no
+moving around of `configuration.nix`. For the configurations' entry points see the
+individual [systems](systems), as well as [default.nix](default.nix).
 
 This will be a all-time work-in-progress, so please beware that things might change
 dramatically or even not working anymore 😛.
-
-See [`./tasks.org`](./tasks.md) for the *work-in-progress* — and there is **a lot of work-in-progress**
-👼.
 
 
 <a id="h:e289aa81-d0ec-49a0-ba94-933e85d4ee8c"></a>
@@ -56,23 +53,6 @@ you feel safe
 
 *todo: rework that part*
 
-If you don't have `nix` installed, run `curl https://nixos.org/nix/install | sh` to install it.
-
--   clone this repository in `$HOME/.config/nixpkgs`
--   create a \`home.nix\` file with the content you want.
-    Some machines files already exists that you can use :
-    
-        { pkgs, ... }:
-        
-        {
-          imports = [
-            ./machines/hokkaido.nix
-          ];
-        }
-
--   run `nix-shell https://github.com/rycee/home-manager/archive/master.tar.gz -A install` (maybe twice :D)
--   run `home-manager switch;`
-
 
 <a id="h:5529fb57-a55d-4b81-a164-e5d1104b7e0b"></a>
 
@@ -85,6 +65,8 @@ If you don't have `nix` installed, run `curl https://nixos.org/nix/install | sh`
 
 # Organization of the repository
 
+*todo: rework that part*
+
 This is probably gonna be a moving target, but this is how it looks (or should look
 soon-ish 👼):
 
@@ -92,7 +74,7 @@ soon-ish 👼):
     Most of the `make` commands will try to populate this ahead of time. The assumption is :
     have a `sync` folder where the assets are. *Note: how to bootstrap (as syncthing will
     not be there, and the `sync` folder either)*
--   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#org54dd53e).
+-   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#org37b6917).
     `make publish` will publish the `README.org` and the `docs` folder to my website.
 -   `lib`: shared code used during configuration (mostly `nix` code).
 -   `machines`: configuration per machines
@@ -102,7 +84,7 @@ soon-ish 👼):
 -   `private`: holds non-shareable code, like *secrets*.
 -   `tmp`: things to… organize (e.g. where I import my other *legacy* configuration)
 
-<a id="org54dd53e"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
+<a id="org37b6917"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
 literate configuration files in this repository, I have to think of how to organize files
 in order to end up with one huge file. The goal of having those `org-mode` files, is
 mainly to document my configuration and publish it, most likely on [sbr.pm](https://sbr.pm).
