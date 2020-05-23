@@ -1,11 +1,32 @@
-{ sources ? import ./nix, lib ? sources.lib, pkgs ? sources.pkgs { } }:
+{ sources ? import ./nix
+, lib ? sources.lib
+, pkgs ? sources.pkgs { }
+, pkgs-unstable ? sources.pkgs-unstable
+, nixpkgs ? sources.nixpkgs { }
+}:
 with builtins; with lib;
 let
-  mkNixOS = name: arch:
+  /*
+  mkNixOS: make a nixos system build with the given name and cfg.
+
+  cfg is an attributeSet:
+  - arch is architecture
+  - type is weither we want to use nixos (stable) or nixos-unstable
+
+  Example:
+    hokkaido = { arch = "x86_64-linux"; };
+    honshu = { arch = "x86_64-linux"; type = "unstable"; };
+  */
+  mkNixOS = name: cfg:
     let
       configuration = ./systems + "/${name}.nix";
-      system = arch;
-      nixos = import (pkgs.path + "/nixos") { inherit configuration system; };
+      system = cfg.arch;
+      # If type == unstable, use nixos-unstable (pkgs-unstable) otherwise use nixos (pkgs)
+      p =
+        if cfg.type == "unstable"
+        then pkgs-unstable
+        else pkgs;
+      nixos = import (p.path + "/nixos") { inherit configuration system; };
     in
     nixos.config.system.build;
   mkSystem = name: arch: (mkNixOS name arch).toplevel;
@@ -19,7 +40,7 @@ let
   allSystems = attrValues systemAttrs;
 in
 {
-  systems = pkgs.linkFarmFromDrvs "systems" allSystems;
-  aarch64 = pkgs.linkFarmFromDrvs "aarch64" aarch64Systems;
-  x86_64-linux = pkgs.linkFarmFromDrvs "x86_64-linux" x86_64Systems;
+  systems = nixpkgs.linkFarmFromDrvs "systems" allSystems;
+  aarch64 = nixpkgs.linkFarmFromDrvs "aarch64" aarch64Systems;
+  x86_64-linux = nixpkgs.linkFarmFromDrvs "x86_64-linux" x86_64Systems;
 } // systemAttrs
