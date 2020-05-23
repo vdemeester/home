@@ -2,8 +2,9 @@
 {
   imports = [
     (import ../nix).home-manager
-    ../hardware/thinkpad-x220.nix
     ../modules/module-list.nixos.nix
+    # hardware
+    ../hardware/thinkpad-x220.nix
     # FIXME: remove this
     ../machines/home.nixos.nix
   ];
@@ -38,5 +39,21 @@
     git.enable = true;
     ssh.enable = true;
     nix-config.buildCores = 2;
+  };
+
+  nix.nixPath = [
+    "nixos-config=${dummyConfig}"
+    "nixpkgs=/run/current-system/nixpkgs"
+    "nixpkgs-overlays=/run/current-system/overlays"
+  ];
+
+  # FIXME: put this in a common
+  system = {
+    extraSystemBuilderCmds = ''
+      ln -sv ${pkgs.path} $out/nixpkgs
+      ln -sv ${../overlays} $out/overlays
+    '';
+
+    stateVersion = "20.03";
   };
 }
