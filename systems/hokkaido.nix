@@ -1,4 +1,10 @@
 { lib, pkgs, ... }:
+let
+  dummyConfig = pkgs.writeText "configuration.nix" ''
+    assert builtins.trace "This is a dummy config, use switch!" false;
+    {}
+  '';
+in
 {
   imports = [
     (import ../nix).home-manager
