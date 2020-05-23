@@ -53,12 +53,18 @@ switch: assets setup
 	home-manager switch
 
 .PHONY: nixos-switch
+.PHONY: nixos-switch
 nixos-switch: assets setup
 	nixos-rebuild switch
 
+.PHONY: install-hooks
 install-hooks:
 	if [ -e .git ]; then nix-shell -p git --run 'git config core.hooksPath .githooks'; fi
 
+.PHONY: pre-commit
+pre-commit: README.md fmt update-docs
+
+.PHONY: fmt
 fmt:
 	nixpkgs-fmt *.nix lib machines modules overlays/*.nix overlays/emacs pkgs tmp tools
 
@@ -79,7 +85,7 @@ clean-www:
 
 # Documentation build and publishing
 .PHONY: update-docs
-update-docs: README.md
+update-docs:
 	@echo "Updating docs references…"
 	$(EMACS) --batch --directory $(DOTEMACS)/lisp/ \
 		--load lib/lisp/docs.el \
