@@ -47,10 +47,12 @@ in
     nix-config.buildCores = 2;
   };
 
+  # FIXME: move this away
+  nix-config.enable = false;
   nix.nixPath = [
     "nixos-config=${dummyConfig}"
     "nixpkgs=/run/current-system/nixpkgs"
-    "nixpkgs-overlays=/run/current-system/overlays"
+    "nixpkgs-overlays=/run/current-system/overlays/compat"
   ];
 
   # FIXME: put this in a common
