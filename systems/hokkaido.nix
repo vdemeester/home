@@ -48,7 +48,7 @@ in
   };
 
   # FIXME: move this away
-  nix-config.enable = false;
+  profiles.nix-config.enable = false;
   nix.nixPath = [
     "nixos-config=${dummyConfig}"
     "nixpkgs=/run/current-system/nixpkgs"
