@@ -1,6 +1,7 @@
 { lib, pkgs, ... }:
 {
   imports = [
+    (import ../nix).home-manager
     ../hardware/thinkpad-x220.nix
     ../modules/module-list.nixos.nix
     # FIXME: remove this
