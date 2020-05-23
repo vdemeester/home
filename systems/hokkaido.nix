@@ -3,6 +3,8 @@
   imports = [
     ../hardware/thinkpad-x220.nix
     ../modules/module-list.nixos.nix
+    # FIXME: remove this
+    ../machines/home.nixos.nix
   ];
 
   fileSystems."/" =
