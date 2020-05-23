@@ -20,4 +20,10 @@
   swapDevices =
     [{ device = "/dev/disk/by-uuid/e1833693-77ac-4d52-bcc7-54d082788639"; }];
 
+  profiles = {
+    avahi.enable = true;
+    git.enable = true;
+    ssh.enable = true;
+    nix-config.buildCores = 2;
+  };
 }
