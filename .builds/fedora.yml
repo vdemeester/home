@@ -5,7 +5,7 @@ sources:
   - git@git.sr.ht:~vdemeester/secrets
 tasks:
 - setup: |
-    dnf install -y tar gzip
+    sudo dnf install -y tar gzip
 - install_nix: |
     set -euo pipefail
     curl -L https://nixos.org/nix/install | sh
