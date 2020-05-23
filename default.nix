@@ -29,7 +29,7 @@ let
       nixos = import (p.path + "/nixos") { inherit configuration system; };
     in
     nixos.config.system.build;
-  mkSystem = name: arch: (mkNixOS name arch).toplevel;
+  mkSystem = name: cfg: (mkNixOS name cfg).toplevel;
   # mkDigitalOceanImage = name: arch: (mkNixOS name arch).digitalocean
 
   systemAttrs = (mapAttrs mkSystem (import ./hosts.nix));
