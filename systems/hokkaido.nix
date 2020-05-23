@@ -7,6 +7,10 @@
     ../machines/home.nixos.nix
   ];
 
+  networking = {
+    hostName = "hokkaido";
+  };
+
   fileSystems."/" =
     {
       device = "/dev/disk/by-uuid/884a3d57-f652-49b2-9c8b-f6eebd5edbeb";
