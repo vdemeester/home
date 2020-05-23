@@ -49,6 +49,7 @@ in
 
   # FIXME: move this away
   profiles.nix-config.enable = false;
+  home-manager.useGlobalPkgs = true;
   nix.nixPath = [
     "nixos-config=${dummyConfig}"
     "nixpkgs=/run/current-system/nixpkgs"
