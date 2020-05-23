@@ -4,8 +4,11 @@ secrets:
 sources:
   - git@git.sr.ht:~vdemeester/secrets
 tasks:
-- hello: |
-    echo "do something with fedora at some point"
+- install_nix: |
+    set -euo pipefail
+    curl -L https://nixos.org/nix/install | sh
+- install_home_manager: |
+    nix-shell $(nix eval --raw '(import ./home/nix/sources.nix).["home-manager"].outPath') -A install
 triggers:
 - action: email
   condition: failure
