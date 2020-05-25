@@ -64,4 +64,7 @@ rec {
   nixosUnstableCacheOutputs = concatMap outputsOf nixosUnstableCachePkgs;
   nixpkgsBuildOutputs = concatMap outputsOf nixpkgsBuildPkgs;
   nixpkgsCacheOutputs = concatMap outputsOf nixpkgsCachePkgs;
+
+  buildOuputs = nixosBuildOutputs ++ nixosUnstableBuildOutputs ++ nixpkgsBuildOutputs;
+  cacheOutputs = nixosCacheOutputs ++ nixosUnstableCacheOutputs ++ nixpkgsCacheOutputs;
 }

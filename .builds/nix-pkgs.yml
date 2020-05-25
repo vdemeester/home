@@ -12,17 +12,7 @@ tasks:
     set +x
     export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
     set -x
-    nix-build home/ci.nix -A nixosCacheOutputs | cachix push shortbrain
-- nixos-unstable: |
-    set +x
-    export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
-    set -x
-    nix-build home/ci.nix -A nixosUnstableCacheOutputs | cachix push shortbrain
-- nixpkgs: |
-    set +x
-    export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
-    set -x
-    nix-build home/ci.nix -A nixkgsCacheOutputs | cachix push shortbrain
+    nix-build home/ci.nix -A cacheOutputs | cachix push shortbrain
 - nur-update: |
     curl -XPOST "https://nur-update.herokuapp.com/update?repo=vdemeester"
 triggers:
