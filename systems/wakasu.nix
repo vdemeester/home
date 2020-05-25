@@ -4,6 +4,8 @@ let
     # assert builtins.trace "This is a dummy config, use switch!" false;
     {}
   '';
+  inCi = builtins.pathExists /home/build;
+  enableHome = !inCi;
 in
 {
   imports = [
@@ -15,7 +17,7 @@ in
     ../machines/home.nixos.nix
   ];
 
-  profiles.home = !inCi;
+  profiles.home = enableHome;
 
   networking = {
     hostName = "wakasu";

@@ -5,6 +5,7 @@ let
     {}
   '';
   inCi = builtins.pathExists /home/build;
+  enableHome = !inCi;
 in
 {
   imports = [
@@ -14,7 +15,7 @@ in
     ../hardware/thinkpad-x220.nix
   ];
 
-  profiles.home = !inCi;
+  profiles.home = enableHome;
 
   networking = {
     hostName = "hokkaido";
