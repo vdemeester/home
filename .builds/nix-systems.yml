@@ -6,13 +6,12 @@ sources:
   - git@git.sr.ht:~vdemeester/secrets
 tasks:
 - setup: |
-    set -euo pipefail
-    set +x
-    export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
-    set -x
     nix-env -iA cachix -f https://cachix.org/api/v1/install
     cachix use shortbrain
 - systems: |
+    set +x
+    export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
+    set -x
     nix-build home -A x86_64-linux
 triggers:
 - action: email
