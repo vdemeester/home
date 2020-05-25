@@ -20,7 +20,16 @@ in
   };
 
   # FIXME move this away
-  home-manager.users.vincent = import ../home.nix;
+  home-manager.users.vincent = { pkgs, ... }: {
+    imports = [
+      # Default profile with default configuration
+      ../modules/module-list.nix
+      # Set the machine to home
+      ../machines/is-hm.nix
+      # Machine specific configuration files
+      ../machines/hokkaido.nix
+    ];
+  };
   home-manager.users.root = { pkgs, ... }: {
     home.packages = with pkgs; [ htop ];
   };
