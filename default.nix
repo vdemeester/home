@@ -1,7 +1,7 @@
 { sources ? import ./nix
 , lib ? sources.lib
 , pkgs ? sources.pkgs { }
-, pkgs-unstable ? sources.pkgs-unstable
+, pkgs-unstable ? sources.pkgs-unstable { }
 , nixpkgs ? sources.nixpkgs { }
 }:
 with builtins; with lib;
@@ -23,7 +23,7 @@ let
       system = cfg.arch;
       # If type == unstable, use nixos-unstable (pkgs-unstable) otherwise use nixos (pkgs)
       p =
-        if cfg.type == "unstable"
+        if cfg ? type && cfg.type == "unstable"
         then pkgs-unstable
         else pkgs;
       nixos = import (p.path + "/nixos") { inherit configuration system; };
