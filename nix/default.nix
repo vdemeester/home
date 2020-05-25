@@ -8,5 +8,5 @@ rec {
   lib-unstable = import (sources.nixos-unstable + "/lib");
   pkgs-unstable = import sources.nixos-unstable;
   nixpkgs = import sources.nixpkgs;
-  emacs = import source.emacs-overlay;
+  emacs = import sources.emacs-overlay;
 }
