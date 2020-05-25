@@ -4,6 +4,7 @@ let
     # assert builtins.trace "This is a dummy config, use switch!" false;
     {}
   '';
+  inCi = builtins.pathExists /home/build;
 in
 {
   imports = [
@@ -11,9 +12,9 @@ in
     ../modules/module-list.nixos.nix
     # hardware
     ../hardware/thinkpad-x220.nix
-    # FIXME: remove this
-    ../machines/home.nixos.nix
   ];
+
+  profiles.home = !inCi;
 
   networking = {
     hostName = "hokkaido";

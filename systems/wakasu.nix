@@ -15,6 +15,8 @@ in
     ../machines/home.nixos.nix
   ];
 
+  profiles.home = !inCi;
+
   networking = {
     hostName = "wakasu";
   };
