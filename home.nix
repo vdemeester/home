@@ -1,21 +1,18 @@
 # This configuration file simply determines the hostname and then import both
 # the default configuration (common for all machine) and specific machine
 # configuration.
-{ sources ? import ./nix/sources.nix
-, pkgs ? import sources.nixpkgs { }
-, ...
-}:
 let
   hostName = "${builtins.readFile ./hostname}";
+  home-manager = (import ./nix/sources.nix).home-manager;
 in
 {
   programs = {
     home-manager = {
       enable = true;
-      path = "${sources.home-manager}";
+      path = "${home-manager}";
     };
   };
-  imports = with sources; [
+  imports = [
     # Default profile with default configuration
     ./modules/module-list.nix
     # Set the machine to home
