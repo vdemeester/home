@@ -12,9 +12,8 @@ tasks:
     set -x
     nix-env -iA cachix -f https://cachix.org/api/v1/install
     cachix use shortbrain
-- pkgs: |
-    nix-build home/ci.nix -A cacheOutputs | cachix push shortbrain
-    curl -XPOST "https://nur-update.herokuapp.com/update?repo=vdemeester"
+- systems: |
+    nix-build -A x86_64-linux
 triggers:
 - action: email
   condition: failure

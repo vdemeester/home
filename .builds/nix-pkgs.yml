@@ -1,0 +1,26 @@
+image: nixos/20.03
+secrets:
+  - 67527e1f-d69c-4f8e-a26d-21685f4ed380
+  - 0818d60d-b587-4d4e-81d8-dc15072ccb97
+sources:
+  - git@git.sr.ht:~vdemeester/secrets
+tasks:
+- setup: |
+    set -euo pipefail
+    set +x
+    export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
+    set -x
+    nix-env -iA cachix -f https://cachix.org/api/v1/install
+    cachix use shortbrain
+- nixos: |
+    nix-build home/ci.nix -A nixosCacheOutputs | cachix push shortbrain
+- nixos-unstable: |
+    nix-build home/ci.nix -A nixosUnstableCacheOutputs | cachix push shortbrain
+- nixpkgs: |
+    nix-build home/ci.nix -A nixkgsCacheOutputs | cachix push shortbrain
+- nur-update: |
+    curl -XPOST "https://nur-update.herokuapp.com/update?repo=vdemeester"
+triggers:
+- action: email
+  condition: failure
+  to: vincent@sbr.pm
