@@ -60,7 +60,7 @@ in
     overlays = [
       (import ../overlays/sbr.nix)
       (import ../overlays/unstable.nix)
-      (import ../overlays/emacs-overlay)
+      (import ../nix).emacs
     ];
     config = {
       allowUnfree = true;

@@ -1,6 +1,3 @@
-[submodule "overlays/emacs-overlay"]
-	path = overlays/emacs-overlay
-	url = https://github.com/nix-community/emacs-overlay.git
 [submodule "tools/emacs/lisp/modus-themes"]
 	path = tools/emacs/lisp/modus-themes
 	url = https://gitlab.com/protesilaos/modus-themes.git
