@@ -18,6 +18,7 @@ in
   ];
 
   profiles.home = enableHome;
+  profiles.users.withMachines = enableHome;
 
   networking = {
     hostName = "wakasu";
@@ -38,6 +39,12 @@ in
     home.packages = with pkgs; [ htop ];
   };
 
+  # FIXME: ain't true
+  fileSystems."/" =
+    {
+      device = "/dev/disk/by-uuid/884a3d57-f652-49b2-9c8b-f6eebd5edbeb";
+      fsType = "ext4";
+    };
   # FIXME: move this away
   profiles.nix-config.enable = false;
   home-manager.useGlobalPkgs = true;

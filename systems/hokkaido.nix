@@ -16,6 +16,7 @@ in
   ];
 
   profiles.home = enableHome;
+  profiles.users.withMachines = enableHome;
 
   networking = {
     hostName = "hokkaido";
