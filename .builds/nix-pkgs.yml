@@ -8,7 +8,7 @@ tasks:
 - setup: |
     nix-env -iA cachix -f https://cachix.org/api/v1/install
     cachix use shortbrain
-- buildCached: |
+- cached: |
     set +x
     export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
     set -x
