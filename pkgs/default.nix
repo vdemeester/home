@@ -1,4 +1,6 @@
-{ pkgs }:
+{ sources ? import ../nix
+, pkgs ? sources.pkgs { }
+}:
 
 rec {
   # pre nur-packages import
