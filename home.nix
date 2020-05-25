@@ -1,13 +1,12 @@
 # This configuration file simply determines the hostname and then import both
 # the default configuration (common for all machine) and specific machine
 # configuration.
-{ sources ? import ../nix/sources.nix
+{ sources ? import ./nix/sources.nix
 , pkgs ? import sources.nixpkgs { }
 , ...
 }:
 let
   hostName = "${builtins.readFile ./hostname}";
-  sources = import ./nix/sources.nix;
 in
 {
   programs = {
