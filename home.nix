@@ -12,6 +12,11 @@ in
       path = "${home-manager}";
     };
   };
+  nixpkgs.overlays = [
+    (import ./overlays/sbr.nix)
+    (import ./overlays/unstable.nix)
+    (import ./nix).emacs
+  ];
   imports = [
     # Default profile with default configuration
     ./modules/module-list.nix
