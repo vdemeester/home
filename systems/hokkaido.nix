@@ -17,6 +17,7 @@ in
 
   profiles.home = enableHome;
   profiles.users.withMachines = enableHome;
+  profiles.mail.enable = enableHome;
 
   networking = {
     hostName = "hokkaido";
