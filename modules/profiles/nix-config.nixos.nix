@@ -56,6 +56,8 @@ in
       extraOptions = ''
         connect-timeout = 20
         build-cores = 0
+        keep-outputs = true
+        keep-derivations = true
       '';
       binaryCaches = cfg.localCaches ++ [
         "https://cache.nixos.org/"
