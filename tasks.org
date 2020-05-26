@@ -265,7 +265,11 @@ package set. The question (to be answered at some point) is wether to use nixos-
 nixos-unstable. =nixos-20.03= with being able to use =unstable= package seems to be the
 safest bet.
 
-** TODO Define a plan to experiment with this
+** DONE Define a plan to experiment with this
+CLOSED: [2020-05-26 Tue 10:36]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-26 Tue 10:36]
+:END:
 
 The main requirement is that /while experimenting/, it should not affect the rest of the
 machines. [[https://github.com/lovesegfault/nix-config][lovesegfault/dotfiles]] is a good idea to follow as I can keep the current
@@ -291,20 +295,47 @@ Let's use =hokkaido= for this (thinkpad x220s). Long term, =hokkaido= might be t
 nixos-unstable machine and the rest more stable (servers, …). Also let's make sure we
 document this all the way (litterate configuration).
 
-** TODO Bootstrap =hokkaido.nix= machine file
+** DONE Bootstrap =hokkaido.nix= machine file
+CLOSED: [2020-05-26 Tue 10:36]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-26 Tue 10:36]
+:END:
 
 - Being able to do =nix-build -A hokkaido=
 - Use nixos-20.30 as base
 
-** TODO Create switch script
+** DONE Create switch script
+CLOSED: [2020-05-26 Tue 10:36]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-26 Tue 10:36]
+:END:
 
 Being able to do =switch= (or =make -C Makefile.new switch=, or whatever)
 
-** TODO Try to use =nixos-unstable= as base
+** DONE Try to use =nixos-unstable= as base
+CLOSED: [2020-05-26 Tue 10:36]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-26 Tue 10:36]
+:END:
 
-** TODO How to manage secrets
+** TODO [#B] home-manager on fedora situation
+
+How to make it self contained too.
+
+** TODO [#A] How to manage secrets
+
+Right now, I have a boolean to detect if I am on ci or not. It's not the best because I
+don't test all.
 
 ** TODO Define CI (where, how)
+
+… and cache.
+
+- For packages builds.sr.ht is good
+- For systems, we can build it on builds.sr.ht *but* we could use a /local/ builder
+  machine to build the systems and cache built things.
+
+** TODO Migrate other machines/systems to it
 
 * CANCELED =ci.nix= build on multiple channels
 CLOSED: [2020-05-22 Fri 13:55]

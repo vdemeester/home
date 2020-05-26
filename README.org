@@ -93,6 +93,7 @@ Repositories
 - [[https://github.com/davidtwco/veritas]]
 - [[https://gitlab.com/samueldr/nixos-configuration]]
 - [[https://github.com/rasendubi/dotfiles]]
+- [[https://github.com/yurrriq/dotfiles][https://github.com/yurrriq/dotfiles]]
 - [[https://github.com/akirak/nixos-config]]
 - [[https://github.com/akirak/home.nix]]
 - [[https://github.com/cstrahan/nixos-config]]

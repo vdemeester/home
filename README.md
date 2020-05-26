@@ -74,7 +74,7 @@ soon-ish 👼):
     Most of the `make` commands will try to populate this ahead of time. The assumption is :
     have a `sync` folder where the assets are. *Note: how to bootstrap (as syncthing will
     not be there, and the `sync` folder either)*
--   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#org37b6917).
+-   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#org11396b9).
     `make publish` will publish the `README.org` and the `docs` folder to my website.
 -   `lib`: shared code used during configuration (mostly `nix` code).
 -   `machines`: configuration per machines
@@ -84,7 +84,7 @@ soon-ish 👼):
 -   `private`: holds non-shareable code, like *secrets*.
 -   `tmp`: things to… organize (e.g. where I import my other *legacy* configuration)
 
-<a id="org37b6917"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
+<a id="org11396b9"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
 literate configuration files in this repository, I have to think of how to organize files
 in order to end up with one huge file. The goal of having those `org-mode` files, is
 mainly to document my configuration and publish it, most likely on [sbr.pm](https://sbr.pm).
@@ -101,6 +101,7 @@ Repositories
 -   <https://github.com/davidtwco/veritas>
 -   <https://gitlab.com/samueldr/nixos-configuration>
 -   <https://github.com/rasendubi/dotfiles>
+-   [https://github.com/yurrriq/dotfiles](https://github.com/yurrriq/dotfiles)
 -   <https://github.com/akirak/nixos-config>
 -   <https://github.com/akirak/home.nix>
 -   <https://github.com/cstrahan/nixos-config>
