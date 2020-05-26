@@ -24,6 +24,7 @@ in
   };
 
   # FIXME move this away
+  home-manager.useUserPackages = true;
   home-manager.users.vincent = { pkgs, ... }: {
     imports = [
       # Default profile with default configuration
