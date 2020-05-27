@@ -1,6 +1,8 @@
 #+TITLE: Home configuration files
 #+FILETAGS: #home infra configuration dotfiles
 
+[[https://builds.sr.ht/~vdemeester/home.svg]]
+
 * What is ~home~
 :PROPERTIES:
 :CUSTOM_ID: h:0272c5ac-0b7f-4ebb-91f0-defa66c2d285
