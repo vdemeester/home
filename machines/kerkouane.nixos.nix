@@ -39,7 +39,7 @@ with import ../assets/machines.nix; {
           /nr:
             repo: https://gitlab.com/vdemeester/nr
           /ram:
-            repo: https://gitlab.com/vdemeester/ram
+            repo: https://git.sr.ht/~vdemeester/ram
           /sec:
             repo: https://gitlab.com/vdemeester/sec
       '';
