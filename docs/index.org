@@ -4,11 +4,9 @@
 
 This set of pages and articles are describing and discussing my configurations. By
 configurations I mean the [[https://dotfiles.github.io/][dotfiles]] for miscellaneous software and operating systems (like
-[[https://nixos.org][=NixOS=]], or [[https://www.gnu.org/software/emacs/][GNU Emacs]]).
-
-This documents comes from my [[https://gitlab.com/vdemeester/home][monorepo]] for my personal tools and infrastructure. I'm trying
-to use [[https://nixos.org/nix/][Nix]] as much as possible for those configuration, using [[https://nixos.org][=NixOS=]] and
-[[https://rycee.gitlab.io/home-manager/][=home-manager=]]. But it is not limited to this. The goal of my [[https://gitlab.com/vdemeester/home][monorepo]] is:
+[[https://nixos.org][=NixOS=]], or [[https://www.gnu.org/software/emacs/][GNU Emacs]]). This documents comes from my [[https://gitlab.com/vdemeester/home][monorepo]] for my personal tools and
+infrastructure. I'm trying to use [[https://nixos.org/nix/][Nix]] as much as possible for those configuration, using
+[[https://nixos.org][=NixOS=]] and [[https://rycee.gitlab.io/home-manager/][=home-manager=]]. But it is not limited to this. The goal of my [[https://gitlab.com/vdemeester/home][monorepo]] is:
 
 - Centralized (sometimes /literate/) configurations
 - Shareable nix modules (e.g. =zsh= configuration on =nixos= and using =home-manager=)

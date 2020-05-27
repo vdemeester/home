@@ -9,7 +9,6 @@
 4.  [References](#h:e5a95a68-f031-438b-831c-824803d0bc3e)
 5.  [COPYING](#h:716e598e-3b1a-4e48-a72b-608c3a970db9)
 
-![img](https://builds.sr.ht/~vdemeester/home.svg)
 
 
 <a id="h:0272c5ac-0b7f-4ebb-91f0-defa66c2d285"></a>
@@ -75,7 +74,7 @@ soon-ish 👼):
     Most of the `make` commands will try to populate this ahead of time. The assumption is :
     have a `sync` folder where the assets are. *Note: how to bootstrap (as syncthing will
     not be there, and the `sync` folder either)*
--   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#org9ad541b).
+-   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#org892ed15).
     `make publish` will publish the `README.org` and the `docs` folder to my website.
 -   `lib`: shared code used during configuration (mostly `nix` code).
 -   `machines`: configuration per machines
@@ -85,7 +84,7 @@ soon-ish 👼):
 -   `private`: holds non-shareable code, like *secrets*.
 -   `tmp`: things to… organize (e.g. where I import my other *legacy* configuration)
 
-<a id="org9ad541b"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
+<a id="org892ed15"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
 literate configuration files in this repository, I have to think of how to organize files
 in order to end up with one huge file. The goal of having those `org-mode` files, is
 mainly to document my configuration and publish it, most likely on [sbr.pm](https://sbr.pm).
