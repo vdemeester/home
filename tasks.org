@@ -220,6 +220,68 @@ CLOSED: [2020-05-10 Sun 13:55]
 
 Daily or weekly build
 
+* CANCELED =ci.nix= build on multiple channels
+CLOSED: [2020-05-22 Fri 13:55]
+:LOGBOOK:
+- State "CANCELED"   from "TODO"       [2020-05-22 Fri 13:55] \\
+  This will be done differently
+:END:
+:PROPERTIES:
+:CREATED:[2020-05-05 Tue 12:45]
+:END:
+
+Automatic =nix-build . | cachix push shortbrain=, on nixos-unstable and nixpkgs-unstable too.
+
+From: [[eshell:*eshell nur-packages*:cd /home/vincent/src/github.com/vdemeester/nur-packages][cd /home/vincent/src/github.com/vdemeester/nur-packages]]
+
+* DONE [#A] Decide on home-manager for NixOS
+CLOSED: [2020-05-21 Thu 13:56]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-21 Thu 13:56]
+:END:
+
+- Should we use home-manager as a nixos module when the host is NixOS ?
+- Experiment with that on a clean setup (VM, …)
+- If we pin channels, I feel it make sense :)
+
+As we are going to pin channel and use our =NIX_PATH= (based on =niv= files ; and later
+most likely *flake*), we can safely assume we should be able to manage home-manager
+through the nixos module. If I can use =nixos-rebuild …= as a user, it's even better.
+
+* DONE [#B] kubernix setup project                         :nixos:kubernetes:
+CLOSED: [2020-05-18 Mon 19:46]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-18 Mon 19:46]
+- New deadline from "[2020-05-08 Fri]" on [2020-05-11 Mon 11:18]
+- New deadline from "[2020-05-02 Sat]" on [2020-05-03 Sun 13:20]
+- New deadline from "[2020-04-26 Sun]" on [2020-04-27 Mon 09:55]
+- New deadline from "[2020-04-24 Fri]" on [2020-04-24 Fri 17:49]
+- New deadline from "[2020-04-17 Fri]" on [2020-04-20 Mon 11:45]
+- New deadline from "[2020-04-11 Sat]" on [2020-04-13 Mon 16:06]
+- New deadline from "[2020-04-04 Sat]" on [2020-04-05 Sun 18:13]
+- New deadline from "[2020-04-03 Fri]" on [2020-04-03 Fri 07:43]
+- New deadline from "[2020-03-29 Sun]" on [2020-03-29 Sun 17:34]
+- New deadline from "[2020-03-27 Fri]" on [2020-03-27 Fri 17:28]
+- New deadline from "[2020-03-21 Sat]" on [2020-03-23 Mon 15:07]
+:END:
+:PROPERTIES:
+:CREATED:[2020-03-18 Wed 10:31]
+:END:
+
+1. use a tmux for this :)
+   https://bytes.zone/posts/tmux-session/
+2. package script in ~home~
+3. have a quick switch to target it (zsh, emacs)
+   Done using the same as the rest
+4. write an article about it, based on the project
+
+What is the flow I want ?
+
+- A simple command (=yak=)
+- A profile (like =tektoncd=, …)
+- A way to list the kubernix profile and their status
+
+Use http://tmuxp.git-pull.com/en/latest/ or
 * TODO [#A] self-contained configuration (with pinned channel versions)
 
 Instead of relying on =nix-channel=, this should pin the version of all channel required
@@ -337,34 +399,6 @@ don't test all.
 
 ** TODO Migrate other machines/systems to it
 
-* CANCELED =ci.nix= build on multiple channels
-CLOSED: [2020-05-22 Fri 13:55]
-:LOGBOOK:
-- State "CANCELED"   from "TODO"       [2020-05-22 Fri 13:55] \\
-  This will be done differently
-:END:
-:PROPERTIES:
-:CREATED:[2020-05-05 Tue 12:45]
-:END:
-
-Automatic =nix-build . | cachix push shortbrain=, on nixos-unstable and nixpkgs-unstable too.
-
-From: [[eshell:*eshell nur-packages*:cd /home/vincent/src/github.com/vdemeester/nur-packages][cd /home/vincent/src/github.com/vdemeester/nur-packages]]
-
-* DONE [#A] Decide on home-manager for NixOS
-CLOSED: [2020-05-21 Thu 13:56]
-:LOGBOOK:
-- State "DONE"       from "TODO"       [2020-05-21 Thu 13:56]
-:END:
-
-- Should we use home-manager as a nixos module when the host is NixOS ?
-- Experiment with that on a clean setup (VM, …)
-- If we pin channels, I feel it make sense :)
-
-As we are going to pin channel and use our =NIX_PATH= (based on =niv= files ; and later
-most likely *flake*), we can safely assume we should be able to manage home-manager
-through the nixos module. If I can use =nixos-rebuild …= as a user, it's even better.
-
 * TODO [#A] Where should be the cloned ?
 
 That's a real interesting question.
@@ -423,6 +457,29 @@ possible.
 To run the install script from a NixOS livecd, =nix-shell= can be used, same in bootstrap
 as soon as we have installed nix.
 
+* TODO [#B] Emacs shell environment                           :emacs:project:
+
+** TODO Enhance eshell
+
+- Better prompt
+- More functions
+- Better completion (pcomplete, …)
+
+** TODO More vterm
+
+Make vterm more useful
+
+** TODO Less zsh-only wonders
+
+more generic stuff
+* TODO [#B] Nix desktop VM                                    :nixos:project:
+
+https://github.com/Xe/nixos-configs
+https://rycee.gitlab.io/home-manager/
+
+** TODO Specific simple configuration (bankruptcy)
+
+** TODO Try gnome3 ?
 * TODO De-duplicate modules
 
 * TODO More defaults in configuration
@@ -509,60 +566,3 @@ stdenv.lib.optionals stdenv.isLinux
 * TODO add crc profile on nixos
 
 Mainy for the dnsmasq configuration, …
-* TODO [#B] Emacs shell environment                           :emacs:project:
-
-** TODO Enhance eshell
-
-- Better prompt
-- More functions
-- Better completion (pcomplete, …)
-
-** TODO More vterm
-
-Make vterm more useful
-
-** TODO Less zsh-only wonders
-
-more generic stuff
-* TODO [#B] Nix desktop VM                                    :nixos:project:
-
-https://github.com/Xe/nixos-configs
-https://rycee.gitlab.io/home-manager/
-
-** TODO Specific simple configuration (bankruptcy)
-
-** TODO Try gnome3 ?
-* DONE [#B] kubernix setup project                         :nixos:kubernetes:
-CLOSED: [2020-05-18 Mon 19:46]
-:LOGBOOK:
-- State "DONE"       from "TODO"       [2020-05-18 Mon 19:46]
-- New deadline from "[2020-05-08 Fri]" on [2020-05-11 Mon 11:18]
-- New deadline from "[2020-05-02 Sat]" on [2020-05-03 Sun 13:20]
-- New deadline from "[2020-04-26 Sun]" on [2020-04-27 Mon 09:55]
-- New deadline from "[2020-04-24 Fri]" on [2020-04-24 Fri 17:49]
-- New deadline from "[2020-04-17 Fri]" on [2020-04-20 Mon 11:45]
-- New deadline from "[2020-04-11 Sat]" on [2020-04-13 Mon 16:06]
-- New deadline from "[2020-04-04 Sat]" on [2020-04-05 Sun 18:13]
-- New deadline from "[2020-04-03 Fri]" on [2020-04-03 Fri 07:43]
-- New deadline from "[2020-03-29 Sun]" on [2020-03-29 Sun 17:34]
-- New deadline from "[2020-03-27 Fri]" on [2020-03-27 Fri 17:28]
-- New deadline from "[2020-03-21 Sat]" on [2020-03-23 Mon 15:07]
-:END:
-:PROPERTIES:
-:CREATED:[2020-03-18 Wed 10:31]
-:END:
-
-1. use a tmux for this :)
-   https://bytes.zone/posts/tmux-session/
-2. package script in ~home~
-3. have a quick switch to target it (zsh, emacs)
-   Done using the same as the rest
-4. write an article about it, based on the project
-
-What is the flow I want ?
-
-- A simple command (=yak=)
-- A profile (like =tektoncd=, …)
-- A way to list the kubernix profile and their status
-
-Use http://tmuxp.git-pull.com/en/latest/ or
