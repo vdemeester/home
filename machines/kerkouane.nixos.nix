@@ -35,7 +35,7 @@ with import ../assets/machines.nix; {
       config = ''
         paths:
           /ape:
-            repo: https://gitlab.com/vdemeester/ape
+            repo: https://git.sr.ht/~vdemeester/ape
           /nr:
             repo: https://gitlab.com/vdemeester/nr
           /ram:
