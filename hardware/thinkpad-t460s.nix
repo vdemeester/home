@@ -1,9 +1,11 @@
 { config, pkgs, ... }:
-
+let
+  sources = import ../nix/sources.nix;
+in
 {
   imports = [
-    <nixos-hardware/lenovo/thinkpad/t460s>
-    <nixos-hardware/ssd>
+    (sources.nixos-hardware + "/lenovo/thinkpad/t460s")
+    (sources.nixos-hardware + "/common/pc/ssd")
     ./thinkpad.nix
   ];
   services = {

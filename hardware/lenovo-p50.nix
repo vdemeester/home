@@ -1,7 +1,12 @@
 { config, pkgs, ... }:
-
+let
+  sources = import ../nix/sources.nix;
+in
 {
-  imports = [ ./thinkpad.nix ];
+  imports = [
+    (sources.nixos-hardware + "/common/pc/ssd")
+    ./thinkpad.nix
+  ];
   hardware = {
     bluetooth = {
       enable = true;

@@ -10,7 +10,6 @@ in
 {
   imports = [
     (import ../nix).home-manager
-    (import ../nix).nixos-hardware
     ../modules/module-list.nixos.nix
     # hardware
     ../hardware/thinkpad-x220.nix
@@ -69,7 +68,6 @@ in
     "nixos-config=${dummyConfig}"
     "nixpkgs=/run/current-system/nixpkgs"
     "nixpkgs-overlays=/run/current-system/overlays/compat"
-    "nixos-hardware=${nixos-hardware}"
   ];
 
   nixpkgs = {
