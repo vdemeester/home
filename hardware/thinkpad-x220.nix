@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./thinkpad.nix ];
+  imports = [
+    <nixos-hardware/lenovo/thinkpad/x220>
+    <nixos-hardware/ssd>
+    ./thinkpad.nix
+  ];
   boot = {
     kernelParams = [ "i915.enable_psr=1" ];
     extraModprobeConfig = ''

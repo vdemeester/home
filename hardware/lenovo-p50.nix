@@ -13,6 +13,7 @@
       intelBusId = "PCI:0:2:0";
     };
   };
+  services.throttled.enable = lib.mkDefault true;
   services = {
     tlp = {
       extraConfig = ''

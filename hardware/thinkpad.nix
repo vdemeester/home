@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+  imports [ <nixos-hardware/lenovo/thinkpad> ];
   boot = {
     blacklistedKernelModules = [
       # Kernel GPU Savings Options (NOTE i915 chipset only)
@@ -27,29 +28,12 @@
     ];
     loader.efi.canTouchEfiVariables = true;
   };
-  environment.systemPackages = with pkgs; [
-    linuxPackages.tp_smapi
-  ];
   hardware = {
     trackpoint.enable = false;
     cpu.intel.updateMicrocode = true;
-    opengl = {
-      #enable = true;
-      extraPackages = [ pkgs.vaapiIntel ];
-      #driSupport32Bit = true;
-    };
   };
   services = {
     acpid = {
-      enable = true;
-      lidEventCommands = ''
-        if grep -q closed /proc/acpi/button/lid/LID/state; then
-          date >> /tmp/i3lock.log
-          DISPLAY=":0.0" XAUTHORITY=/home/fadenb/.Xauthority ${pkgs.i3lock}/bin/i3lock &>> /tmp/i3lock.log
-        fi
-      '';
-    };
-    tlp = {
       enable = true;
     };
     xserver = {

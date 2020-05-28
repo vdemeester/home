@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./thinkpad.nix ];
+  imports = [
+    <nixos-hardware/lenovo/thinkpad/t460s>
+    <nixos-hardware/ssd>
+    ./thinkpad.nix
+  ];
   services = {
     tlp = {
       extraConfig = ''
