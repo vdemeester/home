@@ -25,5 +25,6 @@
       driSupport32Bit = true;
     };
   };
+  nix.maxJobs = 8;
   services.acpid.enable = true;
 }

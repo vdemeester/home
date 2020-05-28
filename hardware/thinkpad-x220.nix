@@ -15,6 +15,7 @@ in
       options iwlwifi 11n_disable=1
     '';
   };
+  nix.maxJobs = 8;
   security = {
     pam.services = {
       slimlock.fprintAuth = false;

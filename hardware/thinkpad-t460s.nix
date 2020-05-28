@@ -8,6 +8,7 @@ in
     (sources.nixos-hardware + "/common/pc/ssd")
     ./thinkpad.nix
   ];
+  nix.maxJobs = 12;
   services = {
     tlp = {
       extraConfig = ''

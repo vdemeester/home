@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   sources = import ../nix/sources.nix;
 in
@@ -18,6 +18,7 @@ in
       intelBusId = "PCI:0:2:0";
     };
   };
+  nix.maxJobs = 12;
   services.throttled.enable = lib.mkDefault true;
   services = {
     tlp = {
