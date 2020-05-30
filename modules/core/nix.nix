@@ -94,7 +94,7 @@ in
     system = {
       extraSystemBuilderCmds = ''
         ln -sv ${pkgs.path} $out/nixpkgs
-        ln -sv ${../overlays} $out/overlays
+        ln -sv ${../../overlays} $out/overlays
       '';
 
       stateVersion = "20.03";
