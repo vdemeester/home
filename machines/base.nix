@@ -1,11 +1,6 @@
 { pkgs, ... }:
 
 {
-  programs = {
-    home-manager = {
-      enable = true;
-    };
-  };
   home.file.".nix-channels".source = ../assets/nix-channels;
   home.packages = with pkgs; [
     enchive

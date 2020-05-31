@@ -9,6 +9,9 @@ in
     ../hardware/thinkpad-x220.nix
     # modules
     ../modules
+    # users
+    (import ../users).vincent
+    (import ../users).root
   ];
 
   fileSystems."/" =
@@ -24,21 +27,6 @@ in
   swapDevices =
     [{ device = "/dev/disk/by-uuid/e1833693-77ac-4d52-bcc7-54d082788639"; }];
 
-  # FIXME move this away
-  home-manager.users.vincent = { pkgs, ... }: {
-    imports = [
-      # Default profile with default configuration
-      ../modules/module-list.nix
-      # Set the machine to home
-      ../machines/is-hm.nix
-      # Machine specific configuration files
-      ../machines/hokkaido.nix
-    ];
-  };
-  home-manager.users.root = { pkgs, ... }: {
-    home.packages = with pkgs; [ htop ];
-  };
-
   networking = {
     hostName = "hokkaido";
   };
@@ -48,6 +36,7 @@ in
     avahi.enable = true;
     git.enable = true;
     ssh.enable = true;
+    users.enable = false;
     users.withMachines = enableHome;
     mail.enable = enableHome;
   };

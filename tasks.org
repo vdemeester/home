@@ -382,7 +382,7 @@ CLOSED: [2020-05-26 Tue 10:36]
 
 ** TODO [#B] home-manager on fedora situation
 
-How to make it self contained too.
+How to make it self contained too. I think =home.nix= will work just fine.
 
 ** TODO [#A] How to manage secrets
 

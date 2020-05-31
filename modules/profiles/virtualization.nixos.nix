@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.virtualization = {
-      enable = mkOption {
-        default = false;
-        description = "Enable virtualization profile";
-        type = types.bool;
-      };
+      enable = mkOption { default = false; description = "Enable virtualization profile"; type = types.bool; };
       nested = mkOption {
         default = false;
         description = "Enable nested virtualization";
@@ -37,6 +33,7 @@ in
     }
     (
       mkIf cfg.nested {
+        boot.kernelParams = [ "kvm_intel.nested=1" ];
         environment.etc."modprobe.d/kvm.conf".text = ''
           options kvm_intel nested=1
         '';

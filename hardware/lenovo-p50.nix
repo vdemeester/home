@@ -7,6 +7,9 @@ in
     (sources.nixos-hardware + "/common/pc/ssd")
     ./thinkpad.nix
   ];
+  boot = {
+    initrd.availableKernelModules = [ "nvme" "rtsx_pci_sdmmc" ];
+  };
   hardware = {
     bluetooth = {
       enable = true;
