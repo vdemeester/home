@@ -28,6 +28,7 @@ in
         startWhenNeeded = false;
         forwardX11 = cfg.forwardX11;
       };
+      sshguard.enable = true;
     };
     programs.mosh.enable = true;
   };
