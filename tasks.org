@@ -566,3 +566,9 @@ stdenv.lib.optionals stdenv.isLinux
 * TODO add crc profile on nixos
 
 Mainy for the dnsmasq configuration, …
+
+* TODO migrate to enchant for spell checking
+
+This will allow to use hunspell, ispell, …
+
+- configure this is h-m and emacs
