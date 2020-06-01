@@ -83,6 +83,7 @@ in
 
     nixpkgs = {
       overlays = [
+        (import ../../overlays/mkSecret.nix)
         (import ../../overlays/sbr.nix)
         (import ../../overlays/unstable.nix)
         (import ../../nix).emacs
