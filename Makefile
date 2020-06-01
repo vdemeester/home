@@ -43,15 +43,15 @@ assets:
 	chown -R vincent:users assets || true
 
 .PHONY: build
-build: assets setup
+build: secrets setup
 	./hack/system build
 
 .PHONY: nixos-dry-build
-dry-build: assets setup
+dry-build: secrets setup
 	./hack/system dry-build
 
 .PHONY: switch
-switch: assets setup
+switch: secrets setup
 	./hack/system switch
 
 .PHONY: install-hooks
