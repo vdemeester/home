@@ -7,7 +7,7 @@
     ./openshift.nix
   ];
 
-  home.packages = with pkg; [
+  home.packages = with pkgs; [
     podman
     skopeo
   ];
