@@ -22,6 +22,7 @@ with lib;
     subGidRanges = [{ startGid = 100000; count = 65536; }];
   };
 
+  virtualisation.containers.users = [ "vincent" ];
   security.pam.services.vincent.fprintAuth = config.services.fprintd.enable;
 
   home-manager.users.vincent = lib.mkMerge (
