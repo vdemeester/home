@@ -17,8 +17,13 @@
     aspell
     aspellDicts.en
     aspellDicts.fr
+    hunspell
+    hunspellDicts.en_US-large
+    hunspellDicts.en_GB-ize
+    hunspellDicts.fr-any
     gnome3.defaultIconTheme
     gnome3.gnome_themes_standard
+    wmctrl
     xclip
     xdg-user-dirs
     xdg_utils

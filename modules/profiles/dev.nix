@@ -33,8 +33,6 @@ in
           gnumake
           jq
           mercurial
-          niv
-          ripgrep
           shfmt
         ];
       xdg.configFile."nr/dev" = {
