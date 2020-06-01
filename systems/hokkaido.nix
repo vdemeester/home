@@ -1,8 +1,5 @@
 { lib, pkgs, ... }:
-let
-  inCi = builtins.pathExists /home/build;
-  enableHome = !inCi;
-in
+
 {
   imports = [
     # hardware
@@ -38,7 +35,6 @@ in
     ssh.enable = true;
     dev.enable = true;
     users.enable = false;
-    mail.enable = enableHome;
     yubikey.enable = true;
   };
 
