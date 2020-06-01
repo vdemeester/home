@@ -3,6 +3,9 @@
 with lib;
 let
   patchedOpenSSH = pkgs.openssh.override { withKerberos = true; withGssapiPatches = true; };
+  secretPath = ../../secrets/machines.nix;
+  secretCondition = (builtins.pathExists secretPath);
+  sshConfig = optionalAttrs secretCondition (import secretPath).sshConfig;
 in
 {
   home.packages = [
@@ -51,7 +54,7 @@ in
       "10.100.0.*" = {
         forwardAgent = true;
       };
-    }; # FIXME with optional secrets // cfg.machines;
+    } // sshConfig; # FIXME with optional secrets // cfg.machines;
     extraConfig = ''
       PreferredAuthentications gssapi-with-mic,publickey,password
       GSSAPIAuthentication yes
