@@ -8,6 +8,7 @@
     ./git.nix
     ./gpg.nix
     ./htop.nix
+    ./ssh.nix
     ./tmux.nix
     ./xdg.nix
     ./zsh.nix

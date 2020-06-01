@@ -15,6 +15,7 @@
   };
 
   env = ''
+    export PATH=$HOME/bin:$PATH
     export LESSHISTFILE="${config.xdg.dataHome}/less_history"
     export GOPATH=${config.home.homeDirectory}
     export WEBKIT_DISABLE_COMPOSITING_MODE=1;
