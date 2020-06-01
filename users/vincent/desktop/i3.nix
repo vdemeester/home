@@ -214,7 +214,9 @@ in
         "Mod4+61" = "focus mode_toggle";
         # manage workspace
         "Mod4+113" = "workspace prev_on_output";
+        "Mod4+112" = "workspace prev_on_output";
         "Mod4+114" = "workspace next_on_output";
+        "Mod4+117" = "workspace next_on_output";
         # manage output
         "Mod4+Shift+113" = "focus output left";
         "Mod4+Shift+116" = "focus output down";
@@ -275,7 +277,7 @@ in
       bindcode $mod+Shift+16 move container to workspace $WS7
       bindcode $mod+Shift+17 move container to workspace $WS8
       bindcode $mod+Shift+18 move container to workspace $WS9
-        bindcode $mod+Shift+19 move container to workspace $WS0
+      bindcode $mod+Shift+19 move container to workspace $WS0
 
       assign [class="Firefox" window_role="browser"] → $WS1
       assign [class="Google-chrome" window_role="browser"] → $WS1
