@@ -43,4 +43,6 @@ in
     mail.enable = enableHome;
     yubikey.enable = true;
   };
+
+  virtualisation.containers.enable = true;
 }

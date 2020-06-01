@@ -27,11 +27,14 @@ with lib;
       (import ../modules)
       (import ./core)
     ]
-    ++ optionals config.profiles.dev.enable [
-      (import ./dev)
+    ++ optionals config.profiles.dev.enable [ (import ./dev) ]
+    ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
+    ++ optionals config.profiles.docker.enable [{
+      home.packages = with pkgs; [ docker docker-compose ];
+    }]
+    ++ optionals (config.virtualisation.containers.enable && config.profiles.dev.enable) [
+      (import ./containers)
     ]
-    ++ optionals config.profiles.desktop.enable [
-      (import ./desktop)
-    ]
+    # TODO: mpd
   );
 }
