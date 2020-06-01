@@ -42,8 +42,9 @@ function switch() {
 }
 
 function main() {
-    build
-    switch
+    for target in $@; do
+        $target
+    done
     exit 0
 }
 

@@ -10,6 +10,7 @@ qemu
 accounts.nix
 assets/*
 private/*
+secrets/*
 networking.nix
 wireguard*.key
 .secrets

@@ -31,6 +31,11 @@ emacs-dump:
 	emacs --batch -q -l ~/.config/emacs/dump.el
 
 # home-manager setup
+.PHONY: secrets
+secrets:
+	mkdir -p secrets
+	cp -Rv $(SYNCDIR)/* secrets/
+
 .PHONY: assets
 assets:
 	mkdir -p assets
@@ -39,24 +44,15 @@ assets:
 
 .PHONY: build
 build: assets setup
-	home-manager build
-
-.PHONY: nixos-build
-nixos-build: assets setup
-	nixos-rebuild build
+	./hack/system build
 
 .PHONY: nixos-dry-build
-nixos-dry-build: assets setup
-	nixos-rebuild dry-build
+dry-build: assets setup
+	./hack/system dry-build
 
 .PHONY: switch
 switch: assets setup
-	home-manager switch
-
-.PHONY: nixos-switch
-.PHONY: nixos-switch
-nixos-switch: assets setup
-	nixos-rebuild switch
+	./hack/system switch
 
 .PHONY: install-hooks
 install-hooks:
