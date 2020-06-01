@@ -572,3 +572,7 @@ Mainy for the dnsmasq configuration, …
 This will allow to use hunspell, ispell, …
 
 - configure this is h-m and emacs
+
+* TODO git.sbr.systems
+
+Mirrors 👼

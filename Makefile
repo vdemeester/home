@@ -12,6 +12,7 @@ DOTNIXPKGS = ~/.config/nixpkgs
 ETCNIXOS = /etc/nixos
 SYNCDIR = /home/vincent/sync/nixos
 SRCWWW = ~/src/www
+SRCHOME = ~/src/home
 
 # Targets
 .PHONY: all
@@ -118,7 +119,7 @@ doctor:
 	@readlink $(DOTNIXPKGS) || $(error $(DOTNIXPKGS) is not correctly linked, you may need to run setup)
 
 .PHONY: setup
-setup: $(DOTEMACS) $(DOTGNUS) $(DOTNIXPKGS) $(SYNCDIR)
+setup: $(DOTEMACS) $(DOTGNUS) $(DOTNIXPKGS) $(SYNCDIR) $(SRCHOME)
 
 $(DOTEMACS):
 	@echo "Link $(DOTEMACS) to $(CURDIR)/tools/emacs"
@@ -131,6 +132,10 @@ $(DOTGNUS):
 $(DOTNIXPKGS):
 	@echo "Link $(DOTNIXPKGS) to $(CURDIR)"
 	@ln -s $(CURDIR) $(DOTNIXPKGS)
+
+$(SRCHOME):
+	@echo "Make sure $(SRCHOME) exists"
+	@ln -s ${PWD} $(SRCHOME)
 
 $(SYNCDIR):
 	$(error $(SYNCDIR) is not present, you need to configure syncthing before running this command)
