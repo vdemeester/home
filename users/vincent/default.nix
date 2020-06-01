@@ -3,13 +3,12 @@ with lib;
 let
   secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
-  machines = optionalAttrs secretCondition (import secretPath);
 
-  isAuthorized = p: builtins.isAttrs p && p.authorize or false;
-  authorizedKeys = lists.optional secretCondition (
+  isAuthorized = p: builtins.isAttrs p && p.authorized or false;
+  authorizedKeys = lists.optionals secretCondition (
     attrsets.mapAttrsToList
       (name: value: value.key)
-      (attrsets.filterAttrs (name: value: isAuthorized value) machines.ssh)
+      (attrsets.filterAttrs (name: value: isAuthorized value) (import secretPath).ssh)
   );
 in
 {
