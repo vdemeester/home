@@ -29,9 +29,8 @@ with lib;
     ++ optionals config.profiles.dev.enable [
       (import ./dev)
     ]
-    ++ optionals config.profiles.laptop.enable [
-    ]
     ++ optionals config.profiles.desktop.enable [
+      (import ./desktop)
     ]
   );
 }
