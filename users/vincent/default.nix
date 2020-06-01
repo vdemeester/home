@@ -24,6 +24,7 @@ with lib;
 
   home-manager.users.vincent = lib.mkMerge (
     [
+      (import ../modules)
       (import ./core)
     ]
     ++ optionals config.profiles.dev.enable [
