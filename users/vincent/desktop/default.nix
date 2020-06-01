@@ -3,12 +3,14 @@
 {
   imports = [
     # autorandr
+    ./finances.nix
     ./firefox.nix
     ./next.nix
     ./gtk.nix
     ./i3.nix
     ./keyboard.nix
     ./mpv.nix
+    ./mpd.nix
     ./redshift.nix
     ./xsession.nix
   ];
