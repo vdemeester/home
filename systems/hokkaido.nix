@@ -41,5 +41,6 @@ in
     users.enable = false;
     users.withMachines = enableHome;
     mail.enable = enableHome;
+    yubikey.enable = true;
   };
 }
