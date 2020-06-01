@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     #cri-tools
     kail
-    # kubectl # FIXME this goes against oc
+    kubectl
     kustomize
     kubectx
     my.ko
