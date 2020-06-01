@@ -22,6 +22,8 @@ with lib;
     subGidRanges = [{ startGid = 100000; count = 65536; }];
   };
 
+  security.pam.services.vincent.fprintAuth = config.services.fprintd.enable;
+
   home-manager.users.vincent = lib.mkMerge (
     [
       (import ../modules)

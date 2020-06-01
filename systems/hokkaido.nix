@@ -44,5 +44,7 @@ in
     yubikey.enable = true;
   };
 
+  services.fprintd.enable = true;
+
   virtualisation.containers.enable = true;
 }
