@@ -21,6 +21,7 @@ rec {
         sha256 = "${sha256}";
       };
       modSha256 = "${modSha}";
+      vendorSha256 = "${modSha}";
 
       postInstall = ''
         # manpages

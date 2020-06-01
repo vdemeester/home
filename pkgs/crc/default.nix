@@ -69,7 +69,8 @@ rec {
       rev = "0.12.7";
       sha256 = "1mv6wqyzsc24y2gnw0nxmiy52sf3lgfnqkq98v8jdvq3fn6lgacm";
     };
-    modSha256 = "04nnmsvillavcq1wfjc38r7hgq1mx0zhp4anz6q1j78rdcd6aigy";
+    vendorSha256 = "04nnmsvillavcq1wfjc38r7hgq1mx0zhp4anz6q1j78rdcd6aigy";
+    modSha256 = "${vendorSha256}";
 
   };
 }
