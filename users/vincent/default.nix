@@ -1,5 +1,17 @@
 { config, lib, pkgs, ... }:
 with lib;
+let
+  secretPath = ../../secrets/machines.nix;
+  secretCondition = (builtins.pathExists secretPath);
+  machines = optionalAttrs secretCondition (import secretPath);
+
+  isAuthorized = p: builtins.isAttrs p && p.authorize or false;
+  authorizedKeys = lists.optional secretCondition (
+    attrsets.mapAttrsToList
+      (name: value: value.key)
+      (attrsets.filterAttrs (name: value: isAuthorized value) machines.ssh)
+  );
+in
 {
   users.users.vincent = {
     createHome = true;
@@ -13,8 +25,7 @@ with lib;
       ++ optionals config.profiles.virtualization.enable [ "libvirtd" ];
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
     isNormalUser = true;
-    # FIXME handle this too
-    openssh.authorizedKeys.keys = [ ];
+    openssh.authorizedKeys.keys = authorizedKeys;
     # FIXME change this ?
     initialPassword = "changeMe";
     # FIXME This might be handled differently by programs.podman, …

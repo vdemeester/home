@@ -32,14 +32,12 @@ in
   };
 
   profiles = {
-    home = enableHome;
     laptop.enable = true;
     avahi.enable = true;
     git.enable = true;
     ssh.enable = true;
     dev.enable = true;
     users.enable = false;
-    users.withMachines = enableHome;
     mail.enable = enableHome;
     yubikey.enable = true;
   };

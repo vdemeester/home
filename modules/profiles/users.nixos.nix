@@ -3,6 +3,16 @@
 with lib;
 let
   cfg = config.profiles.users;
+  secretPath = ../../secrets/machines.nix;
+  secretCondition = (builtins.pathExists secretPath);
+  machines = optionalAttrs secretCondition (import secretPath);
+
+  isAuthorized = p: builtins.isAttrs p && p.authorize or false;
+  authorizedKeys = lists.optional secretCondition (
+    attrsets.mapAttrsToList
+      (name: value: value.key)
+      (attrsets.filterAttrs (name: value: isAuthorized value) machines.ssh)
+  );
 in
 {
   options = {
@@ -16,12 +26,6 @@ in
         default = "vincent";
         description = "Username to use when creating user";
         type = types.str;
-      };
-      # add more options (like openssh keys and config)
-      withMachines = mkOption {
-        default = true;
-        description = "Load machines.nix";
-        type = types.bool;
       };
     };
   };
@@ -41,17 +45,14 @@ in
             initialPassword = "changeMe";
             subUidRanges = [{ startUid = 100000; count = 65536; }];
             subGidRanges = [{ startGid = 100000; count = 65536; }];
+            openssh.authorizedKeys.keys = authorizedKeys;
           };
         };
       };
     }
     (
-      mkIf cfg.withMachines {
-        users.extraUsers."${cfg.user}" = {
-          openssh.authorizedKeys.keys =
-            with import ../../assets/machines.nix; [ ssh.yubikey.key ssh.yubikey5.key ssh.wakasu.key ssh.vincent.key ssh.houbeb.key ssh.hokkaido.key ssh.okinawa.key ];
-        };
-        programs.ssh.extraConfig = with import ../../assets/machines.nix; ''
+      mkIf secretCondition {
+        programs.ssh.extraConfig = with import ../../secrets/machines.nix; ''
           Host kerkouane kerkouane.sbr.pm
             Hostname kerkouane.sbr.pm
             Port ${toString ssh.kerkouane.port}
