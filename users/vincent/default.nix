@@ -38,6 +38,5 @@ with lib;
     ++ optionals (config.virtualisation.containers.enable && config.profiles.dev.enable) [
       (import ./containers)
     ]
-    # TODO: mpd
   );
 }
