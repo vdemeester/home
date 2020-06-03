@@ -5,4 +5,8 @@
     ./nix.nix
     ./nur.nix
   ];
+
+  boot = {
+    cleanTmpDir = true;
+  };
 }
