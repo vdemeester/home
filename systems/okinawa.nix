@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 
 with lib;
 let
@@ -70,25 +70,25 @@ in
           # home
           name = "home";
           slaves = [ ];
-          file = ../assets/db.home;
+          file = pkgs.mkSecret ../secrets/db.home;
         }
         {
           # home.reverse
           name = "192.168.1.in-addr.arpa";
           slaves = [ ];
-          file = ../assets/db.192.168.1;
+          file = pkgs.mkSecret ../secrets/db.192.168.1;
         }
         {
           # vpn
           name = "vpn";
           slaves = [ ];
-          file = ../assets/db.vpn;
+          file = pkgs.mkSecret ../secrets/db.vpn;
         }
         {
           # vpn.reverse
           name = "10.100.0.in-addr.arpa";
           slaves = [ ];
-          file = ../assets/db.10.100.0;
+          file = pkgs.mkSecret ../secrets/db.10.100.0;
         }
       ];
     };
