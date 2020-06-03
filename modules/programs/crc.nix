@@ -9,7 +9,7 @@ in
     programs.crc = {
       enable = mkOption { default = false; description = "wether to enable crc"; type = types.bool; };
       package = mkOption {
-        default = pkgs.crc;
+        default = pkgs.my.crc; # FIXME use pkgs.crc at some point
         description = "crc package to be used";
         type = types.package;
       };
