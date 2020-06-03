@@ -10,6 +10,8 @@ let
       (name: value: value.key)
       (attrsets.filterAttrs (name: value: isAuthorized value) (import secretPath).ssh)
   );
+  hasConfigVirtualizationContainers = builtins.hasAttr "containers" config.virtualisation;
+  isContainersEnabled = if hasConfigVirtualizationContainers then config.virtualisation.containers.enable else false;
 in
 {
   users.users.vincent = {
@@ -32,7 +34,11 @@ in
     subGidRanges = [{ startGid = 100000; count = 65536; }];
   };
 
-  virtualisation.containers.users = [ "vincent" ];
+  /*
+  virtualisation = mkIf isContainersEnabled {
+    containers.users = [ "vincent" ];
+  };
+  */
   security.pam.services.vincent.fprintAuth = config.services.fprintd.enable;
 
   home-manager.users.vincent = lib.mkMerge (
@@ -45,7 +51,7 @@ in
     ++ optionals config.profiles.docker.enable [{
       home.packages = with pkgs; [ docker docker-compose ];
     }]
-    ++ optionals (config.virtualisation.containers.enable && config.profiles.dev.enable) [
+    ++ optionals (isContainersEnabled && config.profiles.dev.enable) [
       (import ./containers)
     ]
   );
