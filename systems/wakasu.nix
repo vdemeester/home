@@ -1,21 +1,27 @@
 { lib, pkgs, ... }:
+
+with lib;
 let
-  inCi = builtins.pathExists /home/build;
-  enableHome = !inCi;
+  hostname = "wakasu";
+  secretPath = ../secrets/machines.nix;
+  secretCondition = (builtins.pathExists secretPath);
+
+  ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
+  ips = lists.optionals secretCondition ([ "${ip}/24" ]);
+  endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
+  endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
+  endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
 in
 {
   imports = [
-    # hardware
     ../hardware/lenovo-p50.nix
-    # modules
     ../modules
-    # users
     (import ../users).vincent
     (import ../users).root
   ];
 
   networking = {
-    hostName = "wakasu";
+    hostName = hostname;
   };
 
   boot.initrd.luks.devices = {
@@ -30,23 +36,16 @@ in
     };
   };
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/c44cdfec-b567-4059-8e66-1be8fec6342a";
-      fsType = "ext4";
-      options = [ "noatime" "discard" ];
-    };
-
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/E974-AB5D";
-      fsType = "vfat";
-    };
-
-  swapDevices =
-    [
-      { device = "/dev/disk/by-uuid/c8c3308a-6ca6-4669-bad3-37a225af4083"; }
-    ];
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/c44cdfec-b567-4059-8e66-1be8fec6342a";
+    fsType = "ext4";
+    options = [ "noatime" "discard" ];
+  };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/E974-AB5D";
+    fsType = "vfat";
+  };
+  swapDevices = [{ device = "/dev/disk/by-uuid/c8c3308a-6ca6-4669-bad3-37a225af4083"; }];
 
   profiles = {
     dev.enable = true;
@@ -56,6 +55,8 @@ in
     ssh = { enable = true; forwardX11 = true; };
     virtualization = { enable = true; nested = true; listenTCP = true; };
     yubikey.enable = true;
+    # FIXME remove the need for it
+    users.enable = false;
   };
   programs = {
     podman.enable = true;
@@ -79,16 +80,13 @@ in
       enable = true;
       devices = [{ device = "/dev/nvme0n1"; }];
     };
-    # FIXME handle secrets
-    /*
     wireguard = {
       enable = true;
-      ips = [ "${wireguard.ips.wakasu}/24" ];
-      endpoint = wg.endpointIP;
-      endpointPort = wg.listenPort;
-      endpointPublicKey = wireguard.kerkouane.publicKey;
+      ips = ips;
+      endpoint = endpointIP;
+      endpointPort = endpointPort;
+      endpointPublicKey = endpointPublicKey;
     };
-    */
     xserver = {
       videoDrivers = [ "nvidia" ];
       dpi = 96;
