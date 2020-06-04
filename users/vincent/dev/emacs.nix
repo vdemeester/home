@@ -108,6 +108,7 @@ in
       darkroom
       eshell-prompt-extras
       esh-autosuggest
+      flimenu
       forge
       go-mode
       magit
