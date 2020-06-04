@@ -284,5 +284,9 @@ aggressive fuzzy-style matching for this particular command."
                                       (org-reveal t)))))
   :bind ("C-'" . prot/imenu-vertical))
 
+(use-package flimenu
+  :config
+  (flimenu-global-mode 1))
+
 (provide 'config-editing)
 ;;; config-editing.el ends here
