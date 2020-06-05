@@ -10,7 +10,7 @@ tasks:
     set +x
     export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
     set -x
-    nix-build home -A wakasu -A hokkaido
+    nix-build home -A hokkaido
 triggers:
 - action: email
   condition: failure
