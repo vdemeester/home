@@ -9,7 +9,7 @@ tasks:
     set +x
     export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
     set -x
-    nix-build home -A sakhalin -A okinawa
+    nix-build home -A sakhalin -A okinawa -A kerkouane
 triggers:
 - action: email
   condition: failure
