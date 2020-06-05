@@ -1,5 +1,5 @@
 *~
-result
+result*
 hostname
 *.retry
 assets/machines.nix
