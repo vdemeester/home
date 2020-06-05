@@ -44,15 +44,20 @@ in
 
   home-manager.users.vincent = lib.mkMerge (
     [
-      (import ../modules)
       (import ./core)
+      (import ./mails { hostname = config.networking.hostName; })
     ]
     ++ optionals config.profiles.dev.enable [ (import ./dev) ]
     ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
+    ++ optionals config.profiles.laptop.enable [{
+      # FIXME move this in its own file
+      programs.autorandr.enable = true;
+    }]
     ++ optionals config.profiles.docker.enable [{
       home.packages = with pkgs; [ docker docker-compose ];
     }]
-    ++ optionals (isContainersEnabled && config.profiles.dev.enable) [
+    ++
+    optionals (isContainersEnabled && config.profiles.dev.enable) [
       (import ./containers)
     ]
   );
