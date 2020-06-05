@@ -1,7 +1,13 @@
 #! /usr/bin/env bash
 set -o pipefail -o noclobber -o nounset
+set -x
 
-WORKDIR=${WORKDIR-}
+WORK_DIR=${WORK_DIR-}
+if [[ -z "${WORK_DIR}" ]]; then
+    WORK_DIR="$(mktemp --tmpdir -u nix-config-sync.XXXXXXXXXX)"
+    # shellcheck disable=2064
+    trap "rm -rf '$WORK_DIR'" EXIT
+fi
 function error() {
     local red
     local reset
@@ -12,19 +18,8 @@ function error() {
     exit 1
 }
 
-function set_work_dir() {
-    if [[ -z "${WORKDIR}" && ! -v WORK_DIR ]]; then
-        WORK_DIR="$(mktemp --tmpdir -u nix-config-sync.XXXXXXXXXX)"
-        # shellcheck disable=2064
-        trap "rm -rf '$WORK_DIR'" EXIT
-    else
-        WORK_DIR="${WORKDIR}"
-    fi
-}
-
 function dry-build() {
     [ "$#" -eq 0 ] || error "build"
-    set_work_dir
     local machine
     machine="$(hostname)"
     unset NIX_PATH
@@ -34,7 +29,6 @@ function dry-build() {
 
 function build() {
     [ "$#" -eq 0 ] || error "build"
-    set_work_dir
     local machine
     machine="$(hostname)"
     unset NIX_PATH
@@ -45,7 +39,6 @@ function build() {
 function switch() {
     [ "$#" -eq 0 ] || error "switch"
     build
-    set_work_dir
     local switch_bin="$WORK_DIR/bin/switch-to-configuration"
     sudo nix-env --set \
         --profile "/nix/var/nix/profiles/system" \
