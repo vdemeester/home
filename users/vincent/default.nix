@@ -49,6 +49,19 @@ in
     ]
     ++ optionals config.profiles.dev.enable [ (import ./dev) ]
     ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
+    ++ optionals (config.networking.hostName == "wakasu") [{
+      programs.google-chrome.enable = true;
+      home.packages = with pkgs; [
+        openvpn
+        krb5
+        libosinfo
+        virtmanager
+        thunderbird
+        asciinema
+        gnome3.zenity # use rofi instead
+        oathToolkit
+      ];
+    }]
     ++ optionals config.profiles.laptop.enable [{
       # FIXME move this in its own file
       programs.autorandr.enable = true;
@@ -56,8 +69,7 @@ in
     ++ optionals config.profiles.docker.enable [{
       home.packages = with pkgs; [ docker docker-compose ];
     }]
-    ++
-    optionals (isContainersEnabled && config.profiles.dev.enable) [
+    ++ optionals (isContainersEnabled && config.profiles.dev.enable) [
       (import ./containers)
     ]
   );
