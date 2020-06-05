@@ -606,3 +606,9 @@ This will allow to use hunspell, ispell, …
 
 Mirrors 👼
 cgit or custom
+* TODO Have a ./hack/home switch…
+:PROPERTIES:
+:CREATED:[2020-06-05 Fri 11:45]
+:END:
+
+… or support home-manager alone on non-nixos systems in =./hack/systems=
