@@ -8,7 +8,6 @@ endif
 
 DOTEMACS = ~/.config/emacs
 DOTGNUS = ~/.config/gnus
-DOTNIXPKGS = ~/.config/nixpkgs
 ETCNIXOS = /etc/nixos
 SYNCDIR = /home/vincent/sync/nixos
 SRCWWW = ~/src/www
@@ -115,7 +114,7 @@ doctor:
 	@readlink $(DOTNIXPKGS) || $(error $(DOTNIXPKGS) is not correctly linked, you may need to run setup)
 
 .PHONY: setup
-setup: $(DOTEMACS) $(DOTGNUS) $(DOTNIXPKGS) $(SYNCDIR) $(SRCHOME)
+setup: $(DOTEMACS) $(DOTGNUS) $(SYNCDIR) $(SRCHOME)
 
 $(DOTEMACS):
 	@echo "Link $(DOTEMACS) to $(CURDIR)/tools/emacs"
@@ -124,10 +123,6 @@ $(DOTEMACS):
 $(DOTGNUS):
 	@echo "Link $(DOTGNUs) to $(CURDIR)/tools/gnus"
 	@ln -s $(CURDIR)/tools/gnus $(DOTGNUS)
-
-$(DOTNIXPKGS):
-	@echo "Link $(DOTNIXPKGS) to $(CURDIR)"
-	@ln -s $(CURDIR) $(DOTNIXPKGS)
 
 $(SRCHOME):
 	@echo "Make sure $(SRCHOME) exists"
