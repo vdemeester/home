@@ -68,11 +68,11 @@ in
           /ape:
             repo: https://git.sr.ht/~vdemeester/ape
           /nr:
-            repo: https://gitlab.com/vdemeester/nr
+            repo: https://git.sr.ht/~vdemeester/nr
           /ram:
             repo: https://git.sr.ht/~vdemeester/ram
           /sec:
-            repo: https://gitlab.com/vdemeester/sec
+            repo: https://git.sr.ht/~vdemeester/sec
       '';
     };
     nginx = {
