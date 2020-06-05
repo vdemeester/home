@@ -15,7 +15,7 @@ in
     boot.kernelParams = [ "nfs.nfs4_disable_idmapping=0" "nfsd.nfs4_disable_idmapping=0" ];
     networking = {
       domain = "home";
-      hosts = with machines; {
+      hosts = with machines; mkIf secretCondition {
         "${home.ips.honshu}" = [ "honshu.home" ];
         "${wireguard.ips.honshu}" = [ "honshu.vpn" ];
         "${home.ips.shikoku}" = [ "shikoku.home" ];
