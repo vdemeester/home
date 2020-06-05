@@ -16,14 +16,14 @@ in
 {
   imports = [
     (sources.nixos + "/nixos/modules/profiles/qemu-guest.nix")
-    #(pkgs + "/nixos/modules/profiles/qemu-guest.nix")
-    #<nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     ../modules
     (import ../users).vincent
     (import ../users).root
   ]
   # digitalocean specifics
   ++ optionals hasNetworkingConfig [ networkingConfigPath ];
+
+  networking.hostName = hostname;
 
   boot.loader.grub.device = "/dev/vda";
   fileSystems."/" = { device = "/dev/vda1"; fsType = "ext4"; };
