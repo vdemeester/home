@@ -12,6 +12,7 @@
     ./mpv.nix
     ./mpd.nix
     ./redshift.nix
+    ./spotify.nix
     ./xsession.nix
   ];
   home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
