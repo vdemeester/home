@@ -47,11 +47,10 @@ in
             inherit (config.environment.sessionVariables) NIX_PATH;
             HOME = "/root";
           };
-          path = [ pkgs.gnutar pkgs.xz pkgs.git pkgs.gnumake config.nix.package.out pkgs.commonsCompress ];
           script = ''
             export PATH=/run/current-system/sw/bin
             cd /etc/nixos/
-            make update nixos-switch
+            make switch
           '';
           startAt = cfg.dates;
           onFailure = [ "status-email-root@%n.service" ];
@@ -66,7 +65,6 @@ in
             // {
             inherit (config.environment.sessionVariables) NIX_PATH;
           };
-          path = [ pkgs.gnutar pkgs.xz pkgs.git ];
           script = ''
             export PATH=/run/current-system/sw/bin
             cd /etc/nixos/
