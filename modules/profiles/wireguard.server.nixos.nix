@@ -4,7 +4,7 @@ with lib;
 let
   cfg = config.profiles.wireguard.server;
 
-  secretPath = ../secrets/machines.nix;
+  secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
   allowedIPs = lists.optionals secretCondition (import secretPath).wireguard.kerkouane.allowedIPs;
   listenPort = if secretCondition then (import secretPath).wg.listenPort else 0;
