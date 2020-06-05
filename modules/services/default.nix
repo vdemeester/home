@@ -1,6 +1,7 @@
 {
   imports = [
-    ./wireguard.client.nixos.nix
+    ./govanityurl.nixos.nix
     ./nix-binary-cache.nixos.nix
+    ./wireguard.client.nixos.nix
   ];
 }

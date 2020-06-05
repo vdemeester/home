@@ -3,6 +3,12 @@
 with lib;
 let
   cfg = config.profiles.wireguard.server;
+
+  secretPath = ../secrets/machines.nix;
+  secretCondition = (builtins.pathExists secretPath);
+  allowedIPs = lists.optionals secretCondition (import secretPath).wireguard.kerkouane.allowedIPs;
+  listenPort = if secretCondition then (import secretPath).wg.listenPort else 0;
+  peers = lists.optionals secretCondition (import secretPath).wg.peers;
 in
 {
   options = {
@@ -23,12 +29,12 @@ in
     '';
     networking.firewall.allowedUDPPorts = [ 51820 ];
     networking.firewall.trustedInterfaces = [ "wg0" ];
-    networking.wireguard.interfaces = with import ../../assets/machines.nix; {
+    networking.wireguard.interfaces = {
       "wg0" = {
-        ips = wireguard.kerkouane.allowedIPs;
-        listenPort = wg.listenPort;
+        ips = allowedIPs;
+        listenPort = listenPort;
         privateKeyFile = "/etc/nixos/wireguard.private.key";
-        peers = wg.peers;
+        peers = peers;
       };
     };
   };

@@ -10,6 +10,7 @@ let
       (name: value: value.key)
       (attrsets.filterAttrs (name: value: isAuthorized value) (import secretPath).ssh)
   );
+
   hasConfigVirtualizationContainers = builtins.hasAttr "containers" config.virtualisation;
   isContainersEnabled = if hasConfigVirtualizationContainers then config.virtualisation.containers.enable else false;
 in
