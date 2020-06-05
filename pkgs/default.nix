@@ -50,7 +50,8 @@ rec {
     crc_1_9
     crc_1_10
     crc_1_11
-    crc_driver_libvirt
+    crc_driver_libvirt_0_12_7
+    crc_driver_libvirt_0_12_8
     ;
   crc = crc_1_10;
 
