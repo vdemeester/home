@@ -28,6 +28,7 @@
       ripgrep
       scripts
       tree
+      youtube-dl
     ];
   };
 
