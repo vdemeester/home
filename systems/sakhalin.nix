@@ -57,6 +57,7 @@ in
   };
 
   profiles = {
+    home = true;
     avahi.enable = true;
     git.enable = true;
     ssh.enable = true;

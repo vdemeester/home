@@ -35,6 +35,7 @@ in
   };
 
   profiles = {
+    home = true;
     laptop.enable = true;
     avahi.enable = true;
     git.enable = true;

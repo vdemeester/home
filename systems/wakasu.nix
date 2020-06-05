@@ -48,6 +48,7 @@ in
   swapDevices = [{ device = "/dev/disk/by-uuid/c8c3308a-6ca6-4669-bad3-37a225af4083"; }];
 
   profiles = {
+    home = true;
     dev.enable = true;
     desktop.autoLogin = true;
     docker.enable = true;

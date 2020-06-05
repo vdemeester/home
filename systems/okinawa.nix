@@ -52,6 +52,7 @@ in
   };
 
   profiles = {
+    home = true;
     avahi.enable = true;
     ssh.enable = true;
     syncthing.enable = true;
