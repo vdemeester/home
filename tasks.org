@@ -384,12 +384,20 @@ CLOSED: [2020-05-26 Tue 10:36]
 
 How to make it self contained too. I think =home.nix= will work just fine.
 
-** TODO [#A] How to manage secrets
+** DONE [#A] How to manage secrets
+CLOSED: [2020-06-05 Fri 15:18]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-06-05 Fri 15:18]
+:END:
 
 Right now, I have a boolean to detect if I am on ci or not. It's not the best because I
 don't test all.
 
-** TODO Define CI (where, how)
+** DONE Define CI (where, how)
+CLOSED: [2020-06-05 Fri 15:19]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-06-05 Fri 15:19]
+:END:
 
 … and cache.
 
@@ -397,9 +405,19 @@ don't test all.
 - For systems, we can build it on builds.sr.ht *but* we could use a /local/ builder
   machine to build the systems and cache built things.
 
-** TODO Migrate other machines/systems to it
+So far it's on builds.sr.ht… we may want to move it to a local thingy but… wait and see
 
-* TODO [#A] Where should be the cloned ?
+** DONE Migrate other machines/systems to it
+CLOSED: [2020-06-05 Fri 15:19]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-06-05 Fri 15:19]
+:END:
+
+* DONE [#A] Where should be the cloned ?
+CLOSED: [2020-06-05 Fri 15:27]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-06-05 Fri 15:27]
+:END:
 
 That's a real interesting question.
 The next question is then, what do we do with the existing setup ?
@@ -419,6 +437,11 @@ The real question is :
 - =~/src/home= on fedora/ubuntu and =/etc/nixos= on nixos
 
 It could also be in =/etc/nixos= if it is writable for the user (=vincent= in most case)
+
+Final word on this:
+- on =NixOS=, cloned in =/etc/nixos= linked to =~/src/home= (or the opposite), with =1000=
+  rights (this can be ensured in the bootstrap/install script).
+- on =Fedora=, cloned in =~/src/home= :)
 
 * TODO [#B] Create a custom iso for easier insteall
 * TODO [#B] nur-package automatic -git package updates
@@ -562,10 +585,16 @@ From: [[file:~/desktop/org/technical/tekton-dev.org::*Environments][Environments
 
 stdenv.lib.optionals stdenv.isLinux
 
-* TODO =private= folder for nix (instead of =assets=)
-* TODO add crc profile on nixos
+It is only require whenever I will target darwin :D
 
-Mainy for the dnsmasq configuration, …
+* TODO =private= folder for nix (instead of =assets=)
+* DONE add crc profile on nixos
+CLOSED: [2020-06-05 Fri 15:40]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-06-05 Fri 15:40]
+:END:
+
+Mainly for the dnsmasq configuration, …
 
 * TODO migrate to enchant for spell checking
 
@@ -576,3 +605,4 @@ This will allow to use hunspell, ispell, …
 * TODO git.sbr.systems
 
 Mirrors 👼
+cgit or custom
