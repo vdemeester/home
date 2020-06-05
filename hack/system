@@ -1,6 +1,5 @@
 #! /usr/bin/env bash
 set -o pipefail -o noclobber -o nounset
-set -x
 
 WORK_DIR=${WORK_DIR-}
 if [[ -z "${WORK_DIR}" ]]; then
