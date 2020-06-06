@@ -5,7 +5,13 @@ tasks:
 - setup: |
     nix-env -iA cachix -f https://cachix.org/api/v1/install
     cachix use shortbrain
-- systems: |
+- dry-run: |
+    set -euo pipefail
+    set +x
+    export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
+    set -x
+    nix-build home -A systems --dry-run
+- build-servers: |
     set -euo pipefail
     set +x
     export CACHIX_SIGNING_KEY=$(cat ~/.cachix.key)
