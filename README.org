@@ -35,7 +35,7 @@ You should be able to run the =bootstrap.sh= script as is. And if you feel adven
 you can use ~curl~ for this.
 
 #+begin_src bash
-curl https://gitlab.com/vdemeester/home/-/raw/master/bootstrap.sh | sh
+curl https://gitlab.com/vdemeester/home/-/raw/master/hack/bootstrap.sh | sh
 #+end_src
 
 Otherwise, clone this repository somewhere, read the =bootstrap.sh= file and execute it if
