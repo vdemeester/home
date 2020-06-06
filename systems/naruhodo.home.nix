@@ -20,6 +20,7 @@ in
 
   home.file.".local/share/applications/redhat-vpn.desktop".source = ./naruhodo/redhat-vpn.desktop;
 
+  programs.bash.enable = lib.mkForce false;
   programs.man.enable = true;
   home.extraOutputsToInstall = [ "man" ];
 }
