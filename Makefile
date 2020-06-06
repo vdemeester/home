@@ -29,7 +29,6 @@ pull:
 emacs-dump:
 	emacs --batch -q -l ~/.config/emacs/dump.el
 
-# home-manager setup
 .PHONY: secrets
 secrets:
 	mkdir -p secrets
@@ -40,6 +39,14 @@ assets:
 	mkdir -p assets
 	cp -Rv $(SYNCDIR)/* assets/
 	chown -R vincent:users assets || true
+
+.PHONY: home-build
+home-build: secrets
+	home-manager -f home.nix build
+
+.PHONY: home-switch
+home-switch: secrets
+	home-manager -f home.nix switch
 
 .PHONY: build
 build: secrets setup
