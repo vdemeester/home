@@ -6,7 +6,6 @@ let
     #!${pkgs.stdenv.shell}
     emacsclient -s /run/user/1000/emacs/org -n -F '((name . "capture") (width . 150) (height . 90))' -e '(org-capture)'
   '';
-  myEmacs = pkgs.emacs27.override { inherit (pkgs) imagemagick; withXwidgets = true; };
 in
 {
   home.file.".local/share/applications/org-protocol.desktop".source = ./emacs/org-protocol.desktop;
@@ -26,7 +25,7 @@ in
   };
   programs.emacs = {
     enable = true;
-    package = myEmacs;
+    package = my.emacs;
     extraPackages = epkgs: with epkgs; [
       ace-window
       aggressive-indent
@@ -135,7 +134,7 @@ in
   };
   services.emacs-server = {
     enable = true;
-    package = myEmacs;
+    package = my.emacs;
     name = "org";
     shell = pkgs.zsh + "/bin/zsh -i -c";
     # FIXME do this in the derivation :)

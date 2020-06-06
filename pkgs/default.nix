@@ -18,6 +18,7 @@ rec {
   sec = pkgs.callPackage ./sec { };
   systemd-email = pkgs.callPackage ./systemd-email { };
   yak = pkgs.callPackage ./yak { };
+  emacs = pkgs.emacs27.override { inherit (pkgs) imagemagick; withXwidgets = true; };
 
   # Maybe upstream
   athens = pkgs.callPackage ./athens { };
