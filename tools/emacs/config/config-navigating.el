@@ -31,5 +31,20 @@
   :config
   (beginend-global-mode 1))
 
+(use-package dumb-jump
+  :bind (("M-g q"     . dumb-jump-quick-look) ;; Show me in a tooltip.
+         ("M-g o" . dumb-jump-go-other-window)
+         ("M-g j" . dumb-jump-go)
+         ("M-g ."     . dumb-jump-go)
+         ("M-g b" . dumb-jump-back)
+         ("M-g p" . dumb-jump-go-prompt)
+         ("M-g x" . dumb-jump-go-prefer-external)
+         ("M-g z" . dumb-jump-go-prefer-external-other-window)
+         ("M-g a"     . xref-find-apropos)) ;; aka C-M-.
+  :config
+  ;; If source file is visible, just shift focus to it.
+  (setq-default dumb-jump-use-visible-window t
+                dumb-jump-prefer-searcher 'rg))
+
 (provide 'config-navigating)
 ;;; config-navigating.el ends here

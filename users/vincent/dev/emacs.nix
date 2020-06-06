@@ -45,6 +45,7 @@ in
       dired-narrow
       dired-rsync
       pkgs.dired-plus
+      dumb-jump
       direnv
       dockerfile-mode
       easy-kill
