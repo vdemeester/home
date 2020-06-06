@@ -1,7 +1,24 @@
 { sources ? import ../nix
 , pkgs ? sources.pkgs { }
 }:
-
+let
+  emacs27 = (pkgs.emacs.override { srcRepo = true; }).overrideAttrs (
+    old: {
+      name = "emacs-dev";
+      version = "27.0.91";
+      src = pkgs.fetchFromGitHub {
+        owner = "emacs-mirror";
+        repo = "emacs";
+        rev = "emacs-27.0.91";
+        sha256 = "0mlrg2npy1r79laahkgzhxd1qassfcdz8qk1cpw7mqgf6y5x505h";
+      };
+      buildInputs = old.buildInputs ++ [ pkgs.jansson ];
+      patches = [
+        ../overlays/patches/clean-env.patch
+      ];
+    }
+  );
+in
 rec {
   # pre nur-packages import
   scripts = pkgs.callPackage ./scripts { };
@@ -18,7 +35,9 @@ rec {
   sec = pkgs.callPackage ./sec { };
   systemd-email = pkgs.callPackage ./systemd-email { };
   yak = pkgs.callPackage ./yak { };
-  emacs = pkgs.emacs27.override { inherit (pkgs) imagemagick; withXwidgets = true; };
+
+  # emacs
+  emacs = emacs27.override { inherit (pkgs) imagemagick; withXwidgets = true; };
 
   # Maybe upstream
   athens = pkgs.callPackage ./athens { };
