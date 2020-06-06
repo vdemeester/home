@@ -28,7 +28,7 @@ in
   };
   config = mkIf cfg.enable (mkMerge [
     {
-      home.file.".local/share/applications/chos4.desktop".source = ../../assets/chos4.desktop;
+      home.file.".local/share/applications/chos4.desktop".source = ../../users/vincent/containers/chos4.desktop;
       profiles.containers.enable = cfg.containers;
       home.packages = with pkgs; [
         #cri-tools
