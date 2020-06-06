@@ -32,6 +32,7 @@
     ];
   };
 
+  xdg.configFile."ape.conf".source = ./ape/ape.conf;
   xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
   xdg.configFile."nr/default" = {
     text = builtins.toJSON [
