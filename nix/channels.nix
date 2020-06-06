@@ -23,6 +23,8 @@ let
     v19_03 = "19.03";
     loris = "19.09";
     v19_09 = "19.09";
+    markhor = "20_03";
+    v20_03 = "20.03";
     unstable = "unstable";
   };
 in
