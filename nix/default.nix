@@ -11,5 +11,5 @@ rec {
   emacs = import sources.emacs-overlay;
   gitignore = import sources.gitignore;
   nixos-hardware = import sources.nixos-hardware;
-  nur = import sources.nur;
+  nur = import sources.NUR;
 }
