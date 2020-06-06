@@ -8,7 +8,6 @@
     ./desktop.nix
     ./dev.nix
     ./docker.nix
-    ./fish.nix
     ./gaming.nix
     ./git.nix
     ./home.nix

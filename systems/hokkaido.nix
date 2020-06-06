@@ -14,8 +14,8 @@ let
 in
 {
   imports = [
-    ../hardware/thinkpad-x220.nix
-    ../modules
+    ./hardware/thinkpad-x220.nix
+    ./modules
     (import ../users).vincent
     (import ../users).root
   ];

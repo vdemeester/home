@@ -14,8 +14,8 @@ let
 in
 {
   imports = [
-    ../hardware/lenovo-p50.nix
-    ../modules
+    ./hardware/lenovo-p50.nix
+    ./modules
     (import ../users).vincent
     (import ../users).root
   ];

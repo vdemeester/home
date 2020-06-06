@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.profiles.mail;
-  secretPath = ../../secrets/machines.nix;
+  secretPath = ../../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 in
 {
@@ -17,7 +17,7 @@ in
     };
   };
   config = mkIf (cfg.enable && secretCondition) {
-    environment.etc."msmtprc".source = pkgs.mkSecret ../../secrets/msmtprc;
+    environment.etc."msmtprc".source = pkgs.mkSecret ../../../secrets/msmtprc;
     environment.systemPackages = with pkgs; [ msmtp ];
   };
 }

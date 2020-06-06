@@ -16,7 +16,7 @@ in
 {
   imports = [
     (sources.nixos + "/nixos/modules/profiles/qemu-guest.nix")
-    ../modules
+    ./modules
     (import ../users).vincent
     (import ../users).root
   ]

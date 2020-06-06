@@ -14,8 +14,8 @@ let
 in
 {
   imports = [
-    ../hardware/gigabyte-brix.nix
-    ../modules
+    ./hardware/gigabyte-brix.nix
+    ./modules
     (import ../users).vincent
     (import ../users).root
   ];

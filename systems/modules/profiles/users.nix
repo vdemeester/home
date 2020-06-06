@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.profiles.users;
-  secretPath = ../../secrets/machines.nix;
+  secretPath = ../../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
   isAuthorized = p: builtins.isAttrs p && p.authorized or false;
@@ -51,7 +51,7 @@ in
     }
     (
       mkIf secretCondition {
-        programs.ssh.extraConfig = with import ../../secrets/machines.nix; ''
+        programs.ssh.extraConfig = with import ../../../secrets/machines.nix; ''
           Host kerkouane kerkouane.sbr.pm
             Hostname kerkouane.sbr.pm
             Port ${toString ssh.kerkouane.port}

@@ -2,17 +2,16 @@
 
 with lib;
 let
-  sources = import ../../nix/sources.nix;
-  cfg = config.profiles.nix-config;
+  dummyConfig = pkgs.writeText "configuration.nix" ''
+    # assert builtins.trace "This is a dummy config, use switch!" false;
+    {}
+  '';
+  cfg = config.core.nix;
 in
 {
   options = {
-    profiles.nix-config = {
-      enable = mkOption {
-        default = true;
-        description = "Enable nix-config profile";
-        type = types.bool;
-      };
+    core.nix = {
+      enable = mkOption { type = types.bool; default = true; description = "Enable core.nix"; };
       gcDates = mkOption {
         default = "weekly";
         description = "Specification (in the format described by systemd.time(7)) of the time at which the garbage collector will run. ";
@@ -40,25 +39,7 @@ in
   };
   config = mkIf cfg.enable {
     nix = {
-      buildCores = cfg.buildCores;
-      useSandbox = true;
-      gc = {
-        automatic = true;
-        dates = cfg.gcDates;
-        options = "--delete-older-than ${cfg.olderThan}";
-      };
-      nixPath = [
-        "nixpkgs=${sources.nixos}"
-        "nixos-config=/etc/nixos/configuration.nix"
-        "nixpkgs-overlays=/etc/nixos/overlays/compat"
-      ];
-      # if hydra is down, don't wait forever
-      extraOptions = ''
-        connect-timeout = 20
-        build-cores = 0
-        keep-outputs = true
-        keep-derivations = true
-      '';
+      allowedUsers = [ "@wheel" ];
       binaryCaches = cfg.localCaches ++ [
         "https://cache.nixos.org/"
         "https://r-ryantm.cachix.org"
@@ -71,22 +52,53 @@ in
         "shortbrain.cachix.org-1:dqXcXzM0yXs3eo9ChmMfmob93eemwNyhTx7wCR4IjeQ="
         "mic92.cachix.org-1:gi8IhgiT3CYZnJsaW7fxznzTkMUOn1RY4GmXdT/nXYQ="
       ];
-      trustedUsers = [ "root" "vincent" ];
+      buildCores = cfg.buildCores;
+      daemonIONiceLevel = 5;
+      daemonNiceLevel = 10;
+      # if hydra is down, don't wait forever
+      extraOptions = ''
+        connect-timeout = 20
+        build-cores = 0
+        keep-outputs = true
+        keep-derivations = true
+      '';
+      gc = {
+        automatic = true;
+        dates = cfg.gcDates;
+        options = "--delete-older-than ${cfg.olderThan}";
+      };
+      nixPath = [
+        "nixos-config=${dummyConfig}"
+        "nixpkgs=/run/current-system/nixpkgs"
+        "nixpkgs-overlays=/run/current-system/overlays/compat"
+      ];
+      optimise = {
+        automatic = true;
+        dates = [ "01:10" "12:10" ];
+      };
+      nrBuildUsers = config.nix.maxJobs * 2;
+      trustedUsers = [ "root" "@wheel" ];
+      useSandbox = true;
     };
+
     nixpkgs = {
       overlays = [
-        (import ../../overlays/sbr.nix)
-        (import ../../overlays/unstable.nix)
-        (import ../../nix).emacs
+        (import ../../../overlays/mkSecret.nix)
+        (import ../../../overlays/sbr.nix)
+        (import ../../../overlays/unstable.nix)
+        (import ../../../nix).emacs
       ];
       config = {
         allowUnfree = true;
-        packageOverrides = pkgs: {
-          nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-            inherit pkgs;
-          };
-        };
       };
+    };
+    system = {
+      extraSystemBuilderCmds = ''
+        ln -sv ${pkgs.path} $out/nixpkgs
+        ln -sv ${../../../overlays} $out/overlays
+      '';
+
+      stateVersion = "20.03";
     };
   };
 }

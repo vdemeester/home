@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  sources = import ../nix/sources.nix;
+  sources = import ../../nix/sources.nix;
 in
 {
   imports = [ (sources.nixos-hardware + "/lenovo/thinkpad") ];

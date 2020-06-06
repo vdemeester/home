@@ -13,7 +13,7 @@ in
   config = mkIf cfg.enable {
     nixpkgs.config = {
       packageOverrides = pkgs: {
-        nur = (import ../../nix).nur { inherit pkgs; };
+        nur = (import ../../../nix).nur { inherit pkgs; };
       };
     };
   };
