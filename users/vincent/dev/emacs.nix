@@ -25,7 +25,7 @@ in
   };
   programs.emacs = {
     enable = true;
-    package = my.emacs;
+    package = pkgs.my.emacs;
     extraPackages = epkgs: with epkgs; [
       ace-window
       aggressive-indent
@@ -134,7 +134,7 @@ in
   };
   services.emacs-server = {
     enable = true;
-    package = my.emacs;
+    package = pkgs.my.emacs;
     name = "org";
     shell = pkgs.zsh + "/bin/zsh -i -c";
     # FIXME do this in the derivation :)
