@@ -4,9 +4,11 @@
   imports = [
     ./emacs.nix
     ./go.nix
-    ./python.nix
+    ./js.nix
+    ./lisp.nix
     ./mr.nix
     ./nix.nix
+    ./python.nix
   ];
 
   home.extraOutputsToInstall = [ "doc" "info" "devdoc" ];
