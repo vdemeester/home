@@ -39,10 +39,6 @@ in
     git.enable = true;
     ssh.enable = true;
     syncthing.enable = true;
-
-    # FIXME remove the need for it
-    users.enable = false;
-
     wireguard.server.enable = true;
   };
 

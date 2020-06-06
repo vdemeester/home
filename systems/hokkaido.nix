@@ -42,8 +42,6 @@ in
     ssh.enable = true;
     dev.enable = true;
     yubikey.enable = true;
-    # FIXME remove the need for it
-    users.enable = false;
   };
 
   services = {

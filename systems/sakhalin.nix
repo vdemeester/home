@@ -63,8 +63,6 @@ in
     ssh.enable = true;
     syncthing.enable = true;
     virtualization = { enable = true; nested = true; listenTCP = true; };
-    # FIXME remove the need for it
-    users.enable = false;
   };
 
   fileSystems."/export/gaia" = { device = "/mnt/gaia"; options = [ "bind" ]; };

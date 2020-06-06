@@ -56,8 +56,6 @@ in
     ssh = { enable = true; forwardX11 = true; };
     virtualization = { enable = true; nested = true; listenTCP = true; };
     yubikey.enable = true;
-    # FIXME remove the need for it
-    users.enable = false;
   };
   programs = {
     podman.enable = true;
