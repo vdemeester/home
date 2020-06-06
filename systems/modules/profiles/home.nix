@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.profiles.home;
-  secretPath = ../../secrets/machines.nix;
+  secretPath = ../../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
   machines = lib.optionalAttrs secretCondition (import secretPath);
 in
