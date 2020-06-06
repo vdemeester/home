@@ -18,9 +18,7 @@ in
     (import ./nix).emacs
   ];
   imports = [
-    # Default profile with default configuration
-    ./modules/module-list.nix
     # Machine specific configuration files
-    (./machines + "/${hostName}.nix")
+    (./systems + "/${hostName}.home.nix")
   ];
 }
