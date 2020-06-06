@@ -3,119 +3,207 @@
 with lib;
 let
   cfg = config.profiles.desktop;
-  dim-screen = pkgs.writeScript "dim-sreen.sh" ''
-    #!${pkgs.stdenv.shell}
-    export PATH=${lib.getBin pkgs.xlibs.xbacklight}/bin:$PATH
-    trap "exit 0" INT TERM
-    trap "kill \$(jobs -p); xbacklight -steps 1 -set $(xbacklight -get);" EXIT
-    xbacklight -time 5000 -steps 400 -set 0 &
-    sleep 2147483647 &
-    wait
-  '';
 in
 {
   options = {
     profiles.desktop = {
-      enable = mkEnableOption "Enable desktop profile";
-      lockCmd = mkOption {
-        default = "-n ${dim-screen} -- ${pkgs.i3lock-color}/bin/i3lock-color -c 666666";
-        description = "Lock command to use";
-        type = types.str;
+      enable = mkOption {
+        default = false;
+        description = "Enable desktop profile";
+        type = types.bool;
       };
-      xsession = {
-        enable = mkOption {
-          default = true;
-          description = "Enable xsession managed";
-          type = types.bool;
-        };
-        i3 = mkOption {
-          default = true;
-          description = "Enable i3 managed window manager";
-          type = types.bool;
-        };
+      avahi = mkOption {
+        default = true;
+        description = "Enable avahi  with the desktop profile";
+        type = types.bool;
+      };
+      pulseaudio = mkOption {
+        default = true;
+        description = "Enable pulseaudio with the desktop profile";
+        type = types.bool;
+      };
+      flatpak = mkOption {
+        default = true;
+        description = "Enable flatpak with the desktop profile";
+        type = types.bool;
+      };
+      syncthing = mkOption {
+        default = true;
+        description = "Enable syncthing with the desktop profile";
+        type = types.bool;
+      };
+      scanning = mkOption {
+        default = true;
+        description = "Enable scanning with the desktop profile";
+        type = types.bool;
+      };
+      printing = mkOption {
+        default = true;
+        description = "Enable printing with the desktop profile";
+        type = types.bool;
+      };
+      networkmanager = mkOption {
+        default = true;
+        description = "Enable networkmanager with the desktop profile";
+        type = types.bool;
+      };
+      autoLogin = mkOption {
+        default = false;
+        description = "Enable auto login";
+        type = types.bool;
       };
     };
   };
   config = mkIf cfg.enable {
-    home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
-    profiles.gpg.enable = true;
-    profiles.emacs.capture = true;
-    xsession = mkIf cfg.xsession.enable {
-      enable = true;
-      initExtra = ''
-        ${pkgs.xlibs.xmodmap}/bin/xmodmap ${config.home.homeDirectory}.Xmodmap &
-      '';
-      pointerCursor = {
-        package = pkgs.vanilla-dmz;
-        name = "Vanilla-DMZ";
-      };
+    profiles.avahi.enable = cfg.avahi;
+    profiles.printing.enable = cfg.printing;
+    profiles.pulseaudio.enable = cfg.pulseaudio;
+    profiles.scanning.enable = cfg.scanning;
+    profiles.syncthing.enable = cfg.syncthing;
+
+    boot = {
+      tmpOnTmpfs = true;
+      plymouth.enable = true;
     };
-    home.keyboard = mkIf cfg.xsession.enable {
-      layout = "fr(bepo),fr";
-      variant = "oss";
-      options = [ "grp:menu_toggle" "grp_led:caps" "compose:caps" ];
-    };
-    gtk = {
-      enable = true;
-      iconTheme = {
-        name = "Arc";
-        package = pkgs.arc-icon-theme;
-      };
-      theme = {
-        name = "Arc";
-        package = pkgs.arc-theme;
-      };
-    };
-    services = {
-      redshift = {
-        enable = true;
-        brightness = { day = "1"; night = "0.9"; };
-        latitude = "48.3";
-        longitude = "7.5";
-        tray = true;
-      };
-    };
-    home.file.".XCompose".source = ./assets/xorg/XCompose;
-    home.file.".Xmodmap".source = ./assets/xorg/Xmodmap;
-    xdg.configFile."xorg/emoji.compose".source = ./assets/xorg/emoji.compose;
-    xdg.configFile."xorg/parens.compose".source = ./assets/xorg/parens.compose;
-    xdg.configFile."xorg/modletters.compose".source = ./assets/xorg/modletters.compose;
-    xdg.configFile."user-dirs.dirs".source = ./assets/xorg/user-dirs.dirs;
-    xdg.configFile."nr/desktop" = {
-      text = builtins.toJSON [
-        { cmd = "surf"; }
-        { cmd = "next"; }
-        { cmd = "xclip"; }
-        { cmd = "dmenu"; }
-        { cmd = "sxiv"; }
-        { cmd = "screenkey"; }
-        { cmd = "gimp"; }
-        { cmd = "virt-manager"; pkg = "virtmanager"; }
-        { cmd = "update-desktop-database"; pkg = "desktop-file-utils"; chan = "unstable"; }
-        { cmd = "lgogdownloader"; chan = "unstable"; }
-        { cmd = "xev"; pkg = "xorg.xev"; }
+
+    hardware.bluetooth.enable = true;
+
+    networking.networkmanager = {
+      enable = cfg.networkmanager;
+      unmanaged = [
+        "interface-name:ve-*"
+        "interface-name:veth*"
+        "interface-name:wg0"
+        "interface-name:docker0"
+        "interface-name:virbr*"
       ];
-      onChange = "${pkgs.my.nr}/bin/nr desktop";
+      packages = with pkgs; [ networkmanager-openvpn ];
     };
-    programs = {
-      firefox.enable = true;
+
+    programs.dconf.enable = true;
+    xdg.portal.enable = cfg.flatpak;
+
+    services = {
+      flatpak.enable = cfg.flatpak;
+      dbus.packages = [ pkgs.gnome3.dconf ];
+      xserver = {
+        enable = true;
+        enableTCP = false;
+        windowManager.twm.enable = true;
+        libinput.enable = true;
+        synaptics.enable = false;
+        layout = "fr(bepo),fr";
+        xkbVariant = "oss";
+        xkbOptions = "grp:menu_toggle,grp_led:caps,compose:caps";
+        inputClassSections = [
+          ''
+            Identifier      "TypeMatrix"
+            MatchIsKeyboard "on"
+            MatchVendor     "TypeMatrix.com"
+            MatchProduct    "USB Keyboard"
+            Driver          "evdev"
+            Option          "XbkModel"      "tm2030USB"
+            Option          "XkbLayout"     "fr"
+            Option          "XkbVariant"    "bepo"
+          ''
+          ''
+            Identifier      "ErgoDox"
+            #MatchVendor     "ErgoDox_EZ"
+            #MatchProduct    "ErgoDox_EZ"
+            MatchIsKeyboard "on"
+            MatchUSBID      "feed:1307"
+            Driver          "evdev"
+            Option          "XkbLayout"     "fr"
+            Option          "XkbVariant"    "bepo"
+          ''
+        ];
+        displayManager = {
+          # defaultSession = "none+i3";
+          lightdm = {
+            enable = true;
+            autoLogin = {
+              enable = true;
+              user = "vincent";
+            };
+          };
+        };
+      };
     };
-    profiles.i3.enable = cfg.xsession.i3;
-    home.packages = with pkgs; [
-      aspell
-      aspellDicts.en
-      aspellDicts.fr
-      #etBook
-      gnome3.defaultIconTheme
-      gnome3.gnome_themes_standard
-      keybase
-      mpv
-      pass
-      peco
-      profile-sync-daemon
-      xdg-user-dirs
-      xdg_utils
-      xsel
+    fonts = {
+      enableFontDir = true;
+      enableGhostscriptFonts = true;
+      fonts = with pkgs; [
+        corefonts
+        dejavu_fonts
+        emojione
+        feh
+        fira
+        fira-code
+        fira-code-symbols
+        fira-mono
+        hasklig
+        inconsolata
+        iosevka
+        noto-fonts
+        noto-fonts-cjk
+        noto-fonts-emoji
+        noto-fonts-extra
+        overpass
+        symbola
+        source-code-pro
+        twemoji-color-font
+        ubuntu_font_family
+        unifont
+      ];
+    };
+
+    # Polkit.
+    security.polkit.extraConfig = ''
+      polkit.addRule(function(action, subject) {
+      if ((action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
+      action.id == "org.freedesktop.udisks2.encrypted-unlock-system"
+      ) &&
+      subject.local && subject.active && subject.isInGroup("users")) {
+      return polkit.Result.YES;
+      }
+      var YES = polkit.Result.YES;
+      var permission = {
+      // required for udisks1:
+      "org.freedesktop.udisks.filesystem-mount": YES,
+      "org.freedesktop.udisks.luks-unlock": YES,
+      "org.freedesktop.udisks.drive-eject": YES,
+      "org.freedesktop.udisks.drive-detach": YES,
+      // required for udisks2:
+      "org.freedesktop.udisks2.filesystem-mount": YES,
+      "org.freedesktop.udisks2.encrypted-unlock": YES,
+      "org.freedesktop.udisks2.eject-media": YES,
+      "org.freedesktop.udisks2.power-off-drive": YES,
+      // required for udisks2 if using udiskie from another seat (e.g. systemd):
+      "org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
+      "org.freedesktop.udisks2.filesystem-unmount-others": YES,
+      "org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
+      "org.freedesktop.udisks2.eject-media-other-seat": YES,
+      "org.freedesktop.udisks2.power-off-drive-other-seat": YES
+      };
+      if (subject.isInGroup("wheel")) {
+      return permission[action.id];
+      }
+      });
+    '';
+
+    environment.systemPackages = with pkgs; [
+      cryptsetup
+      xlibs.xmodmap
+      xorg.xbacklight
+      xorg.xdpyinfo
+      xorg.xhost
+      xorg.xinit
+      xss-lock
+      xorg.xmessage
+      unzip
+      gnupg
+      pinentry
+      inxi
     ];
   };
 }

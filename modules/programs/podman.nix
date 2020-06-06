@@ -9,19 +9,46 @@ in
     programs.podman = {
       enable = mkOption {
         default = false;
-        description = "Enable podman profile";
+        description = ''
+          Whether to configure podman
+        '';
         type = types.bool;
+      };
+      package = mkOption {
+        default = pkgs.podman;
+        description = "podman package to be used";
+        type = types.package;
+      };
+      runcPackage = mkOption {
+        default = pkgs.runc;
+        description = "runc package to be used";
+        type = types.package;
+      };
+      conmonPackage = mkOption {
+        default = pkgs.conmon;
+        description = "conmon package to be used";
+        type = types.package;
+      };
+      cniPackage = mkOption {
+        default = pkgs.cni;
+        description = "cni package to be used";
+        type = types.package;
+      };
+      cniPluginsPackage = mkOption {
+        default = pkgs.cni-plugins;
+        description = "cni-plugins package to be used";
+        type = types.package;
       };
     };
   };
+
   config = mkIf cfg.enable {
-    # FIXME(vdemeester) package podman and conmon in nixpkgs
-    home.packages = with pkgs; [ slirp4netns podman buildah ];
-    xdg.configFile."containers/libpod.conf".text = ''
+
+    environment.etc."containers/libpod.conf".text = ''
       image_default_transport = "docker://"
-      runtime_path = ["/run/current-system/sw/bin/runc"]
-      conmon_path = ["/run/current-system/sw/bin/conmon"]
-      cni_plugin_dir = ["${pkgs.cni-plugins}/bin/"]
+      runtime_path = ["${cfg.runcPackage}/bin/runc"]
+      conmon_path = ["${cfg.conmonPackage}/bin/conmon"]
+      cni_plugin_dir = ["${cfg.cniPluginsPackage}/bin/"]
       cgroup_manager = "systemd"
       cni_config_dir = "/etc/cni/net.d/"
       cni_default_network = "podman"
@@ -30,19 +57,51 @@ in
       pause_command = "/pause"
     '';
 
-    xdg.configFile."containers/registries.conf".text = ''
+    environment.etc."containers/registries.conf".text = ''
       [registries.search]
       registries = ['docker.io', 'registry.fedoraproject.org', 'quay.io', 'registry.access.redhat.com', 'registry.centos.org']
+
       [registries.insecure]
       registries = ['massimo.local:5000', '192.168.12.0/16']
     '';
 
-    xdg.configFile."containers/policy.json".text = ''
+    environment.etc."containers/policy.json".text = ''
       {
         "default": [
           { "type": "insecureAcceptAnything" }
         ]
       }
     '';
+
+    environment.etc."cni/net.d/87-podman-bridge.conflist".text = ''
+      {
+          "cniVersion": "0.3.0",
+          "name": "podman",
+          "plugins": [
+            {
+              "type": "bridge",
+              "bridge": "cni0",
+              "isGateway": true,
+              "ipMasq": true,
+              "ipam": {
+                  "type": "host-local",
+                  "subnet": "10.88.0.0/16",
+                  "routes": [
+                      { "dst": "0.0.0.0/0" }
+                  ]
+              }
+            },
+            {
+              "type": "portmap",
+              "capabilities": {
+                "portMappings": true
+              }
+            }
+          ]
+      }
+    '';
+
+    environment.systemPackages = with pkgs; [ cfg.package cfg.conmonPackage cfg.runcPackage iptables ];
+
   };
 }

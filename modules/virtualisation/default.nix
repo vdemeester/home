@@ -1,7 +1,7 @@
 {
   imports = [
     # Remove "nixos" from here
-    ./buildkit.nixos.nix
-    ./containerd.nixos.nix
+    ./buildkit.nix
+    ./containerd.nix
   ];
 }

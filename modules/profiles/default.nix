@@ -1,32 +1,32 @@
 {
   imports = [
     # Remove "nixos" from here
-    ./avahi.nixos.nix
-    ./base.nixos.nix
-    ./buildkit.nixos.nix
-    ./containerd.nixos.nix
-    ./desktop.nixos.nix
-    ./dev.nixos.nix
-    ./docker.nixos.nix
-    ./fish.nixos.nix
-    ./gaming.nixos.nix
-    ./git.nixos.nix
-    ./home.nixos.nix
-    ./i18n.nixos.nix
-    ./ipfs.nixos.nix
-    ./laptop.nixos.nix
-    ./mail.nixos.nix
-    ./nix-auto-update.nixos.nix
-    ./printing.nixos.nix
-    ./pulseaudio.nixos.nix
-    ./qemu.nixos.nix
-    ./scanning.nixos.nix
-    ./ssh.nixos.nix
-    ./syncthing.nixos.nix
-    ./users.nixos.nix
-    ./virtualization.nixos.nix
-    ./wireguard.server.nixos.nix
-    ./yubikey.nixos.nix
-    ./zsh.nixos.nix
+    ./avahi.nix
+    ./base.nix
+    ./buildkit.nix
+    ./containerd.nix
+    ./desktop.nix
+    ./dev.nix
+    ./docker.nix
+    ./fish.nix
+    ./gaming.nix
+    ./git.nix
+    ./home.nix
+    ./i18n.nix
+    ./ipfs.nix
+    ./laptop.nix
+    ./mail.nix
+    ./nix-auto-update.nix
+    ./printing.nix
+    ./pulseaudio.nix
+    ./qemu.nix
+    ./scanning.nix
+    ./ssh.nix
+    ./syncthing.nix
+    ./users.nix
+    ./virtualization.nix
+    ./wireguard.server.nix
+    ./yubikey.nix
+    ./zsh.nix
   ];
 }

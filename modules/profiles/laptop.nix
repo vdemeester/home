@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
@@ -7,13 +7,26 @@ in
 {
   options = {
     profiles.laptop = {
-      enable = mkEnableOption "Enable laptop profile";
+      enable = mkOption {
+        default = false;
+        description = "Enable laptop profile";
+        type = types.bool;
+      };
     };
   };
   config = mkIf cfg.enable {
-    profiles.desktop.enable = true;
-    programs.autorandr = {
-      enable = true;
+    boot.kernel.sysctl = {
+      "vm.swappiness" = 10;
+      "vm.dirty_ratio" = 25;
+      "vm.dirty_background_ratio" = 10;
+      "vm.dirty_writeback_centisecs" = 5000;
+      "vm.dirty_expire_centisecs" = 5000;
     };
+    profiles.desktop.enable = true;
+    environment.systemPackages = with pkgs; [
+      lm_sensors
+      powertop
+      acpi
+    ];
   };
 }
