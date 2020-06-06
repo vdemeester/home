@@ -3,7 +3,7 @@
 with lib;
 let
   patchedOpenSSH = pkgs.openssh.override { withKerberos = true; withGssapiPatches = true; };
-  secretPath = ../../secrets/machines.nix;
+  secretPath = ../../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
   sshConfig = optionalAttrs secretCondition (import secretPath).sshConfig;
 in
