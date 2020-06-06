@@ -12,7 +12,6 @@ assets/*
 private/*
 secrets/*
 networking.nix
-wireguard*.key
 .secrets
 hardware-configuration.nix
 /key.bin

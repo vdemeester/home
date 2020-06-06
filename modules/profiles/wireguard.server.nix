@@ -33,7 +33,7 @@ in
       "wg0" = {
         ips = allowedIPs;
         listenPort = listenPort;
-        privateKeyFile = "/etc/nixos/wireguard.private.key";
+        privateKeyFile = "/etc/nixos/secrets/wireguard/private.key";
         peers = peers;
       };
     };

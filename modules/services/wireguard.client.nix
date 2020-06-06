@@ -56,7 +56,7 @@ in
     networking.wireguard.interfaces = {
       wg0 = {
         ips = cfg.ips;
-        privateKeyFile = "/etc/nixos/wireguard.private.key";
+        privateKeyFile = "/etc/nixos/secrets/wireguard/private.key";
         peers = [
           {
             publicKey = cfg.endpointPublicKey;
