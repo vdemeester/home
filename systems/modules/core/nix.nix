@@ -10,6 +10,7 @@ let
 in
 {
   options = {
+    environment.systemPackages = [ pkgs.git ];
     core.nix = {
       enable = mkOption { type = types.bool; default = true; description = "Enable core.nix"; };
       gcDates = mkOption {
