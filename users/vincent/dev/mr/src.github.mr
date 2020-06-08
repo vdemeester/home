@@ -5,6 +5,8 @@ lib =
     export BASE_HOST="github.com"
     export GIT_BASE="github.com:"
 
+[NixOS/nixpkgs]
+
 [openshift]
 chain = true
 skip = true
