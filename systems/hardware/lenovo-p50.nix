@@ -11,6 +11,8 @@ in
     initrd.availableKernelModules = [ "nvme" "rtsx_pci_sdmmc" ];
   };
   hardware = {
+
+    enableAllFirmware = true;
     bluetooth = {
       enable = true;
       powerOnBoot = true;
