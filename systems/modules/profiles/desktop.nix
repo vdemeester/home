@@ -84,6 +84,7 @@ in
     xdg.portal.enable = cfg.flatpak;
 
     services = {
+      blueman.enable = true;
       flatpak.enable = cfg.flatpak;
       dbus.packages = [ pkgs.gnome3.dconf ];
       xserver = {
