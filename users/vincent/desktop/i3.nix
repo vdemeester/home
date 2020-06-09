@@ -32,7 +32,7 @@ in
           geometry = "500x5-10+10";
           follow = "keyboard";
           frame_color = "#cccccc";
-          font = "Fira Code 10";
+          font = "Ubuntu Mono 11";
           indicate_hidden = "yes";
           separator_height = 1;
           padding = 8;
@@ -44,6 +44,28 @@ in
           ignore_newline = "no";
           stack_duplicates = true;
           show_indicators = "yes";
+          history_length = 40;
+        };
+        shortcuts = {
+          close = "ctrl+space";
+          close_all = "ctrl+shift+space";
+          history = "ctrl+percent";
+          context = "ctrl+shift+period";
+        };
+        urgency_low = {
+          background = "#000000";
+          foreground = "#ffffff";
+          timeout = 4;
+        };
+        urgency_normal = {
+          background = "#000000";
+          foreground = "#ffffff";
+          timeout = 6;
+        };
+        urgency_critical = {
+          background = "#000000";
+          foreground = "#cf6a4c";
+          timeout = 0;
         };
       };
     };
