@@ -583,9 +583,65 @@ With prefix argument, also display headlines without a TODO keyword."
 (use-package org-capture-pop-frame
   :after org)
 
-
 (use-package orgit
   :after org)
+
+(use-package org-roam
+  :commands (org-roam org-roam-build-cache)
+  ;; :hook
+  ;; (after-init . org-roam-mode)
+  :bind (("C-c o n" . org-roam-mode)
+         :map org-roam-mode-map
+         (("C-c n l" . org-roam)
+          ("C-c n f" . org-roam-find-file)
+          ("C-c n g" . org-roam-show-graph)
+          ("C-c n b" . org-roam-switch-to-buffer))
+         :map org-mode-map
+         (("C-c n i" . org-roam-insert)))
+  :custom
+  (org-roam-directory org-default-technical-dir)
+  :custom-face
+  (org-roam-link ((t (:inherit org-link :foreground "#C991E1"))))
+  :config
+  (require 'org-roam-protocol)
+  ;; (defun jethro/conditional-hugo-enable ()
+  ;;     (save-excursion
+  ;;       (if (cdr (assoc "SETUPFILE" (org-roam--extract-global-props '("SETUPFILE"))))
+  ;;           (org-hugo-auto-export-mode +1)
+  ;;         (org-hugo-auto-export-mode -1))))
+  ;;
+  ;;   (with-eval-after-load 'org
+  ;;     (defun my/org-roam--backlinks-list (file)
+  ;;       (if (org-roam--org-roam-file-p file)
+  ;;           (--reduce-from
+  ;;            (concat acc (format "- [[file:%s][%s]]\n"
+  ;;                                (file-relative-name (car it) org-roam-directory)
+  ;;                                (org-roam--get-title-or-slug (car it))))
+  ;;            "" (org-roam-sql [:select [file-from]
+  ;;                                      :from file-links
+  ;;                                      :where (= file-to $s1)
+  ;;                                      :and file-from :not :like $s2] file "%private%"))
+  ;;         ""))
+  ;;     (defun my/org-export-preprocessor (_backend)
+  ;;       (let ((links (my/org-roam--backlinks-list (buffer-file-name))))
+  ;;         (unless (string= links "")
+  ;;           (save-excursion
+  ;;             (goto-char (point-max))
+  ;;             (insert (concat "\n* Backlinks\n" links))))))
+  ;;     (add-hook 'org-export-before-processing-hook 'my/org-export-preprocessor))
+  (setq org-roam-capture-templates
+        '(("d" "default" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "${slug}"
+           :head "#+SETUPFILE:../templates/articles.org
+#+TITLE: ${title}\n"
+           :unnarrowed t)
+          ("p" "private" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "private-${slug}"
+           :head "#+TITLE: ${title}\n"
+           :unnarrowed t)))
+
 
 (provide 'config-org)
 ;;; config-org.el ends here

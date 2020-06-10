@@ -84,6 +84,7 @@ in
       org-gcal
       org-ql
       org-ref
+      org-roam
       org-super-agenda
       org-web-tools
       ox-pandoc
