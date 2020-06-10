@@ -4,6 +4,7 @@
     ./home-manager.nix
     ./nix.nix
     ./nur.nix
+    ./users.nix
   ];
 
   boot = {
