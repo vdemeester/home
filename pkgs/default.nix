@@ -86,8 +86,9 @@ rec {
   inherit (pkgs.callPackage ./tkn { })
     tkn_0_8
     tkn_0_9
+    tkn_0_10
     ;
-  tkn = tkn_0_9;
+  tkn = tkn_0_10;
 
   # Upstream
   buildkit = pkgs.callPackage ./buildkit { };
