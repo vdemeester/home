@@ -22,11 +22,12 @@ in
       "vm.dirty_writeback_centisecs" = 5000;
       "vm.dirty_expire_centisecs" = 5000;
     };
-    profiles.desktop.enable = true;
     environment.systemPackages = with pkgs; [
       lm_sensors
       powertop
       acpi
     ];
+    profiles.desktop.enable = true;
+    systemd.services.nix-gc.unitConfig.ConditionACPower = true;
   };
 }
