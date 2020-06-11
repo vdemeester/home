@@ -638,9 +638,19 @@ With prefix argument, also display headlines without a TODO keyword."
            :unnarrowed t)
           ("p" "private" plain (function org-roam--capture-get-point)
            "%?"
-           :file-name "private-${slug}"
+           :file-name "${slug}.private"
            :head "#+TITLE: ${title}\n"
-           :unnarrowed t)))
+           :unnarrowed t))))
+
+(use-package org-journal
+  :bind
+  ("C-c n j" . org-journal-new-entry)
+  :custom
+  (org-journal-date-prefix "#+TITLE: ")
+  (org-journal-file-format "%Y-%m-%d.private.org")
+  (org-journal-dir org-default-technical-dir)
+  (org-journal-date-format "%A, %d %B %Y")
+  (org-journal-enable-agenda-integration t))
 
 
 (provide 'config-org)

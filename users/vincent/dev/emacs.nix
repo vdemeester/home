@@ -82,6 +82,7 @@ in
       org-plus-contrib
       org-capture-pop-frame
       org-gcal
+      org-journal
       org-ql
       org-ref
       org-roam
