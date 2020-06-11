@@ -1,6 +1,7 @@
 include = cat ${HOME}/.config/mr
 
 [DEFAULT]
+skip = true
 lib =
     export BASE_HOST="github.com"
     export GIT_BASE="github.com:"
