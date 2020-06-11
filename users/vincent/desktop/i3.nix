@@ -408,7 +408,6 @@ in
     #order += "ethernet _first_"
     #order += "volume master"
     order += "battery 0"
-    order += "cpu_temperature 0"
     order += "load"
     order += "tztime local"
 
