@@ -629,6 +629,11 @@ With prefix argument, also display headlines without a TODO keyword."
   ;;             (goto-char (point-max))
   ;;             (insert (concat "\n* Backlinks\n" links))))))
   ;;     (add-hook 'org-export-before-processing-hook 'my/org-export-preprocessor))
+  (setq org-roam-capture-ref-templates
+        '(("r" "ref" plain #'org-roam-capture--get-point ""
+           :file-name "${slug}"
+           :head "#+title: ${title}\n#+roam_key: ${ref}\n\n${body}"
+           :unnarrowed t)))
   (setq org-roam-capture-templates
         '(("d" "default" plain (function org-roam--capture-get-point)
            "%?"
