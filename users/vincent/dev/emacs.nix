@@ -15,6 +15,7 @@ in
     ditaa
     graphviz
     pandoc
+    sqlite
     zip
     # See if I can hide this under an option
     capture
