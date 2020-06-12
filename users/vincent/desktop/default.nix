@@ -45,7 +45,8 @@
 
   xdg.configFile."nr/desktop" = {
     text = builtins.toJSON [
-      { cmd = "surf"; }
+      { cmd = "peek"; }
+      { cmd = "station"; }
       { cmd = "dmenu"; }
       { cmd = "sxiv"; }
       { cmd = "screenkey"; }
