@@ -73,6 +73,9 @@ in
     };
     nginx = {
       enable = true;
+      recommendedGzipSettings = true;
+      recommendedTlsSettings = true;
+      recommendedOptimisation = true;
       virtualHosts."dl.sbr.pm" = {
         enableACME = true;
         forceSSL = true;
