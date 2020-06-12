@@ -37,9 +37,9 @@
          ("C-c o c" . org-capture))
   :config
   (setq org-agenda-files `(,org-projects-dir
+                           ,org-notes-dir
                            "~/src/home"
                            "~/src/home/docs"
-                           "~/src/www/articles"
                            "~/src/www/posts")
         org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$"
         org-use-speed-commands t
