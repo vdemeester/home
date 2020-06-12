@@ -19,7 +19,7 @@
 ;; OrgRegisters
 (set-register ?i `(file . ,org-inbox-file))
 (set-register ?I `(file . ,org-incubate-file))
-(set-register ?N `(file . ,org-next-file))
+(set-register ?n `(file . ,org-next-file))
 (set-register ?j `(file . ,org-journal-file))
 ;; -OrgRegisters
 
