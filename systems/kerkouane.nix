@@ -11,6 +11,16 @@ let
 
   sshPort = if secretCondition then (import secretPath).ssh.kerkouane.port else 22;
 
+  nginxExtraConfig = ''
+    expires 31d;
+    add_header Cache-Control "public, max-age=604800, immutable"
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+    add_header X-Content-Type-Options "nosniff"
+    add_header X-Frame-Options "SAMEORIGIN"
+    add_header X-Content-Security-Policy "default-src 'self' *.sbr.pm *.sbr.systems"
+    add_header X-XSS-Protection "1; mode=block"
+  '';
+
   sources = import ../nix/sources.nix;
 in
 {
@@ -83,6 +93,7 @@ in
         locations."/" = {
           index = "index.html";
         };
+        extraConfig = nginxExtraConfig;
       };
       virtualHosts."paste.sbr.pm" = {
         enableACME = true;
@@ -91,11 +102,13 @@ in
         locations."/" = {
           index = "index.html";
         };
+        extraConfig = nginxExtraConfig;
       };
       virtualHosts."go.sbr.pm" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = { proxyPass = "http://127.0.0.1:8080"; };
+        extraConfig = nginxExtraConfig;
       };
       virtualHosts."sbr.pm" = {
         enableACME = true;
@@ -104,6 +117,7 @@ in
         locations."/" = {
           index = "index.html";
         };
+        extraConfig = nginxExtraConfig;
       };
       virtualHosts."sbr.systems" = {
         enableACME = true;
@@ -112,6 +126,7 @@ in
         locations."/" = {
           index = "index.html";
         };
+        extraConfig = nginxExtraConfig;
       };
       virtualHosts."vincent.demeester.fr" = {
         enableACME = true;
@@ -120,6 +135,7 @@ in
         locations."/" = {
           index = "index.html";
         };
+        extraConfig = nginxExtraConfig;
       };
     };
     openssh.ports = [ sshPort ];
