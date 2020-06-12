@@ -13,7 +13,7 @@ in
     core.nix = {
       enable = mkOption { type = types.bool; default = true; description = "Enable core.nix"; };
       gcDates = mkOption {
-        default = "*:0/45";
+        default = "daily";
         description = "Specification (in the format described by systemd.time(7)) of the time at which the garbage collector will run. ";
         type = types.str;
       };
