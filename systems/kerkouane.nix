@@ -13,12 +13,12 @@ let
 
   nginxExtraConfig = ''
     expires 31d;
-    add_header Cache-Control "public, max-age=604800, immutable"
+    add_header Cache-Control "public, max-age=604800, immutable";
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
-    add_header X-Content-Type-Options "nosniff"
-    add_header X-Frame-Options "SAMEORIGIN"
-    add_header X-Content-Security-Policy "default-src 'self' *.sbr.pm *.sbr.systems"
-    add_header X-XSS-Protection "1; mode=block"
+    add_header X-Content-Type-Options "nosniff";
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Security-Policy "default-src 'self' *.sbr.pm *.sbr.systems";
+    add_header X-XSS-Protection "1; mode=block";
   '';
 
   sources = import ../nix/sources.nix;
