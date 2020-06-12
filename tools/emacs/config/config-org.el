@@ -9,11 +9,11 @@
 (defconst org-notes-dir (expand-file-name "notes" org-directory) "Directory of shareable, technical notes.")
 (defconst org-archive-dir (expand-file-name "archive" org-directory) "Directory of shareable, technical notes.")
 (defconst org-completed-dir (expand-file-name "projects" org-archive-dir) "Directory of completed project files.")
-(defconst org-inbox-file (expand-file-name "projects/inbox.org" org-projects-dir) "New stuff collected in this file.")
-(defconst org-next-file (expand-file-name "projects/next.org" org-projects-dir) "Todo *next* collected in this file.")
-(defconst org-incubate-file (expand-file-name "projects/incubate.org" org-projects-dir) "Ideas simmering on back burner.")
-(defconst org-journal-file (expand-file-name "notes/journal.private.org" org-notes-dir) "Journaling stuff.")
-(defconst org-meeting-notes-file (expand-file-name "projects/meetings.org" org-projects-dir) "Meeting notes stuff.")
+(defconst org-inbox-file (expand-file-name "inbox.org" org-projects-dir) "New stuff collected in this file.")
+(defconst org-next-file (expand-file-name "next.org" org-projects-dir) "Todo *next* collected in this file.")
+(defconst org-incubate-file (expand-file-name "incubate.org" org-projects-dir) "Ideas simmering on back burner.")
+(defconst org-journal-file (expand-file-name "journal.private.org" org-notes-dir) "Journaling stuff.")
+(defconst org-meeting-notes-file (expand-file-name "meetings.org" org-projects-dir) "Meeting notes stuff.")
 ;; -OrgConstants
 
 ;; OrgRegisters
