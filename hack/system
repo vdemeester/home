@@ -10,8 +10,8 @@ fi
 function error() {
     local red
     local reset
-    red="$(tput setaf 1)"
-    reset="$(tput sgr0)"
+    red="$(tput -Txterm setaf 1)"
+    reset="$(tput -Txterm sgr0)"
 
     printf "%s%s%s\n" "$red" "$*" "$reset"
     exit 1
