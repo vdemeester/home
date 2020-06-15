@@ -21,6 +21,12 @@ let
     add_header X-XSS-Protection "1; mode=block";
   '';
 
+  nginx = pkgs.nginxMainline.override (old: {
+    modules = with pkgs.nginxModules; [
+      fancyindex
+    ];
+  });
+
   sources = import ../nix/sources.nix;
 in
 {
@@ -83,6 +89,7 @@ in
     };
     nginx = {
       enable = true;
+      package = nginx;
       recommendedGzipSettings = true;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
@@ -93,7 +100,8 @@ in
         locations."/" = {
           index = "index.html";
           extraConfig = ''
-            autoindex on;
+            fancyindex on;
+            fancyindex_exact_size off;
           '';
         };
         extraConfig = nginxExtraConfig;
