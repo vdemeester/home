@@ -160,8 +160,8 @@ in
             fancyindex on;
             fancyindex_localtime on;
             fancyindex_exact_size off;
-            fancyindex_header "https://dl.sbr.pm/.fancyindex/header.html";
-            fancyindex_footer "https://dl.sbr.pm/.fancyindex/footer.html";
+            fancyindex_header "/assets/.fancyindex/header.html";
+            fancyindex_footer "/assets/.fancyindex/footer.html";
             # fancyindex_ignore "examplefile.html";
             fancyindex_ignore "README.md";
             fancyindex_ignore "HEADER.md";
