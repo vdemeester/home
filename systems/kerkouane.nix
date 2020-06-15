@@ -17,7 +17,7 @@ let
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
     add_header X-Content-Type-Options "nosniff";
     add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-Content-Security-Policy "default-src 'self' *.sbr.pm *.sbr.systems";
+    add_header X-Content-Security-Policy "default-src 'self' *.sbr.pm *.sbr.systems *.demeester.fr";
     add_header X-XSS-Protection "1; mode=block";
   '';
 
