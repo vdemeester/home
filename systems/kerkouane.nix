@@ -92,6 +92,9 @@ in
         root = "/home/vincent/desktop/sites/dl.sbr.pm";
         locations."/" = {
           index = "index.html";
+          extraConfig = ''
+            autoindex on;
+          '';
         };
         extraConfig = nginxExtraConfig;
       };
