@@ -133,7 +133,7 @@ $(DOTGNUS):
 
 $(SRCHOME):
 	@echo "Make sure $(SRCHOME) exists"
-	@ln -s ${PWD} $(SRCHOME)
+	@-ln -s ${PWD} $(SRCHOME)
 
 $(SYNCDIR):
 	$(error $(SYNCDIR) is not present, you need to configure syncthing before running this command)
