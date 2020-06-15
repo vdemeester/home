@@ -27,6 +27,28 @@ let
     ];
   });
 
+  filesWWW = {
+    enableACME = true;
+    forceSSL = true;
+    root = "/home/vincent/desktop/sites/dl.sbr.pm";
+    locations."/" = {
+      index = "index.html";
+      extraConfig = ''
+        fancyindex on;
+        fancyindex_localtime on;
+        fancyindex_exact_size off;
+        fancyindex_header "/.fancyindex/header.html";
+        fancyindex_footer "/.fancyindex/footer.html";
+        # fancyindex_ignore "examplefile.html";
+        fancyindex_ignore "README.md";
+        fancyindex_ignore "HEADER.md";
+        fancyindex_ignore ".fancyindex";
+        fancyindex_name_length 255;
+      '';
+    };
+    extraConfig = nginxExtraConfig;
+  };
+
   sources = import ../nix/sources.nix;
 in
 {
@@ -93,27 +115,8 @@ in
       recommendedGzipSettings = true;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
-      virtualHosts."dl.sbr.pm" = {
-        enableACME = true;
-        forceSSL = true;
-        root = "/home/vincent/desktop/sites/dl.sbr.pm";
-        locations."/" = {
-          index = "index.html";
-          extraConfig = ''
-            fancyindex on;
-            fancyindex_localtime on;
-            fancyindex_exact_size off;
-            fancyindex_header "/.fancyindex/header.html";
-            fancyindex_footer "/.fancyindex/footer.html";
-            # fancyindex_ignore "examplefile.html";
-            fancyindex_ignore "README.md";
-            fancyindex_ignore "HEADER.md";
-            fancyindex_ignore ".fancyindex";
-            fancyindex_name_length 255;
-          '';
-        };
-        extraConfig = nginxExtraConfig;
-      };
+      virtualHosts."dl.sbr.pm" = filesWWW;
+      virtualHosts."files.sbr.pm" = filesWWW;
       virtualHosts."paste.sbr.pm" = {
         enableACME = true;
         forceSSL = true;
@@ -153,6 +156,18 @@ in
         root = "/home/vincent/desktop/sites/vincent.demeester.fr";
         locations."/" = {
           index = "index.html";
+          extraConfig = ''
+            fancyindex on;
+            fancyindex_localtime on;
+            fancyindex_exact_size off;
+            fancyindex_header "https://dl.sbr.pm/.fancyindex/header.html";
+            fancyindex_footer "https://dl.sbr.pm/.fancyindex/footer.html";
+            # fancyindex_ignore "examplefile.html";
+            fancyindex_ignore "README.md";
+            fancyindex_ignore "HEADER.md";
+            fancyindex_ignore ".fancyindex";
+            fancyindex_name_length 255;
+          '';
         };
         extraConfig = nginxExtraConfig;
       };
