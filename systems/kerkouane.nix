@@ -101,7 +101,13 @@ in
           index = "index.html";
           extraConfig = ''
             fancyindex on;
+            fancyindex_localtime on;
             fancyindex_exact_size off;
+            fancyindex_header "/.fancyindex/header.html";
+            fancyindex_footer "/.fancyindex/footer.html";
+            # fancyindex_ignore "examplefile.html";
+            fancyindex_ignore ".fancyindex";
+            fancyindex_name_length 255;
           '';
         };
         extraConfig = nginxExtraConfig;
