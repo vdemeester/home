@@ -106,6 +106,8 @@ in
             fancyindex_header "/.fancyindex/header.html";
             fancyindex_footer "/.fancyindex/footer.html";
             # fancyindex_ignore "examplefile.html";
+            fancyindex_ignore "README.md";
+            fancyindex_ignore "HEADER.md";
             fancyindex_ignore ".fancyindex";
             fancyindex_name_length 255;
           '';
