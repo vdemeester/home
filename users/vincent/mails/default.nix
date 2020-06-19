@@ -8,4 +8,6 @@ in
     enable = true;
     sync = sync;
   };
+  home.file.".gmailctl/config.jsonnet".source = ./config.jsonnet;
+  home.packages = with pkgs; [ gmailctl ];
 }
