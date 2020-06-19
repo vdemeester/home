@@ -66,8 +66,7 @@ local rh_mailing_list(name, label = '') =
   // Note: labels management is optional. If you prefer to use the
   // GMail interface to add and remove labels, you can safely remove
   // this section of the config.
-  rules: rh_mailing_list('memo-list', 'list/memo') +
-    rh_mailing_list('announce-list', 'announce') +
+  rules: rh_mailing_list('announce-list', 'announce') +
     rh_mailing_list('aos-announce') +
     rh_mailing_list('aos-devel') +
     rh_mailing_list('aos-int-services') +
@@ -105,10 +104,10 @@ local rh_mailing_list(name, label = '') =
     rh_mailing_list('devtools-architects') +
     rh_mailing_list('devtools-team', 'devtools') +
     rh_mailing_list('devx', 'devtools/devx') +
-    rh_mailing_list('serverless-interests', 'project/serverless') +
-    rh_mailing_list('serverless-dev', 'project/serverless/dev') +
-    rh_mailing_list('pipelines-interests', 'pipelines/serverless') +
-    rh_mailing_list('pipelines-dev', 'project/pipelines/dev') +
+    rh_mailing_list('serverless-interests', 'serverless') +
+    rh_mailing_list('serverless-dev', 'serverless/dev') +
+    rh_mailing_list('pipelines-interests', 'pipelines/interests') +
+    rh_mailing_list('pipelines-dev', 'pipelines/dev') +
     label_archive({from: 'do-not-reply@trello.com'}, '_tracker/trello') +
     label_archive({from: 'help-ops@redhat.com'}, '_tracker/rh_service_now') +
     label_archive({from: 'hss-jira@redhat.com'}, '_tracker/jira') +
@@ -132,16 +131,6 @@ local rh_mailing_list(name, label = '') =
       actions: {
         labels: [
           "project/knative"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "list:(devtools-build.redhat.com)"
-      },
-      actions: {
-        labels: [
-          "list/devtools/lead"
         ]
       }
     },
@@ -260,16 +249,6 @@ local rh_mailing_list(name, label = '') =
     },
     {
       filter: {
-        query: "list:(\u003ctechnical-users-list.redhat.com\u003e)"
-      },
-      actions: {
-        labels: [
-          "list/technical-users"
-        ]
-      }
-    },
-    {
-      filter: {
         query: "list:(\u003cgoogle-summer-of-code-mentors-list.googlegroups.com\u003e)"
       },
       actions: {
@@ -280,13 +259,6 @@ local rh_mailing_list(name, label = '') =
     }
   ],
   labels: [
-    {
-      name: "project/tekton",
-      color: {
-        background: "#16a765",
-        text: "#ffffff"
-      }
-    },
     {
       name: "area/admin",
       color: {
@@ -305,29 +277,12 @@ local rh_mailing_list(name, label = '') =
       name: "area/ce"
     },
     {
-      name: "area/order"
-    },
-    {
       name: "project/cdf"
-    },
-    {
-      name: "project/istio",
-      color: {
-        background: "#b6cff5",
-        text: "#0d3472"
-      }
     },
     {
       name: "event/kubecon",
       color: {
         background: "#b99aff",
-        text: "#ffffff"
-      }
-    },
-    {
-      name: "project/knative",
-      color: {
-        background: "#4986e7",
         text: "#ffffff"
       }
     },
@@ -381,21 +336,7 @@ local rh_mailing_list(name, label = '') =
       }
     },
     {
-      name: "project/kubernetes",
-      color: {
-        background: "#4986e7",
-        text: "#ffffff"
-      }
-    },
-    {
       name: "area/health"
-    },
-    {
-      name: "project/openshift-pipelines",
-      color: {
-        background: "#b99aff",
-        text: "#ffffff"
-      }
     },
     {
       name: "area/expense",
@@ -415,34 +356,10 @@ local rh_mailing_list(name, label = '') =
       name: "area/meetup"
     },
     {
-      name: "project/kubernetes/sig-cli",
-      color: {
-        background: "#4986e7",
-        text: "#ffffff"
-      }
-    },
-    {
-      name: "cloud/google",
-      color: {
-        background: "#4986e7",
-        text: "#ffffff"
-      }
-    },
-    {
       name: "area/conference",
       color: {
         background: "#e3d7ff",
         text: "#3d188e"
-      }
-    },
-    {
-      name: "list/technical-users"
-    },
-    {
-      name: "area/operators",
-      color: {
-        background: "#000000",
-        text: "#ffffff"
       }
     },
     {
@@ -452,19 +369,5 @@ local rh_mailing_list(name, label = '') =
         text: "#594c05"
       }
     },
-    {
-      name: "group/gsoc",
-      color: {
-        background: "#4986e7",
-        text: "#ffffff"
-      }
-    },
-    {
-      name: "area/github",
-      color: {
-        background: "#000000",
-        text: "#ffffff"
-      }
-    }
   ] + lib.rulesLabels(self.rules),
 }
