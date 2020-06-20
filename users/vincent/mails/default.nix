@@ -1,4 +1,4 @@
-{ hostname, ... }:
+{ hostname, pkgs, ... }:
 let
   sync = (hostname == "wakasu");
 in

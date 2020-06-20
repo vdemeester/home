@@ -45,7 +45,7 @@ in
   home-manager.users.vincent = lib.mkMerge (
     [
       (import ./core)
-      (import ./mails { hostname = config.networking.hostName; })
+      (import ./mails { hostname = config.networking.hostName; pkgs = pkgs; })
     ]
     ++ optionals config.profiles.dev.enable [ (import ./dev) ]
     ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
