@@ -8,7 +8,7 @@
 :CUSTOM_ID: h:0272c5ac-0b7f-4ebb-91f0-defa66c2d285
 :END:
 
-Veritas is the declarative configuration of my servers, desktops and laptops. This project is based
+~home~ is the declarative configuration of my servers, desktops and laptops. This project is based
 on the NixOS operating system and uses home-manager to manage my dotfiles, for both NixOS and
 non-NixOS hosts (like WSL).
 
