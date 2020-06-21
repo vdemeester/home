@@ -9,5 +9,11 @@ in
     sync = sync;
   };
   home.file.".gmailctl/config.jsonnet".source = ./config.jsonnet;
-  home.packages = with pkgs; [ gmailctl ];
+
+  xdg.configFile."nr/mails" = {
+    text = builtins.toJSON [
+      { cmd = "gmailctl"; chan = "unstable"; }
+    ];
+    onChange = "${pkgs.my.nr}/bin/nr mails";
+  };
 }
