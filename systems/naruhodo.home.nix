@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 
 with lib;
 let
@@ -10,7 +10,7 @@ in
   imports = [
     (import ../users/vincent/core)
     # mails
-    (import ../users/vincent/mails { inherit hostname; })
+    (import ../users/vincent/mails { inherit hostname pkgs; })
     # dev
     (import ../users/vincent/dev)
     # containers
