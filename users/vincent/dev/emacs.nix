@@ -34,7 +34,6 @@ in
       avy
       bbdb
       beginend
-      pkgs.bookmark-plus
       company
       company-emoji
       company-go
@@ -42,24 +41,28 @@ in
       delight
       dired-collapse
       dired-git-info
-      dired-quick-sort
       dired-narrow
+      dired-quick-sort
       dired-rsync
-      pkgs.dired-plus
-      dumb-jump
       direnv
       dockerfile-mode
+      dumb-jump
       easy-kill
+      esh-autosuggest
+      eshell-prompt-extras
       esup
       expand-region
+      flimenu
       flycheck
       flycheck-golangci-lint
       git-annex
       git-commit
       gitattributes-mode
       gitconfig-mode
-      gitignore-mode
       github-review
+      gitignore-mode
+      go-mode
+      gotest
       goto-last-change
       hardhat
       helpful
@@ -70,70 +73,58 @@ in
       icomplete-vertical
       iedit
       json-mode
+      magit
+      magit-annex
+      magit-popup
+      magit-todos
       markdown-mode
-      mpdel
-      multiple-cursors
+      minions
+      moody
+      mwim
+      nix-buffer
+      nix-mode
       nixpkgs-fmt
       no-littering
       ob-async
       ob-go
       ob-http
       orderless
-      orgit
-      org-plus-contrib
       org-capture-pop-frame
       org-gcal
       org-journal
+      org-plus-contrib
       org-ql
       org-ref
       org-roam
       org-super-agenda
+      org-super-agenda
+      org-tree-slide
       org-web-tools
+      orgit
       ox-pandoc
       pandoc-mode
-      projectile
-      projectile-ripgrep
       pdf-tools
+      pkgs.bookmark-plus
+      pkgs.dired-plus
+      projectile
       python-mode
       rainbow-delimiters
       rainbow-mode
-      region-bindings-mode
-      ripgrep
       rg
+      ripgrep
+      smartparens
+      symbol-overlay
       try
+      undo-tree
+      use-package
       visual-fill-column
       visual-regexp
+      vterm
       web-mode
       wgrep
       with-editor
       xterm-color
       yaml-mode
-      darkroom
-      eshell-prompt-extras
-      esh-autosuggest
-      flimenu
-      forge
-      go-mode
-      magit
-      magit-annex
-      magit-popup
-      magit-todos
-      minions
-      moody
-      mwim
-      nix-buffer
-      nix-mode
-      org-super-agenda
-      org-tree-slide
-      shr-tag-pre-highlight
-      ssh-config-mode
-      smartparens
-      symbol-overlay
-      undo-tree
-      use-package
-      # Highly experimental
-      vterm
-      gotest
     ];
   };
   services.emacs-server = {
