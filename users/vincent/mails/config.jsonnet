@@ -122,6 +122,7 @@ local rh_mailing_list(name, label = '') =
     label_archive({from: 'builds@travis-ci.com'}, '_build/travis') +
     label_archive({from: 'cvp-opts@redhat.com'}, '_build/cvp') +
     label_archive({from: 'buildsys@redhat.com'}, '_build/buildsys') +
+    label_archive({from: 'meet-recordings-noreply@google.com'}, '_recordings') +
     rh_mailing_list('bugzilla', '_tracker/bz') +
   [
     {
@@ -369,5 +370,6 @@ local rh_mailing_list(name, label = '') =
         text: "#594c05"
       }
     },
+    { name: "Notes" },
   ] + lib.rulesLabels(self.rules),
 }
