@@ -27,6 +27,9 @@ in
         enable = true;
         startWhenNeeded = false;
         forwardX11 = cfg.forwardX11;
+        extraConfig = ''
+          StreamLocalBindUnlink yes
+        '';
       };
       sshguard.enable = true;
     };
