@@ -54,7 +54,7 @@ in
       "10.100.0.*" = {
         forwardAgent = true;
       };
-    } // sshConfig; # FIXME with optional secrets // cfg.machines;
+    } // sshConfig;
     extraConfig = ''
       PreferredAuthentications gssapi-with-mic,publickey,password
       GSSAPIAuthentication yes
