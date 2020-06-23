@@ -638,7 +638,8 @@ With prefix argument, also display headlines without a TODO keyword."
 
 (use-package org-journal
   :bind
-  ("C-c n j" . org-journal-new-entry)
+  (("C-c n j" . org-journal-new-entry)
+   ("C-c o j" . org-journal-new-entry))
   :custom
   (org-journal-date-prefix "#+TITLE: ")
   (org-journal-file-format "%Y-%m-%d.private.org")
