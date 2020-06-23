@@ -18,9 +18,18 @@ in
     ../users/vincent/containers/openshift.nix
   ];
 
+  home.extraOutputsToInstall = [ "man" ];
   home.file.".local/share/applications/redhat-vpn.desktop".source = ./naruhodo/redhat-vpn.desktop;
 
   programs.bash.enable = lib.mkForce false;
   programs.man.enable = true;
-  home.extraOutputsToInstall = [ "man" ];
+
+  services = {
+    gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+      enableExtraSocket = true;
+      defaultCacheTtlSsh = 7200;
+    };
+  };
 }
