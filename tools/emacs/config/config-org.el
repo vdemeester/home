@@ -641,8 +641,9 @@ With prefix argument, also display headlines without a TODO keyword."
   (("C-c n j" . org-journal-new-entry)
    ("C-c o j" . org-journal-new-entry))
   :custom
-  (org-journal-date-prefix "#+TITLE: ")
-  (org-journal-file-format "%Y-%m-%d.private.org")
+  (org-journal-date-prefix "* ")
+  (org-journal-file-header "#+TITLE: %Y-%m Journal\n\n")
+  (org-journal-file-format "%Y-%m.private.org")
   (org-journal-dir org-notes-dir)
   (org-journal-date-format "%A, %d %B %Y")
   (org-journal-enable-agenda-integration t))
