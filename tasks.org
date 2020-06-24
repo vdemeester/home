@@ -641,3 +641,11 @@ CLOSED: [2020-06-06 Sat 16:38]
 :END:
 
 … or support home-manager alone on non-nixos systems in =./hack/systems=
+* TODO try =redo= on =src/home=
+:PROPERTIES:
+:CREATED:[2020-06-23 Tue 17:45]
+:END:
+
+It's easy to do with =nix-shell= anyway
+** [[https://apenwarr.ca/log/20101214][The only build system that might someday replace make... - apenwarr]]
+[2020-06-23 Tue 17:48]
