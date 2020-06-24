@@ -35,8 +35,6 @@
   (run-hooks 'contrib/after-load-theme-hook))
 
 (advice-add #'load-theme :after #'contrib/run-after-load-theme-hook)
-
-(add-to-list 'load-path (concat user-emacs-directory "lisp/modus-themes"))
 (require 'modus-operandi-theme)
 
 (defun sbr/modus-operandi ()

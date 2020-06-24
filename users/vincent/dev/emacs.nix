@@ -79,6 +79,7 @@ in
       magit-todos
       markdown-mode
       minions
+      modus-operandi-theme
       moody
       mwim
       nix-buffer
