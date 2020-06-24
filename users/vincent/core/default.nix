@@ -29,6 +29,7 @@
       scripts
       tree
       youtube-dl
+      my.batzconverter
     ];
   };
 
