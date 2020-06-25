@@ -2,14 +2,14 @@
 
 stdenv.mkDerivation rec {
   pname = "batzconverter";
-  version = "1.0";
+  version = "1.0.1";
   name = "${pname}-${version}";
 
   src = fetchFromGitHub {
     owner = "chmouel";
     repo = "batzconverter";
     rev = "${version}";
-    sha256 = "0alrxqhbi3ivx6a2n443rmry3y9b896lansmvfw6xwq7p1h7x22y";
+    sha256 = "0cngxk2z98d11vs5n9mbrk0qscrf0f14jg801im334mp33hd3ad4";
   };
 
   installPhase = ''
