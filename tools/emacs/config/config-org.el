@@ -37,10 +37,8 @@
          ("C-c o c" . org-capture))
   :config
   (setq org-agenda-files `(,org-projects-dir
-                           ,org-notes-dir
                            "~/src/home"
-                           "~/src/home/docs"
-                           "~/src/www/posts")
+                           "~/src/www/")
         org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$"
         org-use-speed-commands t
         org-special-ctrl-a/e t
@@ -642,11 +640,11 @@ With prefix argument, also display headlines without a TODO keyword."
    ("C-c o j" . org-journal-new-entry))
   :custom
   (org-journal-date-prefix "* ")
-  (org-journal-file-header "#+TITLE: %Y-%m Journal\n\n")
+  (org-journal-file-header "#+TITLE: %Y-v%m Journal\n\n")
   (org-journal-file-format "%Y-%m.private.org")
   (org-journal-dir org-notes-dir)
   (org-journal-date-format "%A, %d %B %Y")
-  (org-journal-enable-agenda-integration t))
+  (org-journal-enable-agenda-integration nil))
 
 
 (provide 'config-org)
