@@ -649,3 +649,16 @@ CLOSED: [2020-06-06 Sat 16:38]
 It's easy to do with =nix-shell= anyway
 ** [[https://apenwarr.ca/log/20101214][The only build system that might someday replace make... - apenwarr]]
 [2020-06-23 Tue 17:48]
+* TODO systems/hokkaido gnome
+:PROPERTIES:
+:CREATED:[2020-06-25 Thu 05:38]
+:END:
+
+- no desktop profile
+- gnome3
+  + how "sane" and stable is gnome on nixos ?
+- check how close to fedora we can get
+  + goal being : use nixos on naruhodo, have fedora as a lightweight VM
+  + need to identify requirements on naruhodo
+    - package list
+    - features (sharing, xorg/wayland,vpn, kerberos)
