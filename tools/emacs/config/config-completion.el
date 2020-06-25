@@ -242,11 +242,19 @@ normally would when calling `yank' followed by `yank-pop'."
          ("C-v" . icomplete-vertical-toggle)))
 ;; -UseIcompleteVertical
 
+(use-package avy-embark-occur
+  :load-path "~/.config/emacs/lisp/embark/" ; in development
+  :bind
+  (:map minibuffer-local-completion-map
+        ("'" . avy-embark-occur-choose)
+        ("\"" . avy-embark-occur-act)))
+
 (use-package embark
   :load-path "~/.config/emacs/lisp/embark/" ; in development
   :custom
   (embark-occur-initial-view-alist '((t . grid)))
-  (completing-read-function 'embark-completing-read)
+  (embark-occur-minibuffer-completion t)
+  ;; (completing-read-function 'embark-completing-read)
   :config
   (defun vde/embark-insert-exit ()
     "Like `embark-insert' but exits current recursive minibuffer."
