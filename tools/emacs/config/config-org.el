@@ -483,6 +483,9 @@ Switch projects and subprojects from STARTED back to TODO"
              org-babel-execute:sh
              org-babel-execute:shell
              org-babel-execute:zsh))
+(use-package ob-doc-makefile
+  :after org
+  :commands (org-babel-execute:makefile))
 ;; -OrgBabel
 
 ;; OrgExportCfg
