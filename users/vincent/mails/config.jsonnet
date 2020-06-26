@@ -57,6 +57,43 @@ local rh_mailing_list(name, label = '') =
     ]
 ;
 
+local google_groups(name, label = '') =
+    local labels =
+        if label == '' then
+           [ std.join('/', std.splitLimit(name, '-', 1) ) ]
+        else
+           [ label ]
+    ;
+
+    [
+        {
+          filter: {
+            and: [
+              { list: name + '.googlegroups.com' },
+            ],
+          },
+          actions: {
+            archive: false,
+            markSpam: false,
+            labels: labels
+          }
+        },
+        {
+          filter: {
+            and: [
+              { list: name + '.googlegroups.com' },
+              { to: '-me' },
+            ],
+          },
+          actions: {
+            archive: true,
+            markSpam: false,
+            labels: labels
+          }
+        }
+    ]
+;
+
 {
   version: "v1alpha3",
   author: {
@@ -106,10 +143,21 @@ local rh_mailing_list(name, label = '') =
     rh_mailing_list('devx', 'devtools/devx') +
     rh_mailing_list('serverless-interests', 'serverless') +
     rh_mailing_list('serverless-dev', 'serverless/dev') +
+    google_groups('knative-dev', 'knative/dev') +
+    google_groups('knative-users', 'knative/users') +
+    google_groups('istio-dev', 'istio/dev') +
+    google_groups('istio-users', 'istio/users') +
     rh_mailing_list('pipelines-interests', 'pipelines/interests') +
     rh_mailing_list('pipelines-dev', 'pipelines/dev') +
+    google_groups('tekton-dev', 'tekton/dev') +
+    google_groups('tekton-users', 'tekton/users') +
+    google_groups('tekton-governance', 'tekton/governance') +
+    google_groups('tekton-code-of-conduct', 'tekton/code-of-conduct') +
     rh_mailing_list('engineering-advocate', 'engineering-advocate') +
     rh_mailing_list('engineering-advocate-nomination', 'engineering-advocate') +
+    google_groups('kubernetes-sig-cli', 'kubernetes/sig/cli') +
+    google_groups('operator-framework', 'operator/dev') +
+    google_groups('google-summer-of-code-mentors-list', 'gsoc/mentors') +
     label_archive({from: 'do-not-reply@trello.com'}, '_tracker/trello') +
     label_archive({from: 'help-ops@redhat.com'}, '_tracker/rh_service_now') +
     label_archive({from: 'hss-jira@redhat.com'}, '_tracker/jira') +
@@ -129,26 +177,6 @@ local rh_mailing_list(name, label = '') =
   [
     {
       filter: {
-        query: "list:(\u003cknative-dev.googlegroups.com\u003e)"
-      },
-      actions: {
-        labels: [
-          "project/knative"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "list:(\u003cistio-dev.googlegroups.com\u003e)"
-      },
-      actions: {
-        labels: [
-          "project/istio"
-        ]
-      }
-    },
-    {
-      filter: {
         query: "list:(*.github.com)"
       },
       actions: {
@@ -156,27 +184,6 @@ local rh_mailing_list(name, label = '') =
         markRead: true,
         labels: [
           "area/github"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "list:(\u003cistio-users.googlegroups.com\u003e)"
-      },
-      actions: {
-        archive: true,
-        labels: [
-          "project/istio"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "list:(\u003cknative-users.googlegroups.com\u003e)"
-      },
-      actions: {
-        labels: [
-          "project/knative"
         ]
       }
     },
@@ -192,56 +199,6 @@ local rh_mailing_list(name, label = '') =
     },
     {
       filter: {
-        query: "list:(\u003ctekton-code-of-conduct.googlegroups.com\u003e)"
-      },
-      actions: {
-        labels: [
-          "project/tekton"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "list:(\u003ckubernetes-sig-cli.googlegroups.com\u003e)"
-      },
-      actions: {
-        labels: [
-          "project/kubernetes/sig-cli"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "list:(\u003ctekton-dev.googlegroups.com\u003e)"
-      },
-      actions: {
-        labels: [
-          "project/tekton"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "list:(\u003coperator-framework.googlegroups.com\u003e)"
-      },
-      actions: {
-        labels: [
-          "area/operators"
-        ]
-      }
-    },
-    {
-      filter: {
-        to: "tekton-governance@googlegroups.com"
-      },
-      actions: {
-        labels: [
-          "project/tekton"
-        ]
-      }
-    },
-    {
-      filter: {
         from: "customercare@ecompanystore.com"
       },
       actions: {
@@ -250,16 +207,6 @@ local rh_mailing_list(name, label = '') =
         ]
       }
     },
-    {
-      filter: {
-        query: "list:(\u003cgoogle-summer-of-code-mentors-list.googlegroups.com\u003e)"
-      },
-      actions: {
-        labels: [
-          "group/gsoc"
-        ]
-      }
-    }
   ],
   labels: [
     {
