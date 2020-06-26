@@ -108,6 +108,8 @@ local rh_mailing_list(name, label = '') =
     rh_mailing_list('serverless-dev', 'serverless/dev') +
     rh_mailing_list('pipelines-interests', 'pipelines/interests') +
     rh_mailing_list('pipelines-dev', 'pipelines/dev') +
+    rh_mailing_list('engineering-advocate', 'engineering-advocate') +
+    rh_mailing_list('engineering-advocate-nomination', 'engineering-advocate') +
     label_archive({from: 'do-not-reply@trello.com'}, '_tracker/trello') +
     label_archive({from: 'help-ops@redhat.com'}, '_tracker/rh_service_now') +
     label_archive({from: 'hss-jira@redhat.com'}, '_tracker/jira') +
