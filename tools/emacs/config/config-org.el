@@ -273,37 +273,6 @@
                  :empty-lines 1))
   ;; -OrgCaptureTask
 
-  ;; OrgCaptureJournalBase
-  (add-to-list 'org-capture-templates
-               `("j" "Journal"))
-  ;; -OrgCaptureJournalBase
-
-  ;; OrgCaptureJournalEntry
-  (add-to-list 'org-capture-templates
-               `("j" "Journal entry"))
-  (add-to-list 'org-capture-templates
-               `("jj" "Journal entry" entry
-                 (file+datetree ,org-journal-file)
-                 (file ,(concat user-emacs-directory "/etc/orgmode/journal.org"))
-                 :empty-lines 1 :clock-in t :clock-resume t))
-  ;; -OrgCaptureJournalEntry
-
-  ;; OrgCaptureWorklog
-  (add-to-list 'org-capture-templates
-               `("jw" "Worklog (journal) entry" entry
-                 (file+datetree ,org-journal-file)
-                 (file ,(concat user-emacs-directory "/etc/orgmode/worklog.org"))
-                 :unnarrowed t))
-  ;; -OrgCaptureWorklog
-
-  ;; OrgCaptureWeekly
-  (add-to-list 'org-capture-templates
-               `("je" "Weekly review" entry
-                 (file+datetree,org-journal-file)
-                 (file ,(concat user-emacs-directory "/etc/orgmode/weekly.org"))
-                 :clock-in t :clock-resume t :unnarrowed t))
-  ;; -OrgCaptureWeekly
-
   ;; OrgCaptureMeetingNote
   (add-to-list 'org-capture-templates
                `("m" "Meeting notes" entry
@@ -635,9 +604,27 @@ With prefix argument, also display headlines without a TODO keyword."
            :unnarrowed t))))
 
 (use-package org-journal
+  :commands (org-journal-new-entry org-capture)
+  :after (org-capture)
   :bind
   (("C-c n j" . org-journal-new-entry)
    ("C-c o j" . org-journal-new-entry))
+  :init
+  (defun org-journal-find-location ()
+    "Open today's journal, but inhibiting inserting the heading, leaving that to the template."
+    (org-journal-new-entry t)
+    ;; position pont on the journal's top-level heading so that org-capture will add the new entry as a child.
+    (goto-char (point-max)))
+  (add-to-list 'org-capture-templates
+               `("j" "Journal"))
+  (add-to-list 'org-capture-templates
+               `("jj" "Journal entry" entry (function org-journal-find-location)
+                 "* %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
+                 :empty-lines 1 :clock-in t :clock-resume t))
+  (add-to-list 'org-capture-templates
+               `("je" "Weekly review" entry (function org-journal-find-location)
+                 (file ,(expand-file-name "etc/orgmode/weekly.org" user-emacs-directory))
+                 :empty-lines 1 :clock-in t :clock-resume t))
   :custom
   (org-journal-date-prefix "* ")
   (org-journal-file-header "#+TITLE: %Y-v%m Journal\n\n")
@@ -647,5 +634,5 @@ With prefix argument, also display headlines without a TODO keyword."
   (org-journal-enable-agenda-integration nil))
 
 
-(provide 'config-org)
+  (provide 'config-org)
 ;;; config-org.el ends here
