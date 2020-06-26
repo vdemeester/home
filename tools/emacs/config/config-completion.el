@@ -282,8 +282,8 @@ normally would when calling `yank' followed by `yank-pop'."
               (:map minibuffer-local-map
                     (">" . embark-become))
               (:map minibuffer-local-completion-map
-                    (";" . embark-act-noexit)
-                    (":" . embark-act)
+                    ("M-;" . embark-act-noexit)
+                    ("M-:" . embark-act)
                     ("C-o" . embark-occur)
                     ("C-l" . embark-live-occur) ; only here for crm, really
                     ("M-e" . embark-export)
