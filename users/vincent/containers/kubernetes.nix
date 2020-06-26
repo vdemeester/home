@@ -10,6 +10,5 @@
     my.ko
     my.krew
     my.kss
-    my.kubernix
   ];
 }

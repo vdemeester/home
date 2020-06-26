@@ -60,6 +60,7 @@ in
         asciinema
         gnome3.zenity # use rofi instead
         oathToolkit
+        my.kubernix
       ];
     }]
     ++ optionals config.profiles.laptop.enable [{
