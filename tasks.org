@@ -662,3 +662,13 @@ It's easy to do with =nix-shell= anyway
   + need to identify requirements on naruhodo
     - package list
     - features (sharing, xorg/wayland,vpn, kerberos)
+** TODO Initial gnome3 setup
+
+** TODO gnome3 modules
+
+** TODO gnome settings
+
+** TODO boxes and libvirt
+** TODO redhat sepcifics
+
+** TODO Add gnome3 extensions
