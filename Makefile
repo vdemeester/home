@@ -65,11 +65,11 @@ install-hooks:
 	if [ -e .git ]; then nix-shell -p git --run 'git config core.hooksPath .githooks'; fi
 
 .PHONY: pre-commit
-pre-commit: README.md fmt update-docs
+pre-commit: README.md fmt
 
 .PHONY: fmt
 fmt:
-	nixpkgs-fmt *.nix lib machines modules overlays/*.nix overlays/emacs pkgs tmp tools
+	-nixpkgs-fmt *.nix nix lib overlays pkgs systems tools users
 
 # Cleaning
 .PHONY: clean
