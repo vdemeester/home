@@ -34,8 +34,18 @@
          ("C-c o r r" . org-refile)
          ("C-c o a" . org-agenda)
          ("<f12>" . org-agenda)
-         ("C-c o c" . org-capture))
+         ("C-c o c" . org-capture)
+         ("C-c o i p" . vde/org-project))
   :config
+  (define-skeleton vde/org-project
+    "new org-mode project"
+    nil
+    > "#+TITLE: " (skeleton-read "Title: ") \n
+    > "#+FILETAGS: " (skeleton-read "Tags: ") \n
+    > _ \n
+    > "#+BEGIN: clocktable :scope file :maxlevel 2 :emphasize nil :link t" \n
+    > "#+END:" \n
+    > _ \n)
   (setq org-agenda-files `(,org-projects-dir
                            "~/src/home"
                            "~/src/www/")
@@ -636,6 +646,5 @@ With prefix argument, also display headlines without a TODO keyword."
   (org-journal-date-format "%A, %d %B %Y")
   (org-journal-enable-agenda-integration nil))
 
-
-  (provide 'config-org)
+(provide 'config-org)
 ;;; config-org.el ends here
