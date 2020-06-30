@@ -631,6 +631,7 @@ This will allow to use hunspell, ispell, …
 
 Mirrors 👼
 cgit or custom
+
 * DONE Have a ./hack/home switch…
 CLOSED: [2020-06-06 Sat 16:38]
 :LOGBOOK:
@@ -641,7 +642,12 @@ CLOSED: [2020-06-06 Sat 16:38]
 :END:
 
 … or support home-manager alone on non-nixos systems in =./hack/systems=
-* TODO try =redo= on =src/home=
+* CANCELED try =redo= on =src/home=
+CLOSED: [2020-06-29 Mon 18:11]
+:LOGBOOK:
+- State "CANCELED"   from "TODO"       [2020-06-29 Mon 18:11] \\
+  Because… I don't have time :D
+:END:
 :PROPERTIES:
 :CREATED:[2020-06-23 Tue 17:45]
 :END:
@@ -662,13 +668,34 @@ It's easy to do with =nix-shell= anyway
   + need to identify requirements on naruhodo
     - package list
     - features (sharing, xorg/wayland,vpn, kerberos)
-** TODO Initial gnome3 setup
-
-** TODO gnome3 modules
-
-** TODO gnome settings
-
-** TODO boxes and libvirt
-** TODO redhat sepcifics
+** DONE Initial gnome3 setup
+CLOSED: [2020-06-29 Mon 18:11]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-06-29 Mon 18:11]
+:END:
 
 ** TODO Add gnome3 extensions
+** TODO gnome3 modules
+
+** TODO boxes and libvirt
+** TODO gnome settings
+
+** TODO redhat specifics
+
+* TODO Reset systems at boot
+
+- Looking at https://github.com/nix-community/impermanence
+- Test on hokkaido, replicate on others
+- *Use encryption*
+
+** [[https://grahamc.com/blog/erase-your-darlings][Erase your darlings: immutable infrastructure for mutable systems - Graham Christensen]]
+[2020-06-29 Mon 18:13]
+
+** [[https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html][Encypted Btrfs Root with Opt-in State on NixOS]]
+[2020-06-29 Mon 17:44]
+
+** [[https://elis.nu/blog/2020/05/nixos-tmpfs-as-root/][NixOS ❄: tmpfs as root]]
+[2020-06-29 Mon 17:46]
+
+** [[https://elis.nu/blog/2020/06/nixos-tmpfs-as-home/][NixOS ❄: tmpfs as home]]
+[2020-06-29 Mon 17:46]
