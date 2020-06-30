@@ -35,7 +35,9 @@
          ("C-c o a" . org-agenda)
          ("<f12>" . org-agenda)
          ("C-c o c" . org-capture)
-         ("C-c o i p" . vde/org-project))
+         ;; Skeletons
+         ("C-c o i p" . vde/org-project)
+         ("C-c o i n" . vde/org-www-post))
   :config
   (define-skeleton vde/org-project
     "new org-mode project"
@@ -46,6 +48,16 @@
     > "#+BEGIN: clocktable :scope file :maxlevel 2 :emphasize nil :link t" \n
     > "#+END:" \n
     > _ \n)
+  (define-skeleton vde/org-www-post
+    "new www post"
+    nil
+    > "#+title: " (skeleton-read "Title: ") \n
+    > "#+date: " (format-time-string "<%Y-%M-%d %a>") \n
+    > "#+filetags: " (skeleton-read "Tags: ") \n
+    > "#+setupfile: ../templates/post.org" \n
+    > _ \n
+    > "* Introduction"
+    )
   (setq org-agenda-files `(,org-projects-dir
                            "~/src/home"
                            "~/src/www/")
