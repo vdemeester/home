@@ -12,4 +12,5 @@ rec {
   gitignore = import sources.gitignore;
   nixos-hardware = import sources.nixos-hardware;
   nur = import sources.NUR;
+  nix-darwin = import sources.nix-darwin;
 }

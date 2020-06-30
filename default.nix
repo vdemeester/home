@@ -2,6 +2,7 @@
 , lib ? sources.lib
 , pkgs ? sources.pkgs { }
 , pkgs-unstable ? sources.pkgs-unstable { }
+, pkgs-darwin ? sources.nix-darwin
 , nixpkgs ? sources.nixpkgs { }
 }:
 with builtins; with lib;
@@ -10,20 +11,21 @@ let
   mkNixOS: make a nixos system build with the given name and cfg.
 
   cfg is an attributeSet:
-  - arch is architecture
-  - type is weither we want to use nixos (stable) or nixos-unstable
+  - arch is architecture (darwin is a special one)
+  - channel is the "channel" to use (nixos stable, nixos unstable, …)
+  - vm is whether it is a vm, or not
 
   Example:
     hokkaido = { arch = "x86_64-linux"; };
-    honshu = { arch = "x86_64-linux"; type = "unstable"; };
+    naruhodo = { arch = "x86_64-linux"; channel = "unstable"; };
   */
   mkNixOS = name: cfg:
     let
       configuration = ./systems + "/${name}.nix";
       system = cfg.arch;
-      # If type == unstable, use nixos-unstable (pkgs-unstable) otherwise use nixos (pkgs)
+      # If channel == unstable, use nixos-unstable (pkgs-unstable) otherwise use nixos (pkgs)
       p =
-        if cfg ? type && cfg.type == "unstable"
+        if cfg ? channel && cfg.channel == "unstable"
         then pkgs-unstable
         else pkgs;
       # If vm == true, build a VM, otherwise build the system
@@ -31,9 +33,15 @@ let
       main =
         if cfg ? vm && cfg.vm
         then nixos.vm
-        else nixos.config.system.build;
+        else
+          if system == "x86_64-darwin"
+          then (import (pkgs.darwin.path) { inherit nixpkgs configuration; }).system
+          else nixos.config.system.build;
     in
     main;
+  /*
+  mkSystem: make a system build with the given name and cfg.
+  */
   mkSystem = name: cfg:
     if cfg ? vm && cfg.vm
     then (mkNixOS name cfg)
