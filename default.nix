@@ -2,7 +2,7 @@
 , lib ? sources.lib
 , pkgs ? sources.pkgs { }
 , pkgs-unstable ? sources.pkgs-unstable { }
-, pkgs-darwin ? sources.nix-darwin
+, pkgs-darwin ? sources.nix-darwin { }
 , nixpkgs ? sources.nixpkgs { }
 }:
 with builtins; with lib;
@@ -35,8 +35,9 @@ let
         then nixos.vm
         else
           if system == "x86_64-darwin"
-          then (import (pkgs.darwin.path) { inherit nixpkgs configuration; }).system
-          else nixos.config.system.build;
+          then (pkgs.darwin { inherit nixpkgs configuration; }).system
+          else
+            nixos.config.system.build;
     in
     main;
   /*
