@@ -59,18 +59,6 @@
         "url": "https://github.com/nmattia/niv/archive/f73bf8d584148677b01859677a63191c31911eae.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "nix-darwin": {
-        "branch": "master",
-        "description": "nix modules for darwin",
-        "homepage": "",
-        "owner": "LnL7",
-        "repo": "nix-darwin",
-        "rev": "47fe6db9c9cd22c4ba57df3281f98f454880bea7",
-        "sha256": "198lxy1q7z6cmlyxd0rigrabjab4i49w2dk3xqm3bs4y0s0qimwy",
-        "type": "tarball",
-        "url": "https://github.com/LnL7/nix-darwin/archive/47fe6db9c9cd22c4ba57df3281f98f454880bea7.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "nixos": {
         "branch": "nixos-20.03",
         "description": "A read-only mirror of NixOS/nixpkgs tracking the released channels. Send issues and PRs to",
