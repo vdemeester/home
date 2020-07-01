@@ -28,6 +28,7 @@
 
     gnomeExtensions.sound-output-device-chooser
     gnomeExtensions.paperwm
+    my.gnome-shell-extension-shell
     gnome3.gnome-shell-extensions
 
     pop-gtk-theme

@@ -108,4 +108,6 @@ rec {
     containerd_1_4
     ;
   containerd = containerd_1_3;
+
+  gnome-shell-extension-shell = pkgs.callPackage ./gnome/extensions/shell { };
 }
