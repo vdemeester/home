@@ -158,6 +158,7 @@ local google_groups(name, label = '') =
     google_groups('kubernetes-sig-cli', 'kubernetes/sig/cli') +
     google_groups('operator-framework', 'operator/dev') +
     google_groups('google-summer-of-code-mentors-list', 'gsoc/mentors') +
+    rh_mailing_list('cpaas-ops', '_tracker/cpaas') +
     label_archive({from: 'do-not-reply@trello.com'}, '_tracker/trello') +
     label_archive({from: 'help-ops@redhat.com'}, '_tracker/rh_service_now') +
     label_archive({from: 'hss-jira@redhat.com'}, '_tracker/jira') +
