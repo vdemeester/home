@@ -668,6 +668,9 @@ It's easy to do with =nix-shell= anyway
   + need to identify requirements on naruhodo
     - package list
     - features (sharing, xorg/wayland,vpn, kerberos)
+
+I need naruhodo setup on hokkaido as much automated as possible.
+
 ** DONE Initial gnome3 setup
 CLOSED: [2020-06-29 Mon 18:11]
 :LOGBOOK:
@@ -675,13 +678,33 @@ CLOSED: [2020-06-29 Mon 18:11]
 :END:
 
 ** TODO Add gnome3 extensions
+
+- [ ] pomodoro (fixing it)
+- [ ] [[https://github.com/bjarosze/gnome-bluetooth-quick-connect][bluetooth quick connect]]
+- [ ] [[https://framagit.org/abakkk/DrawOnYourScreen][draw on you screen]]
+- [ ] [[https://github.com/mlutfy/hidetopbar][hide top bar]]
+- [ ] [[https://github.com/sindex/no-annoyance][noannoyance]]
+- [X] pop-os/shell
+- [X] sound-output-device-chooser
+- [X] paperwm ?
+- [-] transparent gnome panel
+
+** TODO gnome settings
+
+Check how to do this (dconf, gsettings/gconf)
+
+- [ ] keyboard shortcuts
+- [ ] other settings
+
 ** TODO gnome3 modules
 
-** TODO boxes and libvirt
-** TODO gnome settings
+Create a module (like desktop) or part of desktop
 
 ** TODO redhat specifics
 
+VPN
+
+** TODO [#C] boxes and libvirt
 * TODO Reset systems at boot
 
 - Looking at https://github.com/nix-community/impermanence
