@@ -654,6 +654,7 @@ With prefix argument, also display headlines without a TODO keyword."
   (org-journal-date-prefix "* ")
   (org-journal-file-header "#+TITLE: %Y-v%m Journal\n\n")
   (org-journal-file-format "%Y-%m.private.org")
+  (org-journal-file-type 'monthly)
   (org-journal-dir org-notes-dir)
   (org-journal-date-format "%A, %d %B %Y")
   (org-journal-enable-agenda-integration nil))
