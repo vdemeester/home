@@ -116,6 +116,7 @@ in
       '';
     };
   };
+  /*
   virtualisation.containers = {
     enable = true;
     registries = {
@@ -130,4 +131,5 @@ in
       };
     };
   };
+  */
 }
