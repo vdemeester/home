@@ -51,20 +51,14 @@ in
     ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
     ++ optionals config.services.xserver.desktopManager.gnome3.enable [ (import ./desktop/gnome.nix) ]
     ++ optionals (config.networking.hostName == "wakasu") [{
-      programs.google-chrome.enable = true;
       home.packages = with pkgs; [
-        openvpn
-        krb5
         libosinfo
-        virtmanager
-        thunderbird
         asciinema
-        gnome3.zenity # use rofi instead
         oathToolkit
         my.kubernix
       ];
     }]
-    ++ optionals config.profiles.laptop.enable [{
+    ++ optionals (config.profiles.laptop.enable && config.profiles.desktop.enable) [{
       # FIXME move this in its own file
       programs.autorandr.enable = true;
     }]
