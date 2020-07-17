@@ -44,17 +44,19 @@ in
     };
   };
   */
-
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/c44cdfec-b567-4059-8e66-1be8fec6342a";
+    device = "/dev/disk/by-uuid/6590b73d-72a4-4356-94b1-f56ac45c976d";
     fsType = "ext4";
     options = [ "noatime" "discard" ];
   };
+
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/E974-AB5D";
+    device = "/dev/disk/by-uuid/7FA5-145B";
     fsType = "vfat";
   };
-  swapDevices = [{ device = "/dev/disk/by-uuid/c8c3308a-6ca6-4669-bad3-37a225af4083"; }];
+
+  swapDevices = [{ device = "/dev/disk/by-uuid/720200fc-8f27-49a7-85bb-a406b6119d31"; }];
+
 
   profiles = {
     home = true;
