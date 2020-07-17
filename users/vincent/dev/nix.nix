@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     niv
     nixpkgs-fmt
-    nix-update
+    # nix-update #FIXME only available on unstable for now
   ];
   xdg.configFile."nr/dev.nix" = {
     text = builtins.toJSON [
