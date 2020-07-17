@@ -107,16 +107,6 @@ in
       endpointPort = endpointPort;
       endpointPublicKey = endpointPublicKey;
     };
-    xserver = {
-      videoDrivers = [ "nvidia" ];
-      dpi = 96;
-      serverFlagsSection = ''
-        Option "BlankTime" "0"
-        Option "StandbyTime" "0"
-        Option "SuspendTime" "0"
-        Option "OffTime" "0"
-      '';
-    };
   };
   /*
   virtualisation.containers = {
