@@ -55,7 +55,6 @@ in
         libosinfo
         asciinema
         oathToolkit
-        my.kubernix
       ];
     }]
     ++ optionals (config.profiles.laptop.enable && config.profiles.desktop.enable) [{
