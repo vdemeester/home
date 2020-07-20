@@ -162,5 +162,18 @@ questions.  Else use completion to select the tab to switch to."
   (moody-replace-vc-mode))
 ;; -UseMoody
 
+(use-package face-remap
+  :diminish buffer-face-mode            ; the actual mode
+  :commands prot/variable-pitch-mode
+  :config
+  (define-minor-mode prot/variable-pitch-mode
+    "Toggle `variable-pitch-mode', except for `prog-mode'."
+    :init-value nil
+    :global nil
+    (if prot/variable-pitch-mode
+        (unless (derived-mode-p 'prog-mode)
+          (variable-pitch-mode 1))
+      (variable-pitch-mode -1))))
+
 (provide 'config-appearance)
 ;;; config-appearance.el ends here

@@ -72,7 +72,18 @@ Things to test:
 - [ ] Red Hat VPN connection
 
 
-* TODO [#A] Experiment with Xpra on NixOS (wakasu)
+* DONE [#A] Reinstall wakasu
+CLOSED: [2020-07-17 Fri 13:25] SCHEDULED: <2020-07-17 Fri>
+:LOGBOOK:
+- State "DONE"       from "STARTED"    [2020-07-17 Fri 13:25]
+CLOCK: [2020-07-17 Fri 11:51]--[2020-07-17 Fri 13:25] =>  1:34
+:END:
+
+* DONE [#A] Experiment with Xpra on NixOS (wakasu)
+CLOSED: [2020-07-17 Fri 11:19]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-07-17 Fri 11:19]
+:END:
 :PROPERTIES:
 :CREATED:[2020-06-22 Mon 18:39]
 :END:
