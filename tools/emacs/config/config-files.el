@@ -11,13 +11,13 @@
   (setq-default view-read-only t))
 ;; -UseFiles
 
-;; UseDirenv
-(use-package direnv
-  :config
-  (setq-default direnv-always-show-summary t
-                direnv-show-paths-in-summary nil)
-  (direnv-mode))
-;; -UseDirenv
+(use-package envrc
+  :defer 2
+  :if (executable-find "direnv")
+  :bind (:map envrc-mode-map
+              ("C-c d" . envrc-command-map))
+  :config (envrc-global-mode))
+
 
 ;; UseHardHat
 (use-package hardhat

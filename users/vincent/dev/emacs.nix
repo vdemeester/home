@@ -44,10 +44,10 @@ in
       dired-narrow
       dired-quick-sort
       dired-rsync
-      direnv
       dockerfile-mode
       dumb-jump
       easy-kill
+      envrc
       esh-autosuggest
       eshell-prompt-extras
       esup

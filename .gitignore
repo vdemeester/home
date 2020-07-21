@@ -15,3 +15,4 @@ networking.nix
 .secrets
 hardware-configuration.nix
 /key.bin
+/tools/emacs/nix-buffer/
