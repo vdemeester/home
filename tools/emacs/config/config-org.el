@@ -14,6 +14,7 @@
 (defconst org-incubate-file (expand-file-name "incubate.org" org-projects-dir) "Ideas simmering on back burner.")
 (defconst org-journal-file (expand-file-name "journal.private.org" org-notes-dir) "Journaling stuff.")
 (defconst org-meeting-notes-file (expand-file-name "meetings.org" org-projects-dir) "Meeting notes stuff.")
+(defconst org-babel-library-file (expand-file-name "org_library_of_babel.org" org-notes-dir) "Org babel library.")
 ;; -OrgConstants
 
 ;; OrgRegisters
@@ -60,7 +61,9 @@
     > _ \n
     > "* Introduction"
     )
-
+  ;; Org Babel configurations
+  (when (file-exists-p org-babel-library-file)
+    (org-babel-lob-ingest org-babel-library-file))
   (defun my/org-agenda-files ()
     `(,org-projects-dir
       "~/src/home/tasks.org"
