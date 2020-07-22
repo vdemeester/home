@@ -255,7 +255,8 @@ using either KUBECONFIG or ~/.kube/config"
 
 (use-package vterm
   :commands (vterm vde/vterm-toggle)
-  :bind ("C-c t t" . vde/vterm-toggle)
+  :bind (("C-c t t" . vde/vterm-toggle)
+         ("C-c t r" . vde/run-in-vterm))
   :custom
   (vterm-kill-buffer-on-exit t)
   :config
@@ -278,7 +279,13 @@ toggle, the current window configuration is saved in a register."
            (other-window 1)
            (vterm 1)
            (other-window 1))))
-      (window-configuration-to-register ?Z))))
+      (window-configuration-to-register ?Z)))
+  (buffer-name)
+  (defun vde/run-in-vterm ()
+    (interactive)
+    (with-current-buffer "vterm"
+      (vterm-send-string (read-string "Command: "))
+      (vterm-send-C-j))))
 
 ;; for fish in ansi-term
 (add-hook 'term-mode-hook 'toggle-truncate-lines)
