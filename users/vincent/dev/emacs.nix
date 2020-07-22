@@ -108,7 +108,8 @@ let
     xterm-color
     yaml-mode
   ];
-in {
+in
+{
   home.file.".local/share/applications/org-protocol.desktop".source = ./emacs/org-protocol.desktop;
   home.file.".local/share/applications/ec.desktop".source = ./emacs/ec.desktop;
   home.file.".local/share/applications/capture.desktop".source = ./emacs/capture.desktop;
