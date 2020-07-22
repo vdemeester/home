@@ -254,9 +254,31 @@ using either KUBECONFIG or ~/.kube/config"
   (setq compilation-environment '("TERM=xterm-256color")))
 
 (use-package vterm
-  :commands (vterm)
+  :commands (vterm vde/vterm-toggle)
+  :bind ("C-c t t" . vde/vterm-toggle)
   :custom
-  (vterm-kill-buffer-on-exit t))
+  (vterm-kill-buffer-on-exit t)
+  :config
+  (defun vde/vterm-toggle ()
+    "Toggle between the main vterm buffer and the current buffer.
+If you are in a vterm buffer, switch the window configuration
+back to your code buffers. Otherwise, create at least one vterm
+buffer if it doesn't exist already, and switch to it. On every
+toggle, the current window configuration is saved in a register."
+    (interactive)
+    (if (eq major-mode 'vterm-mode)
+        (jump-to-register ?W)
+      ;; Save current window config and jump to shell
+      (window-configuration-to-register ?W)
+      (condition-case nil
+          (jump-to-register ?Z)
+        (error
+         (vterm)
+         (when (= (length (window-list)) 2)
+           (other-window 1)
+           (vterm 1)
+           (other-window 1))))
+      (window-configuration-to-register ?Z))))
 
 ;; for fish in ansi-term
 (add-hook 'term-mode-hook 'toggle-truncate-lines)
