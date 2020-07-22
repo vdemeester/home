@@ -1,4 +1,7 @@
 ;; Initialization
+;; :PROPERTIES:
+;; :CUSTOM_ID: h:1bb5a9c1-0629-4428-bd2c-73a5fbd968b9
+;; :END:
 ;; 
 ;; I am using the [[https://archive.casouri.cat/note/2020/painless-transition-to-portable-dumper/index.html][portable dump]] feature (/to speed things up/) *but* I want to also start
 ;; without =pdump=, so I need to take both cases into account.
@@ -176,6 +179,9 @@
   (require 'use-package))
 
 ;; Early environment setup
+;; :PROPERTIES:
+;; :CUSTOM_ID: h:859c42d4-876d-43b7-b8c9-8ee2977efb01
+;; :END:
 ;; 
 ;; I want to *force* ==SSH_AUTH_SOCK= in Emacs to use my gpg-agent.
 
