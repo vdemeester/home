@@ -1,6 +1,24 @@
 { config, lib, pkgs, ... }:
+
+with lib;
 let
   ca-bundle_crt = "/etc/ssl/certs/ca-bundle.crt";
+  redhat_folders = [
+    "src/github.com/containers"
+    "src/github.com/google"
+    "src/github.com/knative"
+    "src/github.com/kubernetes"
+    "src/github.com/openshift"
+    "src/github.com/openshift-knative"
+    "src/github.com/openshift-pipelines"
+    "src/github.com/operator-framework"
+    "src/github.com/redhat-developer"
+    "src/github.com/tektoncd"
+    "src/gitlab.cee.redhat.com"
+    "src/gitlab.corp.redhat.com"
+    "src/k8s.io"
+    "src/pkg.devel.redhat.com"
+  ];
 in
 {
   home.packages = with pkgs; [
@@ -110,64 +128,10 @@ in
       "url \"git@github.com:\"".insteadOf = "git://github.com/";
     };
 
-    includes = [
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/github.com/kubernetes/";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/k8s.io/";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/github.com/knative/";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/github.com/tektoncd/";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir/i:${config.home.homeDirectory}/src/github.com/google**";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/k8s.io/";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/github.com/minishift/";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/github.com/operator-framework/";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/github.com/openshift**";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/github.com/redhat**";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/github.com/containers/";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/gitlab.cee.redhat.com/";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/gitlab.corp.redhat.com/";
-      }
-      {
-        path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-        condition = "gitdir:${config.home.homeDirectory}/src/pkg.devel.redhat.com/";
-      }
-    ];
+    includes = [ ] ++ lists.forEach redhat_folders (x: {
+      path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
+      condition = "gitdir:${config.home.homeDirectory}/${x}";
+    });
     ignores = [
       "*.elc"
       "*.vo"
