@@ -6,6 +6,18 @@ let
     #!${pkgs.stdenv.shell}
     emacsclient -s /run/user/1000/emacs/org -n -F '((name . "capture") (width . 150) (height . 90))' -e '(org-capture)'
   '';
+  e = pkgs.writeScriptBin "e" ''
+    #!${pkgs.stdenv.shell}
+    emacs --dump-file=~/.config/emacs/emacs.pdmp
+  '';
+  et = pkgs.writeScriptBin "et" ''
+    #!${pkgs.stdenv.shell}
+    emacsclient -s /run/user/1000/emacs/org --tty $@
+  '';
+  ec = pkgs.writeScriptBin "ec" ''
+    #!${pkgs.stdenv.shell}
+    emacsclient -s /run/user/1000/emacs/org --create-frame $@
+  '';
   myExtraPackages = epkgs: with epkgs; [
     ace-window
     aggressive-indent
@@ -121,15 +133,14 @@ in
     zip
     # See if I can hide this under an option
     capture
+    e
+    ec
+    et
   ];
   programs.emacs = {
     enable = true;
     package = pkgs.my.emacs;
     extraPackages = myExtraPackages;
-  };
-  home.sessionVariables = {
-    EDITOR = "et";
-    ALTERNATE_EDITOR = "et";
   };
   services.emacs-server = {
     enable = true;
@@ -138,5 +149,9 @@ in
     shell = pkgs.zsh + "/bin/zsh -i -c";
     # FIXME do this in the derivation :)
     # extraOptions = "--dump-file=${config.home.homeDirectory}/.config/emacs/emacs.pdmp";
+  };
+  home.sessionVariables = {
+    EDITOR = "et";
+    ALTERNATE_EDITOR = "et";
   };
 }
