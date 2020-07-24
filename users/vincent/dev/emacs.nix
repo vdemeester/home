@@ -8,7 +8,7 @@ let
   '';
   e = pkgs.writeScriptBin "e" ''
     #!${pkgs.stdenv.shell}
-    emacs --dump-file=~/.config/emacs/emacs.pdmp
+    emacs --dump-file=~/.config/emacs/emacs.pdmp $@
   '';
   et = pkgs.writeScriptBin "et" ''
     #!${pkgs.stdenv.shell}
