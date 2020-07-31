@@ -189,6 +189,9 @@
   (setq org-tags-exclude-from-inheritance '("crypt")))
 ;; -OrgCrypt
 
+(use-package org-tempo
+  :after (org))
+
 ;; OrgAgenda
 (use-package org-agenda
   :after org
@@ -208,35 +211,19 @@
         org-agenda-sticky t
         org-super-agenda-header-separator ""
         org-agenda-custom-commands
-        `(("w" "Work agenda"
+        `(("w" "Agenda"
            ((agenda "")
-            (tags-todo "#work-#home-goals+TODO=\"STARTED\""
+            (tags-todo "-goals-incubate-inbox+TODO=\"STARTED\""
                        ((org-agenda-overriding-header "Ongoing")))
-            (tags-todo "#work-#home-goals+TODO=\"NEXT\""
+            (tags-todo "-goals-incubate-inbox+TODO=\"NEXT\""
                        ((org-agenda-overriding-header "Next")))
-            (tags-todo "#work-#home-goals"
+            (tags-todo "-goals-incubate-inbox"
                        ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
                         (org-agenda-overriding-header "Work"))))
            ((org-super-agenda-groups
              '((:name "Important" :priority "A")
                (:name "Done" :log closed)
                (:name "Scheduled" :time-grid t)
-               (:name "Red Hat" :tag "redhat")
-               (:name "Tekton" :tag "tektoncd")
-               (:habit t))))
-           (org-agenda-list))
-          ("n" "Personal agenda"
-           ((tags-todo "-#work-goals-incubate-inbox+TODO=\"STARTED\""
-                       ((org-agenda-overriding-header "Ongoing")))
-            (tags-todo "-#work-goals-incubate-inbox+TODO=\"NEXT\""
-                       ((org-agenda-overriding-header "Next")))
-            (tags-todo "-#work-goals-incubate-inbox"
-                       ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
-                        (org-agenda-overriding-header "Home"))))
-           ((org-super-agenda-groups
-             '((:name "Important" :priority "A")
-               (:name "Home" :tag "#home")
-               (:name "Writing" :tag "#writing")
                (:habit t))))
            (org-agenda-list)))))
 ;; -OrgAgenda
