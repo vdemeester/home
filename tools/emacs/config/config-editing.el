@@ -30,6 +30,25 @@
     (sp-local-pair "`" "'" :when '(sp-in-string-p sp-in-comment-p))))
 ;; -UseSmartParens
 
+(use-package color-identifiers-mode
+  :commands (color-identifiers-mode)
+  :config
+  (defun myfunc-color-identifiers-mode-hook ()
+    (let ((faces '(font-lock-comment-face font-lock-comment-delimiter-face font-lock-constant-face font-lock-type-face font-lock-function-name-face font-lock-variable-name-face font-lock-keyword-face font-lock-string-face font-lock-builtin-face font-lock-preprocessor-face font-lock-warning-face font-lock-doc-face font-lock-negation-char-face font-lock-regexp-grouping-construct font-lock-regexp-grouping-backslash)))
+      (dolist (face faces)
+        (face-remap-add-relative face '((:foreground "" :weight normal :slant normal)))))
+    (face-remap-add-relative 'font-lock-keyword-face '((:weight bold)))
+    (face-remap-add-relative 'font-lock-comment-face '((:slant italic)))
+    (face-remap-add-relative 'font-lock-builtin-face '((:weight bold)))
+    (face-remap-add-relative 'font-lock-preprocessor-face '((:weight bold)))
+    (face-remap-add-relative 'font-lock-function-name-face '((:slant italic)))
+    (face-remap-add-relative 'font-lock-string-face '((:slant italic)))
+    (face-remap-add-relative 'font-lock-constant-face '((:weight bold))))
+  (add-hook 'color-identifiers-mode-hook 'myfunc-color-identifiers-mode-hook)
+  :hook ((go-mode . color-identifiers-mode)
+         (js-mode . color-identifiers-mode)
+         (python-mode . color-identifiers-mode)))
+
 ;; UseAggressiveIndent
 (use-package aggressive-indent
   :bind ("C-c e i" . aggressive-indent-mode)

@@ -25,6 +25,7 @@ let
     avy
     bbdb
     beginend
+    color-identifiers-mode
     company
     company-emoji
     company-go
