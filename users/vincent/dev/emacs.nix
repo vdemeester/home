@@ -55,6 +55,7 @@ let
     github-review
     gitignore-mode
     go-mode
+    go-stacktracer
     gotest
     goto-last-change
     hardhat

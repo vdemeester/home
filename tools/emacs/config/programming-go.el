@@ -36,5 +36,8 @@
               ("C-c t f" . gotest-ui-current-file)
               ("C-c t p" . gotest-ui-current-project)))
 
+(use-package go-stacktracer
+  :commands (go-stacktracer-region))
+
 (provide 'programming-go)
 ;;; programming-go.el ends here
