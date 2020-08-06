@@ -3,11 +3,6 @@
 
 set -e
 
-echo ">>> scale machineset to 2"
-for machineset in $(oc get machineset -n openshift-machine-api -o name); do
-    oc scale --replicas=2 ${machineset} -n openshift-machine-api
-done
-
 echo ">>> install tekton in the cluster"
 # This is needed when we want to test a non-released version
 # cat <<EOF | oc apply -f-
