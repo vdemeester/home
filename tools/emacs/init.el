@@ -1,6 +1,7 @@
 ;; Initialization
 ;; :PROPERTIES:
 ;; :CUSTOM_ID: h:1bb5a9c1-0629-4428-bd2c-73a5fbd968b9
+;; :ID:       a8fe7fee-d339-4854-9b75-c627adce788a
 ;; :END:
 ;; 
 ;; I am using the [[https://archive.casouri.cat/note/2020/painless-transition-to-portable-dumper/index.html][portable dump]] feature (/to speed things up/) *but* I want to also start
@@ -91,6 +92,7 @@
 ;; Unicode all the way
 ;; :PROPERTIES:
 ;; :CUSTOM_ID: h:df45a01a-177d-4909-9ce7-a5423e0ea20f
+;; :ID:       e98f57c6-565a-4919-8ecb-f12e939dab03
 ;; :END:
 ;; 
 ;; By default, all my systems are configured and support =utf-8=, so let's just make it a
@@ -106,6 +108,7 @@
 ;; Package management with =use-package=
 ;; :PROPERTIES:
 ;; :CUSTOM_ID: h:112262a1-dd4d-4a50-a9e2-85b36bbbd95b
+;; :ID:       d2d75dfe-5085-4655-a81f-b6033f273f6f
 ;; :END:
 ;; 
 ;; =use-package= is a tool that streamlines the configuration of packages. It handles
@@ -181,6 +184,7 @@
 ;; Early environment setup
 ;; :PROPERTIES:
 ;; :CUSTOM_ID: h:859c42d4-876d-43b7-b8c9-8ee2977efb01
+;; :ID:       de0aad38-4742-4601-9fe6-c659ddc76bcb
 ;; :END:
 ;; 
 ;; I want to *force* ==SSH_AUTH_SOCK= in Emacs to use my gpg-agent.
@@ -191,6 +195,7 @@
 ;; =custom.el=
 ;; :PROPERTIES:
 ;; :CUSTOM_ID: h:1ddaf27e-ff7c-424e-8615-dd0bd22b685f
+;; :ID:       afd8123e-1461-4f65-a9b7-c8195f1054c8
 ;; :END:
 ;; 
 ;; When you install a package or use the various customisation interfaces to tweak things to
@@ -217,6 +222,7 @@
 ;; Remove built-in =org-mode=
 ;; :PROPERTIES:
 ;; :CUSTOM_ID: h:9462c0d7-03be-4231-8f22-ce1a04be32b1
+;; :ID:       b2b2ac61-2ce6-4a86-b67c-88592bc0f111
 ;; :END:
 ;; 
 ;; I want to make sure I am using the installed version of =orgmode= (from my org
@@ -234,6 +240,7 @@
 ;; Loading configuration files
 ;; :PROPERTIES:
 ;; :CUSTOM_ID: h:d6aebc56-aadb-4b01-8404-bb922d12f8a8
+;; :ID:       ca8dd6f8-47c1-40bd-932b-baf3fb9e6407
 ;; :END:
 ;; 
 ;; This =org-mode= document /tangles/ into several files in different folders :
@@ -319,6 +326,7 @@
 ;; Counting the time of loading
 ;; :PROPERTIES:
 ;; :CUSTOM_ID: h:2b645e95-6776-4f5b-a318-e5a915943881
+;; :ID:       2c7541e4-ed3c-497a-b078-732d18e82759
 ;; :END:
 
 

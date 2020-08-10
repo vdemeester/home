@@ -3,6 +3,7 @@
 ;; :header-args: :tangle ~/src/home/tools/emacs/early-init.el
 ;; :header-args+: :comments org
 ;; :CUSTOM_ID: h:ec67a339-378c-4c2c-93f8-9ce62308cccb
+;; :ID:       317fc8fd-1220-423d-8a45-497f951014ee
 ;; :END:
 ;; 
 ;; Starting with Emacs 27, an =early-init.el= file can be used to do early configuration
@@ -128,6 +129,10 @@ This is used internally by `sbr/modus-themes-toggle'."
 
 (defconst font-height 130
   "Default font-height to use.")
+(defconst font-family-mono "Ubuntu Mono"
+  "Default monospace font-family to use.")
+(defconst font-family-sans "Ubuntu Sans"
+  "Default sans font-family to use.")
 ;; Middle/Near East: שלום, السّلام عليكم
 (when (member "Noto Sans Arabic" (font-family-list))
   (set-fontset-font t 'arabic "Noto Sans Arabic"))
@@ -137,18 +142,17 @@ This is used internally by `sbr/modus-themes-toggle'."
 (when (member "Noto Sans Ethiopic" (font-family-list))
   (set-fontset-font t 'ethiopic "Noto Sans Ethiopic"))
 
-;; Default font is Ubuntu Mono (and Ubuntu Sans for variable-pitch)
-;; If Ubuntu Mono or Ubuntu Sans are not available, use the default Emacs face
-(when (member "Ubuntu Mono" (font-family-list))
+;; If font-family-mono or font-family-sans are not available, use the default Emacs face
+(when (member font-family-mono (font-family-list))
   (set-face-attribute 'default nil
-                      :family "Ubuntu Mono"
+                      :family font-family-mono
                       :height font-height)
   (set-face-attribute 'fixed-pitch nil
-                      :family "Ubuntu Mono"
+                      :family font-family-mono
                       :height font-height))
-(when (member "Ubuntu Sans" (font-family-list))
+(when (member font-family-sans (font-family-list))
   (set-face-attribute 'variable-pitch nil
-                      :family "Ubuntu Sans"
+                      :family font-family-sans
                       :height font-height
                       :weight 'regular))
 
