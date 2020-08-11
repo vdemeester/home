@@ -5,11 +5,11 @@ let
   emacs27 = (pkgs.emacs.override { srcRepo = true; }).overrideAttrs (
     old: {
       name = "emacs-dev";
-      version = "27.1-rc2";
+      version = "27.1";
       src = pkgs.fetchFromGitHub {
         owner = "emacs-mirror";
         repo = "emacs";
-        rev = "emacs-27.1-rc2";
+        rev = "emacs-27.1";
         sha256 = "1i50ksf96fxa3ymdb1irpc82vi67861sr4xlcmh9f64qw9imm3ks";
       };
       /*
