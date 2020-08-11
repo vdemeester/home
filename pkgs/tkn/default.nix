@@ -60,9 +60,4 @@ rec {
     sha256 = "11wcips37k1vfif2ckpdxgf1p5yh2zgccv3ngnl1jjm8kcqla40q";
     modSha = "160174vw34v9w53azkzslcskzhsk1dflccfbvl1l38xm624fj4lw";
   };
-  tkn_0_8 = makeOverridable tknGen {
-    version = "0.8.0";
-    sha256 = "00qznm02gsxvgxjakj7qpm8rgx82bnyycw4l7kpnrly5m07nm9gv";
-    modSha = "0a9m46aspqbvnnvhg6qv0adarr7plj91vknbz9idc8yz4sv9wi8j";
-  };
 }
