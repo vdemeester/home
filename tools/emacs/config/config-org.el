@@ -3,29 +3,30 @@
 ;;; Configuration of orgmode.
 ;;; Code:
 
-;; OrgConstants
-(defconst org-directory "~/desktop/org/" "org-mode directory, where most of the org-mode file lives")
-(defconst org-projects-dir (expand-file-name "projects" org-directory) "Primary tasks directory.")
-(defconst org-notes-dir (expand-file-name "notes" org-directory) "Directory of shareable, technical notes.")
-(defconst org-archive-dir (expand-file-name "archive" org-directory) "Directory of shareable, technical notes.")
-(defconst org-completed-dir (expand-file-name "projects" org-archive-dir) "Directory of completed project files.")
-(defconst org-inbox-file (expand-file-name "inbox.org" org-projects-dir) "New stuff collected in this file.")
-(defconst org-next-file (expand-file-name "next.org" org-projects-dir) "Todo *next* collected in this file.")
-(defconst org-incubate-file (expand-file-name "incubate.org" org-projects-dir) "Ideas simmering on back burner.")
-(defconst org-journal-file (expand-file-name "journal.private.org" org-notes-dir) "Journaling stuff.")
-(defconst org-meeting-notes-file (expand-file-name "meetings.org" org-projects-dir) "Meeting notes stuff.")
-(defconst org-babel-library-file (expand-file-name "org_library_of_babel.org" org-notes-dir) "Org babel library.")
-;; -OrgConstants
+(use-package s)
 
-;; OrgRegisters
+(defconst org-directory "~/desktop/org/"
+  "org-mode directory, where most of the org-mode file lives")
+(defconst org-projects-dir (expand-file-name "projects" org-directory)
+  "Primary tasks directory.")
+(defconst org-notes-dir (expand-file-name "notes" org-directory)
+  "Directory of shareable, technical notes.")
+(defconst org-archive-dir (expand-file-name "archive" org-directory)
+  "Directory of shareable, technical notes.")
+(defconst org-completed-dir (expand-file-name "projects" org-archive-dir)
+  "Directory of completed project files.")
+(defconst org-inbox-file (expand-file-name "inbox.org" org-projects-dir)
+  "New stuff collected in this file.")
+(defconst org-next-file (expand-file-name "next.org" org-projects-dir)
+  "Todo *next* collected in this file.")
+(defconst org-incubate-file (expand-file-name "incubate.org" org-projects-dir)
+  "Ideas simmering on back burner.")
+(defconst org-babel-library-file (expand-file-name "org_library_of_babel.org" org-notes-dir)
+  "Org babel library.")
 (set-register ?i `(file . ,org-inbox-file))
 (set-register ?I `(file . ,org-incubate-file))
 (set-register ?n `(file . ,org-next-file))
-(set-register ?j `(file . ,org-journal-file))
-;; -OrgRegisters
 
-;; OrgMain
-(use-package s)
 (use-package org
   :ensure org-plus-contrib ;; load from the package instead of internal
   :mode (("\\.org$" . org-mode)
@@ -132,9 +133,7 @@
         org-catch-invisible-edits 'error)
   (setcar (nthcdr 4 org-emphasis-regexp-components) 10)
   :hook (org-mode . vde/org-mode-hook))
-;; -OrgMain
 
-;; OrgHook
 (defun vde/org-mode-hook ()
   "Org-mode hook"
   (setq show-trailing-whitespace t)
@@ -147,9 +146,7 @@
          '(company-emoji company-capf company-files company-dabbrev))
     (company-mode 1)
     (add-hook 'before-save-hook #'save-and-update-includes nil 'make-it-local)))
-;; -OrgHook
 
-;; OrgId
 (use-package org-id
   :after (org)
   :config
@@ -179,20 +176,16 @@
     (interactive)
     (org-map-entries (lambda ()
                        (eos/org-custom-id-get (point) 'create)))))
-;; -OrgId
 
-;; OrgCrypt
 (use-package org-crypt
   :after (org)
   :config
   (org-crypt-use-before-save-magic)
   (setq org-tags-exclude-from-inheritance '("crypt")))
-;; -OrgCrypt
 
 (use-package org-tempo
   :after (org))
 
-;; OrgAgenda
 (use-package org-agenda
   :after org
   :commands (org-agenda)
@@ -226,9 +219,7 @@
                (:name "Scheduled" :time-grid t)
                (:habit t))))
            (org-agenda-list)))))
-;; -OrgAgenda
 
-;; OrgGcal
 (use-package org-gcal
   :after (org)
   :commands (org-gcal-fetch)
@@ -243,17 +234,13 @@
   (setq org-gcal-client-id "959564825992-kvc7ofe9640cpc8ibgjqqgpi15e89nkn.apps.googleusercontent.com"
         org-gcal-client-secret (get-authinfo "gcal.api" "9999")
         org-gcal-file-alist '(("vdemeest@redhat.com" . "~/desktop/org/projects/schedule.org"))))
-;; -OrgGcal
 
-;; OrgHabit
 (use-package org-habit
   :after (org)
   :config
   (setq org-habit-show-habits-only-for-today nil
         org-habit-graph-column 80))
-;; -OrgHabit
 
-;; OrgSrc
 (use-package org-src
   :after (org)
   :config
@@ -261,24 +248,18 @@
         org-src-tab-acts-natively t
         org-src-window-setup 'current-window
         org-edit-src-content-indentation 0))
-;; -OrgSrc
 
-;; OrgCaptureStart
 (use-package org-capture
   :after org
   :commands (org-capture)
   :config
-  ;; -OrgCaptureStart
 
-  ;; OrgCaptureOldTemplate
   (add-to-list 'org-capture-templates
                `("l" "Link" entry
                  (file ,org-inbox-file)
                  "* %a\n%U\n%?\n%i"
                  :empty-lines 1))
-  ;; -OrgCaptureOldTemplate
 
-  ;; OrgCaptureTask
   (add-to-list 'org-capture-templates
                `("t" "Tasks"))
   (add-to-list 'org-capture-templates
@@ -291,30 +272,19 @@
                  (file ,org-inbox-file)
                  "* TODO review gh:%^{issue} :review:\n:PROPERTIES:\n:CREATED:%U\n:END:\n\n%i\n%?\nFrom: %a"
                  :empty-lines 1))
-  ;; -OrgCaptureTask
 
-  ;; OrgCaptureMeetingNote
-  (add-to-list 'org-capture-templates
-               `("m" "Meeting notes" entry
-                 (file+datetree ,org-meeting-notes-file)
-                 (file ,(concat user-emacs-directory "/etc/orgmode/meeting-notes.org"))))
-  ;; -OrgCaptureMeetingNote
+  ;; (add-to-list 'org-capture-templates
+  ;;              `("m" "Meeting notes" entry
+  ;;                (file+datetree ,org-meeting-notes-file)
+  ;;                (file ,(concat user-emacs-directory "/etc/orgmode/meeting-notes.org"))))
 
-  ;; OrgCaptureBlog
   (add-to-list 'org-capture-templates
                `("w" "Writing"))
-  ;; -OrgCaptureBlog
-
-  ;; OrgCaptureEnd
   :bind (("C-c o c" . org-capture)))
-;; -OrgCaptureEnd
 
-;; OrgProtocol
 (use-package org-protocol
   :after org)
-;; -OrgProtocol
 
-;; OrgClock
 (use-package org-clock
   :after org
   :commands (org-clock-in org-clock-out org-clock-goto)
@@ -408,16 +378,12 @@ Switch projects and subprojects from STARTED back to TODO"
              (vde/is-project-p))
         "TODO"))))
   :bind (("<f11>" . org-clock-goto)))
-;; -OrgClock
 
-;; OrgAttach
 (use-package org-attach
   :after org
   :config
   (setq org-link-abbrev-alist '(("att" . org-attach-expand-link))))
-;; -OrgAttach
 
-;; OrgLinks
 ;; my personal
 (use-package ol-github
   :after (org))
@@ -452,9 +418,7 @@ Switch projects and subprojects from STARTED back to TODO"
 (use-package ol-notmuch
   :defer 2
   :after (org))
-;; -OrgLinks
 
-;; OrgBabel
 (use-package ob-async
   :after org
   :commands (ob-async-org-babel-execute-src-block))
@@ -506,15 +470,12 @@ Switch projects and subprojects from STARTED back to TODO"
 (use-package ob-doc-makefile
   :after org
   :commands (org-babel-execute:makefile))
-;; -OrgBabel
 
-;; OrgExportCfg
 (use-package ox-publish
   :after org
   :commands (org-publish org-publish-all org-publish-project org-publish-current-project org-publish-current-file)
   :config
   (setq org-html-coding-system 'utf-8-unix))
-;; -OrgExportCfg
 
 (use-package org
   :defer t
