@@ -92,9 +92,9 @@
 (advice-add #'load-theme :after #'contrib/run-after-load-theme-hook)
 (require 'modus-operandi-theme)
 
-(defun sbr/modus-operandi ()
+(defun vde/modus-operandi ()
   "Enable some Modus Operandi variables and load the theme.
-This is used internally by `sbr/modus-themes-toggle'."
+This is used internally by `vde/modus-themes-toggle'."
   (setq modus-operandi-theme-slanted-constructs t
         modus-operandi-theme-bold-constructs t
         modus-operandi-theme-visible-fringes nil
@@ -111,7 +111,7 @@ This is used internally by `sbr/modus-themes-toggle'."
         modus-operandi-theme-scale-4 1.2)
   (load-theme 'modus-operandi t))
 
-(defun sbr/modus-operandi-custom ()
+(defun vde/modus-operandi-custom ()
   "Customize modus-operandi theme"
   (if (member 'modus-operandi custom-enabled-themes)
       (modus-operandi-theme-with-color-variables ; this macro allows us to access the colour palette
@@ -124,8 +124,8 @@ This is used internally by `sbr/modus-themes-toggle'."
          `(whitespace-indentation ((,class (:background "#ffffff" :foreground "#cccccc"))))
          ))))
 
-(add-hook 'contrib/after-load-theme-hook 'sbr/modus-operandi-custom)
-(sbr/modus-operandi)
+(add-hook 'contrib/after-load-theme-hook 'vde/modus-operandi-custom)
+(vde/modus-operandi)
 
 (defconst font-height 130
   "Default font-height to use.")

@@ -57,12 +57,12 @@
   (setq-default custom-safe-themes t)
   (setq-default custom--inhibit-theme-enable nil)
 
-  (defun sbr/before-load-theme (&rest args)
+  (defun vde/before-load-theme (&rest args)
     "Clear existing theme settings instead of layering them.
 Ignores `ARGS'."
     (mapc #'disable-theme custom-enabled-themes))
 
-  (advice-add 'load-theme :before #'sbr/before-load-theme))
+  (advice-add 'load-theme :before #'vde/before-load-theme))
 ;; -UseTheme
 
 ;; UseWindowDivider
@@ -87,7 +87,7 @@ Ignores `ARGS'."
   (setq-default tab-bar-tab-hints nil)
   (setq-default tab-bar-tab-name-function 'tab-bar-tab-name-all)
 
-  (defun sbr/icomplete-tab-bar-tab-dwim ()
+  (defun vde/icomplete-tab-bar-tab-dwim ()
     "Do-What-I-Mean function for getting to a `tab-bar-mode' tab.
 If no other tab exists, create one and switch to it.  If there is
 one other tab (so two in total) switch to it without further
@@ -104,7 +104,7 @@ questions.  Else use completion to select the tab to switch to."
              (tab-bar-switch-to-tab
               (completing-read "Select tab: " tabs nil t))))))
 
-  :bind (("C-x t t" . sbr/icomplete-tab-bar-tab-dwim)
+  :bind (("C-x t t" . vde/icomplete-tab-bar-tab-dwim)
          ("C-x t s" . tab-switcher)))
 ;; -UseTabbar
 

@@ -69,16 +69,16 @@
 
 ;; UseWhitespace
 (use-package whitespace
-  :commands (whitespace-mode sbr/toggle-invisibles)
+  :commands (whitespace-mode vde/toggle-invisibles)
   :config
   (setq-default whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark))
-  (defun sbr/toggle-invisibles ()
+  (defun vde/toggle-invisibles ()
     "Toggles the display of indentation and space characters."
     (interactive)
     (if (bound-and-true-p whitespace-mode)
         (whitespace-mode -1)
       (whitespace-mode)))
-  :bind ("<f6>" . sbr/toggle-invisibles))
+  :bind ("<f6>" . vde/toggle-invisibles))
 ;; -UseWhitespace
 
 ;; UseExpandRegion
@@ -127,13 +127,13 @@
   :hook (prog-mode . display-line-numbers-mode)
   :config
   (setq-default display-line-numbers-type 'relative)
-  (defun sbr/toggle-line-numbers ()
+  (defun vde/toggle-line-numbers ()
     "Toggles the display of line numbers.  Applies to all buffers."
     (interactive)
     (if (bound-and-true-p display-line-numbers-mode)
         (display-line-numbers-mode -1)
       (display-line-numbers-mode)))
-  :bind ("<f7>" . sbr/toggle-line-numbers))
+  :bind ("<f7>" . vde/toggle-line-numbers))
 
 (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
