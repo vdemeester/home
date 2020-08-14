@@ -26,7 +26,6 @@
 (set-register ?i `(file . ,org-inbox-file))
 (set-register ?I `(file . ,org-incubate-file))
 (set-register ?n `(file . ,org-next-file))
-
 (use-package org
   :ensure org-plus-contrib ;; load from the package instead of internal
   :mode (("\\.org$" . org-mode)
@@ -146,46 +145,6 @@
          '(company-emoji company-capf company-files company-dabbrev))
     (company-mode 1)
     (add-hook 'before-save-hook #'save-and-update-includes nil 'make-it-local)))
-
-(use-package org-id
-  :after (org)
-  :config
-  (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
-  (defun eos/org-custom-id-get (&optional pom create prefix)
-    "Get the CUSTOM_ID property of the entry at point-or-marker POM.
-   If POM is nil, refer to the entry at point. If the entry does
-   not have an CUSTOM_ID, the function returns nil. However, when
-   CREATE is non nil, create a CUSTOM_ID if none is present
-   already. PREFIX will be passed through to `org-id-new'. In any
-   case, the CUSTOM_ID of the entry is returned."
-    (interactive)
-    (org-with-point-at pom
-      (let ((id (org-entry-get nil "CUSTOM_ID")))
-        (cond
-         ((and id (stringp id) (string-match "\\S-" id))
-          id)
-         (create
-          (setq id (org-id-new (concat prefix "h")))
-          (org-entry-put pom "CUSTOM_ID" id)
-          (org-id-add-location id (buffer-file-name (buffer-base-buffer)))
-          id)))))
-
-  (defun eos/org-add-ids-to-headlines-in-file ()
-    "Add CUSTOM_ID properties to all headlines in the
-   current file which do not already have one."
-    (interactive)
-    (org-map-entries (lambda ()
-                       (eos/org-custom-id-get (point) 'create)))))
-
-(use-package org-crypt
-  :after (org)
-  :config
-  (org-crypt-use-before-save-magic)
-  (setq org-tags-exclude-from-inheritance '("crypt")))
-
-(use-package org-tempo
-  :after (org))
-
 (use-package org-agenda
   :after org
   :commands (org-agenda)
@@ -219,7 +178,6 @@
                (:name "Scheduled" :time-grid t)
                (:habit t))))
            (org-agenda-list)))))
-
 (use-package org-gcal
   :after (org)
   :commands (org-gcal-fetch)
@@ -234,21 +192,6 @@
   (setq org-gcal-client-id "959564825992-kvc7ofe9640cpc8ibgjqqgpi15e89nkn.apps.googleusercontent.com"
         org-gcal-client-secret (get-authinfo "gcal.api" "9999")
         org-gcal-file-alist '(("vdemeest@redhat.com" . "~/desktop/org/projects/schedule.org"))))
-
-(use-package org-habit
-  :after (org)
-  :config
-  (setq org-habit-show-habits-only-for-today nil
-        org-habit-graph-column 80))
-
-(use-package org-src
-  :after (org)
-  :config
-  (setq org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-src-window-setup 'current-window
-        org-edit-src-content-indentation 0))
-
 (use-package org-capture
   :after org
   :commands (org-capture)
@@ -282,9 +225,11 @@
                `("w" "Writing"))
   :bind (("C-c o c" . org-capture)))
 
+
+(use-package org-capture-pop-frame
+  :after org)
 (use-package org-protocol
   :after org)
-
 (use-package org-clock
   :after org
   :commands (org-clock-in org-clock-out org-clock-goto)
@@ -378,12 +323,18 @@ Switch projects and subprojects from STARTED back to TODO"
              (vde/is-project-p))
         "TODO"))))
   :bind (("<f11>" . org-clock-goto)))
-
-(use-package org-attach
-  :after org
+(use-package org-habit
+  :after (org)
   :config
-  (setq org-link-abbrev-alist '(("att" . org-attach-expand-link))))
-
+  (setq org-habit-show-habits-only-for-today nil
+        org-habit-graph-column 80))
+(use-package org-src
+  :after (org)
+  :config
+  (setq org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-src-window-setup 'current-window
+        org-edit-src-content-indentation 0))
 ;; my personal
 (use-package ol-github
   :after (org))
@@ -418,7 +369,8 @@ Switch projects and subprojects from STARTED back to TODO"
 (use-package ol-notmuch
   :defer 2
   :after (org))
-
+(use-package orgit
+  :after org)
 (use-package ob-async
   :after org
   :commands (ob-async-org-babel-execute-src-block))
@@ -470,62 +422,6 @@ Switch projects and subprojects from STARTED back to TODO"
 (use-package ob-doc-makefile
   :after org
   :commands (org-babel-execute:makefile))
-
-(use-package ox-publish
-  :after org
-  :commands (org-publish org-publish-all org-publish-project org-publish-current-project org-publish-current-file)
-  :config
-  (setq org-html-coding-system 'utf-8-unix))
-
-(use-package org
-  :defer t
-  :config
-
-  (defvar org-capture-templates (list))
-  (setq org-protocol-default-template-key "l")
-
-  ;; images
-  (setq org-image-actual-width nil
-        org-startup-with-inline-images nil)
-
-  ;; Tasks (-> inbox)
-
-  ;; Journal
-
-  (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" ":END:"))
-  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" "#\\+END_SRC"))
-  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" "#\\+END_EXAMPLE"))
-
-  ;; org-links
-  ;; from http://endlessparentheses.com/use-org-mode-links-for-absolutely-anything.html
-  (org-link-set-parameters "tag"
-                           :follow #'endless/follow-tag-link)
-  (defun endless/follow-tag-link (tag)
-    "Display a list of TODO headlines with tag TAG.
-With prefix argument, also display headlines without a TODO keyword."
-    (org-tags-view (null current-prefix-arg) tag))
-
-  (org-link-set-parameters
-   "org"
-   :complete (lambda () (+org-link-read-file "org" org-directory))
-   :follow   (lambda (link) (find-file (expand-file-name link org-directory)))
-   :face     (lambda (link)
-               (if (file-exists-p (expand-file-name link org-directory))
-                   'org-link
-                 'error)))
-  (defun +org-link-read-file (key dir)
-    (let ((file (read-file-name (format "%s: " (capitalize key)) dir)))
-      (format "%s:%s"
-              key
-              (file-relative-name file dir))))
-  )
-
-(use-package org-capture-pop-frame
-  :after org)
-
-(use-package orgit
-  :after org)
-
 (use-package org-roam
   :commands (org-roam org-roam-build-cache)
   ;; :hook
@@ -586,7 +482,6 @@ With prefix argument, also display headlines without a TODO keyword."
            :file-name "${slug}.private"
            :head "#+TITLE: ${title}\n"
            :unnarrowed t))))
-
 (use-package org-journal
   :commands (org-journal-new-entry org-capture)
   :after (org-capture)
@@ -603,7 +498,7 @@ With prefix argument, also display headlines without a TODO keyword."
                `("j" "Journal"))
   (add-to-list 'org-capture-templates
                `("jj" "Journal entry" entry (function org-journal-find-location)
-                 "* %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
+                 "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
                  :empty-lines 1 :clock-in t :clock-resume t))
   (add-to-list 'org-capture-templates
                `("je" "Weekly review" entry (function org-journal-find-location)
@@ -617,6 +512,94 @@ With prefix argument, also display headlines without a TODO keyword."
   (org-journal-dir org-notes-dir)
   (org-journal-date-format "%A, %d %B %Y")
   (org-journal-enable-agenda-integration nil))
+(use-package org-id
+  :after (org)
+  :config
+  (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+  (defun eos/org-custom-id-get (&optional pom create prefix)
+    "Get the CUSTOM_ID property of the entry at point-or-marker POM.
+   If POM is nil, refer to the entry at point. If the entry does
+   not have an CUSTOM_ID, the function returns nil. However, when
+   CREATE is non nil, create a CUSTOM_ID if none is present
+   already. PREFIX will be passed through to `org-id-new'. In any
+   case, the CUSTOM_ID of the entry is returned."
+    (interactive)
+    (org-with-point-at pom
+      (let ((id (org-entry-get nil "CUSTOM_ID")))
+        (cond
+         ((and id (stringp id) (string-match "\\S-" id))
+          id)
+         (create
+          (setq id (org-id-new (concat prefix "h")))
+          (org-entry-put pom "CUSTOM_ID" id)
+          (org-id-add-location id (buffer-file-name (buffer-base-buffer)))
+          id)))))
+
+  (defun eos/org-add-ids-to-headlines-in-file ()
+    "Add CUSTOM_ID properties to all headlines in the
+   current file which do not already have one."
+    (interactive)
+    (org-map-entries (lambda ()
+                       (eos/org-custom-id-get (point) 'create)))))
+(use-package org-crypt
+  :after (org)
+  :config
+  (org-crypt-use-before-save-magic)
+  (setq org-tags-exclude-from-inheritance '("crypt")))
+(use-package org-tempo
+  :after (org))
+(use-package org-attach
+  :after org
+  :config
+  (setq org-link-abbrev-alist '(("att" . org-attach-expand-link))))
+(use-package ox-publish
+  :after org
+  :commands (org-publish org-publish-all org-publish-project org-publish-current-project org-publish-current-file)
+  :config
+  (setq org-html-coding-system 'utf-8-unix))
+
+(use-package org
+  :defer t
+  :config
+
+  (defvar org-capture-templates (list))
+  (setq org-protocol-default-template-key "l")
+
+  ;; images
+  (setq org-image-actual-width nil
+        org-startup-with-inline-images nil)
+
+  ;; Tasks (-> inbox)
+
+  ;; Journal
+
+  (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" ":END:"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" "#\\+END_SRC"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" "#\\+END_EXAMPLE"))
+
+  ;; org-links
+  ;; from http://endlessparentheses.com/use-org-mode-links-for-absolutely-anything.html
+  (org-link-set-parameters "tag"
+                           :follow #'endless/follow-tag-link)
+  (defun endless/follow-tag-link (tag)
+    "Display a list of TODO headlines with tag TAG.
+With prefix argument, also display headlines without a TODO keyword."
+    (org-tags-view (null current-prefix-arg) tag))
+
+  (org-link-set-parameters
+   "org"
+   :complete (lambda () (+org-link-read-file "org" org-directory))
+   :follow   (lambda (link) (find-file (expand-file-name link org-directory)))
+   :face     (lambda (link)
+               (if (file-exists-p (expand-file-name link org-directory))
+                   'org-link
+                 'error)))
+  (defun +org-link-read-file (key dir)
+    (let ((file (read-file-name (format "%s: " (capitalize key)) dir)))
+      (format "%s:%s"
+              key
+              (file-relative-name file dir))))
+  )
 
 (provide 'config-org)
 ;;; config-org.el ends here
