@@ -20,6 +20,8 @@ let
       configureFlags = old.configureFlags ++ [
         "--with-xft"
         "--with-gpm=no"
+        # "--with-nativecomp" # emacs 28
+        "--with-mailutils"
       ];
       buildInputs = old.buildInputs ++ [ pkgs.jansson ];
       patches = [
