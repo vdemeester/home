@@ -22,6 +22,7 @@ let
   myExtraPackages = epkgs: with epkgs; [
     ace-window
     aggressive-indent
+    annotate
     async
     avy
     bbdb
