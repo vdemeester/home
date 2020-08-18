@@ -1,8 +1,10 @@
 ;;; config-projects.el --- -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Project related configuration.
-;;; Using projectile now, might use projects later
+;;; This is mainly using projectile now, but built-in projects module seems promising for long-term.
 ;;; Code:
+
+
 (use-package projectile
   :commands
   (projectile-ack

@@ -1,4 +1,4 @@
-;;; config-org.el --- -*- lexical-binding: t -*-
+;;; config-org.el --- -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Configuration of orgmode.
 ;;; Code:
