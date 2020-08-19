@@ -7,7 +7,9 @@
 (use-package dired
   :commands (dired find-name-dired)
   :bind (("C-c RET" . vde/open-in-external-app)
-         ("C-c f g"    . vde/dired-get-size)
+         ("C-c f g" . vde/dired-get-size)
+         ("M-s d" . vde/dired-fd-dirs)
+         ("M-s z" . vde/dired-fd-files-and-dirs)
          ("C-c f f"    . find-name-dired)
          (:map dired-mode-map
                ("M-p"         . vde/dired-up)
@@ -85,7 +87,50 @@
          "Size of all marked files: %s"
          (progn
            (re-search-backward "\\(^[0-9.,]+[A-Za-z]+\\).*total$")
-           (match-string 1)))))))
+           (match-string 1))))))
+  (defmacro vde/dired-fd (name doc prompt &rest flags)
+    "Make commands for selecting 'fd' results with completion.
+NAME is how the function should be named.  DOC is the function's
+documentation string.  PROMPT describes the scope of the query.
+FLAGS are the command-line arguments passed to the 'fd'
+executable, each of which is a string."
+    `(defun ,name (&optional arg)
+       ,doc
+       (interactive "P")
+       (let* ((vc (vc-root-dir))
+              (dir (expand-file-name (if vc vc default-directory)))
+              (regexp (read-regexp
+                       (format "%s matching REGEXP in %s: " ,prompt
+                               (propertize dir 'face 'bold))))
+              (names (process-lines "fd" ,@flags regexp dir))
+              (buf "*FD Dired*"))
+         (if names
+             (if arg
+                 (dired (cons (generate-new-buffer-name buf) names))
+               (icomplete-vertical-do ()
+                 (find-file
+                  (completing-read (format "Items matching %s (%s): "
+                                           (propertize regexp 'face 'success)
+                                           (length names))
+                                   names nil t)))))
+         (user-error (format "No matches for « %s » in %s" regexp dir)))))
+
+  (vde/dired-fd
+   vde/dired-fd-dirs
+   "Search for directories in VC root or PWD.
+With \\[universal-argument] put the results in a `dired' buffer.
+This relies on the external 'fd' executable."
+   "Subdirectories"
+   "-i" "-H" "-a" "-t" "d" "-c" "never")
+
+  (vde/dired-fd
+   vde/dired-fd-files-and-dirs
+   "Search for files and directories in VC root or PWD.
+With \\[universal-argument] put the results in a `dired' buffer.
+This relies on the external 'fd' executable."
+   "Files and dirs"
+   "-i" "-H" "-a" "-t" "d" "-t" "f" "-c" "never")
+  )
 ;; -UseDired
 
 ;; UseFindDired
@@ -172,6 +217,29 @@
   :bind (:map dired-mode-map
               ("r" . dired-rsync)))
 ;; -UseDiredRsync
+
+(use-package dired-subtree
+  :after dired
+  :config
+  (setq dired-subtree-use-backgrounds nil)
+  :bind (:map dired-mode-map
+              ("<tab>" . dired-subtree-toggle)
+              ("<C-tab>" . dired-subtree-cycle)
+              ("<S-iso-lefttab>" . dired-subtree-remove)))
+
+(use-package diredfl
+  :commands (diredfl-mode)
+  :config
+  (setq diredfl-ignore-compressed-flag nil)
+  :hook (dired-mode-hook . diredfl-mode))
+
+(use-package trashed
+  :commands (trashed)
+  :config
+  (setq trashed-action-confirmer 'y-or-n-p)
+  (setq trashed-use-header-line t)
+  (setq trashed-sort-key '("Date deleted" . t))
+  (setq trashed-date-format "%Y-%m-%d %H:%M:%S"))
 
 (provide 'config-dired)
 ;; config-dired.el ends here
