@@ -22,7 +22,6 @@ let
   myExtraPackages = epkgs: with epkgs; [
     ace-window
     aggressive-indent
-    annotate
     async
     avy
     bbdb
@@ -33,11 +32,13 @@ let
     company-go
     dash
     delight
+    diredfl
     dired-collapse
     dired-git-info
     dired-narrow
     dired-quick-sort
     dired-rsync
+    dired-subtree
     dockerfile-mode
     dumb-jump
     easy-kill
@@ -113,6 +114,7 @@ let
     scratch
     smartparens
     symbol-overlay
+    trashed
     try
     undo-tree
     use-package
