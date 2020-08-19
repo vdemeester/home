@@ -150,5 +150,34 @@ aggressive fuzzy-style matching for this particular command."
   :config
   (flimenu-global-mode 1))
 
+(use-package man
+  :commands (man)
+  :bind (:map Man-mode-map
+              ("i" . Man-goto-section)
+              ("g" . Man-update-manpage)))
+
+(use-package pulse
+  :config
+  (defface vde/pulse-line-modus-theme
+    '((t :inherit modus-theme-subtle-green :extend t))
+    "Ad-hoc face for `vde/pulse-line'.
+This is done because it is not possible to highlight empty lines
+without the `:extend' property.")
+
+  (defun vde/pulse-line (&optional face)
+    "Temporarily highlight the current line."
+    (interactive)
+    (let ((start (if (eobp)
+                     (line-beginning-position 0)
+                   (line-beginning-position)))
+          (end (line-beginning-position 2))
+          (pulse-delay .04)
+          (face
+           (if face
+               face
+             'vde/pulse-line-modus-theme)))
+      (pulse-momentary-highlight-region start end face)))
+  :bind ("<C-escape>" . vde/pulse-line))
+
 (provide 'config-navigating)
 ;;; config-navigating.el ends here
