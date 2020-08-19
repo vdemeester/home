@@ -110,6 +110,7 @@ let
     rainbow-mode
     rg
     ripgrep
+    scratch
     smartparens
     symbol-overlay
     try
