@@ -65,9 +65,9 @@ Meant to economise on key bindings."
         (vde/occur-url)
       (vde/occur-browse-url-in-buffer)))
 
-  :hook ((occur-mode-hook . hl-line-mode)
-         (occur-mode-hook . (lambda ()
-                              (toggle-truncate-lines t))))
+  :hook ((occur-mode . hl-line-mode)
+         (occur-mode . (lambda ()
+                         (toggle-truncate-lines t))))
   :bind (("M-s u" . vde/occur-visit-or-list-urls)
          ("M-s M-o" . multi-occur)
          :map occur-mode-map
@@ -139,11 +139,11 @@ aggressive fuzzy-style matching for this particular command."
       (icomplete-vertical-do (:height (/ (frame-height) 4))
         (call-interactively 'imenu))))
 
-  :hook ((imenu-after-jump-hook . (lambda ()
-                                    (when (and (eq major-mode 'org-mode)
-                                               (org-at-heading-p))
-                                      (org-show-entry)
-                                      (org-reveal t)))))
+  :hook ((imenu-after-jump . (lambda ()
+                               (when (and (eq major-mode 'org-mode)
+                                          (org-at-heading-p))
+                                 (org-show-entry)
+                                 (org-reveal t)))))
   :bind ("C-'" . prot/imenu-vertical))
 
 (use-package flimenu

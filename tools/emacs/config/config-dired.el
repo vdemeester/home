@@ -231,7 +231,7 @@ This relies on the external 'fd' executable."
   :commands (diredfl-mode)
   :config
   (setq diredfl-ignore-compressed-flag nil)
-  :hook (dired-mode-hook . diredfl-mode))
+  :hook (dired-mode . diredfl-mode))
 
 (use-package trashed
   :commands (trashed)

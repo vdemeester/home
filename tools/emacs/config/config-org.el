@@ -498,7 +498,7 @@ and thus keeping the configuration source up-to-date"
     (mapc (lambda (x) (org-babel-tangle-file x))
           (ignore-errors
             (directory-files-recursively org-notes-dir "\.org$"))))
-  :hook ((kill-emacs-hook . vde/tangle-all-notes)))
+  :hook ((kill-emacs . vde/tangle-all-notes)))
 (use-package org-journal
   :commands (org-journal-new-entry org-capture)
   :after (org-capture)
@@ -603,7 +603,7 @@ and thus keeping the configuration source up-to-date"
     (mapc (lambda (x) (org-babel-tangle-file x))
           (ignore-errors
             (directory-files-recursively org-notes-dir "\.org$"))))
-  :hook ((kill-emacs-hook . vde/tangle-all-notes)))
+  :hook ((kill-emacs . vde/tangle-all-notes)))
 
 (use-package org
   :defer t
