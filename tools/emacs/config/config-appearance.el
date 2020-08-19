@@ -188,16 +188,30 @@ questions.  Else use completion to select the tab to switch to."
 
 (use-package face-remap
   :diminish buffer-face-mode            ; the actual mode
-  :commands prot/variable-pitch-mode
+  :commands vde/variable-pitch-mode
   :config
-  (define-minor-mode prot/variable-pitch-mode
+  (define-minor-mode vde/variable-pitch-mode
     "Toggle `variable-pitch-mode', except for `prog-mode'."
     :init-value nil
     :global nil
-    (if prot/variable-pitch-mode
+    (if vde/variable-pitch-mode
         (unless (derived-mode-p 'prog-mode)
           (variable-pitch-mode 1))
       (variable-pitch-mode -1))))
+
+
+(use-package tooltip
+  :config
+  (setq tooltip-delay 0.5)
+  (setq tooltip-short-delay 0.5)
+  (setq x-gtk-use-system-tooltips nil)
+  (setq tooltip-frame-parameters
+        '((name . "tooltip")
+          (internal-border-width . 6)
+          (border-width . 0)
+          (no-special-glyphs . t)))
+  :hook (after-init-hook . tooltip-mode))
+
 
 (provide 'config-appearance)
 ;;; config-appearance.el ends here
