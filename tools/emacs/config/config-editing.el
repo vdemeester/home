@@ -295,7 +295,7 @@ If region is active, add its contents to the new buffer."
           (comment-region (point-at-bol) (point-at-eol)))
         (forward-line 2))
       (rename-buffer (format "*Scratch for %s*" mode) t)))
-  :hook (scratch-create-buffer-hook . vde/scratch-buffer-setup)
+  :hook (scratch-create-buffer . vde/scratch-buffer-setup)
   :bind ("C-c s" . scratch))
 
 (provide 'config-editing)
