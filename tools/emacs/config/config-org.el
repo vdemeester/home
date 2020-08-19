@@ -593,17 +593,6 @@ file which do not already have one."
           (monthname " *" day ", *" year "[^0-9]")
           (year "[-/]" month "[-/]" day "[^0-9]")
           (dayname "\\W"))))
-(use-package org
-  :config
-  (defun vde/tangle-all-notes ()
-    "Produce files from my notes folder.
-This function will attempt to tangle all org files from `org-notes-dir'. The
-assumption is that those will generate configuration file (in `~/src/home'),
-and thus keeping the configuration source up-to-date"
-    (mapc (lambda (x) (org-babel-tangle-file x))
-          (ignore-errors
-            (directory-files-recursively org-notes-dir "\.org$"))))
-  :hook ((kill-emacs . vde/tangle-all-notes)))
 
 (use-package org
   :defer t
