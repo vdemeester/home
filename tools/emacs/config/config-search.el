@@ -79,6 +79,11 @@ confines of word boundaries (e.g. multiple words)."
          ("M-s r p" . rg-project)
          ("M-s r s" . rg-dwiw))
   :config
+  (setq rg-group-result t)
+  (setq rg-hide-command t)
+  (setq rg-show-columns nil)
+  (setq rg-show-header t)
+  (setq rg-default-alias-fallback "all")
   (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
   (cl-pushnew '("gotest" . "*_test.go") rg-custom-type-aliases)
   (with-eval-after-load 'projectile
