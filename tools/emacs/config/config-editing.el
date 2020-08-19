@@ -298,5 +298,9 @@ If region is active, add its contents to the new buffer."
   :hook (scratch-create-buffer . vde/scratch-buffer-setup)
   :bind ("C-c s" . scratch))
 
+(use-package subword
+  :diminish
+  :hook (prog-mode-hook . subword-mode))
+
 (provide 'config-editing)
 ;;; config-editing.el ends here
