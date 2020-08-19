@@ -1,6 +1,6 @@
 ;;; programming-web.el --- -*- lexical-binding: t -*-
 ;;; Commentary:
-;;; Web related configuration
+;;; Programming the Web related configuration
 ;;; Code:
 
 (use-package web-mode
