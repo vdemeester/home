@@ -112,6 +112,7 @@ let
     rg
     ripgrep
     scratch
+    shr-tag-pre-highlight
     smartparens
     symbol-overlay
     trashed
