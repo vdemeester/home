@@ -8,8 +8,8 @@
   :hook ((yaml-mode . highlight-indentation-mode)
          (yaml-mode . highlight-indentation-current-column-mode)))
 
-(use-package toml-mode
-  :mode "\\.to?ml\\'")
+(use-package conf-mode
+  :mode ("\\.to?ml\\'" . conf-toml-mode))
 
 (provide 'programming-config)
 ;;; programming-config.el ends here
