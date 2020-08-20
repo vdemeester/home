@@ -43,17 +43,20 @@
 (use-package color-identifiers-mode
   :commands (color-identifiers-mode)
   :config
+  (setq-default color-identifiers:num-colors 15
+                color-identifiers:min-color-saturation 0.1
+                color-identifiers:max-color-saturation 0.9)
   (defun myfunc-color-identifiers-mode-hook ()
     (let ((faces '(font-lock-comment-face font-lock-comment-delimiter-face font-lock-constant-face font-lock-type-face font-lock-function-name-face font-lock-variable-name-face font-lock-keyword-face font-lock-string-face font-lock-builtin-face font-lock-preprocessor-face font-lock-warning-face font-lock-doc-face font-lock-negation-char-face font-lock-regexp-grouping-construct font-lock-regexp-grouping-backslash)))
       (dolist (face faces)
         (face-remap-add-relative face '((:foreground "" :weight normal :slant normal)))))
-    (face-remap-add-relative 'font-lock-keyword-face '((:weight bold)))
+    (face-remap-add-relative 'font-lock-keyword-face '((:weight bold :slant normal :foreground "#666666")))
     (face-remap-add-relative 'font-lock-comment-face '((:slant italic)))
-    (face-remap-add-relative 'font-lock-builtin-face '((:weight bold)))
+    (face-remap-add-relative 'font-lock-builtin-face '((:weight bold :foreground "#666666")))
     (face-remap-add-relative 'font-lock-preprocessor-face '((:weight bold)))
-    (face-remap-add-relative 'font-lock-function-name-face '((:slant italic)))
-    (face-remap-add-relative 'font-lock-string-face '((:slant italic)))
-    (face-remap-add-relative 'font-lock-constant-face '((:weight bold))))
+    (face-remap-add-relative 'font-lock-function-name-face '((:underline t)))
+    (face-remap-add-relative 'font-lock-string-face '((:weight normal :foreground "#333333")))
+    (face-remap-add-relative 'font-lock-constant-face '((:foreground "#666666" :slant italic))))
   (add-hook 'color-identifiers-mode-hook 'myfunc-color-identifiers-mode-hook)
   :hook ((go-mode . color-identifiers-mode)
          (js-mode . color-identifiers-mode)
