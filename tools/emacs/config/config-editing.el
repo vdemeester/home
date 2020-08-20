@@ -4,6 +4,16 @@
 ;;; Code:
 (setq-default enable-remote-dir-locals t)
 
+;; When finding file in non-existing directory, offer to create the
+;; parent directory.
+(defun with-buffer-name-prompt-and-make-subdirs ()
+  (let ((parent-directory (file-name-directory buffer-file-name)))
+    (when (and (not (file-exists-p parent-directory))
+               (y-or-n-p (format "Directory `%s' does not exist! Create it? " parent-directory)))
+      (make-directory parent-directory t))))
+
+(add-to-list 'find-file-not-found-functions #'with-buffer-name-prompt-and-make-subdirs)
+
 ;; UseSmartParens
 (use-package smartparens
   :commands (smartparens-mode smartparens-global-mode show-smartparens-global-mode
