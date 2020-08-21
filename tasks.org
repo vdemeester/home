@@ -1,7 +1,6 @@
 #+TITLE: Home tasks
 #+FILETAGS: #home infra configuration dotfiles
 
-
 * TODO [#A] systems/naruhodo gnome
 :PROPERTIES:
 :CREATED:[2020-06-25 Thu 05:38]
