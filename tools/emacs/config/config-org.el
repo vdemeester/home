@@ -497,8 +497,7 @@ assumption is that those will generate configuration file (in `~/src/home'),
 and thus keeping the configuration source up-to-date"
     (mapc (lambda (x) (org-babel-tangle-file x))
           (ignore-errors
-            (directory-files-recursively org-notes-dir "\.org$"))))
-  :hook ((kill-emacs . vde/tangle-all-notes)))
+            (directory-files-recursively org-notes-dir "\.org$")))))
 (use-package org-journal
   :commands (org-journal-new-entry org-capture)
   :after (org-capture)
