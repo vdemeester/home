@@ -293,6 +293,8 @@ toggle, the current window configuration is saved in a register."
 (use-package tramp
   :defer t
   :config
+  (setq-default tramp-use-ssh-controlmaster-options nil ; Don't override SSH config.
+                tramp-default-method "ssh") ; ssh is faster than scp and supports ports.
   (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
   (add-to-list 'tramp-remote-path "~/.nix-profile/bin")
   (add-to-list 'tramp-remote-path "~/bin"))
