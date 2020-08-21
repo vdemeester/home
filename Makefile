@@ -1,5 +1,4 @@
 # Makefile for home
-
 # Variables
 EMACS =
 ifndef EMACS
