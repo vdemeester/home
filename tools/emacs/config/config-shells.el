@@ -150,6 +150,9 @@ The EShell is renamed to match that directory to make multiple windows easier."
   :after eshell
   :config (setq eshell-hist-ignoredups t))
 
+(use-package em-tramp
+  :after eshell)
+
 (use-package em-term
   :after eshell
   :config
@@ -296,6 +299,8 @@ toggle, the current window configuration is saved in a register."
   (setq-default tramp-use-ssh-controlmaster-options nil ; Don't override SSH config.
                 tramp-default-method "ssh") ; ssh is faster than scp and supports ports.
   (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
+  (add-to-list 'tramp-remote-path "/etc/profiles/per-user/root/bin/")
+  (add-to-list 'tramp-remote-path "/etc/profiles/per-user/vincent/bin/")
   (add-to-list 'tramp-remote-path "~/.nix-profile/bin")
   (add-to-list 'tramp-remote-path "~/bin"))
 
