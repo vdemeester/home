@@ -130,7 +130,7 @@ in
 
     includes = [ ] ++ lists.forEach redhat_folders (x: {
       path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
-      condition = "gitdir:${config.home.homeDirectory}/${x}";
+      condition = "gitdir:${config.home.homeDirectory}/${x}/**";
     });
     ignores = [
       "*.elc"
