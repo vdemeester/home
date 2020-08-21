@@ -263,6 +263,58 @@ using either KUBECONFIG or ~/.kube/config"
   :custom
   (vterm-kill-buffer-on-exit t)
   :config
+  (defun vde/vterm-tramp-get-method-parameter (method param)
+    "Return the method parameter PARAM.
+If the `tramp-methods' entry does not exist, return NIL."
+    (let ((entry (assoc param (assoc method tramp-methods))))
+      (when entry (cadr entry))))
+  ;; TODO: hook into projectile-run-vterm instead
+  ;; Also, look into vterm-toggle way of doing things.. I thing it is trying to be too smart about it..
+  ;; I prefer an easy projectile integration (or projects integration)
+  (defun vde/vterm ()
+    ""
+    (interactive)
+    (let* ((dir (expand-file-name default-directory))
+           cd-cmd cur-host vterm-dir vterm-host cur-user cur-port remote-p cur-method login-cmd)
+      (if (ignore-errors (file-remote-p dir))
+          (with-parsed-tramp-file-name dir nil
+            (setq remote-p t)
+            (setq cur-host host)
+            (setq cur-method (tramp-find-method method user cur-host))
+            (setq cur-user (or (tramp-find-user cur-method user cur-host) ""))
+            (setq cur-port (or port ""))
+            (setq dir localname))
+        (setq cur-host (system-name)))
+      (setq login-cmd (vde/vterm-tramp-get-method-parameter cur-method 'tramp-login-program))
+      (setq cd-cmd (concat " cd " (shell-quote-argument dir)))
+      (setq shell-buffer (format "vterm %s %s" cur-host dir))
+      (if (buffer-live-p shell-buffer)
+          (switch-to-buffer shell-buffer)
+        (progn
+          (message (format "buffer '%s' doesn't exists" shell-buffer))
+          (vterm shell-buffer)
+          (with-current-buffer shell-buffer
+            (message (format "%s" remote-p))
+            (when remote-p
+              (let* ((method (if (string-equal login-cmd "ssh") "ssh" cur-method))
+                     (login-opts (vde/vterm-tramp-get-method-parameter method 'tramp-login-args))
+                     (login-shell (vde/vterm-tramp-get-method-parameter method 'tramp-remote-shell))
+                     (login-shell-args (tramp-get-sh-extra-args login-shell))
+                     ;; (vterm-toggle-tramp-get-method-parameter cur-method 'tramp-remote-shell)
+                     (spec (format-spec-make
+			                ?h cur-host ?u cur-user ?p cur-port ?c ""
+			                ?l (concat login-shell " " login-shell-args)))
+                     (cmd
+                      (concat login-cmd " "
+                              (mapconcat
+		                       (lambda (x)
+			                     (setq x (mapcar (lambda (y) (format-spec y spec)) x))
+			                     (unless (member "" x) (string-join x " ")))
+		                       login-opts " "))))
+                (vterm-send-string cmd)
+                (vterm-send-return)))
+            (vterm-send-string cd-cmd)
+            (vterm-send-return))))))
   (defun vde/vterm-toggle ()
     "Toggle between the main vterm buffer and the current buffer.
 If you are in a vterm buffer, switch the window configuration
