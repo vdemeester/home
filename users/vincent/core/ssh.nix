@@ -19,6 +19,8 @@ in
     serverAliveInterval = 60;
     hashKnownHosts = true;
     userKnownHostsFile = "${config.xdg.configHome}/ssh/known_hosts";
+    controlMaster = "auto";
+    controlPersist = "10m";
     controlPath = "${config.home.homeDirectory}/.ssh/sockets/%u-%l-%r@%h:%p";
     matchBlocks = {
       "github.com" = {
@@ -59,6 +61,7 @@ in
       PreferredAuthentications gssapi-with-mic,publickey,password
       GSSAPIAuthentication yes
       GSSAPIDelegateCredentials yes
+      StreamLocalBindUnlink yes
     '';
   };
 }
