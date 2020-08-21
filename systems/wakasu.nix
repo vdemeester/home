@@ -87,6 +87,7 @@ in
         enable = true;
         bindTcp = "0.0.0.0:10000";
         pulseaudio = true;
+        extraOptions = [ "--video-scaling=0" "--min-quality=85" "--desktop-scaling=off" ];
       };
     };
     logind.extraConfig = ''
