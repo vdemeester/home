@@ -57,7 +57,6 @@ in
 
   swapDevices = [{ device = "/dev/disk/by-uuid/720200fc-8f27-49a7-85bb-a406b6119d31"; }];
 
-
   profiles = {
     home = true;
     dev.enable = true;
@@ -68,6 +67,8 @@ in
     syncthing.enable = true;
     ssh = { enable = true; forwardX11 = true; };
     virtualization = { enable = true; nested = true; listenTCP = true; };
+    kubernetes.enable = true;
+    openshift.enable = true;
     yubikey.enable = true;
   };
   programs = {

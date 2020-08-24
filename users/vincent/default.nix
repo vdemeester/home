@@ -64,8 +64,8 @@ in
     ++ optionals config.profiles.docker.enable [{
       home.packages = with pkgs; [ docker docker-compose ];
     }]
-    ++ optionals (isContainersEnabled && config.profiles.dev.enable) [
-      (import ./containers)
-    ]
+    ++ optionals (isContainersEnabled && config.profiles.dev.enable) [ (import ./containers) ]
+    ++ optionals config.profiles.kubernetes.enable [ (import ./containers/kubernetes.nix) ]
+    ++ optionals config.profiles.openshift.enable [ (import ./containers/openshift.nix) ]
   );
 }
