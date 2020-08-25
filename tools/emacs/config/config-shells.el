@@ -32,10 +32,8 @@ The EShell is renamed to match that directory to make multiple windows easier."
 
   ;; Handy aliases
   (defalias 'ff 'find-file)
-
-  (defun eshell/d ()
-    "Open a dired instance of the current working directory."
-    (dired "."))
+  (defalias 'e 'find-file)
+  (defalias 'd 'dired)
 
   (defun eshell/gs (&rest args)
     (magit-status (pop args) nil)
