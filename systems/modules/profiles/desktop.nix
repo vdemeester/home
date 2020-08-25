@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.desktop = {
-      enable = mkOption {
-        default = false;
-        description = "Enable desktop profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable desktop profile";
       avahi = mkOption {
         default = true;
         description = "Enable avahi  with the desktop profile";

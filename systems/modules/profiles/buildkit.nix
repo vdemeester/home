@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.buildkit = {
-      enable = mkOption {
-        default = false;
-        description = "Enable buildkit profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable buildkit profile";
       package = mkOption {
         default = pkgs.my.buildkit;
         description = "buildkit package to be used";

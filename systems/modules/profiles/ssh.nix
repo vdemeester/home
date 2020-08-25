@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.ssh = {
-      enable = mkOption {
-        default = false;
-        description = "Enable ssh profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable ssh profile";
       forwardX11 = mkOption {
         type = types.bool;
         default = false;

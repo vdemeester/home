@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.avahi = {
-      enable = mkOption {
-        default = false;
-        description = "Enable avahi profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable avahi profile";
     };
   };
   config = mkIf cfg.enable {

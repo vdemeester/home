@@ -7,7 +7,7 @@ in
 {
   options = {
     profiles.virtualization = {
-      enable = mkOption { default = false; description = "Enable virtualization profile"; type = types.bool; };
+      enable = mkEnableOption "Enable virtualization profile";
       nested = mkOption {
         default = false;
         description = "Enable nested virtualization";

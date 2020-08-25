@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.dev = {
-      enable = mkOption {
-        default = false;
-        description = "Enable dev profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable dev profile";
     };
   };
   config = mkIf cfg.enable {

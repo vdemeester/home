@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.docker = {
-      enable = mkOption {
-        default = false;
-        description = "Enable docker profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable docker profile";
       package = mkOption {
         default = pkgs.docker-edge;
         description = "docker package to be used";

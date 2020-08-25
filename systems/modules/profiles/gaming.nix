@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.gaming = {
-      enable = mkOption {
-        default = false;
-        description = "Enable gaming profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable gaming profile";
     };
   };
   config = mkIf cfg.enable {

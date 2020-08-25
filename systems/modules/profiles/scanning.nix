@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.scanning = {
-      enable = mkOption {
-        default = false;
-        description = "Enable scanning profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable scanning profile";
     };
   };
   config = mkIf cfg.enable {

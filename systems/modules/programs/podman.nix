@@ -7,13 +7,7 @@ in
 {
   options = {
     programs.podman = {
-      enable = mkOption {
-        default = false;
-        description = ''
-          Whether to configure podman
-        '';
-        type = types.bool;
-      };
+      enable = mkEnableOption "Wether to configure podman";
       package = mkOption {
         default = pkgs.podman;
         description = "podman package to be used";

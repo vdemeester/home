@@ -7,11 +7,7 @@ in
 {
   options = {
     services.nix-binary-cache = {
-      enable = mkOption {
-        default = false;
-        description = "Enable nix-binary-cache";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable nix-binary-cache";
       domain = mkOption {
         description = "domain to serve";
         type = types.str;

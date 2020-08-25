@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.ipfs = {
-      enable = mkOption {
-        default = false;
-        description = "Enable ipfs profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable ipfs profile";
       autoMount = mkOption {
         default = true;
         description = "Automount /ipfs and /ipns";

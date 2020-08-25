@@ -13,11 +13,7 @@ in
 {
   options = {
     profiles.wireguard.server = {
-      enable = mkOption {
-        default = false;
-        description = "Enable wireguard.server profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable wireguard.server profile";
     };
   };
   config = mkIf cfg.enable {

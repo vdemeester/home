@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.pulseaudio = {
-      enable = mkOption {
-        default = false;
-        description = "Enable pulseaudio profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable pulseaudio profile";
       tcp = mkOption {
         default = false;
         description = "Enable pulseaudio tcp";

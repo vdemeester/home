@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.yubikey = {
-      enable = mkOption {
-        default = false;
-        description = "Enable yubikey profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable yubikey profile";
     };
   };
   config = mkIf cfg.enable {

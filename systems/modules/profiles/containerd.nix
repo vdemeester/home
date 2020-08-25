@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.containerd = {
-      enable = mkOption {
-        default = false;
-        description = "Enable containerd profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable containerd profile";
       package = mkOption {
         default = pkgs.my.containerd;
         description = "containerd package to be used";

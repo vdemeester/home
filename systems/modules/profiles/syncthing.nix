@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.syncthing = {
-      enable = mkOption {
-        default = false;
-        description = "Enable syncthing profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable syncthing profile";
     };
   };
   config = mkIf cfg.enable {

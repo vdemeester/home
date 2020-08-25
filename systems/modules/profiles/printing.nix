@@ -7,11 +7,7 @@ in
 {
   options = {
     profiles.printing = {
-      enable = mkOption {
-        default = false;
-        description = "Enable printing profile";
-        type = types.bool;
-      };
+      enable = mkEnableOption "Enable printing profile";
     };
   };
   config = mkIf cfg.enable {

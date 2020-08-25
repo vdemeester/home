@@ -7,13 +7,7 @@ in
 {
   options = {
     services.wireguard = {
-      enable = mkOption {
-        type = types.bool;
-        default = false;
-        description = ''
-          Whether to enable a reverse SSH proxy.
-        '';
-      };
+      enable = mkEnableOption "Whether to enable a reverse SSH proxy.";
       ips = mkOption {
         type = with types; listOf str;
         description = ''
