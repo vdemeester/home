@@ -9,7 +9,9 @@ rec {
 
       goPackagePath = "github.com/tektoncd/cli";
       subPackages = [ "cmd/tkn" ];
-      buildFlagsArray = let t = "${goPackagePath}/pkg/cmd/version"; in
+      buildFlagsArray = let
+        t = "${goPackagePath}/pkg/cmd/version";
+      in
         ''
           -ldflags=
             -X ${t}.clientVersion=${version}
@@ -45,6 +47,11 @@ rec {
       };
     };
 
+  tkn_0_12 = makeOverridable tknGen {
+    version = "0.12.0";
+    sha256 = "08mw8g31f4v2n55hsb5106r5ng9lklx66xfx0v580m7fbrdb83gs";
+    modSha = "1475423l1hgx51zxd5k78j05198bblf6cmqjma4wnpwl4z2qcq57";
+  };
   tkn_0_11 = makeOverridable tknGen {
     version = "0.11.0";
     sha256 = "19svynznk7bshjm9hd0zxzdn5j09fl7n7jws2hf8qm1y0ynbydmb";
