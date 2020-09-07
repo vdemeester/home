@@ -20,10 +20,6 @@ all: switch emacs-dump
 update:
 	nix-channel --update
 
-.PHONY: pull
-pull:
-	(cd overlays/emacs-overlay && git checkout master && git pull --rebase)
-
 .PHONY: emacs-dump
 emacs-dump:
 	emacs --batch -q -l ~/.config/emacs/dump.el
@@ -72,13 +68,15 @@ fmt:
 
 # Cleaning
 .PHONY: clean
-clean:
-	@if test $(USER) = root;\
-	then\
-		nix-env --profile /nix/var/nix/profiles/system --delete-generations 15d;\
-	else\
-		unlink result || true;\
-	fi
+clean: clean-system clean-results
+
+.PHONY: clean-system
+clean-system:
+	nix-env --profile /nix/var/nix/profiles/system --delete-generations 15d
+
+.PHONY: clean-results
+clean-results:
+	unlink results
 
 .PHONY: clean-www
 clean-www:
