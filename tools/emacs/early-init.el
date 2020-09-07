@@ -96,14 +96,24 @@
 This is used internally by `vde/modus-themes-toggle'."
   (setq modus-operandi-theme-slanted-constructs t
         modus-operandi-theme-bold-constructs t
-        modus-operandi-theme-visible-fringes nil
-        modus-operandi-theme-3d-modeline t
         modus-operandi-theme-subtle-diffs t
-        modus-operandi-theme-distinct-org-blocks nil
-        modus-operandi-theme-proportional-fonts nil
         modus-operandi-theme-rainbow-headings t
         modus-operandi-theme-section-headings nil
         modus-operandi-theme-scale-headings nil
+        modus-operandi-theme-fringes 'subtle ; {nil,'subtle,'intense}
+        modus-operandi-theme-mode-line '3d ; {nil,'3d,'moody}
+        modus-operandi-theme-3d-modeline t
+        modus-operandi-theme-faint-syntax nil
+        modus-operandi-theme-intense-hl-line t
+        modus-operandi-theme-intense-paren-match t
+        modus-operandi-theme-prompts 'subtle ; {nil,'subtle,'intense}
+        modus-operandi-theme-completions 'opinionated ; {nil,'moderate,'opinionated}
+        modus-operandi-theme-diffs 'desaturated ; {nil,'desaturated,'fg-only}
+        modus-operandi-theme-org-blocks 'greyscale ; {nil,'greyscale,'rainbow}
+        modus-operandi-theme-variable-pitch-headings t
+        modus-operandi-theme-rainbow-headings t
+        modus-operandi-theme-section-headings nil
+        modus-operandi-theme-scale-headings t
         modus-operandi-theme-scale-1 1.05
         modus-operandi-theme-scale-2 1.1
         modus-operandi-theme-scale-3 1.15
@@ -147,12 +157,10 @@ This is used internally by `vde/modus-themes-toggle'."
                       :family font-family-mono
                       :height font-height)
   (set-face-attribute 'fixed-pitch nil
-                      :family font-family-mono
-                      :height font-height))
+                      :family font-family-mono))
 (when (member font-family-sans (font-family-list))
   (set-face-attribute 'variable-pitch nil
                       :family font-family-sans
-                      :height font-height
                       :weight 'regular))
 
 ;; Ignore X resources; its settings would be redundant with the other settings

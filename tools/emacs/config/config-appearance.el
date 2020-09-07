@@ -18,12 +18,10 @@
                           :family font-family-mono
                           :height font-height)
       (set-face-attribute 'fixed-pitch nil
-                          :family font-family-mono
-                          :height font-height))
+                          :family font-family-mono))
     (when (member font-family-sans (font-family-list))
       (set-face-attribute 'variable-pitch nil
                           :family font-family-sans
-                          :height font-height
                           :weight 'regular))))
 ;; -TypeFaceConfiguration
 
