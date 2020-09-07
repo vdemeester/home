@@ -39,6 +39,10 @@ The EShell is renamed to match that directory to make multiple windows easier."
     (magit-status (pop args) nil)
     (eshell/echo))                      ; The echo command suppresses output
 
+  (defun eshell/cdg ()
+    "Change directory to the project's root."
+    (eshell/cd (locate-dominating-file default-directory ".git")))
+
   (defun eshell/extract (file)
     "One universal command to extract FILE (for bz2, gz, rar, etc.)"
     (eshell-command-result (format "%s %s" (cond ((string-match-p ".*\.tar.bz2" file)
