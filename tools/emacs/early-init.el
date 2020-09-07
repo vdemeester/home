@@ -2,7 +2,6 @@
 ;; :PROPERTIES:
 ;; :header-args: :tangle ~/src/home/tools/emacs/early-init.el
 ;; :header-args+: :comments org
-;; :CUSTOM_ID: h:ec67a339-378c-4c2c-93f8-9ce62308cccb
 ;; :ID:       317fc8fd-1220-423d-8a45-497f951014ee
 ;; :END:
 ;; 
