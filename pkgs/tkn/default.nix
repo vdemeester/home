@@ -9,9 +9,10 @@ rec {
 
       goPackagePath = "github.com/tektoncd/cli";
       subPackages = [ "cmd/tkn" ];
-      buildFlagsArray = let
-        t = "${goPackagePath}/pkg/cmd/version";
-      in
+      buildFlagsArray =
+        let
+          t = "${goPackagePath}/pkg/cmd/version";
+        in
         ''
           -ldflags=
             -X ${t}.clientVersion=${version}

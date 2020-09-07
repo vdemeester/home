@@ -1,5 +1,5 @@
 { sources ? import ../nix
-, pkgs ? sources.pkgs {}
+, pkgs ? sources.pkgs { }
 }:
 let
   emacs27 = (pkgs.emacs.override { srcRepo = true; }).overrideAttrs (
@@ -32,44 +32,44 @@ let
 in
 rec {
   # pre nur-packages import
-  scripts = pkgs.callPackage ./scripts {};
-  tmux-tpm = pkgs.callPackage ./tmux-tpm {};
-  vrsync = pkgs.callPackage ./vrsync {};
-  vde-thinkpad = pkgs.callPackage ./vde-thinkpad {};
-  bus = pkgs.callPackage ../tools/bus {};
+  scripts = pkgs.callPackage ./scripts { };
+  tmux-tpm = pkgs.callPackage ./tmux-tpm { };
+  vrsync = pkgs.callPackage ./vrsync { };
+  vde-thinkpad = pkgs.callPackage ./vde-thinkpad { };
+  bus = pkgs.callPackage ../tools/bus { };
 
   # Mine
-  ape = pkgs.callPackage ./ape {};
-  fhs-std = pkgs.callPackage ./fhs/std.nix {};
-  nr = pkgs.callPackage ./nr {};
-  ram = pkgs.callPackage ./ram {};
-  sec = pkgs.callPackage ./sec {};
-  systemd-email = pkgs.callPackage ./systemd-email {};
-  yak = pkgs.callPackage ./yak {};
+  ape = pkgs.callPackage ./ape { };
+  fhs-std = pkgs.callPackage ./fhs/std.nix { };
+  nr = pkgs.callPackage ./nr { };
+  ram = pkgs.callPackage ./ram { };
+  sec = pkgs.callPackage ./sec { };
+  systemd-email = pkgs.callPackage ./systemd-email { };
+  yak = pkgs.callPackage ./yak { };
 
   # emacs
   emacs = emacs27.override { inherit (pkgs) imagemagick; withXwidgets = true; };
 
   # Maybe upstream
-  athens = pkgs.callPackage ./athens {};
-  envbox = pkgs.callPackage ./envbox {};
-  esc = pkgs.callPackage ./esc {};
-  gogo-protobuf = pkgs.callPackage ./gogo-protobuf {};
-  gorun = pkgs.callPackage ./gorun {};
-  govanityurl = pkgs.callPackage ./govanityurl {};
-  ko = pkgs.callPackage ./ko {};
-  kss = pkgs.callPackage ./kss {};
-  batzconverter = pkgs.callPackage ./batzconverter {};
-  kubernix = pkgs.callPackage ./kubernix {};
-  krew = pkgs.callPackage ./krew {};
-  prm = pkgs.callPackage ./prm {};
-  protobuild = pkgs.callPackage ./protobuild {};
-  rmapi = pkgs.callPackage ./rmapi {};
-  toolbox = pkgs.callPackage ./toolbox {};
-  yaspell = pkgs.callPackage ./yaspell {};
+  athens = pkgs.callPackage ./athens { };
+  envbox = pkgs.callPackage ./envbox { };
+  esc = pkgs.callPackage ./esc { };
+  gogo-protobuf = pkgs.callPackage ./gogo-protobuf { };
+  gorun = pkgs.callPackage ./gorun { };
+  govanityurl = pkgs.callPackage ./govanityurl { };
+  ko = pkgs.callPackage ./ko { };
+  kss = pkgs.callPackage ./kss { };
+  batzconverter = pkgs.callPackage ./batzconverter { };
+  kubernix = pkgs.callPackage ./kubernix { };
+  krew = pkgs.callPackage ./krew { };
+  prm = pkgs.callPackage ./prm { };
+  protobuild = pkgs.callPackage ./protobuild { };
+  rmapi = pkgs.callPackage ./rmapi { };
+  toolbox = pkgs.callPackage ./toolbox { };
+  yaspell = pkgs.callPackage ./yaspell { };
 
   # OpenShift
-  inherit (pkgs.callPackage ./oc {})
+  inherit (pkgs.callPackage ./oc { })
     oc_4_1
     oc_4_2
     oc_4_3
@@ -77,7 +77,7 @@ rec {
     oc_4_5
     ;
   oc = oc_4_5;
-  inherit (pkgs.callPackage ./openshift-install {})
+  inherit (pkgs.callPackage ./openshift-install { })
     openshift-install_4_3
     openshift-install_4_4
     openshift-install_4_5
@@ -94,7 +94,7 @@ rec {
   crc = crc_1_10;
 
   # Operator SDK
-  inherit (pkgs.callPackage ./operator-sdk {})
+  inherit (pkgs.callPackage ./operator-sdk { })
     operator-sdk_0_16
     operator-sdk_0_17
     operator-sdk_0_18
@@ -103,7 +103,7 @@ rec {
   operator-sdk = operator-sdk_0_19;
 
   # Tekton
-  inherit (pkgs.callPackage ./tkn {})
+  inherit (pkgs.callPackage ./tkn { })
     tkn_0_9
     tkn_0_10
     tkn_0_11
@@ -112,13 +112,13 @@ rec {
   tkn = tkn_0_12;
 
   # Upstream
-  buildkit = pkgs.callPackage ./buildkit {};
-  inherit (pkgs.callPackage ./containerd {})
+  buildkit = pkgs.callPackage ./buildkit { };
+  inherit (pkgs.callPackage ./containerd { })
     containerd_1_2
     containerd_1_3
     containerd_1_4
     ;
   containerd = containerd_1_3;
 
-  gnome-shell-extension-shell = pkgs.callPackage ./gnome/extensions/shell {};
+  gnome-shell-extension-shell = pkgs.callPackage ./gnome/extensions/shell { };
 }
