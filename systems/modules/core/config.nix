@@ -13,5 +13,8 @@ in
       enable = mkEnableOption "Enable OpenShift profile";
       crc.enable = mkEnableOption "Enable CodeReady Containers";
     };
+    profiles.tekton = {
+      enable = mkEnableOption "Enable Tekton profile";
+    };
   };
 }

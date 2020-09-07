@@ -55,7 +55,7 @@ in
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/720200fc-8f27-49a7-85bb-a406b6119d31"; }];
+  swapDevices = [ { device = "/dev/disk/by-uuid/720200fc-8f27-49a7-85bb-a406b6119d31"; } ];
 
   profiles = {
     home = true;
@@ -69,6 +69,7 @@ in
     virtualization = { enable = true; nested = true; listenTCP = true; };
     kubernetes.enable = true;
     openshift.enable = true;
+    tekton.enable = true;
     yubikey.enable = true;
   };
   programs = {
@@ -100,7 +101,7 @@ in
     syncthing.guiAddress = "0.0.0.0:8384";
     smartd = {
       enable = true;
-      devices = [{ device = "/dev/nvme0n1"; }];
+      devices = [ { device = "/dev/nvme0n1"; } ];
     };
     wireguard = {
       enable = true;
