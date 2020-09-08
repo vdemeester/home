@@ -74,12 +74,11 @@ Meant to economise on key bindings."
          ("t" . toggle-truncate-lines)))
 
 (use-package avy
-  :disabled
-  :bind (("C-c j"   . avy-goto-word-1)
-         ("C-c n b" . avy-pop-mark)
-         ("C-c n j" . avy-goto-char-2)
-         ("C-c n t" . avy-goto-char-timer)
-         ("C-c n w" . avy-goto-word-1)))
+  :commands (avy-goto-char avy-goto-line avy-goto-word-1 avy-pop-mark avy-goto-char-timer)
+  :bind (("C-c j w"   . avy-goto-word-1)
+         ("C-c j b" . avy-pop-mark)
+         ("C-c j t" . avy-goto-char-timer)
+         ("C-c j l" . avy-goto-line)))
 
 (use-package hideshow
   :commands (hs-show-all hs-toggle-hiding hs-hide-all hs-hide-block hs-hide-level)
