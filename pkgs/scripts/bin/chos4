@@ -24,10 +24,17 @@ done
 
 echo ">>> setup identity providers"
 if test -f $HOME/sync/work/chos4/users.htpasswd; then
+    oc get -n openshift-config secret htpass-secret && \
+            oc delete -n openshift-config secret htpass-secret
     oc create secret generic htpass-secret --from-file=htpasswd=$HOME/sync/work/chos4/users.htpasswd -n openshift-config
-    for cr in $HOME/sync/chos4/oauth.*.yaml; do
-        oc apply -f $cr
-    done
+fi
+if test -f $HOME/sync/work/chos4/github.clientsecret; then
+    oc get -n openshift-config secret github-secret && \
+            oc delete -n openshift-config secret github-secret
+    oc create secret generic github-secret --from-file=$HOME/sync/work/chos4/github.clientsecret -n openshift-config
+fi
+if test -f $HOME/sync/work/chos4/oauth.yaml; then
+    oc apply -f $HOME/sync/work/chos4/oauth.yaml
 fi
 
 if [[ "$1" == "install" ]]; then
