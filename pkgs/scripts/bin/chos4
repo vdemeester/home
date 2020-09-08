@@ -22,6 +22,14 @@ for machineset in $(oc get machineset -n openshift-machine-api -o name); do
     oc scale --replicas=2 ${machineset} -n openshift-machine-api
 done
 
+echo ">>> setup identity providers"
+if test -f $HOME/sync/work/chos4/users.htpasswd; then
+    oc create secret generic htpass-secret --from-file=htpasswd=$HOME/sync/work/chos4/users.htpasswd -n openshift-config
+    for cr in $HOME/sync/chos4/oauth.*.yaml; do
+        oc apply -f $cr
+    done
+fi
+
 if [[ "$1" == "install" ]]; then
     op-inst
 fi
