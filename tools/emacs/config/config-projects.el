@@ -10,9 +10,16 @@
   (projectile-ack
    projectile-ag
    projectile-compile-project
+   projectile-configure-project
+   projectile-package-project
+   projectile-install-project
+   projectile-test-project
+   projectile-run-project
    projectile-dired
    projectile-find-dir
    projectile-find-file
+   projectile-find-file-dwim
+   projectile-find-file-in-directory
    projectile-find-tag
    projectile-test-project
    projectile-grep
@@ -29,28 +36,24 @@
    projectile-run-shell-command-in-root
    projectile-switch-project
    projectile-switch-to-buffer
-   projectile-vc)
+   projectile-vc
+   projectile-commander)
   :bind-keymap ("C-c p" . projectile-command-map)
   :config
-  (setq-default projectile-completion-system 'default
-                ;; Do not track known projects automatically, instead call projectile-add-known-project
-                projectile-track-known-projects-automatically nil)
-  (projectile-mode)
-  ;; Remove dead projects when Emacs is idle
+  (setq-default projectile-completion-system 'default)
+  (setq-default projectile-switch-project-action #'projectile-commander
+                projectile-create-missing-test-files t)
+  (setq-default compilation-buffer-name-function (lambda (mode) (concat "*" (downcase mode) ": " (projectile-project-name) "*")))
+  (setq-default projectile-track-known-projects-automatically nil)
   (run-with-idle-timer 10 nil #'projectile-cleanup-known-projects)
-  (setq
-   ;; Custom compilation buffer name function
-   compilation-buffer-name-function (lambda (mode) (concat "*" (downcase mode) ": " (projectile-project-name) "*"))
-   projectile-find-dir-includes-top-level t
-   projectile-switch-project-action #'projectile-commander
-   projectile-create-missing-test-files t
-   projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
   (def-projectile-commander-method ?s
     "Open a *shell* buffer for the project"
-    (projectile-run-eshell))
+    (projectile-run-eshell nil))
   (def-projectile-commander-method ?c
     "Run `compile' in the project"
-    (projectile-compile-project nil)))
+    (projectile-compile-project nil))
+  
+  (projectile-mode))
 
 (provide 'config-projects)
 ;;; config-projects.el ends here
