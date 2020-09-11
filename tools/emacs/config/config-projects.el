@@ -59,6 +59,14 @@
     "Check if a project is a ko project and has a config/ folder full of yaml"
     (and (projectile-ko-project-p)
          (projectile-verify-file-wildcard "config/*.yaml")))
+  (projectile-register-project-type 'ko #'projectile-ko-project-p
+                                    :project-file ".ko.yaml" ; might not be required
+                                    :configure 'projectile-ko-configure-command
+                                    :compile 'projectile-ko-compile-command
+                                    :test 'projectile-ko-test-command
+                                    :run 'projectile-ko-run-command
+                                    :package 'projectile-ko-package-command
+                                    :install 'projectile-ko-install-command)
   (defun projectile-ko-configure-command ()
     "define a configure command for a ko project, depending on the opened file"
     (cond
@@ -131,14 +139,6 @@
   (defun projectile-ko-install-command ()
     "define a install command for a ko project, depending on the openend file "
     "ko apply -f config/")
-  (projectile-register-project-type 'ko #'projectile-ko-project-p
-                                    :project-file ".ko.yaml" ; might not be required
-  				                  :configure 'projectile-ko-configure-command
-  				                  :compile 'projectile-ko-compile-command
-  				                  :test 'projectile-ko-test-command
-  				                  :run 'projectile-ko-run-command
-  				                  :package 'projectile-ko-package-command
-  				                  :install 'projectile-ko-install-command)
   (projectile-mode))
 
 (provide 'config-projects)
