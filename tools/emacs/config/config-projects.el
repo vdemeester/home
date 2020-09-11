@@ -132,10 +132,20 @@
            (relative-current-folder (file-name-directory relative-current-file)))
       (cond
        ((string-prefix-p "cmd/" relative-current-file) (format "go run ./%s" relative-current-folder)))))
-  
   (defun projectile-ko-package-command ()
     "define a package command for a ko project, depending on the openend file "
-    "ko resolve --push=false --oci-layout-path=/tmp/oci -f config")
+    (cond
+     ((eq major-mode 'go-mode) (projectile-ko-package-command-go))
+     (t "ko resolve --push=false --oci-layout-path=/tmp/oci -f config")
+     ))
+  
+  (defun projectile-ko-package-command-go ()
+    "package command for a ko project if in a go file"
+    (let* ((current-file (buffer-file-name (current-buffer)))
+           (relative-current-file (file-relative-name current-file (projectile-project-root)))
+           (relative-current-folder (file-name-directory relative-current-file)))
+      (cond
+       ((string-prefix-p "cmd/" relative-current-file) (format "ko publish --push=false ./%s" relative-current-folder)))))
   (defun projectile-ko-install-command ()
     "define a install command for a ko project, depending on the openend file "
     "ko apply -f config/")
