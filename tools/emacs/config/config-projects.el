@@ -59,7 +59,7 @@
     "Check if a project is a ko project and has a config/ folder full of yaml"
     (and (projectile-ko-project-p)
          (projectile-verify-file-wildcard "config/*.yaml")))
-  (projectile-register-project-type 'ko #'projectile-ko-project-p
+  (projectile-register-project-type 'ko-with-config #'projectile-ko-with-config-project-p
                                     :project-file ".ko.yaml" ; might not be required
                                     :configure 'projectile-ko-configure-command
                                     :compile 'projectile-ko-compile-command
