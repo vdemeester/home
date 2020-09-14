@@ -3,7 +3,7 @@
 buildGoPackage rec {
   pname = "ko";
   name = "${pname}-${version}";
-  version = "0.5.1";
+  version = "0.5.2";
 
   goPackagePath = "github.com/google/ko";
 
@@ -11,7 +11,7 @@ buildGoPackage rec {
     owner = "google";
     repo = "ko";
     rev = "v${version}";
-    sha256 = "0vn1znn7490sxfk51z24r8hv09sn40xvvp98v5wr5s7xj7glyrsl";
+    sha256 = "034sz1idnipd75xx3vdmlahz7j615xccbbmnck2vd80sixbm9qlw";
   };
 
   meta = with stdenv.lib; {
