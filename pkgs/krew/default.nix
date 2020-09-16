@@ -13,8 +13,7 @@ buildGoModule rec {
     repo = "krew";
     sha256 = "0n10kpr2v9jzkz4lxrf1vf9x5zql73r5q1f1llwvjw6mb3xyn6ij";
   };
-  vendorSha256 = "01sgzi6cfdx2p1mbfbcxh8vivrj79qmzsflah9n6j5favn8sqsl3";
-  modSha256 = "${vendorSha256}";
+  vendorSha256 = "01jy73g087bng5xhbwd7pigsd44jl7pdfwf7ff43m9jsziknd39i";
 
   meta = {
     description = "The package manager for 'kubectl plugins. ";

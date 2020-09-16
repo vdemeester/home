@@ -14,8 +14,7 @@ buildGoModule rec {
     repo = "athens";
     sha256 = "10l96v2ayz3bp7kzr3a2lwyb95hc3dymlvcanl4629dy087ap6zj";
   };
-  vendorSha256 = "1xgyna4hwwxjpwcd4k4npkzjlmzzhkba4f46vgcn3qzv0xysvpdx";
-  modSha256 = "${vendorSha256}";
+  vendorSha256 = "1sjahs7a06vsnzfbwgzh6wdqwlcgpq5w4zkhf711ws4njipkmq1r";
 
   meta = {
     description = "a Go module datastore and proxy";

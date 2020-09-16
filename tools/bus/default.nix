@@ -4,6 +4,5 @@ buildGoModule rec {
   name = "bus";
   src = ./.;
 
-  vendorSha256 = "1633qy8a24pacr337v20ws12p3wgr2kf7q2mymar90qrq301wfnx";
-  modSha256 = "${vendorSha256}";
+  vendorSha256 = "05iqr46pm05jxfcss23cxdqng1wpnqp46v5vyw8f65sq0vsfv4xh";
 }
