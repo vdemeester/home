@@ -1,22 +1,21 @@
-{ stdenv, lib, buildGoModule, fetchFromGitHub }:
+{ stdenv, lib, buildGoModule, fetchgit }:
 
 buildGoModule rec {
   name = "ram-${version}";
-  version = "0.3.0";
+  version = "0.3.1";
   rev = "v${version}";
 
-  src = fetchFromGitHub {
+  src = fetchgit {
     inherit rev;
-    owner = "vdemeester";
-    repo = "ram";
-    sha256 = "1lnxscq6lfli09yq5raj2gyg7fss4a8m99nd6f1izm84xn0n0lji";
+    url = "https://git.sr.ht/~vdemeester/ram";
+    sha256 = "1xmx4dc30din9cwl7c0zz9pvdzk9mirvps8m89xfrkmcj5h8k8rr";
   };
-  vendorSha256 = "1rynwivgc9ilsixri8vcxss20j8wpns1jw9g0k37lgdqx88wpl9y";
+  vendorSha256 = "16b2061x0z83c4j59fxm1hhzr9akq1y2lbpiqdh139sqy6l6h7df";
   modSha256 = "${vendorSha256}";
 
   meta = {
     description = "A golang opiniated continuous testing tool 🐏";
-    homepage = "https://github.com/vdemeester/ram";
+    homepage = "https://git.sr.ht/~vdemeester/ram";
     license = lib.licenses.asl20;
   };
 }

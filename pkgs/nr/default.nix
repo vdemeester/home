@@ -1,22 +1,21 @@
-{ stdenv, lib, buildGoModule, fetchFromGitHub }:
+{ stdenv, lib, buildGoModule, fetchgit }:
 
 buildGoModule rec {
   name = "nr-${version}";
-  version = "0.4.0";
+  version = "0.5.0";
   rev = "v${version}";
 
-  src = fetchFromGitHub {
+  src = fetchgit {
     inherit rev;
-    owner = "vdemeester";
-    repo = "nr";
-    sha256 = "1n6plmypw6iz0q1gs4i8rwsmkvx0bwgzpzmrr4qirpfpcyb4av2z";
+    url = "https://git.sr.ht/~vdemeester/nr";
+    sha256 = "0b8y5wsy8f0r9aspn1045nrpkph9kbh6754m2kkyx4i9zjhgnqjp";
   };
   vendorSha256 = "17cz2gahs1j9vd9nqg36q2q04xq24gd2pyvivxkjhqgmq2fcpl17";
   modSha256 = "${vendorSha256}";
 
   meta = {
     description = "a nix run alias generator";
-    homepage = "https://github.com/vdemeester/nr";
+    homepage = "https://git.sr.ht/~vdemeester/nr";
     license = lib.licenses.asl20;
   };
 }
