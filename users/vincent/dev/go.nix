@@ -19,9 +19,7 @@
     dep
     # misc
     protobuf
-    my.protobuild
     my.ram
-    my.sec
     my.esc
     my.yaspell
   ];
