@@ -489,6 +489,7 @@ Switch projects and subprojects from STARTED back to TODO"
            :head "#+TITLE: ${title}\n"
            :unnarrowed t))))
 (use-package org
+  :defer 2
   :config
   (defun vde/tangle-all-notes ()
     "Produce files from my notes folder.
@@ -576,6 +577,7 @@ file which do not already have one."
   :config
   (setq org-html-coding-system 'utf-8-unix))
 (use-package diary-lib
+  :after (org)
   :config
   (setq diary-entry-marker "diary")
   (setq diary-show-holidays-flag t)
