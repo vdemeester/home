@@ -24,7 +24,9 @@ rec {
 
       goPackagePath = "github.com/code-ready/crc";
       subPackages = [ "cmd/crc" ];
-      buildFlagsArray = let t = "${goPackagePath}/pkg/crc"; in
+      buildFlagsArray = let
+        t = "${goPackagePath}/pkg/crc";
+      in
         ''
           -ldflags=
             -X ${t}/version.crcVersion=${version}
@@ -100,6 +102,6 @@ rec {
   crc_driver_libvirt_0_12_8 = makeOverridable crc_driver_libvirtGen {
     version = "0.12.8";
     sha256 = "1ks6vb7276xn4mr2f6d6cg4dhp3mrqgxwr36v0md0fbl6bai6ppk";
-    vendorSha256 = "04nnmsvillavcq1wfjc38r7hgq1mx0zhp4anz6q1j78rdcd6aigy";
+    vendorSha256 = "069rac4m7y7m0lsk04ipsfvq8p51hwlkib2wrsnf7r9sla3dl6fx";
   };
 }
