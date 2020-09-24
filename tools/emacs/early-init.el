@@ -1,85 +1,17 @@
-;; Early initialization
-;; :PROPERTIES:
-;; :header-args: :tangle ~/src/home/tools/emacs/early-init.el
-;; :header-args+: :comments org
-;; :ID:       317fc8fd-1220-423d-8a45-497f951014ee
-;; :END:
-;; 
-;; Starting with Emacs 27, an =early-init.el= file can be used to do early configuration
-;; and optimization.
-;; 
-;; #+begin_quote
-;; Emacs can now be configured using an early init file. The file is called ~early-init.el~,
-;; in ~user-emacs-directory~. It is loaded very early in the startup process: before
-;; graphical elements such as the tool bar are initialized, and before the package manager is
-;; initialized. The primary purpose is to allow customizing how the package system is
-;; initialized given that initialization now happens before loading the regular init file
-;; (see below).
-;; 
-;; We recommend against putting any customizations in this file that don't need to be set up
-;; before initializing installed add-on packages, because the early init file is read too
-;; early into the startup process, and some important parts of the Emacs session, such as
-;; 'window-system' and other GUI features, are not yet set up, which could make some
-;; customization fail to work.
-;; #+end_quote
-;; 
-;; We can use this to our advantage and optimize the initial loading of emacs.
-;; 
-;; - Before Emacs 27, the init file was responsible for initializing the package manager by
-;;   calling `package-initialize'.  Emacs 27 changed the default behavior: It now calls
-;;   `package-initialize' before loading the init file.
-
+;;; early-init.el -*- lexical-binding: t; -*-
 
 (setq package-enable-at-startup nil)
-
-
-
-;; - Let's inhibit resizing the frame at early stage.
-
-
 (setq frame-inhibit-implied-resize t)
-
-
-
-;; - I never use the /menu-bar/, or the /tool-bar/ or even the /scroll-bar/, so we can safely
-;;   disable those very very early.
-
-
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (horizontal-scroll-bar-mode -1)
 
-
-
-;; - Finally we can try to avoid garbage collection at startup. The garbage collector can
-;;   easily double startup time, so we suppress it at startup by turning up ~gc-cons-threshold~
-;;   (and perhaps ~gc-cons-percentage~) temporarily.
-
-
 (setq gc-cons-threshold 402653184
       gc-cons-percentage 0.6)
 
-
-
-;; - Another small optimization concerns on =file-name-handler-alist= : on every .el and .elc
-;;   file loaded during start up, it has to runs those regexps against the filename ; setting
-;;   it to ~nil~ and after initialization finished put the value back make the initialization
-;;   process quicker.
-
-
 (defvar file-name-handler-alist-original file-name-handler-alist)
 (setq file-name-handler-alist nil)
-
-
-
-;;   However, it is important to reset it eventually. Not doing so will cause garbage
-;;   collection freezes during long-term interactive use. Conversely, a ~gc-cons-threshold~
-;;   that is too small will cause stuttering. This will be done at the end.
-;; 
-;; - It's also possible to put the theme *and* the font in =early-init.el= to speed the
-;;   start.
-
 
 (defvar contrib/after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
@@ -110,7 +42,7 @@ This is used internally by `vde/modus-themes-toggle'."
         modus-operandi-theme-completions 'opinionated ; {nil,'moderate,'opinionated}
         modus-operandi-theme-diffs 'desaturated ; {nil,'desaturated,'fg-only}
         modus-operandi-theme-org-blocks 'greyscale ; {nil,'greyscale,'rainbow}
-        modus-operandi-theme-variable-pitch-headings t
+        modus-operandi-theme-variable-pitch-headings nil
         modus-operandi-theme-rainbow-headings t
         modus-operandi-theme-section-headings nil
         modus-operandi-theme-scale-headings t
@@ -168,11 +100,7 @@ This is used internally by `vde/modus-themes-toggle'."
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
 
-
-
 ;; - Reseting garbage collection and file-name-handler values.
-
-
 (add-hook 'after-init-hook
           `(lambda ()
              (setq gc-cons-threshold 67108864 ; 64mb
