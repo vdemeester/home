@@ -173,13 +173,6 @@ This relies on the external 'fd' executable."
   :hook (dired-mode . dired-collapse-mode))
 ;; -UseDiredCollapse
 
-;; Depends on hydra, let's see if we need it or not
-(use-package dired-quick-sort
-  :disabled
-  :after dired
-  :config
-  (dired-quick-sort-setup))
-
 ;; UseDiredAsync
 (use-package async)
 (use-package dired-async

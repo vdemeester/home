@@ -34,9 +34,7 @@ let
     delight
     diredfl
     dired-collapse
-    dired-git-info
     dired-narrow
-    dired-quick-sort
     dired-rsync
     dired-subtree
     dockerfile-mode
@@ -49,6 +47,7 @@ let
     esup
     expand-region
     flimenu
+    # replace with flymake
     flycheck
     flycheck-golangci-lint
     git-annex
@@ -58,17 +57,14 @@ let
     github-review
     gitignore-mode
     go-mode
-    go-stacktracer
     gotest
     goto-last-change
     hardhat
     helpful
     highlight
     highlight-indentation
-    highlight-numbers
     ibuffer-vc
     icomplete-vertical
-    iedit
     json-mode
     magit
     magit-annex
@@ -86,17 +82,14 @@ let
     ob-async
     ob-go
     ob-http
-    olivetti
     orderless
     org-capture-pop-frame
-    org-gcal
     org-journal
     org-plus-contrib
     org-ql
     org-ref
     org-roam
     org-super-agenda
-    org-superstar
     org-tree-slide
     org-web-tools
     orgit

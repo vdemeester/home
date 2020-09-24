@@ -102,29 +102,10 @@
          ("C--". er/contract-region)))
 ;; -UseExpandRegiston
 
-(use-package iedit
-  :disabled
-  :defines hydra-iedit/body
-  :bind* (:map global-map
-               ("C-*" . iedit-mode)
-               :map iedit-mode-keymap
-               ("M-n" . iedit-next-occurence)
-               ("M-p" . iedit-prev-occurence))
-  :config
-  (defhydra hydra-iedit (:color pink :columns 1)
-    "IEDIT"
-    ("C-*" iedit-mode "toggle")
-    ("C-p" iedit-prev-occurrence "prev")
-    ("C-n" iedit-next-occurrence "next")
-    ("C-g" iedit-quit "toggle" :color blue)))
-
-;; UseVisualRegexp
 (use-package visual-regexp
-  :commands (vr/replace vr/query-replace vr/mc-mark)
+  :commands (vr/replace vr/query-replace)
   :bind (("C-c r"   . vr/replace)
-         ("C-c %"   . vr/query-replace)
-         ("C-c m" . vr/mc-mark)))
-;; -UseVisualRegexp
+         ("C-c %"   . vr/query-replace)))
 
 ;; UseHideShow
 (use-package hs-minor-mode
