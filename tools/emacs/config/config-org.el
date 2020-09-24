@@ -174,13 +174,9 @@
             (tags-todo "-goals-incubate-inbox+TODO=\"STARTED\""
                        ((org-agenda-overriding-header "Ongoing")))
             (tags-todo "-goals-incubate-inbox+TODO=\"NEXT\""
-                       ((org-agenda-overriding-header "Next")))
-            (tags-todo "-goals-incubate-inbox"
-                       ((org-agenda-skip-function '(org-agenda-skip-if nil '(scheduled deadline)))
-                        (org-agenda-overriding-header "Work"))))
+                       ((org-agenda-overriding-header "Next"))))
            ((org-super-agenda-groups
              '((:name "Important" :priority "A")
-               (:name "Done" :log closed)
                (:name "Scheduled" :time-grid t)
                (:habit t))))
            (org-agenda-list)))))
