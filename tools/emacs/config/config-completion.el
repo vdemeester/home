@@ -242,7 +242,9 @@ normally would when calling `yank' followed by `yank-pop'."
          ("C-v" . icomplete-vertical-toggle)))
 ;; -UseIcompleteVertical
 
+;; FIXME: choose better shortcuts
 (use-package avy-embark-occur
+  :disabled
   :load-path "~/.config/emacs/lisp/embark/" ; in development
   :bind
   (:map minibuffer-local-completion-map
