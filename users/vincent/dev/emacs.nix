@@ -149,11 +149,9 @@ in
     package = pkgs.my.emacs;
     name = "org";
     shell = pkgs.zsh + "/bin/zsh -i -c";
-    # FIXME do this in the derivation :)
-    # extraOptions = "--dump-file=${config.home.homeDirectory}/.config/emacs/emacs.pdmp";
   };
   home.sessionVariables = {
-    EDITOR = "et";
-    ALTERNATE_EDITOR = "et";
+    EDITOR = "emacs";
+    ALTERNATE_EDITOR = "emacs -nw";
   };
 }
