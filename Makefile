@@ -14,15 +14,11 @@ SRCHOME = ~/src/home
 
 # Targets
 .PHONY: all
-all: switch emacs-dump
+all: switch
 
 .PHONY: update
 update:
 	nix-channel --update
-
-.PHONY: emacs-dump
-emacs-dump:
-	emacs --batch -q -l ~/.config/emacs/dump.el
 
 .PHONY: secrets
 secrets:
