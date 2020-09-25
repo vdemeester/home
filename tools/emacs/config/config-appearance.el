@@ -130,7 +130,6 @@ questions.  Else use completion to select the tab to switch to."
   :bind (("C-x t t" . vde/icomplete-tab-bar-tab-dwim)
          ("C-x t s" . tab-switcher)))
 
-;; UseMoody
 (use-package moody
   :config
   (setq-default x-underline-at-descent-line t
@@ -150,31 +149,6 @@ questions.  Else use completion to select the tab to switch to."
                   " " mode-line-modes
                   mode-line-end-spaces))
 
-  (use-package minions
-    :ensure t
-    :config
-    (setq-default minions-mode-line-lighter "λ="
-                  minions-mode-line-delimiters '("" . "")
-                  minions-direct '(flycheck-mode))
-    (minions-mode +1))
-
-  (use-package time
-    :config
-    (setq-default display-time-24hr-format t
-                  display-time-day-and-date t
-                  display-time-world-list '(("Europe/Paris" "Paris")
-                                            ("Europe/London" "London")
-                                            ("America/New_York" "Boston")
-                                            ("America/Los_Angeles" "San Francisco")
-                                            ("Asia/Calcutta" "Bangalore")
-                                            ("Australia/Brisbane" "Brisbane"))
-                  display-time-string-forms
-                  '((format "%s %s %s, %s:%s"
-                            dayname
-                            monthname day
-                            24-hours minutes)))
-    (display-time))
-
   (setq-default global-mode-string (remove 'display-time-string global-mode-string)
                 mode-line-end-spaces
                 (list (propertize " " 'display '(space :align-to (- right 19)))
@@ -182,6 +156,30 @@ questions.  Else use completion to select the tab to switch to."
 
   (moody-replace-mode-line-buffer-identification)
   (moody-replace-vc-mode))
+
+(use-package minions
+  :config
+  (setq-default minions-mode-line-lighter "λ="
+                minions-mode-line-delimiters '("" . "")
+                minions-direct '(flycheck-mode))
+  (minions-mode +1))
+
+(use-package time
+  :config
+  (setq-default display-time-24hr-format t
+                display-time-day-and-date t
+                display-time-world-list '(("Europe/Paris" "Paris")
+                                          ("Europe/London" "London")
+                                          ("America/New_York" "Boston")
+                                          ("America/Los_Angeles" "San Francisco")
+                                          ("Asia/Calcutta" "Bangalore")
+                                          ("Australia/Brisbane" "Brisbane"))
+                display-time-string-forms
+                '((format "%s %s %s, %s:%s"
+                          dayname
+                          monthname day
+                          24-hours minutes)))
+  (display-time))
 ;; -UseMoody
 
 (use-package face-remap
