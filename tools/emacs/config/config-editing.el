@@ -158,7 +158,7 @@ Else toggle the comment status of the line at point."
          ("M-;" . comment-indent)
          ("C-x C-;" . comment-box)))
 
-;; UseFlySpell
+;; FIXME(vdemeester) Do I need on-the-fly spellcheck *or* not ?
 (use-package flyspell
   :commands (flyspell-prog-mode flyspell-mode)
   :hook((text-mode . flyspell-mode)
