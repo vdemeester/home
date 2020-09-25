@@ -105,7 +105,9 @@ Ignores `ARGS'."
   (defun vde/tab-bar-tab-name ()
     "Generate tab name from the buffer of the selected window *or* projectile."
     (cond
-     ((boundp 'projectile-project-name) (projectile-project-name))
+     ((boundp 'projectile-project-name) (if (string-equal (projectile-project-name) "-")
+                                            (tab-bar-tab-name-current-with-count)
+                                          (projectile-project-name)))
      (t (tab-bar-tab-name-current-with-count))))
 
   (defun vde/icomplete-tab-bar-tab-dwim ()
