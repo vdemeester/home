@@ -158,28 +158,6 @@ Else toggle the comment status of the line at point."
          ("M-;" . comment-indent)
          ("C-x C-;" . comment-box)))
 
-;; UseFlySpell
-(use-package flyspell
-  :commands (flyspell-prog-mode flyspell-mode)
-  :hook((text-mode . turn-on-flyspell)
-        (prog-mode . turn-on-flyspell))
-  :config
-  (define-key flyspell-mode-map (kbd "C-;") nil)
-  (setq-default flyspell-issue-message-flag nil
-                flyspell-issue-welcome-flag nil
-                ispell-program-name "hunspell"
-                ispell-local-dictionary "en_GB"
-                ispell-local-dictionary-alist
-                '(("en_GB"
-                   "[[:alpha:]]"
-                   "[^[:alpha:]]"
-                   "[']"
-                   nil
-                   ("-d" "en_GB,fr_FR")
-                   nil
-                   utf-8))))
-;; -UseFlySpell
-
 (use-package emacs
   :init
   (setq-default tab-always-indent 'complete
