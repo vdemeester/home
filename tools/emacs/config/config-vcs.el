@@ -73,6 +73,7 @@
 
 ;; UseMagit
 (use-package magit
+  :unless noninteractive
   :commands (magit-status magit-clone magit-pull magit-blame magit-log-buffer-file magit-log)
   :bind (("C-c v c" . magit-clone)
          ("C-c v C" . magit-checkout)
@@ -110,6 +111,8 @@
 
 ;; UseMagitTodos
 (use-package magit-todos
+  :after (magit)
+  :unless noninteractive
   :hook (magit-mode . magit-todos-mode)
   :custom
   (magit-todos-exclude-globs '("node_modules" "vendor" "*.json" "*.html"))
@@ -119,6 +122,7 @@
 
 ;; UseMagitAnnex
 (use-package magit-annex
+  :unless noninteractive
   :after magit)
 ;; -UseMagitAnnex
 

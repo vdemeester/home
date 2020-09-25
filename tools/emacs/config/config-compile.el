@@ -5,6 +5,7 @@
 
 ;; UseCompile
 (use-package compile
+  :unless noninteractive
   :commands (compile)
   :preface
   (autoload 'ansi-color-apply-on-region "ansi-color")
@@ -64,11 +65,11 @@
                  "\\)"))
   (add-hook 'compilation-filter-hook #'vde/colorize-compilation-buffer)
   (add-hook 'compilation-mode-hook #'vde/goto-address-mode))
-;; -UseCompile
 
-;; UseFlycheck
+;; FIXME(vdemeester) switch to flymake instead
 (use-package flycheck
-  :if (not (eq system-type 'windows-nt))
+  :if (and (not noninteractive)
+           (not (eq system-type 'windows-nt)))
   :hook (prog-mode . flycheck-mode)
   :commands (flycheck-mode flycheck-next-error flycheck-previous-error)
   :init

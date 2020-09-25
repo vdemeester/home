@@ -19,16 +19,11 @@
   :config (envrc-global-mode))
 
 
-;; UseHardHat
 (use-package hardhat
   :init (global-hardhat-mode))
-;; -UseHardhat
-
-(use-package image-file
-  :disabled
-  :init (auto-image-file-mode))
 
 (use-package highlight-indentation
+  :unless noninteractive
   :commands (highlight-indentation-mode highlight-indentation-current-column-mode)
   :config
   (set-face-background 'highlight-indentation-face "#e3e3d3")

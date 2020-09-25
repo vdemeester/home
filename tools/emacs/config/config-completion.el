@@ -3,8 +3,8 @@
 ;;; Setup completion framework
 ;;; Code
 
-;; UseOrderless
 (use-package orderless
+  :unless noninteractive
   :config
   (setq orderless-regexp-separator " +")
   (setq orderless-matching-styles
@@ -25,9 +25,7 @@
                                       prot/orderless-initialism-dispatcher))
   :bind (:map minibuffer-local-completion-map
               ("SPC" . nil)))         ; space should never complete
-;; -UseOrderless
 
-;; UseMinibuffer
 (use-package minibuffer
   :unless noninteractive
   :config
@@ -117,9 +115,7 @@ instead."
          ("f" . next-completion)
          ("b" . previous-completion)
          ("M-v" . vde/focus-minibuffer)))
-;; -UseMinibuffer
 
-;; UseIComplete
 (use-package icomplete
   :demand
   :unless noninteractive
@@ -206,10 +202,9 @@ Otherwise, use `projectile-switch-to-project'."
                       (interactive)
                       (let ((current-prefix-arg t))
                         (vde/icomplete-toggle-completion-styles))))))
-;; -UseIComplete
 
-;; UseIcompleteVertical
 (use-package icomplete-vertical
+  :unless noninteractive
   :demand
   :after (minibuffer icomplete) ; do not forget to check those as well
   :config
@@ -240,18 +235,7 @@ normally would when calling `yank' followed by `yank-pop'."
   :bind (("C-M-y" . vde/icomplete-yank-kill-ring)
          :map icomplete-minibuffer-map
          ("C-v" . icomplete-vertical-toggle)))
-;; -UseIcompleteVertical
 
-;; FIXME: choose better shortcuts
-(use-package avy-embark-occur
-  :disabled
-  :load-path "~/.config/emacs/lisp/embark/" ; in development
-  :bind
-  (:map minibuffer-local-completion-map
-        ("'" . avy-embark-occur-choose)
-        ("\"" . avy-embark-occur-act)))
-
-;; UseCompany
 (use-package company
   :unless noninteractive
   :hook ((prog-mode . company-mode))
@@ -309,8 +293,6 @@ normally would when calling `yank' followed by `yank-pop'."
   (defun my-company-emoji ()
     (set (make-local-variable 'company-backends) '(company-emoji))
     (company-mode t)))
-
-;; -UseCompany
 
 (provide 'config-completion)
 ;;; config-completion.el ends here

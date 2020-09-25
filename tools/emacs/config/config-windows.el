@@ -13,6 +13,7 @@
 
 ;; UseAceWindow
 (use-package ace-window
+  :unless noninteractive
   :commands (ace-window ace-swap-window)
   :bind (("C-x o"   . ace-window)
          ("C-c w w" . ace-window)
@@ -34,6 +35,7 @@
 
 ;; UseWindmove
 (use-package windmove
+  :unless noninteractive
   :commands (windmove-left windmove-right windmove-down windmove-up)
   :bind (("C-s-<up>" . windmove-up)
          ("C-s-<right>" . windmove-right)

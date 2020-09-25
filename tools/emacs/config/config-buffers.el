@@ -3,7 +3,6 @@
 ;;; Buffer related configurations
 ;;; Code:
 
-;; UseDisplayBuffers
 (use-package emacs
   :unless noninteractive
   :config
@@ -20,7 +19,7 @@
                    (window-height . 0.25)
                    (side . bottom)
                    (slot . -1))
-                  (".*\\*\\(Completions\\|Embark Live Occur\\).*"
+                  (".*\\*\\(Completions\\).*"
                    (display-buffer-in-side-window)
                    (window-height . 0.16)
                    (side . bottom)
@@ -59,17 +58,9 @@
                    (slot . -1))
                   ("\\*\\(Flycheck\\|Package-Lint\\).*"
                    (display-buffer-in-side-window)
-                   (window-width . 0.20)
+                   (window-width . 0.40)
                    (side . right)
                    (slot . 0)
-                   (window-parameters . ((no-other-window . t)
-                                         (mode-line-format . (" "
-                                                              mode-line-buffer-identification)))))
-                  ("\\*Faces\\*"
-                   (display-buffer-in-side-window)
-                   (window-width . 0.20)
-                   (side . right)
-                   (slot . 1)
                    (window-parameters . ((no-other-window . t)
                                          (mode-line-format . (" "
                                                               mode-line-buffer-identification)))))
@@ -84,9 +75,7 @@
   (setq window-combination-resize t) ; Size new windows proportionally
   :bind (("C-x +" . balance-windows-area)
          ("<C-f7>" . window-toggle-side-windows)))
-;; -UseDisplayBuffer
 
-;; UseSaveHist
 (use-package savehist
   :unless noninteractive
   :config
@@ -99,21 +88,20 @@
                                                 comint-input-ring
                                                 compile-history
                                                 last-kbd-macro
-                                                shell-command-history))
+                                                shell-command-history
+                                                projectile-project-command-history))
   (savehist-mode 1))
-;; -UseSaveHist
 
-;; UseUniquify
 (use-package uniquify
+  :unless noninteractive
   :config
   (setq-default uniquify-buffer-name-style 'post-forward
                 uniquify-separator ":"
                 uniquify-ignore-buffers-re "^\\*"
                 uniquify-after-kill-buffer-p t))
-;; -UseUniquify
 
-;; UseIBuffer
 (use-package ibuffer
+  :unless noninteractive
   :commands (ibuffer)
   :bind (("C-x C-b" . ibuffer)
          ([remap list-buffers] . ibuffer))
@@ -152,12 +140,12 @@
                 filename-and-process))))
 
 (use-package ibuffer-vc
+  :unless noninteractive
   :commands (ibuffer-vc-set-filter-groups-by-vc-root)
   :hook (ibuffer . (lambda ()
                      (ibuffer-vc-set-filter-groups-by-vc-root)
                      (unless (eq ibuffer-sorting-mode 'filename/process)
                        (ibuffer-do-sort-by-filename/process)))))
-;; -UseIBuffer
 
 (provide 'config-buffers)
 ;;; config-buffers.el ends here

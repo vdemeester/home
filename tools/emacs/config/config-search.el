@@ -5,6 +5,7 @@
 
 ;; UseISearch
 (use-package isearch
+  :unless noninteractive
   :config
   (setq-default search-whitespace-regexp ".*?"
                 isearch-lax-whitespace t
@@ -64,6 +65,7 @@ confines of word boundaries (e.g. multiple words)."
 
 ;; UseWgrep
 (use-package wgrep
+  :unless noninteractive
   :commands (wgrep-change-to-wgrep-mode)
   :defer 2
   :custom
@@ -73,7 +75,8 @@ confines of word boundaries (e.g. multiple words)."
 
 ;; UseRG
 (use-package rg
-  :if *rg*
+  :if (and (*rg*)
+           (not noninteractive))
   :commands (rg rg-project rg-dwim)
   :bind (("M-s r r" . rg)
          ("M-s r p" . rg-project)

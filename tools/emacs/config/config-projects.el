@@ -6,6 +6,7 @@
 ;;; Code:
 
 (use-package projectile
+  :unless noninteractive
   :commands
   (projectile-ack
    projectile-ag
@@ -78,7 +79,7 @@
      ((eq major-mode 'yaml-mode) "yamllint .")
      (t "go build -v ./...")
      ))
-  
+
   (defun projectile-ko-compile-command-go ()
     "compile command for a ko project if in a go file"
     (let* ((current-file (buffer-file-name (current-buffer)))
@@ -93,7 +94,7 @@
     (cond
      ((eq major-mode 'go-mode) (projectile-ko-test-command-go))
      (t "go test -v ./...")))
-  
+
   (defun projectile-ko-test-command-go ()
     "test command for a ko project if in a go file"
     (let* ((current-file (buffer-file-name (current-buffer)))
@@ -102,19 +103,19 @@
       (cond
        ((string-suffix-p "_test.go" relative-current-file) (projectile-ko-command-go-test relative-current-file))
        (t (format "go test -v ./%s" relative-current-folder)))))
-  
+
   (defun projectile-ko-command-go-test (current-file)
     "get the command for a go test"
     (cond
      ((gotest-module-available-p) (projectile-ko-command-go-test-gotest current-file))
      (t (format "go test -v ./%s" current-file))))
-  
+
   (defun projectile-ko-command-go-test-gotest (current-file)
     "get the command for a go test with gotest module enabled"
     (message default-directory)
     (let ((data (go-test--get-current-file-testing-data)))
       (format "go test -run='%s' -v ./%s" data (file-name-directory current-file))))
-  
+
   (defun gotest-module-available-p ()
     "is go-test module available"
     (fboundp 'go-test--get-current-file-data))
@@ -124,7 +125,7 @@
      ((eq major-mode 'go-mode) (projectile-ko-run-command-go))
      ;; nothing by default ?
      ))
-  
+
   (defun projectile-ko-run-command-go ()
     "test command for a ko project if in a go file"
     (let* ((current-file (buffer-file-name (current-buffer)))
@@ -138,7 +139,7 @@
      ((eq major-mode 'go-mode) (projectile-ko-package-command-go))
      (t "ko resolve --push=false --oci-layout-path=/tmp/oci -f config")
      ))
-  
+
   (defun projectile-ko-package-command-go ()
     "package command for a ko project if in a go file"
     (let* ((current-file (buffer-file-name (current-buffer)))

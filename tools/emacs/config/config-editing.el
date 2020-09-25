@@ -16,6 +16,7 @@
 
 ;; UseSmartParens
 (use-package smartparens
+  :unless noninteractive
   :commands (smartparens-mode smartparens-global-mode show-smartparens-global-mode
                               sp-split-sexp sp-newline sp-up-sexp)
   :hook ((prog-mode . turn-on-smartparens-mode)
@@ -41,6 +42,7 @@
 ;; -UseSmartParens
 
 (use-package color-identifiers-mode
+  :unless noninteractive
   :commands (color-identifiers-mode)
   :config
   (setq-default color-identifiers:num-colors 15
@@ -65,6 +67,7 @@
 
 ;; UseAggressiveIndent
 (use-package aggressive-indent
+  :unless noninteractive
   :bind ("C-c e i" . aggressive-indent-mode)
   :hook ((lisp-mode       . aggressive-indent-mode)
          (emacs-lisp-mode . aggressive-indent-mode))
@@ -75,6 +78,7 @@
 
 ;; UseUndoTree
 (use-package undo-tree
+  :unless noninteractive
   :hook (after-init . global-undo-tree-mode)
   :config
   (setq-default undo-tree-visualizer-timestamps t
@@ -83,6 +87,7 @@
 
 ;; UseWhitespace
 (use-package whitespace
+  :unless noninteractive
   :commands (whitespace-mode vde/toggle-invisibles)
   :config
   (setq-default whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark))
@@ -97,28 +102,33 @@
 
 ;; UseExpandRegion
 (use-package expand-region
+  :unless noninteractive
   :commands (er/expand-region er/contract-region)
   :bind (("C-=" . er/expand-region)
          ("C--". er/contract-region)))
 ;; -UseExpandRegiston
 
 (use-package visual-regexp
+  :unless noninteractive
   :commands (vr/replace vr/query-replace)
   :bind (("C-c r"   . vr/replace)
          ("C-c %"   . vr/query-replace)))
 
 ;; UseHideShow
 (use-package hs-minor-mode
+  :unless noninteractive
   :hook ((prog-mode . hs-minor-mode)))
 ;; -UseHideShow
 
 (use-package easy-kill
+  :unless noninteractive
   :commands (easy-kill)
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill)
   (global-set-key [remap mark-sexp] 'easy-mark))
 
 (use-package display-line-numbers
+  :unless noninteractive
   :hook (prog-mode . display-line-numbers-mode)
   :config
   (setq-default display-line-numbers-type 'relative)
@@ -133,6 +143,7 @@
 (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
 (use-package newcomment
+  :unless noninteractive
   :config
   (setq-default comment-empty-lines t
                 comment-fill-column nil
@@ -160,6 +171,7 @@ Else toggle the comment status of the line at point."
 
 ;; FIXME(vdemeester) Do I need on-the-fly spellcheck *or* not ?
 (use-package flyspell
+  :unless noninteractive
   :commands (flyspell-prog-mode flyspell-mode)
   :hook((text-mode . flyspell-mode)
         (prog-mode . flyspell-prog-mode))
@@ -190,10 +202,12 @@ Else toggle the comment status of the line at point."
   :hook (before-save . delete-trailing-whitespace))
 
 (use-package delsel
+  :unless noninteractive
   :config
   (delete-selection-mode 1))
 
 (use-package emacs
+  :unless noninteractive
   :custom
   (repeat-on-final-keystroke t)
   (set-mark-command-repeat-pop t)
@@ -238,24 +252,8 @@ instead.  This command can then be followed by the standard
          ("<C-f6>" . tear-off-window)
          ("C-S-y" . prot/yank-replace-line-or-region)))
 
-(use-package crux
-  :disabled
-  :commands (crux-transpose-windows
-             crux-duplicate-current-line-or-region
-             crux-rename-file-and-buffer
-             crux-open-with)
-  :bind (("C-c w S" . crux-transpose-windows)
-         ("C-c d" . crux-duplicate-current-line-or-region)
-         ("<C-f2>" . crux-rename-file-and-buffer)
-         :map dired-mode-map
-         ("<M-return>" . crux-open-with)))
-
-(use-package goto-last-change
-  :disabled
-  :commands goto-last-change
-  :bind ("C-z" . goto-last-change))
-
 (use-package pdf-tools
+  :unless noninteractive
   :mode  ("\\.pdf\\'" . pdf-view-mode)
   :config
   (setq-default pdf-view-display-size 'fit-page)
@@ -265,10 +263,12 @@ instead.  This command can then be followed by the standard
   (require 'pdf-occur))
 
 (use-package paste-sbr
+  :unless noninteractive
   :commands (htmlize-paste-it)
   :bind ("C-c e p" . htmlize-paste-it))
 
 (use-package scratch
+  :unless noninteractive
   :commands (scratch)
   :config
   (defun vde/scratch-buffer-setup ()
@@ -298,6 +298,7 @@ If region is active, add its contents to the new buffer."
   :hook (prog-mode-hook . subword-mode))
 
 (use-package whole-line-or-region
+  :unless noninteractive
   :config
   (whole-line-or-region-global-mode))
 

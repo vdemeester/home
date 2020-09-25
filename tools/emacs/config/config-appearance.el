@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Appearance configuration
 ;;; Code:
+(declare-function projectile-project-name "projectile")
+
 (use-package emacs
   :defer 3
   :bind ("C-c f r" . mu-reset-fonts)
@@ -45,6 +47,7 @@
   (global-unset-key (kbd "C-h h")))
 
 (use-package frame
+  :unless noninteractive
   :commands vde/cursor-type-mode
   :config
   (setq-default cursor-type 'box)
@@ -91,6 +94,7 @@ Ignores `ARGS'."
   :hook (after-init . window-divider-mode))
 
 (use-package tab-bar
+  :unless noninteractive
   :config
   (setq-default tab-bar-close-button-show nil)
   (setq-default tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
@@ -131,6 +135,7 @@ questions.  Else use completion to select the tab to switch to."
          ("C-x t s" . tab-switcher)))
 
 (use-package moody
+  :unless noninteractive
   :config
   (setq-default x-underline-at-descent-line t
                 ;; Show buffer position percentage starting from top
@@ -158,6 +163,7 @@ questions.  Else use completion to select the tab to switch to."
   (moody-replace-vc-mode))
 
 (use-package minions
+  :unless noninteractive
   :config
   (setq-default minions-mode-line-lighter "λ="
                 minions-mode-line-delimiters '("" . "")
@@ -165,6 +171,7 @@ questions.  Else use completion to select the tab to switch to."
   (minions-mode +1))
 
 (use-package time
+  :unless noninteractive
   :config
   (setq-default display-time-24hr-format t
                 display-time-day-and-date t
@@ -180,23 +187,9 @@ questions.  Else use completion to select the tab to switch to."
                           monthname day
                           24-hours minutes)))
   (display-time))
-;; -UseMoody
-
-(use-package face-remap
-  :diminish buffer-face-mode            ; the actual mode
-  :commands vde/variable-pitch-mode
-  :config
-  (define-minor-mode vde/variable-pitch-mode
-    "Toggle `variable-pitch-mode', except for `prog-mode'."
-    :init-value nil
-    :global nil
-    (if vde/variable-pitch-mode
-        (unless (derived-mode-p 'prog-mode)
-          (variable-pitch-mode 1))
-      (variable-pitch-mode -1))))
-
 
 (use-package tooltip
+  :unless noninteractive
   :config
   (setq tooltip-delay 0.5)
   (setq tooltip-short-delay 0.5)

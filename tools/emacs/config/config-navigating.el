@@ -74,6 +74,7 @@ Meant to economise on key bindings."
          ("t" . toggle-truncate-lines)))
 
 (use-package avy
+  :unless noninteractive
   :commands (avy-goto-char avy-goto-line avy-goto-word-1 avy-pop-mark avy-goto-char-timer)
   :bind (("C-c j w"   . avy-goto-word-1)
          ("C-c j b" . avy-pop-mark)
@@ -81,6 +82,7 @@ Meant to economise on key bindings."
          ("C-c j l" . avy-goto-line)))
 
 (use-package hideshow
+  :unless noninteractive
   :commands (hs-show-all hs-toggle-hiding hs-hide-all hs-hide-block hs-hide-level)
   :defer 5
   :bind (("C-c @ a" . hs-show-all)
@@ -90,17 +92,20 @@ Meant to economise on key bindings."
          ("C-c @ l" . hs-hide-level)))
 
 (use-package mwim
+  :unless noninteractive
   :commands (mwim-beginning-of-code-or-line mwim-end-of-code-or-line)
   :bind (:map prog-mode-map
               ("C-a" . mwim-beginning-of-code-or-line)
               ("C-e" . mwim-end-of-code-or-line)))
 
 (use-package beginend
+  :unless noninteractive
   :defer 5
   :config
   (beginend-global-mode 1))
 
 (use-package dumb-jump
+  :unless noninteractive
   :bind (("M-g q"     . dumb-jump-quick-look) ;; Show me in a tooltip.
          ("M-g o" . dumb-jump-go-other-window)
          ("M-g j" . dumb-jump-go)
@@ -116,6 +121,7 @@ Meant to economise on key bindings."
                 dumb-jump-prefer-searcher 'rg))
 
 (use-package imenu
+  :unless noninteractive
   :config
   (setq-default imenu-use-markers t
                 imenu-auto-rescan t
@@ -146,16 +152,19 @@ aggressive fuzzy-style matching for this particular command."
   :bind ("C-'" . prot/imenu-vertical))
 
 (use-package flimenu
+  :unless noninteractive
   :config
   (flimenu-global-mode 1))
 
 (use-package man
+  :unless noninteractive
   :commands (man)
   :bind (:map Man-mode-map
               ("i" . Man-goto-section)
               ("g" . Man-update-manpage)))
 
 (use-package pulse
+  :unless noninteractive
   :config
   (defface vde/pulse-line-modus-theme
     '((t :inherit modus-theme-subtle-green :extend t))

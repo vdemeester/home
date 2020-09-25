@@ -5,6 +5,7 @@
 
 ;; UseDired
 (use-package dired
+  :unless noninteractive
   :commands (dired find-name-dired)
   :bind (("C-c RET" . vde/open-in-external-app)
          ("C-c f g" . vde/dired-get-size)
@@ -158,6 +159,7 @@ This relies on the external 'fd' executable."
 
 ;; UseDireAux
 (use-package dired-aux
+  :unless noninteractive
   :after dired
   :config
   (setq-default
@@ -169,6 +171,7 @@ This relies on the external 'fd' executable."
 
 ;; UseDiredCollapse
 (use-package dired-collapse
+  :unless noninteractive
   :commands (dired-collapse-mode)
   :hook (dired-mode . dired-collapse-mode))
 ;; -UseDiredCollapse
@@ -176,6 +179,7 @@ This relies on the external 'fd' executable."
 ;; UseDiredAsync
 (use-package async)
 (use-package dired-async
+  :unless noninteractive
   :after (dired async)
   :commands (dired-async-mode)
   :hook (dired-mode . dired-async-mode))
@@ -183,6 +187,7 @@ This relies on the external 'fd' executable."
 
 ;; UseDiredNarrow
 (use-package dired-narrow
+  :unless noninteractive
   :after dired
   :commands (dired-narrow)
   :bind (:map dired-mode-map
@@ -195,6 +200,7 @@ This relies on the external 'fd' executable."
 
 ;; UseWDired
 (use-package wdired
+  :unless noninteractive
   :after dired
   :commands (wdired-mode
              wdired-change-to-wdired-mode)
@@ -205,6 +211,7 @@ This relies on the external 'fd' executable."
 
 ;; UseDiredRsync
 (use-package dired-rsync
+  :unless noninteractive
   :after dired
   :commands (dired-rsync)
   :bind (:map dired-mode-map
@@ -212,6 +219,7 @@ This relies on the external 'fd' executable."
 ;; -UseDiredRsync
 
 (use-package dired-subtree
+  :unless noninteractive
   :after dired
   :config
   (setq dired-subtree-use-backgrounds nil)
@@ -221,6 +229,7 @@ This relies on the external 'fd' executable."
               ("<S-iso-lefttab>" . dired-subtree-remove)))
 
 (use-package diredfl
+  :unless noninteractive
   :commands (diredfl-mode)
   :config
   (setq diredfl-ignore-compressed-flag nil)
