@@ -6,7 +6,7 @@
 ;; UseOrderless
 (use-package orderless
   :config
-  (setq orderless-regexp-separator "[/\s_-]+")
+  (setq orderless-regexp-separator " +")
   (setq orderless-matching-styles
         '(orderless-strict-leading-initialism
           orderless-regexp
