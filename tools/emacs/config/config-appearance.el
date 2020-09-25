@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Appearance configuration
 ;;; Code:
-;; TypeFaceConfiguration
 (use-package emacs
   :defer 3
   :bind ("C-c f r" . mu-reset-fonts)
@@ -23,7 +22,6 @@
       (set-face-attribute 'variable-pitch nil
                           :family font-family-sans
                           :weight 'regular))))
-;; -TypeFaceConfiguration
 
 (use-package emacs
   :config
@@ -73,7 +71,6 @@
         (kill-local-variable `,local))
       (blink-cursor-mode -1))))
 
-;; UseTheme
 (use-package emacs
   :config
   (setq-default custom-safe-themes t)
@@ -85,18 +82,14 @@ Ignores `ARGS'."
     (mapc #'disable-theme custom-enabled-themes))
 
   (advice-add 'load-theme :before #'vde/before-load-theme))
-;; -UseTheme
 
-;; UseWindowDivider
 (use-package emacs
   :config
   (setq window-divider-default-right-width 1)
   (setq window-divider-default-bottom-width 1)
   (setq window-divider-default-places 'right-only)
   :hook (after-init . window-divider-mode))
-;; -UseWindowDivider
 
-;; UseTabbar
 (use-package tab-bar
   :config
   (setq-default tab-bar-close-button-show nil)
@@ -107,7 +100,13 @@ Ignores `ARGS'."
   (setq-default tab-bar-position nil)
   (setq-default tab-bar-show t)
   (setq-default tab-bar-tab-hints nil)
-  (setq-default tab-bar-tab-name-function 'tab-bar-tab-name-all)
+  (setq-default tab-bar-tab-name-function 'vde/tab-bar-tab-name)
+
+  (defun vde/tab-bar-tab-name ()
+    "Generate tab name from the buffer of the selected window *or* projectile."
+    (cond
+     ((boundp 'projectile-project-name) (projectile-project-name))
+     (t (tab-bar-tab-name-current-with-count))))
 
   (defun vde/icomplete-tab-bar-tab-dwim ()
     "Do-What-I-Mean function for getting to a `tab-bar-mode' tab.
@@ -128,7 +127,6 @@ questions.  Else use completion to select the tab to switch to."
 
   :bind (("C-x t t" . vde/icomplete-tab-bar-tab-dwim)
          ("C-x t s" . tab-switcher)))
-;; -UseTabbar
 
 ;; UseMoody
 (use-package moody
