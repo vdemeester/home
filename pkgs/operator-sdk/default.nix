@@ -8,47 +8,48 @@ rec {
     , vendorSha256
     }:
 
-      buildGoModule rec {
-        inherit vendorSha256;
-        pname = "operator-sdk";
-        name = "${pname}-${version}";
-        rev = "v${version}";
+    buildGoModule rec {
+      inherit vendorSha256;
+      pname = "operator-sdk";
+      name = "${pname}-${version}";
+      rev = "v${version}";
 
-        builtInputs = [ "git" ];
+      builtInputs = [ "git" ];
 
-        goPackagePath = "github.com/operator-framework/operator-sdk";
-        subPackages = [ "cmd/operator-sdk" ];
-        buildFlagsArray = let
+      goPackagePath = "github.com/operator-framework/operator-sdk";
+      subPackages = [ "cmd/operator-sdk" ];
+      buildFlagsArray =
+        let
           t = "${goPackagePath}/version";
         in
-          ''
-            -ldflags=
-              -X ${t}.GitVersion=${version}
-              -X ${t}.KubernetesVersion=v1.17.2
-          '';
-
-        src = fetchFromGitHub {
-          inherit rev;
-          owner = "operator-framework";
-          repo = "operator-sdk";
-          sha256 = "${sha256}";
-        };
-        modSha256 = "${vendorSha256}";
-
-        postInstall = ''
-          # completions
-          mkdir -p $out/share/bash-completion/completions/
-          $out/bin/operator-sdk completion bash > $out/share/bash-completion/completions/operator-sdk
-          mkdir -p $out/share/zsh/site-functions/
-          $out/bin/operator-sdk completion zsh > $out/share/zsh/site-functions/_operator-sdk
+        ''
+          -ldflags=
+            -X ${t}.GitVersion=${version}
+            -X ${t}.KubernetesVersion=v1.17.2
         '';
 
-        meta = {
-          description = "SDK for building Kubernetes applications. Provides high level APIs, useful abstractions, and project scaffolding";
-          homepage = https://github.com/operator-framework/operator-sdk;
-          license = lib.licenses.asl20;
-        };
+      src = fetchFromGitHub {
+        inherit rev;
+        owner = "operator-framework";
+        repo = "operator-sdk";
+        sha256 = "${sha256}";
       };
+      modSha256 = "${vendorSha256}";
+
+      postInstall = ''
+        # completions
+        mkdir -p $out/share/bash-completion/completions/
+        $out/bin/operator-sdk completion bash > $out/share/bash-completion/completions/operator-sdk
+        mkdir -p $out/share/zsh/site-functions/
+        $out/bin/operator-sdk completion zsh > $out/share/zsh/site-functions/_operator-sdk
+      '';
+
+      meta = {
+        description = "SDK for building Kubernetes applications. Provides high level APIs, useful abstractions, and project scaffolding";
+        homepage = https://github.com/operator-framework/operator-sdk;
+        license = lib.licenses.asl20;
+      };
+    };
 
   operator-sdk_0_18 = makeOverridable operatorSdkGen {
     version = "0.18.0";

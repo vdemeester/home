@@ -13,10 +13,10 @@ rec {
         let
           t = "${goPackagePath}/pkg/cmd/version";
         in
-          ''
-            -ldflags=
-              -X ${t}.clientVersion=${version}
-          '';
+        ''
+          -ldflags=
+            -X ${t}.clientVersion=${version}
+        '';
       src = fetchFromGitHub {
         owner = "tektoncd";
         repo = "cli";

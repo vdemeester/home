@@ -24,9 +24,10 @@ rec {
 
       goPackagePath = "github.com/code-ready/crc";
       subPackages = [ "cmd/crc" ];
-      buildFlagsArray = let
-        t = "${goPackagePath}/pkg/crc";
-      in
+      buildFlagsArray =
+        let
+          t = "${goPackagePath}/pkg/crc";
+        in
         ''
           -ldflags=
             -X ${t}/version.crcVersion=${version}
