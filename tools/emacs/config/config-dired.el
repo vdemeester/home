@@ -149,8 +149,6 @@ This relies on the external 'fd' executable."
   :after dired
   :bind ("C-x C-j" . dired-jump)
   :commands (dired-jump dired-omit-mode)
-  :hook
-  (dired-mode . dired-omit-mode)
   :config
   (setq-default dired-omit-files (concat dired-omit-files "\\|^\\.+$\\|^\\..+$")
                 dired-omit-verbose nil
@@ -236,6 +234,7 @@ This relies on the external 'fd' executable."
   :hook (dired-mode . diredfl-mode))
 
 (use-package trashed
+  :unless noninteractive
   :commands (trashed)
   :config
   (setq trashed-action-confirmer 'y-or-n-p)

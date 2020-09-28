@@ -75,8 +75,7 @@ confines of word boundaries (e.g. multiple words)."
 
 ;; UseRG
 (use-package rg
-  :if (and (*rg*)
-           (not noninteractive))
+  :if *rg*
   :commands (rg rg-project rg-dwim)
   :bind (("M-s r r" . rg)
          ("M-s r p" . rg-project)
