@@ -19,7 +19,7 @@
     gnome3.pomodoro
     gnome3.gnome-boxes
 
-    gnome3.gnome-documents
+    #gnome3.gnome-documents
     gnome3.gnome-nettool
     gnome3.gnome-power-manager
     gnome3.gnome-todo

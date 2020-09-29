@@ -14,21 +14,24 @@ let
 in
 {
   imports = [
-    ./hardware/thinkpad-x220.nix
+    ./hardware/dell-latitude-e6540.nix
     ./modules
     (import ../users).vincent
     (import ../users).root
   ];
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/3e86d004-5554-4a90-b436-fcca63775f9d";
+      fsType = "ext4";
+    };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/884a3d57-f652-49b2-9c8b-f6eebd5edbeb";
-    fsType = "ext4";
-  };
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/C036-34B9";
-    fsType = "vfat";
-  };
-  swapDevices = [{ device = "/dev/disk/by-uuid/e1833693-77ac-4d52-bcc7-54d082788639"; }];
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/D91F-14E8";
+      fsType = "vfat";
+    };
+
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/f065180d-8889-45ba-81d1-a67ac746dfeb"; }
+    ];
 
   networking = {
     hostName = hostname;
