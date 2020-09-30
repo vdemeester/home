@@ -23,6 +23,25 @@ CLOSED: [2020-06-29 Mon 18:11]
 - State "DONE"       from "TODO"       [2020-06-29 Mon 18:11]
 :END:
 
+** DONE unstable vs 20.09
+CLOSED: [2020-09-30 Wed 11:23]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-09-30 Wed 11:23]
+:END:
+
+Currently, hokkaido is setup based on unstable.. should we go back to 20.09 ?
+Let's try as is, and see if it's a pain in the butt or not
+
+** TODO Initial repositories setup
+
+- NixOS/nixpkgs
+- src/home
+- src/github.com/tektoncd
+- src/github.com/openshift
+- …
+
+Using =mr= for this
+
 ** TODO Add gnome3 extensions
 
 - [ ] pomodoro (fixing it ?)
@@ -43,6 +62,8 @@ Check how to do this (dconf, gsettings/gconf)
 - [ ] terminal/tilix profiles (colors, …)
 - [ ] No getting started
 - [ ] other settings
+
+Extract from naruhodo, clean and try it out in nixos
 
 ** TODO fix GnuPG setup (with yubikey)
 
