@@ -20,18 +20,19 @@ in
     (import ../users).root
   ];
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/3e86d004-5554-4a90-b436-fcca63775f9d";
+    {
+      device = "/dev/disk/by-uuid/3e86d004-5554-4a90-b436-fcca63775f9d";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/D91F-14E8";
+    {
+      device = "/dev/disk/by-uuid/D91F-14E8";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/f065180d-8889-45ba-81d1-a67ac746dfeb"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/f065180d-8889-45ba-81d1-a67ac746dfeb"; }];
 
   networking = {
     hostName = hostname;
@@ -79,6 +80,8 @@ in
   services.gnome3.core-shell.enable = true;
   services.gnome3.core-os-services.enable = true;
   services.gnome3.core-utilities.enable = true;
+  virtualisation.docker.enable = true;
+  virtualisation.podman.enable = true;
 
   fonts = {
     enableFontDir = true;
