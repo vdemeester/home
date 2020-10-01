@@ -117,4 +117,5 @@ rec {
   containerd = containerd_1_3;
 
   gnome-shell-extension-shell = pkgs.callPackage ./gnome/extensions/shell { };
+  gnome-bluetooth-quick-connect = pkgs.callPackage ./gnome/extensions/bluetooth-quick-connect { };
 }
