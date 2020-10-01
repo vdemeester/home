@@ -45,6 +45,11 @@ in
     "org/gnome/desktop/screensaver" = {
       "picture-uri" = "file:///home/vincent/desktop/pictures/wallpapers/dynamics/firewatch/firewatch.xml";
     };
+    # settings
+    "org/gnome/settings-daemon/plugins/color" = {
+      night-light-enabled = true;
+      night-light-last-coordinates = (mkTuple [ 48.844400719942406 2.3488000000000002 ]);
+    };
     # Tilix
     "com/gexperts/Tilix" = {
       "control-scoll-zoom" = true;
@@ -87,8 +92,11 @@ in
       use-theme-colors = false;
       visible-name = "Light";
     };
+    # Shell
+    "org/gnome/shell" = {
+      enabled-extensions = [ "drive-menu@gnome-shell-extensions.gcampax.github.com" "sound-output-device-chooser@kgshank.net" "user-theme@gnome-shell-extensions.gcampax.github.com" "launch-new-instance@gnome-shell-extensions.gcampax.github.com" "bluetooth-quick-connect@bjarosze.gmail.com" ];
+    };
     # Extensions
-
     "org/gnome/shell/extensions/hidetopbar" = {
       enable-active-window = false;
       enable-intellihide = true;
