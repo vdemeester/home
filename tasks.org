@@ -44,8 +44,8 @@ Using =mr= for this
 
 ** TODO Add gnome3 extensions
 
-- [ ] pomodoro (fixing it ?)
-- [ ] [[https://github.com/bjarosze/gnome-bluetooth-quick-connect][bluetooth quick connect]]
+- [-] pomodoro (fixing it ?)
+- [X] [[https://github.com/bjarosze/gnome-bluetooth-quick-connect][bluetooth quick connect]]
 - [-] [[https://framagit.org/abakkk/DrawOnYourScreen][draw on you screen]]
 - [ ] [[https://github.com/mlutfy/hidetopbar][hide top bar]]
 - [ ] [[https://github.com/sindex/no-annoyance][noannoyance]]
@@ -54,18 +54,28 @@ Using =mr= for this
 - [X] sound-output-device-chooser
 - [-] transparent gnome panel
 
-** TODO gnome settings
+** TODO Enable bolt
+
+** DONE gnome settings
+CLOSED: [2020-10-01 Thu 18:11]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-10-01 Thu 18:11]
+:END:
 
 Check how to do this (dconf, gsettings/gconf)
 
-- [ ] keyboard shortcuts
-- [ ] terminal/tilix profiles (colors, …)
-- [ ] No getting started
-- [ ] other settings
+- [X] keyboard shortcuts
+- [X] terminal/tilix profiles (colors, …)
+- [-] No getting started
+- [-] other settings
 
 Extract from naruhodo, clean and try it out in nixos
 
-** TODO fix GnuPG setup (with yubikey)
+** DONE fix GnuPG setup (with yubikey)
+CLOSED: [2020-10-01 Thu 18:12]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-10-01 Thu 18:12]
+:END:
 
 ** TODO gnome3 modules
 
