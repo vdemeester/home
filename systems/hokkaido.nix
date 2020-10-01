@@ -55,6 +55,7 @@ in
     dev.enable = true;
     yubikey.enable = true;
     virtualization = { enable = true; nested = true; };
+    docker.enable = true;
   };
   environment.systemPackages = with pkgs; [ virtmanager ];
 
@@ -80,7 +81,6 @@ in
   services.gnome3.core-shell.enable = true;
   services.gnome3.core-os-services.enable = true;
   services.gnome3.core-utilities.enable = true;
-  virtualisation.docker.enable = true;
   virtualisation.podman.enable = true;
 
   fonts = {
