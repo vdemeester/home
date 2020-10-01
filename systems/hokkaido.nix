@@ -62,6 +62,7 @@ in
   networking.networkmanager = {
     enable = true;
     unmanaged = [
+      "interface-name:br-*"
       "interface-name:ve-*"
       "interface-name:veth*"
       "interface-name:wg0"
