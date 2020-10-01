@@ -72,9 +72,20 @@ in
     tekton.enable = true;
     yubikey.enable = true;
   };
-  programs = {
-    podman.enable = true;
-    crc.enable = true;
+  virtualisation.podman.enable = true;
+  virtualisation.containers = {
+    enable = true;
+    registries = {
+      search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
+    };
+    policy = {
+      default = [{ type = "insecureAcceptAnything"; }];
+      transports = {
+        docker-daemon = {
+          "" = [{ type = "insecureAcceptAnything"; }];
+        };
+      };
+    };
   };
   security = {
     sudo.extraConfig = ''
