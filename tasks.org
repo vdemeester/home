@@ -103,10 +103,13 @@ possible.
 To run the install script from a NixOS livecd, =nix-shell= can be used, same in bootstrap
 as soon as we have installed nix.
 
+
 * TODO Emacs org-agenda refactoring
 
 Remove the usage of =org-super-agenda= and use standard org feature. This is part of a
 simplify your setup move.
+
+* TODO Upgrade docker to 20.xx
 
 * TODO [#B] Emacs shell environment                                   :emacs:
 
