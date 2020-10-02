@@ -14,6 +14,16 @@
 
 (add-to-list 'find-file-not-found-functions #'with-buffer-name-prompt-and-make-subdirs)
 
+;; Fix long line "problems"
+;; Disable some right-to-left behavior that might not be needed.
+;; Learning arabic might make me change this, but for now..
+(setq-default bidi-paragraph-direction 'left-to-right)
+(if (version<= "27.1" emacs-version)
+    (setq bidi-inhibit-bpa t))
+;; Detect if the line in a buffer are so long they could have a performance impact
+(if (version<= "27.1" emacs-version)
+    (global-so-long-mode 1))
+
 ;; UseSmartParens
 (use-package smartparens
   :unless noninteractive
