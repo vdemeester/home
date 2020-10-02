@@ -19,6 +19,7 @@
     ./printing.nix
     ./pulseaudio.nix
     ./qemu.nix
+    ./redhat.nix
     ./scanning.nix
     ./ssh.nix
     ./syncthing.nix

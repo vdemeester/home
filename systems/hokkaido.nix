@@ -57,6 +57,7 @@ in
     yubikey.enable = true;
     virtualization = { enable = true; nested = true; };
     docker.enable = true;
+    redhat.enable = true;
   };
   environment.systemPackages = with pkgs; [ virtmanager ];
 
