@@ -210,6 +210,11 @@ It is only require whenever I will target darwin :D
 Mirrors 👼
 cgit or custom
 
+This needs to be:
+- the simplest possible
+- fast (aka I don't want to wait on git push)
+- work in and outside home (vpn)
+
 * TODO More defaults in configuration
 
 In [[https://hugoreeves.com/posts/2019/nix-home/][Your home in Nix (dotfile management) - Hugo Reeves]] he defines some defaults (in nix
