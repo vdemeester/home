@@ -17,6 +17,46 @@
 
 I need naruhodo setup on hokkaido as much automated as possible.
 
+** TODO Initial repositories setup
+
+- NixOS/nixpkgs
+- src/home
+- src/github.com/tektoncd
+- src/github.com/openshift
+- …
+
+Using =mr= for this
+
+** TODO Manage =~/sync/*= links
+
+kubeconfig, …
+
+** TODO Yubikey login/lockout
+
+** TODO gnome3 modules
+
+Create a module (like desktop) or part of desktop
+
+** TODO redhat specifics
+
+VPN
+
+** TODO [[git:~/src/home/tasks.org::master@{2020-07-09}::158][Reset systems at boot]]
+
+- =root=
+- =home=
+
+** TODO Dry-install on old Dell
+
+Things to test:
+
+- [ ] Erase your darlings setup ?
+- [X] Gnome settings
+- [ ] Yubikey
+  + login/logout
+  + gpg setup
+- [ ] Red Hat VPN connection
+
 ** DONE Initial gnome3 setup
 CLOSED: [2020-06-29 Mon 18:11]
 :LOGBOOK:
@@ -32,25 +72,11 @@ CLOSED: [2020-09-30 Wed 11:23]
 Currently, hokkaido is setup based on unstable.. should we go back to 20.09 ?
 Let's try as is, and see if it's a pain in the butt or not
 
-** TODO Initial repositories setup
-
-- NixOS/nixpkgs
-- src/home
-- src/github.com/tektoncd
-- src/github.com/openshift
-- …
-
-Using =mr= for this
-
 ** DONE Fix emacs server service
 CLOSED: [2020-10-02 Fri 17:31]
 :LOGBOOK:
 - State "DONE"       from "TODO"       [2020-10-02 Fri 17:31]
 :END:
-
-** TODO Manage =~/sync/*= links
-
-kubeconfig, …
 
 ** DONE Add gnome3 extensions
 CLOSED: [2020-10-02 Fri 12:05]
@@ -94,30 +120,6 @@ CLOSED: [2020-10-01 Thu 18:12]
 :LOGBOOK:
 - State "DONE"       from "TODO"       [2020-10-01 Thu 18:12]
 :END:
-
-** TODO gnome3 modules
-
-Create a module (like desktop) or part of desktop
-
-** TODO redhat specifics
-
-VPN
-
-** TODO [[git:~/src/home/tasks.org::master@{2020-07-09}::158][Reset systems at boot]]
-
-- =root=
-- =home=
-
-** TODO Dry-install on old Dell
-
-Things to test:
-
-- [ ] Erase your darlings setup ?
-- [ ] Gnome settings
-- [ ] Yubikey
-  + login/logout
-  + gpg setup
-- [ ] Red Hat VPN connection
 
 
 * TODO [#B] Create a custom iso for easier install
