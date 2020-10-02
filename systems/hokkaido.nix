@@ -44,6 +44,7 @@ in
   };
 
   hardware.bluetooth.enable = true;
+  services.hardware.bolt.enable = true;
   profiles = {
     syncthing.enable = true;
     home = true;
