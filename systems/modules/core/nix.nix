@@ -77,7 +77,7 @@ in
         automatic = true;
         dates = [ "01:10" "12:10" ];
       };
-      nrBuildUsers = 12;
+      nrBuildUsers = 32;
       #nrBuildUsers = config.nix.maxJobs * 2;
       trustedUsers = [ "root" "@wheel" ];
       useSandbox = true;
