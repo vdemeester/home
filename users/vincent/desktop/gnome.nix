@@ -28,9 +28,9 @@
     gnome3.gnome-usage
 
     gnomeExtensions.sound-output-device-chooser
-    gnomeExtensions.tilingnome
     my.gnome-shell-extension-shell
     my.gnome-bluetooth-quick-connect
+    my.hidetopbar
     gnome3.gnome-shell-extensions
 
     pop-gtk-theme

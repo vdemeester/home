@@ -94,9 +94,15 @@ in
     };
     # Shell
     "org/gnome/shell" = {
-      enabled-extensions = [ "drive-menu@gnome-shell-extensions.gcampax.github.com" "sound-output-device-chooser@kgshank.net" "user-theme@gnome-shell-extensions.gcampax.github.com" "launch-new-instance@gnome-shell-extensions.gcampax.github.com" "bluetooth-quick-connect@bjarosze.gmail.com" ];
+      enabled-extensions = [ "drive-menu@gnome-shell-extensions.gcampax.github.com" "sound-output-device-chooser@kgshank.net" "user-theme@gnome-shell-extensions.gcampax.github.com" "launch-new-instance@gnome-shell-extensions.gcampax.github.com" "bluetooth-quick-connect@bjarosze.gmail.com" "hidetopbar@mathieu.bidon.ca" ];
     };
     # Extensions
+    "org/gnome/shell/extensions/hidetopbar" = {
+      enable-active-window = false;
+      enable-intellihide = true;
+      mouse-sensitive = true;
+      mouse-sensitive-fullscreen-window = false;
+    };
     "org/gnome/shell/extensions/hidetopbar" = {
       enable-active-window = false;
       enable-intellihide = true;
