@@ -120,4 +120,5 @@ rec {
   gnome-bluetooth-quick-connect = pkgs.callPackage ./gnome/extensions/bluetooth-quick-connect { };
   hidetopbar = pkgs.callPackage ./gnome/extensions/hide-top-bar { };
   noannoyance = pkgs.callPackage ./gnome/extensions/noannoyance { };
+  nightthemeswitcher = pkgs.callPackage ./gnome/extensions/nightthemeswitcher { };
 }
