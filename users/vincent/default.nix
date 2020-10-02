@@ -42,37 +42,42 @@ in
   */
   security.pam.services.vincent.fprintAuth = config.services.fprintd.enable;
 
-  home-manager.users.vincent = lib.mkMerge (
-    [
-      (import ./core)
-      (import ./mails { hostname = config.networking.hostName; pkgs = pkgs; })
-    ]
-    ++ optionals config.profiles.dev.enable [ (import ./dev) ]
-    ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
-    ++ optionals config.services.xserver.desktopManager.gnome3.enable [ (import ./desktop/gnome.nix) ]
-    ++ optionals (config.networking.hostName == "wakasu") [
-      {
-        home.packages = with pkgs; [
-          libosinfo
-          asciinema
-          oathToolkit
-        ];
-      }
-    ]
-    ++ optionals (config.profiles.laptop.enable && config.profiles.desktop.enable) [
-      {
-        # FIXME move this in its own file
-        programs.autorandr.enable = true;
-      }
-    ]
-    ++ optionals config.profiles.docker.enable [
-      {
-        home.packages = with pkgs; [ docker docker-compose ];
-      }
-    ]
-    ++ optionals (isContainersEnabled && config.profiles.dev.enable) [ (import ./containers) ]
-    ++ optionals config.profiles.kubernetes.enable [ (import ./containers/kubernetes.nix) ]
-    ++ optionals config.profiles.openshift.enable [ (import ./containers/openshift.nix) ]
-    ++ optionals config.profiles.tekton.enable [ (import ./containers/tekton.nix) ]
-  );
+  home-manager.users.vincent = lib.mkMerge
+    (
+      [
+        (import ./core)
+        (import ./mails { hostname = config.networking.hostName; pkgs = pkgs; })
+      ]
+      ++ optionals config.profiles.dev.enable [ (import ./dev) ]
+      ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
+      ++ optionals config.services.xserver.desktopManager.gnome3.enable [ (import ./desktop/gnome.nix) ]
+      ++ optionals (config.networking.hostName == "wakasu") [
+        {
+          home.packages = with pkgs; [
+            libosinfo
+            asciinema
+            oathToolkit
+          ];
+        }
+      ]
+      ++ optionals (config.profiles.laptop.enable && config.profiles.desktop.enable) [
+        {
+          # FIXME move this in its own file
+          programs.autorandr.enable = true;
+        }
+      ]
+      ++ optionals config.profiles.docker.enable [
+        {
+          home.packages = with pkgs; [ docker docker-compose ];
+        }
+      ]
+      ++ optionals (isContainersEnabled && config.profiles.dev.enable) [ (import ./containers) ]
+      ++ optionals config.profiles.kubernetes.enable [ (import ./containers/kubernetes.nix) ]
+      ++ optionals config.profiles.openshift.enable [ (import ./containers/openshift.nix) ]
+      ++ optionals config.profiles.tekton.enable [ (import ./containers/tekton.nix) ]
+      ++ optionals config.profiles.redhat.enable [{
+        home.file.".local/share/applications/redhat-vpn.desktop".source = ./redhat/redhat-vpn.desktop;
+        home.packages = with pkgs; [ gnome3.zenity oathToolkit ];
+      }]
+    );
 }
