@@ -31,6 +31,7 @@
     my.gnome-shell-extension-shell
     my.gnome-bluetooth-quick-connect
     my.hidetopbar
+    my.noannoyance
     gnome3.gnome-shell-extensions
 
     pop-gtk-theme

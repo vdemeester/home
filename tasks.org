@@ -47,8 +47,8 @@ Using =mr= for this
 - [-] pomodoro (fixing it ?)
 - [X] [[https://github.com/bjarosze/gnome-bluetooth-quick-connect][bluetooth quick connect]]
 - [-] [[https://framagit.org/abakkk/DrawOnYourScreen][draw on you screen]]
-- [ ] [[https://github.com/mlutfy/hidetopbar][hide top bar]]
-- [ ] [[https://github.com/sindex/no-annoyance][noannoyance]]
+- [X] [[https://github.com/mlutfy/hidetopbar][hide top bar]]
+- [X] [[https://github.com/sindex/no-annoyance][noannoyance]]
 - [X] pop-os/shell
 - [X] tilingnome
 - [X] sound-output-device-chooser
