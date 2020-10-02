@@ -103,11 +103,5 @@ in
       mouse-sensitive = true;
       mouse-sensitive-fullscreen-window = false;
     };
-    "org/gnome/shell/extensions/hidetopbar" = {
-      enable-active-window = false;
-      enable-intellihide = true;
-      mouse-sensitive = true;
-      mouse-sensitive-fullscreen-window = false;
-    };
   };
 }
