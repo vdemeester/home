@@ -30,6 +30,9 @@ Using =mr= for this
 ** TODO Manage =~/sync/*= links
 
 kubeconfig, …
+#+begin_src bash
+ln -s ~/desktop/documents/.oath ~/.oath
+#+end_src
 
 ** TODO Yubikey login/lockout
 
