@@ -42,6 +42,16 @@ Let's try as is, and see if it's a pain in the butt or not
 
 Using =mr= for this
 
+** DONE Fix emacs server service
+CLOSED: [2020-10-02 Fri 17:31]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-10-02 Fri 17:31]
+:END:
+
+** TODO Manage =~/sync/*= links
+
+kubeconfig, …
+
 ** DONE Add gnome3 extensions
 CLOSED: [2020-10-02 Fri 12:05]
 :LOGBOOK:
