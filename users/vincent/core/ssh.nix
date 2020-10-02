@@ -12,7 +12,7 @@ in
     patchedOpenSSH
   ];
   home.file.".ssh/sockets/.placeholder".text = '''';
-  xdg.configFile.".ssh/.placeholder".text = '''';
+  xdg.configFile."ssh/.placeholder".text = '''';
   programs.ssh = {
     enable = true;
 
