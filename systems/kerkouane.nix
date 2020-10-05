@@ -92,7 +92,8 @@ in
     #};
   };
   security.pam.enableSSHAgentAuth = true;
-  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/home/vincent/desktop/sites" ];
+  #systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/home/vincent/desktop/sites" ];
+  systemd.services.nginx.serviceConfig.ProtectHome = lib.mkForce false;
   services = {
     govanityurl = {
       enable = true;
