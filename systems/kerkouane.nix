@@ -109,6 +109,7 @@ in
             repo: https://git.sr.ht/~vdemeester/sec
       '';
     };
+    systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/home/vincent/desktop/sites" ];
     nginx = {
       enable = true;
       package = nginx;

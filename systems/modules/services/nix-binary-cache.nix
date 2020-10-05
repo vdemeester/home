@@ -21,6 +21,7 @@ in
   };
   config = mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = [ 80 443 ];
+    systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/public-nix-cache" ];
     services.nginx = {
       enable = true;
       appendHttpConfig = ''
@@ -32,7 +33,7 @@ in
           302     "public";
           default "no-cache";
         }
-        access_log logs/access.log;
+        access_log /var/public-nix-cache/access.log;
       '';
       virtualHosts."${cfg.domain}" = {
         serverAliases = cfg.aliases;
