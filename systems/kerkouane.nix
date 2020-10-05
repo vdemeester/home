@@ -92,6 +92,7 @@ in
     #};
   };
   security.pam.enableSSHAgentAuth = true;
+  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/home/vincent/desktop/sites" ];
   services = {
     govanityurl = {
       enable = true;
@@ -109,7 +110,6 @@ in
             repo: https://git.sr.ht/~vdemeester/sec
       '';
     };
-    systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/home/vincent/desktop/sites" ];
     nginx = {
       enable = true;
       package = nginx;
