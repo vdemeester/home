@@ -8,9 +8,17 @@ in
   options = {
     profiles.yubikey = {
       enable = mkEnableOption "Enable yubikey profile";
+      withPam = {
+        default = true;
+        description = "Wether to enable auth with yubikeys through pam";
+        type = types.bool;
+      };
     };
   };
   config = mkIf cfg.enable {
+    #security.pam.yubico = {
+    #  enable = true;
+    #};
     environment = {
       systemPackages = with pkgs; [
         yubico-piv-tool

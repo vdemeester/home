@@ -23,7 +23,6 @@ in
       powertop
       acpi
     ];
-    profiles.desktop.enable = true;
     systemd.services.nix-gc.unitConfig.ConditionACPower = true;
   };
 }

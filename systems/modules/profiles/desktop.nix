@@ -18,11 +18,6 @@ in
         description = "Enable pulseaudio with the desktop profile";
         type = types.bool;
       };
-      flatpak = mkOption {
-        default = true;
-        description = "Enable flatpak with the desktop profile";
-        type = types.bool;
-      };
       syncthing = mkOption {
         default = true;
         description = "Enable syncthing with the desktop profile";
@@ -43,11 +38,6 @@ in
         description = "Enable networkmanager with the desktop profile";
         type = types.bool;
       };
-      autoLogin = mkOption {
-        default = false;
-        description = "Enable auto login";
-        type = types.bool;
-      };
     };
   };
   config = mkIf cfg.enable {
@@ -57,79 +47,37 @@ in
     profiles.scanning.enable = cfg.scanning;
     profiles.syncthing.enable = cfg.syncthing;
 
-    boot = {
-      tmpOnTmpfs = true;
-      plymouth.enable = true;
-    };
-
     hardware.bluetooth.enable = true;
 
     networking.networkmanager = {
       enable = cfg.networkmanager;
       unmanaged = [
+        "interface-name:br-*"
         "interface-name:ve-*"
         "interface-name:veth*"
         "interface-name:wg0"
         "interface-name:docker0"
         "interface-name:virbr*"
-      ];
+      ]; # FIXME: add unmanaged depending on profiles (wg0, docker0, …)
       packages = with pkgs; [ networkmanager-openvpn ];
     };
 
-    programs.dconf.enable = true;
-    xdg.portal.enable = cfg.flatpak;
-
     services = {
-      blueman.enable = true;
-      flatpak.enable = cfg.flatpak;
-      dbus.packages = [ pkgs.gnome3.dconf ];
       xserver = {
         enable = true;
         enableTCP = false;
-        windowManager.twm.enable = true;
         libinput.enable = true;
         synaptics.enable = false;
-        layout = "fr(bepo),fr";
-        xkbVariant = "oss";
+        layout = "fr";
+        xkbVariant = "bepo";
         xkbOptions = "grp:menu_toggle,grp_led:caps,compose:caps";
-        inputClassSections = [
-          ''
-            Identifier      "TypeMatrix"
-            MatchIsKeyboard "on"
-            MatchVendor     "TypeMatrix.com"
-            MatchProduct    "USB Keyboard"
-            Driver          "evdev"
-            Option          "XbkModel"      "tm2030USB"
-            Option          "XkbLayout"     "fr"
-            Option          "XkbVariant"    "bepo"
-          ''
-          ''
-            Identifier      "ErgoDox"
-            #MatchVendor     "ErgoDox_EZ"
-            #MatchProduct    "ErgoDox_EZ"
-            MatchIsKeyboard "on"
-            MatchUSBID      "feed:1307"
-            Driver          "evdev"
-            Option          "XkbLayout"     "fr"
-            Option          "XkbVariant"    "bepo"
-          ''
-        ];
-        displayManager = {
-          # defaultSession = "none+i3";
-          lightdm = {
-            enable = true;
-            autoLogin = {
-              enable = true;
-              user = "vincent";
-            };
-          };
-        };
       };
     };
     fonts = {
       enableFontDir = true;
       enableGhostscriptFonts = true;
       fonts = with pkgs; [
+        liberation_ttf
         corefonts
         dejavu_fonts
         emojione
@@ -153,40 +101,6 @@ in
         unifont
       ];
     };
-
-    # Polkit.
-    security.polkit.extraConfig = ''
-      polkit.addRule(function(action, subject) {
-      if ((action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
-      action.id == "org.freedesktop.udisks2.encrypted-unlock-system"
-      ) &&
-      subject.local && subject.active && subject.isInGroup("users")) {
-      return polkit.Result.YES;
-      }
-      var YES = polkit.Result.YES;
-      var permission = {
-      // required for udisks1:
-      "org.freedesktop.udisks.filesystem-mount": YES,
-      "org.freedesktop.udisks.luks-unlock": YES,
-      "org.freedesktop.udisks.drive-eject": YES,
-      "org.freedesktop.udisks.drive-detach": YES,
-      // required for udisks2:
-      "org.freedesktop.udisks2.filesystem-mount": YES,
-      "org.freedesktop.udisks2.encrypted-unlock": YES,
-      "org.freedesktop.udisks2.eject-media": YES,
-      "org.freedesktop.udisks2.power-off-drive": YES,
-      // required for udisks2 if using udiskie from another seat (e.g. systemd):
-      "org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
-      "org.freedesktop.udisks2.filesystem-unmount-others": YES,
-      "org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
-      "org.freedesktop.udisks2.eject-media-other-seat": YES,
-      "org.freedesktop.udisks2.power-off-drive-other-seat": YES
-      };
-      if (subject.isInGroup("wheel")) {
-      return permission[action.id];
-      }
-      });
-    '';
 
     environment.systemPackages = with pkgs; [
       cryptsetup

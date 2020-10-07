@@ -10,6 +10,7 @@
     ./docker.nix
     ./gaming.nix
     ./git.nix
+    ./gnome.nix
     ./home.nix
     ./i18n.nix
     ./ipfs.nix

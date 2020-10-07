@@ -53,7 +53,5 @@ in
       pasystray # systray application
       playerctl
     ];
-    # We assume xserver runs when pulseaudio does
-    services.xserver.displayManager.sessionCommands = "${pkgs.pasystray}/bin/pasystray &";
   };
 }

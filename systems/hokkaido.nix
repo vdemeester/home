@@ -43,15 +43,11 @@ in
     plymouth.enable = true;
   };
 
-  hardware.bluetooth.enable = true;
   services.hardware.bolt.enable = true;
   profiles = {
-    syncthing.enable = true;
-    home = true;
+    desktop.gnome.enable = true;
     laptop.enable = true;
-    desktop.enable = lib.mkForce false;
-    avahi.enable = true;
-    git.enable = true;
+    home = true;
     ssh.enable = true;
     dev.enable = true;
     yubikey.enable = true;
@@ -61,61 +57,7 @@ in
   };
   environment.systemPackages = with pkgs; [ virtmanager ];
 
-  networking.networkmanager = {
-    enable = true;
-    unmanaged = [
-      "interface-name:br-*"
-      "interface-name:ve-*"
-      "interface-name:veth*"
-      "interface-name:wg0"
-      "interface-name:docker0"
-      "interface-name:virbr*"
-    ];
-    packages = with pkgs; [ networkmanager-openvpn ];
-  };
-
-  services.xserver.enable = true;
-  services.xserver.layout = "fr";
-  services.xserver.xkbVariant = "bepo";
-  services.xserver.xkbOptions = "grp:menu_toggle,grp_led:caps,compose:caps";
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
-  services.gnome3.chrome-gnome-shell.enable = true;
-  services.gnome3.core-shell.enable = true;
-  services.gnome3.core-os-services.enable = true;
-  services.gnome3.core-utilities.enable = true;
-  virtualisation.podman.enable = true;
-
-  fonts = {
-    enableFontDir = true;
-    enableGhostscriptFonts = true;
-    fonts = with pkgs; [
-      corefonts
-      dejavu_fonts
-      emojione
-      feh
-      fira
-      fira-code
-      fira-code-symbols
-      fira-mono
-      hasklig
-      inconsolata
-      iosevka
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      noto-fonts-extra
-      overpass
-      symbola
-      source-code-pro
-      twemoji-color-font
-      ubuntu_font_family
-      unifont
-    ];
-  };
-
   services = {
-    fprintd.enable = true;
     # FIXME re-generate hokkaido key
     /*
     wireguard = {
@@ -128,6 +70,7 @@ in
     */
   };
 
+  virtualisation.podman.enable = true;
   virtualisation.containers = {
     enable = true;
     registries = {

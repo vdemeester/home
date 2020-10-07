@@ -2,15 +2,6 @@
 
 {
   imports = [
-    # autorandr
-    ./finances.nix
-    ./firefox.nix
-    ./next.nix
-    ./gtk.nix
-    ./keyboard.nix
-    ./mpv.nix
-    ./redshift.nix
-    ./spotify.nix
     ./dconf.nix
   ];
   home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };

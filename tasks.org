@@ -36,11 +36,18 @@ ln -s ~/desktop/documents/.oath ~/.oath
 
 ** TODO Yubikey login/lockout
 
+security.pam.yubico
+u2f keys
+
 ** TODO gnome3 modules
 
 Create a module (like desktop) or part of desktop
 
-** TODO redhat specifics
+** DONE redhat specifics
+CLOSED: [2020-10-02 Fri 18:38]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-10-02 Fri 18:38]
+:END:
 
 VPN
 
@@ -49,10 +56,16 @@ VPN
 - =root=
 - =home=
 
+** TODO Initial setup
+
+- luks
+- =nixos-install= to =make switch= …
+
 ** TODO Dry-install on old Dell
 
 Things to test:
 
+- [ ] luks
 - [ ] Erase your darlings setup ?
 - [X] Gnome settings
 - [ ] Yubikey
