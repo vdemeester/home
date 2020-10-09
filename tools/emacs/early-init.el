@@ -33,7 +33,7 @@ This is used internally by `vde/modus-themes-toggle'."
         modus-operandi-theme-section-headings nil
         modus-operandi-theme-scale-headings nil
         modus-operandi-theme-fringes 'subtle ; {nil,'subtle,'intense}
-        modus-operandi-theme-mode-line '3d ; {nil,'3d,'moody}
+        modus-operandi-theme-mode-line 'moody ; {nil,'3d,'moody}
         modus-operandi-theme-3d-modeline t
         modus-operandi-theme-faint-syntax nil
         modus-operandi-theme-intense-hl-line t
