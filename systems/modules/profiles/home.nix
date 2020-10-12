@@ -48,17 +48,6 @@ in
         fsType = "nfs";
         options = [ "x-systemd.automount" "noauto" ];
       };
-      # Deprecated
-      "/mnt/synodine" = {
-        device = "${machines.home.ips.synodine}:/";
-        fsType = "nfs";
-        options = [ "x-systemd.automount" "noauto" ];
-      };
-      "/mnt/sakhalin" = {
-        device = "${machines.home.ips.sakhalin}:/";
-        fsType = "nfs";
-        options = [ "x-systemd.automount" "noauto" ];
-      };
     };
   };
 }
