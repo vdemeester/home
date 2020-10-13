@@ -8,9 +8,9 @@ in
   options = {
     profiles.yubikey = {
       enable = mkEnableOption "Enable yubikey profile";
-      withPam = mkOption {
+      u2f = mkOption {
         default = true;
-        description = "Wether to enable auth with yubikeys through pam";
+        description = "wether to enable auth with yubkeys throguh pam using u2f";
         type = types.bool;
       };
     };
@@ -37,10 +37,10 @@ in
         };
       };
     }
-    (mkIf cfg.withPam {
-      #security.pam.yubico = {
-      #  enable = true;
-      #};
+    (mkIf cfg.u2f {
+      security.pam.u2f = {
+        enable = true;
+      };
     })
   ]);
 }
