@@ -39,7 +39,11 @@ ln -s ~/desktop/documents/.oath ~/.oath
 security.pam.yubico
 u2f keys
 
-** TODO gnome3 modules
+** DONE gnome3 modules
+CLOSED: [2020-10-12 Mon 12:23]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-10-12 Mon 12:23]
+:END:
 
 Create a module (like desktop) or part of desktop
 
@@ -51,7 +55,12 @@ CLOSED: [2020-10-02 Fri 18:38]
 
 VPN
 
-** TODO [[git:~/src/home/tasks.org::master@{2020-07-09}::158][Reset systems at boot]]
+** CANCELED [[git:~/src/home/tasks.org::master@{2020-07-09}::158][Reset systems at boot]]
+CLOSED: [2020-10-12 Mon 12:23]
+:LOGBOOK:
+- State "CANCELED"   from "TODO"       [2020-10-12 Mon 12:23] \\
+  No need, it's nice and all but… meh
+:END:
 
 - =root=
 - =home=
@@ -66,12 +75,12 @@ VPN
 Things to test:
 
 - [ ] luks
-- [ ] Erase your darlings setup ?
+- [-] Erase your darlings setup ?
 - [X] Gnome settings
 - [ ] Yubikey
   + login/logout
   + gpg setup
-- [ ] Red Hat VPN connection
+- [X] Red Hat VPN connection
 
 ** DONE Initial gnome3 setup
 CLOSED: [2020-06-29 Mon 18:11]
