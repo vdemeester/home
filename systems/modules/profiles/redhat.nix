@@ -11,7 +11,7 @@ in
     };
   };
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ krb5 ];
+    environment.systemPackages = with pkgs; [ krb5 google-chrome ];
     # NetworkManager
     environment.etc."NetworkManager/system-connections/1-RHVPN.ovpn" = {
       source = pkgs.mkSecret ../../../secrets/etc/NetworkManager/system-connections/1-RHVPN.ovpn;
