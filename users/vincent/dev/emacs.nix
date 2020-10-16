@@ -63,6 +63,7 @@ let
     helpful
     highlight
     highlight-indentation
+    htmlize
     ibuffer-vc
     icomplete-vertical
     json-mode
