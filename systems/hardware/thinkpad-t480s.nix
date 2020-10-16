@@ -19,7 +19,9 @@ in
     };
   };
   nix.maxJobs = 12;
+  programs.light.enable = true;
   services = {
+    throttled.enable = true;
     tlp = {
       extraConfig = ''
         # CPU optimizations
