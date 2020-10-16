@@ -23,7 +23,7 @@ update:
 .PHONY: secrets
 secrets:
 	mkdir -p secrets
-	cp -Rv $(SYNCDIR)/* secrets/
+	-cp -Rv $(SYNCDIR)/* secrets/
 
 .PHONY: assets
 assets:
@@ -40,7 +40,7 @@ home-switch: secrets
 	home-manager -f home.nix switch
 
 .PHONY: build
-build: secrets setup
+build: secrets
 	./hack/system build
 
 .PHONY: nixos-dry-build
@@ -48,7 +48,7 @@ dry-build: secrets setup
 	./hack/system dry-build
 
 .PHONY: switch
-switch: secrets setup
+switch: secrets
 	./hack/system switch
 
 .PHONY: install-hooks

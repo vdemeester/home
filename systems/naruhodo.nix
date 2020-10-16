@@ -21,9 +21,10 @@ in
   ];
 
   fileSystems."/" =
-    { device = "/dev/mapper/root";
+    {
+      device = "/dev/mapper/root";
       fsType = "ext4";
-      options = ["noatime" "discard"];
+      options = [ "noatime" "discard" ];
     };
 
   boot.initrd.luks.devices = {
@@ -35,13 +36,13 @@ in
   };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/0101-68DE";
+    {
+      device = "/dev/disk/by-uuid/0101-68DE";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/aff86817-55ae-47ed-876a-e5a027b560ba"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/aff86817-55ae-47ed-876a-e5a027b560ba"; }];
 
   networking = {
     hostName = hostname;
@@ -67,8 +68,6 @@ in
   environment.systemPackages = with pkgs; [ virtmanager ];
 
   services = {
-    # FIXME re-generate naruhodo key
-    /*
     wireguard = {
       enable = true;
       ips = ips;
@@ -76,7 +75,6 @@ in
       endpointPort = endpointPort;
       endpointPublicKey = endpointPublicKey;
     };
-    */
   };
 
   virtualisation.podman.enable = true;

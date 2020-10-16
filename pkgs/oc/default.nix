@@ -39,7 +39,7 @@ rec {
     };
 
   oc_4_5 = makeOverridable ocGen {
-    version = "4.5.2";
+    version = "4.5.14";
     sha256 = "1lryxvh4ds8fzk6bivigknbqxwlv93xjq111mlgi3q0qz0sh7f2y";
   };
   oc_4_4 = makeOverridable ocGen {
