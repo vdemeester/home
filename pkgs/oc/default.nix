@@ -40,7 +40,7 @@ rec {
 
   oc_4_5 = makeOverridable ocGen {
     version = "4.5.14";
-    sha256 = "1lryxvh4ds8fzk6bivigknbqxwlv93xjq111mlgi3q0qz0sh7f2y";
+    sha256 = "0nsv0dnjvap0lv7fvnp9i0xafaw47nyr42rmnzvbm0qmcjqsfzqq";
   };
   oc_4_4 = makeOverridable ocGen {
     version = "4.4.13";
