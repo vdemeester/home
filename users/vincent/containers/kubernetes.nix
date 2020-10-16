@@ -7,6 +7,8 @@
     kubectl
     kustomize
     kubectx
+    kind
+    minikube
     my.ko
     my.krew
     my.kss
