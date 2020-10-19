@@ -158,7 +158,11 @@ questions.  Else use completion to select the tab to switch to."
                 mode-line-end-spaces
                 (list (propertize " " 'display '(space :align-to (- right 19)))
                       'display-time-string))
-
+  (defadvice vc-mode-line (after me/vc-mode-line () activate)
+    "Strip backend from the VC information."
+    (when (stringp vc-mode)
+      (let ((vc-text (replace-regexp-in-string "^ Git" "" vc-mode)))
+        (setq vc-mode vc-text))))
   (moody-replace-mode-line-buffer-identification)
   (moody-replace-vc-mode))
 
