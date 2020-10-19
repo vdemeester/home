@@ -1,0 +1,20 @@
+# -*- mode: sh -*-
+include = cat ${HOME}/.config/mr
+
+[DEFAULT]
+lib =
+    export BASE_PATH=tektoncd
+    export BASE_USER=vdemeester
+    export BASE_HOST="github.com"
+
+[catalog]
+[cli]
+[community]
+[dashboard]
+[experimental]
+[friends]
+[homebrew-tools]
+[pipeline]
+[plumbing]
+[triggers]
+[website]

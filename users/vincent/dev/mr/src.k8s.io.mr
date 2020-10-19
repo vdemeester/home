@@ -1,0 +1,8 @@
+include = cat ${HOME}/.config/mr
+
+[DEFAULT]
+lib =
+    export BASE_HOST="${HOME}/src/k8s.io/"
+    export GIT_BASE="github.com:kubernetes/"
+
+[test-infra]
