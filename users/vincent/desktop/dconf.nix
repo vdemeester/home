@@ -50,6 +50,9 @@ in
       night-light-enabled = true;
       night-light-last-coordinates = (mkTuple [ 48.844400719942406 2.3488000000000002 ]);
     };
+    "org/gnome/settings-daemon/plugins/power" = {
+      sleep-inactive-ac-type = "nothing";
+    };
     # Tilix
     "com/gexperts/Tilix" = {
       "control-scoll-zoom" = true;
