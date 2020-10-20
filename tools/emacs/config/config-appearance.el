@@ -158,11 +158,17 @@ questions.  Else use completion to select the tab to switch to."
                 mode-line-end-spaces
                 (list (propertize " " 'display '(space :align-to (- right 19)))
                       'display-time-string))
-  (defadvice vc-mode-line (after me/vc-mode-line () activate)
-    "Strip backend from the VC information."
-    (when (stringp vc-mode)
-      (let ((vc-text (replace-regexp-in-string "^ Git" "" vc-mode)))
-        (setq vc-mode vc-text))))
+  (advice-add #'vc-git-mode-line-string :filter-return #'my-replace-git-status)
+  (defun my-replace-git-status (tstr)
+    (let* ((tstr (replace-regexp-in-string "Git" "" tstr))
+           (first-char (substring tstr 0 1))
+           (rest-chars (substring tstr 1)))
+      (cond
+       ((string= ":" first-char) ;;; Modified
+        (replace-regexp-in-string "^:" "~ " tstr))
+       ((string= "-" first-char) ;; No change
+        (replace-regexp-in-string "^-" "- " tstr))
+       (t tstr))))
   (moody-replace-mode-line-buffer-identification)
   (moody-replace-vc-mode))
 
