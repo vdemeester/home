@@ -31,7 +31,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.user.services.emacs = {
+    systemd.user.services.emacs-server = {
       Unit = {
         Description = "Emacs: the extensible, self-documenting text editor";
         Documentation =
@@ -47,6 +47,7 @@ in
           "${cfg.shell} 'exec emacs --fg-daemon=${cfg.name} ${cfg.extraOptions}'";
         ExecStop = "${cfg.shell} 'emacsclient --eval '(kill-emacs)''";
         Restart = "on-failure";
+        Environment = "DISPLAY=:0";
       };
 
       Install = { WantedBy = [ "default.target" ]; };

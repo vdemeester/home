@@ -145,6 +145,11 @@ in
     package = pkgs.my.emacs;
     extraPackages = myExtraPackages;
   };
+  services.emacs = {
+    enable = true;
+    client.enable = true;
+    # socketActivation.enable = true;
+  };
   services.emacs-server = {
     enable = true;
     package = pkgs.my.emacs;
