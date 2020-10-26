@@ -24,6 +24,7 @@
     hunspellDicts.en_US-large
     hunspellDicts.en_GB-ize
     hunspellDicts.fr-any
+    libreoffice-fresh
     #wmctrl
     #xclip
     xdg-user-dirs
