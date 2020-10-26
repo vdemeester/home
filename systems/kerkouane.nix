@@ -64,6 +64,8 @@ in
   networking.hostName = hostname;
 
   boot.loader.grub.device = "/dev/vda";
+  boot.loader.grub.enable = lib.mkForce true;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
   fileSystems."/" = { device = "/dev/vda1"; fsType = "ext4"; };
   swapDevices = [{ device = "/swapfile"; size = 1024; }];
 
