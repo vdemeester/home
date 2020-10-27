@@ -3,13 +3,11 @@
 ;;; Files related configurations
 ;;; Code:
 
-;; UseFiles
 (use-package files
   :commands (revert-buffer)
   :bind (("<f5>" . revert-buffer))
   :config
   (setq-default view-read-only t))
-;; -UseFiles
 
 (use-package envrc
   :defer 2
@@ -17,7 +15,6 @@
   :bind (:map envrc-mode-map
               ("C-c d" . envrc-command-map))
   :config (envrc-global-mode))
-
 
 (use-package hardhat
   :init (global-hardhat-mode))

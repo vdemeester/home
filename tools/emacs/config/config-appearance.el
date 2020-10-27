@@ -32,13 +32,7 @@
                 echo-keystrokes 0.1
                 line-number-display-limit-width 10000
                 indicate-buffer-boundaries 'left
-                indicate-empty-lines +1
-                display-time-world-list '(("Europe/London" "London")
-                                          ("Europe/Paris" "Paris")
-                                          ("America/New_York" "Boston")
-                                          ("America/Los_Angeles" "San-Francisco")
-                                          ("Asia/Calcutta" "Bangalore")
-                                          ("Australia/Brisbane" "Brisbane")))
+                indicate-empty-lines +1)
   (line-number-mode 1)
   (column-number-mode 1)
   (global-hl-line-mode 1)

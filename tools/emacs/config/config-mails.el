@@ -3,30 +3,23 @@
 ;;; Mails configuration
 ;;; Code:
 
-;; ReadingEmail
 (use-package simple
   :custom (read-mail-command #'gnus))
-;; -ReadingEmail
 
-;; AuthSource
 (use-package auth-source
   :config
   (setq auth-sources '("~/.authinfo.gpg" "~/.authinfo"))
   (setq user-full-name "Vincent Demeester")
   (setq user-mail-address "vincent@sbr.pm"))
-;; -AuthSource
 
-;; EPA
 (use-package epa-file
   :config
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
   :init
   (epa-file-enable))
-;; -EPA
 
 (setq gnus-init-file (expand-file-name "~/.config/gnus/init.el"))
 
-;; SendmailCfg
 (use-package smtpmail
   ;;:commands (mail-mode mail-text)
   :config
@@ -41,9 +34,7 @@
   :config
   (setq-default send-mail-function 'sendmail-send-it
                 sendmail-program "/home/vincent/bin/msmtp"))
-;; -SendmailCfg
 
-;; MessageCfg
 (use-package message
   :commands (message-mode message-cite-original-without-signature)
   :hook ((message-mode . my-message-hook))
@@ -62,9 +53,7 @@
     (set (make-local-variable 'company-backends)
          '(company-emoji company-capf company-files company-dabbrev))
     (company-mode 1)))
-;; -MessageCfg
 
-;; Notmuch
 (if *sys/full*
     (progn
       (setenv "NOTMUCH_CONFIG" (expand-file-name ".config/notmuch/notmuchrc" (getenv "HOME")))
@@ -83,7 +72,6 @@
                 (:key "u" :name "unread" :query "tag:unread")
                 (:key "F" :name "flagged" :query "tag:flagged")
                 (:key "S" :name "sent" :query "tag:Sent Mail"))))))
-;; -Notmuch
 
 (provide 'config-mails)
 ;;; config-mails ends here

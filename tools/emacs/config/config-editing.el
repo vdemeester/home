@@ -24,7 +24,6 @@
 (if (version<= "27.1" emacs-version)
     (global-so-long-mode 1))
 
-;; UseSmartParens
 (use-package smartparens
   :unless noninteractive
   :commands (smartparens-mode smartparens-global-mode show-smartparens-global-mode
@@ -49,7 +48,6 @@
     ;; also only use the pseudo-quote inside strings where it
     ;; serves as hyperlink.
     (sp-local-pair "`" "'" :when '(sp-in-string-p sp-in-comment-p))))
-;; -UseSmartParens
 
 (use-package color-identifiers-mode
   :unless noninteractive
@@ -75,7 +73,6 @@
          (js-mode . color-identifiers-mode)
          (python-mode . color-identifiers-mode)))
 
-;; UseAggressiveIndent
 (use-package aggressive-indent
   :unless noninteractive
   :bind ("C-c e i" . aggressive-indent-mode)
@@ -84,18 +81,14 @@
   :config
   ;; Free C-c C-q, used in Org and in CIDER
   (unbind-key "C-c C-q" aggressive-indent-mode-map))
-;; -UseAggressiveIndent
 
-;; UseUndoTree
 (use-package undo-tree
   :unless noninteractive
   :hook (after-init . global-undo-tree-mode)
   :config
   (setq-default undo-tree-visualizer-timestamps t
                 undo-tree-enable-undo-in-region t))
-;; -UseUndoTree
 
-;; UseWhitespace
 (use-package whitespace
   :unless noninteractive
   :commands (whitespace-mode vde/toggle-invisibles)
@@ -108,15 +101,12 @@
         (whitespace-mode -1)
       (whitespace-mode)))
   :bind ("<f6>" . vde/toggle-invisibles))
-;; -UseWhitespace
 
-;; UseExpandRegion
 (use-package expand-region
   :unless noninteractive
   :commands (er/expand-region er/contract-region)
   :bind (("C-=" . er/expand-region)
          ("C--". er/contract-region)))
-;; -UseExpandRegiston
 
 (use-package visual-regexp
   :unless noninteractive
@@ -124,11 +114,9 @@
   :bind (("C-c r"   . vr/replace)
          ("C-c %"   . vr/query-replace)))
 
-;; UseHideShow
 (use-package hs-minor-mode
   :unless noninteractive
   :hook ((prog-mode . hs-minor-mode)))
-;; -UseHideShow
 
 (use-package easy-kill
   :unless noninteractive
@@ -200,7 +188,6 @@ Else toggle the comment status of the line at point."
                    ("-d" "en_GB,fr_FR")
                    nil
                    utf-8))))
-;; -UseFlySpell
 
 (use-package emacs
   :init
