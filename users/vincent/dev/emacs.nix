@@ -89,7 +89,6 @@ let
     org-journal
     org-plus-contrib
     org-ql
-    org-roam
     org-super-agenda
     org-tree-slide
     org-web-tools
