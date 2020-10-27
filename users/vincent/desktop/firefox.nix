@@ -1,7 +1,6 @@
 {
   programs.firefox = {
     enable = true;
-    /*
     profiles.default = {
       id = 0;
       isDefault = true;
@@ -89,6 +88,5 @@
         "network.negotiate-auth.trusted-uris" = "redhat.com";
       };
     };
-    */
   };
 }
