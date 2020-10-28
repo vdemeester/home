@@ -66,6 +66,7 @@
     (org-babel-lob-ingest org-babel-library-file))
   (defun my/org-agenda-files ()
     `(,org-projects-dir
+      ,org-notes-dir
       "~/src/home/tasks.org"
       "~/src/www/tasks.org"))
   (defun my/reload-org-agenda-files ()
