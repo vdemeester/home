@@ -33,6 +33,8 @@
     # TODO make this an option
     # slack
     obs-studio
+    obs-v4l2sink
+    linuxPackages.v4l2loopback
     # FIXME move this elsewhere
     keybase
     # pass
