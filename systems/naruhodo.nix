@@ -64,6 +64,7 @@ in
     virtualization = { enable = true; nested = true; };
     docker.enable = true;
     redhat.enable = true;
+    scanning.enable = true;
   };
   environment.systemPackages = with pkgs; [ virtmanager ];
 

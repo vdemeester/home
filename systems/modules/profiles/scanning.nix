@@ -18,7 +18,7 @@ in
     ];
     hardware.sane = {
       enable = true;
-      extraConfig = { "pixma" = "bjnp://192.168.12.70"; };
+      extraConfig = { "pixma" = "bjnp://192.168.1.16"; };
     };
   };
 }
