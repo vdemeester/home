@@ -107,6 +107,7 @@ rec {
     tkn_0_13
     ;
   tkn = tkn_0_13;
+  tkn_oci = pkgs.callPackage ./tkn-oci { };
 
   # Upstream
   buildkit = pkgs.callPackage ./buildkit { };
