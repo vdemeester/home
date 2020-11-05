@@ -46,6 +46,12 @@ let
         fancyindex_name_length 255;
       '';
     };
+    locations."/private" = {
+      extraConfig = ''
+        auth_basic "Restricted";
+        auth_basic_user_file /home/vincent/desktop/sites/dl.sbr.pm/private/.htpasswd;
+      '';
+    };
     extraConfig = nginxExtraConfig;
   };
 
