@@ -59,6 +59,6 @@ rec {
   operator-sdk_0_19 = makeOverridable operatorSdkGen {
     version = "0.19.0";
     sha256 = "0prwdsxm8sldzdn7r9k1yw2q4asz90n25g4zcfaq23vs6fkxch9b";
-    vendorSha256 = "1pz1k23a7jrisflx03jfp5a6xcw7x6pjkp9b6bma9y9w4jaklyqw";
+    vendorSha256 = "0k6xrd1ahic89l821qvh3rr8k203ab6fmj7v4flkv889xaajjxb0";
   };
 }
