@@ -51,6 +51,7 @@ in
   boot = {
     tmpOnTmpfs = true;
     plymouth.enable = true;
+    kernelModules = [ "v4l2loopback" ];
   };
 
   services.hardware.bolt.enable = true;
