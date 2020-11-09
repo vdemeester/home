@@ -102,6 +102,11 @@ in
       domain = "nix.cache.home";
       aliases = [ "cache.sakhalin.home" ];
     };
+    dockerRegistry = {
+      enable = true;
+      listenAddress = "0.0.0.0";
+      enableGarbageCollect = true;
+    };
     bind = {
       enable = true;
       forwarders = [ "8.8.8.8" "8.8.4.4" ];
