@@ -142,6 +142,12 @@ in
         locations."/" = { proxyPass = "http://127.0.0.1:8080"; };
         extraConfig = nginxExtraConfig;
       };
+      virtuaHosts."r.sbr.pm" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = { proxyPass = "http://10.100.0.16:5000"; };
+        extraConfig = nginxExtraConfig;
+      };
       virtualHosts."sbr.pm" = {
         enableACME = true;
         forceSSL = true;
