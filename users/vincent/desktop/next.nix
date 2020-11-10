@@ -1,5 +1,5 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ next ];
+  home.packages = with pkgs; [ nyxt ];
 }
