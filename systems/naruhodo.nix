@@ -51,7 +51,9 @@ in
   boot = {
     tmpOnTmpfs = true;
     plymouth.enable = true;
-    extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+    extraModulePackages = with pkgs.linuxPackages; [
+      v4l2loopback
+    ];
     kernelModules = [ "v4l2loopback" ];
     extraModprobeConfig = ''
       options v4l2loopback exclusive_caps=1

@@ -33,14 +33,14 @@
     # TODO make this an option
     # slack
     obs-studio
-    obs-v4l2sink
-    linuxPackages.v4l2loopback
     # FIXME move this elsewhere
     keybase
     # pass
     profile-sync-daemon
   ];
 
+  xdg.configFile."obs-studio/plugins/obs-v4l2sink/bin/64bit/obs-v4l2sink.so".source =
+    "${pkgs.obs-v4l2sink}/share/obs/obs-plugins/v4l2sink/bin/64bit/v4l2sink.so";
   home.file.".XCompose".source = ./xorg/XCompose;
   # home.file.".Xmodmap".source = ./xorg/Xmodmap;
   xdg.configFile."xorg/emoji.compose".source = ./xorg/emoji.compose;
