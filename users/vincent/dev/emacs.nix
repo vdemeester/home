@@ -147,7 +147,7 @@ in
   services.emacs = {
     enable = true;
     client.enable = true;
-    # socketActivation.enable = true;
+    socketActivation.enable = true;
   };
   services.emacs-server = {
     enable = true;
