@@ -43,8 +43,6 @@
     xdg-user-dirs
     xdg_utils
     xsel
-    # TODO make this an option
-    slack
     # FIXME move this elsewhere
     keybase
     pass

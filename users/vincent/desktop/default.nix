@@ -31,7 +31,6 @@
     xdg_utils
     xsel
     # TODO make this an option
-    # slack
     obs-studio
     # FIXME move this elsewhere
     keybase
