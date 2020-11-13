@@ -29,7 +29,7 @@
     pop-gtk-theme
     pop-icon-theme
     pinentry-gnome
-    tilix
+    # tilix
 
     aspell
     aspellDicts.en
