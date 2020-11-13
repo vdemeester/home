@@ -141,7 +141,7 @@ in
   ];
   programs.emacs = {
     enable = true;
-    package = pkgs.my.emacs;
+    package = (pkgs.emacs.override { withGTK3 = true; withGTK2 = false; withX = true; withXwidgets = true; });
     extraPackages = myExtraPackages;
   };
   services.emacs = {
