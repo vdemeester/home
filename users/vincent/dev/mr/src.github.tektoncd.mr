@@ -18,3 +18,5 @@ lib =
 [plumbing]
 [triggers]
 [website]
+[operator]
+[chains]
