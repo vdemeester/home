@@ -5,7 +5,7 @@ with lib;
 let
   capture = pkgs.writeScriptBin "capture" ''
     #!${pkgs.stdenv.shell}
-    emacsclient -s /run/user/1000/emacs/org -n -F '((name . "capture") (width . 150) (height . 90))' -e '(org-capture)'
+    emacsclient -n -F '((name . "capture") (width . 150) (height . 90))' -e '(org-capture)'
   '';
   e = pkgs.writeScriptBin "e" ''
     #!${pkgs.stdenv.shell}
@@ -13,11 +13,11 @@ let
   '';
   et = pkgs.writeScriptBin "et" ''
     #!${pkgs.stdenv.shell}
-    emacsclient -s /run/user/1000/emacs/org --tty $@
+    emacsclient --tty $@
   '';
   ec = pkgs.writeScriptBin "ec" ''
     #!${pkgs.stdenv.shell}
-    emacsclient -s /run/user/1000/emacs/org --create-frame $@
+    emacsclient --create-frame $@
   '';
   myExtraPackages = epkgs: with epkgs; [
     ace-window
@@ -148,12 +148,6 @@ in
     enable = true;
     client.enable = true;
     socketActivation.enable = true;
-  };
-  services.emacs-server = {
-    enable = true;
-    package = pkgs.my.emacs;
-    name = "org";
-    shell = pkgs.zsh + "/bin/zsh -i -c";
   };
   home.sessionVariables = {
     EDITOR = "emacs";
