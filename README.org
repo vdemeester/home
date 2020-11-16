@@ -1,3 +1,4 @@
+# -*- mode: org; eval: (add-hook 'after-save-hook (lambda () (org-md-export-to-markdown)) nil t) -*-
 #+TITLE: Home configuration files
 #+FILETAGS: #home infra configuration dotfiles
 
@@ -108,6 +109,7 @@ Repositories
 - [[https://github.com/bennofs/etc-nixos]]
 - [[https://github.com/Baughn/machine-config]]
 
+- https://github.com/hlissner/dotfiles/
 * COPYING
 :PROPERTIES:
 :CUSTOM_ID: h:716e598e-3b1a-4e48-a72b-608c3a970db9

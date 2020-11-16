@@ -47,7 +47,7 @@ dramatically or even not working anymore 😛.
 This is probably gonna be a moving target, but this is how it looks (or should look
 soon-ish 👼):
 
--   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#orgdb1ed6a).
+-   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#orgaddf58b).
     `make publish` will publish the `README.org` and the `docs` folder to my website.
 -   `lib`: shared code used during configuration (mostly `nix` code).
 -   `machines`: configuration per machines
@@ -59,7 +59,7 @@ soon-ish 👼):
     will contain empty secrets (or random ones).
 -   `tmp`: things to… organize (e.g. where I import my other *legacy* configuration)
 
-<a id="orgdb1ed6a"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
+<a id="orgaddf58b"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
 literate configuration files in this repository, I have to think of how to organize files
 in order to end up with one huge file. The goal of having those `org-mode` files, is
 mainly to document my configuration and publish it, most likely on [sbr.pm](https://sbr.pm).
@@ -115,6 +115,8 @@ Repositories
 -   <https://github.com/bennofs/etc-nixos>
 -   <https://github.com/Baughn/machine-config>
 
+-   <https://github.com/hlissner/dotfiles/>
+
 
 <a id="h:716e598e-3b1a-4e48-a72b-608c3a970db9"></a>
 
@@ -134,4 +136,3 @@ General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this file.  If not, see <http://www.gnu.org/licenses/>.
-
