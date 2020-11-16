@@ -1,3 +1,0 @@
-[submodule "tools/emacs/lisp/vorg"]
-	path = tools/emacs/lisp/vorg
-	url = https://gitlab.com/vdemeester/vorg.git
