@@ -21,7 +21,6 @@
     gnomeExtensions.sound-output-device-chooser
     my.gnome-shell-extension-shell
     my.gnome-bluetooth-quick-connect
-    my.hidetopbar
     my.noannoyance
     my.nightthemeswitcher
     gnome3.gnome-shell-extensions
