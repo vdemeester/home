@@ -260,7 +260,7 @@ using either KUBECONFIG or ~/.kube/config"
 
 (use-package vterm
   :commands (vterm vde/vterm-toggle)
-  :bind (("C-c t t" . vde/vterm-toggle)
+  :bind (("C-c t v" . vde/vterm-toggle)
          ("C-c t r" . vde/run-in-vterm))
   :custom
   (vterm-kill-buffer-on-exit t)
@@ -270,6 +270,7 @@ using either KUBECONFIG or ~/.kube/config"
 If the `tramp-methods' entry does not exist, return NIL."
     (let ((entry (assoc param (assoc method tramp-methods))))
       (when entry (cadr entry))))
+  (add-hook 'vterm-set-title-functions 'vterm--rename-buffer-as-title)
   ;; TODO: hook into projectile-run-vterm instead
   ;; Also, look into vterm-toggle way of doing things.. I thing it is trying to be too smart about it..
   ;; I prefer an easy projectile integration (or projects integration)
@@ -344,6 +345,12 @@ toggle, the current window configuration is saved in a register."
       (vterm-send-string (read-string "Command: "))
       (vterm-send-C-j))))
 
+(use-package multi-vterm
+  :commands (multi-vterm multi-vterm-projectile multi-vterm-dedicated-toggle)
+  :bind (("C-c t t" . multi-vterm-dedicated-toggle)
+         ("C-c t p" . multi-vterm-prev)
+         ("C-c t n" . multi-vterm-next)
+         ("C-c t s" . multi-vterm)))
 ;; for fish in ansi-term
 (add-hook 'term-mode-hook 'toggle-truncate-lines)
 

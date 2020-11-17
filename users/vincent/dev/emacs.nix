@@ -76,6 +76,7 @@ let
     minions
     modus-operandi-theme
     moody
+    multi-vterm
     mwim
     nix-buffer
     nix-mode
