@@ -100,6 +100,8 @@
                           'magit-insert-modules
                           'magit-insert-unpushed-to-upstream
                           'magit-insert-unpulled-from-upstream)
+  ;; No need for tag in the status header
+  (remove-hook 'magit-status-sections-hook 'magit-insert-tags-header)
   (setq-default magit-module-sections-nested nil)
 
   ;; Show refined hunks during diffs
