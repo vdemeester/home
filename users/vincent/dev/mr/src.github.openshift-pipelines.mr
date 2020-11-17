@@ -1,0 +1,11 @@
+# -*- mode: sh -*-
+include = cat ${HOME}/.config/mr
+
+[DEFAULT]
+lib =
+    export BASE_PATH=openshift-pipelines
+    export BASE_USER=vdemeester
+    export BASE_HOST="github.com"
+
+[knowledge-base]
+[release-tests]
