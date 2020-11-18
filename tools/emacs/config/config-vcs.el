@@ -3,7 +3,6 @@
 ;;; Version control configuration
 ;;; Code:
 
-;; UseVC
 (use-package vc
   :config
   (setq-default vc-find-revision-no-save t
@@ -11,9 +10,7 @@
   :bind (("C-x v f" . vc-log-incoming)  ;  git fetch
          ("C-x v F" . vc-update)
          ("C-x v d" . vc-diff)))
-;; -UseVC
 
-;; UseVCDir
 (use-package vc-dir
   :config
   (defun vde/vc-dir-project ()
@@ -32,25 +29,19 @@
          ("F" . vc-update)       ; symmetric with P: `vc-push'
          ("d" . vc-diff)         ; align with D: `vc-root-diff'
          ("k" . vc-dir-clean-files)))
-;; -UseVCDir
 
-;; UseVCGit
 (use-package vc-git
   :config
   (setq vc-git-diff-switches "--patch-with-stat")
   (setq vc-git-print-log-follow t))
-;; -UseVCGit
 
-;; UseVCAnnotate
 (use-package vc-annotate
   :config
   (setq vc-annotate-display-mode 'scale)
   :bind (("C-x v a" . vc-annotate)
          :map vc-annotate-mode-map
          ("t" . vc-annotate-toggle-annotation-visibility)))
-;; -UseVcAnnotate
 
-;; UseEdiff
 (use-package ediff
   :commands (ediff ediff-files ediff-merge ediff3 ediff-files3 ediff-merge3)
   :config
@@ -58,9 +49,7 @@
   (setq ediff-split-window-function 'split-window-horizontally)
   (setq ediff-diff-options "-w")
   (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
-;; -UseEdiff
 
-;; UseDiff
 (use-package diff
   :config
   (setq diff-default-read-only nil)
@@ -69,9 +58,7 @@
   (setq diff-refine 'font-lock)
   (setq diff-font-lock-prettify nil)
   (setq diff-font-lock-syntax nil))
-;; -UseDiff
 
-;; UseMagit
 (use-package magit
   :unless noninteractive
   :commands (magit-status magit-clone magit-pull magit-blame magit-log-buffer-file magit-log)
@@ -109,9 +96,7 @@
 
   ;; Refresh `magit-status' after saving a buffer
   (add-hook 'after-save-hook #'magit-after-save-refresh-status))
-;; -UseMagit
 
-;; UseMagitTodos
 (use-package magit-todos
   :after (magit)
   :unless noninteractive
@@ -120,21 +105,15 @@
   (magit-todos-exclude-globs '("node_modules" "vendor" "*.json" "*.html"))
   :config
   (setq magit-todos-auto-group-items 'always))
-;; -UseMagittodos
 
-;; UseMagitAnnex
 (use-package magit-annex
   :unless noninteractive
   :after magit)
-;; -UseMagitAnnex
 
-;; UseGitAnnex
 (use-package git-annex
   :after dired
   :defer t)
-;; -UseGitAnnex
 
-;; UseGitCommit
 (use-package git-commit
   :after magit
   :commands (git-commit-mode)
@@ -158,30 +137,23 @@
                 git-commit-style-convention-checks
                 '(non-empty-second-line
                   overlong-summary-line)))
-;; -UseGitCommit
 
-;; UseGitConfig
 (use-package gitconfig-mode
   :commands (gitconfig-mode)
   :mode (("/\\.gitconfig\\'"  . gitconfig-mode)
          ("/\\.git/config\\'" . gitconfig-mode)
          ("/git/config\\'"    . gitconfig-mode)
          ("/\\.gitmodules\\'" . gitconfig-mode)))
-;; -UseGitConfig
 
-;; UseGitIgnore
 (use-package gitignore-mode
   :commands (gitignore-mode)
   :mode (("/\\.gitignore\\'"        . gitignore-mode)
          ("/\\.git/info/exclude\\'" . gitignore-mode)
          ("/git/ignore\\'"          . gitignore-mode)))
-;; -UseGitIgnore
 
-;; UseGitAttributes
 (use-package gitattributes-mode
   :commands (gitattributes-mode)
   :mode (("/\\.gitattributes" . gitattributes-mode)))
-;; -UseGitAttributes
 
 (use-package dired-git-info
   :disabled
