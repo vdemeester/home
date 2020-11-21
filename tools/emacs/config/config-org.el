@@ -168,7 +168,9 @@
         org-agenda-sticky t
         org-super-agenda-header-separator ""
         org-agenda-custom-commands
-        `(("w" "Agenda"
+        `(("l" "Links"
+           tags "+#link")
+          ("w" "Agenda"
            ((agenda "")
             (tags-todo "-goals-incubate-inbox+TODO=\"STARTED\""
                        ((org-agenda-overriding-header "Ongoing")))
