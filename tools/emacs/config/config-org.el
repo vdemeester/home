@@ -179,20 +179,6 @@
                (:name "Scheduled" :time-grid t)
                (:habit t))))
            (org-agenda-list)))))
-(use-package org-gcal
-  :after (org)
-  :commands (org-gcal-fetch)
-  :config
-  (require 'netrc)
-  (setq-default org-gcal-remove-cancelled-events t)
-  (defun get-authinfo (host port)
-    (let* ((netrc (netrc-parse (expand-file-name "~/.authinfo.gpg")))
-           (hostentry (netrc-machine netrc host port port)))
-      (when hostentry (netrc-get hostentry "password"))))
-
-  (setq org-gcal-client-id "959564825992-kvc7ofe9640cpc8ibgjqqgpi15e89nkn.apps.googleusercontent.com"
-        org-gcal-client-secret (get-authinfo "gcal.api" "9999")
-        org-gcal-file-alist '(("vdemeest@redhat.com" . "~/desktop/org/projects/schedule.org"))))
 (use-package org-capture
   :after org
   :commands (org-capture)
