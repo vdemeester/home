@@ -35,10 +35,14 @@
                 indicate-empty-lines +1)
   (line-number-mode 1)
   (column-number-mode 1)
-  (global-hl-line-mode 1)
   (global-unset-key (kbd "C-z"))
   (global-unset-key (kbd "C-x C-z"))
-  (global-unset-key (kbd "C-h h")))
+  (global-unset-key (kbd "C-h h"))
+  ;; let's enable it for all programming major modes
+  (add-hook 'prog-mode-hook #'hl-line-mode)
+  (add-hook 'prog-mode-hook #'hl-todo-mode)
+  ;; and for all modes derived from text-mode
+  (add-hook 'text-mode-hook #'hl-line-mode))
 
 (use-package frame
   :unless noninteractive
