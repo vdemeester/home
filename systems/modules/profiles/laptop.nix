@@ -24,5 +24,10 @@ in
       acpi
     ];
     systemd.services.nix-gc.unitConfig.ConditionACPower = true;
+    services = {
+      logind.extraConfig = ''
+        HandleLidSwitchDocked=ignore
+      '';
+    };
   };
 }
