@@ -15,8 +15,7 @@
     go-symbols
     delve
     goimports
-    # vendoring tools
-    dep
+    gotestsum
     # misc
     protobuf
     my.ram
