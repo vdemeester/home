@@ -32,10 +32,9 @@ let
 in
 rec {
   # pre nur-packages import
-  scripts = pkgs.callPackage ./scripts { };
-  tmux-tpm = pkgs.callPackage ./tmux-tpm { };
-  vrsync = pkgs.callPackage ./vrsync { };
-  vde-thinkpad = pkgs.callPackage ./vde-thinkpad { };
+  scripts = pkgs.callPackage ./my/scripts { };
+  vrsync = pkgs.callPackage ./my/vrsync { };
+  vde-thinkpad = pkgs.callPackage ./my/vde-thinkpad { };
   bus = pkgs.callPackage ../tools/bus { };
   bekind = pkgs.callPackage ../tools/bekind { };
 

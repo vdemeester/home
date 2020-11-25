@@ -3,19 +3,13 @@ let
   compileEmacsFiles = super.callPackage ./emacs/builder.nix;
 in
 rec {
-  scripts = import ../pkgs/scripts {
+  scripts = import ../pkgs/my/scripts {
     inherit (self) stdenv;
   };
-  tmux-tpm = import ../pkgs/tmux-tpm {
-    inherit (self) stdenv lib fetchFromGitHub;
-  };
-  vscodeliveshare = import ../pkgs/vscodeliveshare {
-    inherit (self) stdenv vscode-utils autoPatchelfHook xorg gnome3 utillinux openssl icu zlib curl lttng-ust libsecret libkrb5 gcc libunwind binutils;
-  };
-  vrsync = import ../pkgs/vrsync {
+  vrsync = import ../pkgs/my/vrsync {
     inherit (self) stdenv lib;
   };
-  vde-thinkpad = import ../pkgs/vde-thinkpad {
+  vde-thinkpad = import ../pkgs/my/vde-thinkpad {
     inherit (self) stdenv lib;
   };
   bekind = super.callPackage ../tools/bekind { };
