@@ -88,6 +88,13 @@ confines of word boundaries (e.g. multiple words)."
   (setq rg-default-alias-fallback "all")
   (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
   (cl-pushnew '("gotest" . "*_test.go") rg-custom-type-aliases)
+  (defun vde/rg-buffer-name ()
+    "Generate a rg buffer name from projectile if bound"
+    (cond ((boundp 'projectile-project-name) (if (string-equal (projectile-project-name) "-")
+                                                 "rg"
+                                               (format "rg: %s" (projectile-project-name))))
+          (t "rg")))
+  (setq rg-buffer-name #'vde/rg-buffer-name)
   (with-eval-after-load 'projectile
     (defalias 'projectile-ripgrep #'rg-project)))
 ;; -UseRG
