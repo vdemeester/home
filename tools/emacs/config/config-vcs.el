@@ -97,15 +97,6 @@
   ;; Refresh `magit-status' after saving a buffer
   (add-hook 'after-save-hook #'magit-after-save-refresh-status))
 
-(use-package magit-todos
-  :after (magit)
-  :unless noninteractive
-  :hook (magit-mode . magit-todos-mode)
-  :custom
-  (magit-todos-exclude-globs '("node_modules" "vendor" "*.json" "*.html"))
-  :config
-  (setq magit-todos-auto-group-items 'always))
-
 (use-package magit-annex
   :unless noninteractive
   :after magit)

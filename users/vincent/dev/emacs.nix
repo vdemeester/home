@@ -71,7 +71,6 @@ let
     magit
     magit-annex
     magit-popup
-    magit-todos
     markdown-mode
     minions
     modus-operandi-theme
