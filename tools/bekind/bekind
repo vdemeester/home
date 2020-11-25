@@ -62,8 +62,7 @@ bekind_create(){
         if [[ -f "${profile_file}" ]]; then
             tmpfile=$(mktemp /tmp/bekind.XXXXXX)
             hostip=$(getent hosts ${host} | awk '{ print $1 }')
-            sed "s/HOST/${hostip}/g" "${profile_file}" > ${tmpfile}
-            sed -i "s/PORT/${port}/g" ${tmpfile}
+            sed -e "s/HOST/${hostip}/g" -e "s/PORT/${port}/g" "${profile_file}" > ${tmpfile}
             args="${args} --config ${tmpfile}"
         else
             echo "Profile ${profile} doesn't exists" 1>&2
