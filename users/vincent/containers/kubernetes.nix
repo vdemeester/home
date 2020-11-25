@@ -21,5 +21,6 @@ in
     my.kss
     # our own scripts
     knd
+    bekind
   ];
 }

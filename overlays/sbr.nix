@@ -18,6 +18,7 @@ rec {
   vde-thinkpad = import ../pkgs/vde-thinkpad {
     inherit (self) stdenv lib;
   };
+  bekind = super.callPackage ../tools/bekind { };
 
   my = import ../pkgs {
     inherit (self) pkgs;
