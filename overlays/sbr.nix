@@ -28,8 +28,8 @@ rec {
     src = super.fetchFromGitHub {
       owner = "emacsmirror";
       repo = "bookmark-plus";
-      rev = "b6a71e8d153ae8b7bc9afed1cf7659765cfc1b0e";
-      sha256 = "1nj9dci6wgwc531vigirx70g3nsw33bsh6ni3bq4dl0x1s4zy6gz";
+      rev = "73b8e1c2195860a8c24b5e2961914780c19cf5e3";
+      sha256 = "09aprlawi3m7qrdas3zlk52niap2sr741qzfpjwc2c22hrlyv8ng";
     };
   };
   dired-plus = compileEmacsFiles {
@@ -37,8 +37,8 @@ rec {
     src = super.fetchFromGitHub {
       owner = "emacsmirror";
       repo = "dired-plus";
-      rev = "b51974b84b861592c3519117f3f51ee557ca01ba";
-      sha256 = "0s59yd0axnja1zxc8snx013flf0f76n546i5ix5p0ngcbbhmm5kb";
+      rev = "db4d82a6b1995a3aa31bd7f2dcaf9b83335d5576";
+      sha256 = "10rfjf6gn5cx1kxq97xq7p24rnkw0hnzj32x4hny7bc6s3635d3x";
     };
   };
 
