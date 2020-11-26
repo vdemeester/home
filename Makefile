@@ -41,15 +41,15 @@ home-switch: secrets
 
 .PHONY: build
 build: secrets
-	./hack/system build
+	./bin/system build
 
 .PHONY: nixos-dry-build
 dry-build: secrets setup
-	./hack/system dry-build
+	./bin/system dry-build
 
 .PHONY: switch
 switch: secrets
-	./hack/system switch
+	./bin/system switch
 
 .PHONY: install-hooks
 install-hooks:
