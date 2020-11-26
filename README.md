@@ -1,71 +1,53 @@
 
 # Table of Contents
 
-1.  [What is `home`](#h:0272c5ac-0b7f-4ebb-91f0-defa66c2d285)
-2.  [Installation](#h:e289aa81-d0ec-49a0-ba94-933e85d4ee8c)
-3.  [Organization of the repository](#h:b74304bf-e7e6-4425-9123-e50eca3eb8fa)
-4.  [References](#h:e5a95a68-f031-438b-831c-824803d0bc3e)
-5.  [COPYING](#h:716e598e-3b1a-4e48-a72b-608c3a970db9)
+1.  [Highlights](#org955d5f4)
+    1.  [Systems](#orgb1330e3)
+    2.  [Tools](#orgb798790)
+    3.  [User(s)](#org075b62a)
+2.  [References](#orgdf5348e)
+3.  [Licensing](#orge77bd17)
 
-![img](https://builds.sr.ht/~vdemeester/home.svg)
+`home` is the monorepo containing my personal tools and infrastructure. Everything in here
+should be built using [Nix](https://nixos.org/nix).
 
 
-<a id="h:0272c5ac-0b7f-4ebb-91f0-defa66c2d285"></a>
+<a id="org955d5f4"></a>
 
-# What is `home`
+# Highlights
 
-`home` is the declarative configuration of my servers, desktops and laptops. This project is based
-on the NixOS operating system and uses home-manager to manage my dotfiles, for both NixOS and
-non-NixOS hosts (like WSL).
-
-This repository is the monorepo for my personal tools and the declarative configuration of
-my servers, desktops and laptops. It is based on the NixOS operating system and
-`home-manager` (and some scripts) to manage my dotfiles, for both NixOS and non-NixOS
-hosts (like Fedora, …).
-
-It is fully reproducible (utilizing [niv](https://github.com/nmattia/niv)) and position-independent, meaning there is no
-moving around of `configuration.nix`. For the configurations' entry points see the
-individual [systems](systems), as well as [default.nix](default.nix).
+It is meant to be fully reproducible (using [niv](https://github.com/nmattia/niv) for now) and position-independent, meaning
+there is no moving around of `configuration.nix`. For the configurations' entry points see
+the individual [systems](systems), as well as [default.nix](default.nix).
 
 This will be a all-time work-in-progress, so please beware that things might change
 dramatically or even not working anymore 😛.
 
 
-<a id="h:e289aa81-d0ec-49a0-ba94-933e85d4ee8c"></a>
+<a id="orgb1330e3"></a>
 
-# TODO Installation
+## Systems
 
-*todo: rework that part, link to the `docs` folder*
-
-
-<a id="h:b74304bf-e7e6-4425-9123-e50eca3eb8fa"></a>
-
-# Organization of the repository
-
-*todo: rework that part*
-
-This is probably gonna be a moving target, but this is how it looks (or should look
-soon-ish 👼):
-
--   `docs`: holds documentation about this code, literate configuration, see [literate configuration](#orgaddf58b).
-    `make publish` will publish the `README.org` and the `docs` folder to my website.
--   `lib`: shared code used during configuration (mostly `nix` code).
--   `machines`: configuration per machines
--   `modules`: holds nix modules (services, programs, hardware, profiles, …)
--   `overlays`: holds [nix overlays](https://nixos.wiki/wiki/Overlays)
--   `pkgs`: holds nix packages (those should migrate under `overlays` or on `nur-packages`)
--   `secrets`: holds non-shareable code, this folder is ignored and `make` commands will try
-    to populate this. If it's empty, the rest of configuration is still meant to work but
-    will contain empty secrets (or random ones).
--   `tmp`: things to… organize (e.g. where I import my other *legacy* configuration)
-
-<a id="orgaddf58b"></a>As I'm slowly, but <span class="underline">surely</span>, going to have `org-mode` files for
-literate configuration files in this repository, I have to think of how to organize files
-in order to end up with one huge file. The goal of having those `org-mode` files, is
-mainly to document my configuration and publish it, most likely on [sbr.pm](https://sbr.pm).
+This holds the configuration of my different systems. It is meant to be
+position-independent, meaning there is no moving around of `configuration.nix`. For the
+configurations' entry points see the individual [systems](systems), as well as [default.nix](default.nix).
 
 
-<a id="h:e5a95a68-f031-438b-831c-824803d0bc3e"></a>
+<a id="orgb798790"></a>
+
+## Tools
+
+Those are tools I have written for my personal usage.
+
+
+<a id="org075b62a"></a>
+
+## User(s)
+
+Users configuration, for [NixOS](https://nixos.org) and using home-manager.
+
+
+<a id="orgdf5348e"></a>
 
 # References
 
@@ -118,21 +100,9 @@ Repositories
 -   <https://github.com/hlissner/dotfiles/>
 
 
-<a id="h:716e598e-3b1a-4e48-a72b-608c3a970db9"></a>
+<a id="orge77bd17"></a>
 
-# COPYING
+# Licensing
 
-Copyright (c) 2018-2020 Vincent Demeester <vincent@sbr.pm>
-
-This file is free software: you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation, either version 3 of the License, or (at
-your option) any later version.
-
-This file is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this file.  If not, see <http://www.gnu.org/licenses/>.
+Unless otherwise stated in a subdirectory, all code is licensed under the GNU GPL v3. See
+[COPYING](COPYING) for details.
