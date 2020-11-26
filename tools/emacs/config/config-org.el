@@ -47,6 +47,7 @@
     nil
     > "#+TITLE: " (skeleton-read "Title: ") \n
     > "#+FILETAGS: " (skeleton-read "Tags: ") \n
+    > "#+CATEGORY: " (skeleton-read "Category: ") \n
     > _ \n
     > "#+BEGIN: clocktable :scope file :maxlevel 2 :emphasize nil :link t" \n
     > "#+END:" \n
