@@ -65,7 +65,6 @@ in
     desktop.gnome.enable = true;
     laptop.enable = true;
     home = true;
-    ssh.enable = true;
     dev.enable = true;
     yubikey.enable = true;
     virtualization = { enable = true; nested = true; };
