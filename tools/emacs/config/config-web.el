@@ -7,6 +7,9 @@
   :config
   (setq shr-use-fonts nil)
   (setq shr-use-colors nil)
+  (setq shr-bullet "• ")
+  (setq shr-folding-mode t)
+
   (setq shr-max-image-proportion 0.7)
   (setq shr-image-animate nil)
   (setq shr-width (current-fill-column)))
@@ -33,6 +36,7 @@
   (setq eww-desktop-remove-duplicates t)
   (setq eww-header-line-format "%u")
   (setq eww-search-prefix "https://duckduckgo.com/html/?q=")
+  (setq url-privacy-level '(email agent cookies lastloc))
   (setq eww-download-directory "~/desktop/downloads/")
   (setq eww-suggest-uris
         '(eww-links-at-point
