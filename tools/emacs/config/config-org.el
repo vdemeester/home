@@ -49,9 +49,8 @@
     > "#+FILETAGS: " (skeleton-read "Tags: ") \n
     > "#+CATEGORY: " (skeleton-read "Category: ") \n
     > _ \n
-    > "#+BEGIN: clocktable :scope file :maxlevel 2 :emphasize nil :link t" \n
-    > "#+END:" \n
     > _ \n)
+  (define-auto-insert '("/projects/.*\\.org\\'" . "projects org files") [vde/org-project])
   (define-skeleton vde/org-www-post
     "new www post"
     nil
