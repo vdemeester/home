@@ -1,0 +1,61 @@
+#+title: Reinit and Jekyll
+#+date: <2012-05-07 Mon>
+#+filetags: website jekyll
+#+setupfile: ../templates/post.org
+
+* Introduction
+
+Two weeks ago, my /online/ personal server has been attacked and,
+somehow, died. I'm in the process of re-installation of it but I'm going
+to hardened a bit the security on it. Anyway, this crash meant that
+every piece of site I maintain has been down. That's why I moved this
+/identity site/ on the github pages, using a CNAME ; That way I can
+crash as much as I want my server(s), this page should still be up for a
+while.
+
+And I'm switching on Jekyll for this website as It is supported by
+Github page, easy to use and easy to deploy elsewhere (if one day I want
+to move from Github).
+
+The rest of the post is going to be used as a /sandbox/ post to test the
+site styles.
+
+#+BEGIN_QUOTE
+  This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+  consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+  Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+  Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+  id sem consectetuer libero luctus adipiscing.
+#+END_QUOTE
+
+** Highlight
+   :PROPERTIES:
+   :CUSTOM_ID: highlight
+   :ID:       6e1687a1-6898-4fe1-ac56-53b6e1e1f310
+   :END:
+
+#+begin_src ruby
+def foo puts 'foo' end
+#+end_src
+
+Some bash script...
+
+#+begin_src bash
+#!/bin/bash
+update_gems() {
+    echo "Update gems for all versions ? (y/N)"
+    read UPDATE_GEMS
+    test -z "${UPDATE_GEMS}" && UPDATE_GEMS="n"
+
+    if test "${UPDATE_GEMS}" = "y"; then
+        for version in =ls --color=never $HOME/.rbenv/versions=; do
+            echo "Updating ${version%/}"
+            RBENV_VERSION="${version%/}" rbenv exec gem update
+            RBENV_VERSION="${version%/}" rbenv exec gem install bundler
+        done
+    fi
+}
+
+update_gems
+#+end_src

@@ -1,0 +1,8 @@
+#+title: Nixifying this website
+#+date: <2020-12-01 Fri>
+#+filetags: website nix
+#+setupfile: ../templates/post.org
+
+* Introduction
+
+…

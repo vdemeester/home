@@ -1,0 +1,4 @@
+#+AUTHOR: Vincent Demeester
+#+KEYWORDS: post
+#+OPTIONS: toc:nil pri:nil todo:nil d:(not "LOGBOOK")
+#+EXCLUDE_TAGS: noexport

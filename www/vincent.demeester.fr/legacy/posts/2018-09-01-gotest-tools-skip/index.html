@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="start" href="https://vincent.demeester.fr" />
+
+    <title>Vincent Demeester</title>
+    <link rel="canonical" href="https://vincent.demeester.fr/posts/2018-09-01-gotest-tools-skip/">
+    <link href="https://vincent.demeester.fr/index.xml" rel="alternate" type="application/rss+xml" title="Vincent Demeester" />
+
+    <link rel="openid.server" href="https://indieauth.com/openid" />
+    <link rel="openid.delegate" href="http://vincent.demeester.fr/" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="/css/screen.css" type="text/css" />
+    <link rel="stylesheet" href="/css/sbrain.css" type="text/css" />
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+  </head>
+  
+  <body lang=""/>
+  
+
+
+
+
+
+<div id="main-container">
+  <div id="page">
+    <article class="post">
+      <header>
+        <h1 class="emphnext">Golang testing — gotest.tools skip</h1><a href='https://vincent.demeester.fr/posts/2018-09-01-gotest-tools-skip/'></a>
+        <address class="signature">
+          <span class="date">Sat, 1 September, 2018</span>
+          <span class="words">(400 Words)</span>
+        </address>
+	<ul class="tag_box inline">
+	  
+	  <li class="category"><a href="/categories/#developement">developement</a></li>
+	  
+	  
+	  
+	  
+	  
+	  <li class="tag tag-testing"><a href="/tags/#testing">testing<span>11</span></a></li>
+	  
+	  
+	  <li class="tag tag-golang"><a href="/tags/#golang">golang<span>12</span></a></li>
+	  
+	  
+	  <li class="tag tag-skip"><a href="/tags/#skip">skip<span>1</span></a></li>
+	  
+	  <br/>
+	  
+	</ul>
+      </header>
+      
+      
+      
+      <p>Let&rsquo;s continue the <a href="https://gotest.tools"><code>gotest.tools</code></a> serie, this time with the <code>skip</code> package. This is a
+really simple one so this should be quick.</p>
+
+<blockquote>
+<p><code>skip</code> provides functions for skipping a test and printing the source code of the
+condition used to skip the test.</p>
+</blockquote>
+
+<p>The package consists of only one function : <code>If</code>. The idea comes mainly from
+<a href="https://github.com/docker/docker"><code>docker/docker</code></a> integration test suite, where we wanted to skip some test (or test suites)
+given different context. By context I mean things like the system we are running on
+(<code>Windows</code>, <code>Linux</code>, …) or the capabilities of the running kernel or node (is <code>apparmor</code>
+available or not on the current machine).</p>
+
+<p>This <code>If</code> method takes a <code>testing.T</code> pointer and either a boolean, a function that
+returns a boolean, <strong>or</strong> an expression.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// boolean
+</span><span class="c1">//   --- SKIP: TestName (0.00s)
+</span><span class="c1">//           skip.go:19: MissingFeature
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">MissingFeature</span> <span class="kt">bool</span>
+<span class="nx">skip</span><span class="p">.</span><span class="nf">If</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">MissingFeature</span><span class="p">)</span>
+
+<span class="c1">// function
+</span><span class="c1">//   --- SKIP: TestName (0.00s)
+</span><span class="c1">//           skip.go:19: !IsExperimentalDaemon(dockerClient): daemon is not experimental
+</span><span class="c1"></span><span class="nx">skip</span><span class="p">.</span><span class="nf">If</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nf">IsExperimentalDaemon</span><span class="p">(</span><span class="nx">dockerClient</span><span class="p">),</span> <span class="s">&#34;daemon is not experimental&#34;</span><span class="p">)</span>
+
+<span class="c1">// expression
+</span><span class="c1">//   --- SKIP: TestName (0.00s)
+</span><span class="c1">//           skip.go:19: apiVersion &lt; version(&#34;v1.24&#34;)
+</span><span class="c1"></span><span class="nx">skip</span><span class="p">.</span><span class="nf">If</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">apiVersion</span> <span class="p">&lt;</span> <span class="nf">version</span><span class="p">(</span><span class="s">&#34;v1.24&#34;</span><span class="p">))</span></code></pre></div>
+<p>There is few elements to note though :</p>
+
+<ul>
+<li>This package (as other parts of the <code>gotest.tools</code> packages), will try to look at source
+files to display the expression used (same goes for <code>assert</code>). This is usually not a
+problem because you run tests where the source code is. <strong>However</strong>, in the cases you
+generate a test binary to be executed later (à-la <code>kubernetes</code> or other projects), this
+can display a weird error message if the sources are not available… You shouldn&rsquo;t be
+worried too much about it, but it&rsquo;s better if you know :)</li>
+<li>The main reason to use <code>skip.If</code> is mainly for new contributors to get in quickly,
+<strong>reducing potential friction of them running the tests on their environment</strong>. The more
+the tests are written in a way they explicitely declare their requirements (and skipped
+if the environment does not meet those), the easier it makes contributors run your
+tests. <strong>But</strong>, this also means, you should try to measure the skipped tests on your
+continuous integration system to make sure you run all of them eventually… otherwise
+it&rsquo;s dead code. <em>But more on that in later posts 😉</em>.</li>
+</ul>
+
+<p>That&rsquo;s all for today folks, told you that was going to be quick.</p>
+
+      
+    </article>
+    <hr />
+    <div class="prev-next">
+      
+      <a class="paging-link prev" href="/posts/2018-09-06-gotest-tools-golden/" title="Golang testing — gotest.tools golden">← Previous post</a>
+      
+
+      
+      <a class="paging-link next" href="/posts/2018-08-16-gotest-tools-assertions/" title="Golang testing — gotest.tools assertions">Next post →</a>
+      
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <nav>
+    
+    <a href="/">home</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/about">about</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/archive">archive</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/categories">categories</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/tags">tags</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://twitter.com/vdemeest">twitter</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://github.com/vdemeester">github</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://vincent.demeester.fr/index.xml">rss</a>
+  </nav>
+  <br/>
+  <address>
+    <span class="copyright">
+      Content and design by Vincent Demeester
+      (<a rel="licence" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Some rights reserved</a>)
+    </span><br />
+    <span class="engine">
+      Powered by <a href="https://gohugo.io/">Hugo</a> and <a href="https://github.com/kaushalmodi/ox-hugo/">ox-hugo</a>
+    </span>
+  </address>
+</footer>
+</body>
+

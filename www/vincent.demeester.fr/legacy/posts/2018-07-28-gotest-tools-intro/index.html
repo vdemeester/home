@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="start" href="https://vincent.demeester.fr" />
+
+    <title>Vincent Demeester</title>
+    <link rel="canonical" href="https://vincent.demeester.fr/posts/2018-07-28-gotest-tools-intro/">
+    <link href="https://vincent.demeester.fr/index.xml" rel="alternate" type="application/rss+xml" title="Vincent Demeester" />
+
+    <link rel="openid.server" href="https://indieauth.com/openid" />
+    <link rel="openid.delegate" href="http://vincent.demeester.fr/" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="/css/screen.css" type="text/css" />
+    <link rel="stylesheet" href="/css/sbrain.css" type="text/css" />
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+  </head>
+  
+  <body lang=""/>
+  
+
+
+
+
+
+<div id="main-container">
+  <div id="page">
+    <article class="post">
+      <header>
+        <h1 class="emphnext">Golang testing — gotest.tools introduction</h1><a href='https://vincent.demeester.fr/posts/2018-07-28-gotest-tools-intro/'></a>
+        <address class="signature">
+          <span class="date">Sat, 28 July, 2018</span>
+          <span class="words">(400 Words)</span>
+        </address>
+	<ul class="tag_box inline">
+	  
+	  <li class="category"><a href="/categories/#developement">developement</a></li>
+	  
+	  
+	  
+	  
+	  
+	  <li class="tag tag-testing"><a href="/tags/#testing">testing<span>11</span></a></li>
+	  
+	  
+	  <li class="tag tag-golang"><a href="/tags/#golang">golang<span>12</span></a></li>
+	  
+	  
+	  <li class="tag tag-featured"><a href="/tags/#featured">featured<span>2</span></a></li>
+	  
+	  <br/>
+	  
+	</ul>
+      </header>
+      
+      I already wrote 2 previous posts about golang and testing. It&rsquo;s something I care deeply about and I wanted to continue
+  writing about it. It took me a bit more time than I thought, but getting back to it. Since the <a href="http://vincent.demeester.fr/posts/2017-04-22-golang-testing-golden-file/">last post</a>, Daniel Nephin
+  and I worked (but mainly Daniel 🤗) on bootstrapping a testing helper library.
+      
+      <p>Let me introduce it to you this library : <a href="https://gotest.tools"><code>gotest.tools</code></a>. As described in the <a href="https://godoc.org/gotest.tools">godoc</a> package comment, <code>gotest.tools</code> is a
+collection of packages to augment <code>testing</code> and support common patterns. It&rsquo;s an enhanced and growing version of the
+initial helpers we (the docker/moby maintainers) wrote initially in <a href="https://github.com/docker/docker"><code>docker/docker</code></a> repository. We are using in quite some
+project here at <a href="https://github.com">Docker</a>.</p>
+
+<p>There is a bunch of packages that will all have their own post (linked here when available) :</p>
+
+<ul>
+<li><a href="/posts/2018-08-16-gotest-tools-assertions/"><code>assert</code></a> (with <code>assert/cmp</code> and <code>assert/opt</code>) that provides assertions for comparing expected values to actual values.</li>
+<li><code>env</code> that provides functions to test code that read environment variable or the current working directory.</li>
+<li><a href="/posts/2018-09-14-gotest-tools-fs/"><code>fs</code></a> that provides tools for creating temporary files, and testing the contents and structure of a directory.</li>
+<li><a href="/posts/2018-09-06-gotest-tools-golden/"><code>golden</code></a> that provides tools for comparing large multi-line strings.</li>
+<li><a href="/posts/2018-09-18-gotest-tools-icmd/"><code>icmd</code></a> that executes binaries and provides convenient assertions for testing the results.</li>
+<li><code>poll</code> that provides tools for testing asynchronous code.</li>
+<li><a href="/posts/2018-09-01-gotest-tools-skip/"><code>skip</code></a> that provides functions for skipping a test and printing the source code of the condition used to skip the test.</li>
+</ul>
+
+<p>There is also experimental package, using the <code>x</code> notation (as the golang team uses, for example with <code>golang.org/x/sync</code>) :</p>
+
+<ul>
+<li><code>x/subtest</code> that provides a <code>TestContext</code> to subtests which handles cleanup and provides a <code>testing.TB</code> and <code>context.Context</code>.</li>
+</ul>
+
+<p>There is already some good <code>testing</code> helpers in the Go ecosystem : <a href="https://github.com/stretchr/testify"><code>testify</code></a>, <a href="http://labix.org/gocheck"><code>gocheck</code></a>, <a href="https://github.com/onsi/ginkgo"><code>ginkgo</code></a> and a lot more — so
+why create a new one ? There is multiple reason for it, most of them can be seen in the following <a href="https://github.com/gotestyourself/gotest.tools/issues/49#issuecomment-362436026">GitHub issue</a>.</p>
+
+<p><a href="https://github.com/dnephin/">Daniel</a> also wrote a very useful converter if your code base is currently using <code>testify</code> : <code>gty-migrate-from-testify</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">$ go get -u gotest.tools/assert/cmd/gty-migrate-from-testify
+<span class="c1"># […]</span>
+$ go list <span class="se">\
+</span><span class="se"></span>     -f <span class="s1">&#39;{{.ImportPath}} {{if .XTestGoFiles}}{{&#34;\n&#34;}}{{.ImportPath}}_test{{end}}&#39;</span> <span class="se">\
+</span><span class="se"></span>     ./... <span class="p">|</span> xargs gty-migrate-from-testify</code></pre></div>
+<p>In the next post, let&rsquo;s dig into the assertion part of the library, package <code>assert</code> 👼.</p>
+
+      
+    </article>
+    <hr />
+    <div class="prev-next">
+      
+      <a class="paging-link prev" href="/posts/2018-08-16-gotest-tools-assertions/" title="Golang testing — gotest.tools assertions">← Previous post</a>
+      
+
+      
+      <a class="paging-link next" href="/posts/2017-04-22-golang-testing-golden-file/" title="Golang testing — golden file">Next post →</a>
+      
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <nav>
+    
+    <a href="/">home</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/about">about</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/archive">archive</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/categories">categories</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/tags">tags</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://twitter.com/vdemeest">twitter</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://github.com/vdemeester">github</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://vincent.demeester.fr/index.xml">rss</a>
+  </nav>
+  <br/>
+  <address>
+    <span class="copyright">
+      Content and design by Vincent Demeester
+      (<a rel="licence" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Some rights reserved</a>)
+    </span><br />
+    <span class="engine">
+      Powered by <a href="https://gohugo.io/">Hugo</a> and <a href="https://github.com/kaushalmodi/ox-hugo/">ox-hugo</a>
+    </span>
+  </address>
+</footer>
+</body>
+

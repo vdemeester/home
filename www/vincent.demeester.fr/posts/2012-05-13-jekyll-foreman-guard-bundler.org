@@ -1,0 +1,90 @@
+#+title: Jekyll Forman Guard Bundler
+#+date: <2012-05-13 Sun>
+#+filetags: jekyll ruby bundler guard foreman
+#+setupfile: ../templates/post.org
+
+* Introduction
+
+This post is a quick "How did I setup my Jekyll environnement ?". We are
+going all the tools that are quite awesome in Ruby.
+
+* Goal
+  :PROPERTIES:
+  :CUSTOM_ID: goal
+  :END:
+
+The goal is simple :
+
+1. I want to be able to install any dependent
+   [[http://rubygems.org][Gem]] with a /on-liner/ command
+2. I want to be able to run a /Jekyll server/ that auto updates.
+
+We are going to play with : [[http://gembundler.com/][Bundler]],
+[[https://github.com/guard/guard][Guard]] and
+[[https://github.com/ddollar/foreman][foreman]].
+
+* Bundler
+   :PROPERTIES:
+   :CUSTOM_ID: bundler
+   :END:
+
+Bundler let us run =bundle install= to get all Ruby Gems we will need ;
+It use a file name =Gemfile=. The gems we need are simple : =jekyll=,
+=guard= and some Guard extensions.
+
+#+begin_src ruby
+source "http://rubygems.org"
+
+gem 'jekyll'
+gem 'guard'
+gem 'guard-jekyll2'
+gem 'guard-shell'
+gem 'guard-bundler'
+#+end_src
+
+* Guard
+   :PROPERTIES:
+   :CUSTOM_ID: guard
+   :END:
+
+#+BEGIN_QUOTE
+  Guard is a command line tool to easily handle events on file system
+  modifications.
+#+END_QUOTE
+
+Guard will be watching file we told him and run action in consequence ;
+The file is name =Guardfile=.
+
+#+begin_src ruby
+guard 'jekyll2' do
+  watch %r{.*}
+end
+
+guard :bundler do
+  watch('Gemfile')
+end
+# vim:filetype=ruby
+#+end_src
+
+* Foreman
+   :PROPERTIES:
+   :CUSTOM_ID: foreman
+   :END:
+
+Finally, foreman will let us declare our processes and will handle the
+start, forward the output and handle the shutdown. It can then export
+its configuration into more /production-ready/ file (=init=, =upstard=,
+...) ; It uses a file named =Procfile=.
+
+We will tell foreman to run :
+
+- The jekyll build-in server : =jekyll --server=
+- Guard, to handle file changes /in background/.
+
+#+begin_src bash
+web: bundle exec jekyll --server
+guard: bundle exec guard
+#+end_src
+
+And that's all folk. Now, you just need to run foreman in the
+Jekyll-powered directory and edit your files.

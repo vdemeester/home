@@ -1,0 +1,108 @@
+#+title: Emacs bankruptcy is fun
+#+date: <2020-04-15 Wed>
+#+filetags: emacs configuration optimization
+#+setupfile: ../templates/post.org
+
+* Introduction
+
+Since go 1.14 go released, I've had a broken =go-mode= setup on my Emacs. I was using
+=lsp-mode= and =gopls= and well, the update broke everything. I initally try to fix it but
+I made it worse. At the same time, I started to get fed up with some performance issue of
+my configuration and how slow my Emacs starts, about 6s.
+
+I, thus, declared my third Emacs bankruptcy, =:disabled= everything and slowly started
+from scratch, with the following goal:
+
+- Have it start quick, as less than a second, not too much more than =emacs -Q= would
+- Disable anything that I don't use often initially
+- Try to use as much built-in as possible (example: using =icomplete= instead of
+  =ivy=/=counsel=)
+
+* Do I really need this feature
+
+Following [[https://protesilaos.com/][Protesilaos Stavrou]]'s emacs videos (and [[https://protesilaos.com/dotemacs/][=dotemacs=]]) for a while now, I have a
+tendency to try to use built-in feature as much as possible. The most obvious example is
+using =icomplete= instead of =ivy=/=counsel=.
+
+When I started my /bankruptcy/, I disabled every single customization I had, either using
+=:disabled= when using =use-package= *or* the =(when nil)= /hack/. I then started Emacs
+and acted on what was missing :
+
+1. Do I really miss it ? An example would be, at least initially, the completion in a =go=
+   file. I do miss it, but I miss it *way less* than having Emacs lagging because of
+   =lsp-mode= and showing me wrong completion.
+2. Is there a built-in option to what I previously used ? Here, the =icomplete= example
+   fits well, or =isearch= instead of =swiper=.
+3. Do I need it at startup or /on-demand/ ?
+
+* Looking into what takes time
+
+In "Advanced Techniques for Reducing Emacs Startup Time"[fn:1], I discovered the [[https://github.com/jschaf/esup][=esup=]]
+emacs library. In a gist, this is a profiler for Emacs. It starts a new Emacs instance and
+look at the loading time.
+
+#+CAPTION: esup "result" view
+[[../images/2020-04-15-16-12-54.png]]
+
+Then, you can do a simple loop:
+
+- Run =esup=
+- Look at the top result
+- Fix it (lazy load, removing the feature, …)
+- Re-iterate
+
+* Loading on-demand
+
+Once you have the setup to know what takes time and what not, it's time to look into how
+to load the most thing on demand.
+
+For this, [[https://github.com/jwiegley/use-package][=use-package=]] is amazing, it tremendously help autoloading modules on-demand. If
+you are not using =use-package=, usually you are using =require=, which loads the
+underlying source file (all of it).
+
+With =use-package=, there is multiple ways to load on demand:
+
+- =:commands= to add callable that will trigger loading the package
+- =:bind=, =:bind*=, =:bind-keymap= and =:bind-keymap*= to bind key sequences to the
+  global keymap or a specific keymap.
+- =:mode= and =:interpreter= establish a deferred binding with the =auto-mode-alist= and
+  =interpreter-mode-alist=.
+- =:hook= allows adding functions onto the package hook
+- =:defer= is the most generic one, all the previous keyword imply =:defer=. You can
+  specify a number of second of idle to load the package.
+
+#+BEGIN_aside
+In a gist for =org-babel=, use =use-package ob-python= and never call =org-babel-do-languages=.
+#+END_aside
+Once this is done, you are left with edge cases, like =org-babel-do-languages=.  Those are
+to be handle case by case. The good thing about those cases is that you'll learn what
+those function do and this will give you an even better understanding of what is
+happening.
+
+Doing this exercise also forces you to make you see if you really use that feature or
+not. I ended up removing entire feature from my configuration because they were taking
+quite some time to load, and was used almost never. Instead I am forcing myself to learn
+more what I can do with the built-in features first.
+
+* Conclusion
+
+All in all, this /bankruptcy/ was the most fun I had to do. I consider myself still in the
+process but the base is there.
+
+1. I learned a lot !
+2. My Emacs starts in 0.6s against previously in 5s — =emacs -q= starts in about 0.3s so
+   there is still a little bit of room for improvement.
+3. I discovered / re-discovered a lot of built-in feature
+4. I started documenting my configuration, see [[../configurations/emacs.org][here]].
+
+🎉
+
+:update:
+Well, I've look into the /portable dump/ feature of Emacs, thanks to [[https://archive.casouri.cat/note/2020/painless-transition-to-portable-dumper/index.html][Painless Transition
+to Portable Dumper]]. And I am now down to =0.091s= for the startup. There is a few gotchas
+with /portable dump/, I'll try to write about it later.
+:end:
+
+* Footnotes
+
+[fn:1]: [[https://blog.d46.us/advanced-emacs-startup/][Advanced Techniques for Reducing Emacs Startup Time]]

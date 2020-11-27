@@ -1,0 +1,26 @@
+#+TITLE: About me
+
+I develop mainly in Go, a little bit of Java, a tiny bit of Python ; I'm learning Haskell
+and LISP with Clojure (and also Emacs Lisp). The more I learn about about Functionnal
+languages and their way of thinking, the more I feel enlighten. I'm using Emacs as my main
+editor and IntelliJ IDEA for Java-related stuff. I'm a GNU/Linux user, mainly NixOS
+GNU/Linux. I no longer use or need Microsoft® Windows® but I'm, sometimes, using Mac OS X
+at work (but I don't really like OS X and Apple in general). I'm a FSFE fellow since 2010
+(and previously a FSF fellow), Framasoft and La Quadrature du Net supporter/donator. I
+also try to support various free software, like Mediagoblin.
+
+* Contact
+
+- Email :: vinSPAMcentAT@demSPAMeesterDOT.fr
+- GnuPG :: [[https://vincent.demeester.fr/about/VincentDemeester.asc][5860 2A88]]
+- Instant messaging ::
+  - vdemeester@jabber.fsfe.org
+  - vdemeester@irc.freenode.net #fsfe #docker #docker-compose #docker-dev ##openweb
+- Socials ::
+  + [[https://twitter.com/vdemeest][@vdemeest]] on Twitter
+  + [[https://github.com/vdemeester][@vdemeester]] on GitHub
+  + [[https://gitlab.com/vdemeester][@vdemeester]] on Gitlab
+
+* Talks
+
+- TODO :: TBD

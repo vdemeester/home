@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="start" href="https://vincent.demeester.fr" />
+
+    <title>Vincent Demeester</title>
+    <link rel="canonical" href="https://vincent.demeester.fr/posts/2017-04-22-golang-testing-golden-file/">
+    <link href="https://vincent.demeester.fr/index.xml" rel="alternate" type="application/rss+xml" title="Vincent Demeester" />
+
+    <link rel="openid.server" href="https://indieauth.com/openid" />
+    <link rel="openid.delegate" href="http://vincent.demeester.fr/" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="/css/screen.css" type="text/css" />
+    <link rel="stylesheet" href="/css/sbrain.css" type="text/css" />
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+  </head>
+  
+  <body lang="en"/>
+  
+
+
+
+
+
+<div id="main-container">
+  <div id="page">
+    <article class="post">
+      <header>
+        <h1 class="emphnext">Golang testing — golden file</h1><a href='https://vincent.demeester.fr/posts/2017-04-22-golang-testing-golden-file/'></a>
+        <address class="signature">
+          <span class="date">Sat, 22 April, 2017</span>
+          <span class="words">(900 Words)</span>
+        </address>
+	<ul class="tag_box inline">
+	  
+	  <li class="category"><a href="/categories/#developement">developement</a></li>
+	  
+	  
+	  
+	  
+	  
+	  <li class="tag tag-golang"><a href="/tags/#golang">golang<span>12</span></a></li>
+	  
+	  
+	  <li class="tag tag-testing"><a href="/tags/#testing">testing<span>11</span></a></li>
+	  
+	  
+	  <li class="tag tag-golden"><a href="/tags/#golden">golden<span>1</span></a></li>
+	  
+	  
+	  <li class="tag tag-file"><a href="/tags/#file">file<span>1</span></a></li>
+	  
+	  
+	  <li class="tag tag-functionnal"><a href="/tags/#functionnal">functionnal<span>2</span></a></li>
+	  
+	  
+	  <li class="tag tag-java"><a href="/tags/#java">java<span>4</span></a></li>
+	  
+	  <br/>
+	  
+	</ul>
+      </header>
+      
+      
+      
+      <p>
+Tests are all about <b>maintainability</b> and <b>readability</b>. You want the
+least visual noise possible and it should not be a hassle to
+maintain. When testing functions that output a long of string, in case
+of a command line output testing, readability and maintainance tend to
+be tricky to achieve.
+</p>
+
+
+<div id="outline-container-org2f1fc39" class="outline-2">
+<h2 id="org2f1fc39">The problem</h2>
+<div class="outline-text-2" id="text-org2f1fc39">
+<p>
+As an example let's say we want to test out the output of a command
+that displays a list as a table. The output would look like the
+following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-rainbow-identifiers-identifier-3">ID:</span>                     <span class="org-rainbow-identifiers-identifier-15">nodeID</span>
+<span class="org-rainbow-identifiers-identifier-4">Name:</span>                   <span class="org-rainbow-identifiers-identifier-8">defaultNodeName</span>
+<span class="org-rainbow-identifiers-identifier-10">Hostname:</span>               <span class="org-rainbow-identifiers-identifier-6">defaultNodeHostname</span>
+<span class="org-rainbow-identifiers-identifier-4">Joined</span> <span class="org-rainbow-identifiers-identifier-1">at:</span>              <span class="org-rainbow-identifiers-identifier-11">2009-11-10</span> <span class="org-rainbow-identifiers-identifier-11">23:00:00</span> <span class="org-rainbow-identifiers-identifier-13">+0000</span> <span class="org-rainbow-identifiers-identifier-15">utc</span>
+<span class="org-rainbow-identifiers-identifier-3">Status:</span>
+ <span class="org-rainbow-identifiers-identifier-4">State:</span>                 <span class="org-rainbow-identifiers-identifier-10">Ready</span>
+ <span class="org-rainbow-identifiers-identifier-11">Availability:</span>          <span class="org-rainbow-identifiers-identifier-8">Active</span>
+ <span class="org-rainbow-identifiers-identifier-11">Address:</span>               <span class="org-rainbow-identifiers-identifier-13">127.0.0.1</span>
+<span class="org-rainbow-identifiers-identifier-9">Manager</span> <span class="org-rainbow-identifiers-identifier-3">Status:</span>
+ <span class="org-rainbow-identifiers-identifier-11">Address:</span>               <span class="org-rainbow-identifiers-identifier-13">127.0.0.1</span>
+ <span class="org-rainbow-identifiers-identifier-3">Raft</span> <span class="org-rainbow-identifiers-identifier-3">Status:</span>           <span class="org-rainbow-identifiers-identifier-8">Reachable</span>
+ <span class="org-rainbow-identifiers-identifier-8">Leader:</span>                <span class="org-rainbow-identifiers-identifier-15">No</span>
+<span class="org-rainbow-identifiers-identifier-3">Platform:</span>
+ <span class="org-rainbow-identifiers-identifier-15">Operating</span> <span class="org-rainbow-identifiers-identifier-13">System:</span>      <span class="org-rainbow-identifiers-identifier-12">linux</span>
+ <span class="org-rainbow-identifiers-identifier-10">Architecture:</span>          <span class="org-rainbow-identifiers-identifier-2">x86_64</span>
+<span class="org-rainbow-identifiers-identifier-8">Resources:</span>
+ <span class="org-rainbow-identifiers-identifier-8">CPUs:</span>                  <span class="org-rainbow-identifiers-identifier-12">0</span>
+ <span class="org-rainbow-identifiers-identifier-9">Memory:</span>                <span class="org-rainbow-identifiers-identifier-15">20</span> <span class="org-rainbow-identifiers-identifier-5">MiB</span>
+<span class="org-rainbow-identifiers-identifier-14">Plugins:</span>
+  <span class="org-rainbow-identifiers-identifier-5">Network:</span>              <span class="org-rainbow-identifiers-identifier-3">bridge,</span> <span class="org-rainbow-identifiers-identifier-12">overlay</span>
+  <span class="org-rainbow-identifiers-identifier-9">Volume:</span>               <span class="org-rainbow-identifiers-identifier-12">local</span>
+<span class="org-rainbow-identifiers-identifier-10">Engine</span> <span class="org-rainbow-identifiers-identifier-14">Version:</span>         <span class="org-rainbow-identifiers-identifier-15">1.13.0</span>
+<span class="org-rainbow-identifiers-identifier-10">Engine</span> <span class="org-rainbow-identifiers-identifier-12">Labels:</span>
+ <span class="org-rainbow-identifiers-identifier-11">-</span> <span class="org-variable-name">engine</span> = <span class="org-rainbow-identifiers-identifier-12">label</span>
+</pre>
+</div>
+
+<p>
+Let's see how we would test that output, naively.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">TestNodeInspectPretty</span>(<span class="org-rainbow-identifiers-identifier-8">t</span> *<span class="org-type">testing.T</span>) {
+        <span class="org-rainbow-identifiers-identifier-14">expected</span> := <span class="org-string">```</span>
+<span class="org-string">ID:                     nodeID</span>
+<span class="org-string">Name:                   defaultNodeName</span>
+<span class="org-string">Hostname:               defaultNodeHostname</span>
+<span class="org-string">Joined at:              2009-11-10 23:00:00 +0000 utc</span>
+<span class="org-string">Status:</span>
+<span class="org-string"> State:                 Ready</span>
+<span class="org-string"> Availability:          Active</span>
+<span class="org-string"> Address:               127.0.0.1</span>
+<span class="org-string">Manager Status:</span>
+<span class="org-string"> Address:               127.0.0.1</span>
+<span class="org-string"> Raft Status:           Reachable</span>
+<span class="org-string"> Leader:                No</span>
+<span class="org-string">Platform:</span>
+<span class="org-string"> Operating System:      linux</span>
+<span class="org-string"> Architecture:          x86_64</span>
+<span class="org-string">Resources:</span>
+<span class="org-string"> CPUs:                  0</span>
+<span class="org-string"> Memory:                20 MiB</span>
+<span class="org-string">Plugins:</span>
+<span class="org-string">  Network:              bridge, overlay</span>
+<span class="org-string">  Volume:               local</span>
+<span class="org-string">Engine Version:         1.13.0</span>
+<span class="org-string">Engine Labels:</span>
+<span class="org-string"> - engine = label</span>
+<span class="org-string">```</span>
+        <span class="org-rainbow-identifiers-identifier-3">buf</span> := <span class="org-builtin">new</span>(<span class="org-type">bytes.Buffer</span>)
+        <span class="org-rainbow-identifiers-identifier-3">cmd</span> := <span class="org-function-name">newInspectCommand</span>(
+                <span class="org-rainbow-identifiers-identifier-5">test</span>.<span class="org-function-name">NewFakeCli</span>(&amp;<span class="org-type">fakeClient</span>{
+                        <span class="org-constant">nodeInspectFunc</span>: <span class="org-keyword">func</span>() (<span class="org-type">swarm.Node</span>, []<span class="org-type">byte</span>, <span class="org-type">error</span>) {
+                                <span class="org-keyword">return</span> *<span class="org-function-name">Node</span>(<span class="org-function-name">Manager</span>()), []<span class="org-type">byte</span>{}, <span class="org-constant">nil</span>
+                        },
+                }, <span class="org-rainbow-identifiers-identifier-3">buf</span>))
+        <span class="org-rainbow-identifiers-identifier-3">cmd</span>.<span class="org-function-name">SetArgs</span>([]<span class="org-type">string</span>{<span class="org-string">"nodeID"</span>})
+        <span class="org-rainbow-identifiers-identifier-3">cmd</span>.<span class="org-function-name">Flags</span>().<span class="org-function-name">Set</span>(<span class="org-string">"pretty"</span>, <span class="org-string">"true"</span>)
+        <span class="org-rainbow-identifiers-identifier-11">assert</span>.<span class="org-function-name">NilError</span>(<span class="org-rainbow-identifiers-identifier-8">t</span>, <span class="org-rainbow-identifiers-identifier-3">cmd</span>.<span class="org-function-name">Execute</span>())
+        <span class="org-rainbow-identifiers-identifier-15">actual</span> := <span class="org-rainbow-identifiers-identifier-3">buf</span>.<span class="org-function-name">String</span>()
+        <span class="org-rainbow-identifiers-identifier-11">assert</span>.<span class="org-function-name">EqualNormalizedString</span>(<span class="org-rainbow-identifiers-identifier-8">t</span>, <span class="org-rainbow-identifiers-identifier-11">assert</span>.<span class="org-rainbow-identifiers-identifier-2">RemoveSpace</span>, <span class="org-rainbow-identifiers-identifier-15">actual</span>, <span class="org-function-name">string</span>(<span class="org-rainbow-identifiers-identifier-14">expected</span>))
+}
+</pre>
+</div>
+
+<p>
+This might look ok as is, but a few problem are present:
+</p>
+
+<ul class="org-ul">
+<li>The output is quite large and adds some noise to the test</li>
+<li><p>
+Lot's of value in the <code>expected</code> string comes from default values
+of our <code>Node</code> builder.
+</p>
+
+<p>
+This means any time we change our builder default values, we would
+need to update this test, <i>painful</i>.
+</p></li>
+<li>If the output changes for a good reason (add a field, fix a typo,
+…), this test has to be updated too.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0519f3e" class="outline-2">
+<h2 id="org0519f3e">Golden files to the rescue</h2>
+<div class="outline-text-2" id="text-org0519f3e">
+<p>
+First, let's get back at what is our test about and what we actually
+want to test.
+</p>
+
+<ul class="org-ul">
+<li>We want to ensure, the output of the function does not change by
+mistake (i.e. change that wasn't supposed to change the output)</li>
+<li>We want to have an update version of the output if that was the
+purpose of our change. And we want this update to be the least
+painful possible.</li>
+<li>We don't really care about the final outputs as long as it stays
+the same for the same inputs (i.e. we don't test for any number of
+space, or that word are valid English, or …).</li>
+</ul>
+
+<p>
+This is where the concept of <b>golden file</b> is useful. In a
+nutshell, a golden file is a file where we store the output and that
+will be used by the test as the expected output. This file should be
+updated any time the output changes for good reason. That's that
+simple 👼.
+</p>
+
+<p>
+Once again, the way go <code>testing</code> works, introducing and using golden
+files in our tests is pretty straightforward and easy to use.
+</p>
+
+<p>
+Let's write a small <i>golden file helper</i> so that our test has no
+visual noise, in a <code>golden</code> package.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">var</span> <span class="org-rainbow-identifiers-identifier-3">update</span> = <span class="org-rainbow-identifiers-identifier-15">flag</span>.<span class="org-function-name">Bool</span>(<span class="org-string">"test.update"</span>, <span class="org-constant">false</span>, <span class="org-string">"update golden file"</span>)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Get returns the golden file content. If the `test.update` is specified, it updates the</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">file with the current output and returns it.</span>
+<span class="org-keyword">func</span> <span class="org-function-name">Get</span>(<span class="org-rainbow-identifiers-identifier-8">t</span> *<span class="org-type">testing.T</span>, <span class="org-rainbow-identifiers-identifier-15">actual</span> []<span class="org-type">byte</span>, <span class="org-rainbow-identifiers-identifier-5">filename</span> <span class="org-type">string</span>) []<span class="org-type">byte</span> {
+        <span class="org-rainbow-identifiers-identifier-1">golden</span> := <span class="org-rainbow-identifiers-identifier-9">filepath</span>.<span class="org-function-name">Join</span>(<span class="org-string">"testdata"</span>, <span class="org-rainbow-identifiers-identifier-5">filename</span>)
+        <span class="org-keyword">if</span> *<span class="org-rainbow-identifiers-identifier-3">update</span> {
+                <span class="org-keyword">if</span> <span class="org-rainbow-identifiers-identifier-10">err</span> := <span class="org-rainbow-identifiers-identifier-1">ioutil</span>.<span class="org-function-name">WriteFile</span>(<span class="org-rainbow-identifiers-identifier-1">golden</span>, <span class="org-rainbow-identifiers-identifier-15">actual</span>, <span class="org-rainbow-identifiers-identifier-4">0644</span>); <span class="org-rainbow-identifiers-identifier-10">err</span> != <span class="org-constant">nil</span> {
+                        <span class="org-rainbow-identifiers-identifier-8">t</span>.<span class="org-function-name">Fatal</span>(<span class="org-rainbow-identifiers-identifier-10">err</span>)
+                }
+        }
+        <span class="org-rainbow-identifiers-identifier-14">expected</span>, <span class="org-rainbow-identifiers-identifier-10">err</span> := <span class="org-rainbow-identifiers-identifier-1">ioutil</span>.<span class="org-function-name">ReadFile</span>(<span class="org-rainbow-identifiers-identifier-1">golden</span>)
+        <span class="org-keyword">if</span> <span class="org-rainbow-identifiers-identifier-10">err</span> != <span class="org-constant">nil</span> {
+                <span class="org-rainbow-identifiers-identifier-8">t</span>.<span class="org-function-name">Fatal</span>(<span class="org-rainbow-identifiers-identifier-10">err</span>)
+        }
+        <span class="org-keyword">return</span> <span class="org-rainbow-identifiers-identifier-14">expected</span>
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>We define a <i>global</i> flag, <code>-test.update</code> that will <i>enhance</i> the
+<code>go test</code> command with it (as soon as we import this <code>golden</code> package).</li>
+<li><p>
+We define a <code>golden.Get</code> function that takes the current output
+and the path of the golden file. It also takes <code>testing.T</code> so any
+failure happening here (like reading file, …) will make the test
+fail (one less thing to write in the test calling this function).
+</p>
+
+<p>
+If the flag is present when running the test, it will update the
+file with the actual content.
+</p></li>
+</ul>
+
+<p>
+The initial test becomes.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">TestNodeInspectPretty</span>(<span class="org-rainbow-identifiers-identifier-8">t</span> *<span class="org-type">testing.T</span>) {
+        <span class="org-rainbow-identifiers-identifier-3">buf</span> := <span class="org-builtin">new</span>(<span class="org-type">bytes.Buffer</span>)
+        <span class="org-rainbow-identifiers-identifier-3">cmd</span> := <span class="org-function-name">newInspectCommand</span>(
+                <span class="org-rainbow-identifiers-identifier-5">test</span>.<span class="org-function-name">NewFakeCli</span>(&amp;<span class="org-type">fakeClient</span>{
+                        <span class="org-constant">nodeInspectFunc</span>: <span class="org-keyword">func</span>() (<span class="org-type">swarm.Node</span>, []<span class="org-type">byte</span>, <span class="org-type">error</span>) {
+                                <span class="org-keyword">return</span> *<span class="org-function-name">Node</span>(<span class="org-function-name">Manager</span>()), []<span class="org-type">byte</span>{}, <span class="org-constant">nil</span>
+                        },
+                }, <span class="org-rainbow-identifiers-identifier-3">buf</span>))
+        <span class="org-rainbow-identifiers-identifier-3">cmd</span>.<span class="org-function-name">SetArgs</span>([]<span class="org-type">string</span>{<span class="org-string">"nodeID"</span>})
+        <span class="org-rainbow-identifiers-identifier-3">cmd</span>.<span class="org-function-name">Flags</span>().<span class="org-function-name">Set</span>(<span class="org-string">"pretty"</span>, <span class="org-string">"true"</span>)
+        <span class="org-rainbow-identifiers-identifier-11">assert</span>.<span class="org-function-name">NilError</span>(<span class="org-rainbow-identifiers-identifier-8">t</span>, <span class="org-rainbow-identifiers-identifier-3">cmd</span>.<span class="org-function-name">Execute</span>())
+        <span class="org-rainbow-identifiers-identifier-15">actual</span> := <span class="org-rainbow-identifiers-identifier-3">buf</span>.<span class="org-function-name">String</span>()
+        <span class="org-rainbow-identifiers-identifier-14">expected</span> := <span class="org-rainbow-identifiers-identifier-1">golden</span>.<span class="org-function-name">Get</span>(<span class="org-rainbow-identifiers-identifier-8">t</span>, []<span class="org-function-name">byte</span>(<span class="org-rainbow-identifiers-identifier-15">actual</span>), <span class="org-string">"myfile.golden"</span>)
+        <span class="org-rainbow-identifiers-identifier-11">assert</span>.<span class="org-function-name">EqualNormalizedString</span>(<span class="org-rainbow-identifiers-identifier-8">t</span>, <span class="org-rainbow-identifiers-identifier-11">assert</span>.<span class="org-rainbow-identifiers-identifier-2">RemoveSpace</span>, <span class="org-rainbow-identifiers-identifier-15">actual</span>, <span class="org-function-name">string</span>(<span class="org-rainbow-identifiers-identifier-14">expected</span>))
+}
+</pre>
+</div>
+
+<p>
+If we change the output, the workflow becomes the following :
+</p>
+
+<ul class="org-ul">
+<li>run <code>go test</code> and make sure it's failing,</li>
+<li>Validate that the current output is correct,</li>
+<li>run <code>go test -test.update</code> to update the golden file(s),</li>
+<li>re-run <code>go test</code> to make sure it's now green,</li>
+<li>you are done 👼.</li>
+</ul>
+
+<p>
+With this simple trick, our test now <b>contains less noise</b> and is
+way more <b>maintainable</b> (you just have a command to run to update
+the expected content).
+</p>
+</div>
+</div>
+
+      
+    </article>
+    <hr />
+    <div class="prev-next">
+      
+      <a class="paging-link prev" href="/posts/2018-07-28-gotest-tools-intro/" title="Golang testing — gotest.tools introduction">← Previous post</a>
+      
+
+      
+      <a class="paging-link next" href="/posts/2017-01-01-go-testing-functionnal-builders/" title="Golang testing — functional arguments for wonderful builders">Next post →</a>
+      
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <nav>
+    
+    <a href="/">home</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/about">about</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/archive">archive</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/categories">categories</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/tags">tags</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://twitter.com/vdemeest">twitter</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://github.com/vdemeester">github</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://vincent.demeester.fr/index.xml">rss</a>
+  </nav>
+  <br/>
+  <address>
+    <span class="copyright">
+      Content and design by Vincent Demeester
+      (<a rel="licence" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Some rights reserved</a>)
+    </span><br />
+    <span class="engine">
+      Powered by <a href="https://gohugo.io/">Hugo</a> and <a href="https://github.com/kaushalmodi/ox-hugo/">ox-hugo</a>
+    </span>
+  </address>
+</footer>
+</body>
+

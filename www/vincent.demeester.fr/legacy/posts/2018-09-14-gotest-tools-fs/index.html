@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="start" href="https://vincent.demeester.fr" />
+
+    <title>Vincent Demeester</title>
+    <link rel="canonical" href="https://vincent.demeester.fr/posts/2018-09-14-gotest-tools-fs/">
+    <link href="https://vincent.demeester.fr/index.xml" rel="alternate" type="application/rss+xml" title="Vincent Demeester" />
+
+    <link rel="openid.server" href="https://indieauth.com/openid" />
+    <link rel="openid.delegate" href="http://vincent.demeester.fr/" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="/css/screen.css" type="text/css" />
+    <link rel="stylesheet" href="/css/sbrain.css" type="text/css" />
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+  </head>
+  
+  <body lang=""/>
+  
+
+
+
+
+
+<div id="main-container">
+  <div id="page">
+    <article class="post">
+      <header>
+        <h1 class="emphnext">Golang testing — gotest.tools fs</h1><a href='https://vincent.demeester.fr/posts/2018-09-14-gotest-tools-fs/'></a>
+        <address class="signature">
+          <span class="date">Fri, 14 September, 2018</span>
+          <span class="words">(1100 Words)</span>
+        </address>
+	<ul class="tag_box inline">
+	  
+	  <li class="category"><a href="/categories/#developement">developement</a></li>
+	  
+	  
+	  
+	  
+	  
+	  <li class="tag tag-testing"><a href="/tags/#testing">testing<span>11</span></a></li>
+	  
+	  
+	  <li class="tag tag-golang"><a href="/tags/#golang">golang<span>12</span></a></li>
+	  
+	  
+	  <li class="tag tag-filesystem"><a href="/tags/#filesystem">filesystem<span>1</span></a></li>
+	  
+	  <br/>
+	  
+	</ul>
+      </header>
+      
+      
+      
+      
+
+<p>Let&rsquo;s continue the <a href="https://gotest.tools"><code>gotest.tools</code></a> serie, this time with the <code>fs</code> package.</p>
+
+<blockquote>
+<p>Package fs provides tools for creating temporary files, and testing the contents and structure of a directory.</p>
+</blockquote>
+
+<p>This package is heavily using functional arguments (as we saw in <a href="/posts/2017-01-01-go-testing-functionnal-builders/">functional arguments for
+wonderful builders</a>). Functional arguments is, in a nutshell, a combinaison of two Go
+features : <em>variadic</em> functions (<code>...</code> operation in a function signature) and the fact
+that <code>func</code> are <em>first class citizen</em>. This looks more or less like that.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Config</span> <span class="kd">struct</span> <span class="p">{}</span>
+
+<span class="kd">func</span> <span class="nf">MyFn</span><span class="p">(</span><span class="nx">ops</span> <span class="o">...</span><span class="kd">func</span><span class="p">(</span><span class="o">*</span><span class="nx">Config</span><span class="p">))</span> <span class="o">*</span><span class="nx">Config</span> <span class="p">{</span>
+	<span class="nx">c</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Config</span><span class="p">{}</span> <span class="c1">// with default values
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">op</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ops</span> <span class="p">{</span>
+		<span class="nf">op</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">c</span>
+<span class="p">}</span>
+
+<span class="c1">// Calling it
+</span><span class="c1"></span><span class="nx">conf</span> <span class="o">:=</span> <span class="nf">MyFn</span><span class="p">(</span><span class="nx">withFoo</span><span class="p">,</span> <span class="nf">withBar</span><span class="p">(</span><span class="s">&#34;baz&#34;</span><span class="p">))</span></code></pre></div>
+<p>The <code>fs</code> package has too <strong>main</strong> purpose :</p>
+
+<ol>
+<li>create folders and files required for testing in a simple manner</li>
+<li>compare two folders structure (and content)</li>
+</ol>
+
+<h2 id="create-folder-structures">Create folder structures</h2>
+
+<p>Sometimes, you need to create folder structures (and files) in tests. Doing <code>i/o</code> work
+takes time so try to limit the number of tests that needs to do that, especially in unit
+tests. Doing it in tests adds a bit of boilerplate that could be avoid. As stated <a href="/posts/2017-01-01-go-testing-functionnal-builders/">before</a> :</p>
+
+<blockquote>
+<p>One of the most important characteristic of a unit test (and any type of test really) is
+<strong>readability</strong>. This means it should be easy to read but most importantly it should <strong>clearly
+show the intent</strong> of the test. The setup (and cleanup) of the tests should be as small as
+possible to avoid the noise.</p>
+</blockquote>
+
+<p>In a test you usually end up using <code>ioutil</code> function to create what you need. This looks
+somewhat like the following.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">path</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">TempDir</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;bar&#34;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span> <span class="c1">// or using `assert.Assert`
+</span><span class="c1"></span>	<span class="nx">t</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Mkdir</span><span class="p">(</span><span class="nx">filepath</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="s">&#34;foo&#34;</span><span class="p">),</span> <span class="nx">os</span><span class="p">.</span><span class="nf">FileMode</span><span class="p">(</span><span class="mo">0755</span><span class="p">));</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nx">t</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">WriteFile</span><span class="p">(</span><span class="nx">filepath</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="s">&#34;foo&#34;</span><span class="p">,</span> <span class="s">&#34;bar&#34;</span><span class="p">),</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;content&#34;</span><span class="p">),</span> <span class="nx">os</span><span class="p">.</span><span class="nf">FileMode</span><span class="p">(</span><span class="mo">0777</span><span class="p">));</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nx">t</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">defer</span> <span class="nx">os</span><span class="p">.</span><span class="nf">RemoveAll</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="o">//</span> <span class="nx">to</span> <span class="nx">clean</span> <span class="nx">up</span> <span class="nx">at</span> <span class="nx">the</span> <span class="nx">end</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">test</span></code></pre></div>
+<p>The <code>fs</code> package intends to help reduce the noise and comes with a bunch function to create
+folder structure :</p>
+
+<ul>
+<li>two main function <code>NewFile</code> and <code>NewDir</code></li>
+<li>a bunch of <em>operators</em> : <code>WithFile</code>, <code>WithDir</code>, …</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">NewDir</span><span class="p">(</span><span class="nx">t</span> <span class="nx">assert</span><span class="p">.</span><span class="nx">TestingT</span><span class="p">,</span> <span class="nx">prefix</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">ops</span> <span class="o">...</span><span class="nx">PathOp</span><span class="p">)</span> <span class="o">*</span><span class="nx">Dir</span> <span class="p">{</span>
+	<span class="c1">// …
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">NewFile</span><span class="p">(</span><span class="nx">t</span> <span class="nx">assert</span><span class="p">.</span><span class="nx">TestingT</span><span class="p">,</span> <span class="nx">prefix</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">ops</span> <span class="o">...</span><span class="nx">PathOp</span><span class="p">)</span> <span class="o">*</span><span class="nx">File</span> <span class="p">{</span>
+	<span class="c1">// …
+</span><span class="c1"></span><span class="p">}</span></code></pre></div>
+<p>The <code>With*</code> function are all satisfying the <code>PathOp</code> interface, making <code>NewFile</code> and
+<code>NewDir</code> extremely composable. Let&rsquo;s first see how our above example would look like using
+the <code>fs</code> package, and then, we&rsquo;ll look a bit more at the main <code>PathOp</code> function…</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">dir</span> <span class="o">:=</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">NewDir</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="s">&#34;bar&#34;</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">WithDir</span><span class="p">(</span><span class="s">&#34;foo&#34;</span><span class="p">,</span>
+	<span class="nx">fs</span><span class="p">.</span><span class="nf">WithFile</span><span class="p">(</span><span class="s">&#34;bar&#34;</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">WithContent</span><span class="p">(</span><span class="s">&#34;content&#34;</span><span class="p">),</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">WithMode</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nf">FileMode</span><span class="p">(</span><span class="mo">0777</span><span class="p">))),</span>
+<span class="p">))</span>
+<span class="k">defer</span> <span class="nx">dir</span><span class="p">.</span><span class="nf">Remove</span><span class="p">()</span></code></pre></div>
+<p>It&rsquo;s clean and simple to read. The intent is well described and there is not that much of
+noise. <code>fs</code> functions tends to have <em>sane</em> and <em>safe</em> defaults value (for <code>os.FileMode</code>
+for example). Let&rsquo;s list the main, useful, <code>PathOp</code> provided by <code>gotest.tools/fs</code>.</p>
+
+<ul>
+<li><code>WithDir</code> creates a sub-directory in the directory at path.</li>
+<li><code>WithFile</code> creates a file in the directory at path with content.</li>
+<li><code>WithSymlink</code> creates a symlink in the directory which links to target. Target must be a
+path relative to the directory.</li>
+<li><code>WithHardlink</code> creates a link in the directory which links to target. Target must be a
+path relative to the directory.</li>
+<li><code>WithContent</code> and <code>WWithBytes</code> write content to a file at Path (from a <code>string</code> or a
+<code>[]byte</code> slice).</li>
+<li><code>WithMode</code> sets the file mode on the directory or file at path.</li>
+<li><code>WithTimestamps</code> sets the access and modification times of the file system object at
+path.</li>
+<li><code>FromDir</code> copies the directory tree from the source path into the new Dir. This is
+pretty useful when you have a huge folder structure already present in you <code>testdata</code>
+folder or elsewhere.</li>
+<li><code>AsUser</code> changes ownership of the file system object at Path.</li>
+</ul>
+
+<p>Also, note that <code>PathOp</code> being an function type, you can provide your own implementation
+for specific use-cases. Your function just has to satisfy <code>PathOp</code> signature.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">PathOp</span> <span class="kd">func</span><span class="p">(</span><span class="nx">path</span> <span class="nx">Path</span><span class="p">)</span> <span class="kt">error</span></code></pre></div>
+<h2 id="compare-folder-structures">Compare folder structures</h2>
+
+<p>Sometimes, the code you&rsquo;re testing is creating a folder structure, and you would like to
+be able to tests that, with the given arguments, it creates the specified structure. <code>fs</code>
+allows you to do that too.</p>
+
+<p>The package provides a <code>Equal</code> function, which returns a <code>Comparison</code>, that the <a href="/posts/2018-08-16-gotest-tools-assertions/"><code>assert</code></a>
+package understand. It works by comparing a <code>Manifest</code> type provided by the test and a
+<code>Manifest</code> representation of the specified folder.</p>
+
+<blockquote>
+<p>Equal compares a directory to the expected structured described by a manifest and returns
+success if they match. If they do not match the failure message will contain all the
+differences between the directory structure and the expected structure defined by the
+Manifest.</p>
+</blockquote>
+
+<p>A <code>Manifest</code> stores the expected structure and properties of files and directories in a
+file-system. You can create a <code>Manifest</code> using either the functions <code>Expected</code> or
+<code>ManifestFromDir</code>.</p>
+
+<p>We&rsquo;re going to focus on the <code>Expected</code> function, as <code>ManifestFromDir</code> does pretty much
+what you would expected : it takes the specified path, and returns a <code>Manifest</code> that
+represent this folder.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Expected</span><span class="p">(</span><span class="nx">t</span> <span class="nx">assert</span><span class="p">.</span><span class="nx">TestingT</span><span class="p">,</span> <span class="nx">ops</span> <span class="o">...</span><span class="nx">PathOp</span><span class="p">)</span> <span class="nx">Manifest</span></code></pre></div>
+<p><code>Expected</code> is close to <code>NewDir</code> function : it takes the same <code>PathOp</code> functional
+arguments. This makes creating a <code>Manifest</code> straightforward, as it&rsquo;s working the same. Any
+function that satisfy <code>PathOp</code> can be used for <code>Manifest</code> the exact same way you&rsquo;re using
+them on <code>fs.NewDir</code>.</p>
+
+<p>There is a few additional functions that are only useful with <code>Manifest</code> :</p>
+
+<ul>
+<li><code>MatchAnyFileContent</code> updates a Manifest so that the file at path may contain any content.</li>
+<li><code>MatchAnyFileMode</code> updates a Manifest so that the resource at path will match any file mode.</li>
+<li><code>MatchContentIgnoreCarriageReturn</code> ignores cariage return discrepancies.</li>
+<li><code>MatchExtraFiles</code> updates a Manifest to allow a directory to contain unspecified files.</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">path</span> <span class="o">:=</span> <span class="nf">operationWhichCreatesFiles</span><span class="p">()</span>
+<span class="nx">expected</span> <span class="o">:=</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">Expected</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nf">WithFile</span><span class="p">(</span><span class="s">&#34;one&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
+	<span class="nx">fs</span><span class="p">.</span><span class="nf">WithBytes</span><span class="p">(</span><span class="nx">golden</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="s">&#34;one.golden&#34;</span><span class="p">)),</span>
+	<span class="nx">fs</span><span class="p">.</span><span class="nf">WithMode</span><span class="p">(</span><span class="mo">0600</span><span class="p">)),</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nf">WithDir</span><span class="p">(</span><span class="s">&#34;data&#34;</span><span class="p">,</span>
+	    <span class="nx">fs</span><span class="p">.</span><span class="nf">WithFile</span><span class="p">(</span><span class="s">&#34;config&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">MatchAnyFileContent</span><span class="p">)),</span>
+<span class="p">)</span>
+
+<span class="nx">assert</span><span class="p">.</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">Equal</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="nx">expected</span><span class="p">))</span></code></pre></div>
+<p>The following example compares the result of <code>operationWhichCreatesFiles</code> to the expected
+<code>Manifest</code>. As you can see it also integrates well with other part of the <code>gotest.tools</code>
+library, with the <a href="/posts/2018-09-06-gotest-tools-golden/"><code>golden</code> package</a> in this example.</p>
+
+<h2 id="conclusion">Conclusion…</h2>
+
+<p>… that&rsquo;s a wrap. In my opinion, this is one the most useful package provided by
+<code>gotest.tools</code> after <code>assert</code>. It allows to create simple or complex folder structure
+without the noise that usually comes with it.</p>
+
+      
+    </article>
+    <hr />
+    <div class="prev-next">
+      
+      <a class="paging-link prev" href="/posts/2018-09-18-gotest-tools-icmd/" title="Golang testing — gotest.tools icmd">← Previous post</a>
+      
+
+      
+      <a class="paging-link next" href="/posts/2018-09-06-gotest-tools-golden/" title="Golang testing — gotest.tools golden">Next post →</a>
+      
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <nav>
+    
+    <a href="/">home</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/about">about</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/archive">archive</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/categories">categories</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/tags">tags</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://twitter.com/vdemeest">twitter</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://github.com/vdemeester">github</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://vincent.demeester.fr/index.xml">rss</a>
+  </nav>
+  <br/>
+  <address>
+    <span class="copyright">
+      Content and design by Vincent Demeester
+      (<a rel="licence" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Some rights reserved</a>)
+    </span><br />
+    <span class="engine">
+      Powered by <a href="https://gohugo.io/">Hugo</a> and <a href="https://github.com/kaushalmodi/ox-hugo/">ox-hugo</a>
+    </span>
+  </address>
+</footer>
+</body>
+

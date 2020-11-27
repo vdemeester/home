@@ -1,0 +1,84 @@
+#+TITLE: tasks
+
+* TODO Should the publish/export code be in =src/home=
+
+A nice side effect would be that it can be used directly from emacs (no need to call =make=
+from emacs). Otherwise, [[https://tecosaur.github.io/emacs-config/config.html#nicer-generated-heading][this]] will need to be adapted.
+
+* TODO nixify publishing
+
+See https://github.com/etu/etu.github.io/
+
+* TODO [[https://abhinavsarkar.net/about/][About Me | abhinavsarkar.net]]
+
+[2020-05-07 Thu 16:25]
+
+Good automation setup.
+
+* TODO Simplify home again
+[2020-06-11 Thu 10:49]
+
+Like [[https://ahuth.github.io/][Andrew Huth]]
+- Subtitle is "Hi, …"
+- List of /featured/ content (posts)
+- Little explanation for articles
+- List of some projects (docker, tekton, …)
+
+* TODO Add support for org-roam in publish
+
+- [ ] On reference, add the link
+- [ ] Add a reference /aside/ or entry for references on the page
+
+* TODO New blog post capture template/snippet
+
+- Ask for date
+- Ask for title
+- Put in the right place
+
+Use skeleton, …
+* TODO Have a "series" page ?
+:PROPERTIES:
+:CREATED:[2020-06-28 Sun 14:05]
+:END:
+
+For series of article or posts ?
+
+
+From: [[git:~/src/home/README.org::master@{2020-06-28}::1][git:~/src/home/README.org::master@{2020-06-28}::1]]
+* DONE Simplify the home
+CLOSED: [2020-06-06 Sat 15:50]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-06-06 Sat 15:50]
+:END:
+[2020-04-30 Thu 12:55]
+
+to sthg like [[https://filippo.io/][Filippo Valsorda]]
+also https://duan.ca/articles/
+
+Also look at http://git.foldling.org/ and
+https://emacsninja.com/posts/farewell-github.html for a ~git.sbr.pm~
+(with gitlab.com/vdemeester header as header)
+
+https://www.garron.blog/en/
+https://yarmo.eu/
+
+Could take https://newcss.net/ and go with it :D [[https://newcss.net/][new.css]]
+Base on top of new.css but:
+- a bit larger
+- remove some nonsense
+- support main > header
+- add customs (org related)
+
+* DONE Article listing instead of sitemap
+CLOSED: [2020-05-17 Sun 13:48]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-05-17 Sun 13:48]
+:END:
+
+Manual listing of articles, linking to the sitemap (like ~configuration~)
+
+* DONE Add support for small screen like iPhone
+CLOSED: [2020-06-06 Sat 15:50]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-06-06 Sat 15:50]
+:END:

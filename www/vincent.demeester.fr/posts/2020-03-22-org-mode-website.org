@@ -1,0 +1,562 @@
+#+title: Migrating to an org-mode website
+#+date: <2020-03-22 Sun>
+#+filetags: orgmode website emacs
+#+setupfile: ../templates/post.org
+
+* Introduction
+:PROPERTIES:
+:ID:       24a765bd-a0ed-42cf-b96c-db667f7d37e2
+:END:
+
+This is a story… a story of me changing the way I code and publish my website. In the
+past, I've switch from [[https://vincent.demeester.fr/posts/2012-05-07-reinit-and-jekyll/][Jekyll]] to [[https://vincent.demeester.fr/posts/2015-05-01-orgmode-et-jekyll/]["=orgmode= and Jekyll"]] to [[https://vincent.demeester.fr/posts/2015-05-09-migration-to-hugo/][Hugo]] (sorry those are written
+in french). The past year, I've written and documented myself a little bit about
+[[https://www.theminimalists.com/minimalism/][minimalism]] and [[https://www.goodreads.com/book/show/40672036-digital-minimalism][digital minimalism]]. Although I don't see myself as a minimalist, it helped
+me realize some issues I had.
+
+I also realized if I want to write more, I need to lower the barrier between writing and
+publishing my content ; /if I want it to be published, of course/. This /post/ is about
+what I'm putting in place for this, with a premise : I spend my life in [[https://www.gnu.org/software/emacs/][Emacs]] and thus in
+[[https://orgmode.org/][=orgmode=]]. And [[https://orgmode.org/][=orgmode=]] is feature-full and has this badass feature : =org-publish=.
+
+To build and publish this website, we will /try/ to rely on a reproducible setup, meaning
+[[https://www.gnu.org/software/emacs/][Emacs]] and [[https://orgmode.org/][=orgmode=]] of course, [[https://www.gnu.org/software/make/][GNU Make]] of course *but* most importantly, [[https://nixos.org/nix/][Nix]] (in the near
+future 👼).
+
+:update:
+There is now an article about it, that uses literate programming: [[../articles/meta_publishing_this_website.org][publishing this
+website]]. The content of the post might no be up-to-date at some point.
+:end:
+
+
+* Requirements
+:PROPERTIES:
+:ID:       09991f8e-4257-443c-a3a3-40f449df4597
+:END:
+
+Let's list the requirements I feel I have for my website:
+
+- Full control over the URL of the published posts. ::
+  This is a golden rule of the web: should I change the publishing system, I want to be
+  able to stick to the same URLs or else all external references would be broken. This is
+  a big no-no and in my opinion it makes most blogging systems unacceptable.
+- Top-notch Org support. ::
+  I believe generators like Jekyll and Hugo only have partial Org support. You end up
+  requiring some conversion tooling to get the job done.
+- Simple publishing pipeline. ::
+  I want the generation process to be as simple as possible. This is important for
+  maintenance. Should I someday switch host, I want to be sure that I can set up the same
+  pipeline.
+- Full control over the publishing system. ::
+  I want maximum control over the generation process. I don’t want to be restricted by a
+  non-Turing-complete configuration file or a dumb programming language.
+- Ease of use. ::
+  The process as a whole must be as immediate and friction-less as possible, or else I
+  take the risk of feeling too lazy to publish new posts and update the content.
+- Hackability. ::
+  Last but not least, and this probably supersedes all other requirements: The system must
+  be hackable. Lisp-based systems are prime contenders in that area.
+
+* DONE Organizing
+CLOSED: [2020-03-21 Sat 17:57]
+:PROPERTIES:
+:ID:       78251967-c48a-476d-bc39-c748fc412927
+:END:
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-03-21 Sat 17:57]
+:END:
+
+Let's describe what I do want to publish here:
+
+- Posts :: this is what we call /blog/ these days : short to medium article that are valid
+  at a point of time, as may contain /deprecated/ content, or content that do not reflect
+  my views at a later point in time.
+- Articles :: medium to long article about a topic. Those should be up-to-date or
+  explicitly mark as deprecated or invalid. /In a ideal world this is my *ready for the
+  public* knowledge database, a bit like [[https://braindump.jethro.dev/][Jethro's Braindump]]/.
+- Configurations :: medium to long article about my configurations. Those are base on my
+  ~home~ /configuration/ mono-repository, and usually follow literate programming
+  principles.
+- About :: an about page about the author of the website (aka [[https://vincent.demeester.fr][me]]), linking external
+  contributions (GitHub/Gitlab/… profiles, Talks, …).
+
+* DONE Publishing
+CLOSED: [2020-03-25 Wed 15:54]
+:PROPERTIES:
+:ID:       da542763-78b9-46c0-bcf7-d8d2a2b18677
+:END:
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-03-25 Wed 15:54]
+:END:
+
+As said above, the goal is to publish everything using only [[https://www.gnu.org/software/emacs/][Emacs]] and [[https://orgmode.org/][=orgmode=]] (with the
+help of some standard GNU tools).
+
+The [[file:~/src/sbr/publish.el][~publish.el~]] file is where all the magic happens:
+
+- I want to generate something that is ~html5~ (almost?). The /preamble/, /content/ and
+  /postamble/ ~div~ can be customized using ~org-html-div~. Same goes for the /container/
+  element that is used for "wrapping top level sections", it is customized using
+  ~org-html-container-helement~ (we want ~<section>~). There is a few additional variable
+  that I might document one day 😛.
+
+  #+begin_src emacs-lisp
+  (setq org-export-use-babel nil)
+  (setq org-link-abbrev-alist '(("att" . org-attach-expand-link)))
+
+  ;; setting to nil, avoids "Author: x" at the bottom
+  (setq org-export-with-section-numbers nil
+        org-export-with-smart-quotes t
+        org-export-with-toc nil)
+
+  (defvar sbr-date-format "%b %d, %Y")
+
+  (setq org-html-divs '((preamble "header" "top")
+                        (content "main" "content")
+                        (postamble "footer" "postamble"))
+        org-html-container-element "section"
+        org-html-metadata-timestamp-format sbr-date-format
+        org-html-checkbox-type 'unicode
+        org-html-html5-fancy t
+        org-html-doctype "html5"
+        org-html-htmlize-output-type 'css
+        org-html-htmlize-font-prefix "org-"
+        org-src-fontify-natively t
+        org-html-coding-system 'utf-8-unix)
+  #+end_src
+
+- Part of the ~<head>~, preamble and postamble are customized for the website.
+  + ~head~ ::
+    #+begin_src emacs-lisp
+    (defvar sbr-website-html-head
+      "<link rel='icon' type='image/x-icon' href='/images/favicon.ico'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' href='/css/new.css' type='text/css'/>
+    <link rel='stylesheet' href='/css/syntax.css' type='text/css'/>
+    <link href='/index.xml' rel='alternate' type='application/rss+xml' title='Vincent Demeester' />")
+    #+end_src
+  + premable ::
+    #+begin_src emacs-lisp
+    (defun sbr-website-html-preamble (plist)
+      "PLIST: An entry."
+      ;; Skip adding subtitle to the post if :KEYWORDS don't have 'post' has a
+      ;; keyword
+      (when (string-match-p "post" (format "%s" (plist-get plist :keywords)))
+        (plist-put plist
+                   :subtitle (format "Published on %s by %s."
+                                     (org-export-get-date plist sbr-date-format)
+                                     (car (plist-get plist :author)))))
+
+      ;; Below content will be added anyways
+      "<nav>
+    <img src=\"/images/favicon.ico\" id=\"sitelogo\"/> <a href='/'>home</a> /
+    <a href='/posts/'>posts</a> (<a href='/index.xml'>rss</a>) /
+    <a href='/articles/'>articles</a> /
+    <a href='/configurations/'>configurations</a> /
+    <a href='https://dl.sbr.pm/'>files</a> /
+    <a href='/about/'>about</a></li>
+    </nav>")
+    #+end_src
+  + postamble ::
+    #+begin_src emacs-lisp
+    (defvar sbr-website-html-postamble
+      "<footer>
+         <span class='questions'>Questions, comments ? Please use my <a href=\"https://lists.sr.ht/~vdemeester/public-inbox\">public inbox</a> by sending a plain-text email to <a href=\"mailto:~vdemeester/public-inbox@lists.sr.ht\">~vdemeester/public-inbox@lists.sr.ht</a>.</span>
+         <span class='opinions'>Opinions stated here are my own and do not express the views of my employer, spouse, children, pets, neighbors, secret crushes, favorite authors, or anyone else who is not me. And maybe not even me, depending on how old this is.</span>
+         <span class='copyright'>
+          Content and design by Vincent Demeester
+          (<a rel='licence' href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>Some rights reserved</a>)
+        </span><br />
+        <span class='engine'>
+          Powered by <a href='https://www.gnu.org/software/emacs/'>Gnu Emacs</a> and <a href='https://orgmode.org'>orgmode</a>
+        </span>
+    </footer>")
+    #+end_src
+- =orgmode= is able to generate a site-map. This is what we are going to use to generate
+  the index files for ~posts/~ and ~articles~ mainly.
+  #+begin_src emacs-lisp
+  (defun sbr/org-sitemap-format-entry (entry style project)
+    "Format posts with author and published data in the index page.
+
+  ENTRY: file-name
+  STYLE:
+  PROJECT: `posts in this case."
+    (cond ((not (directory-name-p entry))
+           (format "%s — [[file:%s][%s]]
+                   :PROPERTIES:
+                   :PUBDATE: [%s]
+                   :END:"
+                   (format-time-string "%Y-%m-%d"
+                                       (org-publish-find-date entry project))
+                   entry
+                   (org-publish-find-title entry project)
+                   (format-time-string "%Y-%m-%d"
+                                       (org-publish-find-date entry project))))
+          ((eq style 'tree) (file-name-nondirectory (directory-file-name entry)))
+          (t entry)))
+
+  (defun sbr/org-publish-sitemap (title list)
+    ""
+    (concat "#+TITLE: " title "\n\n"
+            (org-list-to-subtree list)))
+  #+end_src
+- =orgmode= is able to generate a rss, with =ox-rss=. This is what we are going to use to
+  generate the rss files for ~posts~ and ~articles~. This is _heavily_ customized.
+  #+begin_src emacs-lisp
+  (defun sbr/org-get-first-paragraph (file)
+    "Get string content of first paragraph of file."
+    (ignore-errors
+      (with-temp-buffer
+      (insert-file-contents file)
+      (goto-char (point-min))
+      (show-all)
+      (let ((first-begin (progn
+                           (org-forward-heading-same-level 1)
+                           (next-line)
+                           (point)))
+            (first-end (progn
+                         (org-next-visible-heading 1)
+                         (point))))
+        (buffer-substring first-begin first-end)))))
+
+  (defun sbr/org-rss-publish-to-rss (plist filename pub-dir)
+    "Prepare rss.org file before exporting."
+    (let* ((postsdir (plist-get plist :base-directory)))
+      (with-current-buffer (find-file filename)
+        (erase-buffer)
+        (insert "#+TITLE: Posts\n")
+        (insert "#+AUTHOR: Vincent Demeester\n")
+        (insert "#+OPTIONS: toc:nil\n")
+        (let* ((files-all
+                (reverse (directory-files "." nil
+                                          "[0-9-]+.*\\.org$")))
+               (files (subseq files-all 0 (min (length files-all) 30))))
+          (message (format "foo: %s" filename))
+          (dolist (post files)
+            (let* ((post-file post)
+                   (post-title (org-publish-find-title post-file plist))
+                   (preview-str (sbr/org-get-first-paragraph post-file))
+                   (date (replace-regexp-in-string
+                          "\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)-.*"
+                          "\\1" post)))
+              (insert (concat "* [[file:" postsdir "/" post "][" post-title "]]\n\n"))
+              (org-set-property "ID" post)
+              (org-set-property "RSS_TITLE" post-title)
+              ;; ox-rss prepends html-link-home to permalink
+              (org-set-property "RSS_PERMALINK"
+                                (concat postsdir "/"
+                                        (file-name-sans-extension post)
+                                        ".html"))
+              (org-set-property
+               "PUBDATE"
+               (format-time-string
+                "<%Y-%m-%d %a %H:%M>"
+                (org-time-string-to-time
+                 (replace-regexp-in-string
+                  "\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)-.*"
+                  "\\1" post))))
+              (insert preview-str)
+              (newline 1)
+              (insert (concat "[[file:" postsdir "/" post "][(Read more)]]\n\n"))))
+          (save-buffer))))
+    (let ((user-mail-address "t")
+          (org-export-with-broken-links t)
+          (org-rss-use-entry-url-as-guid nil))
+      (org-rss-publish-to-rss plist filename pub-dir)))
+  #+end_src
+- Finally let's set the ~org-publish-project-alist~ to publish our projects
+  #+begin_src emacs-lisp
+  (setq org-publish-project-alist
+        `(("posts"
+           :base-directory "posts"
+           :base-extension "org"
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :publishing-directory "./public/posts"
+           :exclude ,(regexp-opt '("README.org" "draft"))
+           :auto-sitemap t
+           :with-footnotes t
+           :with-toc nil
+           :with-drawers t
+           :sitemap-filename "index.org"
+           :sitemap-title "Posts"
+           :sitemap-format-entry sbr/org-sitemap-format-entry
+           :sitemap-style list
+           :sitemap-sort-files anti-chronologically
+           :sitemap-function sbr/org-publish-sitemap
+           :html-head-include-scripts nil
+           :html-head-include-default-style nil
+           :html-head ,sbr-website-html-head
+           :html-preamble sbr-website-html-preamble
+           :html-postamble ,sbr-website-html-postamble)
+          ("posts-rss"
+           :base-directory "posts"
+           :base-extension "org"
+           :recursive t
+           :html-link-home "https://vincent.demeester.fr/"
+           :rss-link-home "https://vincent.demeester.fr/posts/"
+           :html-link-use-abs-url t
+           :rss-extension "xml"
+           :publishing-directory "./public"
+           :publishing-function (sbr/org-rss-publish-to-rss)
+           :section-number nil
+           :exclude ".*"
+           :include ("index.org"))
+          ("articles"
+           :base-directory "articles"
+           :base-extension "org"
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :publishing-directory "./public/articles"
+           :exclude ,(regexp-opt '("README.org" "draft"))
+           :auto-sitemap t
+           :with-footnotes t
+           :with-toc nil
+           :with-drawers t
+           :sitemap-filename "sitemap.org"
+           :sitemap-title "Articles"
+           :sitemap-style tree
+           :sitemap-sort-files anti-chronologically
+           ;;:sitemap-format-entry sbr/org-sitemap-format-entry
+           ;;:sitemap-function sbr/org-publish-sitemap
+           :html-head-include-scripts nil
+           :html-head-include-default-style nil
+           :html-head ,sbr-website-html-head
+           :html-preamble sbr-website-html-preamble
+           :html-postamble ,sbr-website-html-postamble)
+          ("articles-assets"
+           :exclude ,(regexp-opt '("*.org"))
+           :base-directory "articles"
+           :base-extension ,site-attachments
+           :publishing-directory "./public/articles"
+           :publishing-function org-publish-attachment
+           :recursive t)
+          ("about"
+           :base-directory "about"
+           :base-extension "org"
+           :exclude ,(regexp-opt '("README.org" "draft"))
+           :index-filename "index.org"
+           :recursive nil
+           :with-footnotes t
+           :with-toc nil
+           :with-drawers t
+           :publishing-function org-html-publish-to-html
+           :publishing-directory "./public/about"
+           :html-head-include-scripts nil
+           :html-head-include-default-style nil
+           :html-head ,sbr-website-html-head
+           :html-preamble sbr-website-html-preamble
+           :html-postamble ,sbr-website-html-postamble)
+          ("index"
+           :base-directory ""
+           :base-extension "org"
+           :exclude ,(regexp-opt '("README.org" "draft"))
+           :index-filename "index.org"
+           :recursive nil
+           :with-footnotes t
+           :with-toc nil
+           :with-drawers t
+           :with-title nil
+           :publishing-function org-html-publish-to-html
+           :publishing-directory "./public"
+           :html-head-include-scripts nil
+           :html-head-include-default-style nil
+           :html-head ,sbr-website-html-head
+           :html-preamble sbr-website-html-preamble
+           :html-postamble ,sbr-website-html-postamble)
+          ("css"
+           :base-directory "./css"
+           :base-extension ,site-attachments
+           :recursive t
+           :publishing-directory "./public/css"
+           :publishing-function org-publish-attachment
+           :recursive t)
+          ("images"
+           :base-directory "./images"
+           :base-extension ,site-attachments
+           :publishing-directory "./public/images"
+           :publishing-function org-publish-attachment
+           :recursive t)
+          ("assets"
+           :base-directory "./assets"
+           :base-extension ,site-attachments
+           :publishing-directory "./public/assets"
+           :publishing-function org-publish-attachment
+           :recursive t)
+          ("legacy"
+           :base-directory "./legacy"
+           :base-extension ,site-attachments
+           :publishing-directory "./public/"
+           :publishing-function org-publish-attachment
+           :recursive t)
+          ("all" :components ("posts" "about" "index" "articles" "articles-assets" "css" "images" "assets" "legacy" "posts-rss"))))
+  #+end_src
+
+Here are some /inspiration/ I took for this publishing code:
+
+- [[https://thibaultmarin.github.io/blog/posts/2016-11-13-Personal_website_in_org.html][Personal website in org]]
+- [[https://vicarie.in/posts/blogging-with-org.html][Blogging with Org publishing]]
+- [[https://ambrevar.xyz/blog-architecture/][A blog in pure Org/Lisp]]
+- [[https://zngguvnf.org/2017-07-13--blogging-with-org-static-blog.html][Blogging with org-static-blog]]
+- [[https://bastibe.de/2013-11-13-blogging-with-emacs.html][Blogging with Emacs]]
+- [[https://gjhenrique.com/meta.html][Blogging with org-mode and Gitlab Pages]]
+
+
+* DONE Styling
+CLOSED: [2020-03-23 Mon 19:02]
+:PROPERTIES:
+:ID:       052e297f-01b2-41d3-9689-cd2946b56cfb
+:END:
+:LOGBOOK:
+- State "DONE"       from "STARTED"    [2020-03-23 Mon 19:02]
+:END:
+
+The style of the website has be as simple as possible, and also really light. This means:
+- use default system font as much as possible
+- have a small stylesheet, rely on the default as much as we can
+
+In addition, I want support for:
+- side notes
+- code syntax highlight
+- table of content
+
+The inspiration for this website, in term of style are the following:
+- [[https://vincent.demeester.fr/posts/2018-08-16-gotest-tools-assertions/][Vincent Demeester]]
+- [[https://braindump.jethro.dev/zettels/zettelkasten/][Jethro's Braindump]]
+- [[https://hamberg.no/gtd/][GTD in 15 minutes – A Pragmatic Guide to Getting Things Done]]
+- [[https://www.inkandswitch.com/local-first.html][Local-first software: You own your data, in spite of the cloud]]
+- [[https://archive.casouri.cat/note/2018/blog-in-org-mode-revisited/index.html][Blog in Org Mode, Revisited]]
+- [[https://kind.sigs.k8s.io/][kind]]
+- [[http://willcrichton.net/notes/idioms-of-dynamic-languages/][Idioms of Dynamic Languages | Will Crichton]]
+- [[https://peter.bourgon.org/blog/2019/09/11/programming-with-errors.html][Peter Bourgon · Programming with errors]]
+- [[https://johv.dk/blog/bare-metal-assembly-tutorial.html][Getting started with bare-metal assembly — Jonas Hvid]]
+
+To be able to define the style a bit, let's try some things below. From this point on,
+this is random content just to try my style out. 👼
+
+There is more in [[../articles/sandbox.org][the sandbox]].
+
+------
+
+#+begin_abstract
+Let's dig into how I setup my development environment when working on ~tektoncd/pipeline~
+#+end_abstract
+
+#+TOC: headlines 2
+
+** sub-heading 1
+
+Checking for errors is *very common* in Go, having =Comparison= function for it was a requirement.
+
+#+BEGIN_aside
+This is a side note. If collection is a string, item must also be a string, and is
+compared using =strings.Contains()=. If collection is a Map, contains will succeed if item
+is a key in the map.
+#+END_aside
+
+- =Error= fails if the error is =nil= *or* the error message is not the expected one.
+- =ErrorContains= fails if the error is =nil= *or* the error message does not contain the expected substring.
+- =ErrorType= fails if the error is =nil= *or* the error type is not the expected type.
+
+Let's first look at the most used : =Error= and =ErrorContains=.
+When you're working on ~pipeline~, usually you want :
+
+1. make sure it compiles : ~go build -v ./..~
+2. Running unit tests : ~go test ./...~ (bonus use [[https://github.com/vdemeester/ram][~ram~]] for continuous testing)
+3. End-to-end tests : ~go test -tags e2e ./...~ (or simply using `./test/` package)
+
+   *Make sure you re-deploy before running the e2e tests* using ~ko apply -f ./config~,
+   otherwise you're testing the wrong code.
+
+#+BEGIN_SRC go
+  var err error
+  // will fail with : expected an error, got nil
+  assert.Check(t, cmp.Error(err, "message in a bottle"))
+  err = errors.Wrap(errors.New("other"), "wrapped")
+  // will fail with : expected error "other", got "wrapped: other"
+  assert.Check(t, cmp.Error(err, "other"))
+  // will succeed
+  assert.Check(t, cmp.ErrorContains(err, "other"))
+#+END_SRC
+
+#+CAPTION: This is the caption for the next figure link (or table)
+#+NAME:   fig:SED-HR4049
+#+ATTR_ORG: :width 400/600
+#+ATTR_HTML: :width 100%
+[[../images/emacs/2020-02-29-13-46-08.png]]
+
+If this is the case, then what makes dynamic languages feel easy? Can we take what we learn in answering this question and improve the ergonomics of our static languages? For example, in 2018, I don’t think there’s as strong an argument for “you don’t have to write out the types,” since modern type inference eliminates most of the keystrokes required (even though many major languages still lack such facilities). Plus, saving a few keystrokes does not seem like a critical bottleneck in the programming process.
+
+#+NAME: fig:tektoncd-logo
+[[../images/emacs/2020-02-29-14-41-59.png]]
+
+
+** sub-heading 2
+
+Some content from my other org-mode files.
+
+#+begin_description
+I already wrote 2 previous posts about golang and testing. It's something I care deeply about and I wanted to continue
+writing about it. It took me a bit more time than I thought, but getting back to it. Since the [[http://vincent.demeester.fr/posts/2017-04-22-golang-testing-golden-file/][last post]], Daniel
+Nephin
+and I worked (but mainly Daniel 🤗) on bootstrapping a testing helper library.
+#+end_description
+
+#+BEGIN_QUOTE
+Package assert provides assertions for comparing expected values to actual values. When
+assertion fails a helpful error message is printed.
+#+END_QUOTE
+
+There is already some good =testing= helpers in the Go ecosystem : [[https://github.com/stretchr/testify][=testify=]], [[http://labix.org/gocheck][=gocheck=]],
+[[https://github.com/onsi/ginkgo][=ginkgo=]] and a lot more — so why create a new one ? There is multiple reason for it, most
+of them can be seen in the following [[https://github.com/gotestyourself/gotest.tools/issues/49#issuecomment-362436026][GitHub issue]].
+
+[[https://github.com/dnephin/][Daniel]] also wrote a very useful [fn:1]converter if your code base is currently using =testify= :
+=gty-migrate-from-testify=.
+
+#+BEGIN_SRC sh
+$ go get -u gotest.tools/assert/cmd/gty-migrate-from-testify
+# […]
+$ go list \
+     -f '{{.ImportPath}} {{if .XTestGoFiles}}{{"\n"}}{{.ImportPath}}_test{{end}}' \
+     ./... | xargs gty-migrate-from-testify
+#+END_SRC
+
+We'll Use =Assert= for the rest of the section but any example here would work with
+=Check= too. When we said =Comparison= above, it's mainly the [[https://godoc.org/gotest.tools/assert#BoolOrComparison][BoolOrComparison]] interface —
+it can either be a boolean expression, or a [[https://godoc.org/gotest.tools/assert/cmp#Comparison][cmp.Comparison]] type. =Assert= and =Check= code
+will be /smart/ enough to detect which one it is.
+
+#+BEGIN_SRC go
+  assert.Assert(t, ok)
+  assert.Assert(t, err != nil)
+  assert.Assert(t, foo.IsBar())
+#+END_SRC
+
+
+* What's next ?
+:PROPERTIES:
+:ID:       678bf6cb-68e7-4fc9-af50-23d283293ab1
+:END:
+
+One thing is to import old blog posts from [[https://vincent.demeester.fr][vincent.demeester.fr]]. This is easily done with
+[[https://pandoc.org/][Pandoc]] and a small bash loop — and some manual adjusting later on 😛.
+
+#+begin_src bash
+for post in ~/src/github.com/vdemeester/blog/content/posts/*.md; do
+    pandoc -f markdown -t org -o posts/$(basename -s .md ${post}).org ${post}
+done
+#+end_src
+
+
+What is still /to do/ after this initial take.
+
+- [ ] List =FILETAGS= for taximony
+- [ ] Maybe use [[https://css-tricks.com/snippets/css/complete-guide-grid/][css grid]] for the UI
+
+* Footnotes
+:PROPERTIES:
+:ID:       220a0cce-39c3-4b5f-aaa0-66e3a2450f04
+:END:
+
+[fn:1] foo is bar, bar is baz

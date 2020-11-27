@@ -1,0 +1,99 @@
+#+title: Maven Release Gitflow
+#+date: <2012-07-23 Mon>
+#+filetags: maven java git gitflow release
+#+setupfile: ../templates/post.org
+
+* Introduction
+
+I like a lot the [[http://nvie.com/posts/a-successful-git-branching-model/][gitflow]] way of managing project. When working on maven project, there is
+few great plugins that helps to get the work done. One of them is [[http://maven.apache.org/plugins/maven-release-plugin][maven-release-plugin]].
+
+Inspired on this [[https://gist.github.com/1043970][gist]], I've come
+with a cool way of doing things (let say we want to release a 0.1
+version of an artifact) :
+
+* Prepare the pom.xml.
+  :PROPERTIES:
+  :CUSTOM_ID: prepare-the-pom.xml.
+  :END:
+
+It needs =<scm>= entries, =<distributionManagement>= entries (to know
+where to deploy the release artifact) and few options for the
+maven-release-plugin :
+
+{{< highlight xml >}}
+#+begin_src xml
+<project>
+
+    <!-- […] -->
+    <build>
+        <plugins>
+            <!-- […] -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                    <pushChanges>false</pushChanges>
+                    <localCheckout>true</localCheckout>
+                </configuration>
+            </plugin>
+            <!-- […] -->
+        </plugins>
+    </build>
+    <!-- […] -->
+
+</project>
+#+end_src
+
+Few explanation here :
+
+- =tagNameFormat= is here to change the default tag name (which is
+  =${project.artifactId}-${project.version}=) to a better one.
+- =pushChanges= set to =false= tells maven-release-plugin not to push
+  changes (this will become useful)
+- =localCheckout= set to =true= tells maven-release-plugin to clone from
+  local repository (not distant). This is especially useful here because
+  we didn't push anything (so not setting this option would result in a
+  failure).
+
+* The real stuff
+  :PROPERTIES:
+  :CUSTOM_ID: the-real-stuff
+  :END:
+
+First create a release branch from develop.
+
+#+begin_src bash
+$ git checkout -b release/v0.1 develop
+#+end_src
+
+Then run the maven release stuff.
+
+#+begin_src bash
+$ mvn release:prepare               # change the pom, commit and tag version, and
+                                    # re-change pom (by incrementing SNAPSHOT version)
+$ mvn release:perform               # get the tagged version, compile and deploy
+#+end_src
+
+And the real fun begins.
+
+#+begin_src bash
+$ git checkout develop              # get back to the develop branch
+$ git merge --no-ff release/v0.1    # merge the version back into develop
+$ git checkout master               # go to the master branch
+$ git merge --no-ff release/v0.1~1  # merge the version back into master but
+                                    # the tagged version instead of the release/v0.1 HEAD
+$ git branch -D release/v0.1        # Removing the release branch
+$ git push --all && git push --tags # Finally push everything
+#+end_src
+
+The real magic here is the =git merge --no-ff release/v0.1~1= which will
+merge into master the commit before the HEAD of the branch
+=release/v0.1=.
+
+The next step would be to create a helper script that automates this and
+verify that the =pom.xml= has the right configuration options.
+
+*Edit 17:58* : You can take a look [[https://github.com/vdemeester/java-config/blob/master/bin/mvn-release-flow][here]]

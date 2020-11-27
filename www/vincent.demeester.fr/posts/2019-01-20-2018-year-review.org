@@ -1,0 +1,151 @@
+#+title: 2018 year review
+#+date: <2019-01-20 Sun>
+#+filetags: review
+
+* Introduction
+
+Here is my review of 2018, the first of its kind, hopefully not the last 👼. I saw
+some[fn:1] /2018[fn:2] reviews/[fn:3] articles[fn:4] in my Feedly feed and I thought it
+would be a good idea to write my own too.
+
+I'll try in the next year — maybe month if I ever want to do monthly reviews — to automate
+some of it ; using the beloved =org-mode=.
+
+[fn:1] [[https://punchagan.muse-amuse.in/blog/2018-in-review/][2018 in Review - Noetic Nought]]
+[fn:2] [[https://medium.com/@buster/42-dig-deeper-e2278d1fe015][42 — Dig deeper – Buster Benson – Medium]]
+[fn:3] [[https://jvns.ca/blog/2018/12/23/2018--year-in-review/][2018: Year in review - Julia Evans]]
+[fn:4] [[https://writing.natwelch.com/post/685][Nat? Nat. Nat! | #685 2018 Year in Review]]
+
+* Work
+
+The big change this year is : I changed job 👼. I went from Docker Inc. to Red Hat. I
+needed a change and 5 month in, I think it was the *best choice I made in my life* so far
+💃. I'm doing open-source for a living and best part, I am working remotely (more on that
+later).
+
+Before that, at Docker Inc., I continued the work I started years before,
+a.k.a. maintaining the Moby project and the docker engine, among other Docker project
+(both open-source and closed-source). I also helped the work on the compose side, from the
+root of =docker/compose-on-kubernetes= (before it got open-sourced), to the =docker/app=
+experiments.
+
+At Red Hat, I started to work upstream in the Kubernetes community, mainly on the Knative
+projects. I also work on the Openshift Cloud Function project (and thus team), and those
+fellows are awesome ! Digging more into Openshift, and other part of the Red Hat portfolio
+is a really good learning experience, and it's just the start !
+
+As stated above, I am now working home, full-time. I could work from home from time to
+time when I was at Docker inc, but working home full-time is another kind of beast. So far
+it is really good, some adjustments were needed but it's for the best. Here is a small
+take on "working from home":
+
+- It's easy to have *no distraction*, thus having *really productive* piece of time
+- It's also *really easy to work long day or really long period of time*. It's especially
+  true if, like me, you work on a distributed team (across multiple timezones).
+  - I ended up using the Pomodoro technique to make sure I move at least few times a day
+  - I try to make sure I don't make an habits of checking out work code, email and other
+    material after a certain hour in the evening. It's ok to do it sometimes, but for your
+    sanity, you need some rest time.
+- It's easy to adapt your day to circumstance. If you got to run errands in the middle of
+  the day, it's no big deal. You can take the time back later on.
+- It's so good to have *no* commmute time. That said I end up /walking or taking the bike/
+  early morning to clear my head before work 😝.
+
+* Personal
+
+Health wise, it's a mix of good and bad year. The first half was really good, the second
+way less. End of august, I felt something weird in the right knee, and well, turns out my
+internal meniscus is in a real bad shape. Just as before joining Docker, I'm gonna need a
+surgery, on the right knee that time. It's gonna affect 2019 (the first half, I'm not
+gonna be able to move around much but.. meh, it's life).
+
+Now that I work from home, I'm really glad I got a standing desk at the end of 2017. I
+tend to work standing most of the time -- except when my knee hurts (and most likely for
+few months after the surgery 😅). I invested on a ultrawide screen, to get the same
+experience I had at Docker. And oh boy those screens are good !
+
+I also try to clean my desk and it's "neighboorhood". As I get older, I want less messy
+stuuf (desk, flat, ...). I'm leaning towards having less stuff, being commputer related or
+not. It's not minimalism, but it feel good to have less stuff, but stuff that you actually
+use. I still have trouble throwing old computer away, mainly because I fell they can be
+useful in some way.
+
+[[/images/2019/01/desk1.jpg]]
+
+This year I migrate all of my "infrastructure" computer to NixOS. I learned a lot of Nix,
+reworked my configuration multiple time to end up with a [[https://github.com/vdemeester/nixos-configuration.git][system configuration repository]]
+that uses modules, and a [[https://github.com/vdemeester/home.git][/home configuration repository/]] (for user configuration). The
+[[https://github.com/vdemeester/home.git][home]] repository uses [[https://github.com/rycee/home-manager.git][=home-manager=]] and thus doesn't make any assumption of running on top
+of NixOS. This allows me to have an /easy to get/ setup on any system that =nixpkgs=
+supports (any Linux distribution, Mac OSX, Windows Subsystem Linux). The current
+configuration is not yet optimal but I'm pretty happy about what I got :
+
+- Custom DNS server @home to make it easier to target local hosts.
+- Local proxies and mirrors for docker images, nixpkgs binary package and go modules to
+  eat less bandwidth.
+- Easy to setup VPN using [[https://www.wireguard.com/][WireGuard]].
+- File replication using =syncthing= and automatic backup on my local NAS.
+- Automatic system upgrade, thanks to NixOS. I'll probably write an article about that
+  later on this year.
+
+I started to use =todoist= in 2017, and boy, oh boy, it helped me quite a lot ! I'm using
+it daily to organize my work and quickly get idea, and /todos/ out of my head. The main
+problem with it is it's not integrated with another tool I'm using daily : Emacs and
+=org-mode=. =org-mode= is a fantastic piece of software and is, on its own, the main
+reason for me to invest time in Emacs. I'm taking note in =org-mode=, I write my daily
+standup notes in there too. I end up going back and forth between =org-mode= and =todoist=
+for those daily standup. I am lazy, I want to automate that. And the best way to do it, is
+to also use =org-mode= for task management. I'm in a /transition/ mode right now, but my
+goal for 2019 is to use todoist to take quick note/todo(s) on the move (aka on the phone)
+and use =org-mode= for the rest.
+
+
+* Reading & Writing
+
+I used to like reading, but the past years, I didn't really read that much, except some
+technical books. 2018 in, that respect, is not an exception, I didn't read too much. Worse
+than that, I started some book and stopped at some point, for no apparent reason ; and
+now, I need to start back from the beginning, which, well, is not helping me want to read
+them again.
+
+I'm trying two thing to counter that and consume more books for the years to come.
+
+1. I now have a reading list on my =org-mode= files, where I track which one I read and
+   when I read them ; and maybe notes too. I have a lot of book on my kindle, that only
+   wait for one thing, being read..
+2. I subscribed to [[https://www.audible.fr][Audible]] 👼. Working from home, I tend to take a long break after lunch,
+   where I'm going for a walk, for around an hour. I can't read while walking but I
+   definitely can listen - that make audio books perfect for these moments. I also
+   alternate between audio books and non-musical podcasts.
+
+On the writing side, 2017 was a slow year in terms of writing (only 2 posts), 2018 was a
+bit better, 6 posts -- it's a bit cheating, as it was mainly between changing jobs, and
+on a series I still need to finish. I'm hoping to write more this year, hence the goals
+I've set to myself below.
+
+* 2019 Goals
+
+- *Get back on my feet after knee surgery (exercices, …)* 🏃
+- *Read at least one book per month (be audible, ebook or paper)* 📖
+- *Giving at least a talk (on Knative, containers, nixos, ..)* 🙊
+
+  I didn't give too much talk in 2018 (at least less than 2017). I'm gonna try to get back
+  at it this year. The surgery won't help but it's just few months.
+
+- *At least 1 video per month* 📹
+
+  I want to start recording some video, as I feel it's an easier medium than writing and,
+  well, I wanna try !
+
+- *At least 1 post per month* ✍️
+- *Enhance my emacs skills (aka don't be afraid of the lisp)* ⌨️
+
+  I'm using Emacs for almost anything that doesn't happen in a web browser. But I still
+  feel like a newbie. I want to learn more, to write more lisp that help me being even
+  more lazier (aka achieve more doing less 😝)
+
+- *Enhance my Nix(OS) skills* 🐧
+- *Learn / master a new language* 🎽
+
+  I'm working with Go 90% of my time. I want to master and learn more language. On my list
+  are Emacs Lisp, Rust, Typescript and Haskell.

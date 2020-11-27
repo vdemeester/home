@@ -1,0 +1,84 @@
+#+title: Gollum comme Wiki personnel
+#+date: <2012-12-16 Sun>
+#+filetags: wiki golum github personnel
+#+setupfile: ../templates/post.org
+
+* Introduction
+
+Il y a environ 4 mois j'ai eu un accident de vélo ; un traumatisme
+crânien, des brulures sur la face, quelques points de sutures, un doigt
+cassé et une hernie discale m'ont cloué (et me clou encore) plus que
+d'habitude sur ma chaise de bureau. Le bon côté des choses, c'est que
+cela m'a permit de me poser et de réfléchir une bonne façon d'être
+efficace et organiser, au travail et à la maison :-).
+
+Une des principales /action/ que j'ai pris est d'utiliser un wiki local
+et synchronisé sur /tout/ mes PCs. Le /format/ wiki est assez adapté à
+une prise de note et à la création de contenu plus complet (comme des
+[[http://shortbrain.org][articles]] ou de la documentation pour des
+projets en cours). Les conditions étaient les suivantes :
+
+- Facilité de mise en place.
+- Pas de base de données.
+- /Merging/ facile ([[http://git-scm.com][git]] /rules my world/).
+- [[http://daringfireball.net/projects/markdown/][Markdown]] comme
+  syntaxe, car utilisé à peu près partout (blogs, articles, READMEs,
+  documentations).
+- Éditable à partir d'une interface web ou de mon éditeur favoris.
+
+L'outil qui remplit presque toutes ces conditions s'appelle
+[[https://github.com/github/gollum][gollum]]. C'est un moteur wiki,
+écris en ruby, qui se base sur un repository
+[[http://git-scm.com][git]]. Il est développer par l'équipe de
+[[http://github.com][Github]] et c'est celui qui est utilisé par les
+pages wiki là-bas. Il permet d'utiliser à peu près n'importe quel
+syntaxe (dont
+[[https://github.com/github/github-flavored-markdown][github-markdown]]
+qui est assez proche de celle de
+[[http://johnmacfarlane.net/pandoc][pandoc]]). Par ailleurs, comme il se
+base sur [[http://git-scm.com][git]], les points /"pas de base de
+données"/, /"merging facile"/ et /"éditable également à partir de mon
+éditeur favoris"/ sont toutes remplies.
+
+Avec [[https://github.com/github/gollum][Gollum]] vous avez un wiki
+markdown décentralisé, éditable via une interface web ou via votre
+éditeur favoris.
+
+* Mise en place
+   :PROPERTIES:
+   :CUSTOM_ID: mise-en-place
+   :END:
+
+La mise en place est relativement simple ; après tout dépend du besoin
+que vous avez. L'installation se fait par [[file:rubygems.org][RubyGem]]
+ou en clonant le repository.
+
+{{< highlight bash >}} # Installation de gollum et du format markdown de
+github $ gem install gollum gitub-markdown {{< /highlight >}}
+
+Si vous n'utilisez pas [[https://github.com/sstephenson/rbenv][rbenv]]
+ou [[https://rvm.io/][rvm]] il est probable qu'il faille lancer la
+commande en root ou utiliser sudo.
+
+Ensuite, il suffit de lancer
+[[https://github.com/github/gollum][Gollum]] dans un dossier qui est un
+repository git ; le tour est joué
+
+{{< highlight bash >}} # J'ulitise ~/desktop/wiki pour mon wiki $ cd
+~/desktop/wiki && gollum {{< /highlight >}}
+
+L'idée finale est d'automatiser deux choses :
+
+1. Le démarrage de gollum
+2. La synchronisation du repository avec les différents autres /remotes/
+
+Suivant le système d'exploitation et/ou la distribution utilisées, il y
+a énormément de possibilité d'effectuer cette automatisation. Dans mon
+cas, j'ai une [[http://debian.org][Debian]] assez light, avec surtout
+plein de scripts. Je démarre donc
+[[https://github.com/github/gollum][Gollum]] au démarrage de ma session
+grâce à une script qui est lancé dans la foulée du gestionnaire de
+fenêtre. La synchronisation se fait grâce à une tâche planifiée /cron/
+qui est "distribué" sur chacune de mes machines.
+
+/C'est tout pour le moment/ ;-).

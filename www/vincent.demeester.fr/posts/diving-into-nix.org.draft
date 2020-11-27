@@ -1,0 +1,8 @@
+#+TITLE: Diving into Nix(OS) — introduction
+#+SUBTITLE: Series about nixos
+#+SETUPFILE: ../templates/post.org
+
+* TODO Introduction
+
+This will be the start of a serie of blog post around Nix, Nixpkgs and NixOS. The goal is
+to present the pros and cons of Nix and how it benefits to use it in different use cases.

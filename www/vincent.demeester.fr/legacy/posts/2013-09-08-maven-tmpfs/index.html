@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="start" href="https://vincent.demeester.fr" />
+
+    <title>Vincent Demeester</title>
+    <link rel="canonical" href="https://vincent.demeester.fr/posts/2013-09-08-maven-tmpfs/">
+    <link href="https://vincent.demeester.fr/index.xml" rel="alternate" type="application/rss+xml" title="Vincent Demeester" />
+
+    <link rel="openid.server" href="https://indieauth.com/openid" />
+    <link rel="openid.delegate" href="http://vincent.demeester.fr/" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="/css/screen.css" type="text/css" />
+    <link rel="stylesheet" href="/css/sbrain.css" type="text/css" />
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+  </head>
+  
+  <body lang="fr"/>
+  
+
+
+
+
+
+<div id="main-container">
+  <div id="page">
+    <article class="post">
+      <header>
+        <h1 class="emphnext">Maven Tmpfs</h1><a href='https://vincent.demeester.fr/posts/2013-09-08-maven-tmpfs/'></a>
+        <address class="signature">
+          <span class="date">Sun, 8 September, 2013</span>
+          <span class="words">(600 Words)</span>
+        </address>
+	<ul class="tag_box inline">
+	  
+	  <li class="category"><a href="/categories/#developement">developement</a></li>
+	  
+	  
+	  
+	  
+	  
+	  <li class="tag tag-maven"><a href="/tags/#maven">maven<span>2</span></a></li>
+	  
+	  
+	  <li class="tag tag-tmpfs"><a href="/tags/#tmpfs">tmpfs<span>1</span></a></li>
+	  
+	  
+	  <li class="tag tag-ssd"><a href="/tags/#ssd">ssd<span>1</span></a></li>
+	  
+	  <br/>
+	  
+	</ul>
+      </header>
+      
+      
+      
+      <p>Je suis un utilisateur convaincu de [maven](), malgré ces défauts, le moto
+<strong>&ldquo;Convention over configuration&rdquo;</strong> me va vraiment bien. Que ce soit au boulot ou
+à la maison, j&rsquo;ai plus d&rsquo;ordinateurs équipés de ssd (ou de mémoire flash) que de
+disque traditionnel (mécanique ?). Pour augmenter un peu la durée de vie de
+ces disques SSD, j&rsquo;ai cherché à savoir comment <em>déporter</em> le <em>build</em> de maven
+(qui, pour rappel, se passe dans le dossier <code>target/</code>) hors du SSD ; ici ce
+sera dans le dossier <code>/tmp/</code> qui est monté en mémoire (merci <code>tmpfs</code>),
+mais on peut imaginer déporter ça sur un autre disque, etc.. Après quelques
+recherches j&rsquo;ai trouvés quelques inspirations.</p>
+
+<blockquote>
+<p><strong>Limitations</strong></p>
+
+<p>Dans la solution présentée ci-dessous les principales limitations sont
+les suivantes (que j&rsquo;essaierais de diminuer au fil du temp ;P) :</p>
+
+<ol>
+<li>Il est nécessaire de modifier le pom.xml du projet ; cela ne s&rsquo;appliquera
+donc pas à tous les projets maven sans modification du pom.xml.</li>
+<li>Cela ne fonctionne que sur une plateforme qui support les liens
+symboliques (Linux, Mac OS X, et autre UNIX).</li>
+<li>Cela ne fonctionne qu&rsquo;avec Java 7 ou plus.</li>
+<li>Si vous utilisez m2e, il va gentillement gueuler et c&rsquo;est moche ; pour
+résoudre le problème, il faut faire un tour vers <a href="http://wiki.eclipse.org/M2E_plugin_execution_not_covered">M2E plugin execution
+not covered</a>.</li>
+</ol>
+</blockquote>
+
+<p>Pour [maven](), le dossier <code>target/</code> vient de la propriété
+<code>project.build.directory</code>. Dans la théorie, il suffirait de modifier (dans
+<code>$HOME/.m2/settings.xml</code>) cette propriété et le tour serait jouer.
+Malheuresement ce n&rsquo;est pas possible, <code>project.build.directory</code> est une
+propriété interne et n&rsquo;est, à priori, pas modifiable.</p>
+
+<p>Notre souhait est le suivant :</p>
+
+<ol>
+<li>Le build doit se faire dans <code>/tmp/m2/</code>, ce qui pour un projet se traduit
+par <code>/tmp/m2/${groupId}:${artifactId}</code>.</li>
+<li>Le dossier <code>target/</code> dans les sources est un lien symbolique vers le
+dossier dans <code>/tmp/m2/</code></li>
+<li>On passe par un <strong>profile</strong> qui n&rsquo;est <strong>pas actif</strong> par défaut (pour ne pas
+faire chier le monde) mais <strong>activable via une propriété</strong> (maven nous permet
+de le faire et c&rsquo;est cool <code>^_^</code>). La propriété utilisée sera
+<code>external.build.root</code>.</li>
+</ol>
+
+<p>Le code ci-dessous est repris directement de mon inspiration<sup class="footnote-ref" id="fnref:inspiration"><a href="#fn:inspiration">1</a></sup>. Il
+s&rsquo;occupe de créer le dossier <code>${groupId}:${artifactId}</code> dans
+<code>external.build.root</code> et de faire le lien dans le dossier courant.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;project&gt;</span>
+    <span class="c">&lt;!-- […] --&gt;</span>
+    <span class="nt">&lt;profiles&gt;</span>
+        <span class="nt">&lt;profile&gt;</span>
+            <span class="nt">&lt;id&gt;</span>external-build-dir<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;activation&gt;</span>
+                <span class="nt">&lt;activeByDefault&gt;</span>false<span class="nt">&lt;/activeByDefault&gt;</span>
+                <span class="nt">&lt;property&gt;</span>
+                    <span class="nt">&lt;name&gt;</span>external.build.root<span class="nt">&lt;/name&gt;</span>
+                <span class="nt">&lt;/property&gt;</span>
+            <span class="nt">&lt;/activation&gt;</span>
+            <span class="nt">&lt;build&gt;</span>
+                <span class="nt">&lt;plugins&gt;</span>
+                    <span class="nt">&lt;plugin&gt;</span>
+                        <span class="nt">&lt;groupId&gt;</span>com.alexecollins.maven.plugin<span class="nt">&lt;/groupId&gt;</span>
+                        <span class="nt">&lt;artifactId&gt;</span>script-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+                        <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+                        <span class="nt">&lt;executions&gt;</span>
+                            <span class="nt">&lt;execution&gt;</span>
+                                <span class="nt">&lt;id&gt;</span>prep-work-tree<span class="nt">&lt;/id&gt;</span>
+                                <span class="nt">&lt;goals&gt;</span>
+                                    <span class="nt">&lt;goal&gt;</span>execute<span class="nt">&lt;/goal&gt;</span>
+                                <span class="nt">&lt;/goals&gt;</span>
+                                <span class="nt">&lt;phase&gt;</span>initialize<span class="nt">&lt;/phase&gt;</span>
+                                <span class="nt">&lt;configuration&gt;</span>
+                                    <span class="nt">&lt;script&gt;</span>
+                                        import java.nio.file.*
+                                        def dir =
+                                        &#34;${external.build.root}/${project.groupId}:${project.artifactId}&#34;
+                                        println &#34;using Maven dir ${dir}&#34;
+                                        def dirPath = Paths.get(dir)
+                                        if (!Files.exists(dirPath)) {
+                                        Files.createDirectories(dirPath)
+                                        }
+                                        def target = Paths.get(&#34;${project.build.directory}&#34;)
+                                        if (!Files.exists(target)) {
+                                        Files.createSymbolicLink(target, dirPath)
+                                        }<span class="nt">&lt;/script&gt;</span>
+                                <span class="nt">&lt;/configuration&gt;</span>
+                            <span class="nt">&lt;/execution&gt;</span>
+                            <span class="nt">&lt;execution&gt;</span>
+                                <span class="nt">&lt;id&gt;</span>drop-symlink<span class="nt">&lt;/id&gt;</span>
+                                <span class="nt">&lt;goals&gt;</span>
+                                    <span class="nt">&lt;goal&gt;</span>execute<span class="nt">&lt;/goal&gt;</span>
+                                <span class="nt">&lt;/goals&gt;</span>
+                                <span class="nt">&lt;phase&gt;</span>clean<span class="nt">&lt;/phase&gt;</span>
+                                <span class="nt">&lt;configuration&gt;</span>
+                                    <span class="nt">&lt;script&gt;</span>
+                                        import java.nio.file.*
+                                        def target = Paths.get(&#34;${project.build.directory}&#34;)
+                                        if (Files.isSymbolicLink(target)) {
+                                        Files.delete(target)
+                                        }
+                                    <span class="nt">&lt;/script&gt;</span>
+                                <span class="nt">&lt;/configuration&gt;</span>
+                            <span class="nt">&lt;/execution&gt;</span>
+                        <span class="nt">&lt;/executions&gt;</span>
+                        <span class="nt">&lt;dependencies&gt;</span>
+                            <span class="nt">&lt;dependency&gt;</span>
+                                <span class="nt">&lt;groupId&gt;</span>org.codehaus.groovy<span class="nt">&lt;/groupId&gt;</span>
+                                <span class="nt">&lt;artifactId&gt;</span>groovy<span class="nt">&lt;/artifactId&gt;</span>
+                                <span class="nt">&lt;version&gt;</span>1.8.6<span class="nt">&lt;/version&gt;</span>
+                            <span class="nt">&lt;/dependency&gt;</span>
+                        <span class="nt">&lt;/dependencies&gt;</span>
+                        <span class="nt">&lt;configuration&gt;</span>
+                            <span class="nt">&lt;language&gt;</span>groovy<span class="nt">&lt;/language&gt;</span>
+                        <span class="nt">&lt;/configuration&gt;</span>
+                    <span class="nt">&lt;/plugin&gt;</span>
+                <span class="nt">&lt;/plugins&gt;</span>
+            <span class="nt">&lt;/build&gt;</span>
+        <span class="nt">&lt;/profile&gt;</span>
+    <span class="nt">&lt;/profiles&gt;</span>
+    <span class="c">&lt;!-- […] --&gt;</span>
+<span class="nt">&lt;/project&gt;</span></code></pre></div>
+
+<p>Ainsi, il suffit ensuite d&rsquo;avoir quelques choses du genre dans son
+<code>$HOME/.m2/settings.xml</code> pour que les builds qui ont ce profil se <em>build</em>
+dans <code>/tmp/m2/</code>. On peut aussi ne rien avoir dans <code>$HOME/.m2/settings.xml</code>
+et utilise <code>-Dexternal.build.root=/tmp/m2/</code> avec la commande <code>mvn</code>.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;settings&gt;</span>
+    <span class="c">&lt;!-- […] --&gt;</span>
+    <span class="nt">&lt;profiles&gt;</span>
+        <span class="nt">&lt;profile&gt;</span>
+            <span class="nt">&lt;id&gt;</span>build-in-ramfs<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;properties&gt;</span>
+                <span class="nt">&lt;external.build.root&gt;</span>/tmp/m2/<span class="nt">&lt;/external.build.root&gt;</span>
+            <span class="nt">&lt;/properties&gt;</span>
+        <span class="nt">&lt;/profile&gt;</span>
+    <span class="nt">&lt;/profiles&gt;</span>
+    <span class="nt">&lt;activeProfiles&gt;</span>
+        <span class="nt">&lt;activeProfile&gt;</span>build-in-ramfs<span class="nt">&lt;/activeProfile&gt;</span>
+    <span class="nt">&lt;/activeProfiles&gt;</span>
+    <span class="c">&lt;!-- […] --&gt;</span>
+<span class="nt">&lt;/settings&gt;</span></code></pre></div>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:inspiration"><a href="http://elehack.net/writings/programming/maven-target-in-tmpfs">Putting Maven build directories out-of-tree</a> par <a href="http://elehack.net/">Michal Ekstrand</a>
+ <a class="footnote-return" href="#fnref:inspiration"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+      
+    </article>
+    <hr />
+    <div class="prev-next">
+      
+      <a class="paging-link prev" href="/posts/2013-10-12-podcasts/" title="Podcasts">← Previous post</a>
+      
+
+      
+      <a class="paging-link next" href="/posts/2012-12-16-gollum-comme-wiki-personnel/" title="Gollum Comme Wiki Personnel">Next post →</a>
+      
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <nav>
+    
+    <a href="/">home</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/about">about</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/archive">archive</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/categories">categories</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/tags">tags</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://twitter.com/vdemeest">twitter</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://github.com/vdemeester">github</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://vincent.demeester.fr/index.xml">rss</a>
+  </nav>
+  <br/>
+  <address>
+    <span class="copyright">
+      Content and design by Vincent Demeester
+      (<a rel="licence" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Some rights reserved</a>)
+    </span><br />
+    <span class="engine">
+      Powered by <a href="https://gohugo.io/">Hugo</a> and <a href="https://github.com/kaushalmodi/ox-hugo/">ox-hugo</a>
+    </span>
+  </address>
+</footer>
+</body>
+

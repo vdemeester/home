@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="start" href="https://vincent.demeester.fr" />
+
+    <title>Vincent Demeester</title>
+    <link rel="canonical" href="https://vincent.demeester.fr/posts/2018-09-18-gotest-tools-icmd/">
+    <link href="https://vincent.demeester.fr/index.xml" rel="alternate" type="application/rss+xml" title="Vincent Demeester" />
+
+    <link rel="openid.server" href="https://indieauth.com/openid" />
+    <link rel="openid.delegate" href="http://vincent.demeester.fr/" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="/css/screen.css" type="text/css" />
+    <link rel="stylesheet" href="/css/sbrain.css" type="text/css" />
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+  </head>
+  
+  <body lang=""/>
+  
+
+
+
+
+
+<div id="main-container">
+  <div id="page">
+    <article class="post">
+      <header>
+        <h1 class="emphnext">Golang testing — gotest.tools icmd</h1><a href='https://vincent.demeester.fr/posts/2018-09-18-gotest-tools-icmd/'></a>
+        <address class="signature">
+          <span class="date">Tue, 18 September, 2018</span>
+          <span class="words">(1100 Words)</span>
+        </address>
+	<ul class="tag_box inline">
+	  
+	  <li class="category"><a href="/categories/#developement">developement</a></li>
+	  
+	  
+	  
+	  
+	  
+	  <li class="tag tag-testing"><a href="/tags/#testing">testing<span>11</span></a></li>
+	  
+	  
+	  <li class="tag tag-golang"><a href="/tags/#golang">golang<span>12</span></a></li>
+	  
+	  
+	  <li class="tag tag-exec"><a href="/tags/#exec">exec<span>1</span></a></li>
+	  
+	  
+	  <li class="tag tag-command"><a href="/tags/#command">command<span>1</span></a></li>
+	  
+	  <br/>
+	  
+	</ul>
+      </header>
+      
+      
+      
+      
+
+<p>Let&rsquo;s continue the <a href="https://gotest.tools"><code>gotest.tools</code></a> serie, this time with the <code>icmd</code> package.</p>
+
+<blockquote>
+<p>Package icmd executes binaries and provides convenient assertions for testing the results.</p>
+</blockquote>
+
+<p>After file-system operations (seen in <a href="/posts/2018-09-14-gotest-tools-fs/"><code>fs</code></a>), another common use-case in tests is to
+<strong>execute a command</strong>. The reasons can be you&rsquo;re testing the <code>cli</code> you&rsquo;re currently writing
+or you need to setup something using a command line. A classic execution in a test might
+lookup like the following.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">cmd</span> <span class="o">:=</span> <span class="nx">exec</span><span class="p">.</span><span class="nf">Command</span><span class="p">(</span><span class="s">&#34;echo&#34;</span><span class="p">,</span> <span class="s">&#34;foo&#34;</span><span class="p">)</span>
+<span class="nx">cmd</span><span class="p">.</span><span class="nx">Stout</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">stdout</span>
+<span class="nx">cmd</span><span class="p">.</span><span class="nx">Env</span> <span class="p">=</span> <span class="nx">env</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">cmd</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nx">t</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="nb">string</span><span class="p">(</span><span class="nx">stdout</span><span class="p">)</span> <span class="o">!=</span> <span class="s">&#34;foo&#34;</span> <span class="p">{</span>
+	<span class="nx">t</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;expected: foo, got %s&#34;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">stdout</span><span class="p">))</span>
+<span class="p">}</span></code></pre></div>
+<p>The package <code>icmd</code> is there to ease your pain (as usual 😉) — we used <em>the name <code>icmd</code></em>
+instead of <code>cmd</code> because it&rsquo;s a pretty common identifier in Go source code, thus would be
+really easy to <em>shadow</em> — and have some really weird problems going on.</p>
+
+<p>The usual <code>icmd</code> workflow is the following:</p>
+
+<ol>
+<li>Describe the command you want to execute using : type <code>Cmd</code>, function <code>Command</code> and
+<code>CmdOp</code> operators.</li>
+<li>Run it using : function <code>RunCmd</code> or <code>RunCommand</code> (that does 1. for you). You can also
+use <code>StartCmd</code> and <code>WaitOnCmd</code> if you want more control on the execution workflow.</li>
+<li>Check the result using the <code>Assert</code>, <code>Equal</code> or <code>Compare</code> methods attached to the
+<code>Result</code> struct that the command execution return.</li>
+</ol>
+
+<h2 id="create-and-run-a-command">Create and run a command</h2>
+
+<p>Let&rsquo;s first dig how to create commands. In this part, the assumption here is that the
+command is successful, so we&rsquo;ll have <code>.Assert(t, icmd.Success)</code> for now — we&rsquo;ll learn more
+about <code>Assert</code> in the next section 👼.</p>
+
+<p>The simplest way to create and run a command is using <code>RunCommand</code>, it has the same
+signature as <code>os/exec.Command</code>. A simple command execution goes as below.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">icmd</span><span class="p">.</span><span class="nf">RunCommand</span><span class="p">(</span><span class="s">&#34;echo&#34;</span><span class="p">,</span> <span class="s">&#34;foo&#34;</span><span class="p">).</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">icmd</span><span class="p">.</span><span class="nx">Sucess</span><span class="p">)</span></code></pre></div>
+<p>Sometimes, you need to customize the command a bit more, like adding some environment
+variable. In those case, you are going to use <code>RunCmd</code>, it takes a <code>Cmd</code> and operators.
+Let&rsquo;s look at those functions.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">RunCmd</span><span class="p">(</span><span class="nx">cmd</span> <span class="nx">Cmd</span><span class="p">,</span> <span class="nx">cmdOperators</span> <span class="o">...</span><span class="nx">CmdOp</span><span class="p">)</span> <span class="o">*</span><span class="nx">Result</span>
+
+<span class="kd">func</span> <span class="nf">Command</span><span class="p">(</span><span class="nx">command</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kt">string</span><span class="p">)</span> <span class="nx">Cmd</span>
+
+<span class="kd">type</span> <span class="nx">Cmd</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Command</span> <span class="p">[]</span><span class="kt">string</span>
+	<span class="nx">Timeout</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span>
+	<span class="nx">Stdin</span>   <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span>
+	<span class="nx">Stdout</span>  <span class="nx">io</span><span class="p">.</span><span class="nx">Writer</span>
+	<span class="nx">Dir</span>     <span class="kt">string</span>
+	<span class="nx">Env</span>     <span class="p">[]</span><span class="kt">string</span>
+<span class="p">}</span></code></pre></div>
+<p>As we&rsquo;ve seen <a href="/posts/2017-01-01-go-testing-functionnal-builders/">multiple</a> <a href="/posts/2018-08-16-gotest-tools-assertions/">times</a> <a href="/posts/2018-09-14-gotest-tools-fs/">before</a>, it uses the <em>powerful</em> functional arguments. At the
+time I wrote this post, the <code>icmd</code> package doesn&rsquo;t contains too much <code>CmdOp</code>&nbsp;<sup class="footnote-ref" id="fnref:fn-1"><a href="#fn:fn-1">1</a></sup>, so I&rsquo;ll
+propose two version for each example : one with <code>CmdOpt</code> present in <a href="https://github.com/gotestyourself/gotest.tools/pull/122">this PR</a> and one
+without them.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// With
+</span><span class="c1"></span><span class="nx">icmd</span><span class="p">.</span><span class="nf">RunCmd</span><span class="p">(</span><span class="nx">icmd</span><span class="p">.</span><span class="nf">Command</span><span class="p">(</span><span class="s">&#34;sh&#34;</span><span class="p">,</span> <span class="s">&#34;-c&#34;</span><span class="p">,</span> <span class="s">&#34;echo $FOO&#34;</span><span class="p">),</span>
+	<span class="nx">icmd</span><span class="p">.</span><span class="nf">WithEnv</span><span class="p">(</span><span class="s">&#34;FOO=bar&#34;</span><span class="p">,</span> <span class="s">&#34;BAR=baz&#34;</span><span class="p">),</span> <span class="nx">icmd</span><span class="p">.</span><span class="nf">Dir</span><span class="p">(</span><span class="s">&#34;/tmp&#34;</span><span class="p">),</span>
+	<span class="nx">icmd</span><span class="p">.</span><span class="nf">WithTimeout</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">),</span>
+<span class="p">).</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">icmd</span><span class="p">.</span><span class="nx">Success</span><span class="p">)</span>
+
+<span class="c1">// Without
+</span><span class="c1"></span><span class="nx">icmd</span><span class="p">.</span><span class="nf">RunCmd</span><span class="p">(</span><span class="nx">icmd</span><span class="p">.</span><span class="nx">Cmd</span><span class="p">{</span>
+	<span class="nx">Command</span><span class="p">:</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;sh&#34;</span><span class="p">,</span> <span class="s">&#34;-c&#34;</span><span class="p">,</span> <span class="s">&#34;echo $FOO&#34;</span><span class="p">},</span>
+	<span class="nx">Env</span><span class="p">:</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;FOO=bar&#34;</span><span class="p">,</span> <span class="s">&#34;BAR=baz&#34;</span><span class="p">},</span>
+	<span class="nx">Dir</span><span class="p">:</span> <span class="s">&#34;/tmp&#34;</span><span class="p">,</span>
+	<span class="nx">Timeout</span><span class="p">:</span> <span class="mi">10</span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span>
+<span class="p">}).</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">icmd</span><span class="p">.</span><span class="nx">Success</span><span class="p">)</span></code></pre></div>
+<p>As usual, the intent is clear, it&rsquo;s simple to read and composable (with <code>CmdOp</code>&rsquo;s).</p>
+
+<h2 id="assertions">Assertions</h2>
+
+<p>Let&rsquo;s dig into the assertion part of <code>icmd</code>. Running a command returns a struct
+<code>Result</code>. It has the following methods :</p>
+
+<ul>
+<li><code>Assert</code> compares the Result against the Expected struct, and fails the test if any of
+the expectations are not met.</li>
+<li><code>Compare</code> compares the result to Expected and return an error if they do not match.</li>
+<li><code>Equal</code> compares the result to Expected. If the result doesn&rsquo;t match expected
+returns a formatted failure message with the command, stdout, stderr, exit code, and any
+failed expectations. It returns an <code>assert.Comparison</code> struct, that can be used by other
+<code>gotest.tools</code>.</li>
+<li><code>Combined</code> returns the stdout and stderr combined into a single string.</li>
+<li><code>Stderr</code> returns the stderr of the process as a string.</li>
+<li><code>Stdout</code> returns the stdout of the process as a string.</li>
+</ul>
+
+<p>When you have a result, you, most likely want to do two things :</p>
+
+<ul>
+<li><em>assert</em> that the command succeed or failed with some specific values (exit code,
+stderr, stdout)</li>
+<li>use the output — most likely <code>stdout</code> but maybe <code>stderr</code> — in the rest of the test.</li>
+</ul>
+
+<p>As seen above, <em>asserting</em> the command result is using the <code>Expected</code> struct.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Expected</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">ExitCode</span> <span class="kt">int</span>    <span class="c1">// the exit code the command returned
+</span><span class="c1"></span>	<span class="nx">Timeout</span>  <span class="kt">bool</span>   <span class="c1">// did it timeout ?
+</span><span class="c1"></span>	<span class="nx">Error</span>    <span class="kt">string</span> <span class="c1">// error returned by the execution (os/exe)
+</span><span class="c1"></span>	<span class="nx">Out</span>      <span class="kt">string</span> <span class="c1">// content of stdout
+</span><span class="c1"></span>	<span class="nx">Err</span>      <span class="kt">string</span> <span class="c1">// content of stderr
+</span><span class="c1"></span><span class="p">}</span></code></pre></div>
+<p><code>Success</code> is a constant that defines a success — it&rsquo;s an exit code of <code>0</code>, didn&rsquo;t timeout,
+no error. There is also the <code>None</code> constant, that should be used for <code>Out</code> or <code>Err</code>, to
+specify that we don&rsquo;t want any content for those standard outputs.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">icmd</span><span class="p">.</span><span class="nf">RunCmd</span><span class="p">(</span><span class="nx">icmd</span><span class="p">.</span><span class="nf">Command</span><span class="p">(</span><span class="s">&#34;cat&#34;</span><span class="p">,</span> <span class="s">&#34;/does/not/exist&#34;</span><span class="p">)).</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">icmd</span><span class="p">.</span><span class="nx">Expected</span><span class="p">{</span>
+	<span class="nx">ExitCode</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+	<span class="nx">Err</span><span class="p">:</span>      <span class="s">&#34;cat: /does/not/exist: No such file or directory&#34;</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="c1">// In case of success, we may want to do something with the result
+</span><span class="c1"></span><span class="nx">result</span> <span class="o">:=</span> <span class="nx">icmd</span><span class="p">.</span><span class="nf">RunCommand</span><span class="p">(</span><span class="s">&#34;cat&#34;</span><span class="p">,</span> <span class="s">&#34;/does/exist&#34;</span><span class="p">)</span>
+<span class="nx">result</span><span class="p">.</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">icmd</span><span class="p">.</span><span class="nx">Success</span><span class="p">)</span>
+<span class="c1">// Read the output line by line
+</span><span class="c1"></span><span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewScanner</span><span class="p">(</span><span class="nx">strings</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nf">Stdout</span><span class="p">()))</span>
+<span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nf">Scan</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// Do something with it
+</span><span class="c1"></span><span class="p">}</span></code></pre></div>
+<p>If the <code>Result</code> doesn&rsquo;t map the <code>Expected</code>, a test failure will happen with a useful
+message that will contains the executed command and what differs between the result and
+the expectation.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">result</span> <span class="o">:=</span> <span class="nx">icmd</span><span class="p">.</span><span class="nf">RunCommand</span><span class="p">(</span><span class="err">…</span><span class="p">)</span>
+<span class="nx">result</span><span class="p">.</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">icmd</span><span class="p">.</span><span class="nx">Expected</span><span class="p">{</span>
+		<span class="nx">ExitCode</span><span class="p">:</span> <span class="mi">101</span><span class="p">,</span>
+		<span class="nx">Out</span><span class="p">:</span>      <span class="s">&#34;Something else&#34;</span><span class="p">,</span>
+		<span class="nx">Err</span><span class="p">:</span>      <span class="nx">None</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="c1">// Command:  binary arg1
+</span><span class="c1">// ExitCode: 99 (timeout)
+</span><span class="c1">// Error:    exit code 99
+</span><span class="c1">// Stdout:   the output
+</span><span class="c1">// Stderr:   the stderr
+</span><span class="c1">//
+</span><span class="c1">// Failures:
+</span><span class="c1">// ExitCode was 99 expected 101
+</span><span class="c1">// Expected command to finish, but it hit the timeout
+</span><span class="c1">// Expected stdout to contain &#34;Something else&#34;
+</span><span class="c1">// Expected stderr to contain &#34;[NOTHING]&#34;
+</span><span class="c1"></span><span class="err">…</span></code></pre></div>
+<p>Finally, we listed <code>Equal</code> above, that returns a <code>Comparison</code> struct. This means we can
+use it easily with the <code>assert</code> package. As written in a <a href="/posts/2018-08-16-gotest-tools-assertions/">previous post (about the <code>assert</code>
+package)</a>, I tend prefer to use <code>cmp.Comparison</code>. Let&rsquo;s convert the above examples using
+<code>assert</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">result</span> <span class="o">:=</span> <span class="nx">icmd</span><span class="p">.</span><span class="nf">RunCmd</span><span class="p">(</span><span class="nx">icmd</span><span class="p">.</span><span class="nf">Command</span><span class="p">(</span><span class="s">&#34;cat&#34;</span><span class="p">,</span> <span class="s">&#34;/does/not/exist&#34;</span><span class="p">))</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nf">Check</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nf">Equal</span><span class="p">(</span><span class="nx">icmd</span><span class="p">.</span><span class="nx">Expected</span><span class="p">{</span>
+	<span class="nx">ExitCode</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+	<span class="nx">Err</span><span class="p">:</span>      <span class="s">&#34;cat: /does/not/exist: No such file or directory&#34;</span><span class="p">,</span>
+<span class="p">}))</span>
+
+<span class="c1">// In case of success, we may want to do something with the result
+</span><span class="c1"></span><span class="nx">result</span> <span class="o">:=</span> <span class="nx">icmd</span><span class="p">.</span><span class="nf">RunCommand</span><span class="p">(</span><span class="s">&#34;cat&#34;</span><span class="p">,</span> <span class="s">&#34;/does/exist&#34;</span><span class="p">)</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nf">Equal</span><span class="p">(</span><span class="nx">icmd</span><span class="p">.</span><span class="nx">Success</span><span class="p">))</span>
+<span class="c1">// Read the output line by line
+</span><span class="c1"></span><span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewScanner</span><span class="p">(</span><span class="nx">strings</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nf">Stdout</span><span class="p">()))</span>
+<span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nf">Scan</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// Do something with it
+</span><span class="c1"></span><span class="p">}</span></code></pre></div>
+<h2 id="conclusion">Conclusion…</h2>
+
+<p>… that&rsquo;s a wrap. The <code>icmd</code> package allows to easily run command and describe what result
+are expected of the execution, with the least noise possible. We <strong>use this package heavily</strong>
+on several <code>docker/*</code> projects (the engine, the cli)…</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:fn-1">The <code>icmd</code> package is one of the oldest <code>gotest.tools</code> package, that comes from the <a href="https://github.com/docker/docker"><code>docker/docker</code></a> initially. We introduced these <code>CmdOp</code> but implementations were in <code>docker/docker</code> at first and we never really updated them.
+ <a class="footnote-return" href="#fnref:fn-1"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+      
+    </article>
+    <hr />
+    <div class="prev-next">
+      
+      <a class="paging-link prev" href="/posts/2018-12-16-link/" title="Go testing style guide">← Previous post</a>
+      
+
+      
+      <a class="paging-link next" href="/posts/2018-09-14-gotest-tools-fs/" title="Golang testing — gotest.tools fs">Next post →</a>
+      
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <nav>
+    
+    <a href="/">home</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/about">about</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/archive">archive</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/categories">categories</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="/tags">tags</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://twitter.com/vdemeest">twitter</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://github.com/vdemeester">github</a>
+    <span class="text-muted"> | </span>
+    
+    <a href="https://vincent.demeester.fr/index.xml">rss</a>
+  </nav>
+  <br/>
+  <address>
+    <span class="copyright">
+      Content and design by Vincent Demeester
+      (<a rel="licence" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Some rights reserved</a>)
+    </span><br />
+    <span class="engine">
+      Powered by <a href="https://gohugo.io/">Hugo</a> and <a href="https://github.com/kaushalmodi/ox-hugo/">ox-hugo</a>
+    </span>
+  </address>
+</footer>
+</body>
+
