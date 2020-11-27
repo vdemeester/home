@@ -35,6 +35,9 @@ Repositories
 - [[https://github.com/lovesegfault/nix-config][https://github.com/lovesegfault/nix-config]]
 - [[https://github.com/utdemir/dotfiles]]
 - [[https://github.com/davidtwco/veritas]]
+- [[https://github.com/bqv/nixrc][https://github.com/bqv/nixrc]]
+
+Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
 - [[https://github.com/rasendubi/dotfiles]]
 - [[https://github.com/yurrriq/dotfiles][https://github.com/yurrriq/dotfiles]]
