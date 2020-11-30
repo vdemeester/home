@@ -1,5 +1,5 @@
 #+title: On digital minimalism, Linux, NixOS and Emacs
-#+date:
+#+date: <2020-02-22 Sat>
 #+filetags: minimalism digital emacs linux nixos
 #+setupfile: ../templates/post.org/
 
