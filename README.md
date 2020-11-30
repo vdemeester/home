@@ -1,18 +1,18 @@
 
 # Table of Contents
 
-1.  [Highlights](#org916612c)
-    1.  [Systems](#orgd039c8a)
-    2.  [Tools](#org824994e)
-    3.  [User(s)](#org7fe9cdd)
-2.  [References](#org81f68ea)
-3.  [Licensing](#org7358127)
+1.  [Highlights](#org622b271)
+    1.  [Systems](#org932ee52)
+    2.  [Tools](#orgf1cc69d)
+    3.  [User(s)](#org084305a)
+2.  [References](#org96035a7)
+3.  [Licensing](#orge72c507)
 
 `home` is the monorepo containing my personal tools and infrastructure. Everything in here
 should be built using [Nix](https://nixos.org/nix).
 
 
-<a id="org916612c"></a>
+<a id="org622b271"></a>
 
 # Highlights
 
@@ -24,7 +24,7 @@ This will be a all-time work-in-progress, so please beware that things might cha
 dramatically or even not working anymore 😛.
 
 
-<a id="orgd039c8a"></a>
+<a id="org932ee52"></a>
 
 ## Systems
 
@@ -33,21 +33,21 @@ position-independent, meaning there is no moving around of `configuration.nix`. 
 configurations' entry points see the individual [systems](systems), as well as [default.nix](default.nix).
 
 
-<a id="org824994e"></a>
+<a id="orgf1cc69d"></a>
 
 ## Tools
 
 Those are tools I have written for my personal usage.
 
 
-<a id="org7fe9cdd"></a>
+<a id="org084305a"></a>
 
 ## User(s)
 
 Users configuration, for [NixOS](https://nixos.org) and using home-manager.
 
 
-<a id="org81f68ea"></a>
+<a id="org96035a7"></a>
 
 # References
 
@@ -59,6 +59,7 @@ Repositories
 -   [https://github.com/bqv/nixrc](https://github.com/bqv/nixrc)
 -   [https://github.com/berbiche/dotfiles](https://github.com/berbiche/dotfiles)
 -   <https://github.com/hlissner/dotfiles/>
+-   <https://github.com/leotaku/nixos-config>
 
 Old
 
@@ -70,7 +71,6 @@ Old
 -   <https://github.com/cstrahan/nixos-config>
 -   <https://github.com/jwiegley/nix-config>
 -   <https://github.com/arianvp/nixos-stuff>
--   <https://github.com/leotaku/nixos-config>
 -   <https://github.com/romatthe/ronix>
 -   <https://github.com/rummik/nixos-config>
 -   <https://git.tazj.in/about/>
@@ -105,7 +105,7 @@ Old
 -   <https://github.com/gvolpe/nix-config>
 
 
-<a id="org7358127"></a>
+<a id="orge72c507"></a>
 
 # Licensing
 

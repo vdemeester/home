@@ -73,7 +73,9 @@ defined keys follow the pattern of <PREFIX> <KEY>.")
 (use-package browse-url
   :after eww
   :config
-  (setq browse-url-browser-function 'eww-browse-url))
+  (setq browse-url-browser-function '(("^https://github.com.*" . browse-url-firefox)
+                                      ("^https://gitlab.com.*" . browse-url-firefox)
+                                      (".*" . eww-browse-url))))
 
 (provide 'config-web)
 ;;; config-web.el ends here

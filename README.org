@@ -38,6 +38,7 @@ Repositories
 - [[https://github.com/bqv/nixrc][https://github.com/bqv/nixrc]]
 - [[https://github.com/berbiche/dotfiles][https://github.com/berbiche/dotfiles]]
 - https://github.com/hlissner/dotfiles/
+- [[https://github.com/leotaku/nixos-config]]
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
@@ -48,7 +49,6 @@ Old
 - [[https://github.com/cstrahan/nixos-config]]
 - [[https://github.com/jwiegley/nix-config]]
 - [[https://github.com/arianvp/nixos-stuff]]
-- [[https://github.com/leotaku/nixos-config]]
 - [[https://github.com/romatthe/ronix]]
 - [[https://github.com/rummik/nixos-config]]
 - [[https://git.tazj.in/about/]]
