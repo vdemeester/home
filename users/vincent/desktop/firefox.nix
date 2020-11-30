@@ -26,6 +26,7 @@
         "layers.offmainthreadcomposition.enabled" = true;
         "layout.frame_rate.precise" = true;
         "webgl.force-enabled" = true;
+        "gfx.xrender.enabled" = true;
         "gfx.webrender.all" = true;
         "gfx.webrender.enable" = true;
         # Misc
