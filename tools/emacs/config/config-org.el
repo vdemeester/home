@@ -55,12 +55,14 @@
     "new www post"
     nil
     > "#+title: " (skeleton-read "Title: ") \n
-    > "#+date: " (format-time-string "<%Y-%M-%d %a>") \n
+    > "#+date: " (format-time-string "<%Y-%m-%d %a>") \n
     > "#+filetags: " (skeleton-read "Tags: ") \n
     > "#+setupfile: ../templates/post.org" \n
     > _ \n
     > "* Introduction"
     )
+  (define-auto-insert '("/posts/.*\\.org\\'" . "blog post org files") [vde/org-www-post])
+  (define-auto-insert '("/posts/.*\\.draft\\'" . "blog post draft files") [vde/org-www-post])
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
     (org-babel-lob-ingest org-babel-library-file))
