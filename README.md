@@ -1,18 +1,18 @@
 
 # Table of Contents
 
-1.  [Highlights](#org98dd5e6)
-    1.  [Systems](#org7437bfa)
-    2.  [Tools](#orgc43b76d)
-    3.  [User(s)](#org99148c8)
-2.  [References](#org453a809)
-3.  [Licensing](#orgc92cc63)
+1.  [Highlights](#org916612c)
+    1.  [Systems](#orgd039c8a)
+    2.  [Tools](#org824994e)
+    3.  [User(s)](#org7fe9cdd)
+2.  [References](#org81f68ea)
+3.  [Licensing](#org7358127)
 
 `home` is the monorepo containing my personal tools and infrastructure. Everything in here
 should be built using [Nix](https://nixos.org/nix).
 
 
-<a id="org98dd5e6"></a>
+<a id="org916612c"></a>
 
 # Highlights
 
@@ -24,7 +24,7 @@ This will be a all-time work-in-progress, so please beware that things might cha
 dramatically or even not working anymore 😛.
 
 
-<a id="org7437bfa"></a>
+<a id="orgd039c8a"></a>
 
 ## Systems
 
@@ -33,21 +33,21 @@ position-independent, meaning there is no moving around of `configuration.nix`. 
 configurations' entry points see the individual [systems](systems), as well as [default.nix](default.nix).
 
 
-<a id="orgc43b76d"></a>
+<a id="org824994e"></a>
 
 ## Tools
 
 Those are tools I have written for my personal usage.
 
 
-<a id="org99148c8"></a>
+<a id="org7fe9cdd"></a>
 
 ## User(s)
 
 Users configuration, for [NixOS](https://nixos.org) and using home-manager.
 
 
-<a id="org453a809"></a>
+<a id="org81f68ea"></a>
 
 # References
 
@@ -57,6 +57,8 @@ Repositories
 -   <https://github.com/utdemir/dotfiles>
 -   <https://github.com/davidtwco/veritas>
 -   [https://github.com/bqv/nixrc](https://github.com/bqv/nixrc)
+-   [https://github.com/berbiche/dotfiles](https://github.com/berbiche/dotfiles)
+-   <https://github.com/hlissner/dotfiles/>
 
 Old
 
@@ -100,11 +102,10 @@ Old
 -   <https://github.com/peel/dotfiles>
 -   <https://github.com/bennofs/etc-nixos>
 -   <https://github.com/Baughn/machine-config>
+-   <https://github.com/gvolpe/nix-config>
 
--   <https://github.com/hlissner/dotfiles/>
 
-
-<a id="orgc92cc63"></a>
+<a id="org7358127"></a>
 
 # Licensing
 

@@ -36,6 +36,8 @@ Repositories
 - [[https://github.com/utdemir/dotfiles]]
 - [[https://github.com/davidtwco/veritas]]
 - [[https://github.com/bqv/nixrc][https://github.com/bqv/nixrc]]
+- [[https://github.com/berbiche/dotfiles][https://github.com/berbiche/dotfiles]]
+- https://github.com/hlissner/dotfiles/
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
@@ -78,8 +80,7 @@ Old
 - [[https://github.com/peel/dotfiles]]
 - [[https://github.com/bennofs/etc-nixos]]
 - [[https://github.com/Baughn/machine-config]]
-
-- https://github.com/hlissner/dotfiles/
+- https://github.com/gvolpe/nix-config
 
 * Licensing
 
