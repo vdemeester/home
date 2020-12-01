@@ -9,6 +9,7 @@ in
     sync = false;
   };
   home.file.".gmailctl/config.jsonnet".source = ./config.jsonnet;
+  home.file.".gmailctl/gmailctl.jsonnet".source = ./gmailctl.libsonnet;
 
   xdg.configFile."nr/mails" = {
     text = builtins.toJSON [
