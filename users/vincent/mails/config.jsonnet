@@ -172,7 +172,7 @@ local google_groups(name, label = '') =
     label_archive({from: 'concursolutions.com'}, '_tracker/concur') +
     label_archive({from: 'errata@redhat.com'}, '_tracker/errata') +
     label_archive({from: 'builds@travis-ci.com'}, '_build/travis') +
-    label_archive({from: 'cvp-opts@redhat.com'}, '_build/cvp') +
+    label_archive({from: 'cvp-ops@redhat.com'}, '_build/cvp') +
     label_archive({from: 'buildsys@redhat.com'}, '_build/buildsys') +
     label_archive({from: 'meet-recordings-noreply@google.com'}, '_recordings') +
     rh_mailing_list('bugzilla', '_tracker/bz') +
