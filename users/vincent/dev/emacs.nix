@@ -65,6 +65,7 @@ let
     helpful
     highlight
     highlight-indentation
+    hl-todo
     htmlize
     ibuffer-vc
     icomplete-vertical

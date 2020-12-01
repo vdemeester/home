@@ -40,9 +40,12 @@
   (global-unset-key (kbd "C-h h"))
   ;; let's enable it for all programming major modes
   (add-hook 'prog-mode-hook #'hl-line-mode)
-  (add-hook 'prog-mode-hook #'hl-todo-mode)
   ;; and for all modes derived from text-mode
   (add-hook 'text-mode-hook #'hl-line-mode))
+
+(use-package hl-todo
+  :commands (hl-todo-mode)
+  :hook ((prog-mode . hl-todo-mode)))
 
 (use-package frame
   :unless noninteractive
