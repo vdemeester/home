@@ -121,6 +121,7 @@ let
     with-editor
     xterm-color
     yaml-mode
+    zoom-window
   ];
 in
 {

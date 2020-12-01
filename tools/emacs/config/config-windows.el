@@ -43,5 +43,11 @@
          ("C-s-<left>" . windmove-left)))
 ;; -UseWindmove
 
+(use-package zoom-window
+  :commands (zoom-window-zoom)
+  :bind (("C-x C-z" . zoom-window-zoom))
+  :config
+  (setq zoom-window-mode-line-color "#8ac7ff"))
+
 (provide 'config-windows)
 ;;; config-windows ends here
