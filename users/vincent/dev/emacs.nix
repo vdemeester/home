@@ -26,6 +26,7 @@ let
     avy
     bbdb
     beginend
+    bongo
     color-identifiers-mode
     company
     company-emoji
