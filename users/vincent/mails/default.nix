@@ -10,11 +10,5 @@ in
   };
   home.file.".gmailctl/config.jsonnet".source = ./config.jsonnet;
   home.file.".gmailctl/gmailctl.jsonnet".source = ./gmailctl.libsonnet;
-
-  xdg.configFile."nr/mails" = {
-    text = builtins.toJSON [
-      { cmd = "gmailctl"; chan = "unstable"; }
-    ];
-    onChange = "${pkgs.my.nr}/bin/nr mails";
-  };
+  home.packages = with pkgs; [ gmailctl ];
 }
