@@ -63,4 +63,5 @@ rec {
     version = "0.11.0";
     sha256 = "19svynznk7bshjm9hd0zxzdn5j09fl7n7jws2hf8qm1y0ynbydmb";
   };
+  tkn = tkn_0_14;
 }
