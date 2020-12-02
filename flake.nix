@@ -84,7 +84,13 @@
       # `internal` isn't a known output attribute for flakes. It is used here to contain
       # anything that isn't meant to be re-usable.
       # Taken from davidtwco/veritas repository :)
-      internal = { };
+      internal = {
+        # Overlays consumed by the home-manager/NixOS configuration.
+        overlays = forEachSystem (system: [
+          (self.overlay."${system}")
+          (_: _: import inputs.gitignore-nix { lib = inputs.nixpkgs.lib; })
+        ]);
+      };
 
       # Attribute set of hostnames to be evaluated as NixOS configurations. Consumed by
       # `nixos-rebuild` on those hosts.
@@ -103,7 +109,7 @@
       # so they in the flake output `internal.overlays`.
       #
       # These are meant to be consumed by other projects that might import this flake.
-      overlay = { };
+      overlay = forEachSystem (system: _: _: self.packages."${system}");
 
       # Expose the packages defined in this flake, built for any supported systems. These are
       # meant to be consumed by other projects that might import this flake.
