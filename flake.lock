@@ -1,0 +1,153 @@
+{
+  "nodes": {
+    "emacs": {
+      "locked": {
+        "lastModified": 1606738807,
+        "narHash": "sha256-OLUutatHIVeJiAdeS7LQuGHet5k2v82ciJXgMKvpPw0=",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "bd8cca365ef9584106670363afa90b6e02720087",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "master",
+        "repo": "emacs-overlay",
+        "type": "github"
+      }
+    },
+    "gitignore-nix": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1594969032,
+        "narHash": "sha256-nbZfz02QoVe1yYK7EtCV7wMi4VdHzZEoPg20ZSDo9to=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "c4662e662462e7bf3c2a968483478a665d00e717",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "ref": "master",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1606691558,
+        "narHash": "sha256-mkLAmBhiQ7kI7Ezw1ken3ymGolBmEfiO881iFWSGrbg=",
+        "owner": "rycee",
+        "repo": "home-manager",
+        "rev": "c1faa848c5224452660cd6d2e0f4bd3e8d206419",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rycee",
+        "ref": "master",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixos": {
+      "locked": {
+        "lastModified": 1606669556,
+        "narHash": "sha256-9rlqZ5JwnA6nK04vKhV0s5ndepnWL5hpkaTV1b4ASvk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ae47c79479a086e96e2977c61e538881913c0c08",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-20.09",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1606379629,
+        "narHash": "sha256-Km8fqZnhve84HBue9FdGdpXjG2eR8YCJQp1lZstaGRs=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "abfae8841bcf6368c89366a100232e05d676e114",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
+    "nixos-unstable": {
+      "locked": {
+        "lastModified": 1606655114,
+        "narHash": "sha256-sCOycaZWoucJ15RTE31YkNnxAOUWgVO/i/0a9DkACxE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "8ee7c2505f9e7019aa69c8a6313e5f2d32a69f27",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1606752572,
+        "narHash": "sha256-8Vn/kxxjdupAAdSXePaMN71hfUHtRnPntcU7F/oOxs4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ee1a1f8c89cbbf514b4ddd441bf8557f63ab6e3b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nyxt": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1606644049,
+        "narHash": "sha256-eaPvSQ7SRK/4uk7wcTgyYW1OyNBIkbNbokvRNATwDUA=",
+        "owner": "atlas-engineer",
+        "repo": "nyxt",
+        "rev": "48407b36a55075456eec78bb41c36f91c1765cac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "atlas-engineer",
+        "ref": "master",
+        "repo": "nyxt",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "emacs": "emacs",
+        "gitignore-nix": "gitignore-nix",
+        "home-manager": "home-manager",
+        "nixos": "nixos",
+        "nixos-hardware": "nixos-hardware",
+        "nixos-unstable": "nixos-unstable",
+        "nixpkgs": "nixpkgs",
+        "nyxt": "nyxt"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

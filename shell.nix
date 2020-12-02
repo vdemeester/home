@@ -4,7 +4,8 @@ let
   nixos-unstable = sources.pkgs-unstable { };
   nixos = sources.pkgs { };
 in
-pkgs.mkShell {
+pkgs.mkShell
+{
   name = "nix-config";
   buildInputs = with pkgs; [
     cachix
@@ -16,3 +17,6 @@ pkgs.mkShell {
     export NIX_PATH="nixpkgs=${pkgs.path}:nixos=${nixos.path}:nixos-unstable=${nixos-unstable.path}"
   '';
 }
+# (import (fetchTarball https://github.com/edolstra/flake-compat/archive/master.tar.gz) {
+#  src = builtins.fetchGit ./.;
+#}).shellNix
