@@ -28,8 +28,8 @@ rec {
         runHook preInstall
         install -D ${name}/openshift-install $out/bin/openshift-install
         # completions
-        #mkdir -p $out/share/bash-completion/completions/
-        #$out/bin/openshift-install completion bash > $out/share/bash-completion/completions/openshift-install
+        mkdir -p $out/share/bash-completion/completions/
+        $out/bin/openshift-install completion bash > $out/share/bash-completion/completions/openshift-install
         #mkdir -p $out/share/zsh/site-functions
         #$out/bin/openshift-install completion zsh > $out/share/zsh/site-functions/_openshift-install
       '';
