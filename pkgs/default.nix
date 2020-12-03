@@ -111,6 +111,7 @@ rec {
     tkn
     ;
   tkn_oci = pkgs.callPackage ./tkn-oci { };
+  manifest-tool = pkgs.callPackage ./manifest-tool { };
 
   # Upstream
   buildkit = pkgs.callPackage ./buildkit { };

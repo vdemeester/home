@@ -148,6 +148,8 @@
             openshift-install_4_6
             openshift-install
             ;
+
+          manifest-tool = pkgs.callPackage ./pkgs/manifest-tool { };
         });
 
       # defaultPackage.x86_64-linux = self.packages.x86_64-linux.hello;
