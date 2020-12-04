@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchFromGitHub }:
+{ stdenv, lib, fetchFromGitHub, tzdata }:
 
 stdenv.mkDerivation rec {
   pname = "batzconverter";
@@ -14,6 +14,9 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/bin
+    # Some other hard-coded paths to fix:
+    sed -i 's#/usr/share/zoneinfo/#${tzdata}/share/zoneinfo/#g' \
+      batz.sh
     cp batz.sh $out/bin/batz
     chmod +x $out/bin/batz
   '';
