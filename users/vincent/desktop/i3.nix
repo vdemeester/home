@@ -13,7 +13,8 @@ let
       *Shutdown) systemctl -i poweroff
     esac
   '';
-  lockCommand = "${pkgs.i3lock-color}/bin/i3lock-color -c 666666";
+  # lockCommand = "${pkgs.i3lock-color}/bin/i3lock-color -c 666666";
+  lockCommand = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim";
 in
 {
   imports = [
@@ -53,6 +54,8 @@ in
   ];
   programs.rofi.enable = true;
   services = {
+    blueman-applet.enable = true;
+    pasystray.enable = true;
     dunst = {
       enable = true;
       settings = {
@@ -103,6 +106,9 @@ in
       enable = true;
       lockCmd = lockCommand;
       inactiveInterval = 60;
+      xautolockExtraOptions = [
+        "Xautolock.killer: systemctl suspend"
+      ];
     };
     random-background = {
       enable = true;
@@ -184,14 +190,9 @@ in
           action = "IncreaseFontSize";
         }
         {
-          key = "Add";
+          key = "Plus";
           mods = "Control";
           action = "IncreaseFontSize";
-        }
-        {
-          key = "Subtract";
-          mods = "Control";
-          action = "DecreaseFontSize";
         }
         {
           key = "Minus";
