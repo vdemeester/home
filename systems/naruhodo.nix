@@ -62,7 +62,7 @@ in
 
   services.hardware.bolt.enable = true;
   profiles = {
-    desktop.gnome.enable = true;
+    desktop.i3.enable = true;
     laptop.enable = true;
     home = true;
     dev.enable = true;

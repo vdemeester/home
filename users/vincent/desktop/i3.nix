@@ -2,6 +2,7 @@
 
 with lib;
 let
+  # FIXME(change this at some point)
   powermenu = pkgs.writeScript "powermenu.sh" ''
     #!${pkgs.stdenv.shell}
     MENU="$(${pkgs.rofi}/bin/rofi -sep "|" -dmenu -i -p 'System' -location 3 -xoffset -10 -yoffset 32 -width 20 -hide-scrollbar -line-padding 4 -padding 20 -lines 5 <<< "Suspend|Hibernate|Reboot|Shutdown")"
@@ -15,13 +16,36 @@ let
   lockCommand = "${pkgs.i3lock-color}/bin/i3lock-color -c 666666";
 in
 {
+  home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
   home.packages = with pkgs; [
     alacritty
     arandr
+    # TODO switch to betterlockscreen
     i3lock-color
     libnotify
     maim
     slop
+    # Gnome3 relica
+    gnome3.dconf-editor
+    gnome3.pomodoro
+    # FIXME move this elsewhere
+    pop-gtk-theme
+    pop-icon-theme
+    pinentry-gnome
+    # tilix
+
+    aspell
+    aspellDicts.en
+    aspellDicts.fr
+    hunspell
+    hunspellDicts.en_US-large
+    hunspellDicts.en_GB-ize
+    hunspellDicts.fr-any
+    wmctrl
+    xclip
+    xdg-user-dirs
+    xdg_utils
+    xsel
   ];
   programs.rofi.enable = true;
   services = {
@@ -182,7 +206,7 @@ in
     package = pkgs.i3-gaps;
     enable = true;
     config = {
-      fonts = [ "Fira Code 10" ];
+      fonts = [ "Ubuntu Mono 10" ];
       focus = {
         followMouse = false;
       };
@@ -223,8 +247,8 @@ in
         "Mod4+Mod1+46" = "gaps outer current plus 5";
         "Mod4+Mod1+47" = "gaps outer current minus 5";
         # Split
-        "Mod4+43" = "split h";
-        "Mod4+55" = "split v";
+        #"Mod4+43" = "split h";
+        #"Mod4+55" = "split v";
         # Fullscreen
         "Mod4+41" = "fullscreen toggle";
         # Change container layout
@@ -246,7 +270,7 @@ in
         "Mod4+Shift+114" = "focus output right";
         # Custom keybinding
         "Mod4+Shift+32" = "exec ${lockCommand}";
-        "Mod4+Shift+39" = "exec ~/.screenlayout/home-work.sh && systemctl --user start random-background.service";
+        # "Mod4+Shift+39" = "exec ~/.screenlayout/home-work.sh && systemctl --user start random-background.service";
         "Mod4+24" = "border toggle";
       };
       modes = { };
@@ -261,7 +285,7 @@ in
       ];
     };
     extraConfig = ''
-        set $mod Mod4
+      set $mod Mod4
 
       # Use Mouse+$mod to drag floating windows to their wanted position
       floating_modifier $mod
@@ -301,8 +325,8 @@ in
       bindcode $mod+Shift+18 move container to workspace $WS9
       bindcode $mod+Shift+19 move container to workspace $WS0
 
-      assign [class="Firefox" window_role="browser"] → $WS1
-      assign [class="Google-chrome" window_role="browser"] → $WS1
+      #assign [class="Firefox" window_role="browser"] → $WS1
+      #assign [class="Google-chrome" window_role="browser"] → $WS1
 
       ## quick terminal (tmux)
       exec --no-startup-id alacritty --title metask --class metask --command tmux
@@ -385,8 +409,25 @@ in
         }
 
       bindsym $mod+o mode "resize"
+      # System menu
+      set $sysmenu "system:  [s]uspend [l]ock [r]estart [b]lank-screen [p]oweroff reload-[c]onf e[x]it"
+      bindsym $mod+q mode $sysmenu
+      mode $sysmenu {
+          # restart i3 inplace (preserves your layout/session)
+          bindsym s exec ~/.i3/status_scripts/ambisleep; mode "default"
+          bindsym l exec i3lock -c 5a5376; mode "default"
+          bindsym r restart
+          bindsym b exec "xset dpms force off"; mode "default"
+          bindsym p exec systemctl shutdown
+          bindsym c reload; mode "default"
+          bindsym x exit
+          bindsym Return mode "default"
+          bindsym Escape mode "default"
+          bindsym $mod+q mode "default"
+      }
     '';
   };
+  # FIXME switch to polybar ?
   xdg.configFile."i3status/config".text = ''
     # i3status configuration file.
     # see "man i3status" for documentation.
@@ -401,26 +442,10 @@ in
       interval = 2
     }
 
-    #order += "disk /"
-    #order += "run_watch 🐳"
     order += "path_exists 🔑"
-    #order += "wireless _first_"
-    #order += "ethernet _first_"
-    #order += "volume master"
     order += "battery 0"
     order += "load"
     order += "tztime local"
-
-    wireless _first_ {
-      format_up = "W: (%quality at %essid) %ip"
-      format_down = "W: down"
-    }
-
-    ethernet _first_ {
-      # if you use %speed, i3status requires root privileges
-      format_up = "E: %ip (%speed)"
-      format_down = "E: down"
-    }
 
     battery 0 {
       format = "%status %percentage %remaining"
@@ -456,14 +481,6 @@ in
 
     disk "/" {
       format = "%avail"
-    }
-
-    volume master {
-      format = "♪: %volume"
-      format_muted = "♪: muted (%volume)"
-      device = "default"
-      mixer = "Master"
-      mixer_idx = 0
     }
   '';
 }
