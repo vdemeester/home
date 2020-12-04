@@ -51,6 +51,10 @@ dry-build: secrets setup
 switch: secrets
 	./bin/system switch
 
+.PHONY: boot
+boot: secrets
+	./bin/system boot
+
 .PHONY: install-hooks
 install-hooks:
 	if [ -e .git ]; then nix-shell -p git --run 'git config core.hooksPath .githooks'; fi

@@ -47,6 +47,18 @@ function switch() {
         error "Failed to activate system"
 }
 
+function boot() {
+    [ "$#" -eq 0 ] || error "switch"
+    build
+    local switch_bin="$WORK_DIR/bin/switch-to-configuration"
+    sudo nix-env --set \
+        --profile "/nix/var/nix/profiles/system" \
+        "$WORK_DIR" ||
+        error "Failed to activate profile"
+    sudo "$switch_bin" "boot" ||
+        error "Failed to activate system"
+}
+
 function main() {
     for target in $@; do
         $target
