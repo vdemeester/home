@@ -18,6 +18,7 @@ let
 in
 {
   imports = [
+    ./autorandr.nix
     ./dconf.nix
     ./xsession.nix
   ];
@@ -333,12 +334,6 @@ in
       #assign [class="Firefox" window_role="browser"] → $WS1
       #assign [class="Google-chrome" window_role="browser"] → $WS1
 
-      ## quick terminal (tmux)
-      exec --no-startup-id alacritty --title metask --class metask --command tmux
-      for_window [instance="metask"] floating enable;
-      for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position center; move scratchpad
-      bindcode $mod+49 [instance="metask"] scratchpad show
-
       for_window [title="capture"] floating enable;
 
       bindsym XF86MonBrightnessUp exec "xbacklight -inc 10"
@@ -414,6 +409,21 @@ in
         }
 
       bindsym $mod+o mode "resize"
+      ## quick terminal (tmux)
+      exec --no-startup-id alacritty --title metask --class metask --command tmux
+      for_window [instance="metask"] floating enable;
+      for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position center; move scratchpad
+      bindcode $mod+49 [instance="metask"] scratchpad show
+
+      ## scratchpad
+      set $scratchpad "scratchpad: [$]terminal [p]avucontrol"
+      mode $scratchpad {
+           bindcode 49 [instance="metask"] scratchpad show; mode "default"
+           bindcode 33 [class="(?i)pavucontrol"] scratchpad show; mode "default"
+           bindsym Return mode "default"
+           bindsym Escape mode "default"
+      }
+      # bindcode $mod+49 mode $scratchpad
       # System menu
       set $sysmenu "system:  [s]uspend [l]ock [r]estart [b]lank-screen [p]oweroff reload-[c]onf e[x]it"
       bindsym $mod+q mode $sysmenu
