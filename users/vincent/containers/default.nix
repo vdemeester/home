@@ -10,5 +10,6 @@
 
   home.packages = with pkgs; [
     skopeo
+    my.manifest-tool
   ];
 }
