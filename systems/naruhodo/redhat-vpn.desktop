@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=Red Hat VPN
-Exec=redhat-vpn
-Type=Application
-Terminal=false
-Categories=System;
-Icon=seahorse;
