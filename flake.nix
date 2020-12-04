@@ -123,6 +123,7 @@
           ram = pkgs.callPackage ./pkgs/ram { };
           systemd-email = pkgs.callPackage ./pkgs/systemd-email { };
 
+          batzconverter = pkgs.callPackage ./pkgs/batzconverter { };
           # Tekton
           inherit (pkgs.callPackage ./pkgs/tkn { })
             tkn_0_11
