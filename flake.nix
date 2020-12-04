@@ -94,13 +94,29 @@
 
       # Attribute set of hostnames to be evaluated as NixOS configurations. Consumed by
       # `nixos-rebuild` on those hosts.
+      # TODO naruhodo (hokkaido?) wakasu okinama sakhalin kerkouane
+      # TODO raspberry pi 8G x 3 (name them too)
       nixosConfigurations = { };
 
       # Import the modules exported by this flake.
+      # containerd, buildkit are interesting module to export from here
       nixosModules = { };
 
       # Expose a dev shell which contains tools for working on this repository.
-      devShell = { };
+      devShell = forEachSystem
+        (system:
+          with pkgsBySystem."${system}";
+
+          mkShell {
+            name = "home";
+            buildInputs = [
+              cachix
+              git-crypt
+              nixpkgs-fmt
+              gnumake
+            ];
+          }
+        );
 
       # Expose an overlay which provides the packages defined by this repository.
       #
