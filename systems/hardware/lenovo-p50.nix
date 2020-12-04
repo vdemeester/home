@@ -56,6 +56,7 @@ in
     udev.extraRules = ''
       # Rules for Lenovo Thinkpad WS Dock
       SUBSYSTEM=="usb", ACTION=="add|remove", ENV{ID_VENDOR}=="17ef", ENV{ID_MODEL}=="305a", RUN+="${pkgs.vde-thinkpad}/bin/dock"
+      ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
     '';
   };
 }

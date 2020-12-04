@@ -9,7 +9,7 @@ in
     ./thinkpad.nix
   ];
   boot = {
-    initrd.availableKernelModules = [ "nvme" "rtsx_pci_sdmmc" ];
+    initrd.availableKernelModules = [ "nvme" "rtsx_pci_sdmmc" "thunderbolt" ];
   };
   hardware = {
     enableAllFirmware = true;
@@ -49,8 +49,14 @@ in
         DISK_DEVICES="nvme0n1p3"
       '';
     };
+    udev.extraRules = ''
+      # Rules for Lenovo Thinkpad WS Dock
+      # SUBSYSTEM=="usb", ACTION=="add|remove", ENV{ID_VENDOR}=="17ef", ENV{ID_MODEL}=="305a", RUN+="${pkgs.vde-thinkpad}/bin/dock"
+      ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
+    '';
     xserver = {
-      dpi = 128;
+      # dpi = 128;
+      dpi = 96;
     };
   };
 }

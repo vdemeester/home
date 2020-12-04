@@ -17,7 +17,22 @@ in
       avahi.enable = true;
     };
     services = {
-      xserver.enable = true;
+      blueman.enable = true;
+      xserver = {
+        enable = true;
+        displayManager = {
+          defaultSession = "none+i3";
+          lightdm.enable = true;
+          lightdm.greeters.mini.enable = true;
+          lightdm.greeters.mini.user = "vincent";
+        };
+        windowManager.i3.enable = true;
+      };
+      dbus = {
+        enable = true;
+        # socketActivated = true;
+        packages = [ pkgs.gnome3.dconf ];
+      };
     };
   };
 }

@@ -16,6 +16,10 @@ let
   lockCommand = "${pkgs.i3lock-color}/bin/i3lock-color -c 666666";
 in
 {
+  imports = [
+    ./dconf.nix
+    ./xsession.nix
+  ];
   home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
   home.packages = with pkgs; [
     alacritty
