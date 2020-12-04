@@ -113,45 +113,47 @@
 
       # Expose the packages defined in this flake, built for any supported systems. These are
       # meant to be consumed by other projects that might import this flake.
-      packages = forEachSystem (system:
-        let
-          pkgs = pkgsBySystem."${system}";
-        in
-        {
-          ape = pkgs.callPackage ./pkgs/ape { };
-          nr = pkgs.callPackage ./pkgs/nr { };
-          ram = pkgs.callPackage ./pkgs/ram { };
-          systemd-email = pkgs.callPackage ./pkgs/systemd-email { };
+      packages = forEachSystem
+        (system:
+          let
+            pkgs = pkgsBySystem."${system}";
+          in
+          {
+            ape = pkgs.callPackage ./pkgs/ape { };
+            nr = pkgs.callPackage ./pkgs/nr { };
+            ram = pkgs.callPackage ./pkgs/ram { };
+            systemd-email = pkgs.callPackage ./pkgs/systemd-email { };
 
-          batzconverter = pkgs.callPackage ./pkgs/batzconverter { };
-          # Tekton
-          inherit (pkgs.callPackage ./pkgs/tkn { })
-            tkn_0_11
-            tkn_0_12
-            tkn_0_13
-            tkn_0_14
-            tkn
-            ;
-          # OpenShift
-          inherit (pkgs.callPackage ./pkgs/oc { })
-            oc_4_1
-            oc_4_2
-            oc_4_3
-            oc_4_4
-            oc_4_5
-            oc_4_6
-            oc
-            ;
-          inherit (pkgs.callPackage ./pkgs/openshift-install { })
-            openshift-install_4_3
-            openshift-install_4_4
-            openshift-install_4_5
-            openshift-install_4_6
-            openshift-install
-            ;
+            batzconverter = pkgs.callPackage ./pkgs/batzconverter { };
+            # Tekton
+            inherit (pkgs.callPackage ./pkgs/tkn { })
+              tkn_0_11
+              tkn_0_12
+              tkn_0_13
+              tkn_0_14
+              tkn
+              ;
 
-          manifest-tool = pkgs.callPackage ./pkgs/manifest-tool { };
-        });
+            manifest-tool = pkgs.callPackage ./pkgs/manifest-tool { };
+          } // optionalAttrs (system == "x86_64-linux") {
+            # OpenShift
+            inherit (pkgs.callPackage ./pkgs/oc { })
+              oc_4_1
+              oc_4_2
+              oc_4_3
+              oc_4_4
+              oc_4_5
+              oc_4_6
+              oc
+              ;
+            inherit (pkgs.callPackage ./pkgs/openshift-install { })
+              openshift-install_4_3
+              openshift-install_4_4
+              openshift-install_4_5
+              openshift-install_4_6
+              openshift-install
+              ;
+          });
 
       # defaultPackage.x86_64-linux = self.packages.x86_64-linux.hello;
 
