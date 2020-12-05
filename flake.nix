@@ -1,5 +1,11 @@
 # flake.nix --- the heart of my home
 #
+# Author:  Vincent Demeester <vincent@sbr.pm>
+# URL:     https://git.srb.ht/~vdemeester/home
+# License: GPLv3
+#
+# Welcome to ground zero. Where the whole flake gets set up and all its modules
+# are loaded.
 {
   description = ''
     home is the personal mono-repo of Vincent Demeester; containing the declarative configuration of
@@ -71,14 +77,14 @@
     with inputs.nixpkgs.lib;
     let
       forEachSystem = genAttrs [ "x86_64-linux" "aarch64-linux" ];
-      pkgsBySystem = forEachSystem
-        (system:
-          import inputs.nixpkgs {
-            inherit system;
-            config = import ./nix/config.nix;
-            overlays = self.internal.overlays."${system}";
-          }
-        );
+      mkPkgs = pkgs: system: import pkgs {
+        inherit system;
+        config = import ./nix/config.nix;
+        overlays = self.internal.overlays."${system}";
+      };
+      unstablePkgsBySystem = forEachSystem (mkPkgs inputs.nixos-unstable);
+      stablePkgsBySystem = forEachSystem (mkPkgs inputs.nixos);
+      pkgsBySystem = forEachSystem (mkPkgs inputs.nixpkgs);
     in
     {
       # `internal` isn't a known output attribute for flakes. It is used here to contain
@@ -135,6 +141,8 @@
             pkgs = pkgsBySystem."${system}";
           in
           {
+            apeStable = stablePkgsBySystem."${system}".callPackage ./pkgs/ape { };
+            apeUnstable = unstablePkgsBySystem."${system}".callPackage ./pkgs/ape { };
             ape = pkgs.callPackage ./pkgs/ape { };
             nr = pkgs.callPackage ./pkgs/nr { };
             ram = pkgs.callPackage ./pkgs/ram { };
