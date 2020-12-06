@@ -77,6 +77,8 @@
     with inputs.nixpkgs.lib;
     let
       forEachSystem = genAttrs [ "x86_64-linux" "aarch64-linux" ];
+
+      # Packages
       mkPkgs = pkgs: system: import pkgs {
         inherit system;
         config = import ./nix/config.nix;
@@ -85,6 +87,12 @@
       unstablePkgsBySystem = forEachSystem (mkPkgs inputs.nixos-unstable);
       stablePkgsBySystem = forEachSystem (mkPkgs inputs.nixos);
       pkgsBySystem = forEachSystem (mkPkgs inputs.nixpkgs);
+
+      # NixOS configurations
+      mkNixOsConfiguration = name: { pkgs, system, config }:
+        nameValuePair name (nixoSystem {
+          inherit system;
+        });
     in
     {
       # `internal` isn't a known output attribute for flakes. It is used here to contain
@@ -100,9 +108,14 @@
 
       # Attribute set of hostnames to be evaluated as NixOS configurations. Consumed by
       # `nixos-rebuild` on those hosts.
-      # TODO naruhodo (hokkaido?) wakasu okinama sakhalin kerkouane
-      # TODO raspberry pi 8G x 3 (name them too)
-      nixosConfigurations = { };
+      nixosConfigurations = mapAttrs' mkNixOsConfiguration {
+        naruhodo = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; config = ./systems/naruhodo.nix; };
+        wakasu = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; config = ./systems/naruhodo.nix; };
+        okinawa = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/okinawa.nix; };
+        sakhalin = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/sakhalin.nix; };
+        kerkouane = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/kerkouane.nix; };
+        # TODO raspberry pi 8G x 3 (name them too)
+      };
 
       # Import the modules exported by this flake.
       # containerd, buildkit are interesting module to export from here
