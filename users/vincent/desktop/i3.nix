@@ -53,7 +53,58 @@ in
     xdg_utils
     xsel
   ];
-  programs.rofi.enable = true;
+  xdg.configFile."rofi/slate.rasi".text = ''
+    * {
+      background-color: #282C33;
+      border-color: #2e343f;
+      text-color: #8ca0aa;
+      spacing: 0;
+      width: 512px;
+    }
+
+    inputbar {
+      border: 0 0 1px 0;
+      children: [prompt,entry];
+    }
+
+    prompt {
+      padding: 16px;
+      border: 0 1px 0 0;
+    }
+
+    textbox {
+      background-color: #2e343f;
+      border: 0 0 1px 0;
+      border-color: #282C33;
+      padding: 8px 16px;
+    }
+
+    entry {
+      padding: 16px;
+    }
+
+    listview {
+      cycle: false;
+      margin: 0 0 -1px 0;
+      scrollbar: false;
+    }
+
+    element {
+      border: 0 0 1px 0;
+      padding: 16px;
+    }
+
+    element selected {
+      background-color: #2e343f;
+    }
+  '';
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi.override { plugins = [ pkgs.rofi-emoji pkgs.rofi-menugen pkgs.rofi-mpd ]; };
+    font = "Ubuntu Mono 14";
+    terminal = "${pkgs.alacritty}/bin/alacritty";
+    theme = "slate";
+  };
   services = {
     blueman-applet.enable = true;
     pasystray.enable = true;
@@ -230,7 +281,8 @@ in
       };
       keycodebindings = {
         "Mod4+Shift+24" = "kill";
-        "Mod4+33" = "exec \"${pkgs.rofi}/bin/rofi -show run -modi 'run,window' -kb-row-select 'Tab' -kb-row-tab '' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
+        "Mod4+33" = "exec \"${pkgs.rofi}/bin/rofi -show combi -modi 'run,window,combi' -kb-row-select 'Tab' -kb-row-tab '' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
+        # "Mod4+space" = "";
         # focus window
         "Mod4+44" = "focus left";
         "Mod4+45" = "focus down";
