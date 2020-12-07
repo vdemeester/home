@@ -1,6 +1,29 @@
+{ pkgs, ... }:
+
 {
   programs.firefox = {
     enable = true;
+    # Temporary fix
+    # https://github.com/nix-community/home-manager/issues/1641
+    # (https://github.com/NixOS/nixpkgs/pull/105796)
+    package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+      extraPolicies = {
+        ExtensionSettings = { };
+        CaptivePortal = false;
+        DisableFirefoxStudies = true;
+        DisablePocket = true;
+        DisableTelemetry = true;
+        # DisableFirefoxAccounts = true;
+        FirefoxHome = {
+          Pocket = false;
+          # Snippets = false;
+        };
+        UserMessaging = {
+          ExtensionRecommendations = false;
+          SkipOnboarding = true;
+        };
+      };
+    };
     profiles.default = {
       id = 0;
       isDefault = true;
