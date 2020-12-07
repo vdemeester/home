@@ -9,6 +9,19 @@ in
     hooks.postswitch."notify-i3" = "${config.xsession.windowManager.i3.package}/bin/i3-msg restart";
     hooks.postswitch."reset-background" = "systemctl --user start random-background.service";
     profiles = {
+      on-the-move = {
+        fingerprint = {
+          eDP-1 = thinkpadt480s;
+        };
+        config = {
+          eDP-1 = {
+            enable = true;
+            primary = true;
+            position = "0x0";
+            mode = "1920x1080";
+          };
+        };
+      };
       home = {
         fingerprint = {
           eDP-1 = thinkpadt480s;
