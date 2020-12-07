@@ -119,7 +119,11 @@
 
       # Import the modules exported by this flake.
       # containerd, buildkit are interesting module to export from here
-      nixosModules = { };
+      nixosModules = {
+        # FIXME move this to services
+        containerd = import ./systems/modules/virtualisation/containerd.nix;
+        buildkit = import ./systems/modules/virtualisation/buildkit.nix;
+      };
 
       # Expose a dev shell which contains tools for working on this repository.
       devShell = forEachSystem
