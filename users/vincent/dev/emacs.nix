@@ -119,7 +119,7 @@ let
     vterm
     web-mode
     wgrep
-    whole-line-or-region
+    #whole-line-or-region
     with-editor
     xterm-color
     yaml-mode
