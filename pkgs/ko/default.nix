@@ -1,6 +1,6 @@
-{ stdenv, lib, buildGoPackage, fetchFromGitHub }:
+{ stdenv, lib, buildGoModule, fetchFromGitHub }:
 
-buildGoPackage rec {
+buildGoModule rec {
   pname = "ko";
   name = "${pname}-${version}";
   version = "0.6.2";
@@ -13,6 +13,9 @@ buildGoPackage rec {
     rev = "v${version}";
     sha256 = "0r8lwr431zlf04yr8avaw7kxf4bz0hrrdv493knla66qbyzj9fsx";
   };
+  vendorSha256 = null;
+  # TestGoBuild{,Index} doesn't work because it assumes a .git
+  doCheck = false;
 
   meta = with stdenv.lib; {
     homepage = https://github.com/google/ko;
