@@ -41,12 +41,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.groups = [
-      {
-        name = "buildkit";
-        gid = 350;
-      }
-    ];
+    users.groups.buildkit.gid = 350;
     environment.systemPackages = [ cfg.package ];
     systemd.packages = [ cfg.package ];
 

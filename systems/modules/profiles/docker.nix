@@ -21,8 +21,12 @@ in
     };
   };
   config = mkIf cfg.enable {
-    profiles.containerd.enable = true;
     virtualisation = {
+      containerd.enable = true;
+      buildkitd = {
+        enable = true;
+        extraOptions = "--oci-worker=false --containerd-worker=true";
+      };
       docker = {
         enable = true;
         package = cfg.package;

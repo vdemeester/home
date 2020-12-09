@@ -25,7 +25,7 @@ in
 
     extraPackages = mkOption {
       type = types.listOf types.package;
-      default = [ pkgs.runc ];
+      default = [ pkgs.runc pkgs.cni pkgs.cni-plugins ];
       description = "List of packages to be added to containerd service path";
     };
 

@@ -3,8 +3,6 @@
     # Remove "nixos" from here
     ./avahi.nix
     ./base.nix
-    ./buildkit.nix
-    ./containerd.nix
     ./desktop.nix
     ./dev.nix
     ./docker.nix
