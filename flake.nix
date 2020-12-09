@@ -6,6 +6,7 @@
 #
 # Welcome to ground zero. Where the whole flake gets set up and all its modules
 # are loaded.
+#
 {
   description = ''
     home is the personal mono-repo of Vincent Demeester; containing the declarative configuration of
@@ -92,6 +93,90 @@
       mkNixOsConfiguration = name: { pkgs, system, config }:
         nameValuePair name (nixoSystem {
           inherit system;
+          modules = [
+            ({ name, ... }: {
+              # Set the hostname to the name of the configuration being applied (since the
+              # configuration being applied is determined by the hostname).
+              networking.hostName = name;
+            })
+            ({ inputs, ... }: {
+              # Use the nixpkgs from the flake.
+              nixpkgs = { pkgs = pkgsBySystem."${system}"; };
+
+              # For compatibility with nix-shell, nix-build, etc.
+              environment.etc.nixpkgs.source = inputs.nixpkgs;
+              nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
+            })
+            ({ pkgs, ... }: {
+              # Don't rely on the configuration to enable a flake-compatible version of Nix.
+              nix = {
+                package = pkgs.nixFlakes;
+                extraOptions = "experimental-features = nix-command flakes";
+              };
+            })
+            ({ lib, ... }: {
+              # Set the system configuration revision.
+              system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+            })
+            ({ inputs, ... }: {
+              # Re-expose self and nixpkgs as flakes.
+              nix.registry = {
+                self.flake = inputs.self;
+                nixpkgs = {
+                  from = { id = "nixpkgs"; type = "indirect"; };
+                  flake = inputs.nixpkgs;
+                };
+              };
+            })
+            (import ./systems/modules)
+            (import config)
+          ];
+          specialArgs = { inherit name inputs; };
+        });
+
+      # home-manager configurations
+      mkHomeManagerConfiguration = name: { system, config }:
+        nameValuePair name ({ ... }: {
+          imports = [
+            (import ./home/configs)
+            (import ./home/modules)
+            (import ./home/profiles)
+            (import config)
+          ];
+          # For compatibility with nix-shell, nix-build, etc.
+          home.file.".nixpkgs".source = inputs.nixpkgs;
+          systemd.user.sessionVariables."NIX_PATH" =
+            mkForce "nixpkgs=$HOME/.nixpkgs\${NIX_PATH:+:}$NIX_PATH";
+
+          # Use the same Nix configuration throughout the system.
+          xdg.configFile."nixpkgs/config.nix".source = ./nix/config.nix;
+
+          # Re-expose self and nixpkgs as flakes.
+          xdg.configFile."nix/registry.json".text = builtins.toJSON {
+            version = 2;
+            flakes =
+              let
+                toInput = input:
+                  {
+                    type = "path";
+                    path = input.outPath;
+                  } // (
+                    filterAttrs
+                      (n: _: n == "lastModified" || n == "rev" || n == "revCount" || n == "narHash")
+                      input
+                  );
+              in
+              [
+                {
+                  from = { id = "self"; type = "indirect"; };
+                  to = toInput inputs.self;
+                }
+                {
+                  from = { id = "nixpkgs"; type = "indirect"; };
+                  to = toInput inputs.nixpkgs;
+                }
+              ];
+          };
         });
     in
     {
@@ -99,6 +184,27 @@
       # anything that isn't meant to be re-usable.
       # Taken from davidtwco/veritas repository :)
       internal = {
+
+        # Expose the development shells defined in the repository, run these with:
+        #
+        # nix develop 'self#devShells.x86_64-linux.cargo'
+        devShells = forEachSystem (system:
+          let
+            pkgs = pkgsBySystem."${system}";
+          in
+          {
+            # FIXME define your own here
+            cargo = import ./nix/shells/cargo.nix { inherit pkgs; };
+          }
+        );
+
+        # Attribute set of hostnames to home-manager modules with the entire configuration for
+        # that host - consumed by the home-manager NixOS module for that host (if it exists)
+        # or by `mkHomeManagerHostConfiguration` for home-manager-only hosts.
+        homeManagerConfigurations = mapAttrs' mkHomeManagerConfiguration {
+          naruhodo = { system = "x86_64-linux"; config = ./home/naruhodo.nix; };
+        };
+
         # Overlays consumed by the home-manager/NixOS configuration.
         overlays = forEachSystem (system: [
           (self.overlay."${system}")
@@ -176,6 +282,7 @@
               ;
 
             manifest-tool = pkgs.callPackage ./pkgs/manifest-tool { };
+            ko = pkgs.callPackage ./pkgs/ko { };
           } // optionalAttrs (system == "x86_64-linux") {
             # OpenShift
             inherit (pkgs.callPackage ./pkgs/oc { })
