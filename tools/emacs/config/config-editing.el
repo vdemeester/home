@@ -294,10 +294,5 @@ If region is active, add its contents to the new buffer."
   :diminish
   :hook (prog-mode-hook . subword-mode))
 
-(use-package whole-line-or-region
-  :unless noninteractive
-  :config
-  (whole-line-or-region-global-mode))
-
 (provide 'config-editing)
 ;;; config-editing.el ends here
