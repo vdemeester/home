@@ -32,7 +32,9 @@ The EShell is renamed to match that directory to make multiple windows easier."
 
   ;; Handy aliases
   (defalias 'ff 'find-file)
+  (defalias 'emacs 'find-file)
   (defalias 'e 'find-file)
+  (defalias 'ec 'find-file)
   (defalias 'd 'dired)
 
   (defun eshell/gs (&rest args)
