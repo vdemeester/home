@@ -14,20 +14,59 @@ the individual [[file:systems][systems]], as well as [[file:default.nix][default
 This will be a all-time work-in-progress, so please beware that things might change
 dramatically or even not working anymore 😛.
 
-** Systems
+** =/systems=
 
 This holds the configuration of my different systems. It is meant to be
 position-independent, meaning there is no moving around of ~configuration.nix~. For the
 configurations' entry points see the individual [[file:systems][systems]], as well as [[file:default.nix][default.nix]].
 
-** Tools
+*** =/hosts=
+
+This is the configuration for each hosts. It should be as simple as enabling some profiles
+and some ad-hoc very specific configuration.
+
+*** =/modules=
+
+This is where all configuration that can be used across different system would lend. These
+are not system dependent and should be configurable.
+
+*** =/profiles=
+
+This is where profiles enable/disable and configure modules (defined in NixOS or in
+here). Examples are `developement`, …
+
+** =/home=
+
+Users configuration, for [[https://nixos.org][NixOS]] or not and using home-manager.
+
+
+
+*** =/hosts=
+
+This is the configuration for each hosts. It should be as simple as enabling some profiles
+and some ad-hoc very specific configuration.
+
+*** =/modules=
+
+This is where all configuration that can be used across different system would lend. These
+are not system dependent and should be configurable.
+
+*** =/profiles=
+
+This is where profiles enable/disable and configure modules (defined in NixOS or in
+here). Examples are `developement`, …
+
+** =/nix=
+
+Nix configurations, packages definitions, overlays.
+
+** =/tools=
 
 Those are tools I have written for my personal usage.
 
-** User(s)
+** =/www=
 
-Users configuration, for [[https://nixos.org][NixOS]] and using home-manager.
-
+Website sources and builders/deployers.
 
 * References
 

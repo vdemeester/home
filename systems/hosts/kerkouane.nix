@@ -4,9 +4,9 @@ with lib;
 let
   hostname = "kerkouane";
 
-  networkingConfigPath = ../networking.nix;
+  networkingConfigPath = ../../networking.nix;
   hasNetworkingConfig = (builtins.pathExists networkingConfigPath);
-  secretPath = ../secrets/machines.nix;
+  secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
   sshPort = if secretCondition then (import secretPath).ssh.kerkouane.port else 22;
@@ -60,9 +60,9 @@ in
 {
   imports = [
     (sources.nixos + "/nixos/modules/profiles/qemu-guest.nix")
-    ./modules
-    (import ../users).vincent
-    (import ../users).root
+    ../modules
+    (import ../../users).vincent
+    (import ../../users).root
   ]
   # digitalocean specifics
   ++ optionals hasNetworkingConfig [ networkingConfigPath ];

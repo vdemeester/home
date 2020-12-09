@@ -1,38 +1,18 @@
-# Systemd services for containerd.
-
 { config, lib, pkgs, ... }:
-
-with lib;
 let
-
   cfg = config.virtualisation.containerd;
 
+  inherit (lib) mkOption types mkIf;
 in
 {
-  ###### interface
-
   options.virtualisation.containerd = {
-    enable =
-      mkOption {
-        type = types.bool;
-        default = false;
-        description =
-          ''
-            This option enables containerd, a daemon that manages
-            linux containers.
-          '';
-      };
-
-    listenOptions =
-      mkOption {
-        type = types.listOf types.str;
-        default = [ "/run/containerd/containerd.sock" ];
-        description =
-          ''
-            A list of unix and tcp containerd should listen to. The format follows
-            ListenStream as described in systemd.socket(5).
-          '';
-      };
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        This option enables containerd, a daemon that manages linux containers.
+      '';
+    };
 
     package = mkOption {
       default = pkgs.containerd;
@@ -43,25 +23,22 @@ in
       '';
     };
 
-    packages = mkOption {
+    extraPackages = mkOption {
       type = types.listOf types.package;
       default = [ pkgs.runc ];
       description = "List of packages to be added to containerd service path";
     };
 
-    extraOptions =
-      mkOption {
-        type = types.separatedString " ";
-        default = "";
-        description =
-          ''
-            The extra command-line options to pass to
-            <command>containerd</command> daemon.
-          '';
-      };
+    extraOptions = mkOption {
+      type = types.separatedString " ";
+      default = "";
+      description =
+        ''
+          The extra command-line options to pass to
+          <command>containerd</command> daemon.
+        '';
+    };
   };
-
-  ###### implementation
 
   config = mkIf cfg.enable {
     environment.systemPackages = [ cfg.package ];
@@ -78,7 +55,7 @@ in
           ''
         ];
       };
-      path = [ cfg.package ] ++ cfg.packages;
+      path = [ cfg.package ] ++ cfg.extraPackages;
     };
 
 
@@ -86,7 +63,7 @@ in
       description = "Containerd Socket for the API";
       wantedBy = [ "sockets.target" ];
       socketConfig = {
-        ListenStream = cfg.listenOptions;
+        ListenStream = "/run/containerd/containerd.sock";
         SocketMode = "0660";
         SocketUser = "root";
         SocketGroup = "root";

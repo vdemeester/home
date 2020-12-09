@@ -128,7 +128,9 @@
                 };
               };
             })
-            (import ./systems/modules)
+            # FIXME remove flake suffix once migrated
+            (import ./systems/modules/default.flake.nix)
+            (import ./systems/profiles)
             (import config)
           ];
           specialArgs = { inherit name inputs; };
@@ -138,7 +140,6 @@
       mkHomeManagerConfiguration = name: { system, config }:
         nameValuePair name ({ ... }: {
           imports = [
-            (import ./home/configs)
             (import ./home/modules)
             (import ./home/profiles)
             (import config)
@@ -215,18 +216,19 @@
       # Attribute set of hostnames to be evaluated as NixOS configurations. Consumed by
       # `nixos-rebuild` on those hosts.
       nixosConfigurations = mapAttrs' mkNixOsConfiguration {
-        naruhodo = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; config = ./systems/naruhodo.nix; };
-        wakasu = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; config = ./systems/naruhodo.nix; };
-        okinawa = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/okinawa.nix; };
-        sakhalin = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/sakhalin.nix; };
-        kerkouane = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/kerkouane.nix; };
+        # FIXME remove .flake "suffix" once they all got migrated
+        naruhodo = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; config = ./systems/hosts/naruhodo.flake.nix; };
+        wakasu = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; config = ./systems/hosts/waksu.flake.nix; };
+        okinawa = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/hosts/okinawa.flake.nix; };
+        sakhalin = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/hosts/sakhalin.flake.nix; };
+        kerkouane = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/hosts/kerkouane.flake.nix; };
         # TODO raspberry pi 8G x 3 (name them too)
+        # TODO VMs
       };
 
       # Import the modules exported by this flake.
       # containerd, buildkit are interesting module to export from here
       nixosModules = {
-        # FIXME move this to services
         containerd = import ./systems/modules/virtualisation/containerd.nix;
         buildkit = import ./systems/modules/virtualisation/buildkit.nix;
       };

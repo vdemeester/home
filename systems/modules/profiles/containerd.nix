@@ -41,7 +41,7 @@ in
       containerd = {
         enable = true;
         package = cfg.package;
-        packages = [ cfg.runcPackage ];
+        extraPackages = [ cfg.runcPackage ];
       };
     };
   };

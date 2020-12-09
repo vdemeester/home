@@ -3,7 +3,7 @@
 with lib;
 let
   hostname = "okinawa";
-  secretPath = ../secrets/machines.nix;
+  secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
   ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
@@ -14,10 +14,10 @@ let
 in
 {
   imports = [
-    ./hardware/gigabyte-brix.nix
-    ./modules
-    (import ../users).vincent
-    (import ../users).root
+    ../hardware/gigabyte-brix.nix
+    ../modules
+    (import ../../users).vincent
+    (import ../../users).root
   ];
 
   fileSystems."/" = {
@@ -69,25 +69,25 @@ in
           # home
           name = "home";
           slaves = [ ];
-          file = pkgs.mkSecret ../secrets/db.home;
+          file = pkgs.mkSecret ../../secrets/db.home;
         }
         {
           # home.reverse
           name = "192.168.1.in-addr.arpa";
           slaves = [ ];
-          file = pkgs.mkSecret ../secrets/db.192.168.1;
+          file = pkgs.mkSecret ../../secrets/db.192.168.1;
         }
         {
           # vpn
           name = "vpn";
           slaves = [ ];
-          file = pkgs.mkSecret ../secrets/db.vpn;
+          file = pkgs.mkSecret ../../secrets/db.vpn;
         }
         {
           # vpn.reverse
           name = "10.100.0.in-addr.arpa";
           slaves = [ ];
-          file = pkgs.mkSecret ../secrets/db.10.100.0;
+          file = pkgs.mkSecret ../../secrets/db.10.100.0;
         }
       ];
     };

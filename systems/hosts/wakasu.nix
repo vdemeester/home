@@ -3,7 +3,7 @@
 with lib;
 let
   hostname = "wakasu";
-  secretPath = ../secrets/machines.nix;
+  secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
   ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
@@ -14,10 +14,10 @@ let
 in
 {
   imports = [
-    ./hardware/lenovo-p50.nix
-    ./modules
-    (import ../users).vincent
-    (import ../users).root
+    ../hardware/lenovo-p50.nix
+    ../modules
+    (import ../../users).vincent
+    (import ../../users).root
   ];
 
   networking = {

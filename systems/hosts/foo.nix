@@ -3,14 +3,15 @@
 with lib;
 let
   hostname = "foo";
-  secretPath = ../secrets/machines.nix;
+  secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 in
 {
   imports = [
-    ./modules
-    (import ../users).vincent
-    (import ../users).root
+    ../modules
+    (import ../../users).vincent
+    (import ....//users
+    ).root
   ];
 
   nix.maxJobs = 2;

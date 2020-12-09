@@ -7,19 +7,19 @@
 with builtins; with lib;
 let
   /*
-  mkNixOS: make a nixos system build with the given name and cfg.
+    mkNixOS: make a nixos system build with the given name and cfg.
 
-  cfg is an attributeSet:
-  - arch is architecture
-  - type is weither we want to use nixos (stable) or nixos-unstable
+    cfg is an attributeSet:
+    - arch is architecture
+    - type is weither we want to use nixos (stable) or nixos-unstable
 
-  Example:
-    hokkaido = { arch = "x86_64-linux"; };
-    honshu = { arch = "x86_64-linux"; type = "unstable"; };
-  */
+    Example:
+      hokkaido = { arch = "x86_64-linux"; };
+      honshu = { arch = "x86_64-linux"; type = "unstable"; };
+    */
   mkNixOS = name: cfg:
     let
-      configuration = ./systems + "/${name}.nix";
+      configuration = ./systems + "/hosts/${name}.nix";
       system = cfg.arch;
       # If type == unstable, use nixos-unstable (pkgs-unstable) otherwise use nixos (pkgs)
       p =

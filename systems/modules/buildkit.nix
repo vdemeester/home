@@ -1,33 +1,18 @@
 { config, lib, pkgs, ... }:
-
-with lib;
 let
   cfg = config.virtualisation.buildkitd;
+  inherit (lib) mkOption mkIf types;
 in
 {
-  ###### interface
-
   options.virtualisation.buildkitd = {
-    enable =
-      mkOption {
-        type = types.bool;
-        default = false;
-        description =
-          ''
-            This option enables buildkitd
-          '';
-      };
-
-    listenOptions =
-      mkOption {
-        type = types.listOf types.str;
-        default = [ "/run/buildkitd/buildkitd.sock" ];
-        description =
-          ''
-            A list of unix and tcp buildkitd should listen to. The format follows
-            ListenStream as described in systemd.socket(5).
-          '';
-      };
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+      description =
+        ''
+          This option enables buildkitd
+        '';
+    };
 
     package = mkOption {
       default = pkgs.buildkit;
@@ -44,19 +29,16 @@ in
       description = "List of packages to be added to buildkitd service path";
     };
 
-    extraOptions =
-      mkOption {
-        type = types.separatedString " ";
-        default = "";
-        description =
-          ''
-            The extra command-line options to pass to
-            <command>buildkitd</command> daemon.
-          '';
-      };
+    extraOptions = mkOption {
+      type = types.separatedString " ";
+      default = "";
+      description =
+        ''
+          The extra command-line options to pass to
+          <command>buildkitd</command> daemon.
+        '';
+    };
   };
-
-  ###### implementation
 
   config = mkIf cfg.enable {
     users.groups = [
@@ -89,7 +71,7 @@ in
       description = "Buildkitd Socket for the API";
       wantedBy = [ "sockets.target" ];
       socketConfig = {
-        ListenStream = cfg.listenOptions;
+        ListenStream = "/run/buildkitd/buildkitd.sock";
         SocketMode = "0660";
         SocketUser = "root";
         SocketGroup = "buildkit";
