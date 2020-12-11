@@ -130,7 +130,7 @@
             })
             # FIXME remove flake suffix once migrated
             (import ./systems/modules/default.flake.nix)
-            (import ./systems/profiles)
+            # (import ./systems/profiles)
             (import config)
           ];
           specialArgs = { inherit name inputs; };
