@@ -57,7 +57,7 @@ in
       daemonIONiceLevel = 5;
       daemonNiceLevel = 10;
       # if hydra is down, don't wait forever
-      package = pkgs.nixFlakes;
+      # package = pkgs.nixFlakes;
       extraOptions = ''
         connect-timeout = 20
         build-cores = 0
@@ -85,6 +85,9 @@ in
       trustedUsers = [ "root" "@wheel" ];
       useSandbox = true;
     };
+
+    # `nix-daemon` will hit the stack limit when using `nixFlakes`.
+    systemd.services.nix-daemon.serviceConfig."LimitSTACK" = "infinity";
 
     nixpkgs = {
       overlays = [

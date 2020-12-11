@@ -1,6 +1,5 @@
 {
   imports = [
-    # Remove "nixos" from here
     ./avahi.nix
     ./base.nix
     ./desktop.nix

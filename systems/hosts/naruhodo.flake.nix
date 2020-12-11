@@ -13,12 +13,14 @@ let
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
 in
 {
+  /*
   imports = [
     ../hardware/thinkpad-t480s.nix
     ../modules
     (import ../../users).vincent
     (import ../../users).root
   ];
+  */
 
   fileSystems."/" =
     {
