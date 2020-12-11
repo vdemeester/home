@@ -57,6 +57,7 @@ in
       daemonIONiceLevel = 5;
       daemonNiceLevel = 10;
       # if hydra is down, don't wait forever
+      package = pkgs.nixFlakes;
       extraOptions = ''
         connect-timeout = 20
         build-cores = 0
