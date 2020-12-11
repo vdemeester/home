@@ -20,6 +20,9 @@ This holds the configuration of my different systems. It is meant to be
 position-independent, meaning there is no moving around of ~configuration.nix~. For the
 configurations' entry points see the individual [[file:systems][systems]], as well as [[file:default.nix][default.nix]].
 
+/Note: to test =flakes= use =nix build
+'.#nixosConfigurations.foo.config.system.build.toplevel'=./
+
 *** =/hosts=
 
 This is the configuration for each hosts. It should be as simple as enabling some profiles
@@ -38,7 +41,6 @@ here). Examples are `developement`, …
 ** =/home=
 
 Users configuration, for [[https://nixos.org][NixOS]] or not and using home-manager.
-
 
 
 *** =/hosts=
