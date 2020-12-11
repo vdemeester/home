@@ -91,7 +91,7 @@
 
       # NixOS configurations
       mkNixOsConfiguration = name: { pkgs, system, config }:
-        nameValuePair name (nixoSystem {
+        nameValuePair name (nixosSystem {
           inherit system;
           modules = [
             ({ name, ... }: {
