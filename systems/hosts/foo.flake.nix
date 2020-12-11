@@ -2,7 +2,6 @@
 
 with lib;
 let
-  hostname = "naruhodo";
   secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
@@ -13,14 +12,6 @@ let
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
 in
 {
-  /*
-  imports = [
-    ../hardware/thinkpad-t480s.nix
-    ../modules
-    (import ../../users).vincent
-    (import ../../users).root
-  ];
-  */
 
   fileSystems."/" =
     {
@@ -46,10 +37,6 @@ in
   swapDevices =
     [{ device = "/dev/disk/by-uuid/aff86817-55ae-47ed-876a-e5a027b560ba"; }];
 
-  networking = {
-    hostName = hostname;
-  };
-
   boot = {
     tmpOnTmpfs = true;
     plymouth.enable = true;
@@ -62,7 +49,6 @@ in
     '';
   };
 
-  services.hardware.bolt.enable = true;
   profiles = {
     desktop.i3.enable = true;
     laptop.enable = true;
@@ -75,16 +61,6 @@ in
     scanning.enable = true;
   };
   environment.systemPackages = with pkgs; [ virtmanager ];
-
-  services = {
-    wireguard = {
-      enable = true;
-      ips = ips;
-      endpoint = endpointIP;
-      endpointPort = endpointPort;
-      endpointPublicKey = endpointPublicKey;
-    };
-  };
 
   virtualisation.podman.enable = true;
   virtualisation.containers = {

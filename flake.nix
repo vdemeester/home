@@ -224,6 +224,7 @@
         kerkouane = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/hosts/kerkouane.flake.nix; };
         # TODO raspberry pi 8G x 3 (name them too)
         # TODO VMs
+        foo = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; config = ./systems/hosts/foo.flake.nix; };
       };
 
       # Import the modules exported by this flake.
