@@ -319,9 +319,8 @@ in
       bindsym $mod+Shift+F10 exec ${pkgs.my.scripts}/bin/shotf %d
 
       # screen management
-      bindsym $mod+F11 exec "autorandr -c on-the-move"
+      bindsym $mod+F11 exec "autorandr -c"
       bindsym $mod+Shift+F11 exec "arandr"
-      bindsym $mod+Control+F11 exec "autorandr -c home1"
 
       # move workspace to output
       set $workspace_move Move workspace to output : [l]eft [r]ight [d]own [u]p
