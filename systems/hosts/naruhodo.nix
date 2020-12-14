@@ -58,6 +58,7 @@ in
     extraModprobeConfig = ''
       options v4l2loopback exclusive_caps=1
     '';
+    binfmt.emulatedSystems = [ "armv7l-linux" "aarch64-linux" ];
   };
 
   services.hardware.bolt.enable = true;
