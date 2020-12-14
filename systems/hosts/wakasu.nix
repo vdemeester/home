@@ -15,7 +15,7 @@ in
 {
   imports = [
     ../hardware/lenovo-p50.nix
-    (import ../../nix).home-manager
+    (import ../../nix).home-manager-stable
     ../modules
     (import ../../users).vincent
     (import ../../users).root
