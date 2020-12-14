@@ -3,6 +3,7 @@ let
 in
 rec {
   home-manager = import (sources.home-manager + "/nixos");
+  home-manager-stable = import (sources.home-manager-stable + "/nixos");
   lib = import (sources.nixos + "/lib");
   pkgs = import sources.nixos;
   lib-unstable = import (sources.nixos-unstable + "/lib");

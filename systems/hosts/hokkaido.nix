@@ -15,6 +15,7 @@ in
 {
   imports = [
     ../hardware/dell-latitude-e6540.nix
+    (import ../../nix).home-manager-stable
     ../modules
     (import ../../users).vincent
     (import ../../users).root

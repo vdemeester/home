@@ -60,6 +60,7 @@ in
 {
   imports = [
     (sources.nixos + "/nixos/modules/profiles/qemu-guest.nix")
+    (import ../../nix).home-manager-stable
     ../modules
     (import ../../users).vincent
     (import ../../users).root

@@ -15,6 +15,7 @@ in
 {
   imports = [
     ../hardware/gigabyte-brix.nix
+    (import ../../nix).home-manager-stable
     ../modules
     (import ../../users).vincent
     (import ../../users).root
