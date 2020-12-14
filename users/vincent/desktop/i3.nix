@@ -214,9 +214,6 @@ in
         "Mod4+Mod1+45" = "gaps inner current minus 5";
         "Mod4+Mod1+46" = "gaps outer current plus 5";
         "Mod4+Mod1+47" = "gaps outer current minus 5";
-        # Split
-        #"Mod4+43" = "split h";
-        #"Mod4+55" = "split v";
         # Fullscreen
         "Mod4+41" = "fullscreen toggle";
         # Change container layout
@@ -318,6 +315,8 @@ in
       bindsym $mod+Shift+p exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
       # powermenu
       bindsym $mod+F12 exec ${powermenu}
+      bindsym $mod+F10 exec ${pkgs.my.scripts}/bin/shot %d
+      bindsym $mod+Shift+F10 exec ${pkgs.my.scripts}/bin/shotf %d
 
       # screen management
       bindsym $mod+F11 exec "autorandr -c on-the-move"
@@ -376,6 +375,18 @@ in
       for_window [instance="metask"] floating enable;
       for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position center; move scratchpad
       bindcode $mod+49 [instance="metask"] scratchpad show
+
+      ## pomodoro
+      # bepo s = 45
+      # bepo p = 26
+      set $pomodoro "pomodoro: [s]tart-stop [p]ause-resume"
+      mode $pomodoro {
+        bindcode 45 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --start-stop"; mode "default"
+        bindcode 26 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --pause-resume"; mode "default"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+      }
+      bindcode $mod+43 mode $pomodoro
 
       ## scratchpad
       set $scratchpad "scratchpad: [$]terminal [p]avucontrol"
