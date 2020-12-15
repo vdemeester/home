@@ -49,6 +49,7 @@ in
     '';
   };
 
+  /*
   profiles = {
     desktop.i3.enable = true;
     laptop.enable = true;
@@ -61,6 +62,7 @@ in
     scanning.enable = true;
   };
   environment.systemPackages = with pkgs; [ virtmanager ];
+  */
 
   virtualisation.podman.enable = true;
   virtualisation.containers = {
