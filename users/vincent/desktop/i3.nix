@@ -237,6 +237,8 @@ in
         "Mod4+Shift+32" = "exec ${lockCommand}";
         # "Mod4+Shift+39" = "exec ~/.screenlayout/home-work.sh && systemctl --user start random-background.service";
         "Mod4+24" = "border toggle";
+        # TODO transform this into mode with multiple "capture" target
+        "Mod4+32" = "exec capture";
       };
       modes = { };
       bars = [
