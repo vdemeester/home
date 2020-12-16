@@ -80,6 +80,13 @@ in
     ];
   }];
 
+  programs.ssh.knownHosts = {
+    "wakasu" = {
+      hostNames = [ "wakasu.home" "192.168.1.77" ];
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2GB030S1+iZMqwgYhkl5CuBOKBjZoujc0aVHII39/x";
+    };
+  };
+
   services.hardware.bolt.enable = true;
   profiles = {
     desktop.i3.enable = true;
