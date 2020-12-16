@@ -59,8 +59,26 @@ in
     extraModprobeConfig = ''
       options v4l2loopback exclusive_caps=1
     '';
-    binfmt.emulatedSystems = [ "armv7l-linux" "aarch64-linux" ];
+    binfmt.emulatedSystems = [
+      "armv6l-linux"
+      "armv7l-linux"
+      "aarch64-linux"
+    ];
   };
+
+  nix.distributedBuilds = true;
+  nix.buildMachines = [{
+    hostName = "192.168.1.77";
+    maxJobs = 8;
+    sshUser = "builder";
+    sshKey = "/etc/nixos/secrets/builder";
+    systems = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" "armv6l-linux" ];
+    supportedFeatures = [
+      "big-parallel"
+      "kvm"
+      "nixos-test"
+    ];
+  }];
 
   services.hardware.bolt.enable = true;
   profiles = {

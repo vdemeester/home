@@ -45,7 +45,18 @@ in
     };
   };
   */
-  boot.binfmt.emulatedSystems = [ "armv7l-linux" "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = [
+    "armv6l-linux"
+    "armv7l-linux"
+    "aarch64-linux"
+  ];
+
+  users.extraUsers.builder = {
+    isNormalUser = true;
+    uid = 1018;
+    extraGroups = [ ];
+    openssh.authorizedKeys.keys = [ (builtins.readFile "/etc/nixos/secrets/builder.pub") ];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/6590b73d-72a4-4356-94b1-f56ac45c976d";
