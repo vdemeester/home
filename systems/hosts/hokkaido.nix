@@ -106,6 +106,11 @@ in
   };
 
   services = {
+    logind.extraConfig = ''
+      HandleLidSwitch=ignore
+      HandleLidSwitchExternalPower=ignore
+      HandleLidSwitchDocked=ignore
+    '';
     # FIXME re-generate hokkaido key
     /*
     wireguard = {
