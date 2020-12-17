@@ -79,23 +79,41 @@ in
   };
 
   nix.distributedBuilds = true;
-  nix.buildMachines = [{
-    hostName = "192.168.1.77";
-    maxJobs = 8;
-    sshUser = "builder";
-    sshKey = "/etc/nixos/secrets/builder";
-    systems = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" "armv6l-linux" ];
-    supportedFeatures = [
-      "big-parallel"
-      "kvm"
-      "nixos-test"
-    ];
-  }];
+  nix.buildMachines = [
+    {
+      hostName = "192.168.1.77";
+      maxJobs = 8;
+      sshUser = "builder";
+      sshKey = "/etc/nixos/secrets/builder";
+      systems = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" "armv6l-linux" "powerpc64le-linux" "s390x-linux" ];
+      supportedFeatures = [
+        "big-parallel"
+        "kvm"
+        "nixos-test"
+      ];
+    }
+    {
+      hostName = "192.168.1.115";
+      maxJobs = 8;
+      sshUser = "builder";
+      sshKey = "/etc/nixos/secrets/builder";
+      systems = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" "armv6l-linux" "powerpc64le-linux" "s390x-linux" ];
+      supportedFeatures = [
+        "big-parallel"
+        "kvm"
+        "nixos-test"
+      ];
+    }
+  ];
 
   programs.ssh.knownHosts = {
     "wakasu" = {
       hostNames = [ "wakasu.home" "192.168.1.77" ];
       publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2GB030S1+iZMqwgYhkl5CuBOKBjZoujc0aVHII39/x";
+    };
+    "hokkaido" = {
+      hostNames = [ "hokkaido.home" "192.168.1.115" ];
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB5hoyiE7fj+/vUzvvFD2r2Mm4p86p6uPDOp0ChzR5ZC";
     };
   };
 
