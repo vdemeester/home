@@ -11,6 +11,8 @@ let
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
+
+  getEmulator = system: (lib.systems.elaborate { inherit system; }).emulator pkgs;
 in
 {
   imports = [
@@ -59,10 +61,20 @@ in
     extraModprobeConfig = ''
       options v4l2loopback exclusive_caps=1
     '';
+    binfmt.registrations = {
+      s390x-linux = {
+        # interpreter = getEmulator "s390x-linux";
+        interpreter = "${pkgs.qemu}/bin/qemu-s390x";
+        magicOrExtension = ''\x7fELF\x02\x02\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x16'';
+        mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff'';
+      };
+    };
     binfmt.emulatedSystems = [
       "armv6l-linux"
       "armv7l-linux"
       "aarch64-linux"
+      # "s390x-linux"
+      "powerpc64le-linux"
     ];
   };
 
