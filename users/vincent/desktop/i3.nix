@@ -184,6 +184,7 @@ in
       };
       keybindings = {
         "Mod4+Return" = "exec alacritty";
+        "Mod4+Shift+Return" = "exec emacsclient -c";
       };
       gaps = {
         inner = 0;
