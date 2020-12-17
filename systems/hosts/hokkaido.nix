@@ -37,6 +37,12 @@ in
 
   networking = {
     hostName = hostname;
+    bridges.br1.interfaces = [ "eno1" ];
+    firewall.enable = false; # we are in safe territory :D
+    useDHCP = false;
+    interfaces.br1 = {
+      useDHCP = true;
+    };
   };
 
   boot = {
@@ -44,33 +50,45 @@ in
     plymouth.enable = true;
   };
 
-  services.hardware.bolt.enable = true;
-  profiles = {
-    desktop.gnome.enable = true;
-    laptop.enable = true;
-    home = true;
-    ssh.enable = true;
-    dev.enable = true;
-    yubikey.enable = true;
-    virtualization = { enable = true; nested = true; };
-    docker.enable = true;
-    redhat.enable = true;
-  };
-  environment.systemPackages = with pkgs; [ virtmanager ];
-
-  services = {
-    # FIXME re-generate hokkaido key
-    /*
-    wireguard = {
-      enable = true;
-      ips = ips;
-      endpoint = endpointIP;
-      endpointPort = endpointPort;
-      endpointPublicKey = endpointPublicKey;
+  boot.binfmt.registrations = {
+    s390x-linux = {
+      # interpreter = getEmulator "s390x-linux";
+      interpreter = "${pkgs.qemu}/bin/qemu-s390x";
+      magicOrExtension = ''\x7fELF\x02\x02\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x16'';
+      mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff'';
     };
-    */
   };
+  boot.binfmt.emulatedSystems = [
+    "armv6l-linux"
+    "armv7l-linux"
+    "aarch64-linux"
+    # "s390x-linux"
+    "powerpc64le-linux"
+  ];
 
+  users.extraUsers.builder = {
+    isNormalUser = true;
+    uid = 1018;
+    extraGroups = [ ];
+    openssh.authorizedKeys.keys = [ (builtins.readFile "/etc/nixos/secrets/builder.pub") ];
+  };
+  nix.trustedUsers = [ "root" "vincent" "builder" ];
+
+  profiles = {
+    home = true;
+    dev.enable = true;
+    desktop.enable = lib.mkForce false;
+    laptop.enable = true;
+    docker.enable = true;
+    avahi.enable = true;
+    syncthing.enable = true;
+    ssh = { enable = true; forwardX11 = true; };
+    virtualization = { enable = true; nested = true; listenTCP = true; };
+    kubernetes.enable = true;
+    openshift.enable = true;
+    tekton.enable = true;
+    yubikey.enable = true;
+  };
   virtualisation.podman.enable = true;
   virtualisation.containers = {
     enable = true;
@@ -86,4 +104,18 @@ in
       };
     };
   };
+
+  services = {
+    # FIXME re-generate hokkaido key
+    /*
+    wireguard = {
+      enable = true;
+      ips = ips;
+      endpoint = endpointIP;
+      endpointPort = endpointPort;
+      endpointPublicKey = endpointPublicKey;
+    };
+    */
+  };
+
 }
