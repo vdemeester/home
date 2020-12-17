@@ -286,6 +286,8 @@
 
             manifest-tool = pkgs.callPackage ./pkgs/manifest-tool { };
             ko = pkgs.callPackage ./pkgs/ko { };
+            buildx = pkgs.callPackage ./pkgs/buildx { };
+            buildkit = pkgs.callPackage ./pkgs/buildkit { };
           } // optionalAttrs (system == "x86_64-linux") {
             # OpenShift
             inherit (pkgs.callPackage ./pkgs/oc { })
