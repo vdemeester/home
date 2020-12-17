@@ -8,5 +8,5 @@
     # FIXME: vpn, server, builder, …
   ];
 
-  config.profiles.base.enable = lib.mkDefault true;
+  profiles.base.enable = lib.mkDefault true;
 }

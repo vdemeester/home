@@ -5,7 +5,7 @@ let
 in
 {
   options = {
-    config.profiles.base = {
+    profiles.base = {
       enable = mkEnableOption "base configuration";
     };
   };

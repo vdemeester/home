@@ -20,8 +20,7 @@ This holds the configuration of my different systems. It is meant to be
 position-independent, meaning there is no moving around of ~configuration.nix~. For the
 configurations' entry points see the individual [[file:systems][systems]], as well as [[file:default.nix][default.nix]].
 
-/Note: to test =flakes= use =nix build
-'.#nixosConfigurations.foo.config.system.build.toplevel'=./
+/Note: to test =flakes= use =nix build '.#nixosConfigurations.foo.config.system.build.toplevel'=, or even better, to test in a VM use =nix build '.#nixosConfigurations.foo.config.system.build.vm'=./
 
 *** =/hosts=
 
