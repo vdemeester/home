@@ -90,7 +90,20 @@
       pkgsBySystem = forEachSystem (mkPkgs inputs.nixpkgs);
 
       # NixOS configurations
-      mkNixOsConfiguration = name: { pkgs, system, config }:
+      /* Creates a NixOS configuration from a `name` and a attribute set.
+         The attribute set is composed of:
+         - pkgs: the package set to use. To be taken from the inputs (inputs.nixos, …)
+         - system: the architecture of the system. Default is x86_64-linux.
+         - config
+         - users
+
+      */
+      mkNixOsConfiguration = name: { pkgs
+                                   , system ? "x86_64-linux"
+                                   , config ? ./systems/hosts + "/${name}.flake.nix"
+                                   , users ? [ "vincent" ]
+                                   }:
+        # assert asserts.assertMsg (builtins.pathExists config) "${name} has no configuration, create one in ./systems/hosts/${name}.flake.nix";
         nameValuePair name (nixosSystem {
           inherit system;
           modules = [
@@ -219,14 +232,17 @@
       # `nixos-rebuild` on those hosts.
       nixosConfigurations = mapAttrs' mkNixOsConfiguration {
         # FIXME remove .flake "suffix" once they all got migrated
-        naruhodo = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; config = ./systems/hosts/naruhodo.flake.nix; };
-        wakasu = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; config = ./systems/hosts/waksu.flake.nix; };
-        okinawa = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/hosts/okinawa.flake.nix; };
-        sakhalin = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/hosts/sakhalin.flake.nix; };
-        kerkouane = { pkgs = inputs.nixos; system = "x86_64-linux"; config = ./systems/hosts/kerkouane.flake.nix; };
+        #naruhodo = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; };
+        #wakasu = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; };
+        #okinawa = { pkgs = inputs.nixos; system = "x86_64-linux"; };
+        #sakhalin = { pkgs = inputs.nixos; system = "x86_64-linux"; };
+        #kerkouane = { pkgs = inputs.nixos; system = "x86_64-linux"; };
         # TODO raspberry pi 8G x 3 (name them too)
+        #monastir = { pkgs = inputs.nixo; system = "aarch64-linux"; };
+        #kairouan = { pkgs = inputs.nixos; system = "aarch64-linux"; };
+        nabeul = { pkgs = inputs.nixos; system = "aarch64-linux"; };
         # TODO VMs
-        foo = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; config = ./systems/hosts/foo.flake.nix; };
+        foo = { pkgs = inputs.nixos-unstable; users = [ "vincent" "houbeb" "root" ]; };
       };
 
       # Import the modules exported by this flake.
