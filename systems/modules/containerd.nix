@@ -14,6 +14,14 @@ in
       '';
     };
 
+    autostart = mkOption {
+      type = types.bool;
+      default = true;
+      description = ''
+        Start containerd automatically.
+      '';
+    };
+
     package = mkOption {
       default = pkgs.containerd;
       type = types.package;
@@ -45,7 +53,7 @@ in
     systemd.packages = [ cfg.package ];
 
     systemd.services.containerd = {
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = lib.optional cfg.autostart [ "multi-user.target" ];
       serviceConfig = {
         ExecStart = [
           ""
