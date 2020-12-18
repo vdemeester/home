@@ -1,6 +1,6 @@
 _: _:
 let
-  unstable = (import ./nix).pkgs-unstable { };
+  unstable = (import ../.).pkgs-unstable { };
 in
 {
   inherit (unstable)

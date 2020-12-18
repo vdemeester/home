@@ -25,7 +25,7 @@ let
       ];
       buildInputs = old.buildInputs ++ [ pkgs.jansson ];
       patches = [
-        ../overlays/patches/clean-env.patch
+        ./patches/clean-env.patch
       ];
     }
   );

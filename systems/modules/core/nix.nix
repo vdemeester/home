@@ -89,9 +89,9 @@ in
 
     nixpkgs = {
       overlays = [
-        (import ../../../overlays/mkSecret.nix)
-        (import ../../../overlays/sbr.nix)
-        (import ../../../overlays/unstable.nix)
+        (import ../../../nix/overlays/mkSecret.nix)
+        (import ../../../nix/overlays/sbr.nix)
+        (import ../../../nix/overlays/unstable.nix)
         (import ../../../nix).emacs
       ];
       config = {
@@ -101,7 +101,7 @@ in
     system = {
       extraSystemBuilderCmds = ''
         ln -sv ${pkgs.path} $out/nixpkgs
-        ln -sv ${../../../overlays} $out/overlays
+        ln -sv ${../../../nix/overlays} $out/overlays
       '';
 
       stateVersion = "20.03";

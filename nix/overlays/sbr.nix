@@ -3,18 +3,18 @@ let
   compileEmacsFiles = super.callPackage ./emacs/builder.nix;
 in
 rec {
-  scripts = import ../nix/packages/my/scripts {
+  scripts = import ../packages/my/scripts {
     inherit (self) stdenv;
   };
-  vrsync = import ../nix/packages/my/vrsync {
+  vrsync = import ../packages/my/vrsync {
     inherit (self) stdenv lib;
   };
-  vde-thinkpad = import ../nix/packages/my/vde-thinkpad {
+  vde-thinkpad = import ../packages/my/vde-thinkpad {
     inherit (self) stdenv lib;
   };
-  bekind = super.callPackage ../tools/bekind { };
+  bekind = super.callPackage ../../tools/bekind { };
 
-  my = import ../nix/packages {
+  my = import ../packages {
     inherit (self) pkgs;
   };
 
