@@ -12,42 +12,8 @@ let
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
 in
 {
-
-  fileSystems."/" =
-    {
-      device = "/dev/mapper/root";
-      fsType = "ext4";
-      options = [ "noatime" "discard" ];
-    };
-
-  boot.initrd.luks.devices = {
-    root = {
-      device = "/dev/disk/by-uuid/50d7faba-8923-4b30-88f7-40df26e02def";
-      preLVM = true;
-      allowDiscards = true;
-    };
-  };
-
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/0101-68DE";
-      fsType = "vfat";
-    };
-
-  swapDevices =
-    [{ device = "/dev/disk/by-uuid/aff86817-55ae-47ed-876a-e5a027b560ba"; }];
-
-  boot = {
-    tmpOnTmpfs = true;
-    plymouth.enable = true;
-    extraModulePackages = with pkgs.linuxPackages; [
-      v4l2loopback
-    ];
-    kernelModules = [ "v4l2loopback" ];
-    extraModprobeConfig = ''
-      options v4l2loopback exclusive_caps=1
-    '';
-  };
+  profiles.desktop.enable = true;
+  profiles.home.enable = true;
 
   environment.systemPackages = with pkgs; [ tkn ];
   /*

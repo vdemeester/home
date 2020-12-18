@@ -211,6 +211,7 @@
           (self.overlay."${system}")
           (_: _: import inputs.gitignore-nix { lib = inputs.nixpkgs.lib; })
           (import ./nix/overlays/infra.nix)
+          (import ./nix/overlays/mkSecret.nix)
         ]);
       };
 
@@ -271,9 +272,11 @@
             pkgs = pkgsBySystem."${system}";
           in
           {
+            # FIXME Do I really need / want that
             apeStable = stablePkgsBySystem."${system}".callPackage ./nix/packages/ape { };
             apeUnstable = unstablePkgsBySystem."${system}".callPackage ./nix/packages/ape { };
             ape = pkgs.callPackage ./nix/packages/ape { };
+
             nr = pkgs.callPackage ./nix/packages/nr { };
             ram = pkgs.callPackage ./nix/packages/ram { };
             systemd-email = pkgs.callPackage ./nix/packages/systemd-email { };

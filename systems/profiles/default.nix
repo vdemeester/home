@@ -5,6 +5,7 @@
     ./base.nix
     ./desktop.nix
     ./development.nix
+    ./home.nix
     # FIXME: vpn, server, builder, …
   ];
 
