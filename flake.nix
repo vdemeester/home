@@ -210,6 +210,7 @@
         overlays = forEachSystem (system: [
           (self.overlay."${system}")
           (_: _: import inputs.gitignore-nix { lib = inputs.nixpkgs.lib; })
+          (import ./nix/overlays/infra.nix)
         ]);
       };
 
@@ -261,22 +262,25 @@
 
       # Expose the packages defined in this flake, built for any supported systems. These are
       # meant to be consumed by other projects that might import this flake.
+      #
+      # Internal packages are handled through overlay definition, in internal.
+      # Note: they are also added to the systems overlay so there is no duplication of definition.
       packages = forEachSystem
         (system:
           let
             pkgs = pkgsBySystem."${system}";
           in
           {
-            apeStable = stablePkgsBySystem."${system}".callPackage ./pkgs/ape { };
-            apeUnstable = unstablePkgsBySystem."${system}".callPackage ./pkgs/ape { };
-            ape = pkgs.callPackage ./pkgs/ape { };
-            nr = pkgs.callPackage ./pkgs/nr { };
-            ram = pkgs.callPackage ./pkgs/ram { };
-            systemd-email = pkgs.callPackage ./pkgs/systemd-email { };
+            apeStable = stablePkgsBySystem."${system}".callPackage ./nix/packages/ape { };
+            apeUnstable = unstablePkgsBySystem."${system}".callPackage ./nix/packages/ape { };
+            ape = pkgs.callPackage ./nix/packages/ape { };
+            nr = pkgs.callPackage ./nix/packages/nr { };
+            ram = pkgs.callPackage ./nix/packages/ram { };
+            systemd-email = pkgs.callPackage ./nix/packages/systemd-email { };
 
-            batzconverter = pkgs.callPackage ./pkgs/batzconverter { };
+            batzconverter = pkgs.callPackage ./nix/packages/batzconverter { };
             # Tekton
-            inherit (pkgs.callPackage ./pkgs/tkn { })
+            inherit (pkgs.callPackage ./nix/packages/tkn { })
               tkn_0_11
               tkn_0_12
               tkn_0_13
@@ -284,13 +288,13 @@
               tkn
               ;
 
-            manifest-tool = pkgs.callPackage ./pkgs/manifest-tool { };
-            ko = pkgs.callPackage ./pkgs/ko { };
-            buildx = pkgs.callPackage ./pkgs/buildx { };
-            buildkit = pkgs.callPackage ./pkgs/buildkit { };
+            manifest-tool = pkgs.callPackage ./nix/packages/manifest-tool { };
+            ko = pkgs.callPackage ./nix/packages/ko { };
+            buildx = pkgs.callPackage ./nix/packages/buildx { };
+            buildkit = pkgs.callPackage ./nix/packages/buildkit { };
           } // optionalAttrs (system == "x86_64-linux") {
             # OpenShift
-            inherit (pkgs.callPackage ./pkgs/oc { })
+            inherit (pkgs.callPackage ./nix/packages/oc { })
               oc_4_1
               oc_4_2
               oc_4_3
@@ -299,7 +303,7 @@
               oc_4_6
               oc
               ;
-            inherit (pkgs.callPackage ./pkgs/openshift-install { })
+            inherit (pkgs.callPackage ./nix/packages/openshift-install { })
               openshift-install_4_3
               openshift-install_4_4
               openshift-install_4_5

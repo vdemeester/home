@@ -49,6 +49,7 @@ in
     '';
   };
 
+  environment.systemPackages = with pkgs; [ tkn ];
   /*
   profiles = {
     desktop.i3.enable = true;

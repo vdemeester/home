@@ -33,7 +33,7 @@ let
     in
     concatMap f (attrValues s);
   outputsOf = p: map (o: p.${o}) p.outputs;
-  nurAttrs = p: import ./pkgs/default.nix { pkgs = p; };
+  nurAttrs = p: import ./nix/packages/default.nix { pkgs = p; };
   nurPkgs = p:
     flattenPkgs (
       listToAttrs (
