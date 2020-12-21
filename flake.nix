@@ -142,7 +142,6 @@
             })
             # FIXME remove flake suffix once migrated
             (import ./systems/modules/default.flake.nix)
-            (import ./systems/profiles)
             (import config)
           ]
           # Load user configuration based on the list of users passed.
@@ -155,7 +154,6 @@
         nameValuePair name ({ ... }: {
           imports = [
             (import ./users/modules)
-            # (import ./home/profiles)
             (import config)
           ];
           # For compatibility with nix-shell, nix-build, etc.

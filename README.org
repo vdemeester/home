@@ -30,12 +30,14 @@ and some ad-hoc very specific configuration.
 *** =/modules=
 
 This is where all configuration that can be used across different system would lend. These
-are not system dependent and should be configurable. This is following
+are not system dependent and should be configurable. This contains the following
+"modules", a bit like how nixpkgs is organized
 
-*** =/profiles=
-
-This is where profiles enable/disable and configure modules (defined in NixOS or in
-here). Examples are `developement`, …
+- hardware
+- profiles
+- programs
+- services
+- virtualisation
 
 ** =/users=
 
