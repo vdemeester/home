@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption mkDefault;
   cfg = config.profiles.desktop;
 in
 {
@@ -15,6 +15,9 @@ in
       tmpOnTmpfs = true;
       # Enable Plymouth on desktops
       plymouth.enable = true;
+    };
+    nix = {
+      sshServe = mkDefault true;
     };
   };
 }

@@ -20,24 +20,30 @@ in
     uid = 1000;
     description = "Vincent Demeester";
     extraGroups = [ "wheel" "input" ]
-      ++ optionals config.profiles.desktop.enable [ "audio" "video" "networkmanager" ]
-      ++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
-      ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
-      ++ optionals config.profiles.docker.enable [ "docker" ]
-      ++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
-      ++ optionals config.profiles.virtualization.enable [ "libvirtd" ];
+      ++ optionals config.profiles.desktop.enable [ "audio" "video" "networkmanager" ];
+    #++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
+    #++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
+    #++ optionals config.profiles.docker.enable [ "docker" ]
+    #++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
+    #++ optionals config.profiles.virtualization.enable [ "libvirtd" ];
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
     isNormalUser = true;
     openssh.authorizedKeys.keys = authorizedKeys;
-    # FIXME change this ?
     initialPassword = "changeMe";
-    # FIXME This might be handled differently by programs.podman, …
     subUidRanges = [{ startUid = 100000; count = 65536; }];
     subGidRanges = [{ startGid = 100000; count = 65536; }];
   };
 
+  nix = {
+    trustedUsers = [ "vincent" ];
+    sshServe.keys = authorizedKeys;
+  };
+
+  security = {
+    pam.services.vincent.fprintAuth = config.services.fprintd.enable;
+  };
   /*
-  security.pam.services.vincent.fprintAuth = config.services.fprintd.enable;
+
 
   home-manager.users.vincent = lib.mkMerge
     (

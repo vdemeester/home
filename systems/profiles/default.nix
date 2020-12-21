@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, inputs, ... }:
 
 {
   imports = [
@@ -6,6 +6,7 @@
     ./desktop.nix
     ./development.nix
     ./home.nix
+    ./laptop.nix
     # FIXME: vpn, server, builder, …
   ];
 
