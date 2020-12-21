@@ -12,7 +12,7 @@ let
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
 in
 {
-  profiles.desktop.enable = true;
+  profiles.laptop.enable = true;
   profiles.home.enable = true;
 
   environment.systemPackages = with pkgs; [ tkn ];

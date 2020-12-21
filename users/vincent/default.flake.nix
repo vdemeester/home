@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, inputs, lib, pkgs, ... }:
 with lib;
 let
   secretPath = ../../secrets/machines.nix;
@@ -15,21 +15,19 @@ let
   isContainersEnabled = if hasConfigVirtualizationContainers then config.virtualisation.containers.enable else false;
 in
 {
-  imports = [
-    ./desktop.flake.nix
-    ./laptop.flake.nix
-  ];
+  # imports = [ ../home.nix ];
+
   users.users.vincent = {
     createHome = true;
     uid = 1000;
     description = "Vincent Demeester";
     extraGroups = [ "wheel" "input" ]
-      ++ optionals config.profiles.desktop.enable [ "audio" "video" "networkmanager" ];
-    #++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
-    #++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
-    #++ optionals config.profiles.docker.enable [ "docker" ]
-    #++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
-    #++ optionals config.profiles.virtualization.enable [ "libvirtd" ];
+      ++ optionals config.profiles.desktop.enable [ "audio" "video" "networkmanager" ]
+      #++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
+      ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
+      ++ optionals config.virtualisation.docker.enable [ "docker" ]
+      ++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
+      ++ optionals config.virtualisation.libvirtd.enable [ "libvirtd" ];
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
     isNormalUser = true;
     openssh.authorizedKeys.keys = authorizedKeys;
@@ -37,10 +35,6 @@ in
     subUidRanges = [{ startUid = 100000; count = 65536; }];
     subGidRanges = [{ startGid = 100000; count = 65536; }];
   };
-
-  home-manager.users.vincent = mkMerge ([
-    (import ../modules)
-  ]); # ++ optionals config.profiles.desktop.enable [ ./desktop ]);
 
   nix = {
     trustedUsers = [ "vincent" ];
@@ -61,4 +55,6 @@ in
     ${pkgs.systemd}/bin/loginctl enable-linger ${config.users.users.vincent.name}
   '';
 
+  # Home-manager "magic"
+  home-manager.users.vincent = inputs.self.internal.homeManagerConfigurations."vincent";
 }

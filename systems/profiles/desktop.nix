@@ -17,7 +17,13 @@ in
       plymouth.enable = true;
     };
     nix = {
-      sshServe = mkDefault true;
+      # Enable SSH-serving nix packages
+      sshServe.enable = mkDefault true;
     };
+
+    # Make `/run/user/X` larger.
+    services.logind.extraConfig = ''
+      RuntimeDirectorySize=20%
+    '';
   };
 }

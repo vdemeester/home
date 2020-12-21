@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ inputs, ... }: {
   users.users.houbeb = {
     createHome = true;
     description = "Houbeb Ben Othmene";
@@ -8,9 +8,6 @@
       "…"
     ];
   };
-  /*
-  home-manager.users.houbeb = {
-    home.packages = with pkgs; [ hello ];
-  };
-  */
+  # Home-manager "magic"
+  home-manager.users.houbeb = inputs.self.internal.homeManagerConfigurations."houbeb";
 }

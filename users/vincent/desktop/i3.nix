@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, nixosConfig, lib, pkgs, ... }:
 
 with lib;
 let

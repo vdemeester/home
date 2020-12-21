@@ -151,11 +151,11 @@
         });
 
       # home-manager configurations
-      mkHomeManagerConfiguration = name: { system, config }:
+      mkHomeManagerConfiguration = name: { config ? ./users + "/${name}/home.nix" }:
         nameValuePair name ({ ... }: {
           imports = [
-            (import ./home/modules)
-            (import ./home/profiles)
+            (import ./users/modules)
+            # (import ./home/profiles)
             (import config)
           ];
           # For compatibility with nix-shell, nix-build, etc.
@@ -217,7 +217,9 @@
         # that host - consumed by the home-manager NixOS module for that host (if it exists)
         # or by `mkHomeManagerHostConfiguration` for home-manager-only hosts.
         homeManagerConfigurations = mapAttrs' mkHomeManagerConfiguration {
-          naruhodo = { system = "x86_64-linux"; config = ./home/naruhodo.nix; };
+          vincent = { };
+          root = { };
+          houbeb = { };
         };
 
         # Overlays consumed by the home-manager/NixOS configuration.

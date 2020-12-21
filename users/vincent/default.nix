@@ -23,29 +23,43 @@ in
       ++ optionals config.profiles.desktop.enable [ "audio" "video" "networkmanager" ]
       ++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
-      ++ optionals config.profiles.docker.enable [ "docker" ]
+      ++ optionals config.virtualisation.docker.enable [ "docker" ]
       ++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
       ++ optionals config.profiles.virtualization.enable [ "libvirtd" ];
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
     isNormalUser = true;
     openssh.authorizedKeys.keys = authorizedKeys;
-    # FIXME change this ?
     initialPassword = "changeMe";
-    # FIXME This might be handled differently by programs.podman, …
     subUidRanges = [{ startUid = 100000; count = 65536; }];
     subGidRanges = [{ startGid = 100000; count = 65536; }];
   };
 
-  /*
-  virtualisation = mkIf isContainersEnabled {
-    containers.users = [ "vincent" ];
+  nix = {
+    trustedUsers = [ "vincent" ];
+    sshServe.keys = authorizedKeys;
   };
-  */
-  security.pam.services.vincent.fprintAuth = config.services.fprintd.enable;
 
+  security = {
+    pam = {
+      # Nix will hit the stack limit when using `nixFlakes`.
+      loginLimits = [
+        { domain = config.users.users.vincent.name; item = "stack"; type = "-"; value = "unlimited"; }
+      ];
+    };
+  };
+
+  # Enable user units to persist after sessions end.
+  system.activationScripts.loginctl-enable-linger-vincent = lib.stringAfter [ "users" ] ''
+    ${pkgs.systemd}/bin/loginctl enable-linger ${config.users.users.vincent.name}
+  '';
+
+  # To use nixos config in home-manager configuration, use the nixosConfig attr.
+  # This make it possible to import the whole configuration, and let each module
+  # load their own.
   home-manager.users.vincent = lib.mkMerge
     (
       [
+        (import ../home.nix)
         (import ./core)
         (import ./mails { hostname = config.networking.hostName; pkgs = pkgs; })
       ]

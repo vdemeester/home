@@ -1,12 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-with lib; {
+{ config, inputs, lib, pkgs, ... }:
+let
+  inherit (lib) mkIf;
+in
+{
   users.users.root = {
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
   };
-  /*
-  home-manager.users.root = lib.mkMerge (
-    [ (import ../vincent/core) ]
-  );
-  */
+  # Home-manager "magic"
+  home-manager.users.root = inputs.self.internal.homeManagerConfigurations."root";
 }
