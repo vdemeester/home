@@ -37,25 +37,25 @@ are not system dependent and should be configurable.
 This is where profiles enable/disable and configure modules (defined in NixOS or in
 here). Examples are `developement`, …
 
-** =/home=
+** =/users=
 
 Users configuration, for [[https://nixos.org][NixOS]] or not and using home-manager.
 
-
-*** =/hosts=
-
-This is the configuration for each hosts. It should be as simple as enabling some profiles
-and some ad-hoc very specific configuration.
-
 *** =/modules=
 
-This is where all configuration that can be used across different system would lend. These
-are not system dependent and should be configurable.
+This is a list of modules that can be used by all users.
 
-*** =/profiles=
+*** =/{users}/default.nix=
 
-This is where profiles enable/disable and configure modules (defined in NixOS or in
-here). Examples are `developement`, …
+Contains NixOS user specific configuration. It gets imported if the user is listed in a
+given configuration. It will contains the user creation information (groups, …) and can
+refer to a given home-manager configuration.
+
+*** =/{users}/home.nix=
+
+Contains home-manager configuration.
+/Note/: In order to get information from Nixos, use =nixosConfig=. This should be useful to
+configure some modules depending on the host configuration.
 
 ** =/nix=
 
