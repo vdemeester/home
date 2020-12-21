@@ -159,9 +159,9 @@ in
       enable = true;
       lockCmd = lockCommand;
       inactiveInterval = 60;
-      xautolockExtraOptions = [
-        "Xautolock.killer: systemctl suspend"
-      ];
+      # xautolockExtraOptions = [
+      #   "Xautolock.killer: systemctl suspend"
+      # ];
     };
     random-background = {
       enable = true;
