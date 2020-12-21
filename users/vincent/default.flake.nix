@@ -15,6 +15,10 @@ let
   isContainersEnabled = if hasConfigVirtualizationContainers then config.virtualisation.containers.enable else false;
 in
 {
+  imports = [
+    ./desktop.flake.nix
+    ./laptop.flake.nix
+  ];
   users.users.vincent = {
     createHome = true;
     uid = 1000;
@@ -34,58 +38,27 @@ in
     subGidRanges = [{ startGid = 100000; count = 65536; }];
   };
 
+  home-manager.users.vincent = mkMerge ([
+    (import ../modules)
+  ]); # ++ optionals config.profiles.desktop.enable [ ./desktop ]);
+
   nix = {
     trustedUsers = [ "vincent" ];
     sshServe.keys = authorizedKeys;
   };
 
   security = {
-    pam.services.vincent.fprintAuth = config.services.fprintd.enable;
+    pam = {
+      # Nix will hit the stack limit when using `nixFlakes`.
+      loginLimits = [
+        { domain = config.users.users.vincent.name; item = "stack"; type = "-"; value = "unlimited"; }
+      ];
+    };
   };
-  /*
 
+  # Enable user units to persist after sessions end.
+  system.activationScripts.loginctl-enable-linger-vincent = lib.stringAfter [ "users" ] ''
+    ${pkgs.systemd}/bin/loginctl enable-linger ${config.users.users.vincent.name}
+  '';
 
-  home-manager.users.vincent = lib.mkMerge
-    (
-      [
-        (import ./core)
-        (import ./mails { hostname = config.networking.hostName; pkgs = pkgs; })
-      ]
-      ++ optionals config.profiles.dev.enable [ (import ./dev) ]
-      ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
-      ++ optionals config.profiles.desktop.gnome.enable [ (import ./desktop/gnome.nix) ]
-      ++ optionals config.profiles.desktop.i3.enable [ (import ./desktop/i3.nix) ]
-      ++ optionals (config.networking.hostName == "wakasu") [
-        {
-          home.packages = with pkgs; [
-            libosinfo
-            asciinema
-            oathToolkit
-          ];
-        }
-      ]
-      ++ optionals (config.profiles.laptop.enable && config.profiles.desktop.enable) [
-        {
-          # FIXME move this in its own file
-          programs.autorandr.enable = true;
-        }
-      ]
-      ++ optionals config.profiles.docker.enable [
-        {
-          home.packages = with pkgs; [ docker docker-compose ];
-        }
-      ]
-      ++ optionals (config.profiles.yubikey.enable && config.profiles.yubikey.u2f) [{
-        home.file.".config/Yubico/u2f_keys".source = pkgs.mkSecret ../../secrets/u2f_keys;
-      }]
-      ++ optionals (isContainersEnabled && config.profiles.dev.enable) [ (import ./containers) ]
-      ++ optionals config.profiles.kubernetes.enable [ (import ./containers/kubernetes.nix) ]
-      ++ optionals config.profiles.openshift.enable [ (import ./containers/openshift.nix) ]
-      ++ optionals config.profiles.tekton.enable [ (import ./containers/tekton.nix) ]
-      ++ optionals config.profiles.redhat.enable [{
-        home.file.".local/share/applications/redhat-vpn.desktop".source = ./redhat/redhat-vpn.desktop;
-        home.packages = with pkgs; [ gnome3.zenity oathToolkit ];
-      }]
-    );
-    */
 }
