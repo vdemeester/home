@@ -94,14 +94,13 @@
          The attribute set is composed of:
          - pkgs: the package set to use. To be taken from the inputs (inputs.nixos, …)
          - system: the architecture of the system. Default is x86_64-linux.
-         - config
-         - users
-
+         - config: the configuration path that will be imported
+         - users: the list of user configuration to import
       */
       mkNixOsConfiguration = name: { pkgs
                                    , system ? "x86_64-linux"
                                    , config ? ./systems/hosts + "/${name}.flake.nix"
-                                   , users ? [ "vincent" ]
+                                   , users ? [ "root" "vincent" ]
                                    }:
         # assert asserts.assertMsg (builtins.pathExists config) "${name} has no configuration, create one in ./systems/hosts/${name}.flake.nix";
         nameValuePair name (nixosSystem {
@@ -145,7 +144,9 @@
             (import ./systems/modules/default.flake.nix)
             (import ./systems/profiles)
             (import config)
-          ];
+          ]
+          # Load user configuration based on the list of users passed.
+          ++ (map (f: import (./users + ("/" + f + "/default.flake.nix"))) users);
           specialArgs = { inherit name inputs; };
         });
 
