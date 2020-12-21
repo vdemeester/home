@@ -1,6 +1,6 @@
 {
   imports = [
-    ../buildkit.nix
-    ../containerd.nix
+    ./buildkit.nix
+    ./containerd.nix
   ];
 }
