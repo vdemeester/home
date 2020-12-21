@@ -36,7 +36,6 @@ in
     subGidRanges = [{ startGid = 100000; count = 65536; }];
   };
 
-
   /*
   security.pam.services.vincent.fprintAuth = config.services.fprintd.enable;
 

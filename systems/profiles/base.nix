@@ -1,15 +1,17 @@
-{ config, lib, pkgs, ... }:
+{ config, inputs, lib, pkgs, ... }:
 let
   inherit (lib) mkEnableOption mkIf mkDefault mkOverride;
   cfg = config.profiles.base;
 in
 {
+  imports = [ inputs.home-manager.nixosModules.home-manager ];
   options = {
     profiles.base = {
       enable = mkEnableOption "base configuration";
     };
   };
   config = mkIf cfg.enable {
+
     boot = {
       # Enable running aarch64 binaries using qemu.
       binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -54,6 +56,12 @@ in
       variables = {
         EDITOR = mkOverride 0 "vim";
       };
+    };
+
+    # Home manager default configuration
+    home-manager = {
+      useUserPackages = true;
+      useGlobalPkgs = true;
     };
 
     i18n.defaultLocale = "en_US.UTF-8";
