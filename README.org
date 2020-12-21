@@ -30,7 +30,7 @@ and some ad-hoc very specific configuration.
 *** =/modules=
 
 This is where all configuration that can be used across different system would lend. These
-are not system dependent and should be configurable.
+are not system dependent and should be configurable. This is following
 
 *** =/profiles=
 

@@ -1,26 +1,26 @@
 
 # Table of Contents
 
-1.  [Highlights](#org79aeb82)
-    1.  [`/systems`](#org285d400)
-        1.  [`/hosts`](#orgbdb04ce)
-        2.  [`/modules`](#org8ae14a1)
-        3.  [`/profiles`](#orge941a44)
-    2.  [`/users`](#orgdfbc434)
-        1.  [`/modules`](#orgd943b7a)
-        2.  [`/{users}/default.nix`](#org647d023)
-        3.  [`/{users}/home.nix`](#orgb8193a0)
-    3.  [`/nix`](#org1ac8b6d)
-    4.  [`/tools`](#org0b286a1)
-    5.  [`/www`](#org799c362)
-2.  [References](#org4f423c9)
-3.  [Licensing](#orga1b8c9f)
+1.  [Highlights](#org8a498eb)
+    1.  [`/systems`](#orgb55cf6c)
+        1.  [`/hosts`](#org65e7656)
+        2.  [`/modules`](#org758b398)
+        3.  [`/profiles`](#orgcc33653)
+    2.  [`/users`](#org0babc73)
+        1.  [`/modules`](#org7853b3c)
+        2.  [`/{users}/default.nix`](#org8fe3f3d)
+        3.  [`/{users}/home.nix`](#orgc5c6448)
+    3.  [`/nix`](#orgf01c1b5)
+    4.  [`/tools`](#orgae13caa)
+    5.  [`/www`](#orge1b6aba)
+2.  [References](#org42b3bfc)
+3.  [Licensing](#orgec420f8)
 
 `home` is the monorepo containing my personal tools and infrastructure. Everything in here
 should be built using [Nix](https://nixos.org/nix).
 
 
-<a id="org79aeb82"></a>
+<a id="org8a498eb"></a>
 
 # Highlights
 
@@ -32,7 +32,7 @@ This will be a all-time work-in-progress, so please beware that things might cha
 dramatically or even not working anymore 😛.
 
 
-<a id="org285d400"></a>
+<a id="orgb55cf6c"></a>
 
 ## `/systems`
 
@@ -43,7 +43,7 @@ configurations' entry points see the individual [systems](systems), as well as [
 *Note: to test `flakes` use `nix build '.#nixosConfigurations.foo.config.system.build.toplevel'`, or even better, to test in a VM use `nix build '.#nixosConfigurations.foo.config.system.build.vm'`.*
 
 
-<a id="orgbdb04ce"></a>
+<a id="org65e7656"></a>
 
 ### `/hosts`
 
@@ -51,15 +51,15 @@ This is the configuration for each hosts. It should be as simple as enabling som
 and some ad-hoc very specific configuration.
 
 
-<a id="org8ae14a1"></a>
+<a id="org758b398"></a>
 
 ### `/modules`
 
 This is where all configuration that can be used across different system would lend. These
-are not system dependent and should be configurable.
+are not system dependent and should be configurable. This is following
 
 
-<a id="orge941a44"></a>
+<a id="orgcc33653"></a>
 
 ### `/profiles`
 
@@ -67,21 +67,21 @@ This is where profiles enable/disable and configure modules (defined in NixOS or
 here). Examples are \`developement\`, …
 
 
-<a id="orgdfbc434"></a>
+<a id="org0babc73"></a>
 
 ## `/users`
 
 Users configuration, for [NixOS](https://nixos.org) or not and using home-manager.
 
 
-<a id="orgd943b7a"></a>
+<a id="org7853b3c"></a>
 
 ### `/modules`
 
 This is a list of modules that can be used by all users.
 
 
-<a id="org647d023"></a>
+<a id="org8fe3f3d"></a>
 
 ### `/{users}/default.nix`
 
@@ -90,7 +90,7 @@ given configuration. It will contains the user creation information (groups, …
 refer to a given home-manager configuration.
 
 
-<a id="orgb8193a0"></a>
+<a id="orgc5c6448"></a>
 
 ### `/{users}/home.nix`
 
@@ -99,28 +99,28 @@ Contains home-manager configuration.
 configure some modules depending on the host configuration.
 
 
-<a id="org1ac8b6d"></a>
+<a id="orgf01c1b5"></a>
 
 ## `/nix`
 
 Nix configurations, packages definitions, overlays.
 
 
-<a id="org0b286a1"></a>
+<a id="orgae13caa"></a>
 
 ## `/tools`
 
 Those are tools I have written for my personal usage.
 
 
-<a id="org799c362"></a>
+<a id="orge1b6aba"></a>
 
 ## `/www`
 
 Website sources and builders/deployers.
 
 
-<a id="org4f423c9"></a>
+<a id="org42b3bfc"></a>
 
 # References
 
@@ -178,7 +178,7 @@ Old
 -   <https://github.com/gvolpe/nix-config>
 
 
-<a id="orga1b8c9f"></a>
+<a id="orgec420f8"></a>
 
 # Licensing
 

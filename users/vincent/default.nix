@@ -59,7 +59,6 @@ in
   home-manager.users.vincent = lib.mkMerge
     (
       [
-        (import ../home.nix)
         (import ./core)
         (import ./mails { hostname = config.networking.hostName; pkgs = pkgs; })
       ]
