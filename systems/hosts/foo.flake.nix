@@ -13,6 +13,7 @@ let
 in
 {
   profiles.laptop.enable = true;
+  profiles.desktop.i3.enable = true;
   profiles.home.enable = true;
 
   environment.systemPackages = with pkgs; [ tkn ];

@@ -6,6 +6,7 @@
     ./desktop.flake.nix
     ./development.flake.nix
     ./home.flake.nix
+    ./i3.nix
     ./laptop.flake.nix
     # FIXME: vpn, server, builder, …
   ];

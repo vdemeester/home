@@ -14,18 +14,15 @@ in
   config = mkIf cfg.enable {
     profiles = {
       desktop.enable = true;
-      avahi.enable = true;
     };
     services = {
       blueman.enable = true;
       autorandr.enable = true;
       xserver = {
-        enable = true;
         displayManager = {
           defaultSession = "none+i3";
           lightdm.enable = true;
-          lightdm.greeters.mini.enable = true;
-          lightdm.greeters.mini.user = "vincent";
+          lightdm.greeters.pantheon.enable = true;
         };
         windowManager.i3.enable = true;
       };
