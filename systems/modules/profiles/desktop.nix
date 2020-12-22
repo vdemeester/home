@@ -106,7 +106,7 @@ in
     environment.systemPackages = with pkgs; [
       cryptsetup
       xlibs.xmodmap
-      xorg.xbacklight
+      # xorg.xbacklight
       xorg.xdpyinfo
       xorg.xhost
       xorg.xinit

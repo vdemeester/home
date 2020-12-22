@@ -129,7 +129,11 @@ in
     redhat.enable = true;
     scanning.enable = true;
   };
-  environment.systemPackages = with pkgs; [ virtmanager ];
+  environment.systemPackages = with pkgs; [
+    virtmanager
+    # force xbacklight to work
+    acpilight
+  ];
 
   services = {
     wireguard = {
