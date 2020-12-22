@@ -90,7 +90,7 @@
       pkgsBySystem = forEachSystem (mkPkgs inputs.nixpkgs);
 
       # NixOS configurations
-      /* Creates a NixOS configuration from a `name` and a attribute set.
+      /* Creates a NixOS configuration from a `name` and an attribute set.
          The attribute set is composed of:
          - pkgs: the package set to use. To be taken from the inputs (inputs.nixos, …)
          - system: the architecture of the system. Default is x86_64-linux.
@@ -149,7 +149,17 @@
           specialArgs = { inherit name inputs; };
         });
 
-      # home-manager configurations
+      /*
+      mkHomeManagerConfiguration creates a home-manager configuration from a `name` (a user) and an attribute set.
+      The attribute set is composed of:
+      - config: the configuration path that will be imported, by default `./users/{name}/home.nix
+
+      It loads home-manager specific modules and config and set a minimum set of configuration file
+      to integrate with flakes a bit better.
+
+      It can be used in a configuration as following:
+      `home-manager.users.vincent = inputs.self.internal.homeManagerConfigurations."vincent";`.
+      */
       mkHomeManagerConfiguration = name: { config ? ./users + "/${name}/home.nix" }:
         nameValuePair name ({ ... }: {
           imports = [
@@ -200,7 +210,7 @@
 
         # Expose the development shells defined in the repository, run these with:
         #
-        # nix develop 'self#devShells.x86_64-linux.cargo'
+        # nix develop '.#devShells.x86_64-linux.cargo'
         devShells = forEachSystem (system:
           let
             pkgs = pkgsBySystem."${system}";
