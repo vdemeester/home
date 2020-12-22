@@ -15,8 +15,6 @@ let
   isContainersEnabled = if hasConfigVirtualizationContainers then config.virtualisation.containers.enable else false;
 in
 {
-  # imports = [ ../home.nix ];
-
   users.users.vincent = {
     createHome = true;
     uid = 1000;

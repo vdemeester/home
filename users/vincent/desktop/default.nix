@@ -36,7 +36,7 @@
     keybase
     # pass
     profile-sync-daemon
-  ] ++ lib.optionals nixosConfig.profiles.desktop.i3.enable [ pkgs.brave ];
+  ]; # ++ lib.optionals nixosConfig.profiles.desktop.i3.enable [ pkgs.brave ];
 
   xdg.configFile."obs-studio/plugins/obs-v4l2sink/bin/64bit/obs-v4l2sink.so".source =
     "${pkgs.obs-v4l2sink}/share/obs/obs-plugins/v4l2sink/bin/64bit/v4l2sink.so";
