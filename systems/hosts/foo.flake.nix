@@ -16,7 +16,7 @@ in
   profiles.desktop.i3.enable = true;
   profiles.home.enable = true;
 
-  environment.systemPackages = with pkgs; [ tkn ];
+  environment.systemPackages = with pkgs; [ tkn nyxt ];
   /*
   profiles = {
     desktop.i3.enable = true;

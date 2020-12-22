@@ -78,9 +78,12 @@
   outputs = { self, ... } @ inputs:
     with inputs.nixpkgs.lib;
     let
+      # List systems that we support.
+      # So far it is only amd64 and aarch64
       forEachSystem = genAttrs [ "x86_64-linux" "aarch64-linux" ];
 
-      # Packages
+      # mkPkgs makes pkgs for a system, given a pkgs attrset.
+      # The pkgs attrset can be taken from inputs nixos, nixos-unstable, nixpkgs.
       mkPkgs = pkgs: system: import pkgs {
         inherit system;
         config = import ./nix/config.nix;
@@ -90,7 +93,6 @@
       stablePkgsBySystem = forEachSystem (mkPkgs inputs.nixos);
       pkgsBySystem = forEachSystem (mkPkgs inputs.nixpkgs);
 
-      # NixOS configurations
       /* Creates a NixOS configuration from a `name` and an attribute set.
          The attribute set is composed of:
          - pkgs: the package set to use. To be taken from the inputs (inputs.nixos, …)
@@ -235,6 +237,8 @@
         overlays = forEachSystem (system: [
           (self.overlay."${system}")
           (_: _: import inputs.gitignore-nix { lib = inputs.nixpkgs.lib; })
+          inputs.nyxt.overlay
+          inputs.emacs.overlay
           (import ./nix/overlays/infra.nix)
           (import ./nix/overlays/mkSecret.nix)
         ]);
@@ -244,14 +248,14 @@
       # `nixos-rebuild` on those hosts.
       nixosConfigurations = mapAttrs' mkNixOsConfiguration {
         # FIXME remove .flake "suffix" once they all got migrated
-        #naruhodo = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; };
-        #wakasu = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; };
-        #okinawa = { pkgs = inputs.nixos; system = "x86_64-linux"; };
-        #sakhalin = { pkgs = inputs.nixos; system = "x86_64-linux"; };
-        #kerkouane = { pkgs = inputs.nixos; system = "x86_64-linux"; };
+        naruhodo = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; };
+        wakasu = { pkgs = inputs.nixos-unstable; system = "x86_64-linux"; };
+        okinawa = { pkgs = inputs.nixos; system = "x86_64-linux"; };
+        sakhalin = { pkgs = inputs.nixos; system = "x86_64-linux"; };
+        kerkouane = { pkgs = inputs.nixos; system = "x86_64-linux"; };
         # TODO raspberry pi 8G x 3 (name them too)
-        #monastir = { pkgs = inputs.nixo; system = "aarch64-linux"; };
-        #kairouan = { pkgs = inputs.nixos; system = "aarch64-linux"; };
+        monastir = { pkgs = inputs.nixo; system = "aarch64-linux"; };
+        kairouan = { pkgs = inputs.nixos; system = "aarch64-linux"; };
         nabeul = { pkgs = inputs.nixos; system = "aarch64-linux"; };
         # TODO VMs
         foo = { pkgs = inputs.nixos-unstable; users = [ "vincent" "houbeb" "root" ]; };
@@ -265,20 +269,19 @@
       };
 
       # Expose a dev shell which contains tools for working on this repository.
-      devShell = forEachSystem
-        (system:
-          with pkgsBySystem."${system}";
+      devShell = forEachSystem (system:
+        with pkgsBySystem."${system}";
 
-          mkShell {
-            name = "home";
-            buildInputs = [
-              cachix
-              git-crypt
-              nixpkgs-fmt
-              gnumake
-            ];
-          }
-        );
+        mkShell {
+          name = "home";
+          buildInputs = [
+            cachix
+            git-crypt
+            nixpkgs-fmt
+            gnumake
+          ];
+        }
+      );
 
       # Expose an overlay which provides the packages defined by this repository.
       #

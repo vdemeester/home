@@ -7,11 +7,10 @@ rec {
       pname = "tkn";
       name = "${pname}-${version}";
 
-      goPackagePath = "github.com/tektoncd/cli";
       subPackages = [ "cmd/tkn" ];
       buildFlagsArray =
         let
-          t = "${goPackagePath}/pkg/cmd/version";
+          t = "github.com/tektoncd/cli/pkg/cmd/version";
         in
         ''
           -ldflags=
