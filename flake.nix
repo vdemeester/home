@@ -57,18 +57,19 @@
       owner = "nix-community";
       repo = "emacs-overlay";
       ref = "master";
-    };
-    gitignore-nix = {
-      type = "github";
-      owner = "hercules-ci";
-      repo = "gitignore.nix";
-      ref = "master";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nyxt = {
       type = "github";
       owner = "atlas-engineer";
       repo = "nyxt";
+      ref = "master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    gitignore-nix = {
+      type = "github";
+      owner = "hercules-ci";
+      repo = "gitignore.nix";
       ref = "master";
       flake = false;
     };
