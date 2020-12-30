@@ -12,9 +12,36 @@ let
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
 in
 {
-  profiles.laptop.enable = true;
-  profiles.desktop.i3.enable = true;
-  profiles.home.enable = true;
+  modules = {
+    desktop = {
+      i3.enable = true;
+    };
+    editors = {
+      default = "vim";
+      vim.enable = true;
+    };
+    hardware = {
+      bluetooth.enable = true;
+      audio.enable = true;
+      yubikey.enable = true;
+    };
+    shell = {
+      direnv.enable = true;
+      git.enable = true;
+      gnupg.enable = true;
+      tmux.enable = true;
+      zsh.enable = true;
+    };
+    virtualisation = {
+      enable = true;
+      nested = true;
+    };
+  };
+  profiles = {
+    home.enable = true;
+    redhat.enable = true;
+    laptop.enable = true;
+  };
 
   environment.systemPackages = with pkgs; [ tkn nyxt ];
   /*

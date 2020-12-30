@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption mkDefault;
-  cfg = config.profiles.desktop;
+  cfg = config.modules.desktop;
 in
 {
   options = {
-    profiles.desktop = {
+    modules.desktop = {
       enable = mkEnableOption "desktop configuration";
     };
   };

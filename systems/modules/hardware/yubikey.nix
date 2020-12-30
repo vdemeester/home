@@ -1,12 +1,11 @@
 { config, lib, pkgs, ... }:
-
-with lib;
 let
-  cfg = config.profiles.yubikey;
+  inherit (lib) mkEnableOption mkIf mkMerge mkOption types;
+  cfg = config.modules.hardware.yubikey;
 in
 {
   options = {
-    profiles.yubikey = {
+    modules.hardware.yubikey = {
       enable = mkEnableOption "Enable yubikey profile";
       u2f = mkOption {
         default = true;

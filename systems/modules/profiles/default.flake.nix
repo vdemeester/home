@@ -1,15 +1,15 @@
+# Profiles are grouping modules so that we don't have to
+# specify them for all machines all the time.
 { lib, ... }:
 
 {
   imports = [
     ./base.flake.nix
-    ./desktop.flake.nix
-    ./development.flake.nix
     ./home.flake.nix
-    ./i3.nix
     ./laptop.flake.nix
+    # ./desktop.flake.nix
     # FIXME: vpn, server, builder, …
   ];
 
-  profiles.base.enable = lib.mkDefault true;
+  modules.base.enable = lib.mkDefault true;
 }

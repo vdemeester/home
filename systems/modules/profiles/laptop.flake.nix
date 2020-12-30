@@ -10,7 +10,7 @@ in
     };
   };
   config = mkIf cfg.enable {
-    profiles.desktop.enable = true;
+    modules.desktop.enable = true;
     nix = {
       sshServe.enable = mkForce false;
     };

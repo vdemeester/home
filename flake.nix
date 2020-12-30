@@ -143,7 +143,6 @@
                 };
               };
             })
-            # FIXME remove flake suffix once migrated
             (import ./systems/modules/default.flake.nix)
             (import config)
           ]
@@ -237,7 +236,7 @@
         overlays = forEachSystem (system: [
           (self.overlay."${system}")
           (_: _: import inputs.gitignore-nix { lib = inputs.nixpkgs.lib; })
-          inputs.nyxt.overlay
+          #inputs.nyxt.overlay
           inputs.emacs.overlay
           (import ./nix/overlays/infra.nix)
           (import ./nix/overlays/mkSecret.nix)

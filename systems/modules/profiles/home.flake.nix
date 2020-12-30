@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.profiles.home;
+  cfg = config.modules.home;
 
   secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
@@ -9,7 +9,7 @@ let
 in
 {
   options = {
-    profiles.home = {
+    modules.home = {
       enable = mkEnableOption "home configuration";
     };
   };

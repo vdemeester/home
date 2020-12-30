@@ -1,12 +1,12 @@
 { config, inputs, lib, pkgs, ... }:
 let
   inherit (lib) mkEnableOption mkIf mkDefault mkOverride;
-  cfg = config.profiles.base;
+  cfg = config.modules.base;
 in
 {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
   options = {
-    profiles.base = {
+    modules.base = {
       enable = mkEnableOption "base configuration";
     };
   };
@@ -35,10 +35,6 @@ in
     };
 
     environment = {
-      # Path to link from packages to /run/current-system/sw
-      pathsToLink = [
-        "/share/nix-direnv"
-      ];
       # System packages to install, those are the absolute minimum packages required
       systemPackages = with pkgs; [
         file
@@ -48,14 +44,8 @@ in
         netcat
         psmisc
         pv
-        vim
         wget
       ];
-      # Default editor for the system is vim
-      # (for the users, that might change :D)
-      variables = {
-        EDITOR = mkOverride 0 "vim";
-      };
     };
 
     # Home manager default configuration

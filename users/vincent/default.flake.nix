@@ -20,7 +20,8 @@ in
     uid = 1000;
     description = "Vincent Demeester";
     extraGroups = [ "wheel" "input" ]
-      ++ optionals config.profiles.desktop.enable [ "audio" "video" "networkmanager" ]
+      ++ optionals config.modules.desktop.enable [ "video" ]
+      ++ optionals config.modules.hardware.audio.enable [ "audio" ]
       #++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
       ++ optionals config.virtualisation.docker.enable [ "docker" ]
