@@ -5,8 +5,6 @@ buildGoModule rec {
   name = "${pname}-${version}";
   version = "0.6.2";
 
-  goPackagePath = "github.com/google/ko";
-
   src = fetchFromGitHub {
     owner = "google";
     repo = "ko";

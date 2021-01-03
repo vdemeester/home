@@ -6,7 +6,6 @@ buildGoModule rec {
   #rev = "v${version}";
   rev = "bae5531170d45955c2d72d1b29d77ce1b0c9dedb";
 
-  goPackagePath = "github.com/estep/manifest-tool";
   subPackages = [ "cmd/manifest-tool" ];
 
   src = fetchFromGitHub {

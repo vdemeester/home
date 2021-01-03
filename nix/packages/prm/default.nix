@@ -5,8 +5,7 @@ buildGoModule rec {
   version = "3.4.0";
   rev = "v${version}";
 
-  goPackagePath = "github.com/ldez/prm/v3";
-  buildFlagsArray = let t = "${goPackagePath}/meta"; in
+  buildFlagsArray = let t = "github.com/ldez/prm/v3/meta"; in
     ''
       -ldflags=
          -X ${t}.Version=${version}

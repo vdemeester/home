@@ -5,7 +5,6 @@ buildGoModule rec {
   version = "0.3.4";
   rev = "v${version}";
 
-  goPackagePath = "github.com/kubernetes-sigs/krew";
   subPackages = [ "cmd/krew" ];
   src = fetchFromGitHub {
     inherit rev;

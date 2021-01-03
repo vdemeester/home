@@ -5,10 +5,9 @@ buildGoModule rec {
   version = "0.5.1";
   rev = "v${version}";
 
-  goPackagePath = "github.com/docker/buildx";
   subPackages = [ "cmd/buildx" ];
 
-  buildFlagsArray = let t = "${goPackagePath}/version"; in
+  buildFlagsArray = let t = "github.com/docker/buildx/version"; in
     ''
       -ldflags=
         -X ${t}.Version=${version}
