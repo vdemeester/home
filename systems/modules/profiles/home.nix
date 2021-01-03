@@ -18,8 +18,6 @@ in
       hosts = with machines; mkIf secretCondition {
         "${home.ips.honshu}" = [ "honshu.home" ];
         #"${wireguard.ips.honshu}" = [ "honshu.vpn" ];
-        "${home.ips.hokkaido}" = [ "hokkaido.home" ];
-        "${wireguard.ips.hokkaido}" = [ "hokkaido.vpn" ];
         "${home.ips.shikoku}" = [ "shikoku.home" ];
         "${wireguard.ips.shikoku}" = [ "shikoku.vpn" ];
         "${home.ips.wakasu}" = [ "wakasu.home" ];
