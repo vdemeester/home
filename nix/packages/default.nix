@@ -35,8 +35,8 @@ rec {
   scripts = pkgs.callPackage ./my/scripts { };
   vrsync = pkgs.callPackage ./my/vrsync { };
   vde-thinkpad = pkgs.callPackage ./my/vde-thinkpad { };
-  bus = pkgs.callPackage ../tools/bus { };
-  bekind = pkgs.callPackage ../tools/bekind { };
+  bus = pkgs.callPackage ../../tools/bus { };
+  bekind = pkgs.callPackage ../../tools/bekind { };
 
   # Mine
   ape = pkgs.callPackage ./ape { };
