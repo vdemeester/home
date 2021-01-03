@@ -5,7 +5,6 @@ buildGoModule rec {
   version = "1.3.1";
   rev = "v${version}";
 
-  goPackagePath = "github.com/gogo/protobuf";
   subPackages = [
     "proto"
     "gogoproto"

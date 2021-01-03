@@ -5,8 +5,6 @@ buildGoModule rec {
   version = "0.0.12";
   rev = "v${version}";
 
-  goPackagePath = "github.com/juruen/rmapi";
-
   src = fetchFromGitHub {
     inherit rev;
     owner = "juruen";

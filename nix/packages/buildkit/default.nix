@@ -5,10 +5,9 @@ buildGoModule rec {
   version = "0.8.0";
   rev = "v${version}";
 
-  goPackagePath = "github.com/moby/buildkit";
   subPackages = [ "cmd/buildctl" "cmd/buildkitd" ];
 
-  buildFlagsArray = let t = "${goPackagePath}/version"; in
+  buildFlagsArray = let t = "github.com/moby/buildkit/version"; in
     ''
       -ldflags=
         -X ${t}.Version=${version}

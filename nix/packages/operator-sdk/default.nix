@@ -16,11 +16,10 @@ rec {
 
       builtInputs = [ "git" ];
 
-      goPackagePath = "github.com/operator-framework/operator-sdk";
       subPackages = [ "cmd/operator-sdk" ];
       buildFlagsArray =
         let
-          t = "${goPackagePath}/version";
+          t = "github.com/operator-framework/operator-sdk/version";
         in
         ''
           -ldflags=

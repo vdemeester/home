@@ -5,7 +5,6 @@ buildGoModule rec {
   version = "0.10.0";
   rev = "v${version}";
 
-  goPackagePath = "github.com/gomods/athens";
   subPackages = [ "cmd/proxy" ];
 
   src = fetchFromGitHub {

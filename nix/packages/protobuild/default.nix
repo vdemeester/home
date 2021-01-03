@@ -5,7 +5,6 @@ buildGoModule rec {
   version = "2020-04-14";
   rev = "324b1750ca060b814b18f4142b544b292d42968e";
 
-  goPackagePath = "github.com/stevvooe/protobuild";
   src = fetchFromGitHub {
     inherit rev;
     owner = "stevvooe";
