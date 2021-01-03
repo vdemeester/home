@@ -17,7 +17,9 @@ in
       domain = "home";
       hosts = with machines; mkIf secretCondition {
         "${home.ips.honshu}" = [ "honshu.home" ];
-        "${wireguard.ips.honshu}" = [ "honshu.vpn" ];
+        #"${wireguard.ips.honshu}" = [ "honshu.vpn" ];
+        "${home.ips.hokkaido}" = [ "hokkaido.home" ];
+        "${wireguard.ips.hokkaido}" = [ "hokkaido.vpn" ];
         "${home.ips.shikoku}" = [ "shikoku.home" ];
         "${wireguard.ips.shikoku}" = [ "shikoku.vpn" ];
         "${home.ips.wakasu}" = [ "wakasu.home" ];
@@ -30,7 +32,7 @@ in
         "${home.ips.synodine}" = [ "synodine.home" ];
         "${home.ips.okinawa}" = [ "okinawa.home" ];
         "${wireguard.ips.okinawa}" = [ "okinawa.vpn" ];
-        "${wireguard.ips.carthage}" = [ "carthage.vpn" ];
+        #"${wireguard.ips.carthage}" = [ "carthage.vpn" ];
         "${wireguard.ips.kerkouane}" = [ "kerkouane.vpn" ];
       };
     };
