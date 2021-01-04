@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-maim -d1 | {
+maim -d | {
     case $1 in
 	%c) to='clipboard'; xclip -selection clipboard -t image/png ;;
 	%d) to=~/desktop/pictures/screenshots/$(hostname)/$(date +'%Y-%m-%d-%H%M%S').png; cat > "$to" ;;
