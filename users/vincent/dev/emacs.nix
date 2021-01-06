@@ -7,10 +7,6 @@ let
     #!${pkgs.stdenv.shell}
     emacsclient -n -F '((name . "capture") (width . 150) (height . 90))' -e '(org-capture)'
   '';
-  e = pkgs.writeScriptBin "e" ''
-    #!${pkgs.stdenv.shell}
-    emacs --dump-file=~/.config/emacs/emacs.pdmp $@
-  '';
   et = pkgs.writeScriptBin "et" ''
     #!${pkgs.stdenv.shell}
     emacsclient --tty $@
@@ -31,6 +27,7 @@ let
     company
     company-emoji
     company-go
+    consult
     dash
     delight
     diredfl
@@ -42,6 +39,7 @@ let
     dumb-jump
     easy-kill
     edit-indirect
+    embark
     envrc
     esh-autosuggest
     eshell-prompt-extras
@@ -73,6 +71,7 @@ let
     magit
     magit-annex
     magit-popup
+    marginalia
     markdown-mode
     minions
     modus-operandi-theme

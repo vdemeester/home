@@ -1,6 +1,6 @@
 ;;; init-func.el --- -*- lexical-binding: t -*-
 ;;
-;; OrgIncludeAuto
+
 ;; https://endlessparentheses.com/updating-org-mode-include-statements-on-the-fly.html
 (defun save-and-update-includes ()
   "Update the line numbers of #+INCLUDE:s in current buffer.
@@ -45,7 +45,6 @@ BEGIN and END are regexps which define the line range to use."
           (search-forward-regexp end)
           (setq r (1+ (line-number-at-pos (match-end 0)))))
         (format "%s-%s" (+ l 1) (- r 1)))))) ;; Exclude wrapper
-;; -OrgIncludeAuto
 
 (provide 'init-func)
 ;;; init-func.el ends here

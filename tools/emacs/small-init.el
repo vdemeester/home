@@ -1,4 +1,3 @@
-
 (defconst emacs-start-time (current-time))
 
 (let ((minver 26))
@@ -75,8 +74,6 @@
 (eval-when-compile
   (require 'use-package))
 
-(setenv "SSH_AUTH_SOCK" "/run/user/1000/gnupg/S.gpg-agent.ssh")
-
 (defconst vde/custom-file (locate-user-emacs-file "custom.el")
   "File used to store settings from Customization UI.")
 
@@ -112,46 +109,13 @@
   (string-match "[0-9A-Za-z-]+" system-name)
   (substring system-name (match-beginning 0) (match-end 0)))
 
-
-(defconst *sys/gui*
-  (display-graphic-p)
-  "Are we running on a GUI Emacs ?")
-(defconst *sys/linux*
-  (eq system-type 'gnu/linux)
-  "Are we running on a GNU/Linux system?")
-(defconst *sys/mac*
-  (eq system-type 'darwin)
-  "Are we running on a Mac system?")
-(defconst *sys/root*
-  (string-equal "root" (getenv "USER"))
-  "Are you a ROOT user?")
-(defconst *nix*
-  (executable-find "nix")
-  "Do we have nix? (aka are we running in NixOS or a system using nixpkgs).")
-(defconst *rg*
-  (executable-find "rg")
-  "Do we have ripgrep?")
-(defconst *gcc*
-  (executable-find "gcc")
-  "Do we have gcc?")
-(defconst *git*
-  (executable-find "git")
-  "Do we have git?")
-
-(defvar *sys/full*
-  (member (vde/short-hostname) '("wakasu" "naruhodo")) ; "naruhodo" <- put naruhodo back in
-  "Is it a full system ?")
-(defvar *sys/light*
-  (not *sys/full*)
-  "Is it a light system ?")
-
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
 (add-to-list 'load-path (concat user-emacs-directory "lisp/vorg"))
 (require 'init-func)
-(vde/el-load-dir (concat user-emacs-directory "/config/"))
-
-(if (file-exists-p (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el")))
-    (load-file (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el"))))
+;; (vde/el-load-dir (concat user-emacs-directory "/config/"))
+;;
+;; (if (file-exists-p (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el")))
+;;     (load-file (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el"))))
 
 (let ((elapsed (float-time (time-subtract (current-time)
                                           emacs-start-time))))
