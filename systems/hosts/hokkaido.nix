@@ -111,7 +111,6 @@ in
       HandleLidSwitchExternalPower=ignore
       HandleLidSwitchDocked=ignore
     '';
-    # FIXME re-generate hokkaido key
     wireguard = {
       enable = true;
       ips = ips;
