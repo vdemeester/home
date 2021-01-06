@@ -136,7 +136,6 @@ in
     zip
     # See if I can hide this under an option
     capture
-    e
     ec
     et
   ];
