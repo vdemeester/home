@@ -1,4 +1,4 @@
-{ sources ? import ../nix
+{ sources ? import ../.
 , pkgs ? sources.pkgs { }
 }:
 let
