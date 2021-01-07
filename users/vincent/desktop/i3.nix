@@ -385,9 +385,9 @@ in
       # bepo p = 26
       set $pomodoro "pomodoro: [s]tart s[t]op [p]ause-resume"
       mode $pomodoro {
-        bindcode 45 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --start"; mode "default"
-        bindcode 44 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --stop"; mode "default"
-        bindcode 26 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --pause-resume"; mode "default"
+        bindcode 45 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --no-default-window --start"; mode "default"
+        bindcode 44 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --no-default-window --stop"; mode "default"
+        bindcode 26 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --no-default-window --pause-resume"; mode "default"
         bindsym Return mode "default"
         bindsym Escape mode "default"
       }
