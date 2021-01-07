@@ -48,30 +48,80 @@
 
 (eval-when-compile
   (require 'use-package))
+(defgroup prot-orderless ()
+  "Tweaks for the Orderless completion style."
+  :group 'minibuffer)
+
+(defcustom prot-orderless-default-styles
+  '(orderless-flex
+    orderless-strict-leading-initialism
+    orderless-regexp
+    orderless-prefixes
+    orderless-literal)
+  "List that should be assigned to `orderless-matching-styles'."
+  :type 'list
+  :group 'prot-orderless)
+
+(defcustom prot-orderless-alternative-styles
+  '(orderless-literal
+    orderless-prefixes
+    orderless-strict-leading-initialism
+    orderless-regexp)
+  "Alternative list for `orderless-matching-styles'.
+
+Unlike `prot-orderless-default-styles', this variable is intended
+for use on a case-by-case basis, with the help of the function
+`prot-orderless-with-styles'."
+  :type 'list
+  :group 'prot-orderless)
+
+(defun prot-orderless-literal-dispatcher (pattern _index _total)
+  "Literal style dispatcher using the equals sign as a suffix.
+It matches PATTERN _INDEX and _TOTAL according to how Orderless
+parses its input."
+  (when (string-suffix-p "=" pattern)
+    `(orderless-literal . ,(substring pattern 0 -1))))
+
+(defun prot-orderless-initialism-dispatcher (pattern _index _total)
+  "Leading initialism  dispatcher using the comma suffix.
+It matches PATTERN _INDEX and _TOTAL according to how Orderless
+parses its input."
+  (when (string-suffix-p "," pattern)
+    `(orderless-strict-leading-initialism . ,(substring pattern 0 -1))))
+
+(defvar orderless-matching-styles)
+
+(defun prot-orderless-with-styles (cmd &optional styles)
+  "Call CMD with optional orderless STYLES.
+
+STYLES is a list of pattern matching methods that is passed to
+`orderless-matching-styles'.  Its fallback value is that of
+`prot-orderless-alternative-styles'."
+  (let ((orderless-matching-styles (or styles prot-orderless-alternative-styles))
+        (this-command cmd))
+    (call-interactively cmd)))
 
 (use-package orderless
-  :unless noninteractive
   :config
-  (setq orderless-regexp-separator " +")
-  (setq orderless-matching-styles
-        '(orderless-flex
-	  orderless-strict-leading-initialism
+    (setq prot-orderless-default-styles
+        '(orderless-prefixes
+          orderless-literal
+          orderless-strict-leading-initialism
           orderless-regexp
+          orderless-flex))
+  (setq prot-orderless-alternative-styles
+        '(orderless-literal
           orderless-prefixes
-          orderless-literal))
-
-  (defun prot/orderless-literal-dispatcher (pattern _index _total)
-    (when (string-suffix-p "=" pattern)
-      `(orderless-literal . ,(substring pattern 0 -1))))
-
-  (defun prot/orderless-initialism-dispatcher (pattern _index _total)
-    (when (string-suffix-p "," pattern)
-      `(orderless-strict-leading-initialism . ,(substring pattern 0 -1))))
-
-  (setq orderless-style-dispatchers '(prot/orderless-literal-dispatcher
-                                      prot/orderless-initialism-dispatcher))
+          orderless-strict-leading-initialism
+          orderless-regexp))
+  (setq orderless-component-separator " +")
+  (setq orderless-matching-styles prot-orderless-default-styles)
+  (setq orderless-style-dispatchers
+        '(prot-orderless-literal-dispatcher
+          prot-orderless-initialism-dispatcher))
+  ;; SPC should never complete: use it for `orderless' groups.
   :bind (:map minibuffer-local-completion-map
-              ("SPC" . nil)))         ; space should never complete
+              ("SPC" . nil)))
 (use-package marginalia
    :config
    (marginalia-mode 1)
