@@ -197,7 +197,6 @@ STYLES is a list of pattern matching methods that is passed to
          ("<tab>" . minibuffer-force-complete)))
 
 (use-package embark
-	     :ensure t
   :after minibuffer
   :config
   (setq embark-occur-initial-view-alist '((t . zebra)))
@@ -205,6 +204,8 @@ STYLES is a list of pattern matching methods that is passed to
   (setq embark-live-occur-update-delay 0.5)
   (setq embark-live-occur-initial-delay 0.8)
   (setq embark-annotator-alist '((t . embark-annotation-function-metadatum)))
+  (remove-hook 'minibuffer-setup-hook #'embark-live-occur-after-input)
+  (add-hook 'minibuffer-setup-hook #'embark-live-occur-after-delay)
   :hook (minibuffer-setup-hook . embark-live-occur-after-input)
   :bind (("C-," . embark-act)
          :map minibuffer-local-completion-map
