@@ -14,10 +14,13 @@ in
     environment.systemPackages = with pkgs; [
       krb5
       (google-chrome.override {
-        commandLineArgs = "--auth-negotiate-delegate-whitelist=*.redhat.com";
+        commandLineArgs = "--auth-negotiate-delegate-whitelist='*.redhat.com'";
       })
       libnotify
     ];
+    environment.etc."etc/krb5.conf" = {
+      source = pkgs.mkSecret ../../../secrets/etc/krb5.conf;
+    };
     # NetworkManager
     environment.etc."NetworkManager/system-connections/1-RHVPN.ovpn" = {
       source = pkgs.mkSecret ../../../secrets/etc/NetworkManager/system-connections/1-RHVPN.ovpn;

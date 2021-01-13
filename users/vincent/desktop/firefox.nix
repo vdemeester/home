@@ -109,7 +109,7 @@
         "toolkit.telemetry.unified" = false;
         "toolkit.telemetry.updatePing.enabled" = false;
         # Red Hat specific
-        "network.negotiate-auth.trusted-uris" = "redhat.com";
+        "network.negotiate-auth.trusted-uris" = ".redhat.com";
       };
     };
   };
