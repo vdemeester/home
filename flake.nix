@@ -39,12 +39,13 @@
       repo = "nixos-hardware";
       ref = "master";
     };
-    # nix-darwin = {
-    #   type = "github";
-    #   owner = "LnL7";
-    #   repo = "nix-darwin";
-    #   ref = "master";
-    # };
+    nix-darwin = {
+      type = "github";
+      owner = "LnL7";
+      repo = "nix-darwin";
+      ref = "master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       type = "github";
       owner = "rycee";
@@ -80,7 +81,7 @@
     let
       # List systems that we support.
       # So far it is only amd64 and aarch64
-      forEachSystem = genAttrs [ "x86_64-linux" "aarch64-linux" ];
+      forEachSystem = genAttrs [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
 
       # mkPkgs makes pkgs for a system, given a pkgs attrset.
       # The pkgs attrset can be taken from inputs nixos, nixos-unstable, nixpkgs.
@@ -92,6 +93,61 @@
       unstablePkgsBySystem = forEachSystem (mkPkgs inputs.nixos-unstable);
       stablePkgsBySystem = forEachSystem (mkPkgs inputs.nixos);
       pkgsBySystem = forEachSystem (mkPkgs inputs.nixpkgs);
+
+      /* Creates a Nix Darwin configuration from a name and an attribute set.
+      */
+      mkDarwinConfiguration = name: { pkgs
+                                    , config ? ./systems/hosts + "/${name}.nix"
+                                    , users ? [ "vincent" ]
+                                    }:
+        nameValuePair name (inputs.nix-darwin.lib.darwinsystem {
+          modules = [
+            (
+              ({ inputs, ... }: {
+                # Use the nixpkgs from the flake.
+                nixpkgs = { pkgs = pkgsBySystem."${system}"; };
+
+                # For compatibility with nix-shell, nix-build, etc.
+                environment.etc.nixpkgs.source = inputs.nixpkgs;
+                nix.nixPath = [ "nixpkgs=/etc/nixpkgs" "darwin=${inputs.nix-darwin}" ];
+
+                # Set system stuff
+                system.checks.verifyNixPath = false;
+                system.darwinVersion = lib.mkForce (
+                  "darwin" + toString config.system.stateVersion + "." + inputs.nix-darwin.shortRev
+                );
+                system.darwinRevision = inputs.nix-darwin.rev;
+                system.nixpkgsVersion =
+                  "${nixpkgs.lastModifiedDate or nixpkgs.lastModified}.${nixpkgs.shortRev}";
+                system.nixpkgsRelease = lib.version;
+                system.nixpkgsRevision = nixpkgs.rev;
+              })
+                ({ pkgs, ... }: {
+                  # Don't rely on the configuration to enable a flake-compatible version of Nix.
+                  nix = {
+                    package = pkgs.nixFlakes;
+                    extraOptions = "experimental-features = nix-command flakes";
+                  };
+                })
+                ({ lib, ... }: {
+                  # Set the system configuration revision.
+                  system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+                })
+                ({ inputs, ... }: {
+                  # Re-expose self and nixpkgs as flakes.
+                  nix.registry = {
+                    self.flake = inputs.self;
+                    nixpkgs = {
+                      from = { id = "nixpkgs"; type = "indirect"; };
+                      flake = inputs.nixpkgs;
+                    };
+                  };
+                })
+                (import ./systems/modules/default.flake.nix)
+                (import config)
+            )
+          ];
+        });
 
       /* Creates a NixOS configuration from a `name` and an attribute set.
          The attribute set is composed of:
@@ -258,6 +314,11 @@
         nabeul = { pkgs = inputs.nixos; system = "aarch64-linux"; };
         # TODO VMs
         foo = { pkgs = inputs.nixos-unstable; users = [ "vincent" "houbeb" "root" ]; };
+      };
+
+      # Attribute set of hostnames to be evaluated as nix-darwin configurations.
+      darwinConfigurations = mapAttrs' mkDarwinConfiguration {
+        honshu = { pkgs = inputs.nixpkgs; };
       };
 
       # Import the modules exported by this flake.
