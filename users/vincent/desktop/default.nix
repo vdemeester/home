@@ -33,6 +33,7 @@
     # TODO make this an option
     obs-studio
     # FIXME move this elsewhere
+    signal-desktop
     keybase
     # pass
     profile-sync-daemon
