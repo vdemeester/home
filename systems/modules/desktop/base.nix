@@ -17,6 +17,9 @@ in
       plymouth.enable = true;
     };
 
+    # FIXME Fix tmpOnTmpfs
+    systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
+
     # Extra packages to add to the system
     environment.systemPackages = with pkgs; [
       xorg.xmessage

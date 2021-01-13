@@ -78,6 +78,9 @@ in
     ];
   };
 
+  # FIXME Fix tmpOnTmpfs
+  systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
+
   nix.distributedBuilds = true;
   nix.buildMachines = [
     {

@@ -50,6 +50,9 @@ in
     plymouth.enable = true;
   };
 
+  # FIXME Fix tmpOnTmpfs
+  systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
+
   boot.binfmt.registrations = {
     s390x-linux = {
       # interpreter = getEmulator "s390x-linux";
