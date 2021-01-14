@@ -18,7 +18,7 @@ in
       })
       libnotify
     ];
-    environment.etc."etc/krb5.conf" = {
+    environment.etc."krb5.conf" = {
       source = pkgs.mkSecret ../../../secrets/etc/krb5.conf;
     };
     # NetworkManager
