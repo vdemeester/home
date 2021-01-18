@@ -10,7 +10,11 @@
   :commands (mu-reset-fonts)
   :hook (after-init . mu-reset-fonts)
   :config
-
+  ;; For displaying emojies 😛🦁
+  (set-fontset-font t 'symbol "Apple Color Emoji")
+  (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
+  (set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
+  (set-fontset-font t 'symbol "Symbola" nil 'append)
   (defun mu-reset-fonts ()
     "Reset fonts to my preferences."
     (interactive)
