@@ -193,9 +193,9 @@ in
       };
       keycodebindings = {
         "Mod4+Shift+24" = "kill";
-        "Mod4+33" = "exec \"${pkgs.rofi}/bin/rofi -show drun -modi 'drun,run,window,ssh' -kb-row-select 'Tab' -kb-row-tab '' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
-        "Mod4+Shift+33" = "exec \"${pkgs.rofi}/bin/rofi -show combi -modi 'drun,run,window,ssh,combi' -kb-row-select 'Tab' -kb-row-tab '' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
-        "Mod4+Control+33" = "exec \"${pkgs.rofi}/bin/rofi -show emoji -modi emoji -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
+        "Mod4+33" = "exec \"rofi -show drun -modi 'drun,run,window,ssh' -kb-row-select 'Tab' -kb-row-tab '' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
+        "Mod4+Shift+33" = "exec \"rofi -show combi -modi 'drun,run,window,ssh,combi' -kb-row-select 'Tab' -kb-row-tab '' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
+        "Mod4+Control+33" = "exec \"rofi -show emoji -modi emoji -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'|pbcopy";
         # "Mod4+space" = "";
         # focus window
         "Mod4+44" = "focus left";
