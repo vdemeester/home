@@ -23,12 +23,11 @@ in
     (import ../../users).root
   ];
 
-  fileSystems."/" =
-    {
-      device = "/dev/mapper/root";
-      fsType = "ext4";
-      options = [ "noatime" "discard" ];
-    };
+  fileSystems."/" = {
+    device = "/dev/mapper/root";
+    fsType = "ext4";
+    options = [ "noatime" "discard" ];
+  };
 
   boot.initrd.luks.devices = {
     root = {
@@ -38,14 +37,12 @@ in
     };
   };
 
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/0101-68DE";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/0101-68DE";
+    fsType = "vfat";
+  };
 
-  swapDevices =
-    [{ device = "/dev/disk/by-uuid/aff86817-55ae-47ed-876a-e5a027b560ba"; }];
+  swapDevices = [{ device = "/dev/disk/by-uuid/aff86817-55ae-47ed-876a-e5a027b560ba"; }];
 
   networking = {
     hostName = hostname;
