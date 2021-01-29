@@ -95,6 +95,11 @@ This is used internally by `vde/modus-themes-toggle'."
                       :family font-family-sans
                       :weight 'regular))
 
+(set-fontset-font t 'symbol "Apple Color Emoji")
+(set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
+(set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
+(set-fontset-font t 'symbol "Symbola" nil 'append)
+
 ;; Ignore X resources; its settings would be redundant with the other settings
 ;; in this file and can conflict with later config (particularly where the
 ;; cursor color is concerned).

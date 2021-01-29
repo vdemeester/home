@@ -27,6 +27,7 @@
 
 (require 'package)
 
+;; (setq package-archives nil) ;; To rely only on packages from nix
 (setq package-archives
       '(("melpa" . "http://melpa.org/packages/")
         ("org" . "https://orgmode.org/elpa/")
