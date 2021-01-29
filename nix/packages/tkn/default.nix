@@ -46,6 +46,10 @@ rec {
       };
     };
 
+  tkn_0_15 = makeOverridable tknGen {
+    version = "0.15.0";
+    sha256 = "0xb2zlpkh9cwinp6zj2jpv4wlws042ad1fa0wkcnnkh0vjm6mnrl";
+  };
   tkn_0_14 = makeOverridable tknGen {
     version = "0.14.0";
     sha256 = "1mkbwh4cmhx9in928vlvs7xjjklpsxbv5niv8jmsbnifflg1an8p";
@@ -62,5 +66,5 @@ rec {
     version = "0.11.0";
     sha256 = "19svynznk7bshjm9hd0zxzdn5j09fl7n7jws2hf8qm1y0ynbydmb";
   };
-  tkn = tkn_0_14;
+  tkn = tkn_0_15;
 }
