@@ -36,13 +36,13 @@ in
     time.timeZone = "Europe/Paris";
     # To mimic autofs on fedora
     fileSystems = mkIf secretCondition {
-      "/net/synodine.home/" = {
+      "/net/synodine.home" = {
         device = "${machines.home.ips.synodine}:/";
         fsType = "nfs";
         options = [ "x-systemd.automount" "noauto" ];
       };
       # FIXME(vdemeester): I think it acts like this because there is only one export
-      "/net/sakhalin.home/export/" = {
+      "/net/sakhalin.home/export" = {
         device = "${machines.home.ips.sakhalin}:/";
         fsType = "nfs";
         options = [ "x-systemd.automount" "noauto" ];
