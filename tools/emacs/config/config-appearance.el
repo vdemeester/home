@@ -27,11 +27,11 @@
     (when (member font-family-sans (font-family-list))
       (set-face-attribute 'variable-pitch nil
                           :family font-family-sans
-                          :weight 'regular)))
-  (set-fontset-font t 'symbol "Apple Color Emoji")
-  (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
-  (set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
-  (set-fontset-font t 'symbol "Symbola" nil 'append))
+                          :weight 'regular))
+    (set-fontset-font t 'symbol "Apple Color Emoji")
+    (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
+    (set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
+    (set-fontset-font t 'symbol "Symbola" nil 'append)))
 
 (use-package emacs
   :config
