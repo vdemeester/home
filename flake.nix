@@ -324,7 +324,7 @@
       # Import the modules exported by this flake.
       # containerd, buildkit are interesting module to export from here
       nixosModules = {
-        containerd = import ./systems/modules/virtualisation/containerd.nix;
+        # containerd = import ./systems/modules/virtualisation/containerd.nix;
         buildkit = import ./systems/modules/virtualisation/buildkit.nix;
       };
 

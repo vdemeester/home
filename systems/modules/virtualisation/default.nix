@@ -1,6 +1,7 @@
 {
   imports = [
     ./buildkit.nix
-    ./containerd.nix
+    # Containerd is now a module upstream
+    # ./containerd.nix
   ];
 }

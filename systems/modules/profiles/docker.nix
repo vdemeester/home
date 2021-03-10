@@ -24,7 +24,7 @@ in
     virtualisation = {
       containerd = {
         enable = true;
-        autostart = false;
+        #autostart = false;
       };
       buildkitd = {
         enable = true;
