@@ -17,7 +17,9 @@ let
     "src/gitlab.cee.redhat.com"
     "src/gitlab.corp.redhat.com"
     "src/k8s.io"
+    "src/osp"
     "src/pkg.devel.redhat.com"
+    "src/tektoncd"
   ];
 in
 {
