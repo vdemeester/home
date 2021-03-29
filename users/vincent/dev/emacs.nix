@@ -74,7 +74,7 @@ let
     marginalia
     markdown-mode
     minions
-    modus-operandi-theme
+    modus-themes
     moody
     multi-vterm
     mwim
