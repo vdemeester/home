@@ -38,18 +38,26 @@ rec {
       '';
     };
 
-  oc = oc_4_6;
+  oc = oc_4_7;
+  # oc_4_8 = makeOverridable ocGen {
+  #   version = "4.6.6";
+  #   sha256 = "10q449fygw5qi9spg1jls6j425fdrrmyvcq6p8z91bwyzn67fds9";
+  # };
+  oc_4_7 = makeOverridable ocGen {
+    version = "4.7.4";
+    sha256 = "0009ki35m3id30m0ywxxcq2zd3hkqsxi3sxwgcsng79pj93xghq9";
+  };
   oc_4_6 = makeOverridable ocGen {
-    version = "4.6.6";
-    sha256 = "10q449fygw5qi9spg1jls6j425fdrrmyvcq6p8z91bwyzn67fds9";
+    version = "4.6.23";
+    sha256 = "1gwsa84x6njnfnkxz6ln77vq4z1q32396wy24k3d6vmkhg643iar";
   };
   oc_4_5 = makeOverridable ocGen {
-    version = "4.5.22";
-    sha256 = "044cqblwz31dmhdy947p9jqd3n9rhniwms0jhakldbw5zix1jsbv";
+    version = "4.5.36";
+    sha256 = "1kzsdpjqbc2ibg3sa0zczvlmdvni5fn6dhhgpl4v1g7f438dxamb";
   };
   oc_4_4 = makeOverridable ocGen {
-    version = "4.4.31";
-    sha256 = "1zg8fqfm0ia1mn6bj8kpyr1z5s3sd1gl0i2r3vkxv7zq7k346kds";
+    version = "4.4.33";
+    sha256 = "1bf34331c7wixb1kmabp93sdpp4ihlyigx7nhmy71ffp7j82n419";
   };
   oc_4_3 = makeOverridable ocGen {
     version = "4.3.40";

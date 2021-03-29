@@ -41,18 +41,22 @@ rec {
       };
     };
 
-  openshift-install = openshift-install_4_6;
+  openshift-install = openshift-install_4_7;
+  openshift-install_4_7 = makeOverridable openshiftInstallGen {
+    version = "4.7.4";
+    sha256 = "1mnr9llmn8035qnzc6cwpva3f1d1vsw0bxqqn9yvifi1isfl3g2h";
+  };
   openshift-install_4_6 = makeOverridable openshiftInstallGen {
-    version = "4.6.6";
-    sha256 = "0r4cj8iz76cy3zv80j8l0lfmimqk80lfnqxm412dh9qmnc5xsl62";
+    version = "4.6.23";
+    sha256 = "1m5ryp1i2infln1ig3hc91qrk60syc8jw2vwpq8f7l9ndg7l9lz6";
   };
   openshift-install_4_5 = makeOverridable openshiftInstallGen {
-    version = "4.5.22";
-    sha256 = "1na3kp7v6gqk2wr1w5gpr9dy9nr1vw4z3kka776sxmc082bamg1f";
+    version = "4.5.36";
+    sha256 = "1s4pc0rfw45insvhv61r5kjjdy5874ivcsm37nmr90nkmpq30lsq";
   };
   openshift-install_4_4 = makeOverridable openshiftInstallGen {
-    version = "4.4.31";
-    sha256 = "11iykrkgx3f085vcnk5gl9ia2263ryffpvrz3rj1zgpgpdir6m45";
+    version = "4.4.33";
+    sha256 = "1mdjccyz4wbcwvg4ax2wr3x52cx5h8a0i25n1a7aawsni6z5261m";
   };
   openshift-install_4_3 = makeOverridable openshiftInstallGen {
     version = "4.3.40";
