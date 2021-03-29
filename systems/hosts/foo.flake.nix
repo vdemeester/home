@@ -43,7 +43,7 @@ in
     laptop.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [ tkn nyxt ];
+  environment.systemPackages = with pkgs; [ tektoncd-cli nyxt ];
   /*
   profiles = {
     desktop.i3.enable = true;
