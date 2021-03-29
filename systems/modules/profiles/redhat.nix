@@ -14,7 +14,7 @@ in
     environment.systemPackages = with pkgs; [
       krb5
       (google-chrome.override {
-        commandLineArgs = "--auth-negotiate-delegate-whitelist='*.redhat.com'";
+        commandLineArgs = "--auth-negotiate-delegate-whitelist='*.redhat.com' --auth-server-whitelist=.redhat.com";
       })
       libnotify
     ];
