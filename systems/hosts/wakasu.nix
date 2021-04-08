@@ -128,6 +128,7 @@ in
         extraOptions = [ "--video-scaling=0" "--min-quality=85" "--desktop-scaling=off" ];
       };
     };
+    netdata.enable = true;
     logind.extraConfig = ''
       HandleLidSwitch=ignore
       HandleLidSwitchExternalPower=ignore
