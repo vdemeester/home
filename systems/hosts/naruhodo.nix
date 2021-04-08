@@ -146,8 +146,8 @@ in
   };
   systemd.services.buildkitd.wantedBy = lib.mkForce [ ];
   systemd.services.containerd.wantedBy = lib.mkForce [ ];
-  systemd.services.docker.wantedBy = lib.mkForce [ ];
-  systemd.services.docker.requires = [ "containerd.socket" ];
+  # systemd.services.docker.wantedBy = lib.mkForce [ ];
+  # systemd.services.docker.requires = [ "containerd.socket" ];
 
   virtualisation.podman.enable = true;
   virtualisation.containers = {
