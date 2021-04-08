@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.virtualisation.containerd;
+  cfg = config.virtualisation.mycontainerd;
 
   inherit (lib) mkOption types mkIf;
 in
 {
-  options.virtualisation.containerd = {
+  options.virtualisation.mycontainerd = {
     enable = mkOption {
       type = types.bool;
       default = false;

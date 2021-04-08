@@ -22,9 +22,9 @@ in
   };
   config = mkIf cfg.enable {
     virtualisation = {
-      containerd = {
+      mycontainerd = {
         enable = true;
-        #autostart = false;
+        # autostart = false;
       };
       buildkitd = {
         enable = true;
