@@ -9,7 +9,9 @@ let
 in
 {
   home.packages = [
-    patchedOpenSSH
+    # FIXME: doesn't seem to work on 20.09 for some reason :o)
+    # patchedOpenSSH
+    pkgs.openssh
   ];
   home.file.".ssh/sockets/.placeholder".text = '''';
   xdg.configFile."ssh/.placeholder".text = '''';
