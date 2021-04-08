@@ -96,6 +96,7 @@ in
       ];
       config = {
         allowUnfree = true;
+        #allowBroken = true;
       };
     };
     system = {
