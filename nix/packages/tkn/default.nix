@@ -67,12 +67,4 @@ rec {
     version = "0.13.1";
     sha256 = "0cjih8h64wwdp022pn70xqxafdk34z2y2ipxb86dlf2zdrf9xv53";
   };
-  tkn_0_12 = makeOverridable tknGen {
-    version = "0.12.0";
-    sha256 = "08mw8g31f4v2n55hsb5106r5ng9lklx66xfx0v580m7fbrdb83gs";
-  };
-  tkn_0_11 = makeOverridable tknGen {
-    version = "0.11.0";
-    sha256 = "19svynznk7bshjm9hd0zxzdn5j09fl7n7jws2hf8qm1y0ynbydmb";
-  };
 }

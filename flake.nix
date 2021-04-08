@@ -375,8 +375,6 @@
             batzconverter = pkgs.callPackage ./nix/packages/batzconverter { };
             # Tekton
             inherit (pkgs.callPackage ./nix/packages/tkn { })
-              tkn_0_11
-              tkn_0_12
               tkn_0_13
               tkn_0_14
               tkn_0_15
