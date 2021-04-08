@@ -54,16 +54,17 @@ This is used internally by `vde/modus-themes-toggle'."
 
 (defun vde/modus-operandi-custom ()
   "Customize modus-operandi theme"
-  (if (member 'modus-operandi custom-enabled-themes)
-      (modus-operandi-theme-with-color-variables ; this macro allows us to access the colour palette
-        (custom-theme-set-faces
-         'modus-operandi
-         `(whitespace-tab ((,class (:background "#ffffff" :foreground "#cccccc"))))
-         `(whitespace-space ((,class (:background "#ffffff" :foreground "#cccccc"))))
-         `(whitespace-hspace ((,class (:background "#ffffff" :foreground "#cccccc"))))
-         `(whitespace-newline ((,class (:background "#ffffff" :foreground "#cccccc"))))
-         `(whitespace-indentation ((,class (:background "#ffffff" :foreground "#cccccc"))))
-         ))))
+  ;; (if (member 'modus-operandi custom-enabled-themes)
+  ;;     (modus-operandi-theme-with-color-variables ; this macro allows us to access the colour palette
+  ;;      (custom-theme-set-faces
+  ;;       'modus-operandi
+  ;;       `(whitespace-tab ((,class (:background "#ffffff" :foreground "#cccccc"))))
+  ;;       `(whitespace-space ((,class (:background "#ffffff" :foreground "#cccccc"))))
+  ;;       `(whitespace-hspace ((,class (:background "#ffffff" :foreground "#cccccc"))))
+  ;;       `(whitespace-newline ((,class (:background "#ffffff" :foreground "#cccccc"))))
+  ;;       `(whitespace-indentation ((,class (:background "#ffffff" :foreground "#cccccc"))))
+  ;;       )))
+  )
 
 (add-hook 'contrib/after-load-theme-hook 'vde/modus-operandi-custom)
 (vde/modus-operandi)
