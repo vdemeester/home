@@ -85,6 +85,8 @@ Repositories
 - [[https://github.com/akirak/nix-desktop][https://github.com/akirak/nix-desktop]]
 - [[https://git.tazj.in/about/]]
 - [[https://github.com/danieldk/nix-home]]
+- https://github.com/terlar/nix-config
+  + https://github.com/terlar/emacs-config
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
