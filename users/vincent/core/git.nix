@@ -29,7 +29,7 @@ in
     gitAndTools.git-annex
     gitAndTools.hub
     gitAndTools.gh
-    git-review
+    # git-review
     mr
     my.prm
     my.ape

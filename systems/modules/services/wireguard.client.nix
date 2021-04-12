@@ -43,7 +43,7 @@ in
     };
   };
   config = mkIf cfg.enable {
-    boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
+    # boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
     environment.systemPackages = [ pkgs.wireguard ];
     networking.firewall.trustedInterfaces = [ "wg0" ];
     networking.wireguard.enable = true;
