@@ -51,7 +51,7 @@ in
   };
 
   # FIXME Fix tmpOnTmpfs
-  systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
+  # systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
 
   boot.binfmt.registrations = {
     s390x-linux = {
