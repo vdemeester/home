@@ -89,7 +89,7 @@ in
     virtualization = { enable = true; nested = true; listenTCP = true; };
     kubernetes.enable = true;
     openshift.enable = true;
-    tekton.enable = true;
+    tekton.enable = false;
     yubikey.enable = true;
   };
   virtualisation.podman.enable = true;
