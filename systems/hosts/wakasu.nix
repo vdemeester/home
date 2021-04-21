@@ -148,6 +148,10 @@ in
       endpointPublicKey = endpointPublicKey;
     };
   };
+  systemd.services.buildkitd.wantedBy = lib.mkForce [ ];
+  systemd.services.containerd.wantedBy = lib.mkForce [ ];
+  systemd.services.docker.wantedBy = lib.mkForce [ ];
+  systemd.services.docker.requires = [ "containerd.socket" ];
   /*
   virtualisation.containers = {
     enable = true;
