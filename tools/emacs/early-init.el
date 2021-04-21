@@ -20,6 +20,8 @@
   "Run `contrib/after-load-theme-hook'."
   (run-hooks 'contrib/after-load-theme-hook))
 
+(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
+
 (advice-add #'load-theme :after #'contrib/run-after-load-theme-hook)
 (require 'modus-operandi-theme)
 

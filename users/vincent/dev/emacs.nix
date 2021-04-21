@@ -74,7 +74,9 @@ let
     marginalia
     markdown-mode
     minions
-    modus-themes
+    # FIXME(vdemeester) once it is fixed, re-add
+    # modus-themes
+    # modus-operandi-theme
     moody
     multi-vterm
     mwim
@@ -100,7 +102,8 @@ let
     pkgs.bookmark-plus
     pkgs.dired-plus
     projectile
-    python-mode
+    # FIXME(vdemeester) once it is fixed, re-add
+    #python-mode
     rainbow-delimiters
     rainbow-mode
     rg
