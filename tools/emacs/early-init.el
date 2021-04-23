@@ -23,36 +23,38 @@
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
 
 (advice-add #'load-theme :after #'contrib/run-after-load-theme-hook)
-(require 'modus-operandi-theme)
+(require 'modus-themes)
 
 (defun vde/modus-operandi ()
   "Enable some Modus Operandi variables and load the theme.
 This is used internally by `vde/modus-themes-toggle'."
-  (setq modus-operandi-theme-slanted-constructs t
-        modus-operandi-theme-bold-constructs t
-        modus-operandi-theme-subtle-diffs t
-        modus-operandi-theme-rainbow-headings t
-        modus-operandi-theme-section-headings nil
-        modus-operandi-theme-scale-headings nil
-        modus-operandi-theme-fringes 'subtle ; {nil,'subtle,'intense}
-        modus-operandi-theme-mode-line 'moody ; {nil,'3d,'moody}
-        modus-operandi-theme-3d-modeline t
-        modus-operandi-theme-faint-syntax nil
-        modus-operandi-theme-intense-hl-line t
-        modus-operandi-theme-intense-paren-match t
-        modus-operandi-theme-prompts 'subtle ; {nil,'subtle,'intense}
-        modus-operandi-theme-completions 'opinionated ; {nil,'moderate,'opinionated}
-        modus-operandi-theme-diffs 'desaturated ; {nil,'desaturated,'fg-only}
-        modus-operandi-theme-org-blocks 'greyscale ; {nil,'greyscale,'rainbow}
-        modus-operandi-theme-variable-pitch-headings nil
-        modus-operandi-theme-rainbow-headings t
-        modus-operandi-theme-section-headings nil
-        modus-operandi-theme-scale-headings t
-        modus-operandi-theme-scale-1 1.05
-        modus-operandi-theme-scale-2 1.1
-        modus-operandi-theme-scale-3 1.15
-        modus-operandi-theme-scale-4 1.2)
-  (load-theme 'modus-operandi t))
+  (setq modus-themes-slanted-constructs t
+        modus-themes-bold-constructs t
+        modus-themes-subtle-diffs t
+        modus-themes-rainbow-headings t
+        modus-themes-section-headings nil
+        modus-themes-scale-headings nil
+        modus-themes-fringes 'subtle ; {nil,'subtle,'intense}
+        modus-themes-mode-line 'borderless-moody
+        modus-themes-hl-line nil
+        modus-themes-intense-paren-match t
+        modus-themes-prompts 'subtle-accented ; {nil,'subtle,'intense}
+        modus-themes-completions 'opinionated ; {nil,'moderate,'opinionated}
+        modus-themes-diffs 'desaturated ; {nil,'desaturated,'fg-only}
+        modus-themes-org-blocks 'greyscale ; {nil,'greyscale,'rainbow}
+        modus-themes-paren-match 'subtle-bold
+        modus-themes-syntax nil
+        modus-themes-variable-pitch-headings nil
+        modus-themes-rainbow-headings t
+        modus-themes-section-headings nil
+        modus-themes-scale-headings t
+        modus-themes-scale-1 1.05
+        modus-themes-scale-2 1.1
+        modus-themes-scale-3 1.15
+        modus-themes-scale-4 1.2
+        x-underline-at-descent-line t)
+  (modus-themes-load-themes)
+  (modus-themes-load-operandi))
 
 (defun vde/modus-operandi-custom ()
   "Customize modus-operandi theme"
