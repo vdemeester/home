@@ -13,9 +13,9 @@ let
         sha256 = "1i50ksf96fxa3ymdb1irpc82vi67861sr4xlcmh9f64qw9imm3ks";
       };
       /*
-      %configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg \
-           --with-tiff --with-xft --with-xpm --with-x-toolkit=gtk3 --with-gpm=no \
-           --with-xwidgets --with-modules
+        %configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg \
+        --with-tiff --with-xft --with-xpm --with-x-toolkit=gtk3 --with-gpm=no \
+        --with-xwidgets --with-modules
       */
       configureFlags = old.configureFlags ++ [
         "--with-xft"
@@ -111,6 +111,7 @@ rec {
     tkn_0_15
     tkn_0_16
     tkn_0_17
+    tkn_0_18
     tkn
     ;
   tkn_oci = pkgs.callPackage ./tkn-oci { };
