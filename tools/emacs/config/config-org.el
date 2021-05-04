@@ -432,16 +432,23 @@ and thus keeping the configuration source up-to-date"
    ("C-c o j" . org-journal-new-entry))
   :init
   (defun org-journal-find-location ()
-    "Open today's journal, but inhibiting inserting the heading, leaving that to the template."
+    "Go to the beginning of the today's journal file.
+
+This can be used for an org-capture template to create an entry in the journal."
+    ;; Open today's journal, but specify a non-nil prefix argument in order to
+    ;; inhibit inserting the heading; org-capture will insert the heading.
     (org-journal-new-entry t)
-    ;; position pont on the journal's top-level heading so that org-capture will add the new entry as a child.
-    (goto-char (point-max)))
+    ;; Position point on the journal's top-level heading so that org-capture
+    ;; will add the new entry as a child entry.
+    (widen)
+    (goto-char (point-min))
+    (org-show-entry))
   (add-to-list 'org-capture-templates
                `("j" "Journal"))
   (add-to-list 'org-capture-templates
                `("jj" "Journal entry" entry (function org-journal-find-location)
                  "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
-                 :empty-lines 1 :clock-in t :clock-resume t))
+                 :empty-lines 1))
   (add-to-list 'org-capture-templates
                `("je" "Weekly review" entry (function org-journal-find-location)
                  (file ,(expand-file-name "etc/orgmode/weekly.org" user-emacs-directory))
