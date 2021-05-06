@@ -381,6 +381,20 @@ in
       for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position center; move scratchpad
       bindcode $mod+49 [instance="metask"] scratchpad show
 
+      exec --no-startup-id emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))"
+      for_window [title="_emacs scratchpad_" class="Emacs"] move scratchpad
+      bindcode $mod+Shift+49 [title="_emacs scratchpad_" class="Emacs"] scratchpad show
+
+      ## scratchpad
+      set $scratchpad "scratchpad: [$]terminal [p]avucontrol"
+      mode $scratchpad {
+           bindcode 49 [instance="metask"] scratchpad show; mode "default"
+           bindcode 33 [class="(?i)pavucontrol"] scratchpad show; mode "default"
+           bindsym Return mode "default"
+           bindsym Escape mode "default"
+      }
+      # bindcode $mod+49 mode $scratchpad
+
       ## pomodoro
       # bepo s = 45
       # bepo p = 26
@@ -394,15 +408,6 @@ in
       }
       bindcode $mod+43 mode $pomodoro
 
-      ## scratchpad
-      set $scratchpad "scratchpad: [$]terminal [p]avucontrol"
-      mode $scratchpad {
-           bindcode 49 [instance="metask"] scratchpad show; mode "default"
-           bindcode 33 [class="(?i)pavucontrol"] scratchpad show; mode "default"
-           bindsym Return mode "default"
-           bindsym Escape mode "default"
-      }
-      # bindcode $mod+49 mode $scratchpad
       # System menu
       set $sysmenu "system:  [s]uspend [l]ock [r]estart [b]lank-screen [p]oweroff reload-[c]onf e[x]it"
       bindsym $mod+q mode $sysmenu
