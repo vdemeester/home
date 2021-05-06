@@ -70,10 +70,14 @@ bekind_create(){
         fi
         # replace hosts in there
     fi
+    tmpkubeconfig=$(mktemp /tmp/bekind.kubeconfig.XXXXXX)
+    export KUBECONFIG=${tmpkubeconfig}
     echo "> Create the cluster (name: ${name}, args: ${args})"
     env $env kind create cluster --name ${name} ${args}
     echo "> Write the kubeconfig in ~/.kube/${configfile}"
     env $env kind get kubeconfig --name ${name} > ~/.kube/${configfile}
+    rm ${tmpkubeconfig}
+    unset KUBECONFIG
 }
 
 bekind_delete() {
