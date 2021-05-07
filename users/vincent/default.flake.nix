@@ -25,7 +25,7 @@ in
       #++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
       ++ optionals config.virtualisation.docker.enable [ "docker" ]
-      ++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
+      #++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
       ++ optionals config.virtualisation.libvirtd.enable [ "libvirtd" ];
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
     isNormalUser = true;

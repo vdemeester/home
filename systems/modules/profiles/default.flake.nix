@@ -7,6 +7,7 @@
     ./base.flake.nix
     ./home.flake.nix
     ./laptop.flake.nix
+    ./redhat.nix
     # ./desktop.flake.nix
     # FIXME: vpn, server, builder, …
   ];
