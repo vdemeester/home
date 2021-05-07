@@ -66,6 +66,7 @@
       repo = "nyxt";
       ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
+      flake = false;
     };
     gitignore-nix = {
       type = "github";
@@ -309,7 +310,7 @@
         sakhalin = { pkgs = inputs.nixos; system = "x86_64-linux"; };
         kerkouane = { pkgs = inputs.nixos; system = "x86_64-linux"; };
         # TODO raspberry pi 8G x 3 (name them too)
-        monastir = { pkgs = inputs.nixo; system = "aarch64-linux"; };
+        monastir = { pkgs = inputs.nixos; system = "aarch64-linux"; };
         kairouan = { pkgs = inputs.nixos; system = "aarch64-linux"; };
         nabeul = { pkgs = inputs.nixos; system = "aarch64-linux"; };
         # TODO VMs
