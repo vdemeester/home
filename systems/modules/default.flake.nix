@@ -9,6 +9,6 @@
     ./programs
     ./services
     ./shell
-    ./virtualisation
+    ./virtualisation/default.flake.nix
   ];
 }

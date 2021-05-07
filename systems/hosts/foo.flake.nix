@@ -33,8 +33,8 @@ in
       zsh.enable = true;
     };
     virtualisation = {
-      enable = true;
-      nested = true;
+      libvirt.enable = true;
+      libvirt.nested = true;
     };
   };
   profiles = {
@@ -44,20 +44,6 @@ in
   };
 
   environment.systemPackages = with pkgs; [ tektoncd-cli nyxt ];
-  /*
-  profiles = {
-    desktop.i3.enable = true;
-    laptop.enable = true;
-    home = true;
-    dev.enable = true;
-    yubikey.enable = true;
-    virtualization = { enable = true; nested = true; };
-    docker.enable = true;
-    redhat.enable = true;
-    scanning.enable = true;
-  };
-  environment.systemPackages = with pkgs; [ virtmanager ];
-  */
 
   virtualisation.podman.enable = true;
   virtualisation.containers = {
