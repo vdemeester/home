@@ -25,15 +25,15 @@ in
       home = {
         fingerprint = {
           eDP-1 = thinkpadt480s;
-          DP-1-2 = lg_ultrawide_curved;
+          DP-1-1 = lg_ultrawide_curved;
         };
         config = {
           eDP-1 = {
             enable = true;
-            position = "651x1440";
+            position = "3440x360";
             mode = "1920x1080";
           };
-          DP-1-2 = {
+          DP-1-1 = {
             enable = true;
             primary = true;
             mode = "3440x1440";
