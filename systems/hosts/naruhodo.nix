@@ -118,6 +118,11 @@ in
   };
 
   services.hardware.bolt.enable = true;
+  core.nix = {
+    # temporary
+    localCaches = [ ];
+  };
+
   profiles = {
     desktop.i3.enable = true;
     laptop.enable = true;

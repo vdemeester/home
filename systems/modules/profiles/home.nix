@@ -24,7 +24,9 @@ in
         "${wireguard.ips.wakasu}" = [ "wakasu.vpn" ];
         "${home.ips.hokkaido}" = [ "hokkaido.home" ];
         "${wireguard.ips.hokkaido}" = [ "hokkaido.vpn" ];
-        "${home.ips.sakhalin}" = [ "sakhalin.home" "nix.cache.home" ];
+        # FIXME: re-enable when network is back on
+        "${home.ips.sakhalin}" = [ "sakhalin.home" ];
+        # "${home.ips.sakhalin}" = [ "sakhalin.home" "nix.cache.home" ];
         "${wireguard.ips.sakhalin}" = [ "sakhalin.vpn" ];
         "${home.ips.synodine}" = [ "synodine.home" ];
         "${home.ips.okinawa}" = [ "okinawa.home" ];
