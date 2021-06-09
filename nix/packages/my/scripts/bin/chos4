@@ -4,9 +4,12 @@
 set -e
 
 BASE_URL="https://uploader-cron.svc.ci.openshift.org/"
-curl -s "${BASE_URL}/vincent/kubeadmin.password.gpg"|gpg --decrypt > ~/sync/work/chos4/kubeadmin.password.os4
-curl -s "${BASE_URL}/vincent/webaccess.gpg"|gpg --decrypt > ~/sync/work/chos4/webaccess.os4
-curl -s "${BASE_URL}/vincent/kubeconfig.gpg"|gpg --decrypt > ~/sync/work/chos4/config.os4 && export KUBECONFIG=~/sync/work/chos4/config.os4
+#curl -s "${BASE_URL}/vincent/kubeadmin.password.gpg"|gpg --decrypt > ~/sync/work/chos4/kubeadmin.password.os4
+#curl -s "${BASE_URL}/vincent/webaccess.gpg"|gpg --decrypt > ~/sync/work/chos4/webaccess.os4
+#curl -s "${BASE_URL}/vincent/kubeconfig.gpg"|gpg --decrypt > ~/sync/work/chos4/config.os4 && export KUBECONFIG=~/sync/work/chos4/config.os4
+scp -q pipelines@10.0.77.12:os4-build/profiles/vincent/auth/kubeconfig $HOME/.kube/config.os4
+scp -q pipelines@10.0.77.12:os4-build/profiles/vincent/auth/kubeadmin-password $HOME/.kube/kubeadmin.password.os4
+scp -q pipelines@10.0.77.12:os4-build/profiles/vincent/auth/webaccess $HOME/.kube/webaccess.os4
 
 for file in kubeadmin.password.os4 webaccess.os4 config.os4; do
     if ! test -f $HOME/.kube/$file; then
