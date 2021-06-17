@@ -49,7 +49,7 @@ let
     # replace with flymake
     flycheck
     flycheck-golangci-lint
-    forge
+    #forge
     git-annex
     git-commit
     gitattributes-mode
