@@ -73,8 +73,11 @@ defined keys follow the pattern of <PREFIX> <KEY>.")
 (use-package browse-url
   :after eww
   :config
+  (setq browse-url-generic-program "google-chrome-stable")
   (setq browse-url-browser-function '(("^https://github.com.*" . browse-url-firefox)
                                       ("^https://gitlab.com.*" . browse-url-firefox)
+                                      ("^https://issues.redhat.com.*" . browse-url-generic)
+                                      ("^https://.*redhat.com.*" . browse-url-generic)
                                       (".*" . eww-browse-url))))
 
 (provide 'config-web)
