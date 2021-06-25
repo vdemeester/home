@@ -78,6 +78,7 @@ defined keys follow the pattern of <PREFIX> <KEY>.")
                                       ("^https://gitlab.com.*" . browse-url-firefox)
                                       ("^https://issues.redhat.com.*" . browse-url-generic)
                                       ("^https://.*redhat.com.*" . browse-url-generic)
+                                      ("^https://docs.jboss.org.*" . browse-url-generic)
                                       (".*" . eww-browse-url))))
 
 (provide 'config-web)
