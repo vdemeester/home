@@ -78,33 +78,33 @@ in
   # FIXME Fix tmpOnTmpfs
   systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
 
-  nix.distributedBuilds = true;
-  nix.buildMachines = [
-    {
-      hostName = "192.168.1.77";
-      maxJobs = 8;
-      sshUser = "builder";
-      sshKey = "/etc/nixos/secrets/builder";
-      systems = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" "armv6l-linux" "powerpc64le-linux" "s390x-linux" ];
-      supportedFeatures = [
-        "big-parallel"
-        "kvm"
-        "nixos-test"
-      ];
-    }
-    {
-      hostName = "192.168.1.115";
-      maxJobs = 8;
-      sshUser = "builder";
-      sshKey = "/etc/nixos/secrets/builder";
-      systems = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" "armv6l-linux" "powerpc64le-linux" "s390x-linux" ];
-      supportedFeatures = [
-        "big-parallel"
-        "kvm"
-        "nixos-test"
-      ];
-    }
-  ];
+  # nix.distributedBuilds = true;
+  # nix.buildMachines = [
+  #   {
+  #     hostName = "192.168.1.77";
+  #     maxJobs = 8;
+  #     sshUser = "builder";
+  #     sshKey = "/etc/nixos/secrets/builder";
+  #     systems = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" "armv6l-linux" "powerpc64le-linux" "s390x-linux" ];
+  #     supportedFeatures = [
+  #       "big-parallel"
+  #       "kvm"
+  #       "nixos-test"
+  #     ];
+  #   }
+  #   {
+  #     hostName = "192.168.1.115";
+  #     maxJobs = 8;
+  #     sshUser = "builder";
+  #     sshKey = "/etc/nixos/secrets/builder";
+  #     systems = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" "armv6l-linux" "powerpc64le-linux" "s390x-linux" ];
+  #     supportedFeatures = [
+  #       "big-parallel"
+  #       "kvm"
+  #       "nixos-test"
+  #     ];
+  #   }
+  # ];
 
   programs.ssh.knownHosts = {
     "wakasu" = {
