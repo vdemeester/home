@@ -39,6 +39,8 @@ let
     dumb-jump
     easy-kill
     edit-indirect
+    elfeed
+    elfeed-org
     embark
     envrc
     esh-autosuggest
