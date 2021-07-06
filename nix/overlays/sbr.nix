@@ -7,10 +7,10 @@ rec {
     inherit (self) stdenv;
   };
   vrsync = import ../packages/my/vrsync {
-    inherit (self) stdenv lib;
+    inherit (self) stdenv;
   };
   vde-thinkpad = import ../packages/my/vde-thinkpad {
-    inherit (self) stdenv lib;
+    inherit (self) stdenv;
   };
   bekind = super.callPackage ../../tools/bekind { };
 

@@ -15,7 +15,7 @@ rustPlatform.buildRustPackage rec {
   cargoSha256 = "0xaf056x46c5561hypd85ni7bkijvz26kpwy5iiw19ijnlj1adw9";
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Single dependency Kubernetes clusters for local testing, experimenting and development";
     homepage = https://github.com/saschagrunert/kubernix;
     license = with licenses; [ mit ];

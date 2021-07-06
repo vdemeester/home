@@ -16,7 +16,7 @@ buildGoModule rec {
   # TestGoBuild{,Index} doesn't work because it assumes a .git
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = https://github.com/google/ko;
     description = "Build and deploy Go applications on Kubernetes";
     license = licenses.asl20;

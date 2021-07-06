@@ -38,7 +38,7 @@ rec {
         mkdir -p $out/share/zsh/site-functions
         $out/bin/tkn completion zsh > $out/share/zsh/site-functions/_tkn
       '';
-      meta = with stdenv.lib; {
+      meta = with lib; {
         homepage = https://github.com/tektoncd/cli;
         description = "A CLI for interacting with Tekton!";
         license = licenses.asl20;

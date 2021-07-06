@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     cp -r * $out/share/gnome-shell/extensions/${uuid}
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Disables the “Window Is Ready” notification and changes the policy of the window manager so that new windows are always focused.";
     license = licenses.gpl3;
     maintainers = with maintainers; [ vdemeester ];

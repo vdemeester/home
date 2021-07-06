@@ -22,7 +22,7 @@ let
     url = "https://download.microsoft.com/download/9/3/E/93ED35C8-57B9-4D50-AE32-0330111B38E8/dotnet-runtime-${runtimeVersion}-linux-x64.tar.gz";
     sha256 = "1g754mpwznmxlml5vnbxlm7v253al2m5jwzfvd7hj74f45yx8amf";
   };
-  rpath = stdenv.lib.makeLibraryPath [ utillinux openssl icu zlib curl lttng-ust libsecret libkrb5 gcc.cc.lib libunwind binutils.bintools_bin ];
+  rpath = lib.makeLibraryPath [ utillinux openssl icu zlib curl lttng-ust libsecret libkrb5 gcc.cc.lib libunwind binutils.bintools_bin ];
 in
 (
   vscode-utils.buildVscodeMarketplaceExtension {

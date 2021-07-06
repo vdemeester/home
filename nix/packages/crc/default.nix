@@ -37,7 +37,7 @@ rec {
             -X ${t}/machine/libvirt.MachineDriverCommand=${crc_driver_libvirt}/bin/machine-driver-libvirt
         '';
 
-      meta = with stdenv.lib; {
+      meta = with lib; {
         homepage = https://github.com/code-ready/crc;
         description = "OpenShift 4.x cluster for testing and development purposes";
         license = licenses.asl20;

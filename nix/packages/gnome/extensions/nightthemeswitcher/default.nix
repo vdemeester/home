@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     unzip build/${uuid}.shell-extension.zip -d $out/share/gnome-shell/extensions/${uuid}
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Automatically toggle your light and dark GTK, GNOME Shell, icon and cursor themes variants, switch backgrounds and run custom commands at sunset and sunrise.";
     license = licenses.gpl3;
     maintainers = with maintainers; [ vdemeester ];

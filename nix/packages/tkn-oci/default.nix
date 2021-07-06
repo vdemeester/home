@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     cp ${buildOci "${src}/oci"}/bin/oci $out/bin/tkn-oci
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = https://github.com/tektoncd/experimental;
     description = "Experimental tool to package tekton resources in oci image";
     license = licenses.asl20;
