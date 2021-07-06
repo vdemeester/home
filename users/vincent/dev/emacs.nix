@@ -150,7 +150,7 @@ in
   services.emacs = {
     enable = true;
     client.enable = true;
-    socketActivation.enable = true;
+    #socketActivation.enable = true;
   };
   home.sessionVariables = {
     EDITOR = "emacs";
