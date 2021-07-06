@@ -4,13 +4,14 @@
 ;;; Code:
 
 (use-package elfeed
-  :commands (elfeed))
-
-(use-package elfeed-org
-  :after (org elfeed)
+  :commands (elfeed)
   :config
+  (setq-default elfeed-log-level 'debug
+                elfeed-use-curl 't)
   (elfeed-org)
-  (setq-default rmh-elfeed-org-files (list (expand-file-name "feeds.org" org-notes-dir))))
+  (use-package elfeed-org
+    :config
+    (setq-default rmh-elfeed-org-files (list (expand-file-name "feeds.org" org-notes-dir)))))
 
 (provide 'config-elfeed)
 ;;; config-elfeed.el ends here
