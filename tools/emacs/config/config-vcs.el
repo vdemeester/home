@@ -75,7 +75,7 @@
   :config
   (setq-default magit-save-repository-buffers 'dontask
                 magit-refs-show-commit-count 'all
-                magit-branch-prefer-remote-upstream '("master")
+                magit-branch-prefer-remote-upstream '("main")
                 magit-display-buffer-function #'magit-display-buffer-traditional)
 
   (magit-define-popup-option 'magit-rebase-popup
