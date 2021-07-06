@@ -15,6 +15,7 @@ let
   isContainersEnabled = if hasConfigVirtualizationContainers then config.virtualisation.containers.enable else false;
 in
 {
+  warnings = if (versionAtLeast config.system.nixos.release "21.11") then [ ] else [ "NixOS release: ${config.system.nixos.release}" ];
   users.users.vincent = {
     createHome = true;
     uid = 1000;
@@ -96,6 +97,10 @@ in
       ++ optionals config.profiles.redhat.enable [{
         home.file.".local/share/applications/redhat-vpn.desktop".source = ./redhat/redhat-vpn.desktop;
         home.packages = with pkgs; [ gnome3.zenity oathToolkit ];
+      }]
+      ++ optionals (versionOlder config.system.nixos.release "21.11") [{
+        # FIXME manpages are broken on 21.05 and home-manager (for some reason..)
+        manual.manpages.enable = false;
       }]
     );
 }

@@ -48,20 +48,20 @@
   xdg.configFile."xorg/modletters.compose".source = ./xorg/modletters.compose;
 
   /*
-  xdg.configFile."nr/desktop" = {
+    xdg.configFile."nr/desktop" = {
     text = builtins.toJSON [
-      { cmd = "peek"; }
-      { cmd = "shutter"; }
-      { cmd = "station"; }
-      { cmd = "dmenu"; }
-      { cmd = "sxiv"; }
-      { cmd = "screenkey"; }
-      { cmd = "gimp"; }
-      { cmd = "update-desktop-database"; pkg = "desktop-file-utils"; chan = "unstable"; }
-      { cmd = "lgogdownloader"; chan = "unstable"; }
-      { cmd = "xev"; pkg = "xorg.xev"; }
+    { cmd = "peek"; }
+    { cmd = "shutter"; }
+    { cmd = "station"; }
+    { cmd = "dmenu"; }
+    { cmd = "sxiv"; }
+    { cmd = "screenkey"; }
+    { cmd = "gimp"; }
+    { cmd = "update-desktop-database"; pkg = "desktop-file-utils"; chan = "unstable"; }
+    { cmd = "lgogdownloader"; chan = "unstable"; }
+    { cmd = "xev"; pkg = "xorg.xev"; }
     ];
     onChange = "${pkgs.my.nr}/bin/nr desktop";
-  };
+    };
   */
 }

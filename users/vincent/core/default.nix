@@ -15,7 +15,7 @@
   ];
 
   home = {
-    stateVersion = "20.03";
+    stateVersion = "21.05";
     packages = with pkgs; [
       enchive
       entr

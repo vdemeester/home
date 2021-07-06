@@ -70,7 +70,7 @@ in
     ];
     extraConfig = {
       core = {
-        editor = "${pkgs.emacs}/bin/emacsclient -t";
+        #editor = "${pkgs.emacs}/bin/emacsclient -t";
       };
       color = {
         status = "auto";
