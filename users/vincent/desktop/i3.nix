@@ -224,6 +224,8 @@ in
         "Mod4+39" = "layout stacking";
         "Mod4+25" = "layout tabbed";
         "Mod4+26" = "layout toggle split";
+        # Split
+        "Mod4+Control+39" = "split h";
         # Manage floating
         "Mod4+Shift+61" = "floating toggle";
         "Mod4+61" = "focus mode_toggle";
