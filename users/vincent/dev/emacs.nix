@@ -146,7 +146,7 @@ in
   ];
   programs.emacs = {
     enable = true;
-    package = (pkgs.emacsGit.override { withGTK3 = true; withGTK2 = false; withX = true; withXwidgets = true; });
+    package = (pkgs.emacsGcc.override { withGTK3 = true; withGTK2 = false; withX = true; withXwidgets = true; });
     extraPackages = myExtraPackages;
   };
   services.emacs = {
