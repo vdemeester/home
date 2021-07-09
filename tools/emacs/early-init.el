@@ -82,6 +82,7 @@ This is used internally by `vde/modus-themes-toggle'."
         modus-themes-completions 'opinionated ; {nil,'moderate,'opinionated}
         modus-themes-diffs 'desaturated ; {nil,'desaturated,'fg-only}
         modus-themes-org-blocks 'greyscale ; {nil,'greyscale,'rainbow}
+        modus-themes-links 'neutral-underline
         modus-themes-paren-match 'subtle-bold
         modus-themes-syntax nil
         modus-themes-variable-pitch-headings nil
