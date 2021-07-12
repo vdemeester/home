@@ -17,7 +17,7 @@ in
     };
   };
   config = mkIf cfg.enable {
-    boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
+    # boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
     environment.systemPackages = [ pkgs.wireguard ];
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
     networking.firewall.extraCommands = ''
@@ -25,6 +25,7 @@ in
     '';
     networking.firewall.allowedUDPPorts = [ 51820 ];
     networking.firewall.trustedInterfaces = [ "wg0" ];
+    networking.firefwall.enable = true;
     networking.wireguard.interfaces = {
       "wg0" = {
         ips = allowedIPs;
