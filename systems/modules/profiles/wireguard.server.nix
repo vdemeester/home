@@ -25,7 +25,7 @@ in
     '';
     networking.firewall.allowedUDPPorts = [ 51820 ];
     networking.firewall.trustedInterfaces = [ "wg0" ];
-    networking.firefwall.enable = true;
+    networking.wireguard.enable = true;
     networking.wireguard.interfaces = {
       "wg0" = {
         ips = allowedIPs;
