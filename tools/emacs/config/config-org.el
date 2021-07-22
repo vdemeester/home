@@ -106,7 +106,7 @@
                                     (directory-files org-projects-dir nil ".org")
                                     (--remove (s-starts-with? "." it))
                                     (--map (format "%s/%s" org-projects-dir it))
-                                    (--map `(,it :level . 2))))
+                                    (--map `(,it :level . 1))))
         org-refile-use-outline-path 'file
         org-refile-allow-creating-parent-nodes 'confirm
         org-outline-path-complete-in-steps nil
