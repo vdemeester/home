@@ -152,6 +152,7 @@ local google_groups(name, label = '') =
     google_groups('tekton-dev', 'tekton/dev') +
     google_groups('tekton-users', 'tekton/users') +
     google_groups('tekton-governance', 'tekton/governance') +
+    google_groups('tekton-vmt', 'tekton/vmt') +
     google_groups('tekton-code-of-conduct', 'tekton/code-of-conduct') +
     rh_mailing_list('engineering-advocate', 'engineering-advocate') +
     rh_mailing_list('engineering-advocate-nomination', 'engineering-advocate') +
