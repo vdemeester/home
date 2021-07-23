@@ -90,6 +90,14 @@ rec {
     openshift-install
     ;
 
+  inherit (pkgs.callPackage ./odo { })
+    odo_1_2
+    odo_2_0
+    odo_2_1
+    odo_2_2
+    odo
+    ;
+
   inherit (pkgs.callPackage ./kam { })
     kam_1_1
     kam

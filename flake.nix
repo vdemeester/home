@@ -396,6 +396,13 @@
           } // optionalAttrs (system == "x86_64-linux") {
             # OpenShift
 
+            inherit (pkgs.callPackage ./nix/packages/odo { })
+              odo_1_2
+              odo_2_0
+              odo_2_1
+              odo_2_2
+              odo
+              ;
             inherit (pkgs.callPackage ./nix/packages/kam { })
               kam_1_1
               kam
