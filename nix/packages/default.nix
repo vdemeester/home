@@ -77,6 +77,7 @@ rec {
     oc_4_5
     oc_4_6
     oc_4_7
+    oc_4_8
     oc
     ;
   inherit (pkgs.callPackage ./openshift-install { })
@@ -85,6 +86,7 @@ rec {
     openshift-install_4_5
     openshift-install_4_6
     openshift-install_4_7
+    openshift-install_4_8
     openshift-install
     ;
 
