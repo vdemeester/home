@@ -393,6 +393,11 @@
             buildkit = pkgs.callPackage ./nix/packages/buildkit { };
           } // optionalAttrs (system == "x86_64-linux") {
             # OpenShift
+
+            inherit (pkgs.callPackage ./nix/packages/kam { })
+              kam_1_1
+              kam
+              ;
             inherit (pkgs.callPackage ./nix/packages/oc { })
               oc_4_1
               oc_4_2

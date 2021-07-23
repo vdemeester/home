@@ -88,6 +88,11 @@ rec {
     openshift-install
     ;
 
+  inherit (pkgs.callPackage ./kam { })
+    kam_1_1
+    kam
+    ;
+
   inherit (pkgs.callPackage ./crc { oc_4_4 = oc_4_4; oc_4_3 = oc_4_3; })
     crc_1_9
     crc_1_10
