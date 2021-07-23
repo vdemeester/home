@@ -50,7 +50,12 @@ in
 
   boot = {
     tmpOnTmpfs = true;
-    plymouth.enable = true;
+    plymouth = {
+      enable = true;
+      themePackages = [ pkgs.my.adi1090x-plymouth ];
+      theme = "cuts";
+      # hexagon, green_loader, deus_ex, cuts, sphere, spinner_alt
+    };
     extraModulePackages = with pkgs.linuxPackages; [
       v4l2loopback
     ];
