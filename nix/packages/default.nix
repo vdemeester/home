@@ -132,4 +132,5 @@ rec {
   hidetopbar = pkgs.callPackage ./gnome/extensions/hide-top-bar { };
   noannoyance = pkgs.callPackage ./gnome/extensions/noannoyance { };
   nightthemeswitcher = pkgs.callPackage ./gnome/extensions/nightthemeswitcher { };
+  adi1090x-plymouth = pkgs.callPackage ./adi1090x-plymouth { };
 }

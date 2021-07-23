@@ -373,6 +373,8 @@
             ram = pkgs.callPackage ./nix/packages/ram { };
             systemd-email = pkgs.callPackage ./nix/packages/systemd-email { };
 
+            adi1090x-plymouth = pkgs.callPackage ./nix/packages/adi1090x-plymouth { };
+
             batzconverter = pkgs.callPackage ./nix/packages/batzconverter { };
             # Tekton
             inherit (pkgs.callPackage ./nix/packages/tkn { })
