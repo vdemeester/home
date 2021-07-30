@@ -145,10 +145,26 @@ instead."
          ("f" . next-completion)
          ("b" . previous-completion)
          ("M-v" . vde/focus-minibuffer)))
+
 (use-package vertico
   :unless noninteractive
   :config
   (vertico-mode))
+
+(use-package consult
+  :unless noninteractive
+  :after minibuffer
+  :config
+  (setq consult-async-input-debounce 0.5)
+  (setq consult-async-input-throttle 0.8)
+  :bind (("M-X" . consult-mode-command)
+         ("M-s i" . consult-imenu)
+         ("M-s s" . consult-outline)    ; M-s o is `occur'
+         ("M-s M-s" . consult-outline)
+         ("M-s m" . consult-mark)
+         ("M-s l" . consult-line)
+         :map minibuffer-local-completion-map
+         ("<tab>" . minibuffer-force-compylete)))
 
 (use-package company
   :unless noninteractive

@@ -41,7 +41,8 @@ let
     edit-indirect
     elfeed
     elfeed-org
-    embark
+    # embark
+    # embark-consult
     envrc
     esh-autosuggest
     eshell-prompt-extras
