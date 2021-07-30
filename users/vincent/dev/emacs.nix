@@ -76,9 +76,6 @@ let
     marginalia
     markdown-mode
     minions
-    # FIXME(vdemeester) once it is fixed, re-add
-    # modus-themes
-    # modus-operandi-theme
     moody
     multi-vterm
     mwim
@@ -118,6 +115,7 @@ let
     try
     undo-tree
     use-package
+    vertico
     visual-fill-column
     visual-regexp
     vterm

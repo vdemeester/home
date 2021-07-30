@@ -133,6 +133,10 @@ STYLES is a list of pattern matching methods that is passed to
 
 (use-package minibuffer
   :config
+    (setq completion-styles
+        '(substring initials flex partial-completion orderless))
+  (setq completion-category-overrides
+        '((file (styles . (partial-completion orderless)))))
   (setq completion-styles '(orderless partial-completion))
   (setq completion-category-defaults nil)
   (setq completion-cycle-threshold 3)
@@ -147,7 +151,17 @@ STYLES is a list of pattern matching methods that is passed to
   ;; *Completions* buffer.
   (setq completions-format 'one-column)
   (setq completions-detailed t)
-
+  
+  ;; Grouping of completions for Emacs 28
+  (setq completions-group t)
+  (setq completions-group-sort nil)
+  (setq completions-group-format
+        (concat
+         (propertize "    " 'face 'completions-group-separator)
+         (propertize " %s " 'face 'completions-group-title)
+         (propertize " " 'face 'completions-group-separator
+                     'display '(space :align-to right))))
+  
   (setq read-buffer-completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
 
@@ -175,6 +189,7 @@ STYLES is a list of pattern matching methods that is passed to
          ("p" . previous-line)
          ("f" . next-completion)
          ("b" . previous-completion)))
+
 (use-package consult
   :config
   (setq consult-line-numbers-widen t)
