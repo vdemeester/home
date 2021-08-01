@@ -52,7 +52,6 @@ let
     # replace with flymake
     flycheck
     flycheck-golangci-lint
-    #forge
     git-annex
     git-commit
     gitattributes-mode
