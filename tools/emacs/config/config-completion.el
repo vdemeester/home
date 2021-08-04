@@ -151,6 +151,14 @@ instead."
   :config
   (vertico-mode))
 
+(use-package embark
+  :unless noninteractive
+  :bind (("C-." . embark-act)))
+
+(use-package embark-consult
+  :after (embark consult)
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+
 (use-package consult
   :unless noninteractive
   :after minibuffer
