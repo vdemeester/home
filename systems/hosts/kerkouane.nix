@@ -30,7 +30,7 @@ let
   filesWWW = {
     enableACME = true;
     forceSSL = true;
-    root = "/home/vincent/desktop/sites/dl.sbr.pm";
+    root = "/var/www/dl.sbr.pm";
     locations."/" = {
       index = "index.html";
       extraConfig = ''
@@ -49,7 +49,7 @@ let
     locations."/private" = {
       extraConfig = ''
         auth_basic "Restricted";
-        auth_basic_user_file /home/vincent/desktop/sites/dl.sbr.pm/private/.htpasswd;
+        auth_basic_user_file /var/www/dl.sbr.pm/private/.htpasswd;
       '';
     };
     extraConfig = nginxExtraConfig;
@@ -101,7 +101,7 @@ in
     #};
   };
   security.pam.enableSSHAgentAuth = true;
-  #systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/home/vincent/desktop/sites" ];
+  #systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/www" ];
   systemd.services.nginx.serviceConfig.ProtectHome = lib.mkForce false;
   services = {
     govanityurl = {
@@ -131,7 +131,7 @@ in
       virtualHosts."paste.sbr.pm" = {
         enableACME = true;
         forceSSL = true;
-        root = "/home/vincent/desktop/sites/paste.sbr.pm";
+        root = "/var/www/paste.sbr.pm";
         locations."/" = {
           index = "index.html";
         };
@@ -146,7 +146,7 @@ in
       virtualHosts."sbr.pm" = {
         enableACME = true;
         forceSSL = true;
-        root = "/home/vincent/desktop/sites/sbr.pm";
+        root = "/var/www/sbr.pm";
         locations."/" = {
           index = "index.html";
         };
@@ -155,7 +155,7 @@ in
       virtualHosts."sbr.systems" = {
         enableACME = true;
         forceSSL = true;
-        root = "/home/vincent/desktop/sites/sbr.systems";
+        root = "/var/www/sbr.systems";
         locations."/" = {
           index = "index.html";
         };
@@ -164,7 +164,7 @@ in
       virtualHosts."vincent.demeester.fr" = {
         enableACME = true;
         forceSSL = true;
-        root = "/home/vincent/desktop/sites/vincent.demeester.fr";
+        root = "/var/www/vincent.demeester.fr";
         locations."/" = {
           index = "index.html";
           extraConfig = ''
