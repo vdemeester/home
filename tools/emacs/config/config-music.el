@@ -16,10 +16,11 @@
   (setq-default bongo-audio-file-name-extensions
                 '("669" "aac" "amf" "apun" "au" "dsm" "far" "flac" "g18" "g36" "gdm"
                   "imf" "it" "mdz" "med" "mid" "midi" "mka" "mod" "m4a" "mp2" "mp3"
-                  "mtm" "ogg" "opus" "okt" "r36" "ra" "rcp" "rmi" "s3m" "spx" "stm"
-                  "stx" "ult" "umx" "uni" "vqf" "wav" "wma" "xm")
+                  "mtm" "ogg" "oga ""opus" "okt" "r36" "ra" "rcp" "rmi" "s3m" "spx"
+                  "stm" "stx" "ult" "umx" "uni" "vqf" "wav" "wma" "xm")
                 bongo-custom-backend-matchers
                 '((mpv local-file "m4a")
+                  (mpv local-file "oga")
                   (mpv local-file "opus"))
                 bongo-default-directory "/net/sakhalin.home/export/gaia/music"
                 bongo-prefer-library-buffers nil
