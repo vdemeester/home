@@ -29,9 +29,7 @@ in
         };
         config = {
           eDP-1 = {
-            enable = true;
-            position = "3440x360";
-            mode = "1920x1080";
+            enable = false;
           };
           DP-1-1 = {
             enable = true;
