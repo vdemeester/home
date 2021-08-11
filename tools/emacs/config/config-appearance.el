@@ -123,7 +123,7 @@ Ignores `ARGS'."
                                           (projectile-project-name)))
      (t (tab-bar-tab-name-current-with-count))))
 
-  (defun vde/icomplete-tab-bar-tab-dwim ()
+  (defun vde/complete-tab-bar-tab-dwim ()
     "Do-What-I-Mean function for getting to a `tab-bar-mode' tab.
 If no other tab exists, create one and switch to it.  If there is
 one other tab (so two in total) switch to it without further
@@ -140,7 +140,7 @@ questions.  Else use completion to select the tab to switch to."
              (tab-bar-switch-to-tab
               (completing-read "Select tab: " tabs nil t))))))
 
-  :bind (("C-x t t" . vde/icomplete-tab-bar-tab-dwim)
+  :bind (("C-x t t" . vde/complete-tab-bar-tab-dwim)
          ("C-x t s" . tab-switcher)))
 
 (use-package moody
