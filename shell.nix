@@ -9,7 +9,7 @@ pkgs.mkShell
   name = "nix-config";
   buildInputs = with pkgs; [
     cachix
-    # morph
+    morph
     niv
     nixpkgs-fmt
   ];
