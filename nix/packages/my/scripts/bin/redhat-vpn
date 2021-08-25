@@ -22,4 +22,7 @@ then
 else
     notify-send "VPN ${name} is already connected." "You are already connected to the Red Hat VPN, let's work !"
 fi
-zenity --password --title="Kerberos password" | kinit vdemeest@REDHAT.COM
+# Ask for kerberos password if klist returns an error (no creds)
+klist || {
+    zenity --password --title="Kerberos password" | kinit vdemeest@REDHAT.COM
+}
