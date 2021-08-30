@@ -11,6 +11,7 @@ pkgs.mkShell
     cachix
     morph
     niv
+    nixos-generators
     nixpkgs-fmt
   ];
   shellHook = ''
