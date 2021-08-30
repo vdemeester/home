@@ -3,7 +3,7 @@
 with lib;
 let
   hostname = "sakhalin";
-  secretPath = ../../../secrets/machines.nix;
+  secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
   ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
