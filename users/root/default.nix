@@ -7,6 +7,7 @@ with lib; {
   home-manager.users.root = lib.mkMerge (
     [
       (import ../vincent/core/zsh.nix)
+      (import ../vincent/core/ssh.nix)
       (import ./home.nix)
     ]
     ++ optionals (versionOlder config.system.nixos.release "21.11") [{
