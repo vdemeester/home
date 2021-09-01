@@ -1,4 +1,8 @@
-{ pkgs, lib, ... }:
+{ sources ? import ../../nix
+, lib ? sources.lib
+, pkgs ? sources.pkgs { }
+, ...
+}:
 
 with lib;
 let
