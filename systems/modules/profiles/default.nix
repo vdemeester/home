@@ -12,6 +12,7 @@
     ./i18n.nix
     ./i3.nix
     ./ipfs.nix
+    ./kubernetes.nix
     ./laptop.nix
     ./mail.nix
     ./nix-auto-update.nix

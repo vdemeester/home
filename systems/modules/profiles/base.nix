@@ -12,10 +12,15 @@ in
         description = "Enable base profile";
         type = types.bool;
       };
+      systemd-boot = mkOption {
+        default = true;
+        description = "Enable systemd-boot for boot loading";
+        type = types.bool;
+      };
     };
   };
   config = mkIf cfg.enable {
-    boot.loader.systemd-boot.enable = true;
+    boot.loader.systemd-boot.enable = cfg.systemd-boot;
     environment.pathsToLink = [
       "/share/nix-direnv"
     ];
