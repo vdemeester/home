@@ -37,6 +37,9 @@
     keybase
     # pass
     profile-sync-daemon
+    youtube-dl
+    my.batzconverter
+    mpw
   ]; # ++ lib.optionals nixosConfig.profiles.desktop.i3.enable [ pkgs.brave ];
 
   # xdg.configFile."obs-studio/plugins/obs-v4l2sink/bin/64bit/obs-v4l2sink.so".source =

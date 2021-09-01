@@ -22,14 +22,11 @@
       exa
       fd
       htop
-      mpw
       mosh
       ncurses
       ripgrep
       scripts
       tree
-      youtube-dl
-      my.batzconverter
     ];
   };
 
