@@ -92,9 +92,9 @@ in
     syncthing.enable = true;
     ssh = { enable = true; forwardX11 = true; };
     virtualization = { enable = true; nested = true; listenTCP = true; };
-    kubernetes.enable = true;
-    openshift.enable = true;
-    tekton.enable = false;
+    #kubernetes.enable = true;
+    #openshift.enable = true;
+    #tekton.enable = false;
     yubikey.enable = true;
   };
   virtualisation.podman.enable = true;
