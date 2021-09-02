@@ -32,18 +32,18 @@ in
   };
 
   /*
-  Keep this for naruhodo.
-  boot.initrd.luks.devices = {
+    Keep this for naruhodo.
+    boot.initrd.luks.devices = {
     root = {
-      device = "/dev/disk/by-uuid/49167ed2-8411-4fa3-94cf-2f3cce05c940";
-      preLVM = true;
-      allowDiscards = true;
-      keyFile = "/dev/disk/by-id/usb-_USB_DISK_2.0_070D375D84327E87-0:0";
-      keyFileOffset = 30992883712;
-      keyFileSize = 4096;
-      fallbackToPassword = true;
+    device = "/dev/disk/by-uuid/49167ed2-8411-4fa3-94cf-2f3cce05c940";
+    preLVM = true;
+    allowDiscards = true;
+    keyFile = "/dev/disk/by-id/usb-_USB_DISK_2.0_070D375D84327E87-0:0";
+    keyFileOffset = 30992883712;
+    keyFileSize = 4096;
+    fallbackToPassword = true;
     };
-  };
+    };
   */
   boot.binfmt.registrations = {
     s390x-linux = {
@@ -153,19 +153,19 @@ in
   systemd.services.docker.wantedBy = lib.mkForce [ ];
   systemd.services.docker.requires = [ "containerd.socket" ];
   /*
-  virtualisation.containers = {
+    virtualisation.containers = {
     enable = true;
     registries = {
-      search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
+    search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
     };
     policy = {
-      default = [{ type = "insecureAcceptAnything"; }];
-      transports = {
-        docker-daemon = {
-          "" = [{ type = "insecureAcceptAnything"; }];
-        };
-      };
+    default = [{ type = "insecureAcceptAnything"; }];
+    transports = {
+    docker-daemon = {
+    "" = [{ type = "insecureAcceptAnything"; }];
     };
-  };
+    };
+    };
+    };
   */
 }
