@@ -5,7 +5,6 @@
     # autorandr
     ./finances.nix
     ./firefox.nix
-    ./next.nix
     ./gtk.nix
     #    ./i3.nix
     ./keyboard.nix
@@ -49,6 +48,7 @@
   xdg.configFile."xorg/emoji.compose".source = ./xorg/emoji.compose;
   xdg.configFile."xorg/parens.compose".source = ./xorg/parens.compose;
   xdg.configFile."xorg/modletters.compose".source = ./xorg/modletters.compose;
+  home.file.".local/share/applications/google-meet.desktop".source = ./xorg/google-meet.desktop;
 
   /*
     xdg.configFile."nr/desktop" = {
