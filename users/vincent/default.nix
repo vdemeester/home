@@ -62,6 +62,9 @@ in
       [
         (import ./core)
         (import ./mails { hostname = config.networking.hostName; pkgs = pkgs; })
+        (import ./containers/kubernetes.nix)
+        (import ./containers/openshift.nix)
+        (import ./containers/tekton.nix)
       ]
       ++ optionals config.profiles.dev.enable [ (import ./dev) ]
       ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
@@ -91,9 +94,6 @@ in
         home.file.".config/Yubico/u2f_keys".source = pkgs.mkSecret ../../secrets/u2f_keys;
       }]
       ++ optionals (isContainersEnabled && config.profiles.dev.enable) [ (import ./containers) ]
-      ++ optionals config.profiles.kubernetes.enable [ (import ./containers/kubernetes.nix) ]
-      ++ optionals config.profiles.openshift.enable [ (import ./containers/openshift.nix) ]
-      ++ optionals config.profiles.tekton.enable [ (import ./containers/tekton.nix) ]
       ++ optionals config.profiles.redhat.enable [{
         home.file.".local/share/applications/redhat-vpn.desktop".source = ./redhat/redhat-vpn.desktop;
         home.packages = with pkgs; [ gnome3.zenity oathToolkit ];

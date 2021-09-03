@@ -154,9 +154,6 @@ in
     docker.enable = true;
     redhat.enable = true;
     scanning.enable = true;
-    kubernetes.enable = true;
-    openshift.enable = true;
-    tekton.enable = true;
   };
   environment.systemPackages = with pkgs; [
     virtmanager
