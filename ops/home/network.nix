@@ -10,17 +10,23 @@ in
 
   "k8sn1" = { config, pkgs, lib, ... }: {
     deployment.targetUser = "root";
-    deployment.targetHost = "k8sn1.home";
+    deployment.targetHost = "192.168.1.130";
+    # deployment.targetHost = "k8sn1.home";
+    deployment.tags = [ "kubernetes" "master" ];
     imports = [ ../../systems/hosts/k8sn1.nix ];
   };
   "k8sn2" = { config, pkgs, lib, ... }: {
     deployment.targetUser = "root";
-    deployment.targetHost = "k8sn2.home";
+    deployment.targetHost = "192.168.1.131";
+    # deployment.targetHost = "k8sn2.home";
+    deployment.tags = [ "kubernetes" "worker" ];
     imports = [ ../../systems/hosts/k8sn2.nix ];
   };
   "k8sn3" = { config, pkgs, lib, ... }: {
     deployment.targetUser = "root";
-    deployment.targetHost = "k8sn3.home";
+    deployment.targetHost = "192.168.1.132";
+    # deployment.targetHost = "k8sn3.home";
+    deployment.tags = [ "kubernetes" "worker" ];
     imports = [ ../../systems/hosts/k8sn3.nix ];
   };
   "wakasu" = { config, pkgs, lib, ... }: {
