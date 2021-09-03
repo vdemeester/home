@@ -28,6 +28,7 @@ let
     company-emoji
     company-go
     consult
+    consult-dir
     dash
     delight
     diredfl
@@ -41,8 +42,8 @@ let
     edit-indirect
     elfeed
     elfeed-org
-    # embark
-    # embark-consult
+    embark
+    embark-consult
     envrc
     esh-autosuggest
     eshell-prompt-extras
