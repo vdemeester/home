@@ -7,6 +7,11 @@ in
 {
   imports = [
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
+    (import ../../nix).home-manager-stable
+    ../../systems/modules
+    # FIXME Need to refactor vincent user as.. it's adding way to much by default...
+    # (import ../../users).vincent
+    (import ../../users).root
   ];
 
   fileSystems."/" = {
@@ -22,6 +27,8 @@ in
 
   networking = {
     hostName = hostname;
+    domain = "home";
+    firewall.enable = false;
   };
 
   profiles = {
@@ -31,7 +38,7 @@ in
     kubernetes = {
       enable = true;
       master = {
-        enable = true;
+        enable = false;
         ip = kubeMasterIP;
       };
     };

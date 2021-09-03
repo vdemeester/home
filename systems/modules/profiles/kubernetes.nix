@@ -25,7 +25,12 @@ in
     };
   };
   config = mkIf cfg.enable {
-    networking.extraHosts = "${cfg.master.ip} ${cfg.master.hostname}";
+    networking = {
+      firewall.allowedTCPPorts = [ 80 443 6443 ];
+      extraHosts = "${cfg.master.ip} ${cfg.master.hostname}";
+    };
+
+    boot.kernelModules = [ "ceph" ];
 
     # packages for administration tasks
     environment.systemPackages = with pkgs; [
@@ -37,17 +42,18 @@ in
       roles = [ "node" ] ++ optionals cfg.master.enable [ "master" ];
       masterAddress = cfg.master.hostname;
       apiserverAddress = "https://${cfg.master.hostname}:${toString cfg.master.port}";
+      kubeconfig.server = "https://${cfg.master.hostname}:${toString cfg.master.port}";
       easyCerts = true;
-      apiserver = {
+      apiserver = mkIf cfg.master.enable {
         securePort = cfg.master.port;
         advertiseAddress = cfg.master.ip;
       };
-
+      controllerManager.extraOpts = "--horizontal-pod-autoscaler-use-rest-clients=false";
       # use coredns
       addons.dns.enable = true;
 
       # needed if you use swap
-      kubelet.extraOpts = "--fail-swap-on=false";
+      kubelet.extraOpts = "--fail-swap-on=false --root-dir=/var/lib/kubelet";
     };
   };
 }

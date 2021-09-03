@@ -31,6 +31,8 @@ in
 
   networking = {
     hostName = hostname;
+    domain = "home";
+    firewall.enable = false;
   };
 
   profiles = {
