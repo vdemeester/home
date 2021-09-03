@@ -137,6 +137,10 @@ in
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \
         MODE:="0666", \
         SYMLINK+="stm32_dfu"
+
+
+    # Suspend the system when battery level drops to 5% or lower
+    SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
   '';
   services.hardware.bolt.enable = true;
   core.nix = {
