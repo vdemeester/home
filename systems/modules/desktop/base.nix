@@ -40,6 +40,7 @@ in
         fira-code
         fira-code-symbols
         fira-mono
+        go-font
         hasklig
         inconsolata
         iosevka
