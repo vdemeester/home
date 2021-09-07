@@ -31,14 +31,6 @@ assets:
 	cp -Rv $(SYNCDIR)/* assets/
 	chown -R vincent:users assets || true
 
-.PHONY: home-build
-home-build: secrets
-	home-manager -f home.nix build
-
-.PHONY: home-switch
-home-switch: secrets
-	home-manager -f home.nix switch
-
 .PHONY: build
 build: secrets
 	./bin/system build
