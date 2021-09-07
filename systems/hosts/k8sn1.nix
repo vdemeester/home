@@ -24,6 +24,12 @@ in
     autoResize = true;
   };
 
+  fileSystems."/var" = {
+    device = "/dev/vdb";
+    fsType = "ext4";
+    autoResize = true;
+  };
+
   boot.growPartition = true;
   boot.kernelParams = [ "console=ttyS0" ];
   boot.loader.grub.device = "/dev/vda";
@@ -36,6 +42,7 @@ in
   };
 
   profiles = {
+    nix-auto-update.enable = false;
     ssh.enable = true;
     # systemd-boot doesn't with nixos-generators 🙃
     base.systemd-boot = false;

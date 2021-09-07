@@ -32,6 +32,7 @@ in
   };
 
   profiles = {
+    nix-auto-update.enable = false;
     ssh.enable = true;
     # systemd-boot doesn't with nixos-generators 🙃
     base.systemd-boot = false;
