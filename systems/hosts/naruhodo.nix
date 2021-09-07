@@ -53,6 +53,7 @@ in
   };
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
     tmpOnTmpfs = true;
     plymouth = {
       enable = true;
@@ -60,7 +61,7 @@ in
       theme = "cuts";
       # hexagon, green_loader, deus_ex, cuts, sphere, spinner_alt
     };
-    extraModulePackages = with pkgs.linuxPackages; [
+    extraModulePackages = with pkgs.linuxPackages_latest; [
       v4l2loopback
     ];
     kernelModules = [ "v4l2loopback" ];
