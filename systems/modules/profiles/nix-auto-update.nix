@@ -8,7 +8,7 @@ in
   options = {
     profiles.nix-auto-update = {
       enable = mkOption {
-        default = true;
+        default = false;
         description = "Enable nix-auto-update profile";
         type = types.bool;
       };
