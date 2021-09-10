@@ -1,6 +1,7 @@
 { sources ? import ../../nix
 , lib ? sources.lib
 , pkgs ? sources.pkgs { }
+, ...
 }:
 
 with lib;
@@ -32,18 +33,18 @@ in
 
   boot.initrd.luks.devices = {
     root = {
-      device = "/dev/disk/by-uuid/50d7faba-8923-4b30-88f7-40df26e02def";
+      device = "/dev/disk/by-uuid/9d53a7f3-b75d-4121-b6c3-4b4c4a33ee52";
       preLVM = true;
       allowDiscards = true;
     };
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/0101-68DE";
+    device = "/dev/disk/by-uuid/53E3-FA1E";
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/aff86817-55ae-47ed-876a-e5a027b560ba"; }];
+  swapDevices = [{ device = "/dev/disk/by-uuid/9525a5eb-1e57-47bf-9c62-1caf466cf3be"; }];
 
   networking = {
     hostName = hostname;
