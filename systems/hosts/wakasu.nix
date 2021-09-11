@@ -84,7 +84,7 @@ in
 
   profiles = {
     home = true;
-    dev.enable = true;
+    dev.enable = false;
     desktop.enable = lib.mkForce false;
     laptop.enable = true;
     docker.enable = true;
