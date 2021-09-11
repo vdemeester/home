@@ -17,21 +17,20 @@ in
       domain = "home";
       hosts = with machines; mkIf secretCondition {
         "${home.ips.honshu}" = [ "honshu.home" ];
-        #"${wireguard.ips.honshu}" = [ "honshu.vpn" ];
+        "${home.ips.aomi}" = [ "aomi.home" ];
+        "${wireguard.ips.aomi}" = [ "aomi.vpn" ];
         "${home.ips.shikoku}" = [ "shikoku.home" ];
         "${wireguard.ips.shikoku}" = [ "shikoku.vpn" ];
         "${home.ips.wakasu}" = [ "wakasu.home" ];
         "${wireguard.ips.wakasu}" = [ "wakasu.vpn" ];
         "${home.ips.hokkaido}" = [ "hokkaido.home" ];
         "${wireguard.ips.hokkaido}" = [ "hokkaido.vpn" ];
-        # FIXME: re-enable when network is back on
-        "${home.ips.sakhalin}" = [ "sakhalin.home" ];
-        # "${home.ips.sakhalin}" = [ "sakhalin.home" "nix.cache.home" ];
+        # "${home.ips.sakhalin}" = [ "sakhalin.home" ];
+        "${home.ips.sakhalin}" = [ "sakhalin.home" "nix.cache.home" ];
         "${wireguard.ips.sakhalin}" = [ "sakhalin.vpn" ];
         "${home.ips.synodine}" = [ "synodine.home" ];
         "${home.ips.okinawa}" = [ "okinawa.home" ];
         "${wireguard.ips.okinawa}" = [ "okinawa.vpn" ];
-        #"${wireguard.ips.carthage}" = [ "carthage.vpn" ];
         "${wireguard.ips.kerkouane}" = [ "kerkouane.vpn" ];
       };
     };
