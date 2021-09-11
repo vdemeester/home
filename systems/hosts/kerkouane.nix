@@ -183,12 +183,14 @@ in
         extraConfig = nginxExtraConfig;
       };
     };
-    services.openssh.listenAddresses = [
-      { addr = wireguardIp; port = 22; }
-    ];
-    openssh.openFirewall = false;
-    openssh.passwordAuthentication = false;
-    openssh.permitRootLogin = "without-password";
+    openssh = {
+      listenAddresses = [
+        { addr = wireguardIp; port = 22; }
+      ];
+      openFirewall = false;
+      passwordAuthentication = false;
+      permitRootLogin = "without-password";
+    };
     syncthing.guiAddress = "127.0.0.1:8384";
   };
 }
