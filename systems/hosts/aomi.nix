@@ -96,6 +96,7 @@ in
     yubikey.enable = true;
     virtualization = { enable = true; nested = true; };
     redhat.enable = true;
+    ssh.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
