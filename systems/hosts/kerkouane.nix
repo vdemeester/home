@@ -9,7 +9,7 @@ let
   secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
-  sshPort = if secretCondition then (import secretPath).ssh.kerkouane.port else 22;
+  wireguardIp = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
 
   nginxExtraConfig = ''
     expires 31d;
@@ -183,7 +183,11 @@ in
         extraConfig = nginxExtraConfig;
       };
     };
-    openssh.ports = [ sshPort ];
+    services.openssh.listenAddresses = [
+      { addr = wireguardIp; port = 22; }
+    ];
+    openssh.openFirewall = false;
+    openssh.passwordAuthentication = false;
     openssh.permitRootLogin = "without-password";
     syncthing.guiAddress = "127.0.0.1:8384";
   };
