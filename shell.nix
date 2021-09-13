@@ -3,10 +3,17 @@ let
   pkgs = sources.nixpkgs { };
   nixos-unstable = sources.pkgs-unstable { };
   nixos = sources.pkgs { };
+  sops-nix = sources.sops-nix;
 in
 pkgs.mkShell
 {
   name = "nix-config";
+  sopsPGPKeyDirs = [
+    "./secrets/keys"
+  ];
+  nativeBuildInputs = [
+    (pkgs.callPackage sops-nix { }).sops-import-keys-hook
+  ];
   buildInputs = with pkgs; [
     cachix
     morph

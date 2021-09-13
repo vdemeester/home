@@ -50,6 +50,11 @@ in
     hostName = hostname;
   };
 
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.secrets.example_key = {
+    sopsFile = ../../secrets/syncthing.yaml;
+  };
+
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     tmpOnTmpfs = true;

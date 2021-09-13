@@ -13,4 +13,5 @@ rec {
   gitignore = import sources.gitignore;
   nixos-hardware = import sources.nixos-hardware;
   nur = import sources.NUR;
+  sops-nix = import sources.sops-nix;
 }
