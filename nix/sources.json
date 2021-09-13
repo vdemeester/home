@@ -118,5 +118,17 @@
         "type": "tarball",
         "url": "https://github.com/NixOS/nixpkgs/archive/08ef0f28e3a41424b92ba1d203de64257a9fca6a.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "sops-nix": {
+        "branch": "master",
+        "description": "Atomic secret provisioning for NixOS based on sops",
+        "homepage": "",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "3e4ebc851c91d1ce5c65da23436726c555a0d7e8",
+        "sha256": "0mpzkjvw2vyd6mf5hx6naic3sbhiwj1n6v5j94bm31marm8d2adq",
+        "type": "tarball",
+        "url": "https://github.com/Mic92/sops-nix/archive/3e4ebc851c91d1ce5c65da23436726c555a0d7e8.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
