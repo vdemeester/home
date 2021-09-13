@@ -15,9 +15,6 @@ let
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
-
-  lg_ultrawide_curved = "00ffffffffffff001e6df6760cd105000a1b010380502278eaca95a6554ea1260f50542108007140818081c0a9c0b300d1c081000101e77c70a0d0a0295030203a00204f3100001a9d6770a0d0a0225030203a00204f3100001a000000fd00383d1e5a20000a202020202020000000fc004c4720554c545241574944450a012902031ef12309070749100403011f13595a128301000067030c00100038409f3d70a0d0a0155030203a00204f3100001a7e4800e0a0381f4040403a00204f31000018011d007251d01e206e285500204f3100001e8c0ad08a20e02d10103e9600204f31000018000000ff003731304e544a4a42373139360a0000000000000033";
-  thinkpadp1 = "00ffffffffffff000dae0c15000000002a1c0104b522137802ee95a3544c99260f505400000001010101010101010101010101010101363680a0703820405036680058c110000018363680a0703820405036680058c110000018000000fe00434d4e0a202020202020202020000000fe004e3135364843452d474e310a2001d102030f00e3058000e60605016a6a2400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005435313343363031415230320000000000000000000000000000000000de";
 in
 {
   imports = [
@@ -102,47 +99,28 @@ in
     ssh.enable = true;
   };
 
-  # services.xserver.videoDrivers = [ "nvidia" ];
-  # hardware.nvidia.prime.offload.enable = true;
+
+  services.udev.extraRules = ''
+    # Teensy rules for the Ergodox EZ
+    ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
+    ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
+    KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
+
+    # STM32 rules for the Moonlander and Planck EZ
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \
+        MODE:="0666", \
+        SYMLINK+="stm32_dfu"
+
+    # Suspend the system when battery level drops to 5% or lower
+    SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
+  '';
 
   environment.systemPackages = with pkgs; [
     virtmanager
     # force xbacklight to work
     acpilight
   ];
-
-  programs.autorandr.profiles = {
-    on-the-move = {
-      fingerprint = {
-        eDP-1 = thinkpadt480s;
-      };
-      config = {
-        eDP-1 = {
-          enable = true;
-          primary = true;
-          position = "0x0";
-          mode = "1920x1080";
-        };
-      };
-    };
-    home = {
-      fingerprint = {
-        eDP-1 = thinkpadp1;
-        DP-3-1 = lg_ultrawide_curved;
-      };
-      config = {
-        eDP-1 = {
-          enable = false;
-        };
-        DP-3-1 = {
-          enable = true;
-          primary = true;
-          mode = "3440x1440";
-          position = "0x0";
-        };
-      };
-    };
-  };
 
   services = {
     wireguard = {
