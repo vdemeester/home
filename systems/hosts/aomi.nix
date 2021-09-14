@@ -102,6 +102,7 @@ in
     virtualization = { enable = true; nested = true; };
     redhat.enable = true;
     ssh.enable = true;
+    docker.enable = true;
   };
 
 

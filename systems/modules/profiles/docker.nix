@@ -22,15 +22,15 @@ in
   };
   config = mkIf cfg.enable {
     virtualisation = {
-      mycontainerd = {
+      containerd = {
         enable = true;
         # autostart = false;
       };
-      buildkitd = {
-        enable = true;
-        autostart = false;
-        extraOptions = "--oci-worker=false --containerd-worker=true";
-      };
+      # buildkitd = {
+      #   enable = true;
+      #   autostart = false;
+      #   extraOptions = "--oci-worker=false --containerd-worker=true";
+      # };
       docker = {
         enable = true;
         package = cfg.package;
