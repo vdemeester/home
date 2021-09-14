@@ -128,6 +128,7 @@ in
   ];
 
   services = {
+    syncthing.guiAddress = "${ip}:8384";
     wireguard = {
       enable = true;
       ips = ips;
