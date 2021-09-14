@@ -155,7 +155,6 @@ in
     dev.enable = true;
     yubikey.enable = true;
     virtualization = { enable = true; nested = true; };
-    docker.enable = true;
     redhat.enable = true;
     scanning.enable = true;
   };
