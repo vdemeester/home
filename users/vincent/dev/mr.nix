@@ -3,7 +3,7 @@
 {
   xdg.configFile."mr".source = ./mr/lib.mr;
   home.file."src/.mrconfig".source = ./mr/src.mr;
-  home.file."src/tektoncd".source = ./mr/src.tektoncd.mr;
+  home.file."src/tektoncd/.mrconfig".source = ./mr/src.tektoncd.mr;
   home.file."src/go.sbr.pm/.mrconfig".source = ./mr/src.go.sbr.pm.mr;
   home.file."src/k8s.io/.mrconfig".source = ./mr/src.k8s.io.mr;
   home.file."src/knative.dev/.mrconfig".source = ./mr/src.knative.dev.mr;
