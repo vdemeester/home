@@ -3,12 +3,13 @@
 with lib;
 let
   cfg = config.profiles.syncthing;
+  isCurrentHost = n: v: n != config.networking.hostName;
   devices = {
     # TODO: Filter current devices from devices and folders.devices
-    # aomi = {
-    #   id = "WAD7GYV-RXIL3V3-OT5PFZH-NRQHZWV-D3TGJVR-G4IANXZ-HTO5VT7-XE2WIQQ";
-    #   address = [ "tcp://aomi.vpn" "tcp://aomi.home" ];
-    # };
+    aomi = {
+      id = "WAD7GYV-RXIL3V3-OT5PFZH-NRQHZWV-D3TGJVR-G4IANXZ-HTO5VT7-XE2WIQQ";
+      address = [ "tcp://aomi.vpn" "tcp://aomi.home" ];
+    };
     naruhodo = {
       id = "VTIA5EJ-X2BAMN6-LSBUFVJ-EZ35MTN-AOCEQEZ-HMY7CGV-STVVFTT-5U7SIAY";
       addresses = [ "tcp://naruhodo.vpn" "tcp://naruhodo.home" ];
@@ -23,7 +24,7 @@ let
       addresses = [ "tcp://wakasu.home" "tcp://wakasu.vpn" ];
     };
   };
-  deviceNames = builtins.attrNames devices;
+  deviceNames = builtins.attrNames (filterAttrs isCurrentHost devices);
 in
 {
   options = {
@@ -39,7 +40,7 @@ in
       configDir = "/home/vincent/.syncthing";
       # openDefaultPorts = true;
       declarative = {
-        inherit devices;
+        devices = filterAttrs isCurrentHost devices;
         folders = {
           "/home/vincent/sync" = {
             label = "sync";
