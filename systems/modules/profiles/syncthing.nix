@@ -38,35 +38,32 @@ in
       user = "vincent";
       dataDir = "/home/vincent/.syncthing";
       configDir = "/home/vincent/.syncthing";
-      # openDefaultPorts = true;
-      declarative = {
-        devices = filterAttrs isCurrentHost devices;
-        folders = {
-          "/home/vincent/sync" = {
-            label = "sync";
-            id = "7dshg-r8zr6";
-            devices = deviceNames;
-          };
-          "/home/vincent/desktop/org" = {
-            label = "org";
-            id = "sjpsr-xfwdu";
-            devices = deviceNames;
-          };
-          "/home/vincent/desktop/documents" = {
-            label = "documents";
-            id = "oftdb-t5anv";
-            devices = deviceNames;
-          };
-          "/home/vincent/desktop/pictures/screenshots" = {
-            label = "screenshots";
-            id = "prpsz-azlz9";
-            devices = deviceNames;
-          };
-          "/home/vincent/desktop/pictures/wallpapers" = {
-            label = "wallpapers";
-            id = "wpiah-ydwwx";
-            devices = deviceNames;
-          };
+      devices = filterAttrs isCurrentHost devices;
+      folders = {
+        "/home/vincent/sync" = {
+          label = "sync";
+          id = "7dshg-r8zr6";
+          devices = deviceNames;
+        };
+        "/home/vincent/desktop/org" = {
+          label = "org";
+          id = "sjpsr-xfwdu";
+          devices = deviceNames;
+        };
+        "/home/vincent/desktop/documents" = {
+          label = "documents";
+          id = "oftdb-t5anv";
+          devices = deviceNames;
+        };
+        "/home/vincent/desktop/pictures/screenshots" = {
+          label = "screenshots";
+          id = "prpsz-azlz9";
+          devices = deviceNames;
+        };
+        "/home/vincent/desktop/pictures/wallpapers" = {
+          label = "wallpapers";
+          id = "wpiah-ydwwx";
+          devices = deviceNames;
         };
       };
     };
