@@ -129,6 +129,10 @@ in
 
   services = {
     syncthing.guiAddress = "${ip}:8384";
+    smartd = {
+      enable = true;
+      devices = [{ device = "/dev/nvme0n1"; }];
+    };
     wireguard = {
       enable = true;
       ips = ips;
