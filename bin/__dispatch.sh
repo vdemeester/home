@@ -19,6 +19,9 @@ case "${TARGET_TOOL}" in
     bus)
         attr="tools.bus"
         ;;
+    k8s.infra)
+        attr="tools.k8s_infra"
+        ;;
     *)
         echo "The tool '${TARGET_TOOL}' is currently not installed in this repository."
         exit 1
