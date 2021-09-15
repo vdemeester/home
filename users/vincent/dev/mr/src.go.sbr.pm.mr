@@ -1,3 +1,4 @@
+# -*- mode: sh -*-
 include = cat ${HOME}/.config/mr
 
 [ape]

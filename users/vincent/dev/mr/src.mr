@@ -1,14 +1,11 @@
+# -*- mode: sh -*-
 include = cat ${HOME}/.config/mr
 
-[github.com]
+[osp]
 chain = true
 skip = true
 
-[gitlab.com]
-chain = true
-skip = true
-
-[git.sr.ht]
+[tektoncd]
 chain = true
 skip = true
 
@@ -16,6 +13,15 @@ skip = true
 chain = true
 skip = true
 
-[pkgs.devel.redhat.com]
+[k8s.io]
+chain = true
+skip = true
+
+# Old ones
+[github.com]
+chain = true
+skip = true
+
+[gitlab.com]
 chain = true
 skip = true
