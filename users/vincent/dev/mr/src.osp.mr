@@ -1,2 +1,46 @@
 # -*- mode: sh -*-
 include = cat ${HOME}/.config/mr
+
+[DEFAULT]
+lib =
+    export BASE_USER=vdemeester
+    export BASE_HOST="github.com"
+
+# tektoncd openshift forks (for carrying patches, …)
+[forks]
+chain = true
+skip = true
+
+# downstream (RH internal)
+
+# github.com/openshift
+[openshift-ci]
+lib =
+    export DEFAULT_BRANCH=master
+checkout =
+    git clone git@github.com:vdemeester/release.git openshift-ci
+    cd openshift-ci
+    git remote add upstream https://github.com/openshift/release.git
+    git fetch -p --all
+
+[pipelines-docs]
+lib =
+    export BASE_PATH=openshift
+    export DEFAULT_BRANCH=master
+[pipelines-tutorial]
+lib =
+    export BASE_PATH=openshift
+    export DEFAULT_BRANCH=master
+
+# github.com/openshift-pipelines
+[enhancements]
+lib =
+    export BASE_PATH=openshift-pipelines
+[knowledge-base]
+lib =
+    export DEFAULT_BRANCH=master
+checkout =
+    git clone git@github.com:vdemeester/knowledge-base.git
+    cd knowledge-base
+    git remote add upstream git@github.com:openshift-pipelines/knowledge-base.git
+    git fetch -p --all

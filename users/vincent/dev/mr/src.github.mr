@@ -13,11 +13,3 @@ checkout =
     cd NixOS/nixpkgs
     git remote add upstream https://github.com/NixOS/nixpkgs.git
     git fetch -p --all
-
-[openshift]
-chain = true
-skip = true
-
-[tektoncd]
-chain = true
-skip = true

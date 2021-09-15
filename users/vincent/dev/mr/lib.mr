@@ -1,7 +1,6 @@
 # -*- mode: sh -*-
 [DEFAULT]
 lib =
-    BASE="${HOME}/src/"
     my_git_clone() {
         USERNAME=${GIT_USERNAME:-git}
         GIT_PREFIX=${GIT_PREFIX}
@@ -34,7 +33,7 @@ git_u =
     if [[ -z "$NO_UPSTREAM_U" ]]; then
         git config remote.upstream.url && REMOTE="upstream"
     fi
-    echo "Rebase ${REMOTE}/${DEFAULT_BRANCH} on master"
+    echo "Rebase ${REMOTE}/${DEFAULT_BRANCH} on ${DEFAULT_BRANCH}"
     git rebase ${REMOTE}/${DEFAULT_BRANCH} ${DEFAULT_BRANCH}
     git co $CURRENT_BRANCH
 skip = [ $1 != "checkout" ] && lazy

@@ -1,0 +1,28 @@
+# -*- mode: sh -*-
+include = cat ${HOME}/.config/mr
+
+[DEFAULT]
+lib =
+    git_fork_clone() {
+        REPO_NAME=${MR_REPO//$(dirname ${MR_CONFIG})\/}
+        URL=git@github.com:vdemeester/tektoncd-${REPO_NAME}.git
+        UPSTREAM_URL=https://github.com/tektoncd/${REPO_NAME}.git
+        # FIXME(vdemeester) should probably be https
+        OPENSHIFT_URL=git@github.com:openshift/tektoncd-${REPO_NAME}.git
+        echo "URL         : $URL"
+        echo "UPSTREAM_URL: $UPSTREAM_URL"
+        echo "OPENSHIFT_URL: $OPENSHIFT_URL"
+        git clone $URL $MR_REPO
+        cd $MR_REPO
+        git remote add upstream $UPSTREAM_URL
+        git remote add openshift $OPENSHIFT_URL
+        git fetch -p --all
+    }
+checkout = git_fork_clone
+# Do not try to rebase, …
+git_u = git fetch -p --all
+
+[catalog]
+[operator]
+[pipeline]
+[triggers]
