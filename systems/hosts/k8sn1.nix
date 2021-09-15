@@ -27,7 +27,7 @@ in
   fileSystems."/var" = {
     device = "/dev/vdb";
     fsType = "ext4";
-    autoResize = true;
+    autoResize = true; # Is this needed ?
   };
 
   boot.growPartition = true;

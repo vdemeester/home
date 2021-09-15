@@ -19,6 +19,11 @@ in
     fsType = "ext4";
     autoResize = true;
   };
+  fileSystems."/var" = {
+    device = "/dev/vdb";
+    fsType = "ext4";
+    autoResize = true; # Is this needed ?
+  };
 
   boot.growPartition = true;
   boot.kernelParams = [ "console=ttyS0" ];
