@@ -27,13 +27,14 @@ git_gc = git gc "$@"
 git_u =
     git fetch -p --all
     CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    DEFAULT_BRANCH=${DEFAULT_BRANCH:-main}
     echo "On $CURRENT_BRANCH"
     git stash
     REMOTE="origin"
     if [[ -z "$NO_UPSTREAM_U" ]]; then
         git config remote.upstream.url && REMOTE="upstream"
     fi
-    echo "Rebase ${REMOTE}/master on master"
-    git rebase ${REMOTE}/master master
+    echo "Rebase ${REMOTE}/${DEFAULT_BRANCH} on master"
+    git rebase ${REMOTE}/${DEFAULT_BRANCH} ${DEFAULT_BRANCH}
     git co $CURRENT_BRANCH
 skip = [ $1 != "checkout" ] && lazy
