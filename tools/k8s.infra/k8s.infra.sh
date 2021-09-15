@@ -46,6 +46,7 @@ delete() {
         } || {
             echo "skipping, not present…"
         }
+        ${VIRSH_COMMAND} undefine ${n} --remove-all-storage || echo "Failed to erase.."
     done
 }
 
