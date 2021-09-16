@@ -20,9 +20,9 @@ in
     autoResize = true;
   };
   fileSystems."/var" = {
-    device = "/dev/vdb";
+    device = "/dev/vdb1";
     fsType = "ext4";
-    autoResize = true; # Is this needed ?
+    # autoResize = true; # Is this needed ?
   };
 
   boot.growPartition = true;
