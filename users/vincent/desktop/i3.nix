@@ -13,7 +13,6 @@ let
       *Shutdown) systemctl -i poweroff
     esac
   '';
-  # lockCommand = "${pkgs.i3lock-color}/bin/i3lock-color -c 666666";
   lockCommand = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim";
 in
 {
@@ -158,10 +157,8 @@ in
     screen-locker = {
       enable = true;
       lockCmd = lockCommand;
-      inactiveInterval = 60;
-      # xautolockExtraOptions = [
-      #   "Xautolock.killer: systemctl suspend"
-      # ];
+      inactiveInterval = 300;
+      enableDetectSleep = true;
     };
     random-background = {
       enable = true;
