@@ -172,7 +172,7 @@ in
     config = {
       fonts = {
         names = [ "Ubuntu Mono" ];
-        size = 10;
+        size = 10.0;
       };
       focus = {
         followMouse = false;
@@ -255,7 +255,7 @@ in
           statusCommand = "${pkgs.i3status}/bin/i3status";
           fonts = {
             names = [ "Fira Code" ];
-            size = 12;
+            size = 12.0;
           };
         }
       ];
