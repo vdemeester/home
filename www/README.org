@@ -1,2 +1,5 @@
 #+TITLE: www
 #+SUBTITLE: my website(s)
+
+This publishes all my website, everywhere, anywhere.
+Delegates to each one.
