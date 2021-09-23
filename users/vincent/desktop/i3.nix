@@ -170,7 +170,10 @@ in
     package = pkgs.i3-gaps;
     enable = true;
     config = {
-      fonts = [ "Ubuntu Mono 10" ];
+      fonts = {
+        names = [ "Ubuntu Mono" ];
+        size = 10;
+      };
       focus = {
         followMouse = false;
       };
@@ -250,7 +253,10 @@ in
           position = "bottom";
           trayOutput = "primary";
           statusCommand = "${pkgs.i3status}/bin/i3status";
-          fonts = [ "Fira Code 12" ];
+          fonts = {
+            names = [ "Fira Code" ];
+            size = 12;
+          };
         }
       ];
     };
