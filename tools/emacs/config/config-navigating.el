@@ -43,33 +43,10 @@
     (let ((urls browse-url-button-regexp))
       (occur urls "\\&")))
 
-  (defun vde/occur-browse-url-in-buffer ()
-    "Run `eww' on a URL from the buffer using completion.
-Also see `vde/occur-url'."
-    (interactive)
-    (let ((matches nil))
-      (save-excursion
-        (goto-char (point-min))
-        (while (search-forward-regexp browse-url-button-regexp nil t)
-          (push (match-string-no-properties 0) matches)))
-      (icomplete-vertical-do
-          (:height (/ (frame-height) 4) :separator 'dotted-line)
-        (eww
-         (completing-read "Browse URL: " matches nil t)))))
-
-  (defun vde/occur-visit-or-list-urls (&optional arg)
-    "Wrap `vde/occur-visit-or-list-urls' and `vde/occur-url'.
-Meant to economise on key bindings."
-    (interactive "P")
-    (if arg
-        (vde/occur-url)
-      (vde/occur-browse-url-in-buffer)))
-
   :hook ((occur-mode . hl-line-mode)
          (occur-mode . (lambda ()
                          (toggle-truncate-lines t))))
-  :bind (("M-s u" . vde/occur-visit-or-list-urls)
-         ("M-s M-o" . multi-occur)
+  :bind (("M-s M-o" . multi-occur)
          :map occur-mode-map
          ("t" . toggle-truncate-lines)))
 
