@@ -9,16 +9,16 @@
   ;; Configure `display-buffer' behaviour for some special buffers
   (setq-default display-buffer-alist
                 '(;; bottom side window
-                  ("\\*e?shell.*"
-                   (display-buffer-in-side-window)
-                   (window-height . 0.25)
-                   (side . bottom)
-                   (slot . -1))
-                  ("\\*v?term.*"
-                   (display-buffer-in-side-window)
-                   (window-height . 0.25)
-                   (side . bottom)
-                   (slot . -1))
+                  ;; ("\\*e?shell.*"
+                  ;;  (display-buffer-in-side-window)
+                  ;;  (window-height . 0.25)
+                  ;;  (side . bottom)
+                  ;;  (slot . -1))
+                  ;; ("\\*v?term.*"
+                  ;;  (display-buffer-in-side-window)
+                  ;;  (window-height . 0.25)
+                  ;;  (side . bottom)
+                  ;;  (slot . -1))
                   (".*\\*\\(Completions\\).*"
                    (display-buffer-in-side-window)
                    (window-height . 0.16)
@@ -35,7 +35,7 @@
                    (window-height . 0.25)
                    (side . bottom)
                    (slot . 0))
-                  ("\\*\\(compilation\\|go test\\).*"
+                  ("\\*.*\\(compilation\\|go test\\).*"
                    (display-buffer-in-side-window)
                    (window-height . 0.25)
                    (side . bottom)
@@ -64,11 +64,11 @@
                    (window-parameters . ((no-other-window . t)
                                          (mode-line-format . (" "
                                                               mode-line-buffer-identification)))))
-                  ("\\*Custom.*"
-                   (display-buffer-in-side-window)
-                   (window-width . 0.20)
-                   (side . right)
-                   (slot . 2))
+                  ;; ("\\*Custom.*"
+                  ;;  (display-buffer-in-side-window)
+                  ;;  (window-width . 0.20)
+                  ;;  (side . right)
+                  ;;  (slot . 2))
                   ("\\*Embark Occur.*"
                    (display-buffer-at-bottom))))
   (setq window-sides-vertical nil)
