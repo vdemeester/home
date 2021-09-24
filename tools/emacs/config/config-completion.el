@@ -162,21 +162,58 @@ instead."
 (use-package consult
   :unless noninteractive
   :after minibuffer
+  :init
+  ;; Use Consult to select xref locations with preview
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+  (setq consult-narrow-key "<") ;; (kbd "C-+")
   :config
+  (consult-customize
+   consult-ripgrep consult-git-grep consult-grep consult-bookmark consult-xref
+   consult--source-file consult--source-project-file consult--source-bookmark
+   :preview-key (kbd "M-."))
   (setq consult-async-input-debounce 0.5)
   (setq consult-async-input-throttle 0.8)
   (setq consult-project-root-function
         (lambda ()
           (when-let (project (project-current))
             (car (project-roots project)))))
+
   :bind (("M-X" . consult-mode-command)
-         ("M-s i" . consult-imenu)
-         ("M-s s" . consult-outline)    ; M-s o is `occur'
-         ("M-s M-s" . consult-outline)
-         ("M-s m" . consult-mark)
+         ("C-c b" . consult-bookmark)
+         ("C-c k" . consult-kmacro)
+         ;; C-x bindings (ctl-x-map)
+         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
+         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+         ;; Other custom bindings
+         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ("<help> a" . consult-apropos)            ;; orig. apropos-command
+         ;; M-g bindings (goto-map)
+         ("M-g e" . consult-compile-error)
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g m" . consult-mark)
+         ("M-g o" . consult-outline)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ;; "live" search
+         ("M-s s g" . consult-grep)
+         ("M-s s G" . consult-gip-grep)
+         ("M-s s r" . consult-ripgrep)
          ("M-s l" . consult-line)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ;; Isearch integration
+         ("M-s e" . consult-isearch)
          :map minibuffer-local-completion-map
-         ("<tab>" . minibuffer-force-compylete)))
+         ("<tab>" . minibuffer-force-complete)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch)                 ;; orig. isearch-edit-string
+         ("M-s e" . consult-isearch)               ;; orig. isearch-edit-string
+         ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi)))
 
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir)
