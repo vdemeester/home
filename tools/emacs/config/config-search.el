@@ -79,7 +79,7 @@ confines of word boundaries (e.g. multiple words)."
   :commands (rg rg-project rg-dwim)
   :bind (("M-s r r" . rg)
          ("M-s r p" . rg-project)
-         ("M-s r s" . rg-dwiw))
+         ("M-s r s" . rg-dwim))
   :config
   (setq rg-group-result t)
   (setq rg-hide-command t)
