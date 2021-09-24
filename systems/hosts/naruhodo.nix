@@ -172,6 +172,7 @@ in
       endpointPort = endpointPort;
       endpointPublicKey = endpointPublicKey;
     };
+    syncthing.guiAddress = "${ip}:8384";
   };
   systemd.services.buildkitd.wantedBy = lib.mkForce [ ];
   systemd.services.containerd.wantedBy = lib.mkForce [ ];

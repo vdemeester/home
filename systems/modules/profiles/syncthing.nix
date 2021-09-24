@@ -5,10 +5,9 @@ let
   cfg = config.profiles.syncthing;
   isCurrentHost = n: v: n != config.networking.hostName;
   devices = {
-    # TODO: Filter current devices from devices and folders.devices
     aomi = {
       id = "WAD7GYV-RXIL3V3-OT5PFZH-NRQHZWV-D3TGJVR-G4IANXZ-HTO5VT7-XE2WIQQ";
-      address = [ "tcp://aomi.vpn" "tcp://aomi.home" ];
+      addresses = [ "tcp://aomi.vpn" "tcp://aomi.home" ];
     };
     naruhodo = {
       id = "VTIA5EJ-X2BAMN6-LSBUFVJ-EZ35MTN-AOCEQEZ-HMY7CGV-STVVFTT-5U7SIAY";
