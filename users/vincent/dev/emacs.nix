@@ -101,7 +101,7 @@ let
     pdf-tools
     pkgs.bookmark-plus
     pkgs.dired-plus
-    projectile
+    # projectile
     # FIXME(vdemeester) once it is fixed, re-add
     #python-mode
     rainbow-delimiters
