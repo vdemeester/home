@@ -29,7 +29,7 @@ switch to it. Otherwise, create a new vterm shell."
       (if (and vterm-buffer (not current-prefix-arg))
           (pop-to-buffer-same-window vterm-buffer)
         (let* ((cd-cmd (concat " cd " (shell-quote-argument default-directory))))
-          (vterm vterm-buffer)
+          (vterm default-project-vterm-name)
           (with-current-buffer vterm-buffer
             (vterm-send-string cd-cmd)
             (vterm-send-return)))))))
