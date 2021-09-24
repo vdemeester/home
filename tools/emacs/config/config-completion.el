@@ -165,6 +165,10 @@ instead."
   :config
   (setq consult-async-input-debounce 0.5)
   (setq consult-async-input-throttle 0.8)
+  (setq consult-project-root-function
+        (lambda ()
+          (when-let (project (project-current))
+            (car (project-roots project)))))
   :bind (("M-X" . consult-mode-command)
          ("M-s i" . consult-imenu)
          ("M-s s" . consult-outline)    ; M-s o is `occur'

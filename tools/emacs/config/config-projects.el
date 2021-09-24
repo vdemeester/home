@@ -10,6 +10,7 @@
   :bind (("C-x p v" . vde-project-magit-status)
          ("C-x p s" . vde-project-vterm))
   :init
+  (setq-default project-compilation-buffer-name-function 'project-prefixed-buffer-name)
   (defun vde-project-magit-status ()
     "Run `magit-status' on project."
     (interactive)
@@ -31,8 +32,7 @@ switch to it. Otherwise, create a new vterm shell."
           (vterm vterm-buffer)
           (with-current-buffer vterm-buffer
             (vterm-send-string cd-cmd)
-            (vterm-send-return))))))
-  )
+            (vterm-send-return)))))))
 
 (use-package projectile
   :unless noninteractive
