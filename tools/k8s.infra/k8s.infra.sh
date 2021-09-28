@@ -32,9 +32,14 @@ build() {
         logs=$(mktemp)
         output=$(mktemp)
         echo "Build ${n} node (logs: ${logs})…"
-        nixos-generate -f qcow -c ./systems/hosts/${n}.nix 2>${logs} 1>${output}
+        nixos-generate -I nixpkgs=channel:nixos-21.05 -f qcow -c ./systems/hosts/${n}.nix 2>${logs} 1>${output}
+        echo "Resize ${n} image"
+        qemu-img create -f qcow2 -o preallocation=metadata ${n}.qcow2 40G
+        virt-resize --expand /dev/vda1 $(cat ${output} | tr -d '\n') ${n}.qcow2
         echo "Syncthing image to ${HOST}…"
-        ${RSYNC_COMMAND} $(cat ${output} | tr -d '\n') root@${HOST}:/var/lib/libvirt/images/${n}.qcow2
+        ${RSYNC_COMMAND} ${n}.qcow2 root@${HOST}:/var/lib/libvirt/images/${n}.qcow2
+        echo "Remove ${n} (local) image"
+        rm -f ${n}.qcow2
     done
 }
 
@@ -63,11 +68,23 @@ bootstrap() {
                      --name="${n}" --vcpus=4 --ram=8192 \
                      --network bridge=br1,mac.address=${!mac_addr} \
                      --disk path=/var/lib/libvirt/images/${n}.qcow2,bus=virtio,size=10 \
+                     --disk path=/var/lib/libvirt/images/${n}-data.qcow2,bus=virtio,size=40 \
                      --print-xml > ${folder}/${n}.xml
-                     # --disk path=/var/lib/libvirt/images/${n}-data.qcow2,bus=virtio,size=40 \
         echo "Node ${n} : ${folder}/${n}.xml"
         ${VIRSH_COMMAND} define --file ${folder}/${n}.xml
     done
+    # Start the nodes
+    for n in ${NODES[@]}; do
+        ${VIRSH_COMMAND} start ${n}
+    done
+    # Wait for.. long time..
+    # Not sure how to ensure k8s is running on the master
+    token=$(ssh root@k8sn1.home cat /var/lib/kubernetes/secrets/apitoken.secret)
+    echo $token | ssh root@k8sn2.home nixos-kubernetes-node-join
+    echo $token | ssh root@k8sn3.home nixos-kubernetes-node-join
+    mkdir -p $HOME/.kube
+    # TODO: Copy cluster-admin configuration and sed the certs
+    scp root@k8sn1.home:/etc/kubernetes/cluster-admin.kubeconfig $HOME/home.cluster-admin.config
 }
 
 status() {

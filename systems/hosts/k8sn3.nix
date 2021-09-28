@@ -1,4 +1,8 @@
-{ pkgs, lib, ... }:
+{ sources ? import ../../nix
+, lib ? sources.lib
+, pkgs ? sources.pkgs { }
+, ...
+}:
 
 let
   hostname = "k8sn3";
@@ -8,9 +12,9 @@ in
   imports = [
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     (import ../../nix).home-manager-stable
-    ../../systems/modules
+    ../modules
     # FIXME Need to refactor vincent user as.. it's adding way to much by default...
-    # (import ../../users).vincent
+    # (import ../../../users).vincent
     (import ../../users).root
   ];
 
@@ -18,11 +22,6 @@ in
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
     autoResize = true;
-  };
-  fileSystems."/var" = {
-    device = "/dev/vdb1";
-    fsType = "ext4";
-    # autoResize = true; # Is this needed ?
   };
 
   boot.growPartition = true;

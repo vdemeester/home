@@ -48,6 +48,7 @@ in
         securePort = cfg.master.port;
         advertiseAddress = cfg.master.ip;
       };
+      # TODO: Remove this when switching to 21.11
       controllerManager.extraOpts = "--horizontal-pod-autoscaler-use-rest-clients=false";
       # use coredns
       addons.dns.enable = true;
