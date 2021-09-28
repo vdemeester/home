@@ -10,6 +10,7 @@ in
   ];
   boot = {
     initrd.availableKernelModules = [ "nvme" "rtsx_pci_sdmmc" "thunderbolt" ];
+    kernelParams = [ "intel_idle.max_cstate=4" ];
   };
   hardware = {
     enableAllFirmware = true;
