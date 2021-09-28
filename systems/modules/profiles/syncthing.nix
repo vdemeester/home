@@ -2,6 +2,7 @@
 
 with lib;
 let
+  unstable = versionOlder config.system.nixos.release "21.05";
   cfg = config.profiles.syncthing;
   isCurrentHost = n: v: n != config.networking.hostName;
   devices = {
@@ -32,39 +33,47 @@ in
     };
   };
   config = mkIf cfg.enable {
-    services.syncthing = {
-      enable = true;
-      user = "vincent";
-      dataDir = "/home/vincent/.syncthing";
-      configDir = "/home/vincent/.syncthing";
-      devices = filterAttrs isCurrentHost devices;
-      folders = {
-        "/home/vincent/sync" = {
-          label = "sync";
-          id = "7dshg-r8zr6";
-          devices = deviceNames;
+    services.syncthing =
+      if (builtins.hasAttr "devices" config.services.syncthing)
+      then {
+        enable = true;
+        user = "vincent";
+        dataDir = "/home/vincent/.syncthing";
+        configDir = "/home/vincent/.syncthing";
+        devices = filterAttrs isCurrentHost devices;
+        folders = {
+          "/home/vincent/sync" = {
+            label = "sync";
+            id = "7dshg-r8zr6";
+            devices = deviceNames;
+          };
+          "/home/vincent/desktop/org" = {
+            label = "org";
+            id = "sjpsr-xfwdu";
+            devices = deviceNames;
+          };
+          "/home/vincent/desktop/documents" = {
+            label = "documents";
+            id = "oftdb-t5anv";
+            devices = deviceNames;
+          };
+          "/home/vincent/desktop/pictures/screenshots" = {
+            label = "screenshots";
+            id = "prpsz-azlz9";
+            devices = deviceNames;
+          };
+          "/home/vincent/desktop/pictures/wallpapers" = {
+            label = "wallpapers";
+            id = "wpiah-ydwwx";
+            devices = deviceNames;
+          };
         };
-        "/home/vincent/desktop/org" = {
-          label = "org";
-          id = "sjpsr-xfwdu";
-          devices = deviceNames;
-        };
-        "/home/vincent/desktop/documents" = {
-          label = "documents";
-          id = "oftdb-t5anv";
-          devices = deviceNames;
-        };
-        "/home/vincent/desktop/pictures/screenshots" = {
-          label = "screenshots";
-          id = "prpsz-azlz9";
-          devices = deviceNames;
-        };
-        "/home/vincent/desktop/pictures/wallpapers" = {
-          label = "wallpapers";
-          id = "wpiah-ydwwx";
-          devices = deviceNames;
-        };
+      }
+      else {
+        enable = true;
+        user = "vincent";
+        dataDir = "/home/vincent/.syncthing";
+        configDir = "/home/vincent/.syncthing";
       };
-    };
   };
 }
