@@ -19,6 +19,7 @@
     fswatch
     gnumake
     jq
+    gron
     shfmt
   ];
 
