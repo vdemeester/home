@@ -25,6 +25,12 @@ in
         forwardX11 = cfg.forwardX11;
         extraConfig = ''
           StreamLocalBindUnlink yes
+          Match User nginx
+            ChrootDirectory /var/www
+            ForceCommand interfal-sftp
+            AllowTcpForwarding no
+            PermitTunnel no
+            X11Forwarding no
         '';
       };
       sshguard.enable = true;

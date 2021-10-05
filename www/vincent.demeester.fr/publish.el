@@ -114,12 +114,6 @@
          :publishing-directory "./public/css"
          :publishing-function org-publish-attachment
          :recursive t)
-        ("images"
-         :base-directory "./images"
-         :base-extension ,site-attachments
-         :publishing-directory "./public/images"
-         :publishing-function org-publish-attachment
-         :recursive t)
         ("assets"
          :base-directory "./assets"
          :base-extension ,site-attachments
@@ -132,7 +126,7 @@
          :publishing-directory "./public/"
          :publishing-function org-publish-attachment
          :recursive t)
-        ("all" :components ("posts" "about" "index" "articles" "articles-assets" "css" "images" "assets" "legacy" "posts-rss"))))
+        ("all" :components ("posts" "about" "index" "articles" "articles-assets" "css"  "assets" "legacy" "posts-rss"))))
 
 (provide 'publish)
 ;;; publish.el ends here

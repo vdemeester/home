@@ -7,6 +7,13 @@ let
   secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
+  isAuthorized = p: builtins.isAttrs p && p.authorized or false;
+  authorizedKeys = lists.optionals secretCondition (
+    attrsets.mapAttrsToList
+      (name: value: value.key)
+      (attrsets.filterAttrs (name: value: isAuthorized value) (import secretPath).ssh)
+  );
+
   wireguardIp = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
 
   nginxExtraConfig = ''
@@ -129,7 +136,6 @@ in
   };
   security.pam.enableSSHAgentAuth = true;
   #systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/www" ];
-  systemd.services.nginx.serviceConfig.ProtectHome = lib.mkForce false;
   services = {
     govanityurl = {
       enable = true;
