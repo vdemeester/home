@@ -4,8 +4,6 @@ with lib;
 let
   hostname = "kerkouane";
 
-  networkingConfigPath = ../../networking.nix;
-  hasNetworkingConfig = (builtins.pathExists networkingConfigPath);
   secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
@@ -64,11 +62,41 @@ in
     ../modules
     (import ../../users).vincent
     (import ../../users).root
-  ]
-  # digitalocean specifics
-  ++ optionals hasNetworkingConfig [ networkingConfigPath ];
+  ];
 
   networking.hostName = hostname;
+
+  # START OF DigitalOcean specifics
+  # FIXME: move this into a secret ?
+  # This file was populated at runtime with the networking
+  # details gathered from the active system.
+  networking = {
+    nameservers = [
+      "67.207.67.2"
+      "67.207.67.3"
+    ];
+    defaultGateway = "188.166.64.1";
+    defaultGateway6 = "";
+    dhcpcd.enable = false;
+    usePredictableInterfaceNames = lib.mkForce true;
+    interfaces = {
+      eth0 = {
+        ipv4.addresses = [
+          { address = "188.166.102.243"; prefixLength = 18; }
+          { address = "10.18.0.5"; prefixLength = 16; }
+        ];
+        ipv6.addresses = [
+          { address = "fe80::8035:3aff:fe72:1036"; prefixLength = 64; }
+        ];
+      };
+
+    };
+  };
+  services.udev.extraRules = ''
+    ATTR{address}=="82:35:3a:72:10:36", NAME="eth0"
+
+  '';
+  # END OF DigitalOcean specifics
 
   boot.loader.grub.device = "/dev/vda";
   boot.loader.grub.enable = lib.mkForce true;
@@ -85,7 +113,6 @@ in
   profiles = {
     git.enable = true;
     ssh.enable = true;
-    syncthing.enable = true;
     wireguard.server.enable = true;
   };
 
@@ -118,6 +145,8 @@ in
             repo: https://git.sr.ht/~vdemeester/ram
           /sec:
             repo: https://git.sr.ht/~vdemeester/sec
+         /foo
+            repo: https://git.sr.ht/~vdemeester/foo
       '';
     };
     nginx = {
@@ -191,6 +220,5 @@ in
       passwordAuthentication = false;
       permitRootLogin = "without-password";
     };
-    syncthing.guiAddress = "127.0.0.1:8384";
   };
 }
