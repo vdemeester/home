@@ -1,6 +1,6 @@
 # /Make/ it happen
 # :PROPERTIES:
-# :header-args: :tangle ~/src/home/www/vincent.demeester.fr/Makefile
+# :header-args: :tangle /etc/nixos/www/vincent.demeester.fr/Makefile
 # :header-args+: :comments org
 # :ID:       6191455e-95bc-4abc-a5f5-a62606ab2ea7
 # :END:
@@ -67,10 +67,12 @@ $(NOTES):
 # =~/desktop/sites= on the current machine, and the rest is automated.
 
 
+#rsync -a --progress --copy-links --delete public/assets/.fancyindex/ ~/desktop/sites/dl.sbr.pm/.fancyindex/
+#rsync -a --progress --copy-links --delete public/ ~/desktop/sites/${PUBLISH}/
 .PHONY: publish
 publish: build
-	rsync -a --progress --copy-links --delete public/assets/.fancyindex/ ~/desktop/sites/dl.sbr.pm/.fancyindex/
-	rsync -a --progress --copy-links --delete public/ ~/desktop/sites/${PUBLISH}/
+	rsync -ave ssh --progress --copy-links --delete public/assets/.fancyindex/ kerkouane.vpn:/var/www/dl.sbr.pm/.fancyindex/
+	rsync -ave ssh --progress --copy-links --delete public/ kerkouane.vpn:/var/www/${PUBLISH}/
 
 # Local server
 # :PROPERTIES:
