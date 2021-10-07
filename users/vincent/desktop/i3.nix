@@ -4,7 +4,7 @@ with lib;
 let
   # FIXME(change this at some point)
   powermenu = pkgs.writeScript "powermenu.sh" ''
-    #!${pkgs.stdenv.shell}
+    #!/usr/bin/env bash
     MENU="$(${pkgs.rofi}/bin/rofi -sep "|" -dmenu -i -p 'System' -location 3 -xoffset -10 -yoffset 32 -width 20 -hide-scrollbar -line-padding 4 -padding 20 -lines 5 <<< "Suspend|Hibernate|Reboot|Shutdown")"
     case "$MENU" in
       *Suspend) systemctl suspend;;
@@ -12,6 +12,10 @@ let
       *Reboot) systemctl reboot ;;
       *Shutdown) systemctl -i poweroff
     esac
+  '';
+  emacs-in-folder = pkgs.writeScript "emacs-in-folder" ''
+    #!/usr/bin/env bash
+    fd . -d 3 --type d ~/src | rofi -dmenu | xargs -I {} zsh -i -c "cd {}; emacs ."
   '';
   lockCommand = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim";
 in
@@ -186,6 +190,7 @@ in
         "Mod4+Return" = "exec alacritty";
         "Mod4+Shift+Return" = "exec emacsclient -c";
         "Mod4+Control+Return" = "exec emacs";
+        "Mod4+Control+Shift+Return" = "exec ${emacs-in-folder}";
       };
       gaps = {
         inner = 0;
