@@ -48,4 +48,7 @@
     onChange = "${pkgs.my.nr}/bin/nr dev";
   };
 
+  home.file."src/tektoncd/.envrc".source = ./src/tektoncd.envrc;
+  home.file."src/tektoncd/shell.nix".source = ./src/tektoncd.shell.nix;
+
 }
