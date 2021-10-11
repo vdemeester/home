@@ -69,7 +69,7 @@ rec {
   yaspell = pkgs.callPackage ./yaspell { };
 
   # OpenShift
-  inherit (pkgs.callPackage ./oc { })
+  inherit (pkgs.callPackage ./openshift/oc.nix { })
     oc_4_1
     oc_4_2
     oc_4_3
@@ -80,7 +80,7 @@ rec {
     oc_4_8
     oc
     ;
-  inherit (pkgs.callPackage ./openshift-install { })
+  inherit (pkgs.callPackage ./openshift/openshift-install.nix { })
     openshift-install_4_3
     openshift-install_4_4
     openshift-install_4_5
@@ -90,11 +90,12 @@ rec {
     openshift-install
     ;
 
-  inherit (pkgs.callPackage ./odo { })
+  inherit (pkgs.callPackage ./openshift/odo.nix { })
     odo_1_2
     odo_2_0
     odo_2_1
     odo_2_2
+    odo_2_3
     odo
     ;
 
@@ -114,10 +115,12 @@ rec {
 
   # Operator SDK
   inherit (pkgs.callPackage ./operator-sdk { })
+    operator-sdk_1
+    operator-sdk_1_13
     operator-sdk_0_18
     operator-sdk_0_19
+    operator-sdk
     ;
-  operator-sdk = operator-sdk_0_19;
 
   # Tekton
   inherit (pkgs.callPackage ./tkn { })
@@ -132,7 +135,6 @@ rec {
     tkn_0_21
     tkn
     ;
-  tkn_oci = pkgs.callPackage ./tkn-oci { };
   manifest-tool = pkgs.callPackage ./manifest-tool { };
 
   # Upstream

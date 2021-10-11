@@ -38,10 +38,14 @@ rec {
       '';
     };
 
-  odo = odo_2_2;
+  odo = odo_2_3;
+  odo_2_3 = makeOverridable odoGen {
+    version = "2.3.1";
+    sha256 = "13frxa5mf52j08mica4j9v6zdrqxhccx0injz860fywbcsz0x67p";
+  };
   odo_2_2 = makeOverridable odoGen {
-    version = "2.2.3";
-    sha256 = "1rbq532pzxh806m544wf8s79mk9fc3np5701df1kmjjdmlwhfmjj";
+    version = "2.2.4";
+    sha256 = "1ma0q79s85dy23b4ygjm67dm05i7clm39h5p86sdz4wz63amiqcg";
   };
   odo_2_1 = makeOverridable odoGen {
     version = "2.1.0";
