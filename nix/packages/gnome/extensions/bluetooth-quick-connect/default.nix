@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     cp -r * $out/share/gnome-shell/extensions/${uuid}
   '';
 
-  meta = with lib; {
+  meta = with stdenv.lib; {
     description = "Allows paired Bluetooth devices to be connected and disconnected via the GNOME system menu, without need to enter the Settings app every time.";
     license = licenses.gpl3;
     maintainers = with maintainers; [ vdemeester ];

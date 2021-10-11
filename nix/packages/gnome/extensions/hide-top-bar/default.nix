@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     cp -r * $out/share/gnome-shell/extensions/${uuid}
   '';
 
-  meta = with lib; {
+  meta = with stdenv.lib; {
     description = "Hide GNOME's top bar when it gets into your way.";
     license = licenses.gpl3;
     maintainers = with maintainers; [ vdemeester ];

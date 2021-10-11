@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     cp -r _build $out/share/gnome-shell/extensions/${uuid}
   '';
 
-  meta = with lib; {
+  meta = with stdenv.lib; {
     description = "Pop Shell is a keyboard-driven layer for GNOME Shell which allows for quick and sensible navigation and management of windows.";
     license = licenses.gpl3;
     maintainers = with maintainers; [ vdemeester ];
