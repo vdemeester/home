@@ -129,6 +129,7 @@ rec {
     tkn_0_18
     tkn_0_19
     tkn_0_20
+    tkn_0_21
     tkn
     ;
   tkn_oci = pkgs.callPackage ./tkn-oci { };

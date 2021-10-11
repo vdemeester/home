@@ -46,7 +46,11 @@ rec {
       };
     };
 
-  tkn = tkn_0_20;
+  tkn = tkn_0_21;
+  tkn_0_21 = makeOverridable tknGen {
+    version = "0.21.0";
+    sha256 = "166jjf78crwkfzl7vd92y75x85jqlbid55ny3fhl96y456gmhrsl";
+  };
   tkn_0_20 = makeOverridable tknGen {
     version = "0.20.0";
     sha256 = "125q6r90q9lz1qn3s3xa2006waxc5yyvgrswzgkczs4bv727am39";
