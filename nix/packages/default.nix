@@ -1,35 +1,7 @@
 { sources ? import ../.
 , pkgs ? sources.pkgs { }
 }:
-let
-  emacs27 = (pkgs.emacs.override { srcRepo = true; }).overrideAttrs (
-    old: {
-      name = "emacs-dev";
-      version = "27.1";
-      src = pkgs.fetchFromGitHub {
-        owner = "emacs-mirror";
-        repo = "emacs";
-        rev = "emacs-27.1";
-        sha256 = "1i50ksf96fxa3ymdb1irpc82vi67861sr4xlcmh9f64qw9imm3ks";
-      };
-      /*
-        %configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg \
-        --with-tiff --with-xft --with-xpm --with-x-toolkit=gtk3 --with-gpm=no \
-        --with-xwidgets --with-modules
-      */
-      configureFlags = old.configureFlags ++ [
-        "--with-xft"
-        "--with-gpm=no"
-        # "--with-nativecomp" # emacs 28
-        "--with-mailutils"
-      ];
-      buildInputs = old.buildInputs ++ [ pkgs.jansson ];
-      patches = [
-        ./patches/clean-env.patch
-      ];
-    }
-  );
-in
+
 rec {
   # pre nur-packages import
   scripts = pkgs.callPackage ./my/scripts { };
@@ -47,9 +19,6 @@ rec {
   systemd-email = pkgs.callPackage ./systemd-email { };
   yak = pkgs.callPackage ./yak { };
 
-  # emacs
-  emacs = emacs27.override { inherit (pkgs) imagemagick; withXwidgets = true; };
-
   # Maybe upstream
   athens = pkgs.callPackage ./athens { };
   envbox = pkgs.callPackage ./envbox { };
@@ -60,7 +29,7 @@ rec {
   ko = pkgs.callPackage ./ko { };
   kss = pkgs.callPackage ./kss { };
   batzconverter = pkgs.callPackage ./batzconverter { };
-  kubernix = pkgs.callPackage ./kubernix { };
+  #kubernix = pkgs.callPackage ./kubernix { };
   krew = pkgs.callPackage ./krew { };
   prm = pkgs.callPackage ./prm { };
   #protobuild = pkgs.callPackage ./protobuild { };
@@ -124,10 +93,6 @@ rec {
 
   # Tekton
   inherit (pkgs.callPackage ./tkn { })
-    tkn_0_13
-    tkn_0_14
-    tkn_0_15
-    tkn_0_16
     tkn_0_17
     tkn_0_18
     tkn_0_19
