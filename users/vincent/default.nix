@@ -21,7 +21,8 @@ in
     uid = 1000;
     description = "Vincent Demeester";
     extraGroups = [ "wheel" "input" ]
-      ++ optionals config.profiles.desktop.enable [ "audio" "video" "networkmanager" ]
+      ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
+      ++ optionals config.profiles.desktop.enable [ "audio" "video" ]
       ++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
       ++ optionals config.virtualisation.docker.enable [ "docker" ]
@@ -102,7 +103,7 @@ in
         home.packages = with pkgs; [ gnome3.zenity oathToolkit ];
       }]
       ++ optionals (versionOlder config.system.nixos.release "21.11") [{
-        # FIXME manpages are broken on 21.05 and home-manager (for some reason..)
+        # manpages are broken on 21.05 and home-manager (for some reason..)
         manual.manpages.enable = false;
       }]
     );
