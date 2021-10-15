@@ -47,10 +47,4 @@ in
     deployment.tags = [ "baremetal" "sakhalin" ];
     imports = [ ../../systems/hosts/sakhalin.nix ];
   };
-  "okinawa" = { config, pkgs, lib, ... }: {
-    deployment.targetUser = "root";
-    deployment.targetHost = "okinawa.home";
-    deployment.tags = [ "baremetal" "okinawa" ];
-    imports = [ ../../systems/hosts/okinawa.nix ];
-  };
 }
