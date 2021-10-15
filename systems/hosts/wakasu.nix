@@ -31,20 +31,6 @@ in
     };
   };
 
-  /*
-    Keep this for naruhodo.
-    boot.initrd.luks.devices = {
-    root = {
-    device = "/dev/disk/by-uuid/49167ed2-8411-4fa3-94cf-2f3cce05c940";
-    preLVM = true;
-    allowDiscards = true;
-    keyFile = "/dev/disk/by-id/usb-_USB_DISK_2.0_070D375D84327E87-0:0";
-    keyFileOffset = 30992883712;
-    keyFileSize = 4096;
-    fallbackToPassword = true;
-    };
-    };
-  */
   boot.binfmt.registrations = {
     s390x-linux = {
       # interpreter = getEmulator "s390x-linux";
@@ -90,44 +76,13 @@ in
     docker.enable = true;
     avahi.enable = true;
     syncthing.enable = true;
-    ssh = { enable = true; forwardX11 = true; };
+    ssh = { enable = true; };
     virtualization = { enable = true; nested = true; listenTCP = true; };
-    #kubernetes.enable = true;
-    #openshift.enable = true;
-    #tekton.enable = false;
-    yubikey.enable = true;
-  };
-  virtualisation.podman.enable = true;
-  virtualisation.containers = {
-    enable = true;
-    registries = {
-      search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
-    };
-    policy = {
-      default = [{ type = "insecureAcceptAnything"; }];
-      transports = {
-        docker-daemon = {
-          "" = [{ type = "insecureAcceptAnything"; }];
-        };
-      };
-    };
   };
   security = {
-    sudo.extraConfig = ''
-      %users ALL = (root) NOPASSWD: /home/vincent/.nix-profile/bin/kubernix
-    '';
     pam.u2f.enable = true;
   };
   services = {
-    xserver = {
-      enable = true;
-      displayManager.xpra = {
-        enable = true;
-        bindTcp = "0.0.0.0:10000";
-        pulseaudio = true;
-        extraOptions = [ "--video-scaling=0" "--min-quality=85" "--desktop-scaling=off" ];
-      };
-    };
     netdata.enable = true;
     logind.extraConfig = ''
       HandleLidSwitch=ignore
@@ -169,8 +124,7 @@ in
         }
       ];
     };
-    #syncthing.guiAddress = "${wireguard.ips.wakasu}:8384";
-    syncthing.guiAddress = "0.0.0.0:8384";
+    syncthing.guiAddress = "${ip}:8384";
     smartd = {
       enable = true;
       devices = [{ device = "/dev/nvme0n1"; }];
@@ -183,24 +137,4 @@ in
       endpointPublicKey = endpointPublicKey;
     };
   };
-  systemd.services.buildkitd.wantedBy = lib.mkForce [ ];
-  systemd.services.containerd.wantedBy = lib.mkForce [ ];
-  systemd.services.docker.wantedBy = lib.mkForce [ ];
-  systemd.services.docker.requires = [ "containerd.socket" ];
-  /*
-    virtualisation.containers = {
-    enable = true;
-    registries = {
-    search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
-    };
-    policy = {
-    default = [{ type = "insecureAcceptAnything"; }];
-    transports = {
-    docker-daemon = {
-    "" = [{ type = "insecureAcceptAnything"; }];
-    };
-    };
-    };
-    };
-  */
 }
