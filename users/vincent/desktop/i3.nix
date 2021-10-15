@@ -161,11 +161,15 @@ in
     screen-locker = {
       enable = true;
       lockCmd = lockCommand;
-      inactiveInterval = 300;
-      enableDetectSleep = true;
+      inactiveInterval = 60;
+      xautolock = {
+        enable = true;
+        detectSleep = true;
+      };
     };
     random-background = {
       enable = true;
+      enableXinerama = true;
       imageDirectory = "${config.home.homeDirectory}/desktop/pictures/walls";
       interval = "5h";
     };
