@@ -20,7 +20,6 @@ in
         systemPackages = with pkgs; [
           yubico-piv-tool
           yubikey-personalization
-          yubioath-desktop
           yubikey-manager
         ];
       };
@@ -36,6 +35,11 @@ in
         };
       };
     }
+    (mkIf cfg.config.desktop {
+      environment.systemPackages = with pkgs; [
+        yubioath-desktop
+      ];
+    })
     (mkIf cfg.u2f {
       security.pam.u2f = {
         enable = true;
