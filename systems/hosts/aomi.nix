@@ -19,7 +19,7 @@ in
 {
   imports = [
     ../hardware/lenovo-p1.nix
-    (import ../../nix).home-manager-stable
+    (import ../../nix).home-manager
     ../modules
     (import ../../users).vincent
     (import ../../users).root
