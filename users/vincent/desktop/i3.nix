@@ -158,15 +158,17 @@ in
     };
     udiskie.enable = true;
     network-manager-applet.enable = true;
-    screen-locker = {
+    /*
+      screern-locker = {
       enable = true;
       lockCmd = lockCommand;
       inactiveInterval = 60;
       xautolock = {
-        enable = true;
-        detectSleep = true;
+      enable = true;
+      detectSleep = true;
       };
-    };
+      };
+    */
     random-background = {
       enable = true;
       enableXinerama = true;
