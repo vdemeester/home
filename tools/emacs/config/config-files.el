@@ -9,6 +9,7 @@
                 auto-insert-alist nil)
   :config
   (auto-insert-mode 1))
+
 (use-package files
   :commands (revert-buffer)
   :bind (("<f5>" . revert-buffer))

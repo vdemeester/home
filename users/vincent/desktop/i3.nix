@@ -37,7 +37,6 @@ in
     slop
     # Gnome3 relica
     gnome3.dconf-editor
-    gnome3.pomodoro
     # FIXME move this elsewhere
     pop-gtk-theme
     pop-icon-theme
@@ -400,29 +399,6 @@ in
       exec --no-startup-id emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))"
       for_window [title="_emacs scratchpad_" class="Emacs"] move scratchpad
       bindcode $mod+Shift+49 [title="_emacs scratchpad_" class="Emacs"] scratchpad show
-
-      ## scratchpad
-      set $scratchpad "scratchpad: [$]terminal [p]avucontrol"
-      mode $scratchpad {
-           bindcode 49 [instance="metask"] scratchpad show; mode "default"
-           bindcode 33 [class="(?i)pavucontrol"] scratchpad show; mode "default"
-           bindsym Return mode "default"
-           bindsym Escape mode "default"
-      }
-      # bindcode $mod+49 mode $scratchpad
-
-      ## pomodoro
-      # bepo s = 45
-      # bepo p = 26
-      set $pomodoro "pomodoro: [s]tart s[t]op [p]ause-resume"
-      mode $pomodoro {
-        bindcode 45 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --no-default-window --start"; mode "default"
-        bindcode 44 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --no-default-window --stop"; mode "default"
-        bindcode 26 exec "${pkgs.gnome3.pomodoro}/bin/gnome-pomodoro --no-default-window --pause-resume"; mode "default"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-      }
-      bindcode $mod+43 mode $pomodoro
 
       # System menu
       set $sysmenu "system:  [s]uspend [l]ock [r]estart [b]lank-screen [p]oweroff reload-[c]onf e[x]it"
