@@ -32,5 +32,6 @@ in
         packages = [ pkgs.gnome3.dconf ];
       };
     };
+    programs.dconf.enable = true;
   };
 }

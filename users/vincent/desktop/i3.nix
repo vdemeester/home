@@ -23,7 +23,7 @@ in
   imports = [
     ./alacritty.nix
     ./autorandr.nix
-    ./dconf.nix
+    # ./dconf.nix
     ./xsession.nix
   ];
   home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
@@ -36,12 +36,11 @@ in
     maim
     slop
     # Gnome3 relica
-    gnome3.dconf-editor
+    # gnome3.dconf-editor
     # FIXME move this elsewhere
     pop-gtk-theme
     pop-icon-theme
     pinentry-gnome
-    # tilix
 
     aspell
     aspellDicts.en
@@ -101,6 +100,14 @@ in
       background-color: #2e343f;
     }
   '';
+  programs.kitty = {
+    enable = true;
+    settings = {
+      term = "xterm-256color";
+      close_on_child_death = "yes";
+      font_family = "Ubuntu Mono";
+    };
+  };
   programs.rofi = {
     enable = true;
     package = pkgs.rofi.override { plugins = [ pkgs.rofi-emoji pkgs.rofi-menugen pkgs.rofi-mpd ]; };
@@ -198,8 +205,8 @@ in
         "Mod4+Control+Shift+Return" = "exec ${emacs-in-folder}";
       };
       gaps = {
-        inner = 0;
-        outer = 0;
+        inner = 1;
+        outer = 1;
       };
       keycodebindings = {
         "Mod4+Shift+24" = "kill";
