@@ -205,8 +205,8 @@ in
         "Mod4+Control+Shift+Return" = "exec ${emacs-in-folder}";
       };
       gaps = {
-        inner = 1;
-        outer = 1;
+        inner = 2;
+        outer = 2;
       };
       keycodebindings = {
         "Mod4+Shift+24" = "kill";
