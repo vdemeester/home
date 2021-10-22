@@ -153,11 +153,13 @@ instead."
 
 (use-package embark
   :unless noninteractive
-  :bind (("C-." . embark-act)))
+  :bind (("C-." . embark-act))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  (setq embark-cycle-key (kbd "C-.")))
 
 (use-package embark-consult
-  :after (embark consult)
-  :hook (embark-collect-mode . consult-preview-at-point-mode))
+  :after (embark consult))
 
 (use-package consult
   :unless noninteractive
