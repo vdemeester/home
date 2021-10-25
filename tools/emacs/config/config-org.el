@@ -307,7 +307,7 @@ Skips capture tasks, projects, and subprojects.
 Switch projects and subprojects from STARTED back to TODO"
     (when (not (and (boundp 'org-capture-mode) org-capture-mode))
       (cond
-       ((and (member (org-get-todo-state) (list "TODO"))
+       ((and (member (org-get-todo-state) (list "TODO" "NEXT"))
              (vde/is-task-p))
         "STARTED")
        ((and (member (org-get-todo-state) (list "STARTED"))
