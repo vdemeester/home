@@ -5,20 +5,26 @@ keys:
   - &sakhalin 8b80ab02638ab9c34f6c21bd69928b5908e10cbf
   - &kerkouane b8b02c0885a74753f8fb53f031f0386f20f3e4ec
 creation_rules:
-  # - path_regex: secrets/admins/[^/]+\.yaml$
-  #   key_groups:
-  #   - pgp:
-  #     - *joerg
-  # - path_regex: eve/secrets/[^/]+\.yaml$
-  #   key_groups:
-  #   - pgp:
-  #     - *joerg
-  #     - *eve
-  # - path_regex: eva/secrets/[^/]+\.yaml$
-  #   key_groups:
-  #   - pgp:
-  #     - *joerg
-  #     - *eva
+  - path_regex: secrets/wakasu/[^/]+\.yaml$
+    key_grousp:
+    - pgp:
+      - *vincent
+      - *wakasu
+  - path_regex: secrets/aomi/[^/]+\.yaml$
+    key_grousp:
+    - pgp:
+      - *vincent
+      - *aomi
+  - path_regex: secrets/sakhalin/[^/]+\.yaml$
+    key_grousp:
+    - pgp:
+      - *vincent
+      - *sakhalin
+  - path_regex: secrets/kerkouane/[^/]+\.yaml$
+    key_grousp:
+    - pgp:
+      - *vincent
+      - *kerkouane
   - path_regex: secrets/[^/]+\.yaml$
     key_groups:
     - pgp:
