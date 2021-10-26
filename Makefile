@@ -20,12 +20,6 @@ all: switch
 update:
 	nix-channel --update
 
-.PHONY: assets
-assets:
-	mkdir -p assets
-	cp -Rv $(SYNCDIR)/* assets/
-	chown -R vincent:users assets || true
-
 .PHONY: build
 build:
 	./bin/system build
