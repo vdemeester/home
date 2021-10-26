@@ -16,3 +16,4 @@ networking.nix
 hardware-configuration.nix
 /key.bin
 /tools/emacs/nix-buffer/
+/tools/emacs/var/backup
