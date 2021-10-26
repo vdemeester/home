@@ -157,6 +157,7 @@ in
     virtualization = { enable = true; nested = true; };
     redhat.enable = true;
     scanning.enable = true;
+    ssh.enable = true;
   };
   environment.systemPackages = with pkgs; [
     virtmanager

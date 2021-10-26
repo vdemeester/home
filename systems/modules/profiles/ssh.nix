@@ -8,6 +8,10 @@ in
   options = {
     profiles.ssh = {
       enable = mkEnableOption "Enable ssh profile";
+      listenAddresses = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+      };
       forwardX11 = mkOption {
         type = types.bool;
         default = false;
@@ -23,6 +27,8 @@ in
         enable = true;
         startWhenNeeded = false;
         forwardX11 = cfg.forwardX11;
+        # listenAddresses = map
+        # Move this for kerkouane only
         extraConfig = ''
           StreamLocalBindUnlink yes
           Match User nginx
