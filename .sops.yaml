@@ -4,27 +4,33 @@ keys:
   - &wakasu 3f65577842cabda3955d1f5603286b3ea9ac52bb
   - &sakhalin 8b80ab02638ab9c34f6c21bd69928b5908e10cbf
   - &kerkouane b8b02c0885a74753f8fb53f031f0386f20f3e4ec
+  - &naruhodo 5722867ac621fd15d2dfc7eab7bfec55a117c1bf
 creation_rules:
   - path_regex: secrets/wakasu/[^/]+\.yaml$
-    key_grousp:
+    key_groups:
     - pgp:
       - *vincent
       - *wakasu
   - path_regex: secrets/aomi/[^/]+\.yaml$
-    key_grousp:
+    key_groups:
     - pgp:
       - *vincent
       - *aomi
   - path_regex: secrets/sakhalin/[^/]+\.yaml$
-    key_grousp:
+    key_groups:
     - pgp:
       - *vincent
       - *sakhalin
   - path_regex: secrets/kerkouane/[^/]+\.yaml$
-    key_grousp:
+    key_groups:
     - pgp:
       - *vincent
       - *kerkouane
+  - path_regex: secrets/naruhodo/[^/]+\.yaml$
+    key_groups:
+    - pgp:
+      - *vincent
+      - *naruhodo
   - path_regex: secrets/[^/]+\.yaml$
     key_groups:
     - pgp:
@@ -33,3 +39,4 @@ creation_rules:
       - *wakasu
       - *sakhalin
       - *kerkouane
+      - *naruhodo
