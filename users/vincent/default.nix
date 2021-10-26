@@ -16,6 +16,10 @@ let
 in
 {
   warnings = if (versionAtLeast config.system.nixos.release "21.11") then [ ] else [ "NixOS release: ${config.system.nixos.release}" ];
+  sops.secrets.u2f_keys = mkIf (config.profiles.yubikey.enable && config.profiles.yubikey.u2f) {
+    path = "/home/vincent/.config/Yubico/u2f_keys";
+    owner = "vincent";
+  };
   users.users.vincent = {
     createHome = true;
     uid = 1000;
@@ -94,9 +98,6 @@ in
           home.packages = with pkgs; [ docker docker-compose ];
         }
       ]
-      ++ optionals (config.profiles.yubikey.enable && config.profiles.yubikey.u2f) [{
-        home.file.".config/Yubico/u2f_keys".source = pkgs.mkSecret ../../secrets/u2f_keys;
-      }]
       ++ optionals (isContainersEnabled && config.profiles.dev.enable) [ (import ./containers) ]
       ++ optionals config.profiles.redhat.enable [{
         home.file.".local/share/applications/redhat-vpn.desktop".source = ./redhat/redhat-vpn.desktop;
