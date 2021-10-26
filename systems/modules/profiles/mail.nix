@@ -17,7 +17,9 @@ in
     };
   };
   config = mkIf (cfg.enable && secretCondition) {
-    environment.etc."msmtprc".source = pkgs.mkSecret ../../../secrets/msmtprc;
+    sops.secrets.msmtprc = {
+      path = "/etc/msmtprc";
+    };
     environment.systemPackages = with pkgs; [ msmtp ];
   };
 }
