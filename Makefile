@@ -20,11 +20,6 @@ all: switch
 update:
 	nix-channel --update
 
-.PHONY: secrets
-secrets:
-	mkdir -p secrets
-	-cp -Rv $(SYNCDIR)/* secrets/
-
 .PHONY: assets
 assets:
 	mkdir -p assets
@@ -32,19 +27,19 @@ assets:
 	chown -R vincent:users assets || true
 
 .PHONY: build
-build: secrets
+build:
 	./bin/system build
 
 .PHONY: nixos-dry-build
-dry-build: secrets setup
+dry-build: setup
 	./bin/system dry-build
 
 .PHONY: switch
-switch: secrets
+switch:
 	./bin/system switch
 
 .PHONY: boot
-boot: secrets
+boot:
 	./bin/system boot
 
 .PHONY: install-hooks
