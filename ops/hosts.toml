@@ -11,12 +11,21 @@ addrs = { v4 = "10.100.0.15" }
 
 [hosts.aomi]
 network = "vpn"
-ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJ3QqVCUiE4BIFKTJLN6mSnp9bLSnJ3gE8ScbAajGsH vincent@aomi" }
+ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJ3QqVCUiE4BIFKTJLN6mSnp9bLSnJ3gE8ScbAajGsH vincent@aomi", gpgRemoteForward = true }
 addrs = { v4 = "192.168.1.23" }
 
 [hosts.aomi.wireguard]
 pubkey = "XT4D9YLeVHwMb9R4mhBLSWHYF8iBO"
 addrs = { v4 = "10.100.0.17" }
+
+[hosts.wakasu]
+network = "vpn"
+ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKP+HQUk3GEjXuAqbb2psiLfLcBd/lcYHx57yANPhdzw vincent@wakasu", gpgRemoteForward = true }
+addrs = { v4 = "192.168.1.77" }
+
+[hosts.wakasu.wireguard]
+pubkey = "U10ozKSCnTm8aD5i6UULSJHQPouoswtNkwFI3P9Lw3Y="
+addrs = { v4 = "10.100.0.8" }
 
 [hosts.kerkouane]
 network = "vpn"
