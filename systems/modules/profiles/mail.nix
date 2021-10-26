@@ -3,8 +3,6 @@
 with lib;
 let
   cfg = config.profiles.mail;
-  secretPath = ../../../secrets/machines.nix;
-  secretCondition = (builtins.pathExists secretPath);
 in
 {
   options = {
@@ -16,7 +14,7 @@ in
       };
     };
   };
-  config = mkIf (cfg.enable && secretCondition) {
+  config = mkIf (cfg.enable) {
     sops.secrets.msmtprc = {
       path = "/etc/msmtprc";
     };
