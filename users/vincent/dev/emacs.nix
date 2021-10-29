@@ -54,11 +54,9 @@ let
     flycheck
     flycheck-golangci-lint
     git-annex
+    git-modes
     git-commit
-    gitattributes-mode
-    gitconfig-mode
     github-review
-    gitignore-mode
     go-mode
     gotest
     goto-last-change
