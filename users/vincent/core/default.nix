@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ lib, pkgs, nixosConfig, ... }:
 
+let
+  inherit (lib) versionOlder;
+in
 {
   imports = [
     ./bash.nix
@@ -29,6 +32,10 @@
       tree
     ];
   };
+
+  # manpages are broken on 21.05 and home-manager (for some reason..)
+  # (versionOlder nixosConfig.system.nixos.release "21.11");
+  manual.manpages.enable = true;
 
   xdg.configFile."ape.conf".source = ./ape/ape.conf;
   xdg.configFile."nixpkgs/config.nix".text = ''
