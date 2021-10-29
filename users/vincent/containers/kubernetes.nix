@@ -13,7 +13,6 @@ in
     kail
     kubectl
     kustomize
-    kubectx
     kind
     minikube
     my.ko
