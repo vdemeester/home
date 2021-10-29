@@ -44,3 +44,7 @@ checkout =
     cd knowledge-base
     git remote add upstream git@github.com:openshift-pipelines/knowledge-base.git
     git fetch -p --all
+
+[cookbook]
+lib =
+    export BASE_PATH=openshift-pipelines
