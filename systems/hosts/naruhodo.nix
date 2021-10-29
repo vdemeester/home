@@ -10,13 +10,12 @@ let
   secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
-  ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
-  ips = lists.optionals secretCondition ([ "${ip}/24" ]);
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
 
   getEmulator = system: (lib.systems.elaborate { inherit system; }).emulator pkgs;
+  metadata = importTOML ../../ops/hosts.toml;
 in
 {
   imports = [
@@ -165,15 +164,16 @@ in
     acpilight
   ];
 
+  # warnings = "metadata… ${metadata.hosts.naruhodo.wireguard.addrs.v4}";
   services = {
     wireguard = {
       enable = true;
-      ips = ips;
+      ips = [ "${metadata.hosts.naruhodo.wireguard.addrs.v4}/24" ];
       endpoint = endpointIP;
       endpointPort = endpointPort;
       endpointPublicKey = endpointPublicKey;
     };
-    syncthing.guiAddress = "${ip}:8384";
+    syncthing.guiAddress = "${metadata.hosts.naruhodo.wireguard.addrs.v4}:8384";
   };
   systemd.services.buildkitd.wantedBy = lib.mkForce [ ];
   systemd.services.containerd.wantedBy = lib.mkForce [ ];
