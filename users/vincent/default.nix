@@ -90,12 +90,6 @@ in
           ];
         }
       ]
-      ++ optionals (config.profiles.laptop.enable && config.profiles.desktop.enable) [
-        {
-          # FIXME move this in its own file
-          programs.autorandr.enable = true;
-        }
-      ]
       ++ optionals config.profiles.docker.enable [
         {
           home.packages = with pkgs; [ docker docker-compose ];

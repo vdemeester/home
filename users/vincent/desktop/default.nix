@@ -10,6 +10,7 @@
     ./mpv.nix
     ./spotify.nix
   ] ++ lib.optionals nixosConfig.profiles.desktop.i3.enable [ ./i3.nix ];
+
   home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
   home.packages = with pkgs; [
     aspell
@@ -30,7 +31,9 @@
     youtube-dl
     my.batzconverter
     mpw
-  ]; # ++ lib.optionals nixosConfig.profiles.desktop.i3.enable [ pkgs.brave ];
+  ];
+
+  programs.autorandr.enable = nixosConfig.profiles.laptop.enable;
 
   home.file.".XCompose".source = ./xorg/XCompose;
   # home.file.".Xmodmap".source = ./xorg/Xmodmap;
