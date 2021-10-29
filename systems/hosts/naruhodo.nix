@@ -164,7 +164,6 @@ in
     acpilight
   ];
 
-  # warnings = "metadata… ${metadata.hosts.naruhodo.wireguard.addrs.v4}";
   services = {
     wireguard = {
       enable = true;

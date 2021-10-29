@@ -15,6 +15,7 @@ let
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
+  metadata = importTOML ../../ops/hosts.toml;
 in
 {
   imports = [
@@ -51,9 +52,6 @@ in
   };
 
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
-  sops.secrets.example_key = {
-    sopsFile = ../../secrets/syncthing.yaml;
-  };
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -126,17 +124,18 @@ in
     virtmanager
     # force xbacklight to work
     acpilight
+    steam-run
   ];
 
   services = {
-    syncthing.guiAddress = "${ip}:8384";
+    syncthing.guiAddress = "${metadata.hosts.aomi.wireguard.addrs.v4}:8384";
     smartd = {
       enable = true;
       devices = [{ device = "/dev/nvme0n1"; }];
     };
     wireguard = {
       enable = true;
-      ips = ips;
+      ips = [ "${metadata.hosts.aomi.wireguard.addrs.v4}/24" ];
       endpoint = endpointIP;
       endpointPort = endpointPort;
       endpointPublicKey = endpointPublicKey;
