@@ -48,3 +48,7 @@ checkout =
 [cookbook]
 lib =
     export BASE_PATH=openshift-pipelines
+
+[cluster-tasks-tests]
+lib =
+    export BASE_PATH=ppitonak
