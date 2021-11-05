@@ -18,10 +18,8 @@ pkgs.mkShell
     cachix
     morph
     niv
-    nixos-generators
     nixpkgs-fmt
     sops
-    libguestfs-with-appliance
   ];
   shellHook = ''
     export NIX_PATH="nixpkgs=${pkgs.path}:nixos=${nixos.path}:nixos-unstable=${nixos-unstable.path}"
