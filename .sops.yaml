@@ -34,6 +34,12 @@ creation_rules:
     - pgp:
       - *vincent
       - *naruhodo
+  - path_regex: secrets/k8s/[^/]+\.yaml$
+    key_groups:
+    - pgp:
+      - *k8sn1
+      - *k8sn2
+      - *k8sn3
   - path_regex: secrets/[^/]+\.yaml$
     key_groups:
     - pgp:
