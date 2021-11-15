@@ -43,3 +43,6 @@ creation_rules:
       - *sakhalin
       - *kerkouane
       - *naruhodo
+      - *k8sn1
+      - *k8sn2
+      - *k8sn3
