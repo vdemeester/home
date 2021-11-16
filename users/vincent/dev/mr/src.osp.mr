@@ -31,6 +31,9 @@ lib =
 lib =
     export BASE_PATH=openshift
     export DEFAULT_BRANCH=master
+[must-gather]
+lib =
+    export BASE_PATH=openshift-pipelines
 
 # github.com/openshift-pipelines
 [enhancements]
