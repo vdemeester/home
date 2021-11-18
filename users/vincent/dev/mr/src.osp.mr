@@ -34,6 +34,9 @@ lib =
 [must-gather]
 lib =
     export BASE_PATH=openshift-pipelines
+[toolbox]
+lib =
+    export BASE_PATH=openshift-pipelines
 
 # github.com/openshift-pipelines
 [enhancements]
