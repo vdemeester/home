@@ -9,6 +9,22 @@ keys:
   - &k8sn2 0ebe388f6827fe2eace1055d0b23ac2723c1de53
   - &k8sn3 95233a9c933a7ff9d7a6ca9a531bfac356b8f712
 creation_rules:
+  - path_regex: secrets/servers/[^/]+\.yaml$
+    key_groups:
+    - pgp:
+      - *vincent
+      - *wakasu
+      - *sakhalin
+      - *kerkouane
+      - *k8sn1
+      - *k8sn2
+      - *k8sn3
+  - path_regex: secrets/desktops/[^/]+\.yaml$
+    key_groups:
+    - pgp:
+      - *vincent
+      - *naruhodo
+      - *aomi
   - path_regex: secrets/wakasu/[^/]+\.yaml$
     key_groups:
     - pgp:
@@ -37,6 +53,7 @@ creation_rules:
   - path_regex: secrets/k8s/[^/]+\.yaml$
     key_groups:
     - pgp:
+      - *vincent
       - *k8sn1
       - *k8sn2
       - *k8sn3
