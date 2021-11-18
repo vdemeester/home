@@ -9,9 +9,7 @@
     ./keyboard.nix
     ./mpv.nix
     ./spotify.nix
-  ] ++ lib.optionals nixosConfig.profiles.desktop.i3.enable [ ./i3.nix ]
-  # this is for the future
-  ++ lib.optionals nixosConfig.modules.desktop.i3.enable [ ./i3.nix ];
+  ] ++ lib.optionals nixosConfig.profiles.desktop.i3.enable [ ./i3.nix ];
 
   home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
   home.packages = with pkgs; [
