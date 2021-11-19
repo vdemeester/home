@@ -8,6 +8,5 @@
   home.packages = with pkgs; [
     skopeo
     my.manifest-tool
-    my.buildx
   ];
 }
