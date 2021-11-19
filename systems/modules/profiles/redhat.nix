@@ -3,6 +3,12 @@
 with lib;
 let
   cfg = config.profiles.redhat;
+  common = {
+    sopsFile = ../../../secrets/desktops/redhat.yaml;
+    mode = "444";
+    owner = "root";
+    group = "root";
+  };
 in
 {
   options = {
@@ -18,42 +24,67 @@ in
       })
       libnotify
     ];
-    environment.etc."krb5.conf" = {
-      source = pkgs.mkSecret ../../../secrets/etc/krb5.conf;
+    sops.secrets."krb5.conf" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/krb5.conf";
     };
     # NetworkManager
-    environment.etc."NetworkManager/system-connections/1-RHVPN.ovpn" = {
-      source = pkgs.mkSecret ../../../secrets/etc/NetworkManager/system-connections/1-RHVPN.ovpn;
-      mode = "0600";
+    sops.secrets."1-RHVPN.ovpn" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/NetworkManager/system-connections/1-RHVPN.ovpn";
     };
-    environment.etc."NetworkManager/system-connections/AMS2.ovpn" = {
-      source = pkgs.mkSecret ../../../secrets/etc/NetworkManager/system-connections/AMS2.ovpn;
-      mode = "0600";
+    sops.secrets."AMS2.ovpn" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/NetworkManager/system-connections/AMS2.ovpn";
     };
-    environment.etc."NetworkManager/system-connections/BBRQ.ovpn" = {
-      source = pkgs.mkSecret ../../../secrets/etc/NetworkManager/system-connections/BRQ.ovpn;
-      mode = "0600";
+    sops.secrets."BBRQ.ovpn" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/NetworkManager/system-connections/BBRQ.ovpn";
     };
-    environment.etc."NetworkManager/system-connections/RDU2.ovpn" = {
-      source = pkgs.mkSecret ../../../secrets/etc/NetworkManager/system-connections/RDU2.ovpn;
-      mode = "0600";
+    sops.secrets."RDU2.ovpn" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/NetworkManager/system-connections/RDU2.ovpn";
     };
-    environment.etc."NetworkManager/system-connections/PNQ2.ovpn" = {
-      source = pkgs.mkSecret ../../../secrets/etc/NetworkManager/system-connections/PNQ2.ovpn;
-      mode = "0600";
+    sops.secrets."PNQ2.ovpn" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/NetworkManager/system-connections/PNQ2.ovpn";
     };
-    environment.etc."NetworkManager/system-connections/FAB.ovpn" = {
-      source = pkgs.mkSecret ../../../secrets/etc/NetworkManager/system-connections/FAB.ovpn;
-      mode = "0600";
+    sops.secrets."FAB.ovpn" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/NetworkManager/system-connections/FAB.ovpn";
     };
     # Certificates
-    environment.etc."ipa/ipa.crt".source = pkgs.mkSecret ../../../secrets/etc/ipa/ipa.crt;
-    environment.etc."pki/tls/certs/2015-RH-IT-Root-CA.pem".source = pkgs.mkSecret ../../../secrets/etc/pki/tls/certs/2015-RH-IT-Root-CA.pem;
-    environment.etc."pki/tls/certs/Eng-CA.crt".source = pkgs.mkSecret ../../../secrets/etc/pki/tls/certs/Eng-CA.crt;
-    environment.etc."pki/tls/certs/newca.crt".source = pkgs.mkSecret ../../../secrets/etc/pki/tls/certs/newca.crt;
-    environment.etc."pki/tls/certs/oracle_ebs.crt".source = pkgs.mkSecret ../../../secrets/etc/pki/tls/certs/oracle_ebs.crt;
-    environment.etc."pki/tls/certs/pki-ca-chain.crt".source = pkgs.mkSecret ../../../secrets/etc/pki/tls/certs/pki-ca-chain.crt;
-    environment.etc."pki/tls/certs/RH_ITW.crt".source = pkgs.mkSecret ../../../secrets/etc/pki/tls/certs/RH_ITW.crt;
-    environment.etc."pki/tls/certs/win-intermediate-ca.cer".source = pkgs.mkSecret ../../../secrets/etc/pki/tls/certs/win-intermediate-ca.cer;
+    sops.secrets."ipa.crt" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/ipa/ipa.crt";
+    };
+    sops.secrets."2015-RH-IT-Root-CA.pem" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/pki/tls/certs/2015-RH-IT-Root-CA.pem";
+    };
+    sops.secrets."Eng-CA.crt" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/pki/tls/certs/Eng-CA.crt";
+    };
+    sops.secrets."newca.crt" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/pki/tls/certs/newca.crt";
+    };
+    sops.secrets."oracle_ebs.crt" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/pki/tls/certs/oracle_ebs.crt";
+    };
+    sops.secrets."pki-ca-chain.crt" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/pki/tls/certs/pki-ca-chain.crt";
+    };
+    sops.secrets."RH_ITW.crt" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/pki/tls/certs/RH_ITW.crt";
+    };
+    sops.secrets."win-intermediate-ca.cer" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/pki/tls/certs/win-intermediate-ca.cer";
+    };
   };
 }
