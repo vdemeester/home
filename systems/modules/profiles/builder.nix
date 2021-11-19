@@ -50,14 +50,15 @@ in
       };
     };
 
+    users.extraUsers.builder = {
+      isNormalUser = true;
+      uid = 1018;
+      extraGroups = [ ];
+      openssh.authorizedKeys.keys = [ (builtins.readFile "/etc/nixos/secrets/builder.pub") ];
+    };
+    nix.trustedUsers = [ "root" "vincent" "builder" ];
+
   };
 
-  users.extraUsers.builder = {
-    isNormalUser = true;
-    uid = 1018;
-    extraGroups = [ ];
-    openssh.authorizedKeys.keys = [ (builtins.readFile "/etc/nixos/secrets/builder.pub") ];
-  };
-  nix.trustedUsers = [ "root" "vincent" "builder" ];
 
 }
