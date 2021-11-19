@@ -4,7 +4,7 @@ let
   inherit (lib) mkIf mkEnableOption importTOML filter;
   cfg = config.profiles.externalbuilder;
   metadata = importTOML ../../../ops/hosts.toml;
-  isCurrentHost = n: n.hostName != config.networking.hostName;
+  isCurrentHost = n: n.hostName != metadata.hosts.${config.networking.hostName}.addrs.v4;
 in
 {
   options = {
@@ -54,7 +54,7 @@ in
       isNormalUser = true;
       uid = 1018;
       extraGroups = [ ];
-      openssh.authorizedKeys.keys = [ (builtins.readFile "/etc/nixos/secrets/builder.pub") ];
+      openssh.authorizedKeys.keys = [ (builtins.readFile ../../../secrets/builder.pub) ];
     };
     nix.trustedUsers = [ "root" "vincent" "builder" ];
 
