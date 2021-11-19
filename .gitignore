@@ -9,7 +9,8 @@ qemu
 accounts.nix
 assets/*
 private/*
-secrets/*
+secrets/wireguard/*
+secrets/archive/*
 networking.nix
 .secrets
 hardware-configuration.nix
