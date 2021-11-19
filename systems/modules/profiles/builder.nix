@@ -17,6 +17,7 @@ in
     sops.secrets.builder = {
       sopsFile = ../../../secrets/builder.yaml;
     };
+
     nix.buildMachines = (filter isCurrentHost
       [
         {
@@ -50,4 +51,13 @@ in
     };
 
   };
+
+  users.extraUsers.builder = {
+    isNormalUser = true;
+    uid = 1018;
+    extraGroups = [ ];
+    openssh.authorizedKeys.keys = [ (builtins.readFile "/etc/nixos/secrets/builder.pub") ];
+  };
+  nix.trustedUsers = [ "root" "vincent" "builder" ];
+
 }
