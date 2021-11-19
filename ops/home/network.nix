@@ -1,6 +1,7 @@
 let
   sources = import ../../nix;
   pkgs = sources.pkgs { };
+  metadata = pkgs.lib.importTOML ../hosts.toml;
 in
 {
   network = {
@@ -10,8 +11,7 @@ in
 
   "k8sn1" = { config, pkgs, lib, ... }: {
     deployment.targetUser = "root";
-    deployment.targetHost = "192.168.1.130";
-    # deployment.targetHost = "k8sn1.home";
+    deployment.targetHost = "${metadata.hosts.k8sn1.addrs.v4}";
     deployment.tags = [ "kubernetes" "master" ];
     deployment.healthChecks = {
       cmd = [{
@@ -23,15 +23,13 @@ in
   };
   "k8sn2" = { config, pkgs, lib, ... }: {
     deployment.targetUser = "root";
-    deployment.targetHost = "192.168.1.131";
-    # deployment.targetHost = "k8sn2.home";
+    deployment.targetHost = "${metadata.hosts.k8sn2.addrs.v4}";
     deployment.tags = [ "kubernetes" "worker" ];
     imports = [ ../../systems/hosts/k8sn2.nix ];
   };
   "k8sn3" = { config, pkgs, lib, ... }: {
     deployment.targetUser = "root";
-    deployment.targetHost = "192.168.1.132";
-    # deployment.targetHost = "k8sn3.home";
+    deployment.targetHost = "${metadata.hosts.k8sn3.addrs.v4}";
     deployment.tags = [ "kubernetes" "worker" ];
     imports = [ ../../systems/hosts/k8sn3.nix ];
   };

@@ -14,6 +14,11 @@ network = "vpn"
 ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJ3QqVCUiE4BIFKTJLN6mSnp9bLSnJ3gE8ScbAajGsH vincent@aomi", gpgRemoteForward = true }
 addrs = { v4 = "192.168.1.23" }
 
+[hosts.aomi.builder]
+maxJobs = 8
+systems = [ "x86_64-linux", "aarch64-linux", "armv7l-linux", "armv6l-linux", "powerpc64le-linux", "s390x-linux" ]
+features = [ "big-parallel", "kvm", "nixos-test" ]
+
 [hosts.aomi.wireguard]
 pubkey = "XT4D9YLeVHwMb9R4mhBLSWHYF8iBO"
 addrs = { v4 = "10.100.0.17" }
@@ -23,6 +28,11 @@ network = "vpn"
 ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKP+HQUk3GEjXuAqbb2psiLfLcBd/lcYHx57yANPhdzw vincent@wakasu", gpgRemoteForward = true }
 addrs = { v4 = "192.168.1.77" }
 
+[hosts.wakasu.builder]
+maxJobs = 8
+systems = [ "x86_64-linux", "aarch64-linux", "armv7l-linux", "armv6l-linux", "powerpc64le-linux", "s390x-linux" ]
+features = [ "big-parallel", "kvm", "nixos-test" ]
+
 [hosts.wakasu.wireguard]
 pubkey = "U10ozKSCnTm8aD5i6UULSJHQPouoswtNkwFI3P9Lw3Y="
 addrs = { v4 = "10.100.0.8" }
@@ -31,6 +41,15 @@ addrs = { v4 = "10.100.0.8" }
 network = "vpn"
 addrs = { v4 = "167.99.17.238" } # FIXME probably not right
 
-[hosts.kerkounae.wireguard]
+[hosts.kerkouane.wireguard]
 addrs = { v4 = "10.100.0.1" }
 port = 51820
+
+[hosts.k8sn1]
+addrs = { v4 = "192.168.1.130" }
+
+[hosts.k8sn2]
+addrs = { v4 = "192.168.1.131" }
+
+[hosts.k8sn3]
+addrs = { v4 = "192.168.1.132" }
