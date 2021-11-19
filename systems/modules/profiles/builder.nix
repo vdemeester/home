@@ -4,7 +4,11 @@ let
   inherit (lib) mkIf mkEnableOption importTOML filter;
   cfg = config.profiles.externalbuilder;
   metadata = importTOML ../../../ops/hosts.toml;
-  isCurrentHost = n: n.hostName != metadata.hosts.${config.networking.hostName}.addrs.v4;
+  currentHostIP =
+    if builtins.hasAttr "addrs" metadata.hosts.${config.networking.hostName}
+    then metadata.hosts.${config.networking.hostName}.addrs.v4
+    else "0.0.0.0";
+  isCurrentHost = n: n.hostName != currentHostIP;
 in
 {
   options = {
