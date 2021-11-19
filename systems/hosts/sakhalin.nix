@@ -58,6 +58,7 @@ in
   };
 
   profiles = {
+    bind.enable = true;
     home = true;
     avahi.enable = true;
     git.enable = true;
@@ -107,41 +108,6 @@ in
       enable = true;
       listenAddress = "0.0.0.0";
       enableGarbageCollect = true;
-    };
-    bind = {
-      enable = true;
-      forwarders = [ "8.8.8.8" "8.8.4.4" ];
-      cacheNetworks = [ "192.168.1.0/24" "127.0.0.0/8" "10.100.0.0/24" ];
-      zones = [
-        {
-          # home
-          name = "home";
-          master = true;
-          slaves = [ ];
-          file = pkgs.mkSecret ../../secrets/db.home;
-        }
-        {
-          # home.reverse
-          name = "192.168.1.in-addr.arpa";
-          master = true;
-          slaves = [ ];
-          file = pkgs.mkSecret ../../secrets/db.192.168.1;
-        }
-        {
-          # vpn
-          name = "vpn";
-          master = true;
-          slaves = [ ];
-          file = pkgs.mkSecret ../../secrets/db.vpn;
-        }
-        {
-          # vpn.reverse
-          name = "10.100.0.in-addr.arpa";
-          master = true;
-          slaves = [ ];
-          file = pkgs.mkSecret ../../secrets/db.10.100.0;
-        }
-      ];
     };
     syncthing.guiAddress = "0.0.0.0:8384";
     wireguard = {

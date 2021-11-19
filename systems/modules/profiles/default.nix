@@ -5,6 +5,7 @@
     ./builder.nix
     ./desktop.nix
     ./dev.nix
+    ./dns.nix
     ./docker.nix
     ./gaming.nix
     ./git.nix
