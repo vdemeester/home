@@ -92,6 +92,7 @@ in
   services.hardware.bolt.enable = true;
 
   profiles = {
+    externalbuilder.enable = true;
     desktop.i3.enable = true;
     laptop.enable = true;
     home = true;

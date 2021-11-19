@@ -2,6 +2,7 @@
   imports = [
     ./avahi.nix
     ./base.nix
+    ./builder.nix
     ./desktop.nix
     ./dev.nix
     ./docker.nix
