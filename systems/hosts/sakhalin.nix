@@ -146,26 +146,6 @@ in
       OnFailure = "status-email-root@%n.service";
     };
   };
-  environment.etc."secrets/srht-token".source = pkgs.mkSecret ../../secrets/token_srht;
-  # builds.sr.ht: daily builds
-  systemd.services.builds-srht = {
-    description = "Daily builds.sr.ht";
-    requires = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-
-    restartIfChanged = false;
-    unitConfig.X-StopOnRemoval = false;
-
-    serviceConfig = {
-      Type = "oneshot";
-      User = "vincent";
-      OnFailure = "status-email-root@%n.service";
-    };
-
-    script = "${pkgs.my.bus}/bin/bus";
-
-    startAt = "daily";
-  };
   # ape – sync git mirrors
   systemd.services.ape = {
     description = "Ape - sync git mirrors";
