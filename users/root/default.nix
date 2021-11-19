@@ -1,21 +1,13 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) lists attrsets mkIf optionals versionOlder;
-  secretPath = ../../secrets/machines.nix;
-  secretCondition = (builtins.pathExists secretPath);
-
-  isAuthorized = p: builtins.isAttrs p && p.authorized or false;
-  authorizedKeys = lists.optionals secretCondition (
-    attrsets.mapAttrsToList
-      (name: value: value.key)
-      (attrsets.filterAttrs (name: value: isAuthorized value) (import secretPath).ssh)
-  );
+  inherit (lib) lists attrsets mkIf optionals versionOlder importTOML;
+  metadata = importTOML ../../ops/hosts.toml;
 in
 {
   users.users.root = {
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
-    openssh.authorizedKeys.keys = authorizedKeys;
+    openssh.authorizedKeys.keys = metadata.ssh.keys.root;
   };
   home-manager.users.root = lib.mkMerge (
     [

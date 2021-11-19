@@ -1,15 +1,12 @@
 { config, lib, pkgs, ... }:
-with lib;
-let
-  secretPath = ../../secrets/machines.nix;
-  secretCondition = (builtins.pathExists secretPath);
 
-  isAuthorized = p: builtins.isAttrs p && p.authorized or false;
-  authorizedKeys = lists.optionals secretCondition (
-    attrsets.mapAttrsToList
-      (name: value: value.key)
-      (attrsets.filterAttrs (name: value: isAuthorized value) (import secretPath).ssh)
-  );
+let
+  inherit (lib) importTOML attrsets hasAttr optionals versionAtLeast mkIf;
+  metadata = importTOML ../../ops/hosts.toml;
+  hasSSHAttr = name: value: hasAttr "ssh" value;
+  authorizedKeys = attrsets.mapAttrsToList
+    (name: value: value.ssh.pubkey)
+    (attrsets.filterAttrs hasSSHAttr metadata.hosts);
 
   hasConfigVirtualizationContainers = builtins.hasAttr "containers" config.virtualisation;
   isContainersEnabled = if hasConfigVirtualizationContainers then config.virtualisation.containers.enable else false;
@@ -35,7 +32,9 @@ in
       ++ optionals config.services.nginx.enable [ "nginx" ];
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
     isNormalUser = true;
-    openssh.authorizedKeys.keys = authorizedKeys;
+    openssh.authorizedKeys.keys = authorizedKeys
+      ++ metadata.ssh.keys.vincent
+      ++ metadata.ssh.keys.root;
     initialPassword = "changeMe";
     subUidRanges = [{ startUid = 100000; count = 65536; }];
     subGidRanges = [{ startGid = 100000; count = 65536; }];
