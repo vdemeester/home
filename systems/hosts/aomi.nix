@@ -143,4 +143,12 @@ in
     };
   };
 
+  # Move this to a "builder" role
+  users.extraUsers.builder = {
+    isNormalUser = true;
+    uid = 1018;
+    extraGroups = [ ];
+    openssh.authorizedKeys.keys = [ (builtins.readFile ../../../secrets/builder.pub) ];
+  };
+  nix.trustedUsers = [ "root" "vincent" "builder" ];
 }
