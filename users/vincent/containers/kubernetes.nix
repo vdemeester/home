@@ -10,7 +10,7 @@ in
 {
   home.packages = with pkgs; [
     #cri-tools
-    kail
+    my.kail
     kubectl
     kustomize
     kind

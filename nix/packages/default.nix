@@ -31,6 +31,7 @@ rec {
   batzconverter = pkgs.callPackage ./batzconverter { };
   #kubernix = pkgs.callPackage ./kubernix { };
   krew = pkgs.callPackage ./krew { };
+  kail = pkgs.callPackage ./kail { };
   prm = pkgs.callPackage ./prm { };
   #protobuild = pkgs.callPackage ./protobuild { };
   rmapi = pkgs.callPackage ./rmapi { };
