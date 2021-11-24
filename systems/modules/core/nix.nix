@@ -52,8 +52,15 @@ in
         "mic92.cachix.org-1:gi8IhgiT3CYZnJsaW7fxznzTkMUOn1RY4GmXdT/nXYQ="
       ];
       buildCores = cfg.buildCores;
-      daemonIONiceLevel = 5;
-      daemonNiceLevel = 10;
+      # FIXME handle this depending on the version
+      # 21.05 has the following
+      # daemonIONiceLevel, daemonNiceLevel
+      # 21.11 and above
+      # daemonCPUSchedPolicy, daemonIOSchedClass, daemonIOSchedPriority
+
+      #daemonIONiceLevel = 5;
+      #daemonNiceLevel = 10;
+
       # if hydra is down, don't wait forever
       extraOptions = ''
         connect-timeout = 20
