@@ -30,28 +30,34 @@ in
     };
     # NetworkManager
     sops.secrets."1-RHVPN.ovpn" = {
-      inherit (common) mode owner group sopsFile;
+      inherit (common) owner group sopsFile;
       path = "/etc/NetworkManager/system-connections/1-RHVPN.ovpn";
+      mode = "600";
     };
     sops.secrets."AMS2.ovpn" = {
-      inherit (common) mode owner group sopsFile;
+      inherit (common) owner group sopsFile;
       path = "/etc/NetworkManager/system-connections/AMS2.ovpn";
+      mode = "600";
     };
     sops.secrets."BBRQ.ovpn" = {
-      inherit (common) mode owner group sopsFile;
+      inherit (common) owner group sopsFile;
       path = "/etc/NetworkManager/system-connections/BBRQ.ovpn";
+      mode = "600";
     };
     sops.secrets."RDU2.ovpn" = {
-      inherit (common) mode owner group sopsFile;
+      inherit (common) owner group sopsFile;
       path = "/etc/NetworkManager/system-connections/RDU2.ovpn";
+      mode = "600";
     };
     sops.secrets."PNQ2.ovpn" = {
-      inherit (common) mode owner group sopsFile;
+      inherit (common) owner group sopsFile;
       path = "/etc/NetworkManager/system-connections/PNQ2.ovpn";
+      mode = "600";
     };
     sops.secrets."FAB.ovpn" = {
-      inherit (common) mode owner group sopsFile;
+      inherit (common) owner group sopsFile;
       path = "/etc/NetworkManager/system-connections/FAB.ovpn";
+      mode = "600";
     };
     # Certificates
     sops.secrets."ipa.crt" = {
