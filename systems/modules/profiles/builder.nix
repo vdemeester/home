@@ -20,6 +20,8 @@ in
     nix.distributedBuilds = true;
     sops.secrets.builder = {
       sopsFile = ../../../secrets/builder.yaml;
+      mode = "600";
+      path = "/etc/nix/builder.key";
     };
 
     nix.buildMachines = (filter isCurrentHost
