@@ -139,7 +139,7 @@ in
               export NMBGIT=${config.xdg.dataHome}/notmuch/nmbug
 
               ${pkgs.coreutils}/bin/mkdir -p ${config.home.homeDirectory}/desktop/mails/redhat ${config.home.homeDirectory}/desktop/mails/perso
-              ${pkgs.afew}/bin/afew -C  ${config.xdg.configHome}/notmuch/notmuchrc -m -v
+              ${pkgs.afew}/bin/afew -C  ${config.xdg.configHome}/notmuch/notmuchrc -m -v || true
             '';
             executable = true;
           };

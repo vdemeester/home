@@ -1,12 +1,12 @@
 { hostname, pkgs, ... }:
 let
-  sync = (hostname == "wakasu");
+  sync = (hostname == "aomi");
 in
 {
   imports = [ ../../modules ];
   profiles.mails = {
     enable = true;
-    sync = false;
+    sync = true;
   };
   home.file.".gmailctl/config.jsonnet".source = ./config.jsonnet;
   home.file.".gmailctl/gmailctl.jsonnet".source = ./gmailctl.libsonnet;
