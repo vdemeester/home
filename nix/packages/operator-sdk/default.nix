@@ -65,6 +65,16 @@ rec {
     sha256 = "107rkh11qql77i0ahgipfgih843zfrbvf1k7gfrmvp2avns98m3x";
     vendorSha256 = "1mvwrnik3mapghvi41zdxfd6d2d08hafnghypqqjwgdnin06bg98";
   };
-  operator-sdk_1 = operator-sdk_1_13;
+  operator-sdk_1_14 = makeOverridable operatorSdkGen {
+    version = "1.14.0";
+    sha256 = "sha256-fLOCRg37YwRZwhQwMz6NSD/byYCZPu9+RZUqQbB9uBM=";
+    vendorSha256 = "sha256:1dgpc718nxgzn048q08in5cxjf1cya57a3pgykg96092pnh01n79";
+  };
+  operator-sdk_1_15 = makeOverridable operatorSdkGen {
+    version = "1.15.0";
+    sha256 = "sha256-8RWo+9XJrO/CU5vcnjzt0u2vbMmgP0aCa3iIZFEU50c=";
+    vendorSha256 = "sha256:1dgpc718nxgzn048q08in5cxjf1cya57a3pgykg96092pnh01n79";
+  };
+  operator-sdk_1 = operator-sdk_1_15;
   operator-sdk = operator-sdk_1;
 }
