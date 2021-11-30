@@ -6,7 +6,7 @@ in
   imports = [ ../../modules ];
   profiles.mails = {
     enable = true;
-    sync = true;
+    sync = sync;
   };
   home.file.".gmailctl/config.jsonnet".source = ./config.jsonnet;
   home.file.".gmailctl/gmailctl.jsonnet".source = ./gmailctl.libsonnet;
