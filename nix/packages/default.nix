@@ -117,10 +117,5 @@ rec {
     ;
   containerd = containerd_1_3;
 
-  gnome-shell-extension-shell = pkgs.callPackage ./gnome/extensions/shell { };
-  gnome-bluetooth-quick-connect = pkgs.callPackage ./gnome/extensions/bluetooth-quick-connect { };
-  hidetopbar = pkgs.callPackage ./gnome/extensions/hide-top-bar { };
-  noannoyance = pkgs.callPackage ./gnome/extensions/noannoyance { };
-  nightthemeswitcher = pkgs.callPackage ./gnome/extensions/nightthemeswitcher { };
   adi1090x-plymouth = pkgs.callPackage ./adi1090x-plymouth { };
 }
