@@ -126,6 +126,7 @@ in
     virtmanager
     # force xbacklight to work
     acpilight
+    docker-client
   ];
 
   services = {
