@@ -73,6 +73,7 @@ in
       ]
       ++ optionals config.profiles.dev.enable [
         (import ./dev)
+        (import ./containers)
         (import ./containers/kubernetes.nix)
         (import ./containers/openshift.nix)
         (import ./containers/tekton.nix)
@@ -94,7 +95,6 @@ in
           home.packages = with pkgs; [ docker docker-compose ];
         }
       ]
-      ++ optionals (isContainersEnabled && config.profiles.dev.enable) [ (import ./containers) ]
       ++ optionals config.profiles.redhat.enable [{
         home.file.".local/share/applications/redhat-vpn.desktop".source = ./redhat/redhat-vpn.desktop;
         home.packages = with pkgs; [ gnome3.zenity oathToolkit ];
