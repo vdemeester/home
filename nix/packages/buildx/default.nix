@@ -2,22 +2,20 @@
 
 buildGoModule rec {
   name = "buildx-${version}";
-  version = "0.5.1";
+  version = "0.7.1";
   rev = "v${version}";
 
   subPackages = [ "cmd/buildx" ];
 
-  buildFlagsArray = let t = "github.com/docker/buildx/version"; in
-    ''
-      -ldflags=
-        -X ${t}.Version=${version}
-    '';
+  ldflags = [
+    "-X github.com/docker/buildx/version.Version=${version}"
+  ];
 
   src = fetchFromGitHub {
     inherit rev;
     owner = "docker";
     repo = "buildx";
-    sha256 = "0l03ncs1x4lhgy0kf7bd1zq00md8fi93f8xq6k0ans4400divfzk";
+    sha256 = "sha256-5EV0Rw1+ufxQ1wmQ0EJXQ7HVtXVbB4do/tet0QFRi08=";
   };
   vendorSha256 = null;
   doCheck = false;

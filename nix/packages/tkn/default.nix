@@ -8,14 +8,11 @@ rec {
       name = "${pname}-${version}";
 
       subPackages = [ "cmd/tkn" ];
-      buildFlagsArray =
-        let
-          t = "github.com/tektoncd/cli/pkg/cmd/version";
-        in
-        ''
-          -ldflags=
-            -X ${t}.clientVersion=${version}
-        '';
+      ldflags = [
+        "-s"
+        "-w"
+        "-X github.com/tektoncd/cli/pkg/cmd/version.clientVersion=${version}"
+      ];
       src = fetchFromGitHub {
         owner = "tektoncd";
         repo = "cli";

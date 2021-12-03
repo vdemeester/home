@@ -24,18 +24,17 @@ rec {
 
       goPackagePath = "github.com/code-ready/crc";
       subPackages = [ "cmd/crc" ];
-      buildFlagsArray =
+      ldflags =
         let
           t = "${goPackagePath}/pkg/crc";
         in
-        ''
-          -ldflags=
-            -X ${t}/version.crcVersion=${version}
-            -X ${t}/version.bundleVersion=${bundle}
-            -X ${t}/constants.OcBinaryName=${oc}/bin/oc
-            -X ${t}/constants.PodmanBinaryName=${podman}/bin/podman
-            -X ${t}/machine/libvirt.MachineDriverCommand=${crc_driver_libvirt}/bin/machine-driver-libvirt
-        '';
+        [
+          "-X ${t}/version.crcVersion=${version}"
+          "-X ${t}/version.bundleVersion=${bundle}"
+          "-X ${t}/constants.OcBinaryName=${oc}/bin/oc"
+          "-X ${t}/constants.PodmanBinaryName=${podman}/bin/podman"
+          "-X ${t}/machine/libvirt.MachineDriverCommand=${crc_driver_libvirt}/bin/machine-driver-libvirt"
+        ];
 
       meta = with lib; {
         homepage = https://github.com/code-ready/crc;

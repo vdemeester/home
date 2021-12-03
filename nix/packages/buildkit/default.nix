@@ -2,22 +2,20 @@
 
 buildGoModule rec {
   name = "buildkit-${version}";
-  version = "0.8.0";
+  version = "0.9.3";
   rev = "v${version}";
 
   subPackages = [ "cmd/buildctl" "cmd/buildkitd" ];
 
-  buildFlagsArray = let t = "github.com/moby/buildkit/version"; in
-    ''
-      -ldflags=
-        -X ${t}.Version=${version}
-    '';
+  ldflags = [
+    "-X github.com/moby/buildkit/version.Version=${version}"
+  ];
 
   src = fetchFromGitHub {
     inherit rev;
     owner = "moby";
     repo = "buildkit";
-    sha256 = "0qcgq93wj77i912xqhwrzkzaqz608ilczfn5kcsrf9jk2m1gnx7m";
+    sha256 = "sha256-xjuHMjJjA4sx2Hrr6tPpvKtSmhGZ3AZka733DLxmYfk=";
   };
   vendorSha256 = null;
   doCheck = false;

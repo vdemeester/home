@@ -2,27 +2,28 @@
 
 buildGoModule rec {
   name = "prm-${version}";
-  version = "3.4.0";
+  version = "3.4.5";
   rev = "v${version}";
 
-  buildFlagsArray = let t = "github.com/ldez/prm/v3/meta"; in
-    ''
-      -ldflags=
-         -X ${t}.Version=${version}
-         -X ${t}.BuildDate=unknown
-    '';
+  ldflags =
+    let t = "github.com/ldez/prm/v3/meta";
+    in
+    [
+      "-X ${t}.Version=${version}"
+      "-X ${t}.BuildDate=unknown"
+    ];
 
   src = fetchFromGitHub {
     inherit rev;
     owner = "ldez";
     repo = "prm";
-    sha256 = "1vpii7046rq13ahjkbk7rmbqskk6x1mcsrzqx91nii7nzl32wdap";
+    sha256 = "sha256-ZrzZ4aJ9uB7iFHLCDsTJp8POqOG2HhrIC2cYg31tYdg=";
   };
-  vendorSha256 = "0hiz514xklhk4c5c7lmx02l04dynnlmjy6mjwx3f7ynxiyk3scgz";
+  vendorSha256 = "1k1n2ylxrbkdwli0nh56fv7q8c7yl0661ayvpgirlp19704za509";
 
   meta = {
     description = "Pull Request Manager for Maintainers";
-    homepage = "https://github.com/ldez/prm";
+    homepage = https://github.com/ldez/prm;
     license = lib.licenses.asl20;
   };
 }
