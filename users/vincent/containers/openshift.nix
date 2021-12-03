@@ -6,6 +6,6 @@
     #my.crc
     my.oc
     my.openshift-install
-    #my.operator-sdk
+    my.operator-sdk
   ];
 }
