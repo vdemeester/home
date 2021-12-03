@@ -8,9 +8,6 @@ endif
 DOTEMACS = ~/.config/emacs
 DOTGNUS = ~/.config/gnus
 ETCNIXOS = /etc/nixos
-SYNCDIR = /home/vincent/sync/nixos
-SRCWWW = ~/src/www
-SRCHOME = ~/src/home
 
 # Targets
 .PHONY: all
@@ -78,19 +75,6 @@ README.md: README.org
 		--load lib/lisp/docs.el \
 		--funcall update-readme-md
 
-.PHONY: build-www
-build-www: $(SRCWWW)/publish-common.el lib/lisp/publish.el update-docs
-	@echo "Publishing... with current Emacs configurations."
-	${EMACS} --batch --directory $(DOTEMACS)/lisp/ --directory $(DOTEMACS)/lisp/vorg/ \
-		--load $(SRCWWW)/publish-common.el --load lib/lisp/publish.el \
-		--funcall org-publish-all
-
-$(SRCWWW)/Makefile: $(SRCWWW)
-$(SRCWWW)/publish-common.el: $(SRCWWW)
-
-$(SRCWWW):
-	test -d $(SRCWWW) || git clone git@git.sr.ht:~vdemeester/www.git $(SRCWWW)
-
 # Setup and doctor
 .PHONY: doctor
 doctor:
@@ -99,7 +83,7 @@ doctor:
 	@readlink $(DOTNIXPKGS) || $(error $(DOTNIXPKGS) is not correctly linked, you may need to run setup)
 
 .PHONY: setup
-setup: $(DOTEMACS) $(DOTGNUS) $(SYNCDIR) $(SRCHOME)
+setup: $(DOTEMACS) $(DOTGNUS)
 
 $(DOTEMACS):
 	@echo "Link $(DOTEMACS) to $(CURDIR)/tools/emacs"
@@ -108,10 +92,3 @@ $(DOTEMACS):
 $(DOTGNUS):
 	@echo "Link $(DOTGNUs) to $(CURDIR)/tools/gnus"
 	@ln -s $(CURDIR)/tools/gnus $(DOTGNUS)
-
-$(SRCHOME):
-	@echo "Make sure $(SRCHOME) exists"
-	@-ln -s ${PWD} $(SRCHOME)
-
-$(SYNCDIR):
-	$(error $(SYNCDIR) is not present, you need to configure syncthing before running this command)
