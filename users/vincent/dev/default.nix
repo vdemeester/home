@@ -19,6 +19,7 @@
     fswatch
     gnumake
     jq
+    yq-go
     gron
     shfmt
   ];
@@ -38,7 +39,6 @@
 
   xdg.configFile."nr/dev" = {
     text = builtins.toJSON [
-      { cmd = "yq"; }
       { cmd = "lnav"; }
       { cmd = "miniserve"; }
       { cmd = "licensor"; }
