@@ -1,4 +1,4 @@
-local lib = import 'gmailctl.libsonnet';
+local lib = import './gmailctl.libsonnet';
 
 local toMe = {
   or: [
@@ -20,7 +20,7 @@ local label_archive(filter, label) =
    ]
 ;
 
-local rh_mailing_list(name, label = '') =
+local rh_mailing_list(name, label = '', archive = true) =
     local labels =
         if label == '' then
            [ std.join('/', std.splitLimit(name, '-', 1) ) ]
@@ -49,7 +49,7 @@ local rh_mailing_list(name, label = '') =
             ],
           },
           actions: {
-            archive: true,
+            archive: archive,
             markSpam: false,
             labels: labels
           }
@@ -57,7 +57,7 @@ local rh_mailing_list(name, label = '') =
     ]
 ;
 
-local google_groups(name, label = '') =
+local google_groups(name, label = '', archive = true) =
     local labels =
         if label == '' then
            [ std.join('/', std.splitLimit(name, '-', 1) ) ]
@@ -86,7 +86,7 @@ local google_groups(name, label = '') =
             ],
           },
           actions: {
-            archive: true,
+            archive: archive,
             markSpam: false,
             labels: labels
           }
@@ -148,8 +148,11 @@ local google_groups(name, label = '') =
     google_groups('istio-dev', 'istio/dev') +
     google_groups('istio-users', 'istio/users') +
     rh_mailing_list('pipelines-interests', 'pipelines/interests') +
-    rh_mailing_list('pipelines-dev', 'pipelines/dev') +
-    google_groups('tekton-dev', 'tekton/dev') +
+    rh_mailing_list('pipelines-dev', 'pipelines/dev', false) +
+    rh_mailing_list('pipelines-extcomm', 'pipelines/dev', false) +
+    rh_mailing_list('pipelines-extcomm', 'pipelines/ext') +
+    rh_mailing_list('pipelines-bots', 'pipelines/bots', false) +
+    google_groups('tekton-dev', 'tekton/dev', false) +
     google_groups('tekton-users', 'tekton/users') +
     google_groups('tekton-governance', 'tekton/governance') +
     google_groups('tekton-vmt', 'tekton/vmt') +
