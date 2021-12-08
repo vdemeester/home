@@ -12,6 +12,9 @@ chain = true
 skip = true
 
 # downstream (RH internal)
+[p12n]
+chain = true
+skip = true
 
 # github.com/openshift
 [openshift-ci]
