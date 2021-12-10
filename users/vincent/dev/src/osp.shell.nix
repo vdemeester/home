@@ -9,11 +9,13 @@ pkgs.mkShell {
   name = "osp";
   buildInputs = with pkgs; [
     go
-    my.oc
-    my.tkn
     gron
     yq-go
+    jq
     python39Packages.pyaml
+    my.oc
+    my.tkn
+    my.operator-sdk
   ];
   shellHook = ''
     export GOMODULE=on
