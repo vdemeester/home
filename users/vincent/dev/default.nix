@@ -48,7 +48,10 @@
     onChange = "${pkgs.my.nr}/bin/nr dev";
   };
 
+  # Upstream Tekton
   home.file."src/tektoncd/.envrc".source = ./src/tektoncd.envrc;
   home.file."src/tektoncd/shell.nix".source = ./src/tektoncd.shell.nix;
-
+  # Downstream OSP
+  home.file."src/osp/.envrc".source = ./src/osp.envrc;
+  home.file."src/osp/shell.nix".source = ./src/osp.shell.nix;
 }
