@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    tektoncd-cli
-    #my.tkn_oci
+    # tektoncd-cli
+    my.tkn
   ];
 }
