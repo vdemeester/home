@@ -16,6 +16,7 @@ pkgs.mkShell {
     my.oc
     my.tkn
     my.operator-sdk
+    git-crypt
   ];
   shellHook = ''
     export GOMODULE=on
