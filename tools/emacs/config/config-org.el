@@ -27,7 +27,7 @@
 (set-register ?I `(file . ,org-incubate-file))
 (set-register ?n `(file . ,org-next-file))
 (use-package org
-  :ensure org-plus-contrib ;; load from the package instead of internal
+  ;; :ensure org-plus-contrib ;; load from the package instead of internal
   :mode (("\\.org$" . org-mode)
          ("\\.org.draft$" . org-mode))
   :commands (org-agenda org-capture)
