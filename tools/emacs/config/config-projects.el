@@ -8,7 +8,7 @@
          ("C-x p s" . vde-project-vterm))
   :config
 
-  (setq vde/project-local-identifier '(".project" "go.mod" "README.org" "README.md"))
+  (setq vde/project-local-identifier '(".project" "go.mod"))
 
   (defun vde/project-try-local (dir)
     "Determine if DIR is a non-VC project."
