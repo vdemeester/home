@@ -220,6 +220,9 @@ questions.  Else use completion to select the tab to switch to."
           (no-special-glyphs . t)))
   :hook (after-init-hook . tooltip-mode))
 
+(use-package alert
+  :config
+  (setq alert-default-style 'libnotify))
 
 (provide 'config-appearance)
 ;;; config-appearance.el ends here
