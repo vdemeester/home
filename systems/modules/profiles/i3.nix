@@ -29,7 +29,7 @@ in
       dbus = {
         enable = true;
         # socketActivated = true;
-        packages = [ pkgs.gnome3.dconf ];
+        packages = [ pkgs.dconf ];
       };
     };
     programs.dconf.enable = true;
