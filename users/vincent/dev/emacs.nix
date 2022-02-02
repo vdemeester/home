@@ -87,12 +87,13 @@ let
     ob-go
     ob-http
     orderless
+    org
     org-capture-pop-frame
     org-journal
-    org
     #org-plus-contrib
     org-ql
     org-super-agenda
+    # org-transclusion
     org-tree-slide
     org-web-tools
     orgit

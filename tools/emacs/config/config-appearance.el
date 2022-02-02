@@ -126,6 +126,8 @@ Ignores `ARGS'."
                                  (directory-file-name (file-relative-name project-path "~/src")))
                                 ((string-prefix-p "~/desktop" project-path)
                                  (directory-file-name (file-relative-name project-path "~/desktop")))
+                                ((string-prefix-p "/etc" project-path)
+                                 (directory-file-name (file-relative-name project-path "/etc")))
                                 (t
                                  (file-relative-name project-path)))))
      (t (tab-bar-tab-name-current-with-count))))
