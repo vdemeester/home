@@ -37,11 +37,12 @@ in
         liveRestore = false;
         storageDriver = "overlay2";
         extraOptions = "--experimental --add-runtime docker-runc=${cfg.runcPackage}/bin/runc --default-runtime=docker-runc --containerd=/run/containerd/containerd.sock";
+        daemon.settings = {
+          features = { buildkit = true; };
+          insecure-registries = [ "172.30.0.0/16" "192.168.12.0/16" "massimo.home:5000" "r.svc.home:5000" "r.svc.home" ];
+        };
       };
     };
-    environment.etc."docker/daemon.json".text = ''
-      {"features":{"buildkit": true}, "insecure-registries": ["172.30.0.0/16", "192.168.12.0/16", "massimo.home:5000", "r.svc.home:5000", "r.svc.home" ]}
-    '';
     environment.systemPackages = with pkgs; [
       my.buildx
     ];
