@@ -88,6 +88,7 @@ let
     ob-http
     orderless
     org
+    org-appear
     org-capture-pop-frame
     org-journal
     #org-plus-contrib
