@@ -81,6 +81,10 @@ in
       };
       "192.168.1.*" = {
         forwardAgent = true;
+        extraOptions = {
+          StrictHostKeyChecking = "no";
+          UserKnownHostsFile = "/dev/null";
+        };
       };
       "10.100.0.*" = {
         forwardAgent = true;
