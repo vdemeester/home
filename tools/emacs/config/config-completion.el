@@ -10,7 +10,6 @@
   (setq orderless-matching-styles
         '(orderless-prefixes
           orderless-literal
-          orderless-strict-leading-initialism
           orderless-regexp
           orderless-flex))
 
@@ -21,15 +20,7 @@ parses its input."
     (when (string-suffix-p "=" pattern)
       `(orderless-literal . ,(substring pattern 0 -1))))
 
-  (defun vde/orderless-initialism-dispatcher (pattern _index _total)
-    "Leading initialism  dispatcher using the comma suffix.
-It matches PATTERN _INDEX and _TOTAL according to how Orderless
-parses its input."
-    (when (string-suffix-p "," pattern)
-      `(orderless-strict-leading-initialism . ,(substring pattern 0 -1))))
-
-  (setq orderless-style-dispatchers '(vde/orderless-literal-dispatcher
-                                      vde/orderless-initialism-dispatcher))
+  (setq orderless-style-dispatchers '(vde/orderless-literal-dispatcher))
   :bind (:map minibuffer-local-completion-map
               ("SPC" . nil)))         ; space should never complete
 
@@ -54,7 +45,7 @@ parses its input."
   (setq completion-styles
         '(substring initials flex partial-completion orderless))
   (setq completion-category-overrides
-        '((file (styles . (partial-completion orderless)))))
+        '((file (styles partial-completion))))
   ;; The following two are updated in Emacs 28.  They concern the
   ;; *Completions* buffer.
   (setq completions-format 'one-column)
