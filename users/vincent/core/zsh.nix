@@ -67,7 +67,7 @@ in
       source $HOME/${config.programs.zsh.dotDir}/completion.zsh
       source $HOME/${config.programs.zsh.dotDir}/plugins/powerlevel10k/powerlevel10k.zsh-theme
       source $HOME/${config.programs.zsh.dotDir}/prompt.zsh
-      setopt hist_ignore_space
+      setopt HIST_IGNORE_SPACE
       alias -g L="|less"
       alias -g EEL=' 2>&1 | less'
       alias -g GB='`git rev-parse --abbrev-ref HEAD`'
