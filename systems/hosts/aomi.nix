@@ -126,6 +126,7 @@ in
     # force xbacklight to work
     acpilight
     steam-run
+    asciinema
   ];
 
   services = {
