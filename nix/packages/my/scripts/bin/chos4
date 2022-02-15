@@ -14,7 +14,7 @@ scp -o ControlPath=${CONTROL_PATH} -q pipelines@bootstrap.pipelines.devcluster.o
 scp -o ControlPath=${CONTROL_PATH} -q pipelines@bootstrap.pipelines.devcluster.openshift.com:os4-build/profiles/paac/auth/kubeadmin-password $HOME/sync/work/chos4/kubeadmin.password.paac
 scp -o ControlPath=${CONTROL_PATH} -q pipelines@bootstrap.pipelines.devcluster.openshift.com:os4-build/profiles/paac/auth/webaccess $HOME/sync/work/chos4/webaccess.paac
 
-for file in kubeadmin.password.os4 webaccess.os4 config.os4; do
+for file in kubeadmin.password.os4 webaccess.os4 config.os4 kubeadmin.password.paac webaccess.paac config.paac; do
     if ! test -f $HOME/.kube/$file; then
         ln -s $HOME/sync/work/chos4/$file ~/.kube/$file
     fi
