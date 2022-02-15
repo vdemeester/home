@@ -92,7 +92,7 @@ in
       ]
       ++ optionals config.profiles.docker.enable [
         {
-          home.packages = with pkgs; [ docker docker-compose ];
+          home.packages = with pkgs; [ docker docker-compose dive ];
         }
       ]
       ++ optionals config.profiles.redhat.enable [{
