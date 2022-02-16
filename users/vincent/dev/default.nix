@@ -23,6 +23,7 @@
     gron
     moreutils
     shfmt
+    vale
   ];
 
   home.file.".ignore".text = ''
