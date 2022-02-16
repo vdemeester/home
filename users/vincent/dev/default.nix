@@ -21,6 +21,7 @@
     jq
     yq-go
     gron
+    moreutils
     shfmt
   ];
 
