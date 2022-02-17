@@ -26,11 +26,11 @@ in
         enable = true;
         # autostart = false;
       };
-      # buildkitd = {
-      #   enable = true;
-      #   autostart = false;
-      #   extraOptions = "--oci-worker=false --containerd-worker=true";
-      # };
+      buildkitd = {
+        enable = true;
+        extraOptions = "--oci-worker=false --containerd-worker=true";
+        # autostart = false;
+      };
       docker = {
         enable = true;
         package = cfg.package;

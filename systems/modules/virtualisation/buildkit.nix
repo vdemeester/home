@@ -14,14 +14,6 @@ in
         '';
     };
 
-    autostart = mkOption {
-      type = types.bool;
-      default = true;
-      description = ''
-        Start buildkitd automatically.
-      '';
-    };
-
     package = mkOption {
       default = pkgs.buildkit;
       type = types.package;
@@ -54,9 +46,8 @@ in
     systemd.packages = [ cfg.package ];
 
     systemd.services.buildkitd = {
-      wants = [ "containerd.service" ];
-      after = [ "containerd.service" ];
-      wantedBy = lib.optional cfg.autostart [ "multi-user.target" ];
+      after = [ "network.target" "containerd.service" ];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         ExecStart = [
           ""
