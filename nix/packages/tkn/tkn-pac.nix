@@ -4,7 +4,7 @@ with lib;
 rec {
   tknPacGen = { version, sha256 }:
     buildGoModule rec {
-      pname = "tkn";
+      pname = "tkn-pac";
       name = "${pname}-${version}";
 
       subPackages = [ "cmd/tkn-pac" ];
