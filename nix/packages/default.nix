@@ -106,6 +106,10 @@ rec {
     tkn_0_22
     tkn
     ;
+  inherit (pkgs.callPackage ./tkn/tkn-pac.nix { })
+    tkn-pac_0_5
+    tkn-pac
+    ;
   manifest-tool = pkgs.callPackage ./manifest-tool { };
 
   # Upstream
