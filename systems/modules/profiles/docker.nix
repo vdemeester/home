@@ -36,10 +36,18 @@ in
         package = cfg.package;
         liveRestore = false;
         storageDriver = "overlay2";
-        extraOptions = "--experimental --add-runtime docker-runc=${cfg.runcPackage}/bin/runc --default-runtime=docker-runc --containerd=/run/containerd/containerd.sock";
         daemon.settings = {
+          experimental = true;
+          runtimes = {
+            "docker-runc" = {
+              path = "${cfg.runcPackage}/bin/runc";
+            };
+          };
+          default-runtime = "docker-runc";
+          containerd = "/run/containerd/containerd.sock";
           features = { buildkit = true; };
           insecure-registries = [ "172.30.0.0/16" "192.168.12.0/16" "massimo.home:5000" "r.svc.home:5000" "r.svc.home" ];
+          seccomp-profile = ./docker/my-seccomp.json;
         };
       };
     };
