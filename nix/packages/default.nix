@@ -103,6 +103,7 @@ rec {
     tkn_0_19
     tkn_0_20
     tkn_0_21
+    tkn_0_22
     tkn
     ;
   manifest-tool = pkgs.callPackage ./manifest-tool { };
