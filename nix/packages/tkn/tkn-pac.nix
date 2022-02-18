@@ -32,9 +32,9 @@ rec {
         done
         # completions
         mkdir -p $out/share/bash-completion/completions/
-        $out/bin/tkn-pac completion bash > $out/share/bash-completion/completions/tkn
+        $out/bin/tkn-pac completion bash > $out/share/bash-completion/completions/tkn-pac
         mkdir -p $out/share/zsh/site-functions
-        $out/bin/tkn-pac completion zsh > $out/share/zsh/site-functions/_tkn
+        $out/bin/tkn-pac completion zsh > $out/share/zsh/site-functions/_tkn-pac
       '';
       meta = with lib; {
         homepage = https://github.com/tektoncd/cli;
