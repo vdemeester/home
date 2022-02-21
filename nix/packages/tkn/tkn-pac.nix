@@ -46,7 +46,7 @@ rec {
 
   tkn-pac = tkn-pac_0_5;
   tkn-pac_0_5 = makeOverridable tknPacGen {
-    version = "0.5.2";
-    sha256 = "sha256-/FeKujkzpgxxNvlW9issfi/dLrSFH/JQcjaEVYAagIc=";
+    version = "0.5.3";
+    sha256 = "sha256-X6zQNYQM1C7+GhaUSXg5V6RQxZzoBPvas1gxQx+y9yw=";
   };
 }
