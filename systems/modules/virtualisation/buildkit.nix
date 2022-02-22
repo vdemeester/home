@@ -44,32 +44,25 @@ in
     users.groups.buildkit.gid = 350;
     environment.systemPackages = [ cfg.package ];
     systemd.packages = [ cfg.package ];
-
     systemd.services.buildkitd = {
       after = [ "network.target" "containerd.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = [
-          ""
-          ''
-            ${cfg.package}/bin/buildkitd \
-              ${cfg.extraOptions}
-          ''
-        ];
+        ExecStart = ''${cfg.package}/bin/buildkitd --addr=unix:///run/buildkit/buildkitd.sock --group=buildkit ${cfg.extraOptions}'';
+        Delegate = "yes";
+        KillMode = "process";
+        Type = "notify";
+        Restart = "always";
+        RestartSec = "10";
+
+        # "limits" defined below are adopted from upstream: https://github.com/containerd/containerd/blob/master/containerd.service
+        LimitNPROC = "infinity";
+        LimitCORE = "infinity";
+        LimitNOFILE = "infinity";
+        TasksMax = "infinity";
+        OOMScoreAdjust = "-999";
       };
       path = [ cfg.package ] ++ cfg.packages;
-    };
-
-
-    systemd.sockets.buildkitd = {
-      description = "Buildkitd Socket for the API";
-      wantedBy = [ "sockets.target" ];
-      socketConfig = {
-        ListenStream = "/run/buildkitd/buildkitd.sock";
-        SocketMode = "0660";
-        SocketUser = "root";
-        SocketGroup = "buildkit";
-      };
     };
 
   };
