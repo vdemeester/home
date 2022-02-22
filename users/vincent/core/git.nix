@@ -30,7 +30,8 @@ in
     gitAndTools.git-annex
     gitAndTools.hub
     gitAndTools.gh
-    # git-review
+    gitAndTools.git-appraise
+    gitAndTools.grv
     mr
     my.prm
     my.ape
@@ -157,12 +158,4 @@ in
     ];
   };
   xdg.configFile."git/config.d/redhat.gitconfig".source = ./git/redhat.gitconfig;
-  xdg.configFile."nr/git" = {
-    text = builtins.toJSON [
-      { cmd = "tig"; }
-      { cmd = "grv"; pkg = "gitAndTools.grv"; }
-      { cmd = "git-appraise"; pkg = "gitAndTools.git-appraise"; chan = "unstable"; }
-    ];
-    onChange = "${pkgs.my.nr}/bin/nr git";
-  };
 }

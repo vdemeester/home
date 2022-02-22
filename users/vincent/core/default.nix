@@ -27,9 +27,11 @@ in
       htop
       mosh
       ncurses
+      pciutils
       ripgrep
       scripts
       tree
+      usbutils
     ];
   };
 
@@ -48,15 +50,4 @@ in
       };
     }
   '';
-  xdg.configFile."nr/default" = {
-    text = builtins.toJSON [
-      { cmd = "ncdu"; }
-      { cmd = "sshfs"; }
-      { cmd = "lspci"; pkg = "pciutils"; }
-      { cmd = "lsusb"; pkg = "usbutils"; }
-      { cmd = "9"; pkg = "plan9port"; }
-      { cmd = "wakeonlan"; pkg = "python36Packages.wakeonlan"; }
-    ];
-    onChange = "${pkgs.my.nr}/bin/nr default";
-  };
 }
