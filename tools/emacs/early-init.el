@@ -75,15 +75,15 @@ This is used internally by `vde/modus-themes-toggle'."
         modus-themes-section-headings nil
         modus-themes-scale-headings nil
         modus-themes-fringes 'subtle ; {nil,'subtle,'intense}
-        modus-themes-mode-line 'borderless-moody
+        modus-themes-mode-line '(moody)
         modus-themes-hl-line nil
         modus-themes-intense-paren-match t
-        modus-themes-prompts 'subtle-accented ; {nil,'subtle,'intense}
-        modus-themes-completions 'opinionated ; {nil,'moderate,'opinionated}
+        modus-themes-prompts '(subtle-accented) ; {nil,'subtle,'intense}
+        modus-themes-completions '(opinionated) ; {nil,'moderate,'opinionated}
         modus-themes-diffs 'desaturated ; {nil,'desaturated,'fg-only}
         modus-themes-org-blocks 'greyscale ; {nil,'greyscale,'rainbow}
-        modus-themes-links 'neutral-underline
-        modus-themes-paren-match 'subtle-bold
+        modus-themes-links '(neutral-underline)
+        modus-themes-paren-match '(subtle-bold)
         modus-themes-syntax nil
         modus-themes-variable-pitch-headings nil
         modus-themes-rainbow-headings t
