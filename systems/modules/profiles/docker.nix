@@ -24,12 +24,29 @@ in
     virtualisation = {
       containerd = {
         enable = true;
-        # autostart = false;
       };
       buildkitd = {
         enable = true;
-        extraOptions = "--oci-worker=false --containerd-worker=true";
-        # autostart = false;
+        settings = {
+          worker.oci = {
+            enabled = false;
+          };
+          worker.containerd = {
+            enable = true;
+            platforms = [ "linux/amd64" "linux/arm64" ];
+            namespace = "buildkit";
+          };
+          registry = {
+            "r.svc.home:5000" = {
+              http = true;
+              insecure = true;
+            };
+            "r.svc.home" = {
+              http = true;
+              insecure = true;
+            };
+          };
+        };
       };
       docker = {
         enable = true;
