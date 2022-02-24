@@ -57,6 +57,8 @@ let
     git-annex
     git-modes
     git-commit
+    git-gutter
+    git-gutter-fringe
     github-review
     go-mode
     gotest
