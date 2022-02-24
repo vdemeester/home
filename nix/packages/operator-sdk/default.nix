@@ -1,4 +1,4 @@
-{ stdenv, lib, buildGoModule, git, fetchFromGitHub }:
+{ stdenv, lib, buildGo117Module, git, fetchFromGitHub }:
 
 with lib;
 rec {
@@ -9,7 +9,7 @@ rec {
     , vendorSha256
     }:
 
-    buildGoModule rec {
+    buildGo117Module rec {
       inherit vendorSha256;
       pname = "operator-sdk";
       name = "${pname}-${version}";
@@ -80,6 +80,18 @@ rec {
     sha256 = "sha256-8RWo+9XJrO/CU5vcnjzt0u2vbMmgP0aCa3iIZFEU50c=";
     vendorSha256 = "sha256:1dgpc718nxgzn048q08in5cxjf1cya57a3pgykg96092pnh01n79";
   };
-  operator-sdk_1 = operator-sdk_1_15;
+  operator-sdk_1_16 = makeOverridable operatorSdkGen {
+    version = "1.16.0";
+    k8sVersion = "v1.21";
+    sha256 = "sha256-gjeDH7nXsgiscvFa/3IUPdkHEiyA8DwlN3FXkhIGnzc=";
+    vendorSha256 = "sha256:19cf9gifq9zxxbh67m3czc5fdz9m3fxa3ddjip10svn89n38mmm0";
+  };
+  operator-sdk_1_17 = makeOverridable operatorSdkGen {
+    version = "1.17.0";
+    k8sVersion = "v1.21";
+    sha256 = "sha256-zgiJDmpjmm2rzi12XAT+bHpiOKwi1k6xd9fvPGwFNXQ=";
+    vendorSha256 = "sha256:0i74v34ckawxq9r31v1jj3vyp8rp9v3jyfp0pfn896j24ka85dlr";
+  };
+  operator-sdk_1 = operator-sdk_1_16;
   operator-sdk = operator-sdk_1;
 }

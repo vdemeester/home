@@ -89,6 +89,8 @@ rec {
   inherit (pkgs.callPackage ./operator-sdk { })
     operator-sdk_1
     operator-sdk_1_15
+    operator-sdk_1_16
+    operator-sdk_1_17
     operator-sdk_1_14
     operator-sdk_1_13
     operator-sdk_0_18
