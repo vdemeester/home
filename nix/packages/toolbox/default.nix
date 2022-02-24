@@ -2,14 +2,14 @@
 
 stdenv.mkDerivation rec {
   pname = "toolbox";
-  version = "0.0.92";
+  version = "0.0.99.3";
   name = "${pname}-${version}";
 
   src = fetchFromGitHub {
     owner = "containers";
     repo = "toolbox";
     rev = "${version}";
-    sha256 = "0lqrhqpi012m9qadh9lgqmqshfwfkmfd0h5nfg7692rza0gkiy85";
+    sha256 = "sha256-9HiWgEtaMypLOwXJ6Xg3grLSZOQ4NInZtcvLPV51YO8=";
   };
 
   phases = "unpackPhase installPhase";
