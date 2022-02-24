@@ -66,11 +66,12 @@
          ("C-c v C" . magit-checkout)
          ("C-c v b" . magit-branch)
          ("C-c v d" . magit-dispatch)
-         ("C-c v f" . magit-dispatch-file)
+         ("C-c v f" . magit-fetch)
          ("C-c v g" . magit-blame)
          ("C-c v l" . magit-log-buffer-file)
          ("C-c v p" . magit-pull)
          ("C-c v P" . magit-push)
+         ("C-c v r" . magit-rebase)
          ("C-c v v" . magit-status))
   :config
   (setq-default magit-save-repository-buffers 'dontask
