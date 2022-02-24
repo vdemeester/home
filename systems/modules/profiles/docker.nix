@@ -32,7 +32,7 @@ in
             enabled = false;
           };
           worker.containerd = {
-            enable = true;
+            enabled = true;
             platforms = [ "linux/amd64" "linux/arm64" ];
             namespace = "buildkit";
           };

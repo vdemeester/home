@@ -140,19 +140,38 @@ in
     syncthing.guiAddress = "${metadata.hosts.naruhodo.wireguard.addrs.v4}:8384";
   };
 
-  virtualisation.podman.enable = true;
-  virtualisation.containers = {
-    enable = true;
-    registries = {
-      search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
+  virtualisation = {
+    buildkitd = {
+      enable = true;
+      settings = {
+        worker.oci.enabled = true;
+        registry = {
+          "r.svc.home:5000" = {
+            http = true;
+            insecure = true;
+          };
+          "r.svc.home" = {
+            http = true;
+            insecure = true;
+          };
+        };
+      };
     };
-    policy = {
-      default = [{ type = "insecureAcceptAnything"; }];
-      transports = {
-        docker-daemon = {
-          "" = [{ type = "insecureAcceptAnything"; }];
+    podman.enable = true;
+    containers = {
+      enable = true;
+      registries = {
+        search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
+      };
+      policy = {
+        default = [{ type = "insecureAcceptAnything"; }];
+        transports = {
+          docker-daemon = {
+            "" = [{ type = "insecureAcceptAnything"; }];
+          };
         };
       };
     };
   };
+
 }
