@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   name = "krew-${version}";
-  version = "0.3.4";
+  version = "0.4.3";
   rev = "v${version}";
 
   subPackages = [ "cmd/krew" ];
@@ -10,9 +10,9 @@ buildGoModule rec {
     inherit rev;
     owner = "kubernetes-sigs";
     repo = "krew";
-    sha256 = "0n10kpr2v9jzkz4lxrf1vf9x5zql73r5q1f1llwvjw6mb3xyn6ij";
+    sha256 = "sha256-aW9yASskwDt+5Lvsdju9ZR/HeZ4x8heWljdhqK0ZTx8=";
   };
-  vendorSha256 = "01jy73g087bng5xhbwd7pigsd44jl7pdfwf7ff43m9jsziknd39i";
+  vendorSha256 = "sha256-P2FcCznzsGWYdya+vMLMKFXhZX0f0ZpHk00vuVbWMko=";
 
   meta = {
     description = "The package manager for 'kubectl plugins. ";
