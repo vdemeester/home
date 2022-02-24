@@ -2,14 +2,14 @@
 
 stdenv.mkDerivation rec {
   pname = "kss";
-  version = "0.0.2";
+  version = "0.1.0";
   name = "${pname}-${version}";
 
   src = fetchFromGitHub {
     owner = "chmouel";
     repo = "kss";
     rev = "${version}";
-    sha256 = "1akjval7f17ij0fwyghspp2p27agkls82nafynfaxiakmxwmr7lr";
+    sha256 = "sha256-jS1BnXReYuDUi3HLh1OusZpZan+NsWjj6CKZTUOuA1A=";
   };
   buildInputs = [ python3 ];
   installPhase = ''
