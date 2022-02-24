@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   name = "athens-${version}";
-  version = "0.10.0";
+  version = "0.11.0";
   rev = "v${version}";
 
   subPackages = [ "cmd/proxy" ];
@@ -11,9 +11,9 @@ buildGoModule rec {
     inherit rev;
     owner = "gomods";
     repo = "athens";
-    sha256 = "10l96v2ayz3bp7kzr3a2lwyb95hc3dymlvcanl4629dy087ap6zj";
+    sha256 = "sha256-hkewZ21ElkoDsbPPiCZNmWu4MBlKTlnrK72/xCX06Sk=";
   };
-  vendorSha256 = "1sjahs7a06vsnzfbwgzh6wdqwlcgpq5w4zkhf711ws4njipkmq1r";
+  vendorSha256 = "sha256-9iwT+PE54zy+DCJLb9R2YOXVYPqy3UGs+ro/2JoAFDU=";
 
   meta = {
     description = "a Go module datastore and proxy";
