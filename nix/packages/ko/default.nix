@@ -3,14 +3,14 @@
 buildGoModule rec {
   pname = "ko";
   name = "${pname}-${version}";
-  version = "0.9.1";
+  version = "0.10.0";
 
   subPackages = [ "cmd/ko" ];
   src = fetchFromGitHub {
     owner = "google";
     repo = "ko";
     rev = "v${version}";
-    sha256 = "178pj9b59lwafys82z8qvb0knd5bzvibc9sy0d5q76kbvajk2842";
+    sha256 = "sha256-Xhe5WNHQ+Oa1m/6VwC3zCwWzXRc1spSfPp4jySsOcuU=";
   };
   vendorSha256 = null;
   # TestGoBuild{,Index} doesn't work because it assumes a .git
