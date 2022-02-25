@@ -5,10 +5,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "d1471c0e9049772e84bfe11707ab8b9c133b49e8",
-        "sha256": "0h5gzpjr8pcrwrh9nr0vrjzrnvski5mr02n63m9vwyqb37xsv90c",
+        "rev": "8d8c845d575e6e866fe48f1c88770f71c10f473e",
+        "sha256": "0drjc1axq2ddy59sbl95cgbdwn8s21zwn36q44bsvk44ssjqdq3n",
         "type": "tarball",
-        "url": "https://github.com/nix-community/emacs-overlay/archive/d1471c0e9049772e84bfe11707ab8b9c133b49e8.tar.gz",
+        "url": "https://github.com/nix-community/emacs-overlay/archive/8d8c845d575e6e866fe48f1c88770f71c10f473e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "gitignore": {
@@ -29,10 +29,10 @@
         "homepage": "https://nix-community.github.io/home-manager/",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "0232fe1b75e6d7864fd82b5c72f6646f87838fc3",
-        "sha256": "15c12f48s38pvp8dskpvsdd82ndqvsjdkfml5mzry5cjmivq5cm3",
+        "rev": "662350bee2090edc82b4c162b1415f76b4eee2f3",
+        "sha256": "1cl1407g7sdanvpvqy520lfdmjgbd1zyh25jzv4fy84jwdhr4mdk",
         "type": "tarball",
-        "url": "https://github.com/nix-community/home-manager/archive/0232fe1b75e6d7864fd82b5c72f6646f87838fc3.tar.gz",
+        "url": "https://github.com/nix-community/home-manager/archive/662350bee2090edc82b4c162b1415f76b4eee2f3.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager-stable": {
@@ -89,10 +89,10 @@
         "homepage": "https://github.com/NixOS/nixpkgs",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d5f237872975e6fb6f76eef1368b5634ffcd266f",
-        "sha256": "0fsjwhqgxyd2v86glr2560gr3zx9mb6fhllydmrxi5i04c549vsr",
+        "rev": "7f9b6e2babf232412682c09e57ed666d8f84ac2d",
+        "sha256": "03nb8sbzgc3c0qdr1jbsn852zi3qp74z4qcy7vrabvvly8rbixp2",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/d5f237872975e6fb6f76eef1368b5634ffcd266f.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/7f9b6e2babf232412682c09e57ed666d8f84ac2d.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
@@ -101,10 +101,10 @@
         "homepage": "https://github.com/NixOS/nixpkgs",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b66b39216b1fef2d8c33cc7a5c72d8da80b79970",
-        "sha256": "0xqxrmdr3adcdj1ksnwf8w7d0qjzsc4sgzfcmvvrpk7hrc5q9cvg",
+        "rev": "9222ae36b208d1c6b55d88e10aa68f969b5b5244",
+        "sha256": "0dvl990alr4bb64w9b32dhzacvchpsspj8p3zqcgk7q5akvqh1mw",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/b66b39216b1fef2d8c33cc7a5c72d8da80b79970.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/9222ae36b208d1c6b55d88e10aa68f969b5b5244.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "sops-nix": {
