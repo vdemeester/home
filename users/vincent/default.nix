@@ -77,6 +77,10 @@ in
         (import ./containers/kubernetes.nix)
         (import ./containers/openshift.nix)
         (import ./containers/tekton.nix)
+        {
+          # Enable only on dev, could do something better than this longterm 😀
+          services.keybase.enable = true;
+        }
       ]
       ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
       ++ optionals config.profiles.desktop.gnome.enable [ (import ./desktop/gnome.nix) ]
