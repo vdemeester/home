@@ -23,5 +23,9 @@ pkgs.mkShell
   ];
   shellHook = ''
     export NIX_PATH="nixpkgs=${pkgs.path}:nixos=${nixos.path}:nixos-unstable=${nixos-unstable.path}"
+    test -f .secrets && source .secrets || echo "no secrets"
+    export QEMU_OPTS="-m 8096 -cpu host"
+    export PATH="$(pwd)/bin:$PATH"
+    export REPO_ROOT="$(pwd)"
   '';
 }

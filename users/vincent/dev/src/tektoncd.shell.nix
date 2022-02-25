@@ -22,5 +22,6 @@ pkgs.mkShell {
     export GOMAXPROCS=8
     export KUSTOMIZE_BIN=${pkgs.kustomize}/bin/kustomize
     export KO_BIN=${my.ko}/bin/ko
+    export KO_DOCKER_REPO=gcr.io/vde-tekton
   '';
 }
