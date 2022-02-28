@@ -1,4 +1,3 @@
-
 #+TITLE: microk8s
 
 [[https://microk8s.io/][=microk8s=]] is a lightweight version of [[file:kubernetes.org][Kubernetes]] done by [[file:canonical.org][Canonical]].
@@ -9,7 +8,7 @@ CLOCK: [2020-10-30 Fri 19:00]--[2020-10-31 Sat 00:20] =>  5:20
 CLOCK: [2020-10-30 Fri 16:58]--[2020-10-30 Fri 18:59] =>  2:01
 :END:
 
-#+begin_src text :tangle ./microk8s/ubnt1/preseed.cfg
+#+begin_src text :mkdirp yes :tangle ../../ops/k8s/microk8s/ubnt1/preseed.cfg
 ### Localization
 # Locale sets language and country.
 d-i debian-installer/locale string en_US
@@ -100,7 +99,7 @@ d-i finish-install/reboot_in_progress note
 # How do you want to manage upgrades on this system?
 d-i pkgsel/update-policy select none
 #+end_src
-#+begin_src text :tangle ./microk8s/ubnt2/preseed.cfg
+#+begin_src text :mkdirp yes :tangle ../../ops/k8s/microk8s/ubnt2/preseed.cfg
 ### Localization
 # Locale sets language and country.
 d-i debian-installer/locale string en_US
@@ -191,7 +190,7 @@ d-i finish-install/reboot_in_progress note
 d-i pkgsel/update-policy select none
 #+end_src
 
-#+begin_src bash :dir ./microk8s :tangle ./microk8s/bootstrap.sh :tangle-mode (identity #o755)
+#+begin_src bash :mkdirp yes :tangle ../../ops/k8s/microk8s/bootstrap.sh :tangle-mode (identity #o755)
 #!/usr/bin/env bash
 set -euxo pipefail
 QEMU_URI=${QEMU_URI:-qemu+ssh://wakasu.home/system}
