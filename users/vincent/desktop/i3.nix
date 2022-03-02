@@ -400,6 +400,7 @@ in
       bindsym $mod+o mode "resize"
       ## quick terminal (tmux)
       exec --no-startup-id kitty --title metask --class metask tmux
+      exec --no-startup-id emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))"
       for_window [instance="metask"] floating enable;
       for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position center; move scratchpad
       bindcode $mod+49 [instance="metask"] scratchpad show
