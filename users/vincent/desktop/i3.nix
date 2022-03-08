@@ -405,6 +405,9 @@ in
       for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position center; move scratchpad
       bindcode $mod+49 [instance="metask"] scratchpad show
 
+      bindcode $mod+51 [class="Spotify"] scratchpad show
+      bindcode $mod+23 move scratchpad
+
       exec --no-startup-id emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))"
       for_window [title="_emacs scratchpad_" class="Emacs"] move scratchpad
       bindcode $mod+Shift+49 [title="_emacs scratchpad_" class="Emacs"] scratchpad show
