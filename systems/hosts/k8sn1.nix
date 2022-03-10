@@ -12,7 +12,7 @@ in
   imports = [
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     (import ../../nix).home-manager-stable
-    ../modules
+    ../modules/default.stable.nix
     # FIXME Need to refactor vincent user as.. it's adding way to much by default...
     # (import ../../../users).vincent
     (import ../../users).root
