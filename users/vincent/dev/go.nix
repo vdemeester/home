@@ -14,7 +14,7 @@
     go-outline
     go-symbols
     delve
-    goimports
+    gotools
     gotestsum
     # misc
     protobuf

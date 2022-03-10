@@ -18,7 +18,7 @@ in
   };
   config = mkIf cfg.enable {
     # boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
-    environment.systemPackages = [ pkgs.wireguard ];
+    environment.systemPackages = [ pkgs.wireguard-tools ];
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
     networking.firewall.extraCommands = ''
       iptables -t nat -A POSTROUTING -s10.100.0.0/24 -j MASQUERADE
