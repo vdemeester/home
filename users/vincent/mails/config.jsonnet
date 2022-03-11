@@ -153,10 +153,10 @@ local google_groups(name, label = '', archive = true) =
     rh_mailing_list('pipelines-extcomm', 'pipelines/ext') +
     rh_mailing_list('pipelines-bots', 'pipelines/bots', false) +
     google_groups('tekton-dev', 'tekton/dev', false) +
-    google_groups('tekton-users', 'tekton/users') +
-    google_groups('tekton-governance', 'tekton/governance') +
-    google_groups('tekton-vmt', 'tekton/vmt') +
-    google_groups('tekton-code-of-conduct', 'tekton/code-of-conduct') +
+    google_groups('tekton-users', 'tekton/users', false) +
+    google_groups('tekton-governance', 'tekton/governance', false) +
+    google_groups('tekton-vmt', 'tekton/vmt', false) +
+    google_groups('tekton-code-of-conduct', 'tekton/code-of-conduct', false) +
     rh_mailing_list('engineering-advocate', 'engineering-advocate') +
     rh_mailing_list('engineering-advocate-nomination', 'engineering-advocate') +
     google_groups('kubernetes-sig-cli', 'kubernetes/sig/cli') +
