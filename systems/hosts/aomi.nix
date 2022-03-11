@@ -130,6 +130,12 @@ in
   ];
 
   services = {
+    netdata.enable = true;
+    logind.extraConfig = ''
+      HandleLidSwitch=ignore
+      HandleLidSwitchExternalPower=ignore
+      HandleLidSwitchDocked=ignore
+    '';
     syncthing.guiAddress = "${metadata.hosts.aomi.wireguard.addrs.v4}:8384";
     smartd = {
       enable = true;
