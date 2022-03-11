@@ -121,6 +121,7 @@ in
     redhat.enable = true;
     scanning.enable = true;
     ssh.enable = true;
+    docker.enable = true;
   };
   environment.systemPackages = with pkgs; [
     virtmanager
@@ -141,22 +142,6 @@ in
   };
 
   virtualisation = {
-    buildkitd = {
-      enable = true;
-      settings = {
-        worker.oci.enabled = true;
-        registry = {
-          "r.svc.home:5000" = {
-            http = true;
-            insecure = true;
-          };
-          "r.svc.home" = {
-            http = true;
-            insecure = true;
-          };
-        };
-      };
-    };
     podman.enable = true;
     containers = {
       enable = true;
