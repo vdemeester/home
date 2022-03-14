@@ -30,6 +30,7 @@ let
     company-go
     consult
     consult-dir
+    dap-mode
     dash
     delight
     diredfl
@@ -51,9 +52,6 @@ let
     esup
     expand-region
     flimenu
-    # replace with flymake
-    # flycheck
-    # flycheck-golangci-lint
     focus
     git-annex
     git-modes
