@@ -30,6 +30,7 @@ let
     company-go
     consult
     consult-dir
+    # corfu
     dap-mode
     dash
     delight
