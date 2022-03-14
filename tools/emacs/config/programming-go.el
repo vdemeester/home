@@ -20,11 +20,6 @@
   (setq-default company-go-show-annotation t)
   (push 'company-go company-backends))
 
-;; (use-package flycheck-golangci-lint
-;;   :commands (flycheck-golangci-lint-setup)
-;;   :hook (go-mode . flycheck-golangci-lint-setup)
-;;   :config (setq flycheck-golangci-lint-tests t))
-
 (use-package gotest
   :after go-mode)
 
