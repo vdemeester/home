@@ -163,7 +163,7 @@ instead."
   :config
   (consult-customize
    consult-ripgrep consult-git-grep consult-grep consult-bookmark consult-xref
-   consult--source-file consult--source-project-file consult--source-bookmark
+   consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
    :preview-key (kbd "M-."))
   (setq consult-async-input-debounce 0.5)
   (setq consult-async-input-throttle 0.8)
