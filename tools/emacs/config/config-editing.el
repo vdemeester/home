@@ -24,6 +24,11 @@
 (if (version<= "27.1" emacs-version)
     (global-so-long-mode 1))
 
+(use-package saveplace
+  :unless noninteractive
+  :config
+  (save-place-mode 1))
+
 (use-package smartparens
   :unless noninteractive
   :commands (smartparens-mode smartparens-global-mode show-smartparens-global-mode
