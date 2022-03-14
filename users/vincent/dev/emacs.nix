@@ -52,8 +52,9 @@ let
     expand-region
     flimenu
     # replace with flymake
-    flycheck
-    flycheck-golangci-lint
+    # flycheck
+    # flycheck-golangci-lint
+    focus
     git-annex
     git-modes
     git-commit
@@ -72,6 +73,10 @@ let
     ibuffer-vc
     icomplete-vertical
     json-mode
+    lsp-mode
+    lsp-ui
+    lsp-focus
+    consult-lsp
     magit
     magit-annex
     magit-popup

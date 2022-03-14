@@ -7,6 +7,7 @@
   home.packages = with pkgs; [
     gcc
     go_1_17
+    gopls
     godef
     golangci-lint
     golint
