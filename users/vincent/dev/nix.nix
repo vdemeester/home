@@ -7,5 +7,6 @@
     nix-update
     nix-review
     nix-prefetch-scripts
+    rnix-lsp
   ];
 }
