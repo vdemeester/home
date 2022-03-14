@@ -3,6 +3,7 @@
 ;;; LSP configuration
 ;;; Code:
 (use-package lsp-mode
+  :commands (lsp lsp-deferred)
   :hook ((python-mode . lsp)
          (go-mode . lsp)
          (nix-mode . lsp))
@@ -13,6 +14,7 @@
   :custom
   ;; turn this on to capture client/server comms before
   ;; submitting bug reports with `lsp-workspace-show-log`
+  (lsp-completion-provider :none)
   (lsp-log-io nil)
   ;; (lsp-lens-enable t)
   (lsp-eldoc-enable-hover t)
@@ -29,7 +31,7 @@
   (lsp-modeline-diagnostics-enable nil)
   (lsp-idle-delay .01)
   (lsp-keymap-prefix nil)
-  (lsp-eldoc-render-all t)
+  (lsp-eldoc-render-all nil)
   (lsp-file-watch-threshold 4000))
 
 (use-package consult-lsp
