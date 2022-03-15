@@ -37,8 +37,8 @@ rec {
         $out/bin/tkn-pac completion zsh > $out/share/zsh/site-functions/_tkn-pac
       '';
       meta = with lib; {
-        homepage = https://github.com/tektoncd/cli;
-        description = "A CLI for interacting with Tekton!";
+        homepage = https://github.com/openshift-pipelines/pipelines-as-code;
+        description = "A Tekton CLI extension for managing pipelines-as-code repositories and bootstrapping";
         license = licenses.asl20;
         maintainers = with maintainers; [ vdemeester ];
       };
