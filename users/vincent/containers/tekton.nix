@@ -5,5 +5,6 @@
     # tektoncd-cli
     my.tkn
     my.tkn-pac
+    my.tkn-local
   ];
 }
