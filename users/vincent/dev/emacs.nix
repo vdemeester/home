@@ -24,13 +24,11 @@ let
     bbdb
     beginend
     bongo
+    cape
     color-identifiers-mode
-    company
-    company-emoji
-    company-go
     consult
     consult-dir
-    # corfu
+    corfu
     dap-mode
     dash
     delight
@@ -76,6 +74,7 @@ let
     lsp-ui
     lsp-focus
     consult-lsp
+    kind-icon
     magit
     magit-annex
     magit-popup

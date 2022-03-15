@@ -214,86 +214,104 @@ instead."
          ("C-x C-d" . consult-dir)
          ("C-x C-j" . consult-dir-jump-file)))
 
-(use-package company
-  :unless noninteractive
-  :hook ((prog-mode . company-mode))
-  :commands (global-company-mode company-mode company-indent-or-complete-common)
-  :bind (("M-/" . hippie-expand)
-         :map company-active-map
-         ("C-d" . company-show-doc-buffer)
-         ("C-l" . company-show-location)
-         ("C-t" . company-select-next)
-         ("C-s" . company-select-previous)
-         ("C-<up>" . company-select-next)
-         ("C-<down>" . company-select-previous)
-         ("C-r" . company-complete-selection)
-         ("TAB" . company-complete-common-or-cycle))
+(use-package corfu
+  :ensure
+  ;; Optional customizations
+  ;; :custom
+  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  ;; (corfu-auto t)                 ;; Enable auto completion
+  ;; (corfu-commit-predicate nil)   ;; Do not commit selected candidates on next input
+  ;; (corfu-quit-at-boundary t)     ;; Automatically quit at word boundary
+  ;; (corfu-quit-no-match t)        ;; Automatically quit if there is no match
+  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+  ;; (corfu-preselect-first nil)    ;; Disable candidate preselection
+  ;; (corfu-echo-documentation nil) ;; Disable documentation in the echo area
+  ;; (corfu-scroll-margin 5)        ;; Use scroll margin
+
+  ;; You may want to enable Corfu only for certain modes.
+  ;; :hook ((prog-mode . corfu-mode)
+  ;;        (shell-mode . corfu-mode)
+  ;;        (eshell-mode . corfu-mode))
+
+  ;; Recommended: Enable Corfu globally. This is recommended since dabbrev can
+  ;; be used globally (M-/).
+  :hook (((prog-mode text-mode tex-mode) . corfu-mode)
+         ((shell-mode eshell-mode) . my/corfu-shell-settings))
+  :bind (:map corfu-map
+              ("TAB" . corfu-next)
+              ([tab] . corfu-next)
+              ("S-TAB" . corfu-previous)
+              ([backtab] . corfu-previous)
+              ("M-." . corfu-show-location)
+              ("C-n" . nil)
+              ("C-p" . nil)
+              ("M-h" . nil)
+              ("C-h" . corfu-show-documentation))
   :config
-  (defun company-complete-common-or-selected ()
-    "Insert the common part, or if none, complete using selection."
+  (setq corfu-auto  t
+        corfu-cycle t
+        corfu-quit-no-match t
+        corfu-preselect-first nil
+        corfu-scroll-margin 5)
+  (setq corfu-quit-at-boundary nil)
+  (defun my/corfu-shell-settings ()
+    (setq-local corfu-quit-at-boundary t
+                corfu-quit-no-match t
+                corfu-auto nil)
+    (setq-local corfu-map (copy-keymap corfu-map)
+                completion-cycle-threshold nil)
+    (define-key corfu-map "\r" #'corfu-insert-and-send)
+    (corfu-mode))
+  (defun corfu-insert-and-send ()
     (interactive)
-    (when (company-manual-begin)
-      (if (not (equal company-common company-prefix))
-          (company--insert-candidate company-common)
-        (company-complete-selection))))
-  (setq-default company-idle-delay 0.2
-                company-selection-wrap-around t
-                company-minimum-prefix-length 2
-                company-require-match nil
-                company-dabbrev-ignore-case nil
-                company-dabbrev-downcase nil
-                company-show-numbers t
-                company-tooltip-align-annotations t)
-  (setq company-backends
-        '(company-capf
-          company-files
-          (company-dabbrev-code
-           company-gtags
-           company-etags)
-          company-dabbrev
-          company-keywords))
+    ;; 1. First insert the completed candidate
+    (corfu-insert)
+    ;; 2. Send the entire prompt input to the shell
+    (cond
+     ((and (derived-mode-p 'eshell-mode) (fboundp 'eshell-send-input))
+      (eshell-send-input))
+     ((derived-mode-p 'comint-mode)
+      (comint-send-input)))))
 
-  ;; We don't want completion to prevent us from actually navigating the code
-  (define-key company-active-map (kbd "<return>") nil)
-  (define-key company-active-map (kbd "RET") nil)
-  (define-key company-active-map (kbd "C-p") nil)
-  (define-key company-active-map (kbd "C-n") nil))
-
-;; FIXME(vdemeester) Do this in programming-*.el
-;; Add company-css to css-mode company-backends
-;; (setq-local company-backends (append '(company-css) company-backends))
-;; Same for clang, cmake or xcode, elisp
-
-(use-package company-emoji
-  :unless noninteractive
-  :hook ((markdown-mode . my-company-emoji))
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
   :config
-  (defun my-company-emoji ()
-    (set (make-local-variable 'company-backends) '(company-emoji))
-    (company-mode t)))
-;; (use-package corfu
-;;   ;; Optional customizations
-;;   ;; :custom
-;;   ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-;;   ;; (corfu-auto t)                 ;; Enable auto completion
-;;   ;; (corfu-separator ?\s)          ;; Orderless field separator
-;;   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-;;   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-;;   ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-;;   ;; (corfu-preselect-first nil)    ;; Disable candidate preselection
-;;   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-;;   ;; (corfu-echo-documentation nil) ;; Disable documentation in the echo area
-;;   ;; (corfu-scroll-margin 5)        ;; Use scroll margin
-;;
-;;   ;; You may want to enable Corfu only for certain modes.
-;;   ;; :hook ((prog-mode . corfu-mode)
-;;   ;;        (shell-mode . corfu-mode)
-;;   ;;        (eshell-mode . corfu-mode))
-;;
-;;   ;; Recommended: Enable Corfu globally.
-;;   ;; This is recommended since dabbrev can be used globally (M-/).
-;;   :init
-;;   (corfu-global-mode))
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+;; Add extensions
+(use-package cape
+  :ensure
+  :bind (("C-c p i" . cape-ispell)
+         ("C-c p f" . cape-file)
+         ("C-c p /" . cape-dabbrev)
+         ("C-c p w" . cape-dict)
+         ("C-c p k" . cape-keyword)
+         ("C-c p s" . cape-symbol))
+  :init
+  ;; Add `completion-at-point-functions', used by `completion-at-point'.
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-tex)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-symbol)
+  :config
+  (setq cape-dict-file "/usr/share/dict/words")
+
+  (use-package pcomplete
+    :defer
+    :config
+    ;; Silence the pcomplete capf, no errors or messages!
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+    ;; (advice-remove 'pcomplete-completions-at-point #'cape-wrap-silent)
+
+    ;; Ensure that pcomplete does not write to the buffer
+    ;; and behaves as a pure `completion-at-point-function'.
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
+    ;; (advice-remove 'pcomplete-completions-at-point #'cape-wrap-purify)
+    ))
 
 (provide 'config-completion)
 ;;; config-completion.el ends here
