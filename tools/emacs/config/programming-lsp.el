@@ -32,7 +32,10 @@
   (lsp-idle-delay .01)
   (lsp-keymap-prefix nil)
   (lsp-eldoc-render-all nil)
-  (lsp-file-watch-threshold 4000))
+  (lsp-file-watch-threshold 4000)
+  (lsp-gopls-complete-unimported t t)
+  (lsp-yaml-format-enable t)
+  (lsp-gopls-staticcheck t t))
 
 (use-package consult-lsp
   :after (lsp))
