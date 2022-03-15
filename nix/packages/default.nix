@@ -106,6 +106,7 @@ rec {
     tkn_0_20
     tkn_0_21
     tkn_0_22
+    tkn_0_23
     tkn
     ;
   inherit (pkgs.callPackage ./tkn/tkn-pac.nix { })
