@@ -32,6 +32,7 @@
     youtube-dl
     my.batzconverter
     mpw
+    go-jira
   ];
 
   programs.autorandr.enable = nixosConfig.profiles.laptop.enable;
