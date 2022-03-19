@@ -112,7 +112,6 @@ in
   profiles = {
     externalbuilder.enable = true;
     desktop.i3.enable = true;
-    # desktop.sway.enable = true;
     laptop.enable = true;
     home = true;
     dev.enable = true;
