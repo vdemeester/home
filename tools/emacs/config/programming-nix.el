@@ -4,6 +4,7 @@
 ;;; Code:
 (use-package nix-mode
   :if *nix*
+  :after (lsp)
   :mode ("\\.nix\\'" "\\.nix.in\\'")
   :config
   (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))

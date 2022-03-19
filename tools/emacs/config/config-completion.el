@@ -235,7 +235,7 @@ instead."
 
   ;; Recommended: Enable Corfu globally. This is recommended since dabbrev can
   ;; be used globally (M-/).
-  :hook (((prog-mode text-mode tex-mode) . corfu-mode)
+  :hook (((prog-mode tex-mode) . corfu-mode) ; text-mode
          ((shell-mode eshell-mode) . my/corfu-shell-settings))
   :bind (:map corfu-map
               ("TAB" . corfu-next)
