@@ -119,12 +119,17 @@ in
 
     # Suspend the system when battery level drops to 5% or lower
     SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
+
+    # Allow brightness
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
   '';
 
   environment.systemPackages = with pkgs; [
     virtmanager
     # force xbacklight to work
     acpilight
+    brightnessctl
     steam-run
     asciinema
   ];
