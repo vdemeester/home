@@ -33,6 +33,7 @@
     my.batzconverter
     mpw
     go-jira
+    thunderbird
   ];
 
   programs.autorandr.enable = nixosConfig.profiles.laptop.enable;
