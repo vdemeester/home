@@ -6,5 +6,6 @@
     my.tkn
     my.tkn-pac
     my.tkn-local
+    my.sugarjazy
   ];
 }
