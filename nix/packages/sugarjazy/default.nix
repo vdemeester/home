@@ -14,7 +14,7 @@ poetry2nix.mkPoetryApplication rec {
   };
   doCheck = false;
 
-  buildInputs = [ python310Packages.dateutil ];
+  propagatedBuildInputs = [ python310Packages.dateutil ];
 
   meta = with lib; {
     homepage = "https://github.com/chmouel/sugarjazy";
