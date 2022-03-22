@@ -1,4 +1,4 @@
-;;; modus-operandi-theme.el --- Accessible and customizable light theme (WCAG AAA) -*- lexical-binding:t -*-
+;;; modus-operandi-theme.el --- Elegant, highly legible and customizable light theme -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2019-2022  Free Software Foundation, Inc.
 
@@ -56,17 +56,17 @@
                (equal (file-name-directory load-file-name)
                       (expand-file-name "themes/" data-directory))
                (require-theme 'modus-themes t))
-    (require 'modus-themes)))
+    (require 'modus-themes))
 
-(deftheme modus-operandi
-  "Accessible and customizable light theme (WCAG AAA standard).
+  (deftheme modus-operandi
+    "Elegant, highly legible and customizable light theme.
 Conforms with the highest legibility standard for color contrast
 between background and foreground in any given piece of text,
 which corresponds to a minimum contrast in relative luminance of
-7:1.")
+7:1 (WCAG AAA standard).")
 
-(modus-themes-theme modus-operandi)
+  (modus-themes-theme modus-operandi)
 
-(provide-theme 'modus-operandi)
+  (provide-theme 'modus-operandi))
 
 ;;; modus-operandi-theme.el ends here
