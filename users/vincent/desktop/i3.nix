@@ -108,6 +108,7 @@ in
       close_on_child_death = "yes";
       font_family = "Ubuntu Mono";
     };
+    theme = "Tango Light";
   };
   programs.rofi = {
     enable = true;
