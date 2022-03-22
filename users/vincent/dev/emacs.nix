@@ -96,7 +96,7 @@ let
     org-appear
     org-capture-pop-frame
     org-journal
-    #org-plus-contrib
+    org-contrib
     org-ql
     org-super-agenda
     # org-transclusion
