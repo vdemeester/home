@@ -42,7 +42,11 @@ rec {
         maintainers = with maintainers; [ vdemeester ];
       };
     };
-  tkn-local = tkn-local_0_2;
+  tkn-local = tkn-local_0_3;
+  tkn-local_0_3 = makeOverridable tknLocalGen {
+    version = "0.3.0";
+    sha256 = "sha256-HVz01bOxKgwscwkit3XhpHfSXpMaA7+6CpkgOeQRQY8==";
+  };
   tkn-local_0_2 = makeOverridable tknLocalGen {
     version = "0.2.0";
     sha256 = "sha256-Y4wFFdUxzveHguJfs9LQRCqAc143hwNqGx0TJv9cr44=";
