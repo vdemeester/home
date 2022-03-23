@@ -78,7 +78,7 @@ in
       (( $+functions[zshz] )) && compdef _zshz j
     '';
     loginExtra = ''
-      export GOPATH=${config.home.homeDirectory}
+      # export GOPATH=${config.home.homeDirectory}
     '';
     profileExtra = ''
       if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi

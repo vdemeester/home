@@ -2,7 +2,7 @@
 
 {
   home.sessionVariables = {
-    GOPATH = "${config.home.homeDirectory}";
+    # GOPATH = "${config.home.homeDirectory}";
   };
   home.packages = with pkgs; [
     gcc
