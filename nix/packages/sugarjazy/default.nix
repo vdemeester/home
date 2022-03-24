@@ -2,7 +2,7 @@
 
 poetry2nix.mkPoetryApplication rec {
   pname = "sugarjazy";
-  version = "0.6.0";
+  version = "0.6.2";
   python = python310;
 
   projectDir = ./.;
@@ -10,7 +10,7 @@ poetry2nix.mkPoetryApplication rec {
     owner = "chmouel";
     repo = "sugarjazy";
     rev = "${version}";
-    sha256 = "sha256-OxiSWkUkNO0YkkUyYiFZry0hEV2gdydAQlCDcYqfaE4=";
+    sha256 = "sha256-UbYdyfLEsO4ghIiN1BzOdPqEujbRbKqrN2WCRlIj3g4=";
   };
   doCheck = false;
 
