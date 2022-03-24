@@ -10,6 +10,8 @@ rec {
   bus = pkgs.callPackage ../../tools/bus { };
   bekind = pkgs.callPackage ../../tools/bekind { };
 
+  chmouzies.kubernetes = pkgs.callPackage ./chmouzies/kubernetes.nix { };
+
   # Mine
   ape = pkgs.callPackage ./ape { };
   fhs-std = pkgs.callPackage ./fhs/std.nix { };

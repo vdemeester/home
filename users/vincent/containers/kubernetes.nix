@@ -22,5 +22,6 @@ in
     knd
     bekind
     stern
+    my.chmouzies.kubernetes
   ];
 }
