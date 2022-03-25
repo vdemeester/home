@@ -24,4 +24,7 @@ in
     stern
     my.chmouzies.kubernetes
   ];
+  programs.zsh.initExtra = ''
+    alias -g SK="|sugarjazy -s --kail --kail-prefix-format='{pod}'"
+  '';
 }
