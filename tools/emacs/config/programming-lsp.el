@@ -10,10 +10,11 @@
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
-  (setq )
+  ;; (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\vendor\\'")
   :custom
   ;; turn this on to capture client/server comms before
   ;; submitting bug reports with `lsp-workspace-show-log`
+  (lsp-enable-file-watchers nil)
   (lsp-completion-provider :none)
   (lsp-log-io nil)
   ;; (lsp-lens-enable t)
