@@ -51,6 +51,7 @@ let
     esup
     expand-region
     flimenu
+    flymake-languagetool
     focus
     git-annex
     git-modes
@@ -148,6 +149,7 @@ in
     capture
     ec
     et
+    languagetool
   ];
   programs.emacs = {
     enable = true;
