@@ -15,7 +15,8 @@ in
     kustomize
     kind
     minikube
-    my.ko
+    ko
+    crane
     my.krew
     my.kss
     # our own scripts
