@@ -55,6 +55,7 @@ in
         storageDriver = "overlay2";
         daemon.settings = {
           experimental = true;
+          bip = "172.26.0.1/16";
           runtimes = {
             "docker-runc" = {
               path = "${cfg.runcPackage}/bin/runc";
