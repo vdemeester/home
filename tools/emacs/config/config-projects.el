@@ -9,6 +9,15 @@
   :config
 
   (setq vde/project-local-identifier '(".project" "go.mod"))
+  (setq project-switch-commands
+        '((?f "File" project-find-file)
+          (?g "Grep" project-find-regexp)
+          (?d "Dired" project-dired)
+          (?b "Buffer" project-switch-to-buffer)
+          (?q "Query replace" project-query-replace-regexp)
+          (?m "Magit" vde-project-magit-status)
+          (?e "Eshell" project-eshell)
+          (?s "Vterm" vde-project-vterm)))
 
   (defun vde/project-try-local (dir)
     "Determine if DIR is a non-VC project."
