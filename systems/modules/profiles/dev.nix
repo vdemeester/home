@@ -19,6 +19,7 @@ in
       grc
       ripgrep
       gnumake
+      sops
     ];
   };
 }

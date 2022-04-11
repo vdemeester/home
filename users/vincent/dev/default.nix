@@ -16,14 +16,15 @@
   home.packages = with pkgs; [
     binutils
     cmake
+    difftastic
     fswatch
     gnumake
-    jq
-    yq-go
     gron
+    jq
     moreutils
     shfmt
     vale
+    yq-go
   ];
 
   home.file.".ignore".text = ''
