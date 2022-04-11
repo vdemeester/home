@@ -35,6 +35,7 @@ in
     mr
     my.prm
     my.ape
+    difftastic
   ];
   programs.git = {
     enable = true;
@@ -51,20 +52,21 @@ in
     aliases = {
       b = "branch --color -v";
       br = "branch";
+      ca = "commit --amend";
       ci = "commit --signoff";
       co = "checkout";
       conflicts = "!git ls-files --unmerged | cut -c51- | sort -u | xargs $EDITOR";
-      ca = "commit --amend";
-      wdiff = "diff --color-words";
-      unstage = "reset HEAD";
+      dft = "difftool";
       lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
       lga = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --branches --remotes";
       lol = "log --pretty=oneline --abbrev-commit --graph --decorate";
       ls-ignored = "ls-files --exclude-standard --ignored --others";
       resolve = "!git ls-files --unmerged | cut -c51- | sort -u | xargs git add";
-      su = "submodule update --init --recursive";
       st = "status";
+      su = "submodule update --init --recursive";
+      unstage = "reset HEAD";
       w = "status -sb";
+      wdiff = "diff --color-words";
     };
     attributes = [
       "*.org   diff=org"
@@ -97,8 +99,21 @@ in
         changed = "yellow";
         untracked = "red";
       };
+      diff = {
+        external = "difft";
+        tool = "difftastic";
+      };
       "diff.org" = {
         xfuncname = "\"^\\\\*+.*\"";
+      };
+      difftool = {
+        prompt = false;
+      };
+      "difftool.difftastic" = {
+        cmd = "difft \"$LOCAL\" \"$REMOTE\"";
+      };
+      pager = {
+        difftool = true;
       };
       forge = {
         remote = "upstream";
