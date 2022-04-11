@@ -15,11 +15,6 @@
       (set (make-local-variable 'compile-command)
            "go build -v && go test -v && go vet")))
 
-(use-package company-go
-  :after (go-mode company)
-  (setq-default company-go-show-annotation t)
-  (push 'company-go company-backends))
-
 (use-package gotest
   :after go-mode)
 
