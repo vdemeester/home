@@ -9,5 +9,6 @@
     skopeo
     my.manifest-tool
     nerdctl
+    act
   ];
 }
