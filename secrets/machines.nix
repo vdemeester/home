@@ -75,13 +75,13 @@ let
     #   allowedIPs = [ "${wireguard.ips.kobe}/32" ];
     #   publicKey = "vzRFxFNK83HHilXoXlw71bPvy1KJNUfbTMw6MMSaQVs=";
     # };
-    houbeb = {
-      allowedIPs = [ "${wireguard.ips.houbeb}/32" ];
-      publicKey = "tzanPdQBkD6FrWjalZAuc3G9PtLgHjPVCBjvJDCgdSw=";
-    };
+    # houbeb = {
+    #   allowedIPs = [ "${wireguard.ips.houbeb}/32" ];
+    #   publicKey = "tzanPdQBkD6FrWjalZAuc3G9PtLgHjPVCBjvJDCgdSw=";
+    # };
     okinawa = {
       allowedIPs = [ "${wireguard.ips.okinawa}/32" ];
-      publicKey = "P5Sa2idRYSf9TZz0OMjfNNL8+Ue2GErBI6xhUrkrYUk=";
+      publicKey = "gsX8RiTq7LkCiEIyNk2j9b8CHlJjSUbi1Im6nSWGmB4=";
     };
     sakhalin = {
       allowedIPs = [ "${wireguard.ips.sakhalin}/32" ];
@@ -134,8 +134,7 @@ let
       key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDm23WasboyoiYcaCyxb/DWXRwWXR183gHwOcWTGMKZaYy0WMAWkBUPJjD5s7tlib2D7GJIoBqoPRvNQbmUdxFle+CftY7aj7oP7s0FlbNzFmybTzcZ/3zkkkKAOw2USw3saQ4kd8IqyACo9TsfhajX8jsrrHl3dzyjqTDWlcJmETUGpdYbSA7E3WavzPF2x3/kFcA5cmoYgpcFpGgXAKvaG2IFONLv+vTDPtGVq+GiOwQSVR7TXpFmdhHEw9hnzHnsuffQMxANaQMvqPV8+H0jfF3H2WNqp8GULcGyudngkKioTAVvBiTiRJnVK7hg6SxpdlszqO0yMjN37NB2gPJz houbeb@phantom.local";
     };
     okinawa = {
-      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZUDZSIxOt6qEO3WKkAcs1fai1GB/dwAdvsFgxIYVj0 vincent@okinawa";
-      authorized = true;
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILcu4MmZNeBLE7HDjLc6T10tz6rerziQbsZN0LS+mAiq vincd@okinawa";
     };
     honshu = {
       key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAocnNHVCqloXfsvbOoMV0KYAdeon5NYrZX3bnWK+SAo vincent@honshu";
@@ -158,7 +157,7 @@ in
     listenPort = 51820;
     endpointIP = "167.99.17.238";
     persistentKeepalive = 25;
-    peers = [ wireguard.shikoku wireguard.hokkaido wireguard.wakasu wireguard.vincent wireguard.houbeb wireguard.okinawa wireguard.sakhalin wireguard.naruhodo wireguard.aomi wireguard.ipad ]; # wireguard.honshu
+    peers = [ wireguard.shikoku wireguard.hokkaido wireguard.wakasu wireguard.vincent wireguard.okinawa wireguard.sakhalin wireguard.naruhodo wireguard.aomi wireguard.ipad ]; # wireguard.honshu wireguard.houbeb
   };
   ssh = ssh;
   sshConfig = {
