@@ -1,8 +1,9 @@
-{ sources ? import ../../nix
-, lib ? sources.lib
-, pkgs ? sources.pkgs { }
-, ...
-}:
+# { sources ? import ../../nix
+# , lib ? sources.lib
+# , pkgs ? sources.pkgs { }
+# , ...
+# }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
@@ -20,9 +21,9 @@ in
 {
   imports = [
     ../hardware/thinkpad-t480s.nix
-    (import ../../nix).home-manager
+    # (import ../../nix).home-manager
     ../modules
-    (import ../../users).vincent
+    # (import ../../users).vincent
     (import ../../users).root
   ];
 

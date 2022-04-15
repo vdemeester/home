@@ -23,6 +23,7 @@ in
   # naruhodo
   naruhodo = nixosSystem {
     modules = [
+      ./naruhodo.nix
     ] ++ sharedModules;
     system = "x86_64-linux";
   };
