@@ -103,9 +103,11 @@ in
         enableACME = true;
         forceSSL = true;
         locations."/" = {
-          proxy_set_header = "Host            $host";
-          proxy_set_header = "X-Forwarded-For $remote_addr";
           proxyPass = "http://192.168.1.187:80";
+          extraConfig = ''
+            proxy_set_header Host            $host;
+            proxy_set_header X-Forwarded-For $remote_addr;
+          '';
         };
       };
     };
