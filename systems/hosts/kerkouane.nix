@@ -178,6 +178,15 @@ in
         locations."/" = { proxyPass = "http://127.0.0.1:8080"; };
         extraConfig = nginxExtraConfig;
       };
+      virtualHosts."whoami.sbr.pm" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxy_set_header = "Host            $host";
+          proxy_set_header = "X-Forwarded-For $remote_addr";
+          proxyPass = "http://10.100.0.8:80";
+        };
+      };
       virtualHosts."sbr.pm" = {
         enableACME = true;
         forceSSL = true;
