@@ -182,9 +182,11 @@ in
         enableACME = true;
         forceSSL = true;
         locations."/" = {
-          proxy_set_header = "Host            $host";
-          proxy_set_header = "X-Forwarded-For $remote_addr";
           proxyPass = "http://10.100.0.8:80";
+          extraConfig = ''
+            proxy_set_header Host            $host;
+            proxy_set_header X-Forwarded-For $remote_addr;
+          '';
         };
       };
       virtualHosts."sbr.pm" = {

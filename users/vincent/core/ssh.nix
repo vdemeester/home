@@ -105,7 +105,7 @@ in
     wakasu.home,wakasu.vpn,10.100.0.8,192.168.1.77 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2GB030S1+iZMqwgYhkl5CuBOKBjZoujc0aVHII39/x
     aomi.home,aomi.vpn,10.100.0.17,192.168.1.23 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME
     sakhalin.home,sakhalin.vpn,10.100.0.16,192.168.1.70 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/PMBThi4DhgZR8VywbRDzzMVh2Qp3T6NJAcPubfXz6
-    kerkouane.vpn ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJguVoQYObRLyNxELFc3ai2yDJ25+naiM3tKrBGuxwwA
+    kerkouane.vpn,10.100.0.1 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJguVoQYObRLyNxELFc3ai2yDJ25+naiM3tKrBGuxwwA
     synodine.home,192.168.1.20 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWdnPJg0Y4kd4lHPAGE4xgMAK2qvMg3oBxh0t+xO+7O
   '';
   xdg.configFile."ssh/ssh_known_hosts.redhat".text = ''
