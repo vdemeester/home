@@ -100,10 +100,18 @@ in
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
       virtualHosts."whoami.sbr.pm" = {
-        enableACME = true;
-        forceSSL = true;
         locations."/" = {
           proxyPass = "http://192.168.1.187:80";
+          extraConfig = ''
+            proxy_set_header Host            $host;
+            proxy_set_header X-Forwarded-For $remote_addr;
+          '';
+        };
+      };
+      virtualHosts."webhook.sbr.pm" = {
+        # listen = [{ port = 8080; }];
+        locations."/" = {
+          proxyPass = "http://192.168.1.188:8080";
           extraConfig = ''
             proxy_set_header Host            $host;
             proxy_set_header X-Forwarded-For $remote_addr;
