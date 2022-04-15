@@ -5,7 +5,7 @@
 }:
 
 let
-  hostname = "k8sn1";
+  hostname = "k8sn1.home";
   kubeMasterIP = "192.168.1.130";
 in
 {
