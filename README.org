@@ -78,6 +78,8 @@ Repositories
 - [[https://github.com/jordanisaacs/dotfiles][https://github.com/jordanisaacs/dotfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/jordanisaacs.dotfiles/][src]]
 - [[https://git.sr.ht/~akirak/nix-config][https://git.sr.ht/~akirak/nix-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/akirak.nix-config/][src]]
   + [[https://github.com/akirak/nix-desktop][https://github.com/akirak/nix-desktop]]
+- [[https://github.com/chvp/nixos-config][https://github.com/chvp/nixos-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/chvp.nixos-config/][src]]
+- [[https://github.com/gytis-ivaskevicius/nixfiles][https://github.com/gytis-ivaskevicius/nixfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/gytis-ivaskevicius.nixfiles/][src]]
 - [[https://github.com/davidtwco/veritas]] — [[file:/net/sakhalin.home/export/gaia/src/configs/davidtwco.veritas/][src]]
 - [[https://github.com/buckley310/nixos-config][https://github.com/buckley310/nixos-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/buckley310.nixos-config/][src]]
 - [[https://github.com/eadwu/nixos-configuration][https://github.com/eadwu/nixos-configuration]] — [[file:/net/sakhalin.home/export/gaia/src/configs/eadwu.nixos-configuration/][src]]

@@ -11,8 +11,10 @@
     home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager-stable = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-21.11"; inputs.nixpkgs.follows = "nixos-21_11"; };
     impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
+
     nur.url = "github:nix-community/NUR";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
+
     deploy-rs = {
       type = "github";
       owner = "serokell";
