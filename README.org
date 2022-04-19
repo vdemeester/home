@@ -85,6 +85,7 @@ Repositories
 - [[https://github.com/eadwu/nixos-configuration][https://github.com/eadwu/nixos-configuration]] — [[file:/net/sakhalin.home/export/gaia/src/configs/eadwu.nixos-configuration/][src]]
 - [[https://github.com/berbiche/dotfiles][https://github.com/berbiche/dotfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/berbiche.dotfiles/][src]]
 - https://github.com/hlissner/dotfiles/ — [[file:/net/sakhalin.home/export/gaia/src/configs/hlissner.dotfiles/][src]]
+- [[https://github.com/Mic92/dotfiles][https://github.com/Mic92/dotfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/Mic92.dotfiles/][src]]
 - [[https://github.com/lovesegfault/nix-config][https://github.com/lovesegfault/nix-config]]
 - [[https://github.com/utdemir/dotfiles]]
 - [[https://github.com/bqv/nixrc][https://github.com/bqv/nixrc]]
