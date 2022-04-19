@@ -7,5 +7,4 @@
     ./services
     ./virtualisation
   ];
-  sops.defaultSopsFile = ../../secrets/secrets.yaml;
 }

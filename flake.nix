@@ -68,7 +68,7 @@
     } @ inputs:
     let
       mkApp = flake-utils.lib.mkApp;
-      homeProfiles = import ./home { inherit (nixpkgs) lib; };
+      # homeProfiles = import ./home { inherit (nixpkgs) lib; };
     in
     flake-utils-plus.lib.mkFlake {
       inherit self inputs;
@@ -98,6 +98,8 @@
           {
             # Import custom home-manager modules (NixOS)
             config.home-manager.sharedModules = import ./users/modules/modules.nix;
+            # Default SopsFile
+            config.sops.defaultSopsFile = ./secrets/secrets.yaml;
           }
         ];
       };
@@ -108,21 +110,34 @@
           modules = [ ./systems/hosts/naruhodo.nix ];
         };
         # WSL setup
+        # FIXME okinawa doesn't have openssh
         okinawa = {
           modules = [
-	    nixos-wsl.nixosModules.wsl
-	    ./systems/hosts/okinawa.nix
-	  ];
+            nixos-wsl.nixosModules.wsl
+            ./systems/hosts/okinawa.nix
+          ];
         };
         # Servers
         shikoku = {
           channelName = "nixos-21_11";
           modules = [ ./systems/hosts/shikoku.nix ]; # Can add additionnal things
         };
-        wakasu = { };
-        sakhalin = { };
-        aomi = { };
-        kerkouane = { };
+        wakasu = {
+          channelName = "nixos-21_11";
+          modules = [ ./systems/hosts/wakasu.nix ]; # Can add additionnal things
+        };
+        sakhalin = {
+          channelName = "nixos-21_11";
+          modules = [ ./systems/hosts/sakhalin.nix ]; # Can add additionnal things
+        };
+        aomi = {
+          channelName = "nixos-21_11";
+          modules = [ ./systems/hosts/aomi.nix ]; # Can add additionnal things
+        };
+        kerkouane = {
+          channelName = "nixos-21_11";
+          modules = [ ./systems/hosts/kerkouane.nix ]; # Can add additionnal things
+        };
       };
 
       # deploy-rs setup
@@ -133,6 +148,8 @@
         in
         {
           overlay = import ./nix/overlays;
+
+          # `nix develop`
           devShell =
             let
               inherit (sops-nix.packages."x86_64-linux") sops-import-keys-hook;
