@@ -99,17 +99,27 @@
       };
 
       hosts = {
+        # Main laptop
         naruhodo = {
           modules = [ ./systems/hosts/naruhodo.nix ];
         };
+        # WSL setup
         okinawa = {
           modules = [ ./systems/hosts/okinawa.nix ];
         };
+        # Servers
         shikoku = {
           channelName = "nixos-21_11";
           modules = [ ./systems/hosts/shikoku.nix ]; # Can add additionnal things
         };
+        wakasu = { };
+        sakhalin = { };
+        aomi = { };
+        kerkouane = { };
       };
+
+      # deploy-rs setup
+      deploy = { };
 
       outputsBuilder = channels:
         let
