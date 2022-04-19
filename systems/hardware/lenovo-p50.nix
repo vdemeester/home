@@ -1,10 +1,10 @@
 { config, pkgs, lib, ... }:
-let
-  sources = import ../../nix/sources.nix;
-in
+#let
+#  sources = import ../../nix/sources.nix;
+#in
 {
   imports = [
-    (sources.nixos-hardware + "/common/pc/ssd")
+    # (sources.nixos-hardware + "/common/pc/ssd")
     ./thinkpad.nix
   ];
   boot = {

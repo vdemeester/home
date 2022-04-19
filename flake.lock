@@ -249,6 +249,21 @@
         "type": "github"
       }
     },
+    "nix-hardware": {
+      "locked": {
+        "lastModified": 1649849514,
+        "narHash": "sha256-zQyTr2UebTKUh1KLyLtevhHsM8umPK1LfQLGUGjRjiQ=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "1a0ccdbf4583ed0fce37eea7955e8ef90f840a9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixos-21_11": {
       "locked": {
         "lastModified": 1650244918,
@@ -263,6 +278,20 @@
         "ref": "nixos-21.11",
         "repo": "nixpkgs",
         "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1649849514,
+        "narHash": "sha256-zQyTr2UebTKUh1KLyLtevhHsM8umPK1LfQLGUGjRjiQ=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "1a0ccdbf4583ed0fce37eea7955e8ef90f840a9f",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixos-hardware",
+        "type": "indirect"
       }
     },
     "nixos-unstable": {
@@ -378,7 +407,9 @@
         "home-manager": "home-manager",
         "home-manager-stable": "home-manager-stable",
         "impermanence": "impermanence",
+        "nix-hardware": "nix-hardware",
         "nixos-21_11": "nixos-21_11",
+        "nixos-hardware": "nixos-hardware",
         "nixos-unstable": "nixos-unstable",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",

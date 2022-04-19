@@ -14,14 +14,13 @@ let
 in
 {
   imports = [
-    (import ../../nix).home-manager-stable
-    ../modules/default.stable.nix
+    # (import ../../nix).home-manager-stable
+    #../modules/default.stable.nix
     (import ../../users).vincent
     (import ../../users).root
   ];
 
   networking = {
-    hostName = hostname;
     bridges.br1.interfaces = [ "enp0s31f6" ];
     firewall.enable = false; # we are in safe territory :D
     useDHCP = false;
@@ -60,9 +59,9 @@ in
   # swapDevices = [{ device = "/dev/disk/by-uuid/720200fc-8f27-49a7-85bb-a406b6119d31"; }];
 
   profiles = {
-    home = true;
-    dev.enable = false;
-    desktop.enable = lib.mkForce false;
+    #home = true;
+    dev.enable = lib.mkForce false;
+    #desktop.enable = lib.mkForce false;
     avahi.enable = true;
     syncthing.enable = true;
     ssh = { enable = true; };

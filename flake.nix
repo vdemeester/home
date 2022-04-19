@@ -44,6 +44,7 @@
 
     # WSL
     nixos-wsl = { type = "github"; owner = "nix-community"; repo = "NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nix-hardware = { type = "github"; owner = "NixOS"; "repo" = "nixos-hardware"; };
 
     # Channels
     # FIXME: is it needed or should I just alias nixos-unstable instead
@@ -64,14 +65,19 @@
     , sops-nix
     , envfs
     , nixos-wsl
+    , nixos-hardware
     , ...
     } @ inputs:
     let
       mkApp = flake-utils.lib.mkApp;
       # homeProfiles = import ./home { inherit (nixpkgs) lib; };
+
+      nixosModules = flake-utils-plus.lib.exportModules [
+        ./systems/modules/virtualisation/buildkit.nix
+      ];
     in
     flake-utils-plus.lib.mkFlake {
-      inherit self inputs;
+      inherit self inputs nixosModules;
 
       supportedSystems = [ "aarch64-linux" "x86_64-linux" ];
       channelsConfig.allowUnfree = true;
@@ -89,13 +95,41 @@
           # nixos/profiles/core.nix requires self parameter
           inherit self;
         };
-        modules = [
+        modules = with nixosModules; [
+          # Exported modules
+          buildkit
           # Common modules
-          ./systems/modules/default.flake.nix # FIXME rename to default.nix once all is migrated
+          # FIXME: migrate this to elsewhere, or at least split it
+          ./systems/modules/core/nix.nix
+          ./systems/modules/core/users.nix
+          ./systems/modules/profiles/base.nix
+          ./systems/modules/profiles/syncthing.nix
+          ./systems/modules/profiles/avahi.nix
+          ./systems/modules/profiles/ssh.nix
+          ./systems/modules/profiles/virtualization.nix
+          ./systems/modules/profiles/yubikey.nix
+          ./systems/modules/profiles/dev.nix
+          ./systems/modules/profiles/git.nix
+          ./systems/modules/profiles/desktop.nix
+          ./systems/modules/profiles/laptop.nix
+          ./systems/modules/profiles/gnome.nix
+          ./systems/modules/profiles/printing.nix
+          ./systems/modules/profiles/pulseaudio.nix
+          ./systems/modules/profiles/scanning.nix
+          ./systems/modules/hardware/sane-extra-config.nixos.nix
+          ./systems/modules/profiles/redhat.nix
+          ./systems/modules/profiles/i3.nix
+          ./systems/modules/profiles/sway.nix
+          ./systems/modules/profiles/builder.nix
+          ./systems/modules/profiles/home.nix
+          ./systems/modules/services/wireguard.client.nix
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
           envfs.nixosModules.envfs
           {
+            config.nix.generateRegistryFromInputs = true;
+            config.home-manager.useGlobalPkgs = true;
+            config.home-manager.useUserPackages = true;
             # Import custom home-manager modules (NixOS)
             config.home-manager.sharedModules = import ./users/modules/modules.nix;
             # Default SopsFile
@@ -107,12 +141,18 @@
       hosts = {
         # Main laptop
         naruhodo = {
-          modules = [ ./systems/hosts/naruhodo.nix ];
+          modules = [
+            nixos-hardware.nixosModules.lenovo-thinkpad-t480s
+            nixos-hardware.nixosModules.common-pc-laptop-ssd
+            ./systems/modules/profiles/docker.nix
+            ./systems/hosts/naruhodo.nix
+          ];
         };
         # WSL setup
         # FIXME okinawa doesn't have openssh
         okinawa = {
           modules = [
+            ./systems/modules/profiles/docker.nix
             nixos-wsl.nixosModules.wsl
             ./systems/hosts/okinawa.nix
           ];
@@ -120,23 +160,39 @@
         # Servers
         shikoku = {
           channelName = "nixos-21_11";
-          modules = [ ./systems/hosts/shikoku.nix ]; # Can add additionnal things
+          modules = [
+            ./systems/modules/profiles/docker.stable.nix
+            ./systems/hosts/shikoku.nix
+          ];
         };
         wakasu = {
           channelName = "nixos-21_11";
-          modules = [ ./systems/hosts/wakasu.nix ]; # Can add additionnal things
+          modules = [
+            nixos-hardware.nixosModules.lenovo-thinkpad
+            nixos-hardware.nixosModules.common-pc-laptop-ssd
+            ./systems/hosts/wakasu.nix
+          ];
         };
         sakhalin = {
           channelName = "nixos-21_11";
-          modules = [ ./systems/hosts/sakhalin.nix ]; # Can add additionnal things
+          modules = [
+            nixos-hardware.nixosModules.common-pc-ssd
+            ./systems/hosts/sakhalin.nix
+          ];
         };
         aomi = {
           channelName = "nixos-21_11";
-          modules = [ ./systems/hosts/aomi.nix ]; # Can add additionnal things
+          modules = [
+            nixos-hardware.nixosModules.lenovo-thinkpad-p1-3th-gen
+            nixos-hardware.nixosModules.common-pc-laptop-ssd
+            ./systems/hosts/aomi.nix
+          ];
         };
         kerkouane = {
           channelName = "nixos-21_11";
-          modules = [ ./systems/hosts/kerkouane.nix ]; # Can add additionnal things
+          modules = [
+            ./systems/hosts/kerkouane.nix
+          ];
         };
       };
 
