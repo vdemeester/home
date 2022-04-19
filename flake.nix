@@ -87,7 +87,7 @@
         };
         modules = [
           # Common modules
-          ./systems/modules/default.flake.nix
+          ./systems/modules/default.flake.nix # FIXME rename to default.nix once all is migrated
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
           envfs.nixosModules.envfs
