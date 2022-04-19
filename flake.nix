@@ -5,6 +5,13 @@
     # Flake for compatibility with non-flake commands
     flake-compat = { type = "github"; owner = "edolstra"; repo = "flake-compat"; flake = false; };
     flake-utils = { type = "github"; owner = "numtide"; repo = "flake-utils"; };
+    flake-utils-plus = {
+      type = "github";
+      owner = "gytis-ivaskevicius";
+      repo = "flake-utils-plus";
+      ref = "v1.3.1";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     devshell = { type = "github"; owner = "numtide"; repo = "devshell"; };
 
     # Flake Dependencies
@@ -31,64 +38,79 @@
     nixpkgs-unstable = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixpkgs-unstable"; };
   };
 
-  outputs = { self, nixpkgs, nixos-21_11, ... }@inputs:
+  outputs =
+    { self
+    , nixpkgs
+    , flake-utils-plus
+    , flake-utils
+    , home-manager
+    , emacs-overlay
+    , nur
+    , ...
+    } @ inputs:
     let
-      lib = import ./nix/lib inputs;
-      inherit (lib) genSystems;
-
-      overlays.default = import ./nix/packages;
-
-      pkgs = genSystems
-        (system:
-          import nixpkgs {
-            inherit system;
-            overlays = [
-              inputs.devshell.overlay
-              inputs.emacs-overlay.overlay
-              overlays.default
-            ];
-
-            config.allowUnfree = true;
-          });
-      stablePkgs = genSystems
-        (system:
-          import nixos-21_11 {
-            inherit system;
-            overlays = [
-              inputs.devshell.overlay
-              inputs.emacs-overlay.overlay
-              overlays.default
-            ];
-
-            config.allowUnfree = true;
-          });
+      mkApp = flake-utils.lib.mkApp;
+      homeProfiles = import ./home { inherit (nixpkgs) lib; };
     in
-    {
-      inherit lib overlays pkgs;
+    flake-utils-plus.lib.mkFlake {
+      inherit self inputs;
 
-      # Standalone home-manager config
-      inherit (import ./home/profiles inputs) homeConfigurations;
+      supportedSystems = [ "aarch64-linux" "x86_64-linux" ];
+      channelsConfig.allowUnfree = true;
 
-      deploy = import ./hosts/deploy.nix inputs;
+      sharedOverlays = [
+        (import ./nix/overlays)
+        emacs-overlay.overlay
+        nur.overlay
+      ];
 
-      # NixOS configuration with home-manager
-      nixosConfigurations = import ./systems/hosts inputs;
+      hostDefaults = {
+        system = "x86_64-linux";
+        channelName = "nixos-unstable";
+        extraArgs = {
+          # nixos/profiles/core.nix requires self parameter
+          inherit self;
+        };
+        modules = [
+          ./systems/modules
+          home-manager.nixosModules.home-manager
+          {
+            # Import custom home-manager modules (NixOS)
+            config.home-manager.sharedModules = import ./users/modules/modules.nix;
+          }
+        ];
+      };
 
-      # devShells = genSystems (system: {
-      #   default = pkgs.${system}.devshell.mkShell {
-      #     packages = with pkgs.${system}; [
-      #       git
-      #       nixpkgs-fmt
-      #       inputs.deploy-rs.defaultPackage.${system}
-      #       # repl
-      #     ];
-      #     name = "dots";
-      #   };
-      # });
+      hosts = {
+        naruhodo = {
+          modules = [ ./systems/hosts/naruhodo.nix ];
+        };
+        okinawa = {
+          modules = [ ./systems/hosts/okinawa.nix ];
+        };
+        shikoku = {
+          channelName = "nixos-21_11";
+          modules = [ ./systems/hosts/shikoku.nix ];
+        };
+      };
 
-      packages = lib.genAttrs [ "x86_64-linux" ] (system: {
-        inherit (pkgs.${system})
-          ;
-      });
+      outputsBuilder = channels:
+        let
+        in
+        {
+          overlay = import ./nix/overlays;
+          devShell = with channels.nixpkgs; mkShell {
+            sopsPGPKeyDirs = [ "./secrets/keys" ];
+            nativeBuildInputs = [
+              (pkgs.callPackage pkgs.sops-nix { }).sops-import-keys-hook
+            ];
+            buildInputs = with pkgs; [
+              cachix
+              git
+              nixpkgs-fmt
+              sops
+            ];
+          };
+        };
     };
 }

@@ -27,4 +27,8 @@ the current setup I have (=niv=, =morph=, …).
 
 * Digging into the flake
 
+- Going with flake-utils-plus. Why ?
+  For a "configuration" repository, I think it makes perfect sense. For standalone flakes,
+  like projects, … I wouldn't say the same but for this one it does.
+
 #+include: "../flake.nix"
