@@ -42,6 +42,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # WSL
+    wsl = { type = "github"; owner = "nix-community"; repo = "NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; }
+
     # Channels
     # FIXME: is it needed or should I just alias nixos-unstable instead
     nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
@@ -60,6 +63,7 @@
     , nur
     , sops-nix
     , envfs
+    , nixos-wsl
     , ...
     } @ inputs:
     let
@@ -105,7 +109,10 @@
         };
         # WSL setup
         okinawa = {
-          modules = [ ./systems/hosts/okinawa.nix ];
+          modules = [
+	    nixos-wsl.nixosModules.wsl
+	    ./systems/hosts/okinawa.nix
+	  ];
         };
         # Servers
         shikoku = {
