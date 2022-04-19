@@ -61,7 +61,7 @@ in
   profiles = {
     #home = true;
     dev.enable = lib.mkForce false;
-    #desktop.enable = lib.mkForce false;
+    desktop.enable = lib.mkForce false;
     avahi.enable = true;
     syncthing.enable = true;
     ssh = { enable = true; };

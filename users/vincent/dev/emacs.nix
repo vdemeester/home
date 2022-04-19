@@ -108,7 +108,7 @@ let
     pandoc-mode
     pdf-tools
     pkgs.bookmark-plus
-    pkgs.dired-plus
+    # pkgs.dired-plus
     # FIXME(vdemeester) once it is fixed, re-add
     #python-mode
     rainbow-delimiters
@@ -153,7 +153,7 @@ in
   ];
   programs.emacs = {
     enable = true;
-    package = (pkgs.emacsGcc.override { withGTK3 = true; withGTK2 = false; withX = true; withXwidgets = true; });
+    package = (pkgs.emacsNativeComp.override { withGTK3 = true; withGTK2 = false; withX = true; withXwidgets = true; });
     extraPackages = myExtraPackages;
   };
   services.emacs = {

@@ -60,6 +60,7 @@
     , flake-utils-plus
     , flake-utils
     , home-manager
+    , home-manager-stable
     , emacs-overlay
     , nur
     , sops-nix
@@ -84,6 +85,7 @@
 
       sharedOverlays = [
         (import ./nix/overlays)
+        (import ./nix/overlays/sbr.nix)
         emacs-overlay.overlay
         nur.overlay
       ];
@@ -100,30 +102,38 @@
           buildkit
           # Common modules
           # FIXME: migrate this to elsewhere, or at least split it
+          ./systems/modules/core/config.nix
           ./systems/modules/core/nix.nix
           ./systems/modules/core/users.nix
-          ./systems/modules/profiles/base.nix
-          ./systems/modules/profiles/syncthing.nix
+          ./systems/modules/hardware/sane-extra-config.nixos.nix
           ./systems/modules/profiles/avahi.nix
-          ./systems/modules/profiles/ssh.nix
-          ./systems/modules/profiles/virtualization.nix
-          ./systems/modules/profiles/yubikey.nix
-          ./systems/modules/profiles/dev.nix
-          ./systems/modules/profiles/git.nix
+          ./systems/modules/profiles/base.nix
+          ./systems/modules/profiles/builder.nix
           ./systems/modules/profiles/desktop.nix
-          ./systems/modules/profiles/laptop.nix
+          ./systems/modules/profiles/dev.nix
+          ./systems/modules/profiles/dns.nix
+          ./systems/modules/profiles/git.nix
           ./systems/modules/profiles/gnome.nix
+          ./systems/modules/profiles/home.nix
+          ./systems/modules/profiles/i18n.nix
+          ./systems/modules/profiles/i3.nix
+          ./systems/modules/profiles/ipfs.nix
+          ./systems/modules/profiles/kubernetes.nix
+          ./systems/modules/profiles/laptop.nix
+          ./systems/modules/profiles/mail.nix
           ./systems/modules/profiles/printing.nix
           ./systems/modules/profiles/pulseaudio.nix
-          ./systems/modules/profiles/scanning.nix
-          ./systems/modules/hardware/sane-extra-config.nixos.nix
+          ./systems/modules/profiles/qemu.nix
           ./systems/modules/profiles/redhat.nix
-          ./systems/modules/profiles/i3.nix
+          ./systems/modules/profiles/scanning.nix
+          ./systems/modules/profiles/ssh.nix
+          ./systems/modules/profiles/syncthing.nix
           ./systems/modules/profiles/sway.nix
-          ./systems/modules/profiles/builder.nix
-          ./systems/modules/profiles/home.nix
+          ./systems/modules/profiles/virtualization.nix
+          ./systems/modules/profiles/wireguard.server.nix
+          ./systems/modules/profiles/yubikey.nix
+          ./systems/modules/profiles/zsh.nix
           ./systems/modules/services/wireguard.client.nix
-          home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
           envfs.nixosModules.envfs
           {
@@ -142,6 +152,7 @@
         # Main laptop
         naruhodo = {
           modules = [
+            home-manager.nixosModules.home-manager
             nixos-hardware.nixosModules.lenovo-thinkpad-t480s
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             ./systems/modules/profiles/docker.nix
@@ -152,6 +163,7 @@
         # FIXME okinawa doesn't have openssh
         okinawa = {
           modules = [
+            home-manager.nixosModules.home-manager
             ./systems/modules/profiles/docker.nix
             nixos-wsl.nixosModules.wsl
             ./systems/hosts/okinawa.nix
@@ -161,6 +173,7 @@
         shikoku = {
           channelName = "nixos-21_11";
           modules = [
+            home-manager-stable.nixosModules.home-manager
             ./systems/modules/profiles/docker.stable.nix
             ./systems/hosts/shikoku.nix
           ];
@@ -168,6 +181,7 @@
         wakasu = {
           channelName = "nixos-21_11";
           modules = [
+            home-manager-stable.nixosModules.home-manager
             nixos-hardware.nixosModules.lenovo-thinkpad
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             ./systems/hosts/wakasu.nix
@@ -176,6 +190,7 @@
         sakhalin = {
           channelName = "nixos-21_11";
           modules = [
+            home-manager-stable.nixosModules.home-manager
             nixos-hardware.nixosModules.common-pc-ssd
             ./systems/hosts/sakhalin.nix
           ];
@@ -183,6 +198,7 @@
         aomi = {
           channelName = "nixos-21_11";
           modules = [
+            home-manager-stable.nixosModules.home-manager
             nixos-hardware.nixosModules.lenovo-thinkpad-p1-3th-gen
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             ./systems/hosts/aomi.nix
@@ -191,6 +207,7 @@
         kerkouane = {
           channelName = "nixos-21_11";
           modules = [
+            home-manager-stable.nixosModules.home-manager
             ./systems/hosts/kerkouane.nix
           ];
         };
