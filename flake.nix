@@ -29,6 +29,18 @@
       inputs.utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      type = "github";
+      owner = "Mic92";
+      repo = "sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    envfs = {
+      type = "github";
+      owner = "Mic92";
+      repo = "envfs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Channels
     # FIXME: is it needed or should I just alias nixos-unstable instead
@@ -46,6 +58,8 @@
     , home-manager
     , emacs-overlay
     , nur
+    , sops-nix
+    , envfs
     , ...
     } @ inputs:
     let
@@ -72,8 +86,11 @@
           inherit self;
         };
         modules = [
-          ./systems/modules
+          # Common modules
+          ./systems/modules/default.flake.nix
           home-manager.nixosModules.home-manager
+          sops-nix.nixosModules.sops
+          envfs.nixosModules.envfs
           {
             # Import custom home-manager modules (NixOS)
             config.home-manager.sharedModules = import ./users/modules/modules.nix;
@@ -90,7 +107,7 @@
         };
         shikoku = {
           channelName = "nixos-21_11";
-          modules = [ ./systems/hosts/shikoku.nix ];
+          modules = [ ./systems/hosts/shikoku.nix ]; # Can add additionnal things
         };
       };
 
@@ -99,18 +116,22 @@
         in
         {
           overlay = import ./nix/overlays;
-          devShell = with channels.nixpkgs; mkShell {
-            sopsPGPKeyDirs = [ "./secrets/keys" ];
-            nativeBuildInputs = [
-              (pkgs.callPackage pkgs.sops-nix { }).sops-import-keys-hook
-            ];
-            buildInputs = with pkgs; [
-              cachix
-              git
-              nixpkgs-fmt
-              sops
-            ];
-          };
+          devShell =
+            let
+              inherit (sops-nix.packages."x86_64-linux") sops-import-keys-hook;
+            in
+            with channels.nixpkgs; mkShell {
+              sopsPGPKeyDirs = [ "./secrets/keys" ];
+              nativeBuildInputs = [
+                sops-import-keys-hook
+              ];
+              buildInputs = with pkgs; [
+                cachix
+                git
+                nixpkgs-fmt
+                sops
+              ];
+            };
         };
     };
 }

@@ -22,7 +22,7 @@ in
   imports = [
     ../hardware/thinkpad-t480s.nix
     # (import ../../nix).home-manager
-    ../modules
+    # ../modules
     # (import ../../users).vincent
     (import ../../users).root
   ];
