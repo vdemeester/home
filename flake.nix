@@ -43,7 +43,7 @@
     };
 
     # WSL
-    wsl = { type = "github"; owner = "nix-community"; repo = "NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; }
+    nixos-wsl = { type = "github"; owner = "nix-community"; repo = "NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
 
     # Channels
     # FIXME: is it needed or should I just alias nixos-unstable instead
