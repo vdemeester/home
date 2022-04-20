@@ -22,7 +22,7 @@ let
       naruhodo = "192.168.1.36";
       okinawa = "192.168.1.19";
       sakhalin = "192.168.1.70";
-      shikoku = "192.168.12.40";
+      shikoku = "192.168.1.24";
       synodine = "192.168.1.20";
       wakasu = "192.168.1.77";
     };
@@ -49,16 +49,16 @@ let
     };
     shikoku = {
       allowedIPs = [ "${wireguard.ips.shikoku}/32" ];
-      publicKey = "3+Y2IwvKojoGBbFoCwf6lvfrSjf99u4khR4k+MIuymw=";
+      publicKey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
     };
-    honshu = {
-      allowedIPs = [ "${wireguard.ips.honshu}/32" ];
-      publicKey = "P206gLsHo/wf5zZK0IB4IbTuvDkmBL69PMqrG9Zrim4=";
-    };
-    hokkaido = {
-      allowedIPs = [ "${wireguard.ips.hokkaido}/32" ];
-      publicKey = "3/dL6eRELjtKNs40JVcd7DPsPmH4MFRUBntpy93JWUo=";
-    };
+    # honshu = {
+    #   allowedIPs = [ "${wireguard.ips.honshu}/32" ];
+    #   publicKey = "P206gLsHo/wf5zZK0IB4IbTuvDkmBL69PMqrG9Zrim4=";
+    # };
+    # hokkaido = {
+    #   allowedIPs = [ "${wireguard.ips.hokkaido}/32" ];
+    #   publicKey = "3/dL6eRELjtKNs40JVcd7DPsPmH4MFRUBntpy93JWUo=";
+    # };
     wakasu = {
       allowedIPs = [ "${wireguard.ips.wakasu}/32" ];
       publicKey = "U10ozKSCnTm8aD5i6UULSJHQPouoswtNkwFI3P9Lw3Y=";
@@ -157,7 +157,7 @@ in
     listenPort = 51820;
     endpointIP = "167.99.17.238";
     persistentKeepalive = 25;
-    peers = [ wireguard.shikoku wireguard.hokkaido wireguard.wakasu wireguard.vincent wireguard.okinawa wireguard.sakhalin wireguard.naruhodo wireguard.aomi wireguard.ipad ]; # wireguard.honshu wireguard.houbeb
+    peers = [ wireguard.shikoku wireguard.wakasu wireguard.vincent wireguard.okinawa wireguard.sakhalin wireguard.naruhodo wireguard.aomi wireguard.ipad ]; # wireguard.honshu wireguard.hokkaido wireguard.houbeb
   };
   ssh = ssh;
   sshConfig = {
