@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
@@ -45,18 +45,30 @@ in
     "powerpc64le-linux"
   ];
 
-  # fileSystems."/" = {
-  #   device = "/dev/disk/by-uuid/6590b73d-72a4-4356-94b1-f56ac45c976d";
-  #   fsType = "ext4";
-  #   options = [ "noatime" "discard" ];
-  # };
-  #
-  # fileSystems."/boot" = {
-  #   device = "/dev/disk/by-uuid/7FA5-145B";
-  #   fsType = "vfat";
-  # };
-  #
-  # swapDevices = [{ device = "/dev/disk/by-uuid/720200fc-8f27-49a7-85bb-a406b6119d31"; }];
+  # TODO: check if it's done elsewhere
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+
+  # TODO: check if it's done elsewhere
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  fileSystems."/" =
+    {
+      device = "/dev/disk/by-uuid/73fd8864-f6af-4fdd-b826-0dfdeacd3c19";
+      fsType = "ext4";
+      #   options = [ "noatime" "discard" ];
+    };
+
+  fileSystems."/boot" =
+    {
+      device = "/dev/disk/by-uuid/829D-BFD1";
+      fsType = "vfat";
+    };
+
+  swapDevices =
+    [{ device = "/dev/disk/by-uuid/a9ec44e6-0c1d-4f60-9f5c-81a7eaa8e8fd"; }];
 
   profiles = {
     #home = true;
