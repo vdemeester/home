@@ -82,17 +82,17 @@ in
   services = {
     netdata.enable = true;
     syncthing.guiAddress = "${ip}:8384";
-    # smartd = {
-    #   enable = true;
-    #   devices = [{ device = "/dev/nvme0n1"; }];
-    # };
-    # wireguard = {
-    #   enable = true;
-    #   ips = ips;
-    #   endpoint = endpointIP;
-    #   endpointPort = endpointPort;
-    #   endpointPublicKey = endpointPublicKey;
-    # };
+    smartd = {
+      enable = true;
+      devices = [{ device = "/dev/nvme0n1"; }];
+    };
+    wireguard = {
+      enable = true;
+      ips = ips;
+      endpoint = endpointIP;
+      endpointPort = endpointPort;
+      endpointPublicKey = endpointPublicKey;
+    };
   };
 
   # Move this to a "builder" role
