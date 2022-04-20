@@ -2,7 +2,7 @@
 
 with lib;
 let
-  hostname = "sakhalin";
+  hostname = "shikoku";
   secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
