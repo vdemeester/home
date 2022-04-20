@@ -232,12 +232,14 @@
             shikoku = mkNode "shikoku" "192.168.1.24" true;
           };
         };
+
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
       outputsBuilder = channels:
         let
         in
         {
-          overlay = import ./nix/overlays;
+          overlays.default = import ./nix/overlays;
 
           packages = with channels.nixpkgs; {
             inherit
