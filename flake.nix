@@ -67,6 +67,7 @@
     , envfs
     , nixos-wsl
     , nixos-hardware
+    , deploy-rs
     , ...
     } @ inputs:
     let
@@ -214,13 +215,38 @@
       };
 
       # deploy-rs setup
-      deploy = { };
-
+      deploy =
+        let
+          mkNode = server: ip: fast: {
+            hostname = "${ip}:22";
+            fastConnection = false;
+            profiles.system.path =
+              deploy-rs.lib.x86_64-linux.activate.nixos
+                self.nixosConfigurations."${server}";
+          };
+        in
+        {
+          user = "root";
+          sshUser = "root";
+          nodes = {
+            shikoku = mkNode "shikoku" "192.168.1.24" true;
+          };
+        };
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
       outputsBuilder = channels:
         let
         in
         {
           overlay = import ./nix/overlays;
+
+          packages = with channels.nixpkgs; {
+            inherit
+              bekind
+              tkn
+              tkn_0_23
+              tkn_0_22
+              ;
+          };
 
           # `nix develop`
           devShell =
@@ -237,6 +263,7 @@
                 git
                 nixpkgs-fmt
                 sops
+                deploy-rs.packages."x86_64-linux".deploy-rs
               ];
             };
         };
