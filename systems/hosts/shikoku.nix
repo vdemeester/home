@@ -58,7 +58,7 @@ in
     {
       device = "/dev/disk/by-uuid/73fd8864-f6af-4fdd-b826-0dfdeacd3c19";
       fsType = "ext4";
-      #   options = [ "noatime" "discard" ];
+      options = [ "noatime" "discard" ];
     };
 
   fileSystems."/boot" =
