@@ -28,7 +28,7 @@ metadata:
   name: openshift-pipeline-operator
   namespace: openshift-operators
 spec:
-  channel: preview
+  channel: latest
   name: openshift-pipelines-operator-rh
   source: redhat-operators
   sourceNamespace: openshift-marketplace
