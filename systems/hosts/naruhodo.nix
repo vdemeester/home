@@ -42,11 +42,11 @@ in
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/0101-68DE";
+    device = "/dev/disk/by-uuid/2294-77F4";
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/aff86817-55ae-47ed-876a-e5a027b560ba"; }];
+  swapDevices = [{ device = "/dev/disk/by-uuid/c00da13a-39ee-4640-9783-baf0a3d13e73"; }];
 
   networking = {
     hostName = hostname;
@@ -106,7 +106,7 @@ in
   '';
   services.hardware.bolt.enable = true;
   core.nix = {
-    # temporary
+    # temporary or not
     localCaches = [ ];
   };
 
