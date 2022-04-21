@@ -23,6 +23,10 @@ let
       id = "XNCACMA-LMIZPRZ-J6LEMR5-BVI7IVQ-6HWWMUU-QUCA63X-ZE32NOP-QFDDGQM";
       addresses = [ "tcp://wakasu.home" "tcp://wakasu.vpn" ];
     };
+    shikoku = {
+      id = "KZMMXRR-UINDQTS-H3TV2W7-EIGOUDI-3LW4ZDG-7PRKDFV-MJ5KUTJ-YG5Y5AI";
+      addresses = [ "tcp://shikoku.home" "tcp://shikoku.vpn" ];
+    };
   };
   deviceNames = builtins.attrNames (filterAttrs isCurrentHost devices);
 in
