@@ -11,7 +11,7 @@ let
       addresses = [ "tcp://aomi.vpn" "tcp://aomi.home" ];
     };
     naruhodo = {
-      id = "VTIA5EJ-X2BAMN6-LSBUFVJ-EZ35MTN-AOCEQEZ-HMY7CGV-STVVFTT-5U7SIAY";
+      id = "BKZN3FH-KRP4XRN-XFEVCCG-VANAUJN-YFAUS5Q-WUOLQQ7-II7I6PR-NVJZXQT";
       addresses = [ "tcp://naruhodo.vpn" "tcp://naruhodo.home" ];
       # addresses = [ "tcp://192.168.1.2" "tcp://void.home" ];
     };
