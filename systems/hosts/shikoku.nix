@@ -70,7 +70,7 @@ in
 
   # Extra data
   # HDD:   b58e59a4-92e7-4278-97ba-6fe361913f50
-  filesystems."/data" = {
+  fileSystems."/data" = {
     device = "/dev/disk/by-uuid/b58e59a4-92e7-4278-97ba-6fe361913f50";
     fsType = "ext4";
     options = [ "noatime" ];
