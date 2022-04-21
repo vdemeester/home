@@ -71,7 +71,7 @@ in
     [{ device = "/dev/disk/by-uuid/a9ec44e6-0c1d-4f60-9f5c-81a7eaa8e8fd"; }];
 
   profiles = {
-    #home = true;
+    home = true;
     dev.enable = lib.mkForce false;
     desktop.enable = lib.mkForce false;
     avahi.enable = true;
