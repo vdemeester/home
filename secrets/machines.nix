@@ -93,7 +93,7 @@ let
     };
     naruhodo = {
       allowedIPs = [ "${wireguard.ips.naruhodo}/32" ];
-      publicKey = "XXyyJ9GlIiZnUm+Bkpz+NSrFiosjfY4FB2PgLXVPLkI=";
+      publicKey = "Fp4YmztYYepL+k5Xd9ciWK6EhbZomGOH9ZsVBYMFnlM=";
     };
   };
   ssh = {
