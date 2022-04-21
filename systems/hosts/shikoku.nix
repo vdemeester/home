@@ -21,7 +21,7 @@ in
   ];
 
   boot.supportedFilesystems = [ "zfs" ];
-  networking.hostId = "$(head -c 8 /etc/machine-id)";
+  networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
 
   networking = {
     bridges.br1.interfaces = [ "enp0s31f6" ];
