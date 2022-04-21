@@ -33,7 +33,7 @@ in
     gitAndTools.git-appraise
     gitAndTools.grv
     mr
-    my.prm
+    #my.prm
     my.ape
     difftastic
   ];
