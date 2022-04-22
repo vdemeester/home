@@ -103,7 +103,10 @@ in
     desktop.enable = lib.mkForce false;
     avahi.enable = true;
     syncthing.enable = true;
-    ssh = { enable = true; };
+    ssh = {
+      enable = true;
+      forwardX11 = true;
+    };
     virtualization = { enable = true; nested = true; listenTCP = true; };
   };
   services = {
