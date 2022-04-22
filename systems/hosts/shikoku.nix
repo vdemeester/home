@@ -97,6 +97,7 @@ in
     device = "/dev/disk/by-uuid/a9ec44e6-0c1d-4f60-9f5c-81a7eaa8e8fd";
   }];
 
+  programs.ssh.setXAuthLocation = true;
   profiles = {
     home = true;
     dev.enable = lib.mkForce false;
