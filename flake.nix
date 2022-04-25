@@ -230,6 +230,7 @@
           sshUser = "root";
           nodes = {
             shikoku = mkNode "shikoku" "192.168.1.24" true;
+            wakasu = mkNode "wakasu" "192.167.1.77" true;
           };
         };
 
