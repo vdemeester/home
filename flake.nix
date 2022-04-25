@@ -194,6 +194,7 @@
           modules = [
             home-manager-stable.nixosModules.home-manager
             nixos-hardware.nixosModules.common-pc-ssd
+            ./systems/modules/profiles/docker.stable.nix
             ./systems/hosts/sakhalin.nix
           ];
         };
@@ -232,6 +233,8 @@
           nodes = {
             shikoku = mkNode "shikoku" "192.168.1.24" true;
             wakasu = mkNode "wakasu" "192.168.1.77" true;
+            sakhalin = mkNode "sakhalin" "192.168.1.70" true;
+            kerkouane = mkNode "kerkouane" "kerkouane.vpn" false;
           };
         };
 
