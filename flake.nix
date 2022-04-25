@@ -77,6 +77,15 @@
       nixosModules = flake-utils-plus.lib.exportModules [
         ./systems/modules/virtualisation/buildkit.nix
       ];
+
+      stableModules = [
+        home-manager-stable.nixosModules.home-manager
+        ./systems/modules/profiles/docker.stable.nix
+      ];
+      unstableModules = [
+        home-manager.nixosModules.home-manager
+        ./systems/modules/profiles/docker.nix
+      ];
     in
     flake-utils-plus.lib.mkFlake {
       inherit self inputs nixosModules;
@@ -152,20 +161,16 @@
       hosts = {
         # Main laptop
         naruhodo = {
-          modules = [
-            home-manager.nixosModules.home-manager
+          modules = unstableModules ++ [
             nixos-hardware.nixosModules.lenovo-thinkpad-t480s
             nixos-hardware.nixosModules.common-pc-laptop-ssd
-            ./systems/modules/profiles/docker.nix
             ./systems/hosts/naruhodo.nix
           ];
         };
         # WSL setup
         # FIXME okinawa doesn't have openssh
         okinawa = {
-          modules = [
-            home-manager.nixosModules.home-manager
-            ./systems/modules/profiles/docker.nix
+          modules = unstableModules ++ [
             nixos-wsl.nixosModules.wsl
             ./systems/hosts/okinawa.nix
           ];
@@ -173,35 +178,28 @@
         # Servers
         shikoku = {
           channelName = "nixos-21_11";
-          modules = [
-            home-manager-stable.nixosModules.home-manager
-            ./systems/modules/profiles/docker.stable.nix
+          modules = stableModules ++ [
             ./systems/hosts/shikoku.nix
           ];
         };
         wakasu = {
           channelName = "nixos-21_11";
-          modules = [
-            home-manager-stable.nixosModules.home-manager
+          modules = stableModules ++ [
             nixos-hardware.nixosModules.lenovo-thinkpad
             nixos-hardware.nixosModules.common-pc-laptop-ssd
-            ./systems/modules/profiles/docker.stable.nix
             ./systems/hosts/wakasu.nix
           ];
         };
         sakhalin = {
           channelName = "nixos-21_11";
-          modules = [
-            home-manager-stable.nixosModules.home-manager
+          modules = stableModules ++ [
             nixos-hardware.nixosModules.common-pc-ssd
-            ./systems/modules/profiles/docker.stable.nix
             ./systems/hosts/sakhalin.nix
           ];
         };
         aomi = {
           channelName = "nixos-21_11";
-          modules = [
-            home-manager-stable.nixosModules.home-manager
+          modules = stableModules ++ [
             nixos-hardware.nixosModules.lenovo-thinkpad-p1-3th-gen
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             ./systems/hosts/aomi.nix
@@ -209,8 +207,8 @@
         };
         kerkouane = {
           channelName = "nixos-21_11";
-          modules = [
-            home-manager-stable.nixosModules.home-manager
+          modules = stableModules ++ [
+            ./systems/modules/services/govanityurl.nix
             ./systems/hosts/kerkouane.nix
           ];
         };
