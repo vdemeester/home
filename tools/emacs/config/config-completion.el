@@ -248,12 +248,12 @@ instead."
               ("M-h" . nil)
               ("C-h" . corfu-show-documentation))
   :config
-  (setq corfu-auto  t
+  (setq corfu-auto  nil
         corfu-cycle t
         corfu-quit-no-match t
         corfu-preselect-first nil
+        corfu-quit-at-boundary nil
         corfu-scroll-margin 5)
-  (setq corfu-quit-at-boundary nil)
   (defun my/corfu-shell-settings ()
     (setq-local corfu-quit-at-boundary t
                 corfu-quit-no-match t
