@@ -185,6 +185,7 @@
             home-manager-stable.nixosModules.home-manager
             nixos-hardware.nixosModules.lenovo-thinkpad
             nixos-hardware.nixosModules.common-pc-laptop-ssd
+            ./systems/modules/profiles/docker.stable.nix
             ./systems/hosts/wakasu.nix
           ];
         };
