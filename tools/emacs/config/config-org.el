@@ -136,7 +136,7 @@
         org-cycle-separator-lines 1
         org-adapt-indentation nil
         org-hide-leading-stars t
-        org-hide-emphasis-markers t)
+        org-hide-emphasis-markers nil)
   (setcar (nthcdr 4 org-emphasis-regexp-components) 10)
   :hook (org-mode . vde/org-mode-hook))
 
@@ -148,9 +148,6 @@
     (auto-revert-mode)
     (auto-fill-mode)
     (org-indent-mode)
-    (set (make-local-variable 'company-backends)
-         '(company-emoji company-capf company-files company-dabbrev))
-    (company-mode 1)
     (add-hook 'before-save-hook #'save-and-update-includes nil 'make-it-local)))
 (use-package org-agenda
   :after org
