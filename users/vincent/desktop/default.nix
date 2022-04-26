@@ -17,6 +17,7 @@
     aspell
     aspellDicts.en
     aspellDicts.fr
+    desktop-file-utils
     hunspell
     hunspellDicts.en_US-large
     hunspellDicts.en_GB-ize

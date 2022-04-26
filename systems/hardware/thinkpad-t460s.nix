@@ -1,11 +1,11 @@
 { config, pkgs, ... }:
-let
-  sources = import ../../nix/sources.nix;
-in
+#let
+#  sources = import ../../nix/sources.nix;
+#in
 {
   imports = [
-    (sources.nixos-hardware + "/lenovo/thinkpad/t460s")
-    (sources.nixos-hardware + "/common/pc/ssd")
+    #  (sources.nixos-hardware + "/lenovo/thinkpad/t460s")
+    #  (sources.nixos-hardware + "/common/pc/ssd")
     ./thinkpad.nix
   ];
   nix.maxJobs = 12;

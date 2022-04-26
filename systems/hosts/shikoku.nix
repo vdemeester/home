@@ -1,8 +1,8 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
-  hostname = "wakasu";
+  hostname = "shikoku";
   secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
 
@@ -14,15 +14,16 @@ let
 in
 {
   imports = [
-    ../hardware/lenovo-p50.nix
-    #(import ../../nix).home-manager-stable
+    # (import ../../nix).home-manager-stable
     #../modules/default.stable.nix
     (import ../../users).vincent
     (import ../../users).root
   ];
 
+  boot.supportedFilesystems = [ "zfs" ];
+  networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
+
   networking = {
-    hostName = hostname;
     bridges.br1.interfaces = [ "enp0s31f6" ];
     firewall.enable = false; # we are in safe territory :D
     useDHCP = false;
@@ -47,41 +48,70 @@ in
     "powerpc64le-linux"
   ];
 
+  # TODO: check if it's done elsewhere
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+
+  # TODO: check if it's done elsewhere
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/6590b73d-72a4-4356-94b1-f56ac45c976d";
+    device = "/dev/disk/by-uuid/73fd8864-f6af-4fdd-b826-0dfdeacd3c19";
     fsType = "ext4";
     options = [ "noatime" "discard" ];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/7FA5-145B";
+    device = "/dev/disk/by-uuid/829D-BFD1";
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/720200fc-8f27-49a7-85bb-a406b6119d31"; }];
+  # Extra data
+  # HDD:   b58e59a4-92e7-4278-97ba-6fe361913f50
+  fileSystems."/data" = {
+    device = "/dev/disk/by-uuid/b58e59a4-92e7-4278-97ba-6fe361913f50";
+    fsType = "ext4";
+    options = [ "noatime" ];
+  };
+  # ZFS Pool
+  # SSD1:  469077df-049f-4f5d-a34f-1f5449d782ec
+  # SSD2:  e11a3b63-791c-418b-9f4b-5ae0199f1f97
+  # NVME2: 3d2dff80-f2b1-4c48-8e76-12b01fdf4137
+  fileSystems."/tank/data" =
+    {
+      device = "tank/data";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
+    };
 
+  fileSystems."/tank/virt" =
+    {
+      device = "tank/virt";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
+    };
+
+  swapDevices = [{
+    device = "/dev/disk/by-uuid/a9ec44e6-0c1d-4f60-9f5c-81a7eaa8e8fd";
+  }];
+
+  programs.ssh.setXAuthLocation = true;
   profiles = {
-    bind.enable = true;
     home = true;
-    dev.enable = false;
+    dev.enable = lib.mkForce false;
     desktop.enable = lib.mkForce false;
-    laptop.enable = true;
-    docker.enable = true;
     avahi.enable = true;
     syncthing.enable = true;
-    ssh = { enable = true; };
+    ssh = {
+      enable = true;
+      forwardX11 = true;
+    };
     virtualization = { enable = true; nested = true; listenTCP = true; };
-  };
-  security = {
-    pam.u2f.enable = true;
   };
   services = {
     netdata.enable = true;
-    logind.extraConfig = ''
-      HandleLidSwitch=ignore
-      HandleLidSwitchExternalPower=ignore
-      HandleLidSwitchDocked=ignore
-    '';
     syncthing.guiAddress = "${ip}:8384";
     smartd = {
       enable = true;
@@ -93,31 +123,6 @@ in
       endpoint = endpointIP;
       endpointPort = endpointPort;
       endpointPublicKey = endpointPublicKey;
-    };
-    nginx = {
-      enable = true;
-      recommendedGzipSettings = true;
-      recommendedTlsSettings = true;
-      recommendedOptimisation = true;
-      virtualHosts."whoami.sbr.pm" = {
-        locations."/" = {
-          proxyPass = "http://192.168.1.187:80";
-          extraConfig = ''
-            proxy_set_header Host            $host;
-            proxy_set_header X-Forwarded-For $remote_addr;
-          '';
-        };
-      };
-      virtualHosts."webhook.sbr.pm" = {
-        # listen = [{ port = 8080; }];
-        locations."/" = {
-          proxyPass = "http://192.168.1.188:8080";
-          extraConfig = ''
-            proxy_set_header Host            $host;
-            proxy_set_header X-Forwarded-For $remote_addr;
-          '';
-        };
-      };
     };
   };
 

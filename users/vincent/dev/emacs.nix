@@ -16,6 +16,11 @@ let
     emacsclient --create-frame $@
   '';
   myExtraPackages = epkgs: with epkgs; [
+    # FIXME(vdemeester) once it is fixed, re-add
+    # pkgs.dired-plus
+    # org-transclusion
+    #python-mode
+    #whole-line-or-region
     ace-window
     aggressive-indent
     alert
@@ -28,15 +33,16 @@ let
     color-identifiers-mode
     consult
     consult-dir
+    consult-lsp
     corfu
     dap-mode
     dash
     delight
-    diredfl
     dired-collapse
     dired-narrow
     dired-rsync
     dired-subtree
+    diredfl
     dockerfile-mode
     dumb-jump
     easy-kill
@@ -54,10 +60,10 @@ let
     flymake-languagetool
     focus
     git-annex
-    git-modes
     git-commit
     git-gutter
     git-gutter-fringe
+    git-modes
     github-review
     go-mode
     gotest
@@ -71,11 +77,10 @@ let
     ibuffer-vc
     icomplete-vertical
     json-mode
+    kind-icon
+    lsp-focus
     lsp-mode
     lsp-ui
-    lsp-focus
-    consult-lsp
-    kind-icon
     magit
     magit-annex
     magit-popup
@@ -96,11 +101,10 @@ let
     org
     org-appear
     org-capture-pop-frame
-    org-journal
     org-contrib
+    org-journal
     org-ql
     org-super-agenda
-    # org-transclusion
     org-tree-slide
     org-web-tools
     orgit
@@ -108,9 +112,6 @@ let
     pandoc-mode
     pdf-tools
     pkgs.bookmark-plus
-    pkgs.dired-plus
-    # FIXME(vdemeester) once it is fixed, re-add
-    #python-mode
     rainbow-delimiters
     rainbow-mode
     rg
@@ -129,7 +130,6 @@ let
     vterm
     web-mode
     wgrep
-    #whole-line-or-region
     with-editor
     xterm-color
     yaml-mode
@@ -153,7 +153,7 @@ in
   ];
   programs.emacs = {
     enable = true;
-    package = (pkgs.emacsGcc.override { withGTK3 = true; withGTK2 = false; withX = true; withXwidgets = true; });
+    package = (pkgs.emacsNativeComp.override { withGTK3 = true; withGTK2 = false; withX = true; withXwidgets = true; });
     extraPackages = myExtraPackages;
   };
   services.emacs = {

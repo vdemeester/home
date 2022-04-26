@@ -95,10 +95,10 @@ in
 
     nixpkgs = {
       overlays = [
-        (import ../../../nix/overlays/mkSecret.nix)
-        (import ../../../nix/overlays/sbr.nix)
-        (import ../../../nix/overlays/unstable.nix)
-        (import ../../../nix).emacs
+        # (import ../../../nix/overlays/mkSecret.nix)
+        # (import ../../../nix/overlays/sbr.nix)
+        # (import ../../../nix/overlays/unstable.nix)
+        # (import ../../../nix).emacs
       ];
       config = {
         allowUnfree = true;

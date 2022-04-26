@@ -1,13 +1,13 @@
 { config, pkgs, ... }:
-let
-  sources = import ../../nix/sources.nix;
-in
+#let
+#  sources = import ../../nix/sources.nix;
+#in
 {
   imports = [
     ./thinkpad.nix
-    (sources.nixos-hardware + "/lenovo/thinkpad/tp-smapi.nix")
-    (sources.nixos-hardware + "/common/cpu/intel")
-    (sources.nixos-hardware + "/common/pc/ssd")
+    #(sources.nixos-hardware + "/lenovo/thinkpad/tp-smapi.nix")
+    #(sources.nixos-hardware + "/common/cpu/intel")
+    #(sources.nixos-hardware + "/common/pc/ssd")
   ];
   boot = {
     kernelParams = [ "i915.enable_psr=1" ];

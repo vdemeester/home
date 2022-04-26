@@ -17,7 +17,7 @@ in
     minikube
     ko
     crane
-    my.krew
+    #my.krew
     my.kss
     # our own scripts
     knd
