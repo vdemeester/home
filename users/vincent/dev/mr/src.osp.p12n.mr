@@ -8,6 +8,15 @@ checkout =
     git remote rename origin gerrit
 u = git fetch -p --all
 
+[p12n]
+checkout =
+    git clone git@gitlab.cee.redhat.com:vdemeest/p12n.git p12n
+    cd p12n
+    git config http.sslVerify false
+    git remote add upstream https://gitlab.cee.redhat.com/tekton/p12n
+    git fetch -p --all
+u = git fetch -p --all
+
 [plumbing]
 checkout =
     git clone git@gitlab.cee.redhat.com:vdemeest/tekton-plumbing.git plumbing
@@ -28,7 +37,7 @@ u = git fetch -p --all
 
 [cpaas-config]
 checkout =
-    git clone git@gitlab.cee.redhat.com:vdemeest/cpaas-products-openshift-pipelines.git cpaas-config
+    git clone git@gitlab.cee.redhat.com:vdemeest/openshift-pipelines.git cpaas-config
     cd cpaas-config
     git config http.sslVerify false
     git remote add upstream https://gitlab.cee.redhat.com/cpaas-products/openshift-pipelines.git
@@ -37,7 +46,7 @@ u = git fetch -p --all
 
 [cpaas-product-configs]
 checkout =
-    git clone git@gitlab.cee.redhat.com:vdemeest/cpaas-products-product-configs.git cpaas-product-configs
+    git clone git@gitlab.cee.redhat.com:vdemeest/product-configs.git cpaas-product-configs
     cd cpaas-product-configs
     git config http.sslVerify false
     git remote add upstream https://gitlab.cee.redhat.com/cpaas-products/product-configs.git
