@@ -10,5 +10,6 @@
     my.manifest-tool
     nerdctl
     act
+    dagger
   ];
 }
