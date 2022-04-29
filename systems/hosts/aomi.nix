@@ -189,7 +189,7 @@ in
       OnFailure = "status-email-root@%.service";
     };
 
-    path = with pkgs; [ git openssh gnumake docker-client bash coreutils-full gawk curl nix kustomize which ];
+    path = with pkgs; [ git openssh bash coreutils-full nix which ];
     script = ''
       set -e
       cd /home/vincent/src/osp/p12n/p12n

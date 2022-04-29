@@ -8,15 +8,21 @@ in
 pkgs.mkShell {
   name = "osp";
   buildInputs = with pkgs; [
-    go
-    gron
-    yq-go
-    jq
-    python39Packages.pyaml
-    my.oc
-    my.tkn
-    my.operator-sdk
+    curl
+    docker-client
+    gawk
     git-crypt
+    gnumake
+    gron
+    jq
+    kustomize
+    my.oc
+    my.operator-sdk
+    my.tkn
+    python39Packages.pyaml
+    skopeo
+    yq-go
+    go
   ];
   shellHook = ''
     export GOMODULE=on
