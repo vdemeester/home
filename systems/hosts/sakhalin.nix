@@ -99,11 +99,11 @@ in
         /export/toshito              192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
       '';
     };
-    nix-binary-cache = {
-      enable = true;
-      domain = "nix.cache.home";
-      aliases = [ "cache.sakhalin.home" ];
-    };
+    # nix-binary-cache = {
+    #   enable = true;
+    #   domain = "nix.cache.home";
+    #   aliases = [ "cache.sakhalin.home" ];
+    # };
     dockerRegistry = {
       enable = true;
       listenAddress = "0.0.0.0";
