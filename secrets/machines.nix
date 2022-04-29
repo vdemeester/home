@@ -102,7 +102,8 @@ let
       authorized = true;
     };
     yubikey5 = {
-      key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJoArpBsTXr3m6q2QnA1vI1DSwmgdU0OAp7DUxcxl9CJfeZIEs/iAerk8jmHgJ2xCEF6SpzI0FWSQIXy8dKpF4wLJ0tCoq5LqQx3jEzy3NUBLfxK+/Baa1te4qG2YImlgnzmEEm5uZlCGZRY2L/U9+4Hwo1AgD69Zzin6QGh2pyTWpmZ/WyhwIfGgqsnlM9XlaVzlMHYfStDi+rUU6XEAfdSqo1SnWKDBHc3mDYGTVhfAlt2LucLKu7oI2MsSlSxva072BExctadtB3TGHbt8gRJZj8CdwgRNhT+hFfbsL6YDvQn6dhTSMuiD8sBEvVble0Nj4p+Q6ROCRIuMuhgh3 cardno:000610153832";
+      # key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJoArpBsTXr3m6q2QnA1vI1DSwmgdU0OAp7DUxcxl9CJfeZIEs/iAerk8jmHgJ2xCEF6SpzI0FWSQIXy8dKpF4wLJ0tCoq5LqQx3jEzy3NUBLfxK+/Baa1te4qG2YImlgnzmEEm5uZlCGZRY2L/U9+4Hwo1AgD69Zzin6QGh2pyTWpmZ/WyhwIfGgqsnlM9XlaVzlMHYfStDi+rUU6XEAfdSqo1SnWKDBHc3mDYGTVhfAlt2LucLKu7oI2MsSlSxva072BExctadtB3TGHbt8gRJZj8CdwgRNhT+hFfbsL6YDvQn6dhTSMuiD8sBEvVble0Nj4p+Q6ROCRIuMuhgh3 cardno:000610153832";
+      key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJoArpBsTXr3m6q2QnA1vI1DSwmgdU0OAp7DUxcxl9CJfeZIEs/iAerk8jmHgJ2xCEF6SpzI0FWSQIXy8dKpF4wLJ0tCoq5LqQx3jEzy3NUBLfxK+/Baa1te4qG2YImlgnzmEEm5uZlCGZRY2L/U9+4Hwo1AgD69Zzin6QGh2pyTWpmZ/WyhwIfGgqsnlM9XlaVzlMHYfStDi+rUU6XEAfdSqo1SnWKDBHc3mDYGTVhfAlt2LucLKu7oI2MsSlSxva072BExctadtB3TGHbt8gRJZj8CdwgRNhT+hFfbsL6YDvQn6dhTSMuiD8sBEvVble0Nj4p+Q6ROCRIuMuhgh3 cardno:10 153 832";
       authorized = true;
     };
     kerkouane = {
