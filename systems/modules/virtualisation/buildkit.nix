@@ -52,7 +52,9 @@ in
 
     settings = lib.mkOption {
       type = settingsFormat.type;
-      default = { };
+      default = {
+        grpc.address = [ "unix:///run/buildkit/buildkitd.sock" ];
+      };
       description = ''
         Verbatim lines to add to containerd.toml
       '';
@@ -66,7 +68,6 @@ in
 
     virtualisation.buildkitd = {
       args = {
-        addr = "unix:///run/buildkit/buildkitd.sock";
         group = "buildkit";
         config = toString configFile;
       };

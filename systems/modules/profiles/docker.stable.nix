@@ -18,6 +18,7 @@ in
         description = "runc package to be used";
         type = types.package;
       };
+
     };
   };
   config = mkIf cfg.enable {
@@ -28,6 +29,10 @@ in
       buildkitd = {
         enable = true;
         settings = {
+          grpc = {
+            # FIXME(vdemeester) move TCP behind an option (and not 0.0.0.0)
+            address = [ "unix:///run/buildkit/buildkitd.sock" "tcp://0.0.0.0:1234" ];
+          };
           worker.oci = {
             enabled = false;
           };
