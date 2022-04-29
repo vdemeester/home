@@ -173,4 +173,42 @@ in
     openssh.authorizedKeys.keys = [ (builtins.readFile ../../secrets/builder.pub) ];
   };
   nix.trustedUsers = [ "root" "vincent" "builder" ];
+
+  # RedHat specific
+  systemd.services.osp-vdemeest-nightly = {
+    description = "Build nightly builds";
+    requires = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+
+    restartIfChanged = false;
+    unitConfig.X-StopOnRemoval = false;
+
+    serviceConfig = {
+      Type = "oneshot";
+      User = "vincent";
+      OnFailure = "status-email-root@%.service";
+    };
+
+    path = with pkgs; [ git openssh gnumake docker-client bash coreutils-full gawk curl nix kustomize which ];
+    script = ''
+      set -e
+      cd /home/vincent/src/osp/p12n/p12n
+      git fetch -p --all
+      BRANCH="git symbolic-ref --short HEAD"
+      # 1.8
+      git checkout upstream/pipelines-1.8-rhel-8
+      nix-shell /home/vincent/src/osp/shell.nix --command 'make REMOTE=quay.io/vdemeest TAG=1.8 sources/upgrade sources/operator/fetch-payload  bundle/push'
+      # make REMOTE=quay.io/vdemeest TAG=1.8 sources/upgrade sources/operator/fetch-payload  bundle/push
+      git reset --hard HEAD
+      #1.7
+      git checkout upstream/pipelines-1.7-rhel-8
+      nix-shell /home/vincent/src/osp/shell.nix --command 'make REMOTE=quay.io/vdemeest TAG=1.7 sources/upgrade sources/operator/fetch-payload  bundle/push'
+      # make REMOTE=quay.io/vdemeest TAG=1.7 sources/upgrade sources/operator/fetch-payload  bundle/push
+      git reset --hard HEAD
+      # revert
+      git checkout $BRANCH
+    '';
+
+    startAt = "daily";
+  };
 }
