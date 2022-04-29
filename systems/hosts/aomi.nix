@@ -194,7 +194,7 @@ in
       set -e
       cd /home/vincent/src/osp/p12n/p12n
       git fetch -p --all
-      BRANCH="git symbolic-ref --short HEAD"
+      BRANCH=$(git symbolic-ref --short HEAD)
       # 1.8
       git checkout upstream/pipelines-1.8-rhel-8
       nix-shell /home/vincent/src/osp/shell.nix --command 'make REMOTE=quay.io/vdemeest TAG=1.8 sources/upgrade sources/operator/fetch-payload  bundle/push'
