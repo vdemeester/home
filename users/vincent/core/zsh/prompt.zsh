@@ -67,6 +67,7 @@
       # ram                   # free RAM
       # load                  # CPU load
       in_nix_shell
+      docker_host
       time                    # current time
       # =========================[ Line #2 ]=========================
       #newline
@@ -839,6 +840,12 @@
       fi
     fi
   }
+
+  function prompt_docker_host() {
+      if test -n "${DOCKER_HOST}"; then
+          p10k segment -f blue -i '🐋' -t "${DOCKER_HOST}"
+      fi
+  }
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
   # is to generate the prompt segment for display in instant prompt. See
   # https://github.com/romkatv/powerlevel10k/blob/master/README.md#instant-prompt.
@@ -851,6 +858,10 @@
 
   function instant_prompt_in_nix_shell() {
     prompt_in_nix_shell
+  }
+
+  function instant_prompt_docker_host() {
+      prompt_docker_host
   }
 
   # User-defined prompt segments can be customized the same way as built-in segments.
