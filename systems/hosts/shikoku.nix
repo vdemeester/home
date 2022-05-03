@@ -108,6 +108,7 @@ in
       enable = true;
       forwardX11 = true;
     };
+    docker.enable = true;
     virtualization = { enable = true; nested = true; listenTCP = true; };
   };
   services = {
