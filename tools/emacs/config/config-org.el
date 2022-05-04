@@ -103,7 +103,7 @@
         org-enforce-todo-dependencies t
         org-refile-targets (append '((org-inbox-file :level . 0))
                                    (->>
-                                    (directory-files org-projects-dir nil ".org")
+                                    (directory-files org-projects-dir nil ".org$")
                                     (--remove (s-starts-with? "." it))
                                     (--map (format "%s/%s" org-projects-dir it))
                                     (--map `(,it :level . 1))))
