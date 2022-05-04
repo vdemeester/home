@@ -22,7 +22,7 @@
   ;; (lsp-enable-indentation nil)
   (lsp-prefer-flymake t)
   (lsp-ui-sideline-enable nil)
-  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-enable nil)
   (lsp-ui-imenu-enable t)
   (lsp-ui-sideline-ignore-duplicate t)
   (lsp-enable-folding t)
