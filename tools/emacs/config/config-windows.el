@@ -43,6 +43,16 @@
          ("C-s-<left>" . windmove-left)))
 ;; -UseWindmove
 
+;; UseWindow
+(use-package window
+  :unless noninteractive
+  :commands (shrink-window-horizontally shrink-window enlarge-window-horizontally enlarge-window)
+  :bind (("S-C-<left>" . shrink-window-horizontally)
+         ("S-C-<right>" . enlarge-window-horizontally)
+         ("S-C-<down>" . shrink-window)
+         ("S-C-<up>" . enlarge-window)))
+;; -UseWindow
+
 (use-package zoom-window
   :commands (zoom-window-zoom)
   :bind (("C-x C-z" . zoom-window-zoom))
