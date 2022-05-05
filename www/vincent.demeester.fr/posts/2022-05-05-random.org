@@ -1,0 +1,24 @@
+#+title: Random thoughts after 2 years
+#+date: <2022-05-05 Thu>
+#+filetags: #home
+#+setupfile: ../templates/2022.post.org
+
+* Introduction
+
+Hello world !
+
+#+begin_src emacs-lisp
+(defun read-file (filePath)
+  "Return FILEPATH's file content."
+  (with-temp-buffer
+    (insert-file-contents filePath)
+    (buffer-string)))
+#+end_src
+
+#+begin_quote
+HTML export of drawer with NAME and CONTENT.
+name is the name of the drawer, that will be used as class.
+content is the content of the drawer
+
+— Vincent Demeester
+#+end_quote
