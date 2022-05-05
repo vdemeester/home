@@ -18,9 +18,9 @@ boot:
 switch:
 	sudo nixos-rebuild --flake .# switch
 dry-build:
-	sudo nixos-rebuild --flake .# dry-build
+	nixos-rebuild --flake .# dry-build
 build:
-	sudo nixos-rebuild --flake .# build
+	nixos-rebuild --flake .# build
 
 FORCE:
 
