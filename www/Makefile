@@ -1,3 +1,5 @@
+all: build
+
 build:
 	make -C vincent.demeester.fr build
 

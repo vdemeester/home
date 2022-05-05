@@ -87,6 +87,10 @@ clean-www:
 	-rm -rvf *.elc
 	-rm -rv ~/.org-timestamps/*
 
+.PHONY: www
+www:
+	(cd www; make)
+
 # Documentation build and publishing
 .PHONY: update-docs
 update-docs:

@@ -134,5 +134,10 @@
          :recursive t)
         ("all" :components ("posts" "about" "index" "articles" "articles-assets" "css" "images" "assets" "legacy" "posts-rss"))))
 
+(defun publish ()
+  "Build vincent.demeester.fr website"
+  (delete-directory (expand-file-name "~/.org-timestamps") t)
+  (org-publish-all))
+
 (provide 'publish)
 ;;; publish.el ends here

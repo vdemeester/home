@@ -48,11 +48,11 @@ all: build
 
 
 .PHONY: build
-build: publish.el publish-common.el build-articles
+build: lib/publish.el lib/publish-common.el build-articles
 	@echo "Publishing... with current Emacs configurations."
 	${EMACS} --debug-init --batch --directory $(DOTEMACS)/lisp/ --directory $(DOTEMACS)/lisp/vorg/ \
 		--load lib/publish-common.el --load lib/publish.el \
-		--funcall org-publish-all
+		--funcall publish
 
 .PHONY: build-articles
 build-articles: $(NOTES)
