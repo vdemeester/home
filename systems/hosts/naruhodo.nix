@@ -65,6 +65,7 @@ in
       v4l2loopback
     ];
     kernelModules = [ "v4l2loopback" ];
+    kernelParams = [ "cgroup_no_v1=all" "systemd.unified_cgroup_hierarchy=1" ];
     extraModprobeConfig = ''
       options v4l2loopback exclusive_caps=1
     '';
