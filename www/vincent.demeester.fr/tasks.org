@@ -1,5 +1,10 @@
 #+TITLE: tasks
 
+* TODO Set =<mark>= with orgmode
+
+- https://emacs.stackexchange.com/questions/36496/how-to-mark-code-fragments-in-org-export
+- https://emacs.stackexchange.com/questions/12814/extending-org-mode-with-more-markups
+
 * TODO Should the publish/export code be in =src/home=
 
 A nice side effect would be that it can be used directly from emacs (no need to call =make=
