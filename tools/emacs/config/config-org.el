@@ -136,7 +136,8 @@
         org-cycle-separator-lines 1
         org-adapt-indentation nil
         org-hide-leading-stars t
-        org-hide-emphasis-markers nil)
+        org-hide-emphasis-markers nil
+        org-link-file-path-type 'relative)
   (setcar (nthcdr 4 org-emphasis-regexp-components) 10)
   :hook (org-mode . vde/org-mode-hook))
 
