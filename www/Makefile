@@ -1,7 +1,7 @@
 all: build
 
 build:
-	make -C vincent.demeester.fr build
+	make -C vincent.demeester.fr clean build
 
 publish:
-	make -C vincent.demeester.fr publish
+	make -C vincent.demeester.fr clean publish

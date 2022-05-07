@@ -56,7 +56,7 @@ build: lib/publish.el lib/publish-common.el build-articles
 
 .PHONY: build-articles
 build-articles: $(NOTES)
-	rsync -arv --delete --copy-links --exclude='*.private.org' --exclude='*.db' $(NOTES)/ articles/
+	rsync -arv --delete --copy-links --exclude='*.private.org' --exclude='*.db' $(NOTES)/ content/articles/
 
 $(NOTES):
 	$(error $(NOTES) doesn't exists…)
@@ -115,4 +115,4 @@ clean:
 	@echo "Cleaning up.."
 	@-rm -rvf *.elc
 	@-rm -rvf public
-	@-rm -rv ~/.org-timestamps/*
+	#@-rm -rv ~/.org-timestamps/*

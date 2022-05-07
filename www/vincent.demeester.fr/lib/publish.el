@@ -11,7 +11,7 @@
 
 (setq org-publish-project-alist
       `(("posts"
-         :base-directory "posts"
+         :base-directory "content/posts"
          :base-extension "org"
          :recursive t
          :publishing-function org-html-publish-to-html
@@ -33,7 +33,7 @@
          :html-preamble sbr-website-html-preamble
          :html-postamble ,sbr-website-html-postamble)
         ("posts-rss"
-         :base-directory "posts"
+         :base-directory "content/posts"
          :base-extension "org"
          :recursive t
          :html-link-home "https://vincent.demeester.fr/"
@@ -46,7 +46,7 @@
          :exclude ".*"
          :include ("index.org"))
         ("articles"
-         :base-directory "articles"
+         :base-directory "content/articles"
          :base-extension "org"
          :recursive t
          :publishing-function org-html-publish-to-html
@@ -69,13 +69,13 @@
          :html-postamble ,sbr-website-html-postamble)
         ("articles-assets"
          :exclude ,(regexp-opt '("*.org"))
-         :base-directory "articles"
+         :base-directory "content/articles"
          :base-extension ,site-attachments
          :publishing-directory "./public/articles"
          :publishing-function org-publish-attachment
          :recursive t)
         ("about"
-         :base-directory "about"
+         :base-directory "content/about"
          :base-extension "org"
          :exclude ,(regexp-opt '("README.org" "draft"))
          :index-filename "index.org"
@@ -91,7 +91,7 @@
          :html-preamble sbr-website-html-preamble
          :html-postamble ,sbr-website-html-postamble)
         ("index"
-         :base-directory ""
+         :base-directory "content/"
          :base-extension "org"
          :exclude ,(regexp-opt '("README.org" "draft"))
          :index-filename "index.org"
@@ -115,7 +115,7 @@
          :publishing-function org-publish-attachment
          :recursive t)
         ("images"
-         :base-directory "./images"
+         :base-directory "./content/images"
          :base-extension ,site-attachments
          :publishing-directory "./public/images"
          :publishing-function org-publish-attachment
@@ -127,7 +127,7 @@
          :publishing-function org-publish-attachment
          :recursive t)
         ("legacy"
-         :base-directory "./legacy"
+         :base-directory "./content/legacy"
          :base-extension ,site-attachments
          :publishing-directory "./public/"
          :publishing-function org-publish-attachment
