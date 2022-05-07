@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-10-19 Tue 14:36 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>2021-10 Journal</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Vincent Demeester" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">2021-10 Journal</h1>
+<dl class="org-dl">
+<dt>AppStudio organization across teams</dt><dd>The way AppStudio is organize is relatively to <b>very</b> inefficient. Trying to organize a
+bunch of small team — that have, for most of them, an actual product to deliver. The F2F
+showed that. AppStudio initial scope is relatively small and it could be handle way more
+efficiently by one <i>execution</i> team that design AppStudio based on it's need, and work on
+product (and with product teams) to achieve their goal.  The amount of meetings and
+discussion added by this "cross-team" effort is enormous (and most likely tiring to a
+lot of folks, including me). And even like that, we have the feeling that there is not
+enough communication between teams (e.g., on what is the responsibilities and boundaries
+of each service — and assumption that we make). This also creates sources of contentions
+that would be not happening if AppStudio team was one <i>execution</i> team.</dd>
+
+<dt>Build Service / Tekton Service</dt><dd><p>
+For some reason, we brought OSBS and CPaaS team in the AppStudio loop. For some reason,
+we <i>sold</i> them that AppStudio would fit their bill. But if we look at the requirements of
+each, they are very different. AppStudio has the smallest amount of requirements and
+somehow should encapsulate all the others ? As said above, it seems to me that the
+current vision of AppStudio is very very close to a Digital Ocean Apps made by Red
+Hat. This, in my opinion, has nothing to do with a lot of requirement OSBS and other
+have. It doesn't even tie AppStudio to KCP.
+</p>
+
+<p>
+Siamak tried to clarify a bit this in <a href="https://docs.google.com/presentation/d/1Y4555ByKNnc-IqudjpimeHCwO-q8XPMpYkbGVk9glmk/edit#slide=id.gf4c3d0aa3b_0_17">Managed Tekton Service</a>, by proposing a Tekton
+Service (Tekton API served by something — kcp is impl. detail here) and AppStudio, OSBS,
+CPaaS, RHODS, and whatever-comes-next, to build build on top. In a simple term, all
+those services (internal or external) would build on top of the Tekton API. Benifiting
+from each others at different possible levels (Tasks, …). This got "changed" again, for
+being confusing — which is getting me confused. What is wrong with all building on top
+of Tekton ? Do we feel Tekton abstraction is not at the right level ? Do we think the
+abstraction that will be at AppStudio Build Service level will be the right one and more
+importantly, will "fit them all" ? (note: if so, then why do we consider Tekton API in
+the picture at all, is one question we can ask ourselves). Most importantly what are the
+reason we <b>absolutely</b> want to use the exact same system for all ? If it's to be able to
+say "we use the same tools as what we are selling", isn't the tekton api (+ tasks, … )
+level, openshift, etc.,  good enough already ?
+</p>
+
+<p>
+Most of the time (to not say <b>all the time</b>), duplication is better than the wrong
+abstraction. I'd rather have a few things duplicated between OSBS, CPaaS, Appstudio, …
+to start with, gather information on what are those duplication, and do something about
+it, than trying to resolve all of the problems with one abstraction that has a high
+chance of not getting it right anyway.
+</p>
+
+<p>
+It also seems the experience and "service" vision, long-term (kcp, …), is disconnected
+from the first(s) milestone(s) of AppStudio. What do we want to achieve for Red Hat Summit
+and after ? Is our goal to present something that is usable by customer even if it
+doesn't do anything like the long-term vision (aka not based on kcp, …) ? Or is the goal
+to show that KCP vision applies and work. If it's the 2nd, then, AppStudio should not
+only go at the KCP vision pace but also actually participating to it, working towards it
+and not focus on providing an AppStudio experience independently of it. KCP seems to be
+at a relative experimental state, and, thus, if we consider AppStudio as a <i>capability</i> on
+top of KCP, AppStudio itself should be consider in an experimental state too (and
+organizationally wise it would change how we do things).
+</p></dd>
+
+<dt>Decision mechansims and "unilateral changes"</dt><dd><p>
+I have some relative concerns around how is AppStudio Build Service being discussed and
+who is talking about what, and when. Decision, and discussion should be taken with all
+representative as part of it (Siamak, Guillaume, …) and it feels like sometimes some
+decision or changes are don unilaterally. A good example of this is the recent changes
+<a href="https://docs.google.com/presentation/d/1Y4555ByKNnc-IqudjpimeHCwO-q8XPMpYkbGVk9glmk/edit#slide=id.gf4c3d0aa3b_0_17">Managed Tekton Service</a> slidedeck, without any prior discussion, and without actually
+sharing with the rest of the stakeholders what is confusing about the current setup
+(note that it had been shared with all the folks and we didn't have that "it's confusing
+feedback"). This creates some confusion around who are the representative of the Build
+Service team, and the Pipeline team for example. From my point of view, anyone who is
+not part of the execution teams, is not a representative of those teams and it feels
+really weird to me that potential discussion and decision are taken by individuals that
+are not part of the "execution" (organizing the work, reviewing, committing to do
+something, …).
+</p>
+
+<p>
+From my perspective (and the team perspective), I would assume (and am assuming) that
+anything that is not shared to the rest of the team and not written somewhere (and
+accepted/agreed by the stakholder of the project) is not decided yet and can be
+discussed, changed or discarded.
+</p>
+
+<p>
+All of this causes frustration and not only for me, and it causes enough frustration for
+me to have to write this and get it out of my brain. I am of course available to discuss
+those thoughts more, either by mail or on a call with you all.
+</p></dd>
+</dl>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Vincent Demeester</p>
+<p class="date">Created: 2021-10-19 Tue 14:36</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

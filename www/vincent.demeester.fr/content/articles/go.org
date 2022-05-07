@@ -1,0 +1,133 @@
+#+TITLE: Go
+#+SUBTITLE: an open source programming language that makes it easy to build simple, reliable, and efficient software.
+#+ROAM_ALIAS: "golang" "go"
+
+
+* Design docs
+
+Here is a list of interesting design docs around Go.
+
+** Generics
+
+- [[file:generics_aren_t_ready_for_go_drew_devault_s_blog.org][Generics aren’t ready for Go | Drew DeVault’s Blog]]
+- [[https://go.googlesource.com/proposal/+/refs/heads/master/design/go2draft-type-parameters.md][Type Parameters - Draft Design]]
+  + [[https://rakyll.org/generics-proposal/][Few things on generics]] Rakyll's take on the design
+
+* Links
+
+** [[https://rakyll.org/inlined-defers/][Inlined defers in Go · Go, the unwritten parts]]                       :go:
+[2020-06-08 Mon 10:43]
+
+** [[https://0x46.net/thoughts/2018/12/29/go-libraries/][Stop writing broken Go libraries]]
+[2020-05-04 Mon 20:33]
+
+** [[https://www.arp242.net/go-last-resort.html][Go’s features of last resort]]
+[2019-11-27 Wed 14:54]
+
+** [[https://www.bartfokker.nl/posts/decorators/][Clean code using decorators :: Programming blog — Programming blog]]
+
+** [[https://dave.cheney.net/practical-go/presentations/qcon-china.html][Practical Go: Real world advice for writing maintainable Go programs]]
+
+** [[https://github.com/undefinedlabs/go-integration/blob/master/example/example_test.go][go-integration/example_test.go at master · undefinedlabs/go-integration]] :test:
+[2019-11-27 Wed 15:56]
+
+An example of transparent integration with containers on tests.
+
+** [[https://www.manifold.co/blog/how-go-interfaces-can-facilitate-switching-external-services-619cc478e20a][How Go interfaces can facilitate switching external services - Manifold]]
+[2019-03-27 Wed 18:18]
+
+** [[https://www.alexedwards.net/blog/an-overview-of-go-tooling][An Overview of Go's Tooling - Alex Edwards]]                        :tools:
+[2019-04-17 Wed 14:17]
+** [[https://peter.bourgon.org/blog/2019/04/24/go-naming-tips.html][Peter Bourgon · Go naming tips]]
+[2019-04-24 Wed 16:17]
+
+** [[https://npf.io/2019/06/do-or-do-not/][Do or Do Not · npf.io]]
+[2019-06-21 Fri 18:16]
+
+** [[https://kristoff.it/blog/why-go-and-not-rust/][Why Go and not Rust? | Loris Cro's Personal Blog]]                   :rust:
+[2019-09-17 Tue 11:38]
+** [[https://philpearl.github.io/post/bad_go_slice_of_pointers/?utm_campaign=The%2520Go%2520Gazette&utm_medium=email&utm_source=Revue%2520newsletter][Bad Go: slices of pointers · Phil Pearl's Blog]]
+[2019-09-17 Tue 10:40]
+
+** [[https://divan.dev/posts/gopath/][I still ❤️ you, GOPATH · divan's blog]]                                 :go:
+[2019-10-01 Tue 17:55]
+** [[https://blog.golang.org/publishing-go-modules][Publishing Go Modules - The Go Blog]]                             :modules:
+[2019-11-05 Tue 15:02]
+** TODO [[https://rakhim.org/2019/12/summary-of-concurrency-is-not-parallellism-a-talk-by-rob-pike/][Summary of Concurrency Is Not Parallellism, a talk by Rob Pike - Rakhim.org]]
+[2019-12-23 Mon 17:21]
+** TODO [[https://pace.dev/blog/2020/02/13/batching-operations-in-go-by-mat-ryer][Batching operations in Go by Mat Ryer - PACE.]]
+[2020-03-19 Thu 21:05]
+
+** TODO [[https://pace.dev/blog/2020/02/12/why-you-shouldnt-use-func-main-in-golang-by-mat-ryer][Why you shouldn't use func main in Go by Mat Ryer - PACE.]]
+[2020-03-19 Thu 21:05]
+
+
+** TODO [[https://www.arp242.net/static-go.html][Statically compiling Go programs]]                        :compile:go:
+[2020-04-14 Tue 15:13]
+** TODO [[https://pace.dev/blog/2020/02/03/context-aware-ioreader-for-golang-by-mat-ryer.html][Context-aware io.Reader for Go by Mat Ryer + David Hernandez - PACE.]]
+[2020-04-01 Wed 17:28]
+** TODO [[https://blog.sbstp.ca/go-quirks/][sbstp's blog — go quirks]]
+[2020-03-29 Sun 11:48]
+** TODO [[https://github.com/stretchr/testify/pull/933/files][Avoid calling Helper() on the happy path by bboreham · Pull Request #933 · stretchr/testify]] :go:
+[2020-04-27 Mon 15:23]
+
+We should do the same for gotestyourself
+
+** TODO [[https://github.com/go-noisegate/noisegate][go-noisegate/noisegate: Noise Gate: Golang test runner to get faster test results]] :go:
+[2020-05-05 Tue 10:57]
+
+*** [[https://github.com/go-noisegate/go-noisegate.el][go-noisegate/go-noisegate.el: Emacs plugin for Noise Gate]]       :emacs:
+[2020-05-05 Tue 10:57]
+
+** TODO [[https://orndorffgrant.com/framework-agnostic-go-handlers/][Framework Agnostic HTTP Endpoint Go Handlers]]                    :go:
+[2020-05-25 Mon 11:07]
+
+** TODO [[https://go.googlesource.com/proposal/+/refs/heads/master/design/go2draft-type-parameters.md][Type Parameters - Draft Design]]                            :go:#read:
+[2020-06-17 Wed 16:47]
+
+** TODO [[https://rauljordan.com/2020/07/06/why-go-error-handling-is-awesome.html][Why Go’s Error Handling is Awesome | rauljordan]]
+[2020-07-09 Thu 18:37]
+
+** TODO [[https://rauljordan.com/2020/05/25/immutability-patterns-in-go.html][Immutability Patterns in Go | rauljordan]]
+[2020-07-09 Thu 18:37]
+
+** TODO [[https://rauljordan.com/2019/09/23/how-to-write-an-event-feed-library.html][Writing an One-to-Many Event Feed Library in Go | rauljordan]]
+[2020-07-09 Thu 18:37]
+
+** TODO [[https://bencane.com/stories/2020/07/06/how-i-structure-go-packages/#/eof-bio][How I Structure Go Packages]]
+[2020-07-17 Fri 07:23]
+
+** TODO [[https://fasterthanli.me/articles/i-want-off-mr-golangs-wild-ride][I want off Mr. Golang's Wild Ride - fasterthanli.me]]
+[2020-07-01 Wed 19:08]
+
+** TODO [[https://christine.website/blog/within-go-repo-layout-2020-09-07][The Within Go Repo Layout - Christine Dodrill]]
+[2020-09-08 Tue 07:24]
+
+Go repository layout is a very different thing compared to other languages. There's a lot of conflicting opinions and little firm guidance to help steer people along a path to more maintainable code. This is a collection of guidelines that help to facilitate understandable and idiomatic Go.
+** TODO [[https://johnsogg.github.io/emacs-golang][Set up Emacs for Golang from scratch - December 2016 · jnl]]       :go:
+[2020-04-09 Thu 17:44]
+
+Do the same in 2020 (with go modules), without lsp for now
+Add this to notes (go language)
+
+** TODO [[https://github.com/quii/learn-go-with-tests][quii/learn-go-with-tests: Learn Go with test-driven development]]
+[2020-11-16 Mon 09:46]
+
+** TODO [[https://fasterthanli.me/articles/abstracting-away-correctness][Abstracting away correctness - fasterthanli.me]]
+[2020-06-30 Tue 19:50]
+
+** TODO [[https://blog.questionable.services/article/guide-logging-middleware-go/][A Guide To Writing Logging Middleware in Go · questionable services]]
+[2020-10-06 Tue 17:18]
+
+** TODO [[https://www.arp242.net/read-stdin.html][Better UX when reading from stdin]]
+[2019-12-12 Thu 18:03]
+
+
+** TODO [[https://www.alexedwards.net/blog/which-go-router-should-i-use][Which Go router should I use? (with flowchart) – Alex Edwards]]
+:PROPERTIES:
+:CREATED:[2021-10-05 Tue 16:01]
+:END:
+** Misc
+- https://peter.bourgon.org/go-for-industrial-programming/#testing
+- https://www.bartfokker.nl/posts/decorators/
+- http://technosophos.com/2018/07/04/be-nice-and-write-stable-code.html

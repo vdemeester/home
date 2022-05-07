@@ -1,0 +1,13 @@
+
+#+TITLE: Gnus
+#+SUBTITLE: a flexible message reader running under GNU Emacs.
+
+#+begin_quote
+The main Gnus goal is to provide the user with an efficient and extensible interface
+towards dealing with large numbers of messages, no matter the form they may have or
+wherever they may come from.
+#+end_quote
+
+* Links
+** TODO [[https://gist.github.com/zeroed/df307e7f52845a6502700a50f4a12082][Practical guide to use Gnus with Gmail]]
+[2020-03-13 Fri 16:31]

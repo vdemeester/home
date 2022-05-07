@@ -1,0 +1,434 @@
+#+TITLE: Development machines made easy
+#+SUBTITLE: From lazyness to awesomeness
+#+SETUPFILE: .setup.org
+
+
+#+begin_abstract
+Let's dig into how I manage creating and managing development machines. The Why and the
+How.
+#+end_abstract
+
+#+TOC: headlines 1
+
+For work, I sometimes need to create and use /development/ machines to hack on a specific
+case. There is multiple reason I would need to create those machines instead of working
+directly on my laptop or desktop. Let's look at those, and how I try to automate the hell
+out of it (because I am *really lazy*).
+
+* Use case
+:PROPERTIES:
+:CUSTOM_ID: h:f7b73025-0a31-4001-a08d-a5646d6e7be1
+:END:
+
+Let's look into some use-case that are useful to me
+
+- Create and/or test packages for a specific distribution — most likely RPM-based (Fedora,
+  RHEL, …) and Debian-based (Ubuntu, Debian, …).
+- From scratch machine,
+  - to make sure some documentation are complete for people to start
+    hacking on a project, and using a tool.
+  - to make demo, recording or something 👼
+- Cluster machines for Kubernetes or Openshift.
+
+Some requirements and _nice-to-have_:
+
+- Automate provisioning of these machines.
+- Use virtual machine for most case (~libvirt~, ~qemu+kvm~).
+- Auto updates of the "provisioning"
+
+Targeted system are, _for now_ :
+
+- Fedora, RHEL
+- Debian, Ubuntu
+- NixOS
+
+* Base images
+:PROPERTIES:
+:CUSTOM_ID: h:302d6250-fe7f-42a9-9c1c-0cbfcedf8e62
+:END:
+
+I initially wanted to use ~packer~ and it has its uses. I mainly need to build images for
+virtual machines, and it's even simpler than that, ~qemu~ based virtual machine (using
+~libvirt~). For those cases, there is simpler solution:
+
+- For ~nixos~, a tool seems to be designed for that purpose : [[https://github.com/nix-community/nixos-generators][~nixos-generators~]]
+- For ~fedora~, ~ubuntu~ and all, if targeting ~libvirt~, there is a really nice tool :
+  [[http://libguestfs.org/virt-builder.1.html][~virt-builder~]] from [[http://libguestfs.org/][libguestfs]].
+
+#+TOC: headlines 2 local
+
+** TODO ~virt-builder~
+:PROPERTIES:
+:CUSTOM_ID: h:86b2f8d4-a8c7-4b6f-a788-e7a5a681a3d5
+:END:
+
+** TODO NixOS ~nixos-generators~
+:PROPERTIES:
+:CUSTOM_ID: h:5d22d10b-657d-4ca2-a614-577b60d0023e
+:END:
+
+* TODO Provisionning
+:PROPERTIES:
+:CUSTOM_ID: h:dc187bf7-25a3-4bdd-a021-54ca4b59cf65
+:END:
+:LOGBOOK:
+- Rescheduled from "[2019-11-07 Thu]" on [2019-11-07 Thu 17:49]
+- Rescheduled from "[2019-11-01 Fri]" on [2019-11-04 Mon 09:32]
+- Rescheduled from "[2019-10-24 Thu]" on [2019-10-25 Fri 10:07]
+- Rescheduled from "[2019-10-18 Fri]" on [2019-10-18 Fri 17:23]
+- Rescheduled from "[2019-10-17 Thu]" on [2019-10-17 Thu 18:48]
+- Rescheduled from "[2019-10-16 Wed]" on [2019-10-16 Wed 17:04]
+- Rescheduled from "[2019-10-14 Mon]" on [2019-10-14 Mon 09:28]
+- Rescheduled from "[2019-10-11 Fri]" on [2019-10-11 Fri 20:41]
+- Rescheduled from "[2019-10-10 Thu]" on [2019-10-10 Thu 18:22]
+CLOCK: [2019-10-10 Thu 15:30]--[2019-10-10 Thu 16:54] =>  1:24
+CLOCK: [2019-10-10 Thu 14:18]--[2019-10-10 Thu 22:38] =>  8:20
+- Rescheduled from "[2019-10-09 Wed]" on [2019-10-09 Wed 18:35]
+- Rescheduled from "[2019-10-08 Tue]" on [2019-10-09 Wed 15:02]
+- Rescheduled from "[2019-10-04 Fri]" on [2019-10-06 Sun 14:57]
+- Rescheduled from "[2019-10-03 Thu]" on [2019-10-03 Thu 09:58]
+- Rescheduled from "[2019-09-30 Mon]" on [2019-10-02 Wed 14:26]
+- Rescheduled from "[2019-09-27 Fri]" on [2019-09-27 Fri 11:19]
+- Rescheduled from "[2019-09-25 Wed]" on [2019-09-25 Wed 17:23]
+- Rescheduled from "[2019-09-17 Tue]" on [2019-09-20 Fri 14:11]
+- Rescheduled from "[2019-09-13 Fri]" on [2019-09-13 Fri 16:20]
+- Rescheduled from "[2019-09-11 Wed]" on [2019-09-11 Wed 19:19]
+- Rescheduled from "[2019-09-10 Tue]" on [2019-09-10 Tue 17:56]
+- Rescheduled from "[2019-09-06 Fri]" on [2019-09-06 Fri 16:50]
+- Rescheduled from "[2019-09-04 Wed]" on [2019-09-05 Thu 17:34]
+CLOCK: [2019-09-04 Wed 10:00]--[2019-09-04 Wed 11:00] =>  1:00
+:END:
+
+Now that we have base images, we can start to play around, most likely with ~ansible~ to
+easily and quickly provision setups based on those. Those setups can includes :
+
+- development environment
+  + Nix-based (aka Nixos or Nixpkgs on other machines)
+  + /Native/-based (aka no Nix), Fedora
+- multiple node testing environment
+
+** TODO Development machine
+:PROPERTIES:
+:CUSTOM_ID: h:b1ad53f3-6ac7-44e1-8fc0-326ef785ec46
+:END:
+
+There is currently only one, my /main/ development machine, to hack on containers and
+orchestration tooling, using mainly go.
+
+- It doesn't need to be a "workstation", can be a server, I just need a headless
+  fedora on which I can install stuff and run services.
+- It needs to be able to run ~minikube~ or ~crc~, so nested virtualization is required.
+- It needs to require the less effort to reset/recreate.
+- It needs to have the same IP on the network, always (meaning same MAC address)
+- It needs to be "updatable" using provisionning (aka I change the provisionning part, I
+  apply and go !)
+
+*** TODO Create the virtal machine
+:PROPERTIES:
+:CUSTOM_ID: h:bc7d4e4c-76e9-4fc6-9ce6-999f250c4d4c
+:END:
+
+I want to re-use a disk for ~/home~ (or at least ~$HOME/src~) so that I can just re-attach
+it later on. We are assuming we have a base image working here, see [[*~virt-builder~][~virt-builder~]].
+
+#+begin_src bash
+virsh --connect=qemu+tcp://wakasu.home:16509/system list
+#+end_src
+
+#+RESULTS:
+| Id                           | Name       | State   |
+| ---------------------------- |            |         |
+| 2                            | fedora-dev | running |
+
+
+*** TODO Base system
+:PROPERTIES:
+:CUSTOM_ID: h:af99c176-b991-433e-8070-17b38a8fb82a
+:END:
+
+- zsh
+- bash
+- exa
+- htop
+- ssh/shhd
+
+*** TODO Virtualization tooling
+:PROPERTIES:
+:CUSTOM_ID: h:6cbfd75a-6dbd-4b6b-8b63-c7c92db04e77
+:END:
+
+- nested virt => @virtualization, libvirt-devel
+
+*** TODO Containers tooling
+:PROPERTIES:
+:CUSTOM_ID: h:8a9a0d74-00d4-458f-a481-1620de380a4f
+:END:
+
+- podman-docker
+- buildah
+- skopeo
+
+- ko
+- kubectl
+- google-cloud-sdk
+
+*** TODO Developers tooling
+:PROPERTIES:
+:CUSTOM_ID: h:cbbb7ea9-a553-4029-b755-d3d2f6894ced
+:END:
+
+*** TODO Nix setup ?
+:PROPERTIES:
+:CUSTOM_ID: h:27836d1b-e7f9-4274-b3ca-37909e72daaa
+:END:
+
+** TODO Kubernetes cluster
+:PROPERTIES:
+:CUSTOM_ID: h:77a3cff7-20d4-416b-bb1d-b772196b1f3e
+:END:
+
+* References
+:PROPERTIES:
+:CUSTOM_ID: h:9c4d79c4-726c-424c-8d27-3f819532d1ae
+:END:
+
+- https://github.com/SkypLabs/packer-debian
+- https://github.com/SkypLabs/packer-centos
+- https://github.com/idi-ops/packer-fedora
+- https://github.com/rustic/fedora29-minimal
+- https://github.com/terusus/packer-ansible-arch
+- https://github.com/jogleasonjr/packer-arch
+- https://github.com/karolistamutis/packer-archlinux
+- https://developer.fedoraproject.org/tools/virt-builder/about.html
+- https://computingforgeeks.com/virsh-commands-cheatsheet/
+- https://help.ubuntu.com/community/KVM/Virsh
+
+* Archives
+:PROPERTIES:
+:CUSTOM_ID: h:1f6e052f-3df2-415c-a7a1-e1eb9ae3f6c0
+:END:
+** Packer
+:PROPERTIES:
+:CUSTOM_ID: h:62c6b7b1-0ab4-4ab6-9dad-edd9e2d7c54e
+:END:
+Let's use [[https://packer.io/][~packer~]] with qemu for those cases — and let's create a repository where we're
+gonna write the development machine recipes : [[https://github.com/vdemeester/machines][~vdemeester/machines~]].
+
+#+TOC: headlines 2 local
+
+*** NixOS recipes
+:PROPERTIES:
+:CUSTOM_ID: h:edba86e1-0aa2-43a7-832b-60bfd5bf3727
+:ID:       f76c12a3-c9da-4cf8-bdbf-ab74865c3e0e
+:END:
+
+The initial source of packer recipes comes from [[https://github.com/nix-community/nixbox][~nix-community/nixbox~]], but I'm
+/tailoring/ them to my needs
+
+#+begin_src json
+  {
+    "builders": [
+      {
+        "boot_wait": "40s",
+        "boot_command": [
+          "echo http://{{ .HTTPIP }}:{{ .HTTPPort}} > .packer_http<enter>",
+          "mkdir -m 0700 .ssh<enter>",
+          "curl $(cat .packer_http)/install_rsa.pub > .ssh/authorized_keys<enter>",
+          "systemctl start sshd<enter>"
+        ],
+        "http_directory": "scripts",
+        "iso_checksum_type": "sha256",
+        "shutdown_command": "shutdown -h now",
+        "ssh_private_key_file": "./scripts/install_rsa",
+        "ssh_port": 22,
+        "ssh_username": "root",
+        "type": "qemu",
+        "iso_url": "https://d3g5gsiof5omrk.cloudfront.net/nixos/18.09/nixos-18.09.1799.b9fa31cea0e/nixos-minimal-18.09.1799.b9fa31cea0e-x86_64-linux.iso",
+        "iso_checksum": "cc7c399c5fe4672383fe54cb1d648854a0d6732765fe1a61bb38b3fe3b7c6d2f",
+        "disk_interface": "virtio-scsi",
+        "qemuargs": [
+          [
+            "-m",
+            "1024"
+          ]
+        ]
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "shell",
+        "script": "./scripts/install.sh"
+      }
+    ]
+  }
+#+end_src
+
+Let's look at the provisioning script. We don't want to create a full specific
+configuration for these images as we will use ~ansible~ for the final provisioning.
+
+- ~scripts/install.sh~
+
+  #+begin_src bash
+    #!/bin/sh -e
+
+    packer_http=$(cat .packer_http)
+
+    # Partition disk
+    cat <<FDISK | fdisk /dev/sda
+    n
+
+
+
+
+    a
+    w
+
+    FDISK
+
+    # Create filesystem
+    mkfs.ext4 -j -L nixos /dev/sda1
+
+    # Mount filesystem
+    mount LABEL=nixos /mnt
+
+    # Setup system
+    nixos-generate-config --root /mnt
+
+    curl -sf "$packer_http/machine.nix" > /mnt/etc/nixos/machine.nix
+    curl -sf "$packer_http/builders/$PACKER_BUILDER_TYPE.nix" > /mnt/etc/nixos/hardware-builder.nix
+    curl -sf "$packer_http/configuration.nix" > /mnt/etc/nixos/configuration.nix
+    curl -sf "$packer_http/custom-configuration.nix" > /mnt/etc/nixos/custom-configuration.nix
+
+    ### Install ###
+    nixos-install
+
+    ### Cleanup ###
+    curl "$packer_http/postinstall.sh" | nixos-install
+  #+end_src
+- ~scripts/postinstall.sh~
+  #+begin_src bash
+    #!/bin/sh
+
+    # Make sure we are totally up to date
+    nix-channel --add https://nixos.org/channels/nixos-18.09 nixos
+    nix-channel --update
+    nixos-rebuild switch --upgrade
+
+    # Cleanup any previous generations and delete old packages that can be
+    # pruned.
+
+    for x in $(seq 0 2) ; do
+      nix-env --delete-generations old
+      nix-collect-garbage -d
+    done
+
+
+    # Remove install ssh key
+    rm -rf /root/.ssh /root/.packer_http
+
+    # Zero out the disk (for better compression)
+    dd if=/dev/zero of=/EMPTY bs=1M
+    rm -rf /EMPTY
+  #+end_src
+- ~scripts/machine.nix~
+  #+begin_src nix
+    # This file is overwritten by the vagrant-nixos plugin
+    { config, pkgs, ... }:
+    {
+      networking.hostName = "nixos-machine";
+    }
+  #+end_src
+- ~scripts/configuration.nix~
+  #+begin_src nix
+    { config, pkgs, ... }:
+
+    {
+      imports =
+        [ # Include the results of the hardware scan.
+          ./hardware-configuration.nix
+          ./hardware-builder.nix
+          ./machine.nix
+          ./custom-configuration.nix
+        ];
+
+      # Use the GRUB 2 boot loader.
+      boot.loader.grub.enable = true;
+      boot.loader.grub.version = 2;
+      boot.loader.grub.device = "/dev/sda";
+
+      # remove the fsck that runs at startup. It will always fail to run, stopping
+      # your boot until you press *.
+      boot.initrd.checkJournalingFS = false;
+
+      # Services to enable:
+
+      # Enable the OpenSSH daemon.
+      services.openssh.enable = true;
+
+      # Enable DBus
+      services.dbus.enable    = true;
+
+      # Replace nptd by timesyncd
+      services.timesyncd.enable = true;
+
+      # Packages for Vagrant
+      environment.systemPackages = with pkgs; [
+        iputils
+      ];
+
+      # Creates a "vincent" users with password-less sudo access
+      users = {
+        extraGroups = [ { name = "vincent"; } ];
+        extraUsers  = [
+          # Try to avoid ask password
+          { name = "root"; password = "vincent"; }
+          {
+            description     = "Vincent User";
+            name            = "vincent";
+            group           = "vincent";
+            extraGroups     = [ "users" "wheel" ];
+            password        = "vincent";
+            home            = "/home/vincent";
+            createHome      = true;
+            useDefaultShell = true;
+            openssh.authorizedKeys.keys = [
+              "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDO1sx5h44xnK/k0ODnQ3aQR8+nr7HC7u94fS3OhwQ6AvjqDGLnI6EP4sr4Yh2eXf8lHX+lkg8iZ6Z+y9dVnnzwveZfqbfOyh6t8Hg+M1nl26rwdYv+guU8khvh+Kzl9Vdb5dexf/hWQ/LcWvsuPO+tBmqajNTLYbGinqrMm3Bw2jJS/+DitgoT8hiuSTU1smY1CGzggHEdsx4+oDMuDMvRYwOBBHrUF00lZLx3zB3nGl1VFYD2St3vzlmzoZNrW7Rx8TRg02BTVAwd4qPHOMz8Kg+JmDhVig9yeqHo4FCwXxQ8+jk54Cd2el6TjfaA5HD2+e4FYLP6bMSLIabLTfLP vincent@wakasu"
+            ];
+          }
+        ];
+      };
+
+      security.sudo.configFile =
+        ''
+          Defaults:root,%wheel env_keep+=LOCALE_ARCHIVE
+          Defaults:root,%wheel env_keep+=NIX_PATH
+          Defaults:root,%wheel env_keep+=TERMINFO_DIRS
+          Defaults env_keep+=SSH_AUTH_SOCK
+          Defaults lecture = never
+          root   ALL=(ALL) SETENV: ALL
+          %wheel ALL=(ALL) NOPASSWD: ALL, SETENV: ALL
+        '';
+
+    }
+  #+end_src
+- ~scripts/custom-configuration.nix~
+  #+begin_src nix
+    { config, pkgs, ... }:
+
+    {
+    # Place here any custom configuration specific to your organisation (locale, ...)
+    # if you want it to be part of the packer base image to be used with vagrant.
+    }
+  #+end_src
+- ~scripts/builders/qemu.nix~
+  #+begin_src nix
+    { modulesPath, ... }:
+    {
+      imports = [
+        "${toString modulesPath}/profiles/qemu-guest.nix"
+      ];
+    }
+  #+end_src
+
+
+And to build this image, a simple ~packer build nixos.json~ is required.

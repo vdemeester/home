@@ -1,0 +1,5 @@
+
+#+TITLE: Book: Debugging Teams
+
+I am reading this in complement (and before), [[file:book_a_practical_guide_to_distributed_scrum.org][A Practical Guide to Distributed Scrum]],
+[[file:book_kanban_workbook.org][Kanban Workbook]], [[file:book_sprint.org][Sprint]] and other teams and [[file:remote_team.org][remote teams]] related resources.

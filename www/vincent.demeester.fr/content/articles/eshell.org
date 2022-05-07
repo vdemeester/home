@@ -1,0 +1,12 @@
+
+#+TITLE: eshell
+
+* Links
+** TODO [[https://masteringemacs.org/article/complete-guide-mastering-eshell][Mastering Eshell - Mastering Emacs]]
+[2020-04-09 Thu 14:54]
+
+** TODO [[https://www.reddit.com/r/emacs/comments/ft84xy/run_shell_command_in_new_vterm/][Run shell command in new vterm : emacs]]                  :vterm:shell:
+:PROPERTIES:
+:ID:       6f42bb20-51fd-4ed0-8bdb-5d423d517320
+:END:
+[2020-04-09 Thu 17:45]

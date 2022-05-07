@@ -1,0 +1,32 @@
+#+TITLE: Remote developement
+#+SUBTITLE: Thoughts, documents and resources around remote developement
+#+FILETAGS: #work remote developement emacs
+#+SETUPFILE: .setup.org
+
+
+/Note: This is more or less taking over [[file:development-machines.org][Development machines made easy.]]/
+
+* TODO Goals
+
+* TODO Emacs
+
+- Tramp aka local edit, remote execution
+- ssh + emacs in terminal aka remote edit, remote execution
+
+** TODO Challenges
+
+- Tramp + direnv doesn't work
+  + Actually it does with a little bit of "magic"
+    =C-x p c= followed by =eval "$(direnv export bash)" && go build -v ./...= and it just
+    works, it needs automation though.
+- "Slowness"
+
+Ideas:
+- Use remote-tailored commands (write elisp)
+- ko nix aware to be able to delegate to builder
+
+
+* TODO Alternatives
+
+- VSCode
+- Vim

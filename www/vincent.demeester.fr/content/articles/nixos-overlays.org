@@ -1,0 +1,41 @@
+#+TITLE: NixOS overlay notes
+#+FILETAGS: :nixos:overlay:configuration:
+#+SETUPFILE: .setup.org
+
+[[https://nixos.org][NixOS]] has a concept of =overlays= since a while ([[https://nixos.org/nix-dev/2016-December/022386.html][around 2016]]). The
+official manual has a chapter on it : [[https://nixos.org/nixpkgs/manual/#chap-overlays][Overlays]].
+
+#+BEGIN_QUOTE
+Overlays are used to add layers in the fix-point used by Nixpkgs to
+compose the set of all packages.
+#+END_QUOTE
+
+There is two distinct element to overlays:
+
+- How to define overlays ?
+- Where =nix= (and NixOS) looks for it ?
+
+* Define an overlay
+:PROPERTIES:
+:CUSTOM_ID: h:56de4f99-53be-49fd-b969-a419d8e9273f
+:END:
+
+According to the documentation, « Overlays are Nix functions which
+accept two arguments, conventionally called self and super, and return
+a set of packages ». The documentation gives an example :
+
+#+BEGIN_SRC nix
+self: super:
+
+{
+  boost = super.boost.override {
+    python = self.python3;
+  };
+  rr = super.callPackage ./pkgs/rr {
+    stdenv = self.stdenv_32bit;
+  };
+}
+#+END_SRC
+
+I used to have a personal channels on github : [[https://github.com/vdemeester/sbrpkgs/][sbrpkgs]]. Let's convert
+this repository to an overlay by updating the =default.nix= file.

@@ -1,0 +1,30 @@
+#+TITLE: Articles
+#+FILETAGS: #home article knowledge
+#+SETUPFILE: .setup.org
+
+This set of articles is my knowledge base. This is managed using [[file:org_mode.org][Org Mode]] and specifically
+[[file:org_roam.org][org-roam]]. This content is kept up-to-date across time (compared to posts).
+
+The following part of this page tries to present an organization to all my
+articles ; but there is a [[file:sitemap.org][sitemap]] if you want to see all the content.
+/The sitemap is gonna be a little bit hard to navigate without a filtering mechanism./
+
+- [[file:kubernetes.org][Kubernetes]] and [[file:openshift.org][OpenShift]]
+  + [[file:knative.org][Knative]]
+  + [[file:tekton.org][Tekton]]
+    - [[file:tekton_dev.org][Tekton development environment]]
+    - [[file:tekton-usage.org][Tektoncd usage and examples]]
+- [[file:linux.org][Linux]]
+  + [[file:fedora.org][Fedora]]
+  + [[file:nixos.org][NixOS]]
+  + Misc
+    - [[file:yubikey.org][Yubikey setup on Linux]]
+- [[file:programming.org][Programming]]
+  + [[file:bash.org][bash]]
+  + [[file:elisp.org][elisp]]
+  + [[file:go.org][golang]]
+  + [[file:haskell.org][haskell]]
+  + [[file:development-machines.org][Development machines made easy]]
+- Miscellaneous
+  + [[file:sandbox.org][Emacs org-mode sandbox]]
+  + [[file:fish.org][Fish shell notes]]

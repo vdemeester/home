@@ -1,0 +1,22 @@
+#+TITLE: Fedora
+#+FILETAGS: fedora linux
+#+SETUPFILE: .setup.org
+
+- [[file:fedora-silverblue.org][Fedora silverblue]]
+
+* Packaging
+:PROPERTIES:
+:CUSTOM_ID: h:8b03b38c-c116-4ee2-874f-f2a301ac3715
+:END:
+
+- [[https://fedoraproject.org/wiki/Join_the_package_collection_maintainers][Join the package collection maintainers]]
+
+** Golang
+:PROPERTIES:
+:CUSTOM_ID: h:f8173b2d-a3b9-4108-8bc5-847898aaf7ea
+:END:
+
+- [[https://eclipseo.fedorapeople.org/guidelines/packaging-guidelines/Golang/][Golang Packaging Guidelines]]
+- [[https://fedoraproject.org/wiki/More_Go_packaging][More Go packaging]]
+- [[https://fedoraproject.org/wiki/PackagingDrafts/Go][PackagingDrafts/Go]]
+- [[https://github.com/gofed/gofed][~gofed~]] is a tool set aimed at automation of packaging of golang projects (in fedora)

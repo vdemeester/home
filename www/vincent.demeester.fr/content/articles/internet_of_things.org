@@ -1,0 +1,7 @@
+#+TITLE: Internet of Things
+
+* Links
+** TODO [#C] [[https://vas3k.com/blog/dumbass_home/?ref=sn][Dumbass Home 2.0 :: Internet of Things. How to Automate Your Flat Today :: vas3k.com]]
+[2020-03-08 Sun 16:34]
+
+Put this somewhere into notes

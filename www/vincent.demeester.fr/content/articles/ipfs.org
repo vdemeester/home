@@ -1,0 +1,17 @@
+
+#+TITLE: ipfs
+
+[[https://ipfs.io/][IPFS]] is peer-to-peer hypermedia protocol designed to make the web faster, safer, and more
+open.
+
+* What is =ipfs= ?
+
+- [[https://hackernoon.com/understanding-ipfs-in-depth-1-5-a-beginner-to-advanced-guide-e937675a8c8a][Understanding IPFS in Depth(1/6): A Beginner to Advanced Guide]]
+- [[https://medium.com/towardsblockchain/understanding-ipfs-in-depth-2-6-what-is-interplanetary-linked-data-ipld-c8c01551517b][Understanding IPFS in Depth(2/6): What is InterPlanetary Linked Data(IPLD)?]]
+- [[https://medium.com/textileio/tutorial-series-setting-up-an-ipfs-peer-4056e6c69612][Tutorial Series: Setting up an IPFS peer]]
+
+* Links
+** [[https://elais.codes/deploying-this-site-with-ipfs-and-scheme.html][Deploying This Site with IPFS and Scheme - Elais Codes]]
+[2020-06-08 Mon 10:38]
+** [[https://github.com/ipfs-shipyard/ipfs-deploy][ipfs-shipyard/ipfs-deploy: Zero-Config CLI to Deploy Static Websites to IPFS]]
+[2020-06-08 Mon 10:40]

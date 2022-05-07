@@ -1,0 +1,201 @@
+#+TITLE: My Feeds
+
+* Feeds                                                              :elfeed:
+** Blogs                                                               :blog:
+
+*** https://major.io/posts/index.xml
+
+*** https://christine.website/blog.rss
+
+*** https://sidhartharya.me/posts/index.xml
+
+*** https://fzakaria.com/feed.xml
+
+*** https://francis.begyn.be/blog.rss
+
+*** http://www.willghatch.net/blog/feeds/all.rss.xml
+
+*** https://ag91.github.io/rss.xml                                    :emacs:
+
+*** https://danyspin97.org/blog/index.xml
+
+*** https://sachachua.com/blog/category/emacs/feed/                   :emacs:
+
+*** https://mgdm.net/atom.xml
+
+*** https://xenodium.com/rss.xml
+
+*** http://blog.dijit.sh/feed
+
+*** https://willschenk.com/feed.xml
+
+*** https://vincent.bernat.ch/en/blog/atom.xml
+
+*** https://cookie.engineer/weblog/feed.xml
+
+*** https://adamj.eu/tech/atom.xml
+
+*** https://aliquote.org/index.xml
+
+*** https://irreal.org/blog/?feed=rss2                                :emacs:
+
+*** https://yitang.uk/atom.xml
+
+*** https://jcs.org/rss                                             :openbsd:
+
+*** https://www.charlieharrington.com/rss.xml
+
+*** https://occasionallycogent.com/feed.xml
+
+*** https://jao.io/blog/rss.xml
+
+*** https://waylonwalker.com/rss.xml
+
+*** https://blog.sulami.xyz/atom.xml
+
+*** https://utcc.utoronto.ca/~cks/space/blog/?atom
+
+*** https://blog.vivekhaldar.com/rss
+
+*** https://chrisman.github.io/rss.xml
+
+*** https://ambrevar.xyz/atom.xml
+
+*** https://emacsredux.com/atom.xml                                   :emacs:
+
+*** https://pablo.tools/atom.xml
+
+*** http://feeds.feedburner.com/collabfund
+
+*** https://opguides.info/posts/index.xml
+
+*** https://www.alexblackie.com/feed.xml
+
+*** https://tsdh.org/rss.xml
+
+*** https://nullprogram.com/feed/
+
+*** https://blog.jim-nielsen.com/feed.xml
+
+*** https://medium.com/feed/@threkk
+
+*** https://aduros.com/index.xml
+
+*** https://weekly.nixos.org/feeds/all.rss.xml                 :weekly:nixos:
+
+*** https://martinfowler.com/feed.atom
+
+*** https://ianthehenry.com/feed.xml
+
+*** https://www.joshwcomeau.com/rss.xml                                 :css:
+
+*** https://martinfowler.com/feed.atom
+
+*** https://abhinavsarkar.net/feed.atom
+
+*** https://notes.abhinavsarkar.net/feed.atom                         :notes:
+
+*** https://マリウス.com/index.xml
+
+*** https://fasterthanli.me/index.xml
+
+*** https://8thlight.com/blog/feed/atom.xml
+
+*** https://rauljordan.com/feed.xml
+
+*** https://vfoley.xyz/index.xml
+
+*** https://batsov.com/atom.xml
+
+*** https://blog.royalsloth.eu/posts/index.xml
+
+*** https://dindi.garjola.net/rss.xml
+
+*** https://karthinks.com/index.xml                                   :emacs:
+
+*** https://hachibu.net/posts/index.xml
+
+*** https://erikwinter.nl/index.xml
+
+*** https://blog.sumtypeofway.com/atom.xml
+
+*** https://www.inkandswitch.com/index.xml
+
+*** https://www.unixsheikh.com/feed.rss
+
+*** https://brooker.co.za/blog/rss.xml
+
+*** https://duan.ca/feed.xml
+
+*** https://thume.ca/atom.xml
+
+*** https://elis.nu/blog/rss.xml
+
+*** https://protesilaos.com/codelog.xml
+
+*** https://codeinthehole.com/index.xml
+
+*** https://cprss.s3.amazonaws.com/golangweekly.com.xml           :weekly:go:
+
+*** https://shivjm.blog/feed.xml
+
+*** https://helpdeskheadesk.net/index.xml
+
+*** https://lepisma.xyz/log/atom.xml
+
+*** https://lepisma.xyz/journal/atom.xml
+
+*** https://lepisma.xyz/atom.xml
+
+*** https://adventurist.me/feed.xml
+
+*** https://danluu.com/atom.xml
+
+*** https://danielmangum.com/posts/index.xml
+
+*** https://mazzo.li/rss.xml
+
+*** https://apenwarr.ca/log/rss.php
+
+*** https://zerokspot.com/feeds
+
+*** https://lazybear.io/index.xml
+
+*** https://shen.hong.io/rss/                                    :phylosophy:
+
+*** https://www.la-grange.net/feed
+
+*** https://larlet.fr/david/log/
+
+*** https://t-ravis.com/index.xml
+
+** Journals                                                         :journal:
+
+** News                                                                :news:
+
+*** https://lobste.rs/rss                                          :lobsters:
+
+** Reddit                                                            :reddit:
+
+*** https://www.reddit.com/r/emacs.rss?sort=new                       :emacs:
+
+*** https://www.reddit.com/r/NixOS.rss?sort=new                       :nixos:
+
+** Youtube                                                    :video:youtube:
+
+Example of RSS link for youtube:
+https://www.youtube.com/feeds/videos.xml?channel_id=UCe5excZqMeG1CIW-YhMTCEQ
+
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ][System Crafters]]                                           :lang:en:emacs:
+
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJ24N4O0bP7LGLBDvye7oCA][Matt D'avella]]                           :lang:en:productivity:minimalism:
+
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJNItGjNhUx3Zz6W4OCVfHA][Passion Rénovation]]                                   :rénovation:lang:fr:
+
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC0uTPqBCFIpZxlz_Lv1tk_g][Protesilaos Stavrou]]                                               :emacs:
+
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCtqICqGbPSbTN09K1_7VZ3Q][DirtyBiology]]                                                    :biology:
+
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCs_azWRsdYDhKonquMlAMfQ][The Unlazy Way]]                                             :productivity:
+
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCe5excZqMeG1CIW-YhMTCEQ][Emacs Elements]]                                                    :emacs:

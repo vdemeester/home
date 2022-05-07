@@ -1,0 +1,11 @@
+#+title: Generics aren’t ready for Go | Drew DeVault’s Blog
+#+roam_key: https://drewdevault.com/2019/02/18/Generics-arent-ready-for-Go.html
+
+Have you ever seen someone write something to the effect of “I would use Go, but I need
+generics”? Perhaps we can infer from this that many of the people who are pining after
+generics in Go are not, in fact, Go users. Many of them are users of another programming
+language that does have generics, and they feel that generics are a good fit for this
+language, and therefore a good fit for any language. The inertia of “what I’m used to”
+comes to a violent stop when they try to use Go. People affected by this frustration
+interpret it as a problem with Go, that Go is missing some crucial feature - such as
+generics. But this lack of features is itself a feature, not a bug.

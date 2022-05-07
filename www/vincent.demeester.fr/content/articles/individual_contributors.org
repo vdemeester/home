@@ -1,0 +1,13 @@
+
+#+TITLE: Individual Contributors
+
+Primary responsibilities
+- Participate in sprint planning calls
+- Groom product backlog - refine, estimate backlog items
+- Self-assign user stories
+- Write code and tests
+- Write documentation
+- Triage bugs
+- Fix bugs
+- Participate in code reviews
+- Participate in sprint review and sprint retrospective

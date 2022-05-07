@@ -1,0 +1,13 @@
+#+TITLE: Rust
+
+* Links
+** TODO [[https://duan.ca/2020/05/07/nix-rust-development/][Naive NixOS Rust Development]]                                 :nixos:
+[2020-05-28 Thu 15:56]
+** TODO [[https://endler.dev/2020/rust-compile-times/][Tips for Faster Rust Compile Times | Matthias Endler]]
+[2020-06-22 Mon 16:48]
+** TODO [[http://www.sheshbabu.com/posts/rust-module-system/][Clear explanation of Rust’s module system]]
+[2020-07-20 Mon 11:16]
+** TODO [[https://joeprevite.com/rust-lang-ecosystem][Understanding the Rust Ecosystem]]
+[2020-06-23 Tue 18:06]
+** TODO [[http://www.sheshbabu.com/posts/rust-error-handling/][Beginner's guide to Error Handling in Rust]]
+[2020-08-20 Thu 16:33]

@@ -1,0 +1,266 @@
+
+#+TITLE: Tekton development environment
+
+* Basic development environment setup
+:PROPERTIES:
+:CUSTOM_ID: h:07626b12-f046-4671-87cd-858ebde959b9
+:END:
+
+** Requirements
+:PROPERTIES:
+:CUSTOM_ID: h:29af1f1c-bb22-4f51-96b2-a217279e5b04
+:END:
+
+- ~go~ : installation depends on your operating system
+- ~ko~ : ~go get -u github.com/google/go-containerregistry/cmd/ko~
+- ~kubernetes~
+  + ~minikube~
+  + ~minishift~
+  + …
+
+** ~Minikube~
+:PROPERTIES:
+:CUSTOM_ID: h:8a457dfb-5144-4bd2-bc16-4a18d7bb54f6
+:END:
+
+#+BEGIN_SRC bash
+$ minikube profile tektoncd
+$ minikube config set kubernetes-version "v1.13.2"
+$ minikube config set memory "8192"
+$ minikube config set cpus "4"
+# linux-only with libvirt, qemu-kvm
+$ minikube config set vm-driver "kvm2"
+$ minikube start
+✅  minikube profile was successfully set to tektoncd
+⚠️  These changes will take effect upon a minikube delete and then a minikube start
+⚠️  These changes will take effect upon a minikube delete and then a minikube start
+⚠️  These changes will take effect upon a minikube delete and then a minikube start
+😄  minikube v0.35.0 on linux (amd64)
+🔥  Creating kvm2 VM (CPUs=4, Memory=8192MB, Disk=20000MB) ...
+📶  "tektoncd" IP address is 192.168.39.241
+🐳  Configuring Docker as the container runtime ...
+✨  Preparing Kubernetes environment ...
+🚜  Pulling images required by Kubernetes v1.13.2 ...
+🚀  Launching Kubernetes v1.13.2 using kubeadm ...
+⌛  Waiting for pods: apiserver proxy etcd scheduler controller addon-manager dns
+🔑  Configuring cluster permissions ...
+🤔  Verifying component health .....
+💗  kubectl is now configured to use "tektoncd"
+🏄  Done! Thank you for using minikube!
+#+END_SRC
+
+** ~Minishift~
+:PROPERTIES:
+:CUSTOM_ID: h:b6e6a6cd-6130-4d8a-828e-41e609f66c19
+:END:
+
+#+BEGIN_SRC bash
+$ minishift profile set tektoncd
+$ minishift config set openshift-version "v3.11.0"
+$ minishift config set memory "8192"
+$ minishift config set cpus "4"
+$ minishift config set image-caching "true"
+$ minishift addons enable admin-user
+$ minishift addons enable anyuid
+$ minishift start
+-- Starting profile 'tektoncd'
+-- Check if deprecated options are used ... OK
+-- Checking if https://github.com is reachable ... OK
+-- Checking if requested OpenShift version 'v3.11.0' is valid ... OK
+-- Checking if requested OpenShift version 'v3.11.0' is supported ... OK
+-- Checking if requested hypervisor 'kvm' is supported on this platform ... OK
+-- Checking if KVM driver is installed ...
+# […]
+-- Starting the OpenShift cluster using 'kvm' hypervisor ...
+-- Minishift VM will be configured with ...
+   Memory:    8 GB
+   vCPUs :    4
+   Disk size: 20 GB
+# […]
+   -- Starting OpenShift cluster ...........
+
+Creating initial project "myproject" ...
+Server Information ...
+OpenShift server started.
+
+The server is accessible via web console at:
+    https://192.168.42.95:8443/console
+
+You are logged in as:
+    User:     developer
+    Password: <any value>
+
+To login as administrator:
+    oc login -u system:admin
+
+
+-- Applying addon 'admin-user':..
+-- Applying addon 'anyuid':.
+# […]
+#+END_SRC
+
+** Environments
+:PROPERTIES:
+:CUSTOM_ID: h:4ca1bd38-6613-4b44-a276-f40680d89310
+:END:
+
+We need to configure ~ko~ (using ~KO_DOCKER_REPO~) so that it can deploy the working copy
+code into our development cluster.
+
+- ~minikube~ (or ~minishift~) with ~docker~ as container runtime
+  1. Make sure your local ~docker~ command-line points to the VM daemon
+   #+BEGIN_SRC bash
+   eval $(minikube docker-env)
+   # eval $(minishift docker-env) # for minishift
+   #+END_SRC
+  2. Use ~ko.local~ as ~KO_DOCKER_REPO~ — it's a special case handled by ~ko~
+    #+BEGIN_SRC bash
+    export KO_DOCKER_REPO=ko.local
+    #+END_SRC
+- for any cluster using another runtime (or a remote cluster), you need to use a registry
+  that will be accessible from the cluster (~gcr.io~ or your own – the docker hub doesn't
+  work with ~ko~).
+
+** Deploy ~tektoncd/pipeline~
+:PROPERTIES:
+:CUSTOM_ID: h:f8a6a774-f886-492c-a268-2d896cf0918d
+:END:
+
+1. ~tektoncd/pipeline~ needs to sit on the right place in your ~GOPATH~
+
+  #+BEGIN_SRC bash
+  $ echo $GOPATH
+  /home/vincent
+  $ pwd
+  /home/vincent/src/github.com/tektoncd/pipeline
+  #+END_SRC
+
+2. Deploy 💃
+
+  #+BEGIN_SRC bash
+  $ ko apply -f ./config
+  2019/03/13 10:49:22 Building github.com/tektoncd/pipeline/cmd/webhook
+  2019/03/13 10:49:22 Building github.com/tektoncd/pipeline/cmd/gsutil
+  2019/03/13 10:49:22 Building github.com/tektoncd/pipeline/cmd/controller
+  2019/03/13 10:49:22 Building github.com/tektoncd/pipeline/cmd/nop
+  2019/03/13 10:49:22 Building github.com/tektoncd/pipeline/cmd/creds-init
+  2019/03/13 10:49:22 Building github.com/tektoncd/pipeline/cmd/git-init
+  2019/03/13 10:49:22 Building github.com/tektoncd/pipeline/cmd/kubeconfigwriter
+  2019/03/13 10:49:22 Building github.com/tektoncd/pipeline/cmd/bash
+  2019/03/13 10:49:22 Building github.com/tektoncd/pipeline/cmd/entrypoint
+  namespace/tekton-pipelines created
+  clusterrole.rbac.authorization.k8s.io/tekton-pipelines-admin created
+  serviceaccount/tekton-pipelines-controller created
+  clusterrolebinding.rbac.authorization.k8s.io/tekton-pipelines-controller-admin created
+  2019/03/13 10:49:23 Using base index.docker.io/library/busybox:latest for github.com/tektoncd/pipeline/cmd/entrypoint
+  2019/03/13 10:49:23 Using base gcr.io/distroless/static:latest for github.com/tektoncd/pipeline/cmd/nop
+  # […]
+  deployment.apps/tekton-pipelines-controller created
+  deployment.apps/tekton-pipelines-webhook created
+  #+END_SRC
+
+3. Enjoy 🔥
+
+  #+BEGIN_SRC bash
+  $ kubectl get all -n tekton-pipelines
+  NAME                                               READY     STATUS    RESTARTS   AGE
+  pod/tekton-pipelines-controller-5875857cf5-k9njx   1/1       Running   0          3m18s
+  pod/tekton-pipelines-webhook-54785c88f4-jbkqr      1/1       Running   0          3m18s
+
+  NAME                                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+  service/tekton-pipelines-controller   ClusterIP   10.104.145.40   <none>        9090/TCP   4m31s
+  service/tekton-pipelines-webhook      ClusterIP   10.97.9.56      <none>        443/TCP    4m31s
+
+  NAME                                          READY     UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/tekton-pipelines-controller   1/1       1            1           3m18s
+  deployment.apps/tekton-pipelines-webhook      1/1       1            1           3m18s
+
+  NAME                                                     DESIRED   CURRENT   READY     AGE
+  replicaset.apps/tekton-pipelines-controller-5875857cf5   1         1         1         3m18s
+  replicaset.apps/tekton-pipelines-webhook-54785c88f4      1         1         1         3m18s
+  #+END_SRC
+
+** An example
+:PROPERTIES:
+:CUSTOM_ID: h:99cb715a-3807-414e-9b73-2d60bacbe583
+:END:
+
+Let's validate it works by running a simple example
+
+#+BEGIN_SRC yaml
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: build-simple
+spec:
+  steps:
+  - name: build-simple
+    image: docker.io/library/busybox
+    command:
+    - /bin/sh
+    args:
+    - -c
+    - "echo hello world"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TaskRun
+metadata:
+  name: build-simple
+spec:
+  taskRef:
+    name: build-simple
+  trigger:
+    type: manual
+#+END_SRC
+
+#+BEGIN_SRC bash
+$ kubectl apply -f ./test.yaml
+task.tekton.dev/build-simple created
+taskrun.tekton.dev/build-simple created
+#+END_SRC
+
+Let's now look at what's in our namespace
+
+#+BEGIN_SRC bash
+$ kubectl get all
+NAME                          READY     STATUS      RESTARTS   AGE
+pod/build-simple-pod-ada879   0/2       Completed   0          10s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   26m
+
+NAME                           AGE
+task.tekton.dev/build-simple   10s
+
+NAME                              AGE
+taskrun.tekton.dev/build-simple   10s
+#+END_SRC
+* Development workflow
+:PROPERTIES:
+:CUSTOM_ID: h:89f26869-04b1-402f-af3a-77946dec25b2
+:END:
+
+When you're working on ~pipeline~, usually you want :
+
+1. make sure it compiles : ~go build -v ./..~
+2. Running unit tests : ~go test ./...~ (bonus use [[https://github.com/vdemeester/ram][~ram~]] for continuous testing)
+3. End-to-end tests : ~go test -tags e2e ./...~ (or simply using `./test/` package)
+
+   *Make sure you re-deploy before running the e2e tests* using ~ko apply -f ./config~,
+   otherwise you're testing the wrong code.
+
+* Code walkthrough
+:PROPERTIES:
+:CUSTOM_ID: h:0964e161-7ddd-40f9-a224-207e68b941fe
+:END:
+
+Let's look into ~tektoncd/pipeline~ sources
+
+- Go packages
+  + ~cmd~
+  + ~pkg~
+    - ~apis~ : api types
+    - ~client~ : generated client
+    - ~reconcilier~ : core of the pipeline controller
+- Tests
+- CI related files

@@ -1,0 +1,2 @@
+#+title: Simple, correct, fast: in that order | Drew DeVault’s Blog
+#+roam_key: https://drewdevault.com/2018/07/09/Simple-correct-fast.html

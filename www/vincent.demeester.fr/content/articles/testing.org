@@ -1,0 +1,51 @@
+#+TITLE: Testing
+#+FILETAGS: language programming testing
+#+SETUPFILE: .setup.org
+
+* Links
+
+** TODO [[https://ahuth.github.io/content/articles/what-are-unit-tests-for.html][What are Unit Tests For?]]
+[2020-06-11 Thu 10:49]
+** TODO [[https://mike-bland.com/2012/08/10/call-me-ishmael.html][Call me Ishmael]]
+
+Interesting article about testing at google. Read the following also:
+- https://mike-bland.com/2012/08/16/oop-revisited.html
+- https://mike-bland.com/2012/09/11/practice-of-testing.html
+- https://mike-bland.com/2012/09/13/process.html
+- https://mike-bland.com/2012/10/01/tools.html
+
+** TODO [[https://dave.cheney.net/2019/05/14/why-bother-writing-tests-at-all][Why bother writing tests at all? | Dave Cheney]]
+[2019-05-18 Sat 12:49]
+
+** TODO [[https://medium.com/scopedev/testing-in-the-cloud-native-era-41f63a0e101b][Testing in the Cloud Native Era - Scope - Medium]]
+[2019-11-06 Wed 19:21]
+
+** TODO [[https://www.hillelwayne.com/post/contract-examples/][Finding Property Tests • Hillel Wayne]]                      :haskell:
+[2019-11-29 Fri 19:55]
+
+** TODO [[https://8thlight.com/blog/rani-zilpelwar/2019/12/10/write-flexible-and-clear-unit-tests.html][How to Write Flexible and Clear Unit Tests | 8th Light]]
+[2019-12-12 Thu 13:41]
+** TODO [[https://www.arp242.net/testing.html][Testing isn’t everything]]
+[2019-12-12 Thu 18:03]
+
+** TODO [[https://madeintandem.com/blog/five-factor-testing/][Five Factor Testing | Tandem]]
+[2020-02-08 Sat 16:49]
+
+** TODO [[http://calpaterson.com/against-database-teardown.html][The argument against clearing the database between tests]] :database:test:
+[2020-04-28 Tue 00:41]
+
+** TODO [[https://www.dein.fr/2019-09-06-test-coverage-only-matters-if-at-100-percent.html][Test coverage only matters if it's at 100% | dein.fr]]       :testing:
+[2020-05-19 Tue 16:29]
+** TODO [[https://www.innoq.com/en/blog/why-you-should-write-automated-tests/][Why You Should Write Automated Tests – INNOQ]]
+[2020-08-27 Thu 12:57]
+
+** TODO [[https://lukeplant.me.uk/blog/posts/test-smarter-not-harder/][Test smarter, not harder - lukeplant.me.uk]]
+[2020-09-11 Fri 10:51]
+
+For many religions, the more painful an activity, and the more you do it, the more meritorious it is — and it may even atone for past misdeeds. If you take that mindset with you into writing tests, you will do a rather bad job.
+** TODO [[https://blog.auxon.io/2021/02/01/effective-property-based-testing/][Effective Property-Based Testing | Blog – Auxon Corporation]]
+[2021-02-03 Wed 10:51]
+** TODO [[https://www.innoq.com/en/blog/anatomy-of-a-good-test/][Anatomy of a Good Test – INNOQ]]
+[2020-09-25 Fri 11:50]
+** TODO [[https://gregberge.com/blog/testing-hooks][Better tests with "Testing Hooks" pattern]]
+[2020-07-01 Wed 19:01]

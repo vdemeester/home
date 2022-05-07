@@ -1,0 +1,9 @@
+
+#+TITLE: OpenShift Pipeline
+
+OpenShift Pipeline is [[file:tekton.org][Tekton]] version optimized for [[file:openshift.org][OpenShift]]. It enables you to write
+[[file:continuous_integration.org][CI]]/[[file:continuous_deployment.org][CD]] pipelines on [[file:openshift.org][OpenShift]], built by [[file:red_hat.org][Red Hat]]. The *mission* of OpenShift Pipeline is :
+
+#+begin_quote
+to provide the best user experience for building cloud-native CI/CD pipelines on OpenShift
+#+end_quote

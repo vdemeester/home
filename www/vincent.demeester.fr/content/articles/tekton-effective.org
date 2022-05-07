@@ -1,0 +1,36 @@
+#+TITLE: Efficient Pipeline with Tekton
+#+SUBTITLE: Diving into the cat's project best practices 🐱
+#+FILETAGS: tektoncd kubernetes ci cd pipeline
+
+#+begin_abstract
+Let's dig into how I to write efficient pipeline with Tekton, following best-practices
+#+end_abstract
+
+#+TOC: headlines 1
+
+* TODO Plan
+
+Open question: should it a set of article ? (like a small book :D)
+
+* What is Tektoncd ?
+:PROPERTIES:
+:CUSTOM_ID: h:df5e2667-14ba-44d1-9ea5-789fcd64a202
+:END:
+
+#+NAME: fig:tektoncd-logo
+#+ATTR_ORG: :width 400/600
+#+ATTR_HTML: :width 400/600px
+[[file:images/tekton/tekton-horizontal-color.png]]
+
+#+begin_quote
+The Tekton Pipelines project provides Kubernetes-style resources for declaring CI/CD-style pipelines.
+#+end_quote
+
+* TODO Without PipelineResource
+
+* TODO Use of parameters
+
+* TODO Ways to pass information from A to B
+
+* TODO When to use =podTemplate=
+* TODO When to use =stepTemplate=

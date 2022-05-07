@@ -1,0 +1,64 @@
+#+TITLE: Documentation
+#+FILETAGS: language programming documentation
+#+SETUPFILE: .setup.org
+
+* Documentation                                                  :docs:#link:
+
+** [[https://documentation.divio.com/][Documentation System]]
+[2021-10-15 Fri 17:27]
+
+#+begin_quote
+The Grand Unified Theory of Documentation
+— David Laing
+
+There is a secret that needs to be understood in order to write good software
+documentation: there isn’t one thing called documentation, there are four.
+
+They are: tutorials, how-to guides, technical reference and explanation. They represent
+four different purposes or functions, and require four different approaches to their
+creation. Understanding the implications of this will help improve most documentation -
+often immensely.
+#+end_quote
+
+This is a set of resources around how setup a system to document your software/product
+correctly. And there is *four* distinctive type of documentation (different style of writing):
+
+- Tutorials — /learning-oriented/
+  Usually the most important to "get-in", and usually not very well done.
+- How-to Guides — /problem-oriented/
+  Series of step required to solve a real-world problem.
+- Explanation — /understanding-oriented/
+- References — /information-oriented/
+
+#+NAME: Overview
+[[./images/documentation/overview.png]]
+
+Given how wide is this set of pages, I might link several sub-entries here.
+
+[[https://www.youtube.com/watch?v=t4vKPhjcMZg][What nobody tells you about documentation]] is the video from the author(s) of this set of pages.
+
+** [[https://8thlight.com/blog/martin-gaston/2019/10/22/tips-for-technical-writing.html][Tips for Technical Writing | 8th Light]]
+[2019-10-28 Mon 08:21]
+
+#+begin_quote
+Do you struggle to write blog posts? Developing your craft when it comes to writing can be
+as intimidating as the buggiest code.
+
+Refining your writing will be another fascinating challenge on your path to mastery. At
+its best, writing can be very satisfying. While it might feel daunting now, in time it
+could become something you take real pleasure in.
+
+Yet it can sure feel difficult and daunting to establish yourself in this space. What
+should you write about? How should you get started? How often should you publish your
+work? Where? When?
+
+It's a lot to take in.
+
+This post contains some advice to anyone aspiring to technical writing on the web. Also
+included are some creative writing exercises to help develop your thinking.
+#+end_quote
+
+One very interesting part of this article is the template part of it:
+- Beginning :: /What are you going to tell me/
+- Middle :: /The telling/
+- End :: /What did you tell me/

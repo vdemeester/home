@@ -1,0 +1,119 @@
+
+#+TITLE: OpenShift
+
+It is primarily built by [[file:red_hat.org][Red Hat]].
+
+* Projects around OpenShift
+
+- [[file:openshift_pipeline.org][OpenShift Pipeline]]
+
+* Provisioning
+
+One of my goal is to have a local OpenShift cluster that I use daily — I really like the
+idea of [[file:dogfooding.org][dogfooding]]. There is multiple ways to provision OpenShift, but as we are going to
+run it locally (because it costs less 🙃), we are going to try to using =libvirt= and the
+[[https://github.com/openshift/installer/][installer]] /or/ on bare metal. Note that we can use the /bare metal/ setup on libvirt
+virtual machines that are managed outside of the OpenShift scope using the [[https://github.com/openshift/installer/blob/master/docs/user/metal/install_upi.md][User Provided
+Infrastructure]]. Let's try this : [[file:openshift_on_vm_bare_metal.org][OpenShift on VM Bare metal]].
+
+For OpenShift, I'll stick with [[file:red_hat.org][Red Hat]] usual setup, aka using CentOS or RHEL 😉.
+
+* Identity providers
+
+#+begin_quote
+For users to interact with OpenShift Container Platform, they must first authenticate to
+the cluster. The authentication layer identifies the user associated with requests to the
+OpenShift Container Platform API. The authorization layer then uses information about the
+requesting user to determine if the request is allowed.
+
+[…]
+
+The OpenShift Container Platform master includes a built-in OAuth server. Developers and
+administrators obtain OAuth access tokens to authenticate themselves to the API.
+#+end_quote
+
+Identity providers are the way to create user in an OpenShift cluster. There is a bunch
+that exists, but we will only look at the following.
+
+#+TOC: headlines 1 local
+
+** HTPasswd
+
+*** create
+
+#+begin_quote
+Configure the htpasswd identity provider to validate user names and passwords against a
+flat file generated using htpasswd.
+#+end_quote
+
+- Create or update your flat file with a user name and hashed password:
+  #+begin_src bash
+  $ htpasswd -c -B -b </path/to/users.htpasswd> <user_name> <password>
+  #+end_src
+
+- Create the htpasswd secret
+  #+begin_src bash
+  $ oc create secret generic htpass-secret --from-file=htpasswd=</path/to/users.htpasswd> -n openshift-config
+  #+end_src
+
+- Create an HTPasswd CR
+  #+begin_src yaml
+  apiVersion: config.openshift.io/v1
+  kind: OAuth
+  metadata:
+    name: cluster
+  spec:
+    identityProviders:
+    - name: my_htpasswd_provider
+      mappingMethod: claim
+      type: HTPasswd
+      htpasswd:
+        fileData:
+          name: htpass-secret
+  #+end_src
+
+*** update
+
+In order to update the users of an htpasswd identity provider:
+
+- Get the secret content
+  #+begin_src bash
+  $ oc get secret htpass-secret -ojsonpath={.data.htpasswd} -n openshift-config | base64 -d > users.htpasswd
+  #+end_src
+- Add or remove a user
+  #+begin_src bash
+  # Add
+  $ htpasswd -bB users.htpasswd <username> <password>
+  # Remove
+  $ htpasswd -D users.htpasswd <username>
+  #+end_src
+- Replace the =htpass-secret=
+  #+begin_src bash
+  $ oc create secret generic htpass-secret --from-file=htpasswd=users.htpasswd --dry-run -o yaml -n openshift-config | oc replace -f -
+  #+end_src
+- /note:/ If you removed one or more users, you must additionally remove existing resources
+  for each user.
+  #+begin_src bash
+  # Delete the user
+  $ oc delete user <username>
+  # Delete the user identity
+  $ oc delete identity my_htpasswd_provider:<username>
+  #+end_src
+
+** GitHub
+
+#+begin_quote
+Configure a github identity provider to validate user names and passwords against GitHub
+or GitHub Enterprise’s OAuth authentication server.
+#+end_quote
+
+See [[https://docs.openshift.com/container-platform/4.5/authentication/identity_providers/configuring-github-identity-provider.html][Configuring a GitHub or GitHub Enterprise identity provider - Configuring identity providers | Authentication and authorization | OpenShift Container Platform 4.5]].
+
+** GitLab
+
+#+begin_quote
+Configure a gitlab identity provider to use GitLab.com or any other GitLab instance as an
+identity provider.
+#+end_quote
+
+See [[https://docs.openshift.com/container-platform/4.5/authentication/identity_providers/configuring-gitlab-identity-provider.html#configuring-gitlab-identity-provider][Configuring a GitLab identity provider - Configuring identity providers | Authentication and authorization | OpenShift Container Platform 4.5]].

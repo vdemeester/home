@@ -1,0 +1,13 @@
+#+TITLE: Lisp
+
+* Sub languages
+
+- Common Lisp
+- [[file:emacs_lisp.org][Emacs Lisp]]
+- [[file:clojure.org][Clojure]]
+
+* Links
+** TODO [[https://joshbradley.me/understanding-the-power-of-lisp/][Understanding the Power of LISP]]                               :lisp:
+[2020-04-09 Thu 17:35]
+** TODO [[https://stopa.io/post/265][An Intuition for Lisp Syntax]]
+[2020-10-26 Mon 10:56]

@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TaskRun
+metadata:
+  name: build-simple
+spec:
+  taskSpec:
+    steps:
+    - name: echo
+      image: docker.io/library/busybox
+      command:
+      - /bin/sh
+      args:
+      - -c
+      - "echo echo"
+    - name: exit
+      image: docker.io/library/busybox
+      command:
+      - /bin/sh
+      args:
+      - -c
+      - "exit 1"
+    - name: echo-again
+      image: docker.io/library/busybox
+      command:
+      - /bin/sh
+      args:
+      - -c
+      - "sleep 30s"
+  trigger:
+    type: manual

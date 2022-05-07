@@ -1,0 +1,7 @@
+#+title: My personal journey from MIT to GPL | Drew DeVault’s Blog
+#+roam_key: https://drewdevault.com/2019/06/13/My-journey-from-MIT-to-GPL.html
+
+As I got started writing open source software, I generally preferred the MIT license. I
+actually made fun of the “copyleft” GPL licenses, on the grounds that they are less
+free. I still hold this opinion today: the GPL license is less free than the MIT license -
+but today, I believe this in a good way.

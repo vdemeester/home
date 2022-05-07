@@ -1,0 +1,8 @@
+#+TITLE: Raspberry PI
+
+* NixOS
+
+- https://rbf.dev/blog/2020/05/custom-nixos-build-for-raspberry-pis/#building-on-nixos-using-nixos-generators
+- https://github.com/Robertof/nixos-docker-sd-image-builder
+- https://gist.github.com/chrisanthropic/2e6d3645f20da8fd4c1f122113f89c06
+- https://github.com/zupo/nix

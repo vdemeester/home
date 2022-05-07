@@ -1,0 +1,1802 @@
+#+TITLE: Tekton Pipeline : another world without PipelineResources
+#+FILETAGS: tekton #work pipeline pipelineresources
+#+CATEGORY: tektoncd
+
+This document is a refreshed version of [[https://docs.google.com/document/d/1u6qO7CPtDnTOZMYFQ5ARysSOy8lfFeVw83C_5BxAKsw/edit#heading=h.yc5nzf2ze0dr][A world without PipelineResource]] (only accessible
+if you are a member of the tekton community) as of =tekton/pipeline= =v0.17.x=.
+
+* TODO Goal(s)
+
+
+** PipelineResources "problems"
+*** PipelineResources extra(s)
+
+Related issue is [[https://github.com/tektoncd/pipeline/issues/3518][#3518]], but there might be others. It is not currently possible to pass
+extra certificates to a =PipelineResource= generated container, making, for example a
+self-signed =https= git clone from using =PipelineResource= impossible. This may apply to
+additional "extra" that we would want to apply to =PipelineResource= that we can apply to
+=Task= (additional volumes, …).
+* TODO Examples
+:LOGBOOK:
+CLOCK: [2020-11-10 Tue 16:25]--[2020-11-10 Tue 17:30] =>  1:05
+CLOCK: [2020-11-02 Mon 15:37]--[2020-11-09 Mon 16:57] => 169:20
+CLOCK: [2020-10-30 Fri 15:10]--[2020-10-30 Fri 16:58] =>  1:48
+:END:
+
+The examples in the document are based on the "User stories" list of [[https://docs.google.com/document/d/1h9n0Lod0OiJ_sP2HK8Ms7N04aee5LW8xfz5yMGCFMIs/edit?ts=5f96a3e8#][Tekton Pipeline v1
+API]] document.
+
+We are going to use the [[https://github.com/tektoncd/catalog][catalog]] task as much as we can. We are also going to use tekton
+bundle, that will be available starting from =v0.18.0=.
+
+** DONE Prerequisite
+CLOSED: [2020-11-02 Mon 15:36]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-11-02 Mon 15:36]
+:END:
+
+Let's bundle some base tasks into a tekton bundle to "ease" of use.
+
+- =git=
+
+  #+begin_src bash :dir /home/vincent/src/github.com/tektoncd/catalog :result raw
+  tkn-oci push docker.io/vdemeester/tekton-base-git:v0.1 task/git-clone/0.2/git-clone.yaml task/git-cli/0.1/git-cli.yaml task/git-rebase/0.1/git-rebase.yaml
+  #+end_src
+
+
+Let's also create a /generic/ PVC for getting source code, …
+
+#+begin_src yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: testpvc
+spec:
+  accessModes: [ ReadWriteMany ]
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 1Gi
+#+end_src
+
+** DONE Standard Go Pipeline
+CLOSED: [2020-11-02 Mon 15:34]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-11-02 Mon 15:34]
+:END:
+
+A simple go pipeline is doing the following:
+- *linting* using =golangci-lint= - [[https://raw.githubusercontent.com/tektoncd/catalog/master/task/golangci-lint/0.1/golangci-lint.yaml][golangci-lint]]
+- *build* using =go build= - [[https://raw.githubusercontent.com/tektoncd/catalog/master/task/golang-build/0.1/golang-build.yaml][golang-build]]
+- *testing* using =go test= - [[https://raw.githubusercontent.com/tektoncd/catalog/master/task/golang-test/0.1/golang-test.yaml][golang-test]]
+
+#+begin_src bash :dir /home/vincent/src/github.com/tektoncd/catalog :result raw
+tkn-oci push docker.io/vdemeester/tekton-golang:v0.1 task/golangci-lint/0.1/golangci-lint.yaml  task/golang-build/0.1/golang-build.yaml task/golang-test/0.1/golang-test.yaml
+#+end_src
+
+#+begin_src yaml
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: std-golang
+spec:
+  params:
+  - name: package
+#- name: url
+#  default: https://$(params.package) # that doesn't work
+  - name: revision
+    default: ""
+  workspaces:
+  - name: ws
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+      bundle: docker.io/vdemeester/tekton-base-git:v0.1
+    workspaces:
+    - name: output
+      workspace: ws
+    params:
+    - name: url
+      value: https://$(params.package)
+  - name: build
+    taskRef:
+      name: golang-build
+      bundle: docker.io/vdemeester/tekton-golang:v0.1
+    runAfter: [ fetch-repository ]
+    params:
+    - name: package
+      value: $(params.package)
+    workspaces:
+    - name: source
+      workspace: ws
+  - name: lint
+    taskRef:
+      name: golangci-lint
+      bundle: docker.io/vdemeester/tekton-golang:v0.1
+    runAfter: [ fetch-repository ]
+    params:
+    - name: package
+      value: $(params.package)
+    workspaces:
+    - name: source
+      workspace: ws
+  - name: test
+    taskRef:
+      name: golang-test
+      bundle: docker.io/vdemeester/tekton-golang:v0.1
+    runAfter: [ build, lint ]
+    params:
+    - name: package
+      value: $(params.package)
+    workspaces:
+    - name: source
+      workspace: ws
+#+end_src
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: run-std-go-
+spec:
+  pipelineRef:
+    name: std-golang
+  params:
+  - name: package
+    value: github.com/tektoncd/pipeline
+  workspaces:
+  - name: ws
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+#+end_src
+
+Note:
+- =bundle= is duplicated a lot (default bundle would reduce verbosity).
+- =params= and =workspaces= are duplicated in there.
+  /Maybe we could be able to specify workspace to be available for all tasks/
+
+** DONE Standard Java Pipeline(s)
+CLOSED: [2020-11-02 Mon 17:23]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-11-02 Mon 17:23]
+:END:
+
+#+begin_src bash :dir /home/vincent/src/github.com/tektoncd/catalog :result raw
+tkn-oci push docker.io/vdemeester/tekton-java:v0.1 task/maven/0.2/maven.yaml  task/jib-gradle/0.1/jib-gradle.yaml task/jib-maven/0.1/jib-maven.yaml
+#+end_src
+
+*** DONE Prerequisite
+CLOSED: [2020-11-02 Mon 16:27]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-11-02 Mon 16:27]
+:END:
+
+Let's have a =nexus= server running…
+
+#+begin_src yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nexus
+    app.kubernetes.io/instance: nexus
+    app.kubernetes.io/name: nexus
+    app.kubernetes.io/part-of: nexus
+  name: nexus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexus
+  template:
+    metadata:
+      labels:
+        app: nexus
+    spec:
+      containers:
+      - name: nexus
+        image: docker.io/sonatype/nexus3:3.16.2
+        env:
+        - name: CONTEXT_PATH
+          value: /
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8081
+          protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+            - echo
+            - ok
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            memory: 4Gi
+            cpu: 2
+          requests:
+            memory: 512Mi
+            cpu: 200m
+        terminationMessagePath: /dev/termination-log
+        volumeMounts:
+        - mountPath: /nexus-data
+          name: nexus-data
+      volumes:
+      - name: nexus-data
+        persistentVolumeClaim:
+          claimName: nexus-pv
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nexus
+  name: nexus
+spec:
+  ports:
+  - name: 8081-tcp
+    port: 8081
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    app: nexus
+  sessionAffinity: None
+  type: ClusterIP
+# ---
+# apiVersion: v1
+# kind: Route
+# metadata:
+#   labels:
+#     app: nexus
+#   name: nexus
+# spec:
+#   port:
+#     targetPort: 8081-tcp
+#   to:
+#     kind: Service
+#     name: nexus
+#     weight: 100
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: nexus
+  name: nexus-pv
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+#+end_src
+
+… a maven-repo PVC
+
+#+begin_src yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: maven-repo-pvc
+spec:
+  resources:
+    requests:
+      storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+#+end_src
+
+and a maven settings configmap
+
+#+begin_src yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-maven-settings
+data:
+  settings.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <settings>
+      <servers>
+        <server>
+          <id>nexus</id>
+          <username>admin</username>
+          <password>admin123</password>
+        </server>
+      </servers>
+      <mirrors>
+        <mirror>
+          <id>nexus</id>
+          <name>nexus</name>
+          <url>http://nexus:8081/repository/maven-public/</url>
+          <mirrorOf>*</mirrorOf>
+        </mirror>
+      </mirrors>
+    </settings>
+#+end_src
+
+*** DONE Maven
+CLOSED: [2020-11-02 Mon 16:40]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-11-02 Mon 16:40]
+:END:
+
+A simple =maven= project pipeline that build, run test, packages and publish artifacts
+(jars) to a maven repository. /Note: it uses a maven cache (=.m2=)/.
+
+The pipeline…
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: std-maven
+spec:
+  params:
+  - name: url
+  - name: revision
+    default: ""
+  workspaces:
+  - name: ws
+  - name: local-maven-repo
+  - name: maven-settings
+    optional: true
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+      bundle: docker.io/vdemeester/tekton-base-git:v0.1
+    workspaces:
+    - name: output
+      workspace: ws
+    params:
+    - name: url
+      value: $(params.url)
+  - name: unit-tests
+    taskRef:
+      bundle: docker.io/vdemeester/tekton-java:v0.1
+      name: maven
+    runAfter:
+      - fetch-repository
+    workspaces:
+    - name: source
+      workspace: ws
+    - name: maven-repo
+      workspace: local-maven-repo
+    - name: maven-settings
+      workspace: maven-settings
+    params:
+    - name: GOALS
+      value: ["package"]
+  - name: release-app
+    taskRef:
+      bundle: docker.io/vdemeester/tekton-java:v0.1
+      name: maven
+    runAfter:
+      - unit-tests
+    workspaces:
+    - name: source
+      workspace: ws
+    - name: maven-repo
+      workspace: local-maven-repo
+    - name: maven-settings
+      workspace: maven-settings
+    params:
+    - name: GOALS
+      value:
+      - deploy
+      - -DskipTests=true
+      - -DaltDeploymentRepository=nexus::default::http://nexus:8081/repository/maven-releases/
+      - -DaltSnapshotDeploymentRepository=nexus::default::http://nexus:8081/repository/maven-snapshots/
+#+end_src
+
+… and the pipeline run
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: run-std-maven-
+spec:
+  pipelineRef:
+    name: std-maven
+  params:
+  - name: url
+    value: https://github.com/spring-projects/spring-petclinic
+  workspaces:
+  - name: maven-settings
+    configMap:
+      name: custom-maven-settings
+      items:
+      - key: settings.xml
+        path: settings.xml
+  - name: local-maven-repo
+    persistentVolumeClaim:
+      claimName: maven-repo-pvc
+  - name: ws
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+#+end_src
+
+Notes:
+- Need =affinity-assistant= to be disabled (as of today)
+- =params= and =workspaces= are duplicated in there.
+  /Maybe we could be able to specify workspace to be available for all tasks/
+
+*** DONE Gradle
+CLOSED: [2020-11-02 Mon 16:56]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-11-02 Mon 16:56]
+:END:
+
+A simple =gradle= project pipeline that build, run test, packages and publish artifacts
+(jars) to a maven repository. /Note: it uses a maven cache (=.m2=)/. This is the same as above
+but using =gradle= instead of =maven=.
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: std-gradle
+spec:
+  params:
+  - name: url
+  - name: revision
+    default: ""
+  workspaces:
+  - name: ws
+  - name: local-maven-repo
+  - name: maven-settings
+    optional: true
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+      bundle: docker.io/vdemeester/tekton-base-git:v0.1
+    workspaces:
+    - name: output
+      workspace: ws
+    params:
+    - name: url
+      value: $(params.url)
+  - name: unit-tests
+    taskRef:
+      bundle: docker.io/vdemeester/tekton-java:v0.1
+      name: gradle
+    runAfter:
+      - fetch-repository
+    workspaces:
+    - name: source
+      workspace: ws
+    - name: maven-repo
+      workspace: local-maven-repo
+    - name: maven-settings
+      workspace: maven-settings
+    params:
+    - name: GOALS
+      value: ["build"]
+  # - name: release-app
+  #   taskRef:
+  #     bundle: docker.io/vdemeester/tekton-java:v0.1
+  #     name: gradle
+  #   runAfter:
+  #     - unit-tests
+  #   workspaces:
+  #   - name: source
+  #     workspace: ws
+  #   - name: maven-repo
+  #     workspace: local-maven-repo
+  #   - name: maven-settings
+  #     workspace: maven-settings
+  #   params:
+  #   - name: GOALS
+  #     value:
+  #     - upload
+  #     - -DskipTests=true
+  #     - -DaltDeploymentRepository=nexus::default::http://nexus:8081/repository/maven-releases/
+  #     - -DaltSnapshotDeploymentRepository=nexus::default::http://nexus:8081/repository/maven-snapshots/q
+#+end_src
+
+and the run…
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: run-std-gradle-
+spec:
+  pipelineRef:
+    name: std-gradle
+  params:
+  - name: url
+    value: https://github.com/spring-petclinic/spring-petclinic-kotlin
+  workspaces:
+  - name: maven-settings
+    configMap:
+      name: custom-maven-settings
+      items:
+      - key: settings.xml
+        path: settings.xml
+  - name: local-maven-repo
+    persistentVolumeClaim:
+      claimName: maven-repo-pvc
+  - name: ws
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+#+end_src
+
+** DONE A source-to-image Pipeline
+CLOSED: [2020-11-10 Tue 17:04]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-11-10 Tue 17:04]
+:END:
+
+A pipeline that takes a repository with a =Dockerfile=, builds and pushes an image from it,
+and deploy it to kubernetes (using deployment/services).
+
+Let's first setup a registry
+
+#+begin_src shell
+TMD=$(mktemp -d)
+
+# Generate SSL Certificate
+openssl req -newkey rsa:4096 -nodes -sha256 -keyout "${TMD}"/ca.key -x509 -days 365 \
+        -out "${TMD}"/ca.crt -subj "/C=FR/ST=IDF/L=Paris/O=Tekton/OU=Catalog/CN=registry"
+
+# Create a configmap from these certs
+kubectl create -n "${tns}" configmap sslcert \
+        --from-file=ca.crt="${TMD}"/ca.crt --from-file=ca.key="${TMD}"/ca.key
+#+end_src
+
+#+RESULTS:
+
+#+begin_src yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry
+spec:
+  selector:
+    matchLabels:
+      run: registry
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: registry
+    spec:
+      containers:
+      - name: registry
+        image: docker.io/registry:2
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+          - name: sslcert
+            mountPath: /certs
+        env:
+          - name: REGISTRY_HTTP_TLS_CERTIFICATE
+            value: "/certs/ca.crt"
+          - name: REGISTRY_HTTP_TLS_KEY
+            value: "/certs/ca.key"
+          - name: REGISTRY_HTTP_SECRET
+            value: "tekton"
+      volumes:
+        - name: sslcert
+          configMap:
+            defaultMode: 420
+            items:
+            - key: ca.crt
+              path: ca.crt
+            - key: ca.key
+              path: ca.key
+            name: sslcert
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry
+spec:
+  ports:
+  - port: 5000
+  selector:
+    run: registry
+#+end_src
+
+*** DONE buildah
+CLOSED: [2020-11-09 Mon 16:57]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-11-09 Mon 16:57]
+:END:
+
+#+begin_src yaml
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: std-source-to-image-buildah
+spec:
+  params:
+  - name: url
+  - name: revision
+    default: ""
+  - name: image
+    default: "localhost:5000/foo"
+  - name: pushimage
+    default: "localhost:5000/foo"
+  workspaces:
+  - name: ws
+  - name: sslcertdir
+    optional: true
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+      #bundle: docker.io/vdemeester/tekton-base-git:v0.1
+    workspaces:
+    - name: output
+      workspace: ws
+    params:
+    - name: url
+      value: $(params.url)
+  - name: build-and-push
+    taskRef:
+      name: buildah
+      #bundle: docker.io/vdemeester/tekton-builders:v0.1
+    runAfter: [ fetch-repository ]
+    params:
+    - name: IMAGE
+      value: $(params.pushimage)
+    - name: TLSVERIFY
+      value: "false"
+    workspaces:
+    - name: source
+      workspace: ws
+    # - name: sslcertdir
+    #   workspace: sslcertdir
+  - name: deploy
+    runAfter: [ build-and-push ]
+    params:
+    - name: reference
+      value: $(params.image)@$(tasks.build-and-push.results.IMAGE_DIGEST)
+    taskSpec:
+      params:
+      - name: reference
+      steps:
+      - image: gcr.io/cloud-builders/kubectl@sha256:8ab94be8b2b4f3d117f02d868b39540fddd225447abf4014f7ba4765cb39f753
+        script: |
+          cat <<EOF | kubectl apply -f -
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: foo-app
+          spec:
+            selector:
+              matchLabels:
+                run: foo-app
+            replicas: 1
+            template:
+              metadata:
+                labels:
+                  run: foo-app
+              spec:
+                containers:
+                - name: foo
+                  image: $(params.reference)
+#+end_src
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: run-std-source-to-image-buildah-
+spec:
+  pipelineRef:
+    name: std-source-to-image-buildah
+  params:
+  - name: url
+    value: https://github.com/lvthillo/python-flask-docker
+  - name: pushimage
+    value: sakhalin.home:5000/foo
+  workspaces:
+  - name: ws
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+#+end_src
+
+Notes:
+- =deploy= may need it's own task definition in the catalog. =kubectl-deploy-pod= is one but
+  didn't work properly
+- rest is smooth
+
+*** DONE s2i (no =Dockerfile=)
+CLOSED: [2020-11-10 Tue 16:59]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-11-10 Tue 16:59]
+:END:
+
+#+begin_src yaml
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: std-source-to-image-s2i
+spec:
+  params:
+  - name: url
+  - name: revision
+    default: ""
+  - name: image
+    default: "localhost:5000/foo"
+  - name: pushimage
+    default: "localhost:5000/foo"
+  workspaces:
+  - name: ws
+  - name: sslcertdir
+    optional: true
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+      #bundle: docker.io/vdemeester/tekton-base-git:v0.1
+    workspaces:
+    - name: output
+      workspace: ws
+    params:
+    - name: url
+      value: $(params.url)
+  - name: build-and-push
+    taskRef:
+      name: s2i
+      #bundle: docker.io/vdemeester/tekton-builders:v0.1
+    runAfter: [ fetch-repository ]
+    params:
+    - name: BUILDER_IMAGE
+      value: docker.io/fabric8/s2i-java:latest-java11
+    - name: S2I_EXTRA_ARGS
+      value: "--image-scripts-url=image:///usr/local/s2i"
+    - name: IMAGE
+      value: $(params.pushimage)
+    - name: TLSVERIFY
+      value: "false"
+    workspaces:
+    - name: source
+      workspace: ws
+    # - name: sslcertdir
+    #   workspace: sslcertdir
+  - name: deploy
+    runAfter: [ build-and-push ]
+    params:
+    - name: reference
+      value: $(params.image)@$(tasks.build-and-push.results.IMAGE_DIGEST)
+    taskSpec:
+      params:
+      - name: reference
+      steps:
+      - image: gcr.io/cloud-builders/kubectl@sha256:8ab94be8b2b4f3d117f02d868b39540fddd225447abf4014f7ba4765cb39f753
+        script: |
+          cat <<EOF | kubectl apply -f -
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: foo-app
+          spec:
+            selector:
+              matchLabels:
+                run: foo-app
+            replicas: 1
+            template:
+              metadata:
+                labels:
+                  run: foo-app
+              spec:
+                containers:
+                - name: foo
+                  image: $(params.reference)
+#+end_src
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: run-std-source-to-image-s2i-
+spec:
+  pipelineRef:
+    name: std-source-to-image-s2i
+  params:
+  - name: url
+    value: https://github.com/siamaksade/spring-petclinic
+  - name: pushimage
+    value: sakhalin.home:5000/foo
+  workspaces:
+  - name: ws
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+#+end_src
+
+Notes:
+- =s2i= shares a lot with =buildah= or any =Dockerfile= build tool.
+  This may *show* the need to compose tasks from other tasks. Here we do =s2i …
+  --as-dockerfile= and then we just need to build the =Dockerfile=. This could be 2 separate
+  tasks but it would make the pipeline less efficient.
+
+** DONE A source-to-image "knative" Pipeline
+CLOSED: [2020-11-10 Tue 17:02]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2020-11-10 Tue 17:02]
+:END:
+
+A pipeline that takes a repository with a =Dockerfile=, builds and pushes an image from it,
+and deploy it to kubernetes using knative services.
+
+#+begin_src yaml
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: std-source-to-image-buildah-kn
+spec:
+  params:
+  - name: url
+  - name: revision
+    default: ""
+  - name: image
+    default: "localhost:5000/foo"
+  - name: pushimage
+    default: "localhost:5000/foo"
+  workspaces:
+  - name: ws
+  - name: sslcertdir
+    optional: true
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+      #bundle: docker.io/vdemeester/tekton-base-git:v0.1
+    workspaces:
+    - name: output
+      workspace: ws
+    params:
+    - name: url
+      value: $(params.url)
+  - name: build-and-push
+    taskRef:
+      name: buildah
+      #bundle: docker.io/vdemeester/tekton-builders:v0.1
+    runAfter: [ fetch-repository ]
+    params:
+    - name: IMAGE
+      value: $(params.pushimage)
+    - name: TLSVERIFY
+      value: "false"
+    workspaces:
+    - name: source
+      workspace: ws
+    # - name: sslcertdir
+    #   workspace: sslcertdir
+  - name: kn-deploy
+    runAfter: [ build-and-push ]
+    taskref:
+      name: kn
+    params:
+    - name: ARGS
+      value:
+      - "service"
+      - "create"
+      - "hello"
+      - "--force"
+      - "--image=$(params.image)@$(tasks.build-and-push.results.IMAGE_DIGEST)"
+#+end_src
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: run-std-source-to-image-buildah-kn-
+spec:
+  pipelineRef:
+    name: std-source-to-image-buildah-kn
+  params:
+  - name: url
+    value: https://github.com/lvthillo/python-flask-docker
+  - name: pushimage
+    value: sakhalin.home:5000/foo
+  serviceAccountName: kn-deployer-account
+  workspaces:
+  - name: ws
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+#+end_src
+
+
+** TODO A canary deployment pipeline (not from sources)
+
+
+
+** TODO A canary deployment pipeline (iter8)
+
+This is taken from [[https://github.com/iter8-tools/canary-tekton-example][iter8 canary tekton example]].
+
+[[./images/tekton/canary-pipeline.png]]
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: identify-baseline-task
+spec:
+  description: |
+    Identify the baseline deployment in a cluster namespace.
+  params:
+    - name: UID
+      type: string
+      default: "uid"
+      description: |
+        Unique identifier used to assocaite load with an experiment.
+        Suitable values might be the experiment name of the task/pipeline run name/uid.
+    - name: NAMESPACE
+      type: string
+      default: default
+      description: The cluster namespace in which to search for the baseline.
+    - name: EXPERIMENT_TEMPLATE
+      type: string
+      default: "experiment"
+      description: Name of template that should be used for the experiment.
+  workspaces:
+  - name: source
+  results:
+    - name: baseline
+      description: Name of the baseline deployment.
+  steps:
+    - name: update-experiment
+      workingDir: $(workspaces.source.path)/$(params.UID)
+      image: kalantar/yq-kubernetes
+      script: |
+        #!/usr/bin/env bash
+        # Uncomment to debug
+        set -x
+
+        # Identify baseline deployment for an experiment
+        # This is heuristic; prefers to look at stable DestinationRule
+        # But if this isn't defined will select first deployment that satisfies
+        # the service selector (service from Experiment)
+
+        NAMESPACE=$(params.NAMESPACE)
+        SERVICE=$(yq read $(params.EXPERIMENT_TEMPLATE) spec.service.name)
+        ROUTER=$(yq read $(params.EXPERIMENT_TEMPLATE) spec.networking.id)
+
+        if [[ -z ${ROUTER} ]] || [[ "${ROUTER}" == "null" ]]; then
+          ROUTER="${SERVICE}.${NAMESPACE}.svc.cluster.local"
+        fi
+
+        echo "SERVICE=${SERVICE}"
+        echo " ROUTER=${ROUTER}"
+
+        SUBSET=
+        NUM_VS=$(kubectl --namespace ${NAMESPACE} get vs --selector=iter8-tools/router=${ROUTER} --output json | jq '.items | length')
+        echo "NUM_VS=${NUM_VS}"
+        if (( ${NUM_VS} > 0 )); then
+          SUBSET=$(kubectl --namespace ${NAMESPACE} get vs --selector=iter8-tools/router=${ROUTER} --output json | jq -r '.items[0].spec.http[0].route[] | select(has("weight")) | select(.weight == 100) | .destination.subset')
+          echo "SUBSET=$SUBSET"
+        fi
+
+        DEPLOY_SELECTOR=""
+        if [[ -n ${SUBSET} ]]; then
+          NUM_DR=$(kubectl --namespace ${NAMESPACE} get dr --selector=iter8-tools/router=${ROUTER} --output json | jq '.items | length')
+          echo "NUM_DR=${NUM_DR}"
+          if (( ${NUM_DR} > 0 )); then
+            DEPLOY_SELECTOR=$(kubectl --namespace ${NAMESPACE} get dr --selector=iter8-tools/router=${ROUTER} --output json | jq -r --arg SUBSET "$SUBSET" '.items[0].spec.subsets[] | select(.name == $SUBSET) | .labels | to_entries[] | "\(.key)=\(.value)"' | paste -sd',' -)
+          fi
+        fi
+        echo "DEPLOY_SELECTOR=${DEPLOY_SELECTOR}"
+
+        if [ -z "${DEPLOY_SELECTOR}" ]; then
+          # No stable DestinationRule found so find the deployment(s) implementing $SERVICE
+          DEPLOY_SELECTOR=$(kubectl --namespace ${NAMESPACE} get service ${SERVICE} --output json | jq -r '.spec.selector | to_entries[] | "\(.key)=\(.value)"' | paste -sd',' -)
+        fi
+        echo "DEPLOY_SELECTOR=$DEPLOY_SELECTOR"
+
+        NUM_DEPLOY=$(kubectl --namespace ${NAMESPACE} get deployment --selector=${DEPLOY_SELECTOR} --output json | jq '.items | length')
+        echo " NUM_DEPLOY=${NUM_DEPLOY}"
+        BASELINE_DEPLOYMENT_NAME=
+        if (( ${NUM_DEPLOY} > 0 )); then
+          BASELINE_DEPLOYMENT_NAME=$(kubectl --namespace ${NAMESPACE} get deployment --selector=${DEPLOY_SELECTOR} --output jsonpath='{.items[0].metadata.name}')
+        fi
+        echo -n "${BASELINE_DEPLOYMENT_NAME}"  | tee $(results.baseline.path)
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: define-experiment-task
+spec:
+  description: |
+    Define an iter8 canary Experiment from a template.
+  workspaces:
+    - name: source
+      description: Consisting of kubernetes manifest templates (ie, the Experiment)
+  params:
+    - name: UID
+      default: "uid"
+      description: |
+        Unique identifier used to assocaite load with an experiment.
+        Suitable values might be the experiment name of the task/pipeline run name/uid.
+    - name: EXPERIMENT_TEMPLATE
+      type: string
+      default: "experiment.yaml"
+      description: An experiment resource that can be modified.
+    - name: NAME
+      type: string
+      default: ""
+      description: The name of the experiment resource to create
+    - name: BASELINE
+      type: string
+      default: ""
+      description: The name of the baseline resource
+    - name: CANDIDATE
+      type: string
+      default: ""
+      description: The name of the candidate (canary) resource
+  results:
+    - name: experiment
+      description: Path to experiment (in workspace )
+  steps:
+    - name: update-experiment
+      image: kalantar/yq-kubernetes
+      workingDir: $(workspaces.source.path)/$(params.UID)
+      script: |
+        #!/usr/bin/env bash
+
+        OUTPUT="experiment-$(params.UID).yaml"
+
+        if [ -f "$(params.EXPERIMENT_TEMPLATE)" ]; then
+          cp "$(params.EXPERIMENT_TEMPLATE)" "${OUTPUT}"
+        else
+          curl -s -o "${OUTPUT}" "$(params.EXPERIMENT_TEMPLATE)"
+        fi
+
+        if [ ! -f "${OUTPUT}" ]; then
+          echo "Can not read template: $(params.EXPERIMENT_TEMPLATE)"
+          exit 1
+        fi
+
+        # Update experiment template
+        if [ "" != "$(params.NAME)" ]; then
+          yq write --inplace "${OUTPUT}" metadata.name "$(params.NAME)"
+        fi
+        if [ "" != "$(params.BASELINE)" ]; then
+          yq write --inplace "${OUTPUT}" spec.service.baseline "$(params.BASELINE)"
+        fi
+        if [ "" != "$(params.CANDIDATE)" ]; then
+          yq write --inplace "${OUTPUT}" spec.service.candidates[0] "$(params.CANDIDATE)"
+        fi
+
+        cat "${OUTPUT}"
+        echo -n $(params.UID)/${OUTPUT} | tee $(results.experiment.path)
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: apply-manifest-task
+spec:
+  description: |
+    Create an iter8 canary Experiment from a template.
+  workspaces:
+    - name: manifest-dir
+      description: Consisting of kubernetes manifests (ie, the Experiment)
+  params:
+    - name: MANIFEST
+      type: string
+      default: "manifest.yaml"
+      description: The name of the file containing the kubernetes manifest to apply
+    - name: TARGET_NAMESPACE
+      type: string
+      default: "default"
+      description: The namespace in which the manifest should be applied
+  steps:
+    - name: apply-manifest
+      image: kalantar/yq-kubernetes
+      workingDir: $(workspaces.manifest-dir.path)
+      script: |
+        #!/usr/bin/env bash
+
+        # Create experiment in cluster
+        kubectl --namespace $(params.TARGET_NAMESPACE) apply --filename "$(params.MANIFEST)"
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: define-canary-task
+spec:
+  description: |
+    Create YAML file needed to deploy the canary version of the application.
+    Relies on kustomize and assumes a patch file template (PATCH_FILE) containing the keyword
+    "VERSION" that can be replaced with the canary verion.
+  params:
+  - name: UID
+    default: "uid"
+    description: |
+      Unique identifier used to assocaite load with an experiment.
+      Suitable values might be the experiment name of the task/pipeline run name/uid.
+  - name: image-repository
+    description: Docker image repository
+    default: ""
+  - name: image-tag
+    description: tag of image to deploy
+    default: latest
+  - name: PATCH_FILE
+    default: kustomize/patch.yaml
+  workspaces:
+  - name: source
+  results:
+    - name: deployment-file
+      description: Path to file (in workspace )
+
+  steps:
+  - name: modify-patch
+    image: alpine
+    workingDir: $(workspaces.source.path)/$(params.UID)
+    script: |
+      #!/usr/bin/env sh
+
+      IMAGE_TAG=$(params.image-tag)
+      PATCH_FILE=$(params.PATCH_FILE)
+      IMAGE=$(params.image-repository):$(params.image-tag)
+
+      sed -i -e "s#iter8/reviews:istio-VERSION#${IMAGE}#" ${PATCH_FILE}
+      sed -i -e "s#VERSION#${IMAGE_TAG}#g" ${PATCH_FILE}
+      cat ${PATCH_FILE}
+
+      echo -n "deploy-$(params.UID).yaml" | tee $(results.deployment-file.path)
+
+  - name: generate-deployment
+    image: smartive/kustomize
+    workingDir: $(workspaces.source.path)/$(params.UID)
+    command: [ "kustomize" ]
+    args: [ "build", "kustomize", "-o", "deploy-$(params.UID).yaml" ]
+
+  - name: log-deployment
+    image: alpine
+    workingDir: $(workspaces.source.path)/$(params.UID)
+    command: [ "cat" ]
+    args: [ "deploy-$(params.UID).yaml" ]
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: wait-completion-task
+spec:
+  description: |
+    Wait until EXPERIMENT is completed;
+    that is, condition ExperimentCompleted is true.
+  params:
+  - name: EXPERIMENT
+    default: "experiment"
+    description: Name of iter8 experiment
+  - name: NAMESPACE
+    default: default
+    description: Namespace in which the iter8 experiment is defined.
+  - name: TIMEOUT
+    default: "1h"
+    description: Amount of time to wait for experiment to complete.
+  steps:
+  - name: wait
+    image: kalantar/yq-kubectl
+    script: |
+      #!/usr/bin/env sh
+      set -x
+
+      kubectl --namespace $(params.NAMESPACE) wait \
+        --for=condition=ExperimentCompleted \
+        experiments.iter8.tools $(params.EXPERIMENT) \
+        --timeout=$(params.TIMEOUT)
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: cleanup-task
+spec:
+  workspaces:
+  - name: workspace
+  params:
+  - name: UID
+    default: "uid"
+    description: |
+      Unique identifier used to assocaite load with an experiment.
+      Suitable values might be the experiment name of the task/pipeline run name/uid.
+  steps:
+  - name: clean-workspace
+    image: alpine
+    script: |
+      #!/usr/bin/env sh
+      set -x
+
+      rm -rf $(workspaces.workspace.path)/$(params.UID)
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: identify-endpoint-task
+spec:
+  description: |
+    Identify URL of application to be used buy load generator.
+  params:
+  - name: istio-namespace
+    default: istio-system
+    description: Namespace where Istio is installed.
+  - name: application-query
+    default: ""
+    description: Application endpoint.
+  results:
+    - name: application-url
+      description: The URL that can be used to apply load to the application.
+  steps:
+  - name: determine-server
+    image: kalantar/yq-kubernetes
+    script: |
+      #!/usr/bin/env sh
+
+      # Determine the IP
+      # Try loadbalancer on istio-ingressgateway
+      IP=$(kubectl --namespace $(params.istio-namespace) get service istio-ingressgateway --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
+      # If not, try an external IP for a node
+      echo "IP=${IP}"
+      if [ -z "${IP}" ]; then
+        IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type == "ExternalIP")].address}')
+      fi
+      echo "IP=${IP}"
+      # If not, try an internal IP for a node (minikube)
+      if [ -z "${IP}" ]; then
+        IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type == "InternalIP")].address}')
+      fi
+      echo "IP=${IP}"
+
+      # Determine the port
+      PORT=$(kubectl --namespace $(params.istio-namespace) get service istio-ingressgateway --output jsonpath="{.spec.ports[?(@.port==80)].nodePort}")
+      echo "PORT=${PORT}"
+
+      HOST="${IP}:${PORT}"
+      echo "HOST=$HOST"
+
+      echo -n "http://${HOST}/$(params.application-query)" | tee $(results.application-url.path)
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: generate-load-task
+spec:
+  description: |
+    Generate load by sending queries to URL every INTERVAL seconds.
+    Load generation continues as long as the file terminate is not present.
+  params:
+  - name: UID
+    default: "uid"
+    description: |
+      Unique identifier used to assocaite load with an experiment.
+      Suitable values might be the experiment name of the task/pipeline run name/uid.
+  - name: URL
+    default: "http://localhost:8080"
+    description: URL that should be used to generate load.
+  - name: HOST
+    default: ""
+    description: Value to be added in Host header.
+  - name: terminate
+    default: ".terminate"
+    description: Name of file that, if present, triggers termination of load generation.
+  - name: INTERVAL
+    default: "0.1"
+    description: Interval (s) between generated requests.
+  workspaces:
+  - name: scratch
+  steps:
+  - name: generate-load
+    image: kalantar/yq-kubernetes
+    workingDir: $(workspaces.scratch.path)
+    script: |
+      #!/usr/bin/env bash
+
+      # Remove terminatation file if it exists (it should not)
+      rm -f $(params.UID)/$(params.terminate) || true
+
+      echo "param HOST=$(params.HOST)"
+      echo "param URL=$(params.URL)"
+
+      if [ "$(params.HOST)" == "" ]; then
+        HOST=
+      elif [ "$(params.HOST)" == "\*" ]; then
+        HOST=
+      else
+        HOST=$(params.HOST)
+      fi
+      echo "computed HOST=$HOST"
+
+      # Optionally use a Host header in requests
+      if [ -z ${HOST} ]; then
+        echo "curl -o /dev/null -s -w \"%{http_code}\\n\" $(params.URL)"
+      else
+        echo "curl -H \"Host: ${HOST}\" -o /dev/null -s -w \"%{http_code}\\n\" $(params.URL)"
+      fi
+
+      # Generate load until the file terminate is created.
+      REQUESTS=0
+      ERRORS=0
+      while [ 1 ]; do
+        if [ -f $(params.UID)/$(params.terminate) ]; then
+          echo "Terminating load; ${REQUESTS} requests sent; ${ERRORS} had errors."
+          break
+        fi
+        sleep $(params.INTERVAL)
+        OUT=
+        if [ -z ${HOST} ]; then
+          OUT=$(curl -o /dev/null -s -w "%{http_code}\n" $(params.URL))
+        else
+          OUT=$(curl -H "Host: ${HOST}" -o /dev/null -s -w "%{http_code}\n" $(params.URL))
+        fi
+        if [ "${OUT}" != "200" ]; then ((ERRORS++)); echo "Not OK: ${OUT}"; fi
+        ((REQUESTS++))
+      done
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: stop-load-task
+spec:
+  description: |
+    Trigger the termination of experiment load.
+  params:
+  - name: UID
+    default: "uid"
+    description: |
+      Unique identifier used to assocaite load with an experiment.
+      Suitable values might be the experiment name of the task/pipeline run name/uid.
+  - name: terminate
+    default: ".terminate"
+    description: Name of file that, if present, triggers termination of load generation.
+  workspaces:
+  - name: scratch
+  steps:
+  - name: wait
+    image: alpine
+    workingDir: $(workspaces.scratch.path)
+    script: |
+      #!/usr/bin/env sh
+
+      # To avoid conflicts, use a run specific subdirectory
+      mkdir -p $(params.UID)
+      touch $(params.UID)/$(params.terminate)
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: queue-request-task
+spec:
+  description: |
+    Place self at the end of a queue and wait until we are at the top.
+  params:
+  - name: UID
+    default: "uid"
+    description: |
+      Unique identifier used to assocaite load with an experiment.
+      Suitable values might be the experiment name of the task/pipeline run name/uid.
+  - name: lock-dir
+    default: ".lock"
+    description: Name of directory to use to acquire mutex.
+  - name: queue
+    default: ".queue"
+    description: Name of the file containing execution queue.
+  - name: wait-time
+    default: "20"
+    description: Sleep time between attempts to aquire the lock.
+  workspaces:
+  - name: scratch
+  steps:
+  - name: queue
+    image: alpine
+    workingDir: $(workspaces.scratch.path)
+    script: |
+      #!/usr/bin/env sh
+
+      while [ "$(params.UID)" != "$(tail -n 1 $(params.queue))" ]; do
+        if mkdir "$(params.lock-dir)"; then
+          echo "queuing $(params.UID)"
+          echo $(params.UID) >> $(params.queue)
+          rm -rf "$(params.lock-dir)"
+        else
+          sleep $(params.wait-time)
+        fi
+      done
+  - name: wait-head
+    image: alpine
+    workingDir: $(workspaces.scratch.path)
+    script: |
+      #!/usr/bin/env sh
+
+      while [ "$(params.UID)" != "$(head -n 1 $(params.queue))" ]; do
+        sleep $(params.wait-time)
+      done
+      echo "$(params.UID) proceeding"
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: dequeue-request-task
+spec:
+  description: |
+    Remove entry from top of queue.
+  params:
+  - name: queue
+    default: ".queue"
+    description: Name of the file containing execution queue.
+  workspaces:
+  - name: scratch
+  steps:
+  - name: dequeue
+    image: alpine
+    workingDir: $(workspaces.scratch.path)
+    script: |
+      #!/usr/bin/env sh
+
+      tail -n +2 $(params.queue) > /tmp/$$; mv /tmp/$$ $(params.queue)
+#+end_src
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: canary-rollout-iter8
+spec:
+  workspaces:
+  - name: source
+  - name: experiment-dir
+  params:
+  - name: application-source
+    type: string
+    description: URL of source git repository.
+    default: ""
+  - name: application-namespace
+    type: string
+    description: Target namespace for application.
+  - name: application-query
+    type: string
+    description: Service query for load generation.
+    default: ""
+  - name: application-image
+    type: string
+    description: Docker image repository for image to deploy.
+  - name: HOST
+    type: string
+    description: Value that should be sent in Host header in test queries
+    default: ""
+
+  - name: experiment
+    type: string
+    description: Name of experiment to create.
+    default: "experiment"
+  - name: experiment-template
+    type: string
+    description: Template for experiment to create.
+
+  - name: terminate
+    type: string
+    default: ".terminate"
+    description: Name of file that, if present, triggers termination of load generation.
+
+  tasks:
+  - name: initialize-request
+    taskRef:
+      name: queue-request-task
+    workspaces:
+    - name: scratch
+      workspace: experiment-dir
+    params:
+    - name: UID
+      value: $(context.pipelineRun.uid)
+
+  - name: clone-source
+    taskRef:
+      name: git-clone
+    runAfter:
+    - initialize-request
+    workspaces:
+    - name: output
+      workspace: source
+    params:
+    - name: url
+      value: $(params.application-source)
+    - name: revision
+      value: master
+    - name: deleteExisting
+      value: "true"
+    - name: subdirectory
+      value: $(context.pipelineRun.uid)
+
+  - name: build-and-push-image
+    taskRef:
+      name: kaniko
+    runAfter:
+    - clone-source
+    timeout: "15m"
+    workspaces:
+    - name: source
+      workspace: source
+    params:
+    - name: DOCKERFILE
+      value: ./$(context.pipelineRun.uid)/Dockerfile
+    - name: CONTEXT
+      value: ./$(context.pipelineRun.uid)
+    - name: IMAGE
+      value: $(params.application-image):$(tasks.clone-source.results.commit)
+    - name: EXTRA_ARGS
+      value: "--skip-tls-verify"
+
+  - name: identify-baseline
+    taskRef:
+      name: identify-baseline-task
+    runAfter:
+    - clone-source
+    workspaces:
+    - name: source
+      workspace: source
+    params:
+    - name: UID
+      value: $(context.pipelineRun.uid)
+    - name: NAMESPACE
+      value: $(params.application-namespace)
+    - name: EXPERIMENT_TEMPLATE
+      value: $(params.experiment-template)
+
+  - name: define-experiment
+    taskRef:
+      name: define-experiment-task
+    runAfter:
+    - clone-source
+    - identify-baseline
+    workspaces:
+    - name: source
+      workspace: source
+    params:
+    - name: UID
+      value: $(context.pipelineRun.uid)
+    - name: EXPERIMENT_TEMPLATE
+      value: $(params.experiment-template)
+    - name: NAME
+      value: $(context.pipelineRun.uid)
+    - name: BASELINE
+      value: $(tasks.identify-baseline.results.baseline)
+    - name: CANDIDATE
+      value: reviews-$(tasks.clone-source.results.commit)
+
+  - name: create-experiment
+    taskRef:
+      name: apply-manifest-task
+    runAfter:
+    - define-experiment
+    workspaces:
+    - name: manifest-dir
+      workspace: source
+    params:
+    - name: TARGET_NAMESPACE
+      value: $(params.application-namespace)
+    - name: MANIFEST
+      value: $(tasks.define-experiment.results.experiment)
+
+  - name: define-canary
+    taskRef:
+      name: define-canary-task
+    runAfter:
+    - clone-source
+    workspaces:
+    - name: source
+      workspace: source
+    params:
+    - name: UID
+      value: $(context.pipelineRun.uid)
+    - name: image-repository
+      value: $(params.application-image)
+    - name: image-tag
+      value: $(tasks.clone-source.results.commit)
+
+  - name: deploy-canary
+    taskRef:
+      name: apply-manifest-task
+    runAfter:
+    - create-experiment
+    - build-and-push-image
+    - define-canary
+    workspaces:
+    - name: manifest-dir
+      workspace: source
+    params:
+    - name: TARGET_NAMESPACE
+      value: $(params.application-namespace)
+    - name: MANIFEST
+      value: $(context.pipelineRun.uid)/$(tasks.define-canary.results.deployment-file)
+
+  - name: identify-endpoint
+    taskRef:
+      name: identify-endpoint-task
+    runAfter:
+    - initialize-request
+    params:
+    - name: application-query
+      value: $(params.application-query)
+
+  - name: generate-load
+    taskRef:
+      name: generate-load-task
+    runAfter:
+    - create-experiment
+    - identify-endpoint
+    workspaces:
+    - name: scratch
+      workspace: experiment-dir
+    params:
+    - name: UID
+      value: $(context.pipelineRun.uid)
+    - name: URL
+      value: $(tasks.identify-endpoint.results.application-url)
+    - name: HOST
+      value: $(params.HOST)
+    - name: terminate
+      value: $(params.terminate)
+
+  - name: wait-completion
+    taskRef:
+      name: wait-completion-task
+    runAfter:
+    - deploy-canary
+    params:
+    - name: EXPERIMENT
+      value: $(context.pipelineRun.uid)
+    - name: NAMESPACE
+      value: $(params.application-namespace)
+
+  - name: stop-load-generation
+    runAfter:
+    - wait-completion
+    taskRef:
+      name: stop-load-task
+    workspaces:
+    - name: scratch
+      workspace: experiment-dir
+    params:
+    - name: UID
+      value: $(context.pipelineRun.uid)
+    - name: terminate
+      value: $(params.terminate)
+
+  finally:
+  - name: cleanup-scratch-workspace
+    taskRef:
+      name: cleanup-task
+    workspaces:
+    - name: workspace
+      workspace: experiment-dir
+    params:
+    - name: UID
+      value: $(context.pipelineRun.uid)
+  - name: cleanup-source-workspace
+    taskRef:
+      name: cleanup-task
+    workspaces:
+    - name: workspace
+      workspace: source
+    params:
+    - name: UID
+      value: $(context.pipelineRun.uid)
+  - name: complete-request
+    taskRef:
+      name: dequeue-request-task
+    workspaces:
+    - name: scratch
+      workspace: experiment-dir
+#+end_src
+
+#+begin_src yaml
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: canary-rollout
+spec:
+  pipelineRef:
+    name: canary-rollout-iter8
+  serviceAccountName: default
+  workspaces:
+  - name: source
+    persistentVolumeClaim:
+      claimName: source-storage
+  - name: experiment-dir
+    persistentVolumeClaim:
+      claimName: experiment-storage
+  params:
+  - name: application-source
+    value: https://github.com/kalantar/reviews
+  - name: application-namespace
+    value: bookinfo-iter8
+  - name: application-image
+    value: kalantar/reviews
+  - name: application-query
+    value: productpage
+
+  - name: HOST
+    value: "bookinfo.example.com"
+
+  - name: experiment-template
+    value: iter8/experiment.yaml
+#+end_src
+
+** TODO A canary "knative" deployment pipeline
+
+** TODO A "matrix" build pipeline
+
+** TODO =tektoncd/pipeline= project pipeline
+
+** TODO Netlify flow
+
+- Build and deploy a wip
+
+* TODO Issues
+
+** No support for one-shot task with =git-clone=
+
+PipelineResource brought /pre/ steps that would help running one task on top of a
+GitResource for example. Let's say you have a repository with a =Dockerfile=. All you want
+is to build your =Dockerfile= in your CI. Without =PipelineResource= you are /stuck/ to use a
+=Pipeline=.
+
+* TODO Advantage
+
+* TODO Next steps
+
+* TODO References
+
+- https://github.com/redhat-gpte-devopsautomation/app-dev-openshift-pipeline
+- https://gist.github.com/markito/9ef0329bce51a454e7ce5a0ed18a1eb1
+- https://github.com/iter8-tools/canary-tekton-example
+- https://github.com/ibm/ibm-garage-tekton-tasks

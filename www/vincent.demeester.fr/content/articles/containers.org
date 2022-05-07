@@ -1,0 +1,46 @@
+#+TITLE: Containers
+
+From the [[file:docker.org][Docker]] [[https://www.docker.com/resources/what-container][website]] :
+
+#+begin_quote
+A container is a standard unit of software that packages up code and all its dependencies
+so the application runs quickly and reliably from one computing environment to another. A
+Docker container image is a lightweight, standalone, executable package of software that
+includes everything needed to run an application: code, runtime, system tools, system
+libraries and settings.
+#+end_quote
+
+[[file:docker.org][Docker]] made the use of [[file:linux.org][Linux]] containers easy, and bootstrap the [[file:open_container_initiative.org][Open Container Initiative]]
+to ensure we have standards.
+
+* Runtimes
+
+There is a bunch of runtimes:
+- [[file:runc.org][runc]] from [[file:open_container_initiative.org][OCI]] (simplest, default runtime)
+- [[file:docker.org][docker]] from [[file:docker.org][Docker Inc.]]
+- [[file:containerd.org][containerd]] under the [[file:moby_project.org][Moby Project]]
+- [[file:cri_o.org][cri-o]] from [[file:red_hat.org][Red Hat]]
+
+* Specs
+
+- [[file:opencontainers_runtime_spec_oci_runtime_specification.org][opencontainers/runtime-spec: OCI Runtime Specification]]
+- [[file:opencontainers_image_spec_oci_image_format.org][opencontainers/image-spec: OCI Image Format]]
+- [[file:opencontainers_distribution_spec_oci_distribution_specification.org][opencontainers/distribution-spec: OCI Distribution Specification]]
+- [[file:opencontainers_artifacts_oci_artifacts.org][opencontainers/artifacts: OCI Artifacts]]
+* Links                                                               :#link:
+** TODO [[https://kontain.me/][Kontain.me]]
+[2020-06-06 Sat 16:26]
+** TODO [[https://ericchiang.github.io/post/containers-from-scratch/][Containers from Scratch | posts]]
+[2020-12-04 Fri 07:51]
+** TODO [[https://containers.gitbook.io/build-containers-the-hard-way/][Build Containers the Hard Way (WIP) - Build Containers the Hard Way]]
+[2020-12-04 Fri 07:51]
+
+** TODO [[https://ericchiang.github.io/post/user-namespaces/][User Namespaces | posts]]
+[2020-12-04 Fri 08:09]
+
+** TODO [[https://ericchiang.github.io/post/privileged-containers/][Privileged Containers Aren't Containers | posts]]
+[2020-12-04 Fri 08:09]
+** TODO [[https://github.com/slp/krunvm][slp/krunvm: Manage lightweight VMs created from OCI images]]
+[2021-01-29 Fri 10:17]
+** TODO [[https://ntietz.com/tech-blog/drawbacks-of-developing-in-containers/][Drawbacks of developing in containers | nicholas@web]]
+[2021-03-19 Fri 16:55]

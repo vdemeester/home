@@ -1,0 +1,607 @@
+# -*- mode: org; eval: (add-hook 'after-save-hook (lambda () (org-babel-tangle)) nil t) -*-
+#+TITLE: meta: publishing this website
+#+ROAM_ALIAS: "publishing this website"
+
+This is a *always up-to-date* version of my initial [[https://vincent.demeester.fr/posts/2020-03-22-org-mode-website.html][post]] about publishing this website
+using [[file:org_mode.org][org-mode]]. This uses the [[https://orgmode.org/manual/Extracting-Source-Code.html][tangle]] feature of =org-mode= and will span from the
+=Makefile= of the [[https://git.sr.ht/~vdemeester/www][repository]] to any [[file:elisp.org][emacs-lisp]] code required.
+
+This is part of the [[file:meta_meta.org][Meta]] entry.
+
+#+TOC: headlines 3
+
+* Parts of the website
+
+Let's look at the different part of the website and for each where I do get the
+information I want to publish.
+
+- =/= :: this is just a file (=index.org=) that I maintain manually.
+- =/posts= :: this is what we call /blog/ these days : short to medium article that are valid
+  at a point of time, as may contain /deprecated/ content, or content that do not reflect
+  my views at a later point in time.
+- =/articles= :: medium to long article about a topic. Those should be up-to-date or
+  explicitly mark as deprecated or invalid. This is my *ready for the public* knowledge
+  database, a bit like [[https://braindump.jethro.dev/][Jethro's Braindump]]. It is managed using [[file:org_roam.org][org-roam]] and I just need to
+  get the latests somewhere to publish it.
+- =/configurations= :: medium to long article about my configurations. Those are base
+  sources for my ~home~ /configuration/ mono-repository, and usually follow literate
+  programming principles. The are managed using [[file:org_roam.org][org-roam]] with the =config:= prefix.
+- =/files= :: a dump of random files, it is actually on another domain name, completely
+  unmanaged by this.
+- =/about= :: an about page about the author of the website (aka [[https://vincent.demeester.fr][me]]), linking external
+  contributions (GitHub/Gitlab/… profiles, Talks, …).
+
+In a nutshell, the folder hierarchy is something like :
+
+#+begin_src shell :tangle no
+src/www
+|-- about           # the about folder (with one index.org)
+|-- articles        # <- comes from ~/desktop/org/notes~
+|-- css             # the css
+|-- images          # the images
+|-- index.org       # the index 🎉
+|-- posts           # the posts (format YYYY-MM-DD-{title}.org)
+`-- public          # the output that get deployed later on
+#+end_src
+
+* Publishing
+
+** /Make/ it happen
+:PROPERTIES:
+:header-args: :tangle /etc/nixos/www/vincent.demeester.fr/Makefile
+:header-args+: :comments org
+:ID:       6191455e-95bc-4abc-a5f5-a62606ab2ea7
+:END:
+
+In order to publish this website, I am using [[file:make.org][make]]. In a nutshell, I am going to define a
+few target to get the content from my notes, export org files into html and copy more or
+less everything to the =public= folder. I will also define a clean and a publish target.
+
+The first part of my =Makefile= will be to define some constants that I want to use later
+on. Those are mainly to easily change where to look for the notes or where the emacs
+configuration is.
+
+#+begin_src makefile
+EMACS =
+ifndef EMACS
+EMACS = "emacs"
+endif
+
+DOTEMACS =
+ifndef DOTEMACS
+DOTEMACS = "~/.config/emacs"
+endif
+
+PUBLISH =
+ifndef PUBLISH
+PUBLISH = vincent.demeester.fr
+endif
+
+NOTES = ~/desktop/org/notes
+#+end_src
+
+The default target will be name =build=.
+
+#+begin_src makefile
+all: build
+#+end_src
+
+*** Building =public/= and publishing it
+:PROPERTIES:
+:ID:       853f3d6b-f385-4091-9f9e-b04d17794e5c
+:END:
+
+To build the website, we will be using [[file:emacs.org][Emacs]] in batch mode, with some shared library *and*
+the actual [[id:631ced7a-f3f7-4a77-81a8-4a1884a6c4d4][publish]] script.
+
+#+begin_src makefile
+.PHONY: build
+build: publish.el publish-common.el build-articles
+	@echo "Publishing... with current Emacs configurations."
+	${EMACS} --debug-init --batch --directory $(DOTEMACS)/lisp/ --directory $(DOTEMACS)/lisp/vorg/ \
+		--load publish-common.el --load publish.el \
+		--funcall org-publish-all
+
+.PHONY: build-articles
+build-articles: $(NOTES)
+	rsync -arv --delete --copy-links --exclude='*.private.org' --exclude='*.db' $(NOTES)/ articles/
+
+$(NOTES):
+	$(error $(NOTES) doesn't exists…)
+#+end_src
+
+The =publish= target is gonna be really simple: I just need to copy the content to
+=~/desktop/sites= on the current machine, and the rest is automated.
+
+#+begin_src makefile
+#rsync -a --progress --copy-links --delete public/assets/.fancyindex/ ~/desktop/sites/dl.sbr.pm/.fancyindex/
+#rsync -a --progress --copy-links --delete public/ ~/desktop/sites/${PUBLISH}/
+.PHONY: publish
+publish: build
+	rsync -ave ssh --progress --copy-links --delete public/assets/.fancyindex/ kerkouane.vpn:/var/www/dl.sbr.pm/.fancyindex/
+	rsync -ave ssh --progress --copy-links --delete public/ kerkouane.vpn:/var/www/${PUBLISH}/
+#+end_src
+
+*** Local server
+:PROPERTIES:
+:ID:       0e26a52e-5f66-42c6-934d-b45cfc9745b2
+:END:
+
+Let's use =miniserve= (using [[file:nix.org][Nix]] with =nix-shell=) to serve the static website locally to
+validate my changes.
+
+#+begin_src makefile
+.PHONY: serve
+serve:
+	nix-shell -p miniserve --command "miniserve --port=8181 --index=index.html public/"
+#+end_src
+
+*** Final nits of the =Makefile=
+:PROPERTIES:
+:ID:       5bec22c8-491b-4e03-855a-4b5f859473cf
+:END:
+
+One of the final step is to install the git hooks if any. I tend to have this target in all my
+personal =Makefile= at least. Let's also define a =pre-commit= target that will hold
+anything we need to do at =pre-commit=.
+
+#+begin_src makefile
+.PHONY: install-hooks
+install-hooks:
+	if [ -e .git ]; then nix-shell -p git --run 'git config core.hooksPath .githooks'; fi
+
+.PHONY: pre-commit
+pre-commit: README.md
+#+end_src
+
+And the final target is the =clean= one. This will remove any compile emacs-lisp file
+(=*.elc=), the =public= folder, and some org-mode metadata.
+
+#+begin_src makefile
+.PHONY: clean
+clean:
+	@echo "Cleaning up.."
+	@-rm -rvf *.elc
+	@-rm -rvf public
+	@-rm -rv ~/.org-timestamps/*
+#+end_src
+
+** The /publish/ scrits
+:PROPERTIES:
+:ID:       631ced7a-f3f7-4a77-81a8-4a1884a6c4d4
+:END:
+
+I've imported the script directly in here, I'll slowly split this and document it.
+
+*** =publish.el=
+:PROPERTIES:
+:header-args: :tangle /etc/nixos/www/vincent.demeester.fr/publish.el
+:ID:       bef868db-17f0-4a67-9c64-6dcf64ad6de1
+:END:
+
+#+begin_src emacs-lisp
+;;; publish.el --- Publish www project -*- lexical-binding: t; -*-
+;; Author: Vincent Demeester <vincent@sbr.pm>
+
+;;; Commentary:
+;; This script will convert the org-mode files in this directory into
+;; html.
+
+;;; Code:
+(require 'package)
+(require 'publish-common)
+
+(setq org-publish-project-alist
+      `(("posts"
+         :base-directory "posts"
+         :base-extension "org"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "./public/posts"
+         :exclude ,(regexp-opt '("README.org" "draft"))
+         :auto-sitemap t
+         :with-footnotes t
+         :with-toc nil
+         :with-drawers t
+         :sitemap-filename "index.org"
+         :sitemap-title "Posts"
+         :sitemap-format-entry sbr/org-sitemap-format-entry
+         :sitemap-style list
+         :sitemap-sort-files anti-chronologically
+         :sitemap-function sbr/org-publish-sitemap
+         :html-head-include-scripts nil
+         :html-head-include-default-style nil
+         :html-head ,sbr-website-html-head
+         :html-preamble sbr-website-html-preamble
+         :html-postamble ,sbr-website-html-postamble)
+        ("posts-rss"
+         :base-directory "posts"
+         :base-extension "org"
+         :recursive t
+         :html-link-home "https://vincent.demeester.fr/"
+         :rss-link-home "https://vincent.demeester.fr/posts/"
+         :html-link-use-abs-url t
+         :rss-extension "xml"
+         :publishing-directory "./public"
+         :publishing-function (sbr/org-rss-publish-to-rss)
+         :section-number nil
+         :exclude ".*"
+         :include ("index.org"))
+        ("articles"
+         :base-directory "articles"
+         :base-extension "org"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "./public/articles"
+         :exclude ,(regexp-opt '("README.org" "draft"))
+         :auto-sitemap t
+         :with-footnotes t
+         :with-toc nil
+         :with-drawers t
+         :sitemap-filename "sitemap.org"
+         :sitemap-title "Articles"
+         :sitemap-style tree
+         :sitemap-sort-files anti-chronologically
+         ;;:sitemap-format-entry sbr/org-sitemap-format-entry
+         ;;:sitemap-function sbr/org-publish-sitemap
+         :html-head-include-scripts nil
+         :html-head-include-default-style nil
+         :html-head ,sbr-website-html-head
+         :html-preamble sbr-website-html-preamble
+         :html-postamble ,sbr-website-html-postamble)
+        ("articles-assets"
+         :exclude ,(regexp-opt '("*.org"))
+         :base-directory "articles"
+         :base-extension ,site-attachments
+         :publishing-directory "./public/articles"
+         :publishing-function org-publish-attachment
+         :recursive t)
+        ("about"
+         :base-directory "about"
+         :base-extension "org"
+         :exclude ,(regexp-opt '("README.org" "draft"))
+         :index-filename "index.org"
+         :recursive nil
+         :with-footnotes t
+         :with-toc nil
+         :with-drawers t
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "./public/about"
+         :html-head-include-scripts nil
+         :html-head-include-default-style nil
+         :html-head ,sbr-website-html-head
+         :html-preamble sbr-website-html-preamble
+         :html-postamble ,sbr-website-html-postamble)
+        ("index"
+         :base-directory ""
+         :base-extension "org"
+         :exclude ,(regexp-opt '("README.org" "draft"))
+         :index-filename "index.org"
+         :recursive nil
+         :with-footnotes t
+         :with-toc nil
+         :with-drawers t
+         :with-title nil
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "./public"
+         :html-head-include-scripts nil
+         :html-head-include-default-style nil
+         :html-head ,sbr-website-html-head
+         :html-preamble sbr-website-html-preamble
+         :html-postamble ,sbr-website-html-postamble)
+        ("css"
+         :base-directory "./css"
+         :base-extension ,site-attachments
+         :recursive t
+         :publishing-directory "./public/css"
+         :publishing-function org-publish-attachment
+         :recursive t)
+        ("images"
+         :base-directory "./images"
+         :base-extension ,site-attachments
+         :publishing-directory "./public/images"
+         :publishing-function org-publish-attachment
+         :recursive t)
+        ("assets"
+         :base-directory "./assets"
+         :base-extension ,site-attachments
+         :publishing-directory "./public/assets"
+         :publishing-function org-publish-attachment
+         :recursive t)
+        ("legacy"
+         :base-directory "./legacy"
+         :base-extension ,site-attachments
+         :publishing-directory "./public/"
+         :publishing-function org-publish-attachment
+         :recursive t)
+        ("all" :components ("posts" "about" "index" "articles" "articles-assets" "css" "images" "assets" "legacy" "posts-rss"))))
+
+(provide 'publish)
+;;; publish.el ends here
+#+end_src
+
+*** =publish-common.el=
+:PROPERTIES:
+:header-args: :tangle /etc/nixos/www/vincent.demeester.fr/publish-common.el
+:ID:       bcedf3bd-49ec-4602-b916-daea6695af1e
+:END:
+
+#+begin_src emacs-lisp
+;;; publish-common.el --- Commons code for www publishing projects -*- lexical-binding: t; -*-
+;; Author: Vincent Demeester <vincent@sbr.pm>
+
+;;; Commentary:
+;;
+;;; Code:
+;; load org
+(require 'org)
+(require 'dash)
+;; load org export functions
+(require 'ox-publish)
+(require 'ox-rss)
+(require 'ox-html)
+;; load org link functions
+(require 'ol-man)
+(require 'ol-git-link)
+;; Those are mine
+(require 'ol-github)
+(require 'ol-gitlab)
+(require 'org-attach)
+;; load additional libraries
+(require 'go-mode)
+(require 'css-mode)
+(require 'yaml-mode)
+(require 'nix-mode)
+
+(require 's)
+
+(setq org-export-use-babel nil)
+(setq org-link-abbrev-alist '(("att" . org-attach-expand-link)))
+
+;; setting to nil, avoids "Author: x" at the bottom
+(setq org-export-with-section-numbers nil
+      org-export-with-smart-quotes t
+      org-export-with-toc nil)
+
+(defvar sbr-date-format "%b %d, %Y")
+
+(setq org-html-divs '((preamble "header" "top")
+                      (content "main" "content")
+                      (postamble "footer" "postamble"))
+      org-html-container-element "section"
+      org-html-metadata-timestamp-format sbr-date-format
+      org-html-checkbox-type 'unicode
+      org-html-html5-fancy t
+      org-html-doctype "html5"
+      org-html-htmlize-output-type 'css
+      org-html-htmlize-font-prefix "org-"
+      org-src-fontify-natively t
+      org-html-coding-system 'utf-8-unix)
+
+(defun sbr/org-export-format-drawer (name content)
+  "HTML export of drawer with NAME and CONTENT.
+name is the name of the drawer, that will be used as class.
+content is the content of the drawer"
+  (format "<div class='drawer %s'>\n<h6>%s</h6>\n%s</div>"
+          (downcase name)
+          (capitalize name)
+          content))
+(setq org-html-format-drawer-function 'sbr/org-export-format-drawer)
+
+(defun read-file (filePath)
+  "Return FILEPATH's file content."
+  (with-temp-buffer
+    (insert-file-contents filePath)
+    (buffer-string)))
+
+(defvar sbr-website-html-head
+  "<link rel='icon' type='image/x-icon' href='/images/favicon.ico'/>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel='stylesheet' href='/css/new.css' type='text/css'/>
+<link rel='stylesheet' href='/css/syntax.css' type='text/css'/>
+<link href='/index.xml' rel='alternate' type='application/rss+xml' title='Vincent Demeester' />")
+
+(defun sbr-website-html-preamble (plist)
+  "PLIST: An entry."
+  ;; Skip adding subtitle to the post if :KEYWORDS don't have 'post' has a
+  ;; keyword
+  (when (string-match-p "post" (format "%s" (plist-get plist :keywords)))
+    (plist-put plist
+               :subtitle (format "Published on %s by %s."
+                                 (org-export-get-date plist sbr-date-format)
+                                 (car (plist-get plist :author)))))
+
+  ;; Below content will be added anyways
+  "<nav>
+<img src=\"/images/favicon.ico\" id=\"sitelogo\"/> <a href='/'>home</a> /
+<a href='/posts/'>posts</a> (<a href='/index.xml'>rss</a>) /
+<a href='/articles/'>articles</a> /
+<a href='https://dl.sbr.pm/'>files</a> /
+<a href='/about/'>about</a></li>
+</nav>")
+
+(defvar sbr-website-html-postamble
+  "<footer>
+     <span class='questions'>Questions, comments ? Please use my <a href=\"https://lists.sr.ht/~vdemeester/public-inbox\">public inbox</a> by sending a plain-text email to <a href=\"mailto:~vdemeester/public-inbox@lists.sr.ht\">~vdemeester/public-inbox@lists.sr.ht</a>.</span>
+     <span class='opinions'>Opinions stated here are my own and do not express the views of my employer, spouse, children, pets, neighbors, secret crushes, favorite authors, or anyone else who is not me. And maybe not even me, depending on how old this is.</span>
+     <span class='copyright'>
+      Content and design by Vincent Demeester
+      (<a rel='licence' href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>Some rights reserved</a>)
+    </span><br />
+    <span class='engine'>
+      Powered by <a href='https://www.gnu.org/software/emacs/'>Gnu Emacs</a> and <a href='https://orgmode.org'>orgmode</a>
+    </span>
+</footer>")
+(defvar site-attachments
+  (regexp-opt '("jpg" "jpeg" "gif" "png" "svg"
+                "ico" "cur" "css" "js" "woff" "html" "pdf" "otf"))
+  "File types that are published as static files.")
+
+(defun sbr/org-sitemap-format-entry (entry style project)
+  "Format posts with author and published data in the index page.
+
+ENTRY: file-name
+STYLE:
+PROJECT: `posts in this case."
+  (cond ((not (directory-name-p entry))
+         (format "%s — [[file:%s][%s]]
+                 :PROPERTIES:
+                 :PUBDATE: [%s]
+                 :END:"
+                 (format-time-string "%Y-%m-%d"
+                                     (org-publish-find-date entry project))
+                 entry
+                 (org-publish-find-title entry project)
+                 (format-time-string "%Y-%m-%d"
+                                     (org-publish-find-date entry project))))
+        ((eq style 'tree) (file-name-nondirectory (directory-file-name entry)))
+        (t entry)))
+
+(defun sbr/org-publish-sitemap (title list)
+  ""
+  (concat "#+TITLE: " title "\n\n"
+          (org-list-to-subtree list)))
+
+(defun sbr/org-get-first-paragraph (file)
+  "Get string content of first paragraph of file."
+  (ignore-errors
+    (with-temp-buffer
+    (insert-file-contents file)
+    (goto-char (point-min))
+    (show-all)
+    (let ((first-begin (progn
+                         (org-forward-heading-same-level 1)
+                         (next-line)
+                         (point)))
+          (first-end (progn
+                       (org-next-visible-heading 1)
+                       (point))))
+      (buffer-substring first-begin first-end)))))
+
+(defun sbr/org-rss-publish-to-rss (plist filename pub-dir)
+  "Prepare rss.org file before exporting."
+  (let* ((postsdir (plist-get plist :base-directory)))
+    (with-current-buffer (find-file filename)
+      (erase-buffer)
+      (insert "#+TITLE: Posts\n")
+      (insert "#+AUTHOR: Vincent Demeester\n")
+      (insert "#+OPTIONS: toc:nil\n")
+      (let* ((files-all
+              (reverse (directory-files "." nil
+                                        "[0-9-]+.*\\.org$")))
+             (files (seq-subseq files-all 0 (min (length files-all) 30))))
+        (message (format "foo: %s" filename))
+        (dolist (post files)
+          (let* ((post-file post)
+                 (post-title (org-publish-find-title post-file plist))
+                 (preview-str (sbr/org-get-first-paragraph post-file))
+                 (date (replace-regexp-in-string
+                        "\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)-.*"
+                        "\\1" post)))
+            (insert (concat "* [[file:" postsdir "/" post "][" post-title "]]\n\n"))
+            (org-set-property "ID" post)
+            (org-set-property "RSS_TITLE" post-title)
+            ;; ox-rss prepends html-link-home to permalink
+            (org-set-property "RSS_PERMALINK"
+                              (concat postsdir "/"
+                                      (file-name-sans-extension post)
+                                      ".html"))
+            (org-set-property
+             "PUBDATE"
+             (format-time-string
+              "<%Y-%m-%d %a %H:%M>"
+              (org-time-string-to-time
+               (replace-regexp-in-string
+                "\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)-.*"
+                "\\1" post))))
+            (insert preview-str)
+            (newline 1)
+            (insert (concat "[[file:" postsdir "/" post "][(Read more)]]\n\n"))))
+        (save-buffer))))
+  (let ((user-mail-address "t")
+        (org-export-with-broken-links t)
+        (org-rss-use-entry-url-as-guid nil))
+    (org-rss-publish-to-rss plist filename pub-dir)))
+
+(advice-add #'org-export-get-reference :override #'unpackaged/org-export-get-reference)
+
+(defun unpackaged/org-export-get-reference (datum info)
+  "Like `org-export-get-reference', except uses heading titles instead of random numbers."
+  (let ((cache (plist-get info :internal-references)))
+    (or (car (rassq datum cache))
+        (let* ((crossrefs (plist-get info :crossrefs))
+               (cells (org-export-search-cells datum))
+               ;; Preserve any pre-existing association between
+               ;; a search cell and a reference, i.e., when some
+               ;; previously published document referenced a location
+               ;; within current file (see
+               ;; `org-publish-resolve-external-link').
+               ;;
+               ;; However, there is no guarantee that search cells are
+               ;; unique, e.g., there might be duplicate custom ID or
+               ;; two headings with the same title in the file.
+               ;;
+               ;; As a consequence, before re-using any reference to
+               ;; an element or object, we check that it doesn't refer
+               ;; to a previous element or object.
+               (new (or (cl-some
+                         (lambda (cell)
+                           (let ((stored (cdr (assoc cell crossrefs))))
+                             (when stored
+                               (let ((old (org-export-format-reference stored)))
+                                 (and (not (assoc old cache)) stored)))))
+                         cells)
+                        (when (org-element-property :raw-value datum)
+                          ;; Heading with a title
+                          (unpackaged/org-export-new-title-reference datum cache))
+                        ;; NOTE: This probably breaks some Org Export
+                        ;; feature, but if it does what I need, fine.
+                        (org-export-format-reference
+                         (org-export-new-reference cache))))
+               (reference-string new))
+          ;; Cache contains both data already associated to
+          ;; a reference and in-use internal references, so as to make
+          ;; unique references.
+          (dolist (cell cells) (push (cons cell new) cache))
+          ;; Retain a direct association between reference string and
+          ;; DATUM since (1) not every object or element can be given
+          ;; a search cell (2) it permits quick lookup.
+          (push (cons reference-string datum) cache)
+          (plist-put info :internal-references cache)
+          reference-string))))
+
+(defun unpackaged/org-export-new-title-reference (datum cache)
+  "Return new reference for DATUM that is unique in CACHE."
+  (cl-macrolet ((inc-suffixf (place)
+                             `(progn
+                                (string-match (rx bos
+                                                  (minimal-match (group (1+ anything)))
+                                                  (optional "--" (group (1+ digit)))
+                                                  eos)
+                                              ,place)
+                                ;; HACK: `s1' instead of a gensym.
+                                (-let* (((s1 suffix) (list (match-string 1 ,place)
+                                                           (match-string 2 ,place)))
+                                        (suffix (if suffix
+                                                    (string-to-number suffix)
+                                                  0)))
+                                  (setf ,place (format "%s--%s" s1 (cl-incf suffix)))))))
+    (let* ((title (org-element-property :raw-value datum))
+           (ref (url-hexify-string (substring-no-properties title)))
+           (parent (org-element-property :parent datum)))
+      (while (--any (equal ref (car it))
+                    cache)
+        ;; Title not unique: make it so.
+        (if parent
+            ;; Append ancestor title.
+            (setf title (concat (org-element-property :raw-value parent)
+                                "--" title)
+                  ref (url-hexify-string (substring-no-properties title))
+                  parent (org-element-property :parent parent))
+          ;; No more ancestors: add and increment a number.
+          (inc-suffixf ref)))
+      ref)))
+
+(provide 'publish-common)
+;;; publish-common.el ends here
+#+end_src

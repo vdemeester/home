@@ -1,0 +1,154 @@
+
+#+TITLE: NixOS
+
+[[https://nixos.org/][NixOS]] is a Linux distribution with a unique approach to package and configuration
+management. Built on top of the [[file:nix.org][Nix]] package manager, it is completely declarative, makes
+upgrading systems reliable, and has many other [[https://nixos.org/features.html][advantages]].
+
+Most of my [[file:infrastructure.org][infrastructure]] is on NixOS.
+
+- [[file:nixos-overlays.org][NixOS overlay notes]]
+
+* Nix builder
+
+* Links
+
+** [[https://github.com/nix-community/impermanence][nix-community/impermanence: Modules to help you handle persistent state on systems with ephemeral root storage [maintainer=@talyz]​]] :nixos:
+[2020-06-07 Sun 14:05]
+
+=impermanence= provides modules to setup your system with ephemeral root storage 🙃
+
+
+** [[https://spacekookie.de/blog/ocitools-in-nixos/][ociTools in NixOS]]
+[2019-10-28 Mon 21:38]
+** TODO [[http://notes.neeasade.net/adhoc-executable-patching-on-nix.html][adhoc executable patching on nixos]]
+[2020-11-26 Thu 12:17]
+** TODO [[http://davedellacosta.com/posts/2019-03-29-why-nixos-is-hard-and-how-to-fix.html][davedellacosta.com - 2019-03-29-why-nixos-is-hard-and-how-to-fix]] :nixpkgs:nixos:
+[2019-04-17 Wed 18:19]
+
+** TODO https://elvishjerricco.github.io/2018/06/24/secure-declarative-key-management.html (Secure, Declarative Key Management with NixOps, Pass, and nix-plugins) :nixos:
+   :PROPERTIES:
+   :END:
+** TODO [[https://blog.hercules-ci.com/nix/2019/05/15/nix-gitignore/][gitignore for Nix – Hercules Labs blog]]                     :nixpkgs:
+[2019-06-07 Fri 14:47]
+
+** TODO [[https://gist.github.com/adisbladis/187204cb772800489ee3dac4acdd9947][Use podman within a nix-shell]]              :nixos:podman:containers:
+[2019-12-10 Tue 18:52]
+** TODO [[https://nixos.mayflower.consulting/blog/2019/11/27/windows-vm-storage/][Windows-on-NixOS, part 1: Migrating bare-metal to a VM]]       :nixos:
+[2020-01-17 Fri 18:19]
+
+** TODO [[http://blog.patapon.info/nixos-local-vm/][Dejà vu - Updating NixOS local VMs]]                           :nixos:
+[2020-01-17 Fri 18:19]
+
+** TODO [[http://blog.patapon.info/nix-run-direnv/][Dejà vu - Direnv with nix run]]                                :nixos:
+[2020-01-17 Fri 18:19]
+
+** TODO [[https://myme.no/posts/2020-01-26-nixos-for-development.html][myme.no - NixOS: For developers]]
+[2020-01-30 Thu 18:28]
+
+** TODO [[https://github.com/fghibellini/nix-haskell-monorepo][fghibellini/nix-haskell-monorepo: Pragmatic tutorial on how to use nix with a haskell monorepo]]
+[2020-01-30 Thu 18:33]
+
+** TODO [[https://christine.website/blog/i-was-wrong-about-nix-2020-02-10][I was Wrong about Nix - Christine Dodrill]]
+[2020-02-12 Wed 12:38]
+
+** TODO [[https://www.srid.ca/2012301.html][Lightweight Linux VMs on NixOS - Sridhar Ratnakumar]]
+[2020-03-27 Fri 18:15]
+** TODO [[https://blog.ysndr.de/posts/internals/2020-04-10-built-with-nix/][Building a reproducible blog with Nix]]
+[2020-04-28 Tue 19:20]
+
+** TODO [[https://christine.website/blog/nixos-desktop-flow-2020-04-25][My NixOS Desktop Flow - Christine Dodrill]]
+[2020-05-07 Thu 16:45]
+** TODO [[https://github.com/tazjin/nix-1p][tazjin/nix-1p: A (more or less) one page introduction to Nix, the language.]] :nixpkgs:nixos:
+[2020-05-15 Fri 10:46]
+** TODO [[https://brianmckenna.org/blog/running_binaries_on_nixos][Running Unpatched Binaries on NixOS - BAM Weblog]]
+:PROPERTIES:
+:CREATED:[2019-03-02 Sat 11:29]
+:END:
+** TODO [[https://thomashartmann.dev/blog/nix-override-packages-with-overlays/][thomashartmann.dev::Nix: override packages with overlays]]
+[2020-03-02 Mon 15:11]
+
+** TODO [[https://christine.website/blog/how-i-start-nix-2020-03-08][How I Start: Nix - Christine Dodrill]]
+[2020-03-09 Mon 10:25]
+
+Super guide to nix in a project with niv 💓
+
+** TODO [[https://nixery.dev/][Nixery]]
+[2019-10-09 Wed 15:07]
+
+nixery.dev/shell/git/htop
+** TODO [[https://rycwo.xyz/2018/07/29/nixos-series-dual-boot][Diving Into NixOS (Part 1): Dual-Booting On A New Laptop]]
+
+** TODO [[https://github.com/tweag/rfcs/blob/flakes/rfcs/0049-flakes.md][rfcs/0049-flakes.md at flakes · tweag/rfcs]]
+[2020-05-06 Wed 05:44]
+
+**** TODO [[https://github.com/NixOS/nixpkgs/pull/84125][nix-daemon.nix: Add option nix.registry by edolstra · Pull Request #84125 · NixOS/nixpkgs]] :nixos:
+[2020-05-06 Wed 09:01]
+
+**** TODO [[https://github.com/NixOS/nixpkgs/pull/68897][Flake support by edolstra · Pull Request #68897 · NixOS/nixpkgs]] :nixos:
+[2020-05-06 Wed 09:01]
+
+
+
+** TODO [[http://www.haskellforall.com/2020/11/how-to-use-nixos-for-lightweight.html?m=1][Haskell for all: How to use NixOS for lightweight integration tests]]
+[2020-11-30 Mon 14:32]
+** TODO [[https://rbf.dev/blog/2020/05/custom-nixos-build-for-raspberry-pis/][NixOS on a Raspberry Pi: creating a custom SD image with OpenSSH out of the box | Roberto Frenna]] :nixos:
+[2020-05-28 Thu 15:53]
+
+** TODO [[https://blog.qtp2t.club/posts/2020-06-20-nix-nixos-thoughts/][Nix(OS) Thoughts]]
+[2020-06-22 Mon 16:49]
+
+** TODO [[https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html][Encypted Btrfs Root with Opt-in State on NixOS]]
+[2020-06-29 Mon 17:44]
+
+** TODO [[https://elis.nu/blog/2020/05/nixos-tmpfs-as-root/][NixOS ❄: tmpfs as root]]
+[2020-06-29 Mon 17:46]
+
+** TODO [[https://elis.nu/blog/2020/06/nixos-tmpfs-as-home/][NixOS ❄: tmpfs as home]]
+[2020-06-29 Mon 17:46]
+
+** TODO [[https://github.com/ryantm/home-manager-template][ryantm/home-manager-template: A quick-start template for using home-manager in a more reproducible way.]]
+[2020-06-29 Mon 17:49]
+
+** TODO [[https://github.com/grahamc/netboot.nix/][grahamc/netboot.nix: Create full netboot images in 15 seconds.]]
+[2020-06-29 Mon 17:52]
+
+** TODO [[https://notes.neeasade.net/adhoc-executable-patching-on-nix.html][adhoc executable patching on nixos]]
+[2020-07-14 Tue 18:45]
+
+** TODO [[https://foo-dogsquared.github.io/blog/posts/moving-into-nixos/][Moving into NixOS | Gabriel Arazas]]
+[2020-11-16 Mon 19:17]
+
+** TODO [[https://fzakaria.com/2020/11/17/on-demand-linked-libraries-for-nix.html][On-demand linked libraries for Nix | Farid Zakaria’s Blog]]
+[2020-11-19 Thu 17:44]
+
+** TODO [[https://rycwo.xyz/2019/02/07/nixos-series-configuring-xinit][Diving Into NixOS (Part 3): Lightweight Startup With xinit]]
+[2020-11-19 Thu 17:47]
+
+** TODO [[https://fzakaria.com/2020/08/11/caching-your-nix-shell.html][caching your nix-shell | Farid Zakaria’s Blog]]
+[2020-12-17 Thu 16:04]
+** TODO [[https://hands-on.cloud/why-you-should-never-ever-use-nixos/][Why you should never ever use NixOS]]
+[2021-01-26 Tue 18:32]
+** TODO [[https://sgt.hootr.club/molten-matter/nix-distributed-builds/][Offloading NixOS builds to a faster machine]]
+[2021-01-26 Tue 18:34]
+** TODO [[https://serokell.io/blog/deploy-rs][Our New Nix Deployment Tool: deploy-rs]]
+[2021-01-26 Tue 18:49]
+
+** TODO [[https://terinstock.com/post/2021/01/Setting-up-a-git-server-on-NixOS/][Setting up a git server on NixOS]]
+[2021-01-28 Thu 10:48]
+** TODO [[https://nixos.mayflower.consulting/blog/2021/01/28/nextcloud-stateversion/][Safe service upgrades using system.stateVersion]]
+[2021-01-29 Fri 10:34]
+
+** TODO [[https://tech.channable.com/posts/2021-04-09-nix-is-the-ultimate-devops-toolkit.html][Channable - Nix is the ultimate DevOps toolkit]]
+[2021-04-12 Mon 12:32]
+
+** TODO [[https://christine.website/blog/my-wireguard-setup-2021-02-06][My Automagic NixOS Wireguard Setup - Christine Dodrill]]
+[2021-04-12 Mon 12:38]
+
+** TODO [[https://fzakaria.com/2021/08/05/the-search-for-a-minimal-nix-shell-continued-mkshellminimal.html][The search for a minimal nix-shell continued; mkShellMinimal | Farid Zakaria’s Blog]]
+[2021-08-06 Fri 10:23]
+
+** TODO [[https://github.com/Mic92/sops-nix][Mic92/sops-nix: Atomic secret provisioning for NixOS based on sops]]
+[2021-08-06 Fri 15:35]
+** TODO [[https://catgirl.ai/log/nixos-experience/][Eight Months of NixOS | gay robot noises]]
+[2020-11-03 Tue 11:04]

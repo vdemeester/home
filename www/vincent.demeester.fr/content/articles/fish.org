@@ -1,0 +1,81 @@
+#+TITLE: Fish shell notes
+#+FILETAGS: :fish:shell:configuration:
+#+setupfile: .setup.org
+
+I recently (2017) switch to [[https://fishshell.com/][fish]] shell as my interactive shell. There
+is a few reason for it:
+
+- the defaults are really good and there is a little to configure to
+  achieve what I was trying to do with zsh,
+- the autosuggestion feature is quite cool (I even went to reproduce
+  that in =eshell=),
+- the syntax highlighting feature is also killer as it easier to see
+  problems in the command-line before hitting enter,
+- it auto-generates completion from parsing man pages =<3=
+
+  #+BEGIN_SRC sh
+    $ fish_update_completions
+    Parsing man pages and writing completions to /home/vincent/.local/share/fish/generated_completions/
+      1793 / 1793 : zramctl.8.gz
+  #+END_SRC
+
+At the begining, I used [[https://github.com/oh-my-fish/oh-my-fish][oh-my-fish]] as a simple way in.
+
+#+BEGIN_QUOTE
+Oh My Fish provides core infrastructure to allow you to install
+packages which extend or modify the look of your shell. It's fast,
+extensible and easy to use.
+#+END_QUOTE
+
+[[https://github.com/oh-my-fish/oh-my-fish][oh-my-fish]] is pretty cool but I tend to use only a few plugin and I
+almost have more hand-written configuration files for fish than what
+oh-my-fish gives me. So I'm now using [[https://fishshell.com/][fish]] shell /bare-naked/ with my
+own configurations.
+
+According to the [[https://fishshell.com/docs/current/index.html#initialization][documentation]], fish will load files from the
+following folder (in order):
+
+- Configuration shipped with fish, which should not be edited, in
+  =$__fish_datadir/config.fish= (usually =/usr/share/fish/config.fish=).
+- System-wide configuration files, where administrators can include
+  initialization that should be run for all users on the system -
+  similar to =/etc/profile= for POSIX-style shells - in
+  =$__fish_sysconfdir= (usually =/etc/fish/config.fish=);
+- Configuration snippets in files ending in =.fish=, in the directories:
+  - =$XDG_CONFIG_HOME/fish/conf.d= (by default, =~/.config/fish/conf.d/=)
+  - =$__fish_sysconfdir/conf.d= (by default, =/etc/fish/conf.d=)
+  - =/usr/share/fish/vendor_conf.d= (set at compile time; by default,
+    =$__fish_datadir/conf.d=)
+  If there are multiple files with the same name in these directories,
+  only the first will be executed. They are executed in order of their
+  filename, sorted (like globs) in a natural order (i.e. "01" sorts
+  before "2").
+- User initialization, usually in =~/.config/fish/config.fish=
+  (controlled by the =XDG_CONFIG_HOME= environment variable).
+
+Fish will also automatically loads functions from the following folder
+(in order):
+
+- A directory for end-users to keep their own functions, usually
+  =~/.config/fish/functions= (controlled by the =XDG_CONFIG_HOME=
+  environment variable).
+- A directory for systems administrators to install functions for all
+  users on the system, usually =/etc/fish/functions=.
+- A directory for third-party software vendors to ship their own
+  functions for their software, usually
+  =/usr/share/fish/vendor_functions.d=.
+- The functions shipped with fish, usually installed in
+  =/usr/share/fish/functions=.
+
+#+begin_quote
+An autoloaded function becomes available automatically to all
+running shells. If the function definition is changed, all running
+shells will automatically reload the altered version. Startup time and
+memory usage is improved, etc.
+#+end_quote
+
+I'm also using [[https://nixos.org/][nixos]] which have some specificities but we'll see that
+later. One specificity though about my setup is the, I may want some
+fish function/helper to be available for all users on a server (when
+using nixos) or only a user (mainly, when using nixpkgs without nixos,
+on Mac OSX or another linux or on Windows with WSL).

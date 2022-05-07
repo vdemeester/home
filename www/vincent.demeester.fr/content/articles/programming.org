@@ -1,0 +1,220 @@
+#+TITLE: Programming
+#+SETUPFILE: .setup.org
+
+* Languages
+:PROPERTIES:
+:ID:       46a1380a-fce0-4d4c-bc09-4468cd4f6f58
+:END:
+
+- [[file:go.org][Go]]
+- [[file:python.org][Python]]
+- [[file:lisp.org][Lisp]]
+  + [[file:clojure.org][Clojure]]
+  + [[file:emacs_lisp.org][Emacs Lisp]]
+- [[file:rust.org][Rust]]
+
+* Four principles of software engineering
+:PROPERTIES:
+:CREATED: [2020-10-12 Mon 10:48]
+:END:
+
+#+begin_quote
+Software should be robust. It should be designed to accommodate all
+known edge cases. In practice, this means predicting and handling all
+known error cases, enumerating and addressing all classes of user
+inputs, reasoning about and planning for the performance
+characteristics of your program, and so on.
+
+Software should be reliable. It should be expected to work for an
+extended length of time under design conditions without failures.
+Ideally, it should work outside of design conditions up to some
+threshold.
+
+Software should also be stable. It should not change in incompatible
+or unexpected ways; if it works today it should also work tomorrow. If
+it has to change, a plan shall be written. Stakeholders (including
+users!) should be given advance notice and should be involved in the
+planning stage.
+
+Finally, software should be simple. Only as many moving parts should
+be included as necessary to meet the other three goals. All software
+has bugs, but complicated software (1) has more bugs and (2) is more
+difficult to diagnose and fix. Note that designing a simple solution
+is usually more difficult than designing a complex solution.
+
+This (short) article is based on a Mastodon post I wrote a few weeks
+ago.
+
+From: [[https://drewdevault.com/2020/10/09/Four-principles-of-software-engineering.html][Four principles of software engineering]]
+#+end_quote
+
+* Programming is terrible
+
+[[https://programmingisterrible.com/][programming is terrible]] — lessons learned from a life wasted — is a very interesting
+website. I've tried to extract a few links from it with my comments in here.
+
+- [[https://programmingisterrible.com/post/110922879293/stop-blowhard-syndrome][Stop Blowhard Syndrome — programming is terrible]]
+  Yes, Yes, Yes !
+- [[https://programmingisterrible.com/post/102153932958/how-i-write-software][How I write software — programming is terrible]]
+  Write boring code !
+
+  #+BEGIN_QUOTE
+  My favourite property of good code is boredom. Dull statements one after another, no
+  surprises, no tricks, no special cases, and absolutely no meta-programming. Boring code is
+  the easiest to debug, to verify, and to explain.
+
+  Boring code usually doesn’t use global state, has very precise effects, and isn’t strongly
+  tied to the project it lives in. Boring features like single assignment, where each
+  variable only holds one object, and not relying on changing the world around it. Boring
+  code will only do what its asked of it and does not rely on implicit behaviours.
+  #+END_QUOTE
+
+- [[https://programmingisterrible.com/post/116698171738/nothing-is-more-indicative-of-a-bullshit-job-than][Nothing is more indicative of a bullshit job than... — programming is terrible]]
+- [[https://programmingisterrible.com/post/39420736223/bisecting-programmers][What makes good and what makes bad programmers? — programming is terrible]]
+  Some thoughs about good/bad programmers — and really, is there good/bad ?
+- [[https://programmingisterrible.com/post/173883533613/code-to-debug][Write code that's easy to delete, and easy to... — programming is terrible]]
+- [[https://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to][Write code that is easy to delete, not easy to... — programming is terrible]]
+- [[https://programmingisterrible.com/post/173883533613/code-to-debug][Write code that's easy to delete, and easy to... — programming is terrible]]
+- [[https://programmingisterrible.com/post/110292532528/modules-network-microservices][modules + network = microservices — programming is terrible]]
+- [[https://programmingisterrible.com/post/162346490883/how-do-you-cut-a-monolith-in-half][How do you cut a monolith in half? — programming is terrible]]
+  Some thoughts one cutting monolith in several pieces
+- [[https://programmingisterrible.com/post/188942142748/scaling-in-the-presence-of-errorsdont-ignore][Scaling in the presence of errors—don’t ignore... — programming is terrible]]
+
+* Code reviews
+
+Code review is one extremely powerful tool in a software developer team’s arsenal, yet
+it’s often neglected or used in a way that leads to toxic behavior, causing more harm than
+good.
+
+The primary purpose of code review is to make sure that the overall code health of your
+project code base is improving over time. All of the tools and processes of code review
+are designed to this end.
+
+An list of code-review article and tools aronud code revîew :  [[https://github.com/joho/awesome-code-review][awesome-code-review]].
+
+** TODO [[https://dev.to/rfornal/better-code-review-practices-15nb][Better Code Review Practices - DEV Community 👩‍💻👨‍💻]]
+[2020-01-28 Tue 18:58]
+
+** TODO [[https://medium.com/palantir/code-review-best-practices-19e02780015f][Code Review Best Practices - Palantir Blog - Medium]]
+[2020-01-28 Tue 18:58]
+
+** TODO [[https://codingsans.com/blog/code-review][Code Review: Create The Culture, Learn The Best Practices | Coding Sans]]
+[2020-01-28 Tue 18:58]
+
+** TODO [[https://google.github.io/eng-practices/review/developer/][The CL author’s guide to getting through code review | eng-practices]]
+[2019-10-07 Mon 10:43]
+
+** TODO [[https://google.github.io/eng-practices/review/reviewer/][How to do a code review | eng-practices]]
+[2019-10-07 Mon 10:44]
+
+** TODO [[https://blog.jez.io/cli-code-review/][Code Review from the Command Line - Bits, Bytes, and Words]]
+[2020-09-23 Wed 13:02]
+
+** TODO [[https://benjamincongdon.me/blog/2021/10/17/Features-of-Excellent-Code-Review-Tools/][Features of Excellent Code Review Tools | Ben Congdon]]
+[2021-10-29 Fri 18:03]
+
+* Pair programming                                                     :pair:
+
+** TODO [[https://martinfowler.com/articles/on-pair-programming.html][On Pair Programming]]
+[2020-02-12 Wed 09:21]
+
+** TODO [[https://chelseatroy.com/2017/04/01/advanced-pair-programming-pairing-remotely/][Advanced Pair Programming: Pairing Remotely – Chelsea Troy]]
+[2020-04-21 Tue 18:26]
+
+** TODO [[https://chelseatroy.com/2017/04/04/advanced-pair-programming-enabling-your-pair/][Advanced Pair Programming: Enabling Your Pair – Chelsea Troy]]
+[2020-04-21 Tue 18:26]
+
+** TODO [[https://chelseatroy.com/2017/04/06/advanced-pair-programming-learning-from-your-pair/][Advanced Pair Programming: Learning From Your Pair – Chelsea Troy]]
+[2020-04-21 Tue 18:26]
+
+** TODO [[https://chelseatroy.com/2016/01/30/remote-pair-programming-best-practices/][Remote Pair Programming: Best Practices – Chelsea Troy]]
+[2020-04-21 Tue 18:27]
+
+** TODO [[https://geshan.com.np/blog/2020/06/pair-programming-benefits-for-your-team/][5 pair programming benefits you should know about]]
+[2020-06-23 Tue 17:49]
+
+* Misc.
+
+** TODO [[http://karolis.koncevicius.lt/posts/porn_zen_and_vimrc/][Porn, Zen, and .vimrc]]
+[2020-09-17 Thu 08:36]
+
+Could be on it's own entry on editors
+** TODO [[https://solovyov.net/blog/2020/higher-order-functions/][Higher-order functions are like inheritance]]
+[2020-09-18 Fri 11:29]
+
+
+** TODO [[https://www.arp242.net/comments.html][Good comments are to the point and flow well]]
+[2019-12-12 Thu 18:03]
+** [[https://www.sandimetz.com/blog/2016/1/20/the-wrong-abstraction][The Wrong Abstraction — Sandi Metz]]
+
+ A really interesting article about a really good point : sometimes duplication is better
+ than the wrong abstraction !
+
+** [[https://blog.nelhage.com/post/reflections-on-performance/][Reflections on software performance - Made of Bugs]]
+[2020-06-06 Sat 12:36]
+
+
+** TODO [[https://medium.com/@johnclarke_82232/mono-or-multi-repo-6c3674142dfc][Mono- or Multi-repo?. One big repo, or lots of smaller repos… | by John Clarke | Medium]]
+[2020-08-17 Mon 16:33]
+
+** TODO [[https://medium.com/@mattklein123/monorepos-please-dont-e9a279be011b][Monorepos: Please don’t!. Here we are at the beginning of 2019… | by Matt Klein | Medium]]
+[2020-08-17 Mon 16:33]
+
+** TODO [[https://understandlegacycode.com/blog/key-points-of-working-effectively-with-legacy-code/][The key points of Working Effectively with Legacy Code — Understand Legacy Code]]
+[2020-02-26 Wed 12:20]
+
+** TODO [[https://trineo.com/blog/2020/01/constraint-driven-development][Constraint Driven Development | Trineo]]
+[2020-03-29 Sun 06:15]
+** TODO [[https://jameshfisher.com/2014/05/11/your-syntax-highlighter-is-wrong/][Your syntax highlighter is wrong]]
+[2019-12-12 Thu 13:35]
+** TODO [[https://www.benkuhn.net/syntax][Syntax highlighting is backwards | benkuhn.net]]
+[2020-03-02 Mon 17:02]
+** TODO [[https://lukeplant.me.uk/blog/posts/why-im-leaving-elm/][Why I’m leaving Elm - lukeplant.me.uk]]
+:PROPERTIES:
+:ID:       6d0ed84f-6ae3-4f49-90cd-ef19b2d85fc9
+:END:
+[2020-04-09 Thu 19:48]
+** TODO [[https://andreyorst.gitlab.io/posts/2020-04-29-text-editors/][Text Editors – Andrey Orst]]
+[2020-05-14 Thu 12:31]
+** TODO [[https://codewithoutrules.com/2020/04/20/productivity-skills/][The secret skills of productive programmers]]
+[2020-05-15 Fri 14:33]
+
+** TODO [[https://codewithoutrules.com/2020/05/14/prepare-losing-job/][How to prepare for losing your programming job]]
+[2020-05-15 Fri 14:33]
+** TODO [[https://icyphox.sh/blog/simplicity-security/][Simplicity (mostly) guarantees security]]
+[2020-05-16 Sat 15:17]
+** TODO [[http://themediocreprogrammer.com/build/html/the_mediocre_programmer.html][The Mediocre Programmer]]                                      :#read:
+[2020-05-25 Mon 11:10]
+** TODO [[https://michaelfeathers.silvrback.com/functional-code-is-honest-code][Michael Feathers - Functional Code is Honest Code]]
+[2020-06-23 Tue 17:39]
+
+** TODO [[https://michaelfeathers.silvrback.com/testing-warranties][Michael Feathers - Testing Warranties]]
+[2020-06-23 Tue 17:39]
+** TODO [[https://qntm.org/clean][It's probably time to stop recommending Clean Code @ Things Of Interest]]
+[2020-06-29 Mon 17:01]
+** TODO [[https://tomgamon.com/posts/2020-08-25-dont-marry-your-design/][Don't marry your design after the first date - Tom Gamon]]
+[2020-08-26 Wed 16:14]
+** TODO [[https://phaazon.net/blog/editors-in-2020][My thoughts about editors in 2020 – phaazon.net]]
+[2020-09-07 Mon 10:28]
+
+Because I think the speed doesn’t matter when programming, I think the most important part to remember here is the comfort: the wrists don’t move and my fingers fly around the keyboard, whatever the speed.
+** TODO [[https://noelwelsh.com/posts/2020-07-05-what-and-why-fp.html][Noel Welsh: What Functional Programming Is, What it Isn't, and Why it Matters]]
+[2020-09-07 Mon 16:07]
+** TODO [[https://josephg.com/blog/3-tribes/][3 tribes of programming]]
+[2020-09-23 Wed 12:12]
+** TODO [[https://jfmengels.net/safe-dead-code-removal/?lobsters][Safe dead code removal in a pure functional language | jfmengels' blog]]
+[2021-01-29 Fri 10:28]
+
+** TODO [[https://www.unixsheikh.com/articles/code-navigation-design-patterns-and-too-many-functions.html][Code Navigation, Design Patterns, and Too Many Functions]]
+[2020-10-27 Tue 16:21]
+** TODO [[http://brooker.co.za/blog/2020/06/23/code.html][Code Only Says What it Does - Marc's Blog]]
+[2020-10-27 Tue 16:22]
+** TODO [[https://joshwcomeau.com/accessibility/hands-free-coding/][Coding with voice dictation using Talon Voice · Josh W Comeau]]
+[2020-10-22 Thu 10:50]
+** TODO [[https://thereader.mitpress.mit.edu/habits-of-expert-software-designers/][Eight Habits of Expert Software Designers: An Illustrated Guide | The MIT Press Reader]]
+[2019-10-10 Thu 14:38]
+
+** TODO [[https://www.inkandswitch.com/end-user-programming.html][End-user programming]]                                  :inkandswitch:
+[2020-02-08 Sat 18:02]
+** TODO [[https://8thlight.com/blog/javier-garc%25C3%25ADa/2019/10/29/functional-lessons.html][Functional lessons learnt | 8th Light]]
+[2019-11-06 Wed 09:29]

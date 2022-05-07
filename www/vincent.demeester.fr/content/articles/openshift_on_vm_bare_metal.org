@@ -1,0 +1,211 @@
+
+#+TITLE: OpenShift on VM Bare metal
+
+Let's try to install OpenShift 4 on bare metal, where bare metal is virtual machine
+managed outside of OpenShift reach. We are trying to follow the [[https://docs.openshift.com/container-platform/4.4/installing/installing_bare_metal/installing-bare-metal.html][OpenShift Install on Bare
+metal]] official documentation as much as possible.
+
+#+TOC: headlines 2
+
+* Prerequisites
+
+
+In my [[file:infrastructure.org][infrastructure]] I do have at my disposal 2 machines that both have libvirt (qemu+kvm)
+enabled (with nested virtualization support even 😝).
+
+- okinawa: 8 cores, 32GiB memory
+- wakasu: 8 cores, 64GiB memory
+
+Because we are going to install the machine /bare metal/ on virtual machine, some
+assumptions are made (see [[file:infrastructure.org][Infrastructure]] on those).
+
+- VMs are created using a pre-defined Mac address, and the DHCP server on the network
+  assign them a static IP (based on the mac address).
+- This allows to create _ahead_ of time DNS entries on the network so that the bootstrap
+  and the cluster can find its own by domain name.
+
+My /home/ network is using =home= as domain name tld. So VMs will be =vm1.home=, … and for
+the ocp cluster, /aliased/ with =ocp.home=. We will have 3 master and 5 workers 🙃. The
+DNS entry looks more or less like
+
+#+begin_src text
+;; Load balancer
+vm0.home. IN A 192.168.1.120
+api.ocp.home. IN A 192.168.1.120
+api-int.ocp.home. IN A 192.168.1.120
+,*.apps.ocp.home. IN A 192.168.1.120
+
+;; Masters
+vm1.home. IN A 192.168.1.121
+master1.ocp.home. IN A 192.168.1.121
+vm2.home. IN A 192.168.1.122
+master2.ocp.home. IN A 192.168.1.122
+vm3.home. IN A 192.168.1.123
+master3.ocp.home. IN A 192.168.1.123
+
+;; Workers
+vm4.home. IN A 192.168.1.124
+worker1.ocp.home. IN A 192.168.1.124
+vm5.home. IN A 192.168.1.125
+worker2.ocp.home. IN A 192.168.1.125
+vm6.home. IN A 192.168.1.126
+worker3.ocp.home. IN A 192.168.1.126
+vm7.home. IN A 192.168.1.127
+worker4.ocp.home. IN A 192.168.1.127
+vm8.home. IN A 192.168.1.128
+worker5.ocp.home. IN A 192.168.1.128
+
+;; Bootstrap machine
+vm9.home. IN A 192.168.1.129
+bootstrap.ocp.home. IN A 192.168.1.129
+
+;; etcd records
+etcd-0.ocp.home. IN A 192.168.1.121
+etcd-1.ocp.home. IN A 192.168.1.122
+etcd-2.ocp.home. IN A 192.168.1.123
+_etcd-server-ssl._tcp.ocp.home. IN SRV 0 10 2380 etcd-0.ocp.home.
+_etcd-server-ssl._tcp.ocp.home. IN SRV 0 10 2380 etcd-1.ocp.home.
+_etcd-server-ssl._tcp.ocp.home. IN SRV 0 10 2380 etcd-2.ocp.haome.
+#+end_src
+
+As you can see, aside from the 3 masters and the 5 workers, we will have a load-balancer
+VM as documented in the official documentation.
+
+For reference, VMs Mac address compared to their IP.
+
+| MAC address       |            IP | Name |
+| 52:54:00:dd:a3:20 | 192.168.1.120 | VM0  |
+| 52:54:00:dd:a3:21 | 192.168.1.121 | VM1  |
+| 52:54:00:dd:a3:22 | 192.168.1.122 | VM2  |
+| 52:54:00:dd:a3:23 | 192.168.1.123 | VM3  |
+| 52:54:00:dd:a3:24 | 192.168.1.124 | VM4  |
+| 52:54:00:dd:a3:25 | 192.168.1.125 | VM5  |
+| 52:54:00:dd:a3:26 | 192.168.1.126 | VM6  |
+| 52:54:00:dd:a3:27 | 192.168.1.127 | VM7  |
+| 52:54:00:dd:a3:28 | 192.168.1.128 | VM8  |
+| 52:54:00:dd:a3:29 | 192.168.1.129 | VM9  |
+
+Although I am tempted to use [[https://github.com/RedHatOfficial/ocp4-helpernode][ocp4-helpernode]], I am going to try to do as much as I can
+with my bare hands ✋.
+* Provisionning Machines
+
+We will need to provision some machines, using =virsh=, =virt-install= or whatever works
+the best to be honest. This is also gonna be *heavily* based on
+[[https://github.com/RedHatOfficial/ocp4-helpernode/blob/master/docs/quickstart-static.md][ocp4-helpernode/quickstart-static.md]].
+
+** Bootstraper
+
+For the bootstrap VM (=vm9=), we can go with any system but, let's follow closely the
+quistart and use Centos EL8. The boostraper machine will be on =wakasu= so we will need to
+target the libvirt daemon from there.
+
+#+begin_src shell
+export QEMU_URI=qemu+ssh://vincent@wakasu.home/system
+virt-install --connect=${QEMU_URI} \
+             --name="ocp4-bootstrap" --vcpus=4 --ram=8192 \
+             --disk path=/var/lib/libvirt/images/ocp-bootstrap.qcow2,bus=virtio,size=120 \
+             --boot menu=on --print-xml > ocp4-bootstrap.xml
+virsh --connect=${QEMU_URI} \
+      define --file ocp4-bootstrap.xml
+#+end_src
+
+#+RESULTS:
+
+** Load balancer
+
+** Master and worker nodes
+
+Let's group machines between wakasu and okinawa. There will be 2 masters on wakasu and one
+on okinawa, 3 workers on wakasu, and 2 on okinawa.
+
+- =wakasu=
+  #+begin_src bash :dir ~/var/ocp4 :results raw
+  export QEMU_URI=qemu+ssh://vincent@wakasu.home/system
+  virt-install --connect=${QEMU_URI} \
+               --name="ocp4-master1" --vcpus=4 --ram=12288 \
+               --disk path=/var/lib/libvirt/images/ocp4-master1.qcow2,bus=virtio,size=120 \
+               --os-variant rhel8.0 \
+               --network bridge=br1,mac.address=52:54:00:dd:a3:21 \
+               --boot menu=on --print-xml > ocp4-wakasu-master1.xml
+  virt-install --connect=${QEMU_URI} \
+               --name="ocp4-master2" --vcpus=4 --ram=12288 \
+               --disk path=/var/lib/libvirt/images/ocp4-master2.qcow2,bus=virtio,size=120 \
+               --os-variant rhel8.0 \
+               --network bridge=br1,mac.address=52:54:00:dd:a3:22 \
+               --boot menu=on --print-xml > ocp4-wakasu-master2.xml
+  virt-install --connect=${QEMU_URI} \
+               --name="ocp4-worker1" --vcpus=4 --ram=8192 \
+               --disk path=/var/lib/libvirt/images/ocp4-worker1.qcow2,bus=virtio,size=120 \
+               --os-variant rhel8.0 \
+               --network bridge=br1,mac.address=52:54:00:dd:a3:24 \
+               --boot menu=on --print-xml > ocp4-wakasu-worker1.xml
+  virt-install --connect=${QEMU_URI} \
+               --name="ocp4-worker2" --vcpus=4 --ram=8192 \
+               --disk path=/var/lib/libvirt/images/ocp4-worker2.qcow2,bus=virtio,size=120 \
+               --os-variant rhel8.0 \
+               --network bridge=br1,mac.address=52:54:00:dd:a3:25 \
+               --boot menu=on --print-xml > ocp4-wakasu-worker2.xml
+  virt-install --connect=${QEMU_URI} \
+               --name="ocp4-worker3" --vcpus=4 --ram=8192 \
+               --disk path=/var/lib/libvirt/images/ocp4-worker3.qcow2,bus=virtio,size=120 \
+               --os-variant rhel8.0 \
+               --network bridge=br1,mac.address=52:54:00:dd:a3:26 \
+               --boot menu=on --print-xml > ocp4-wakasu-worker3.xml
+  for f in ocp4-wakasu-*.xml; do
+      virsh --connect=${QEMU_URI} define \
+            --file $f
+  done
+  #+end_src
+
+  #+RESULTS:
+  Domain ocp4-master1 defined from ocp4-wakasu-master1.xml
+
+  Domain ocp4-master2 defined from ocp4-wakasu-master2.xml
+
+  Domain ocp4-worker1 defined from ocp4-wakasu-worker1.xml
+
+  Domain ocp4-worker2 defined from ocp4-wakasu-worker2.xml
+
+  Domain ocp4-worker3 defined from ocp4-wakasu-worker3.xml
+
+
+
+- =okinawa=
+  #+begin_src bash :dir ~/var/ocp4 :result raw
+  export QEMU_URI=qemu+ssh://vincent@okinawa.home/system
+  virt-install --connect=${QEMU_URI} \
+               --name="ocp4-master3" --vcpus=4 --ram=12288 \
+               --disk path=/var/lib/libvirt/images/ocp4-master3.qcow2,bus=virtio,size=120 \
+               --os-variant rhel8.0 \
+               --network bridge=br1,mac.address=52:54:00:dd:a3:23 \
+               --boot menu=on --print-xml > ocp4-okinawa-master1.xml
+  virt-install --connect=${QEMU_URI} \
+               --name="ocp4-worker4" --vcpus=4 --ram=8192 \
+               --disk path=/var/lib/libvirt/images/ocp4-worker4.qcow2,bus=virtio,size=120 \
+               --os-variant rhel8.0 \
+               --network bridge=br1,mac.address=52:54:00:dd:a3:27 \
+               --boot menu=on --print-xml > ocp4-okinawa-worker1.xml
+  virt-install --connect=${QEMU_URI} \
+               --name="ocp4-worker5" --vcpus=4 --ram=8192 \
+               --disk path=/var/lib/libvirt/images/ocp4-worker5.qcow2,bus=virtio,size=120 \
+               --os-variant rhel8.0 \
+               --network bridge=br1,mac.address=52:54:00:dd:a3:28 \
+               --boot menu=on --print-xml > ocp4-okinawa-worker2.xml
+  for f in ocp4-okinawa-*.xml; do
+      virsh --connect=${QEMU_URI} define \
+            --file $f
+  done
+
+  #+end_src
+
+  #+RESULTS:
+  | Domain | ocp4-master3 | defined | from | ocp4-okinawa-master1.xml |
+  | Domain | ocp4-worker4 | defined | from | ocp4-okinawa-worker1.xml |
+  | Domain | ocp4-worker5 | defined | from | ocp4-okinawa-worker2.xml |
+
+
+* Links
+
+- [[https://github.com/RedHatOfficial/ocp4-helpernode][ocp4-helpernode]]
+- [[https://www.openshift.com/blog/openshift-4-bare-metal-install-quickstart][OpenShift 4 Bare metal quickstart]] blog post
+- [[https://docs.openshift.com/container-platform/4.4/installing/installing_bare_metal/installing-bare-metal.html][OpenShift Install on Bare metal]] official doc

@@ -1,0 +1,13 @@
+#+TITLE: Keyboards
+#+FILETAGS: keyboard moonlander ergodox
+
+* Links
+
+** [[https://github.com/optozorax/moonlander][optozorax/moonlander: My keymap for moonlander keyboard]]
+[2021-08-04 Wed 20:07]
+
+** [[https://github.com/lee-dohm/keyboard-firmware][lee-dohm/keyboard-firmware: Firmware that I use for my various mechanical keyboards]]
+[2021-08-04 Wed 20:09]
+
+** [[https://configure.zsa.io/moonlander/layouts/vKAxL/latest/0][Oryx: The ZSA Keyboard Configurator]]
+[2021-08-11 Wed 09:45]

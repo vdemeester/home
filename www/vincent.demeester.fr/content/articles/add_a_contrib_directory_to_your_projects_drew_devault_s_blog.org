@@ -1,0 +1,11 @@
+#+title: Add a “contrib” directory to your projects | Drew DeVault’s Blog
+#+roam_key: https://drewdevault.com/2020/06/06/Add-a-contrib-directory.html
+
+The contrib directory is used as an unorganized (or, at best, lightly organized) bin of
+various useful things contributed by the community around the software, but which is not
+necessarily a good candidate for being a proper part of the software. Things in contrib
+should not be wired into your build system, shouldn’t be part of your automated testing,
+shouldn’t be included in your documentation, and should not be installed with your
+packages. contrib entries are not supported by the maintainers, and are given only a light
+code review at the most. There is no guarantee whatsoever of workitude or maintenance for
+anything found in contrib.

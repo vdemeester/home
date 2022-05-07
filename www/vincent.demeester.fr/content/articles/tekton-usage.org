@@ -1,0 +1,385 @@
+#+TITLE: Tektoncd usage and examples
+#+SUBTITLE: Playing with the cat's project 🐱
+#+FILETAGS: tektoncd kubernetes ci cd pipeline
+#+SETUPFILE: .setup.org
+
+#+begin_abstract
+Let's dig into some use case and examples of ~tektoncd/pipeline~. From secrets and
+services accounts to real-life example, let's document ~pipeline~ usage, tips and tricks.
+#+end_abstract
+
+#+TOC: headlines 2
+
+* What is Tektoncd ?
+:PROPERTIES:
+:CUSTOM_ID: h:7b3bca36-78c1-44b4-96fe-b26332e195ed
+:END:
+
+#+NAME: fig:tektoncd-logo
+#+ATTR_ORG: :width 400/600
+#+ATTR_HTML: :width 400/600px
+[[file:images/tekton/tekton-horizontal-color.png]]
+
+#+begin_quote
+The Tekton Pipelines project provides Kubernetes-style resources for declaring CI/CD-style pipelines.
+#+end_quote
+
+- Started as an experiment from [[https://github.com/knative][Knative]] to define more advance build use cases that
+  [[https://github.com/knative/build/][~knative/build~]] was able to.
+- Is now it's own project and GitHub organization.
+
+* Secrets
+:PROPERTIES:
+:CUSTOM_ID: h:dc6c7476-6df0-467b-a2fb-1512d300ef4c
+:END:
+
+Most of the time, you're gonna need to access private resources like git repositories,
+image registries, ssh server and clusters. We'll dig into each of them but the gist is always the
+same :
+
+- Create secrets that holds the credentials
+- Create service accounts that uses those secrets
+- Attach those service accounts to the ~PipelineRun~/~TaskRun~
+
+:note:
+Those are working *exactly* the same as ~knative/build~. The docs are [[https://github.com/knative/docs/blob/master/docs/build/auth.md][here]].
+:END:
+
+
+** Git credentials
+:PROPERTIES:
+:CUSTOM_ID: h:8eb369c9-1987-4119-9b24-d3b1204dab15
+:END:
+
+*** Using ssh
+:PROPERTIES:
+:CUSTOM_ID: h:c08a3856-f230-4c0d-a8ee-2f5ee8c85313
+:END:
+
+#+begin_src yaml
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: ssh-key
+    annotations:
+      tekton.dev/git-0: github.com
+      tekton.dev/git-1: gitlab.com
+      tekton.dev/git-2: sr.ht
+  type: kubernetes.io/ssh-auth
+  data:
+    # cat ~/.id_rs | base64 -w 0
+    ssh-privatekey: <base64 encoded>
+    # This is non-standard, but its use is encouraged to make this more secure.
+    # ssh-keyscan github.com | base64 -w 0
+    known_hosts: <base64 encoded>
+#+end_src
+
+*** Using basic authentication
+:PROPERTIES:
+:CUSTOM_ID: h:e54bf2cb-7ac1-449e-b7cb-25a036248b83
+:END:
+
+#+begin_src yaml
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: basic-user-pass
+    annotations:
+      tekton.dev/git-0: https://github.com
+      tekton.dev/git-1: https://gitlab.com
+      tekton.dev/git-0: https://sr.ht
+  type: kubernetes.io/basic-auth
+  stringData:
+    username: <username>
+    password: <password>
+#+end_src
+
+
+** Registry credentials
+:PROPERTIES:
+:CUSTOM_ID: h:f590bf9c-464d-4d31-a176-b7c9b7b9e168
+:END:
+
+*** Using basic authentication
+:PROPERTIES:
+:CUSTOM_ID: h:2813551c-f51a-4873-8d1d-7608d67e9711
+:END:
+
+#+begin_src yaml
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: basic-user-pass
+    annotations:
+      tekton.dev/docker-0: https://index.docker.io
+      tekton.dev/docker-1: https://gcr.io
+  type: kubernetes.io/basic-auth
+  stringData:
+    username: <username>
+    password: <password>
+#+end_src
+
+*** Using kubernetes secret types
+:PROPERTIES:
+:CUSTOM_ID: h:b81a4552-743f-4c5d-80be-c1a896ba7ec7
+:END:
+
+There is two secret specific secret types related to docker authentication, or more
+accurately to docker configuration files (that holds auth).
+
+- ~kubernetes.io/dockerconfigjson~ (~$HOME/.docker/config.json~)
+- ~kubernetes.io/dockercfg~ (~$HOME/.dockercfg~)
+
+#+begin_src bash
+  kubectl create secret generic regcred \
+      --from-file=.dockerconfigjson=<path/to/.docker/config.json> \
+      --type=kubernetes.io/dockerconfigjson
+  # kubectl create secret generic regcred --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson
+#+end_src
+
+#+begin_src yaml
+  apiVersion: v1
+  data:
+    .dockerconfigjson: eyJodHRwczovL2luZGV4L ... J0QUl6RTIifX0=
+  kind: Secret
+  metadata:
+    ...
+    name: regcred
+    ...
+  type: kubernetes.io/dockerconfigjson
+#+end_src
+
+Kubernetes documentation : [[https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/][Pull an Image from a Private Registry - Kubernetes]]
+
+* Service account
+:PROPERTIES:
+:CUSTOM_ID: h:b0f52c83-e465-4733-9ba8-51d4c915fb25
+:END:
+
+#+begin_src yaml
+  apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: build-bot
+  secrets:
+    - name: regcred
+    - name: ssh-key
+#+end_src
+
+
+* Using ~kaniko~
+:PROPERTIES:
+:CUSTOM_ID: h:d81a3f84-c608-4345-8cf0-44c8ed15ea2a
+:END:
+
+** Volume for ~kaniko~'s cache
+:PROPERTIES:
+:CUSTOM_ID: h:8c8cd49e-5dda-47cf-a3d8-caff9a1bf833
+:END:
+
+#+begin_src yaml
+  kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: kaniko-cache-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 8Gi
+#+end_src
+
+
+** Resources
+:PROPERTIES:
+:CUSTOM_ID: h:7da25768-794e-48c1-b92a-603e1c0572b2
+:END:
+
+- the ~git~ repository
+  #+begin_src yaml
+    apiVersion: tekton.dev/v1alpha1
+    kind: PipelineResource
+    metadata:
+      name: private-go-hello
+    spec:
+      type: git
+      params:
+        - name: revision
+          value: master
+        - name: url
+          value: git@github.com:vdemeester/go-hello.git
+  #+end_src
+
+- the ~image~ (s)
+  #+begin_src yaml
+    apiVersion: tekton.dev/v1alpha1
+    kind: PipelineResource
+    metadata:
+      name: hello-image-res
+    spec:
+      type: image
+      params:
+        - name: url
+          description: The target URL
+          value: docker.io/vdemeester/go-hello
+    ---
+    apiVersion: tekton.dev/v1alpha1
+    kind: PipelineResource
+    metadata:
+      name: bye-image-res
+    spec:
+      type: image
+      params:
+        - name: url
+          description: The target URL
+          value: quay.io/rhdevelopers/vdemeest-go-bye
+  #+end_src
+
+** ~Task~
+:PROPERTIES:
+:CUSTOM_ID: h:4d50a5ad-2748-4f28-b545-6bf1e6872463
+:END:
+
+#+begin_src yaml
+  apiVersion: tekton.dev/v1alpha1
+  kind: Task
+  metadata:
+    name: kaniko-build-push
+  spec:
+    inputs:
+      resources:
+      - name: src
+        type: git
+      params:
+      - name: pathToDockerFile
+        description: The path to the dockerfile to build (relative to the context)
+        default: Dockerfile
+      - name: pathToContext
+        description:
+          The path to the build context, used by Kaniko - within the workspace
+          (https://github.com/GoogleContainerTools/kaniko#kaniko-build-contexts).
+          The git clone directory is set by the GIT init container which setup
+          the git input resource - see https://github.com/knative/build-pipeline/blob/master/pkg/reconciler/v1alpha1/taskrun/resources/pod.go#L107
+        default: .
+    outputs:
+      resources:
+        - name: builtImage
+          type: image
+    steps:
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor:debug
+      command: ["/kaniko/executor"]
+      args:
+      - --dockerfile=${inputs.params.pathToDockerFile}
+      - --destination=${outputs.resources.builtImage.url}
+      - --context=/workspace/src/${inputs.params.pathToContext}
+      volumeMounts:
+      - name: kaniko-cache
+        mountPath: /cache
+    volumes:
+    - name: kaniko-cache
+      persistentVolumeClaim:
+        claimName: kaniko-cache-pvc
+#+end_src
+
+** ~Pipeline~
+:PROPERTIES:
+:CUSTOM_ID: h:f00592b2-a81b-43c4-a4fa-36959f515553
+:END:
+
+#+begin_src yaml
+  apiVersion: tekton.dev/v1alpha1
+  kind: Pipeline
+  metadata:
+    name: kaniko
+  spec:
+    resources:
+      - name: src
+        type: git
+      - name: hello-image
+        type: image
+      - name: bye-image
+        type: image
+    tasks:
+    - name: go-hello-image
+      taskRef:
+        name: kaniko-build-push
+      params:
+        - name: pathToContext
+          value: hello
+      resources:
+        inputs:
+          - name: src
+            resource: src
+        outputs:
+          - name: builtImage
+            resource: hello-image
+    - name: go-bye-image
+      taskRef:
+        name: kaniko-build-push
+      params:
+        - name: pathToContext
+          value: bye
+      resources:
+        inputs:
+          - name: src
+            resource: src
+        outputs:
+          - name: builtImage
+            resource: bye-image
+#+end_src
+
+
+** ~PipelineRun~
+:PROPERTIES:
+:CUSTOM_ID: h:9caacd24-1667-4268-9716-d967cab7c6f1
+:END:
+
+#+begin_src yaml
+  apiVersion: tekton.dev/v1alpha1
+  kind: PipelineRun
+  metadata:
+    name: kaniko-run
+  spec:
+    pipelineRef:
+      name: kaniko
+    trigger:
+      type: manual
+    serviceAccount: build-bot
+    resources:
+      - name: src
+        resourceRef:
+          name: private-go-hello
+      - name: hello-image
+        resourceRef:
+          name: hello-image-res
+      - name: bye-image
+        resourceRef:
+          name: bye-image-res
+#+end_src
+
+* TODO Deploy to a cluster
+:PROPERTIES:
+:CUSTOM_ID: h:eadc5b7a-797b-4da4-a543-3116612dfb4a
+:END:
+
+** TODO Same one, on another cluster
+:PROPERTIES:
+:CUSTOM_ID: h:90600634-74c2-4e04-b25c-b6665baac4d5
+:END:
+
+** TODO Another one, thanks to cluster resources
+:PROPERTIES:
+:CUSTOM_ID: h:7aaedc77-4319-4223-9790-31353447ad48
+:END:
+
+* TODO Using ~buildah~
+:PROPERTIES:
+:CUSTOM_ID: h:6fc85dd7-034c-4170-9b69-b84df9c976eb
+:END:
+
+* TODO Using ~helm~
+:PROPERTIES:
+:CUSTOM_ID: h:6c165f41-d642-480c-b841-541a89f95875
+:END:

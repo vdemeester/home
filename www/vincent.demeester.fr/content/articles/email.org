@@ -1,0 +1,24 @@
+
+#+TITLE: email
+#+ROAM_ALIAS: "mail" "e-mail" "Email" "Mail"
+
+* [[https://www.paritybit.ca/blog/why-email-is-the-best-discussion-platform][Why Email is the Best Discussion Platform - paritybit.ca]]
+[2020-06-08 Mon 10:35]
+
+* TODO [[https://useplaintext.email/][Use plaintext email]]
+[2020-03-03 Tue 22:42]
+
+* TODO [[https://poolp.org/posts/2019-12-15/decentralised-smtp-is-for-the-greater-good/][Decentralised SMTP is for the greater good - poolp.org]]
+[2020-03-03 Tue 22:06]
+
+* TODO [[https://kevq.uk/email-is-not-broken/][Email Is Not Broken - Kev Quirk]]
+[2020-07-01 Wed 11:08]
+
+* TODO [[https://write.privacytools.io/freddy/my-take-on-email][My Take on Email — Freddy's Ramblings]]
+[2020-07-03 Fri 09:08]
+
+* TODO [[https://www.artemix.org/blog/backing-up-e-mails-from-an-imap-server][Backing up e-mails from an IMAP server - Artemis]]
+[2020-11-05 Thu 10:48]
+* Self hosting
+** [[https://codedharma.com/posts/openbsd_email_1/][Setting Up Your Own Email Server With OpenBSD | Code Dharma]]
+[2020-06-08 Mon 10:23]

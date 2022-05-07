@@ -1,0 +1,26 @@
+#+title: A philosophy of project governance | Drew DeVault’s Blog
+#+roam_key: https://drewdevault.com/2020/01/17/Effective-project-governance.html
+
+I’ve been in the maintainer role for dozens of projects for a while now, and have
+moderated my fair share of conflicts. I’ve also been on the other side, many times, as a
+minor contributor watching or participating in conflict within other projects. Over the
+years, I’ve developed an approach to project governance which I believe is lightweight,
+effective, and inclusive.
+
+I hold the following axioms to be true:
+
+- Computer projects are organized by humans, creating a social system.
+- Social systems are fundamentally different from computer systems.
+- Objective rules cannot be programmed into a social system.
+
+And the following is true of individuals within those systems:
+
+- Project leadership is in a position to do anything they want.
+- Project leadership will ultimately do whatever they want, even if they have to come up
+  with an interpretation of the rules which justifies it.
+- Individual contributors who have a dissonant world-view from project leadership will
+  never be welcome under those leaders.
+
+Any effective project governance model has to acknowledge these truths. To this end, the
+simplest effective project governance model is a BDFL, which scales a lot further than
+people might expect.

@@ -1,0 +1,31 @@
+
+#+TITLE: bash
+
+* Links                                                               :#link:
+** [[https://ashishb.net/all/the-first-two-statements-of-your-bash-script-should-be/][The first two statements of your BASH script should be…]]      :shell:bash:
+[2020-04-15 Wed 17:22]
+
+#+begin_src bash
+#!/usr/bin/env bash
+set -euo pipefail
+#+end_src
+
+** [[https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/][Safer bash scripts with 'set -euxo pipefail' · vaneyckt.io]]         :bash:
+[2019-06-21 Fri 18:11]
+
+Almost the same as above 🙃.
+
+** [[https://citizen428.net/blog/bash-error-handling-with-trap/][Bash Error Handling with Trap - citizen428.net]]
+[2020-05-28 Thu 15:52]
+
+Traps in Bash are used for executing a command or series of commands
+upon catching a signal.
+
+** [[https://zwischenzugs.com/2019/04/03/eight-obscure-bash-options-you-might-want-to-know-about/][Eight Obscure Bash Options You Might Want to Know About – zwischenzugs]]
+[2019-06-07 Fri 14:49]
+
+** [[https://danpker.com/posts/2020/faster-bash-startup/][Faster Bash Startup · Daniel Parker]]
+[2020-11-23 Mon 10:23]
+
+** [[https://work.lisk.in/2020/11/20/even-faster-bash-startup.html][Even faster bash startup — Tomáš Janoušek, Blog]]
+[2020-11-23 Mon 10:23]

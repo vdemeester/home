@@ -1,0 +1,62 @@
+
+#+TITLE: Kubernetes
+
+- [[file:knative.org][Knative]] notes
+
+* Provisioning
+
+There is a bunch of ways to provision Kubernetes, but you need to take few elements into
+account:
+- is it a "throwable" cluster, for development or tests purposes
+- is it a local cluster (not exposed to the public)
+- is it a production grade cluster (exposed to the public)
+
+For the /throwable/ case, there is a bunch of possibilities, from running VMs to running
+kubernetes in containers.
+
+- [[file:kubernix.org][kubernix]] for [[file:nixos.org][NixOS]] specific.
+- [[file:minikube.org][minikube]]
+- [[file:kind.org][kind]]
+- [[file:microk8s.org][microk8s]]
+
+For the local cluster part, you can rely on [[https://github.com/kelseyhightower/kubernetes-the-hard-way/][/the hard way/]] or on tools from the community,
+depending on your system.
+
+- I am trying to use [[file:nixos.org][NixOS]] for this : [[file:kubernetes_on_nixos.org][Kubernetes on NixOS]].
+- In parallel, I'm gonna setup k8s using [[file:microk8s.org][microk8s]] on VMs too, so that I can test with a
+  Ubuntu host.
+
+For the production grade cluster, /well/, I am not there yet, but best advice, use GKE or
+[[file:openshift.org][OpenShift]].
+
+* Configuration
+
+** Extract configuration context to its own file
+
+#+begin_src shell
+kubectl config view --minify --flatten \
+        --context=put-the-context-here > ~/.kube/config.context
+#+end_src
+
+* Links
+
+** TODO [[http://boringis.cool/][boring is cool | advocacy site for boring technology]]
+** TODO [[https://ahmet.im/blog/mastering-kubeconfig/][Mastering the KUBECONFIG file]]
+** TODO [[https://christine.website/blog/drone-kubernetes-cd-2020-07-10][Continuous Deployment to Kubernetes with Gitea and Drone - Christine Dodrill]]
+[2020-07-11 Sat 14:30]
+
+** TODO [[https://medium.com/flant-com/kubectl-commands-and-tips-7b33de0c5476][Ready-to-use commands and tips for kubectl | by Flant staff | Flant | Aug, 2020 | Medium]]
+[2020-09-10 Thu 13:24]
+** TODO [[https://blog.dave.tf/post/new-kubernetes/][A better Kubernetes, from the ground up · blog.dave.tf]]
+[2020-11-30 Mon 19:05]
+** TODO [[https://aporcupine.com/2020/03/pi4-kubernetes-cluster/][🤖 Setting Up a Raspberry Pi 4 Kubernetes Cluster | A_Porcupine - A Blog about technology and other such geekery!]]
+[2020-12-09 Wed 16:34]
+
+** TODO [[https://dbafromthecold.com/2020/11/30/building-a-raspberry-pi-cluster-to-run-azure-sql-edge-on-kubernetes/][Building a Raspberry Pi cluster to run Azure SQL Edge on Kubernetes | DBA From The Cold]]
+[2020-12-09 Wed 16:45]
+
+** TODO [[https://dbafromthecold.com/2020/12/03/updating-my-kubernetes-raspberry-pi-cluster-to-containerd/][Updating my Kubernetes Raspberry Pi Cluster to containerd | DBA From The Cold]]
+[2020-12-09 Wed 16:47]
+
+** TODO [[https://geektechstuff.com/2020/11/18/kubernetes-cluster-on-raspberry-pi/][Kubernetes Cluster On Raspberry Pi – Geek Tech Stuff]]
+[2020-12-09 Wed 16:47]
