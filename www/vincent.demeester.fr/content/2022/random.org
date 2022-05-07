@@ -32,32 +32,8 @@ aligned with my current "thoughts". And there, I am taking inspiration from [[ht
 [[https://www.la-grange.net/karl/][Karl Dubost]]. Karl keeps the "design" (or style or whatever) of its page as they are / were
 when he is published the content. This means, a page written 10 years ago, will be
 rendered the same (/with devil in details if the browser changed something or course/), 10
-years ago or now. And, /for some reason/, this is *really* appealing to me.
+years ago or now. And, /for some reason/, this is *really* appealing to me. I am slowing
+and incrementally trying to achieve that. Also, /note/ that the redesign is very subtle
+as, the more I am looking at the current theme, the more most of it seems good enough for me.
 
-#+begin_src emacs-lisp
-(defun read-file (filePath)
-  "Return FILEPATH's file content."
-  (with-temp-buffer
-    (insert-file-contents filePath)
-    (buffer-string)))
-#+end_src
-
-<2022-05-07 Sat 10:45> Hello world
-
-<2022-05-07>
-- Hello world
-- Bye world
-
-
-[2022-05-07 Sat 10:45]
-Another content
-
-~code~ versus =code=. {{marking something would be awesome as well}}.
-
-#+begin_quote
-HTML export of drawer with NAME and CONTENT.
-name is the name of the drawer, that will be used as class.
-content is the content of the drawer
-
-— Vincent Demeester
-#+end_quote
+I am also making sure I keep an [[file:../sandbox.org][sandbox]] page always up-to-date.

@@ -17,6 +17,9 @@ below is a "selection" of some content. If you are looking for an "index" of all
 
 See also some [[http:/docs/sitemap.html][documentation]] publish from my [[monorepo][mono-repo]].
 
+I did /archive/ part of the website. The URI stay the same, so it shouldn't be a problem.
+For shortcuts, here are the old [[https://vincent.demeester.fr/posts/][posts]] and [[https://vincent.demeester.fr/articles/][articles]].
+
 #+BEGIN_EXPORT html
 <small class='opinions'>Opinions stated here are my own and do not express the views of my employer, spouse, children, pets, neighbors, secret crushes, favorite authors, or anyone else who is not me. And maybe not even me, depending on how old this is.</small><br/>
 <small class='engine'>

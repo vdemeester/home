@@ -22,6 +22,7 @@
          :with-footnotes t
          :with-toc nil
          :with-drawers t
+         :with-timestamps t
          :sitemap-filename "sitemap.org"
          :sitemap-title "Sitemap"
          ;; :sitemap-format-entry sbr/org-sitemap-format-entry

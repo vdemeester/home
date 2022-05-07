@@ -1,7 +1,7 @@
 #+TITLE: Sitemap
 
 - [[file:index.org][Hi, I'm Vincent Demeester]]
-- [[file:about.org][About me]]
 - [[file:sandbox.org][Emacs org-mode sandbox]]
+- [[file:about.org][About me]]
 - 2022
   - [[file:2022/random.org][Random thoughts after 2 years]]

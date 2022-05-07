@@ -603,3 +603,4 @@ div.drawer.results pre.src:before {
 .priority { font-family: monospace; color: orange; }
 .timestamp { color: #bebebe; }
 .timestamp-kwd { color: #5f9ea0; }
+.underline { text-decoration: underline; }

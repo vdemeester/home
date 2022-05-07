@@ -36,8 +36,10 @@ the org-exported HTML pages.  Note however that the =.title=, =.subtitle= and
 =#postamble= element are not included in this section.
 
 ** TODO Title with TODO
+SCHEDULED: <2022-05-07 Sat>
 
 ** DONE Title with DONE
+DEADLINE: <2022-05-07 Sat>
 
 Some inactive timestamps
 
@@ -46,6 +48,10 @@ Some inactive timestamps
 Let's write some stuff between the two !
 
 [2019-02-20 Wed] Without time
+
+Maybe also some *active* timestamps
+
+<2022-05-07 Sat> Without time as well
 
 ** [#A] Title with Priority
 
