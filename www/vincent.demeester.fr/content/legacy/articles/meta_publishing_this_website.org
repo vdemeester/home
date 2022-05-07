@@ -1,4 +1,3 @@
-# -*- mode: org; eval: (add-hook 'after-save-hook (lambda () (org-babel-tangle)) nil t) -*-
 #+TITLE: meta: publishing this website
 #+ROAM_ALIAS: "publishing this website"
 
@@ -604,4 +603,8 @@ PROJECT: `posts in this case."
 
 (provide 'publish-common)
 ;;; publish-common.el ends here
+#+end_src
+
+#+begin_src bash
+# -*- mode: org; eval: (add-hook 'after-save-hook (lambda () (org-babel-tangle)) nil t) -*-
 #+end_src

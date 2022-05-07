@@ -1,0 +1,90 @@
+#+TITLE: Posts
+
+* 2020-07-08 — [[file:2020-07-08-june-status-update.org][Status update, June 2020]]
+:PROPERTIES:
+:PUBDATE: [2020-07-08 Wed]
+:END:
+* 2020-06-08 — [[file:2020-06-21-website-update.org][website update]]
+:PROPERTIES:
+:PUBDATE: [2020-06-08 Mon]
+:END:
+* 2020-04-15 — [[file:2020-04-15-emacs-bankruptcy-is-fun.org][Emacs bankruptcy is fun]]
+:PROPERTIES:
+:PUBDATE: [2020-04-15 Wed]
+:END:
+* 2020-03-22 — [[file:2020-03-22-org-mode-website.org][Migrating to an org-mode website]]
+:PROPERTIES:
+:PUBDATE: [2020-03-22 Sun]
+:END:
+* 2020-02-22 — [[file:2020-02-22-digital-minimalism.org][On digital minimalism, Linux, NixOS and Emacs]]
+:PROPERTIES:
+:PUBDATE: [2020-02-22 Sat]
+:END:
+* 2019-03-23 — [[file:2019-03-23-gotest-tools-poll.org][Golang testing — gotest.tools poll]]
+:PROPERTIES:
+:PUBDATE: [2019-03-23 Sat]
+:END:
+* 2019-01-26 — [[file:2019-01-26-nix-run-alias.org][Nix run aliases]]
+:PROPERTIES:
+:PUBDATE: [2019-01-26 Sat]
+:END:
+* 2019-01-20 — [[file:2019-01-20-2018-year-review.org][2018 year review]]
+:PROPERTIES:
+:PUBDATE: [2019-01-20 Sun]
+:END:
+* 2018-09-18 — [[file:2018-09-18-gotest-tools-icmd.org][Golang testing — gotest.tools icmd]]
+:PROPERTIES:
+:PUBDATE: [2018-09-18 Tue]
+:END:
+* 2018-09-14 — [[file:2018-09-14-gotest-tools-fs.org][Golang testing — gotest.tools fs]]
+:PROPERTIES:
+:PUBDATE: [2018-09-14 Fri]
+:END:
+* 2018-09-06 — [[file:2018-09-06-gotest-tools-golden.org][Golang testing — gotest.tools golden]]
+:PROPERTIES:
+:PUBDATE: [2018-09-06 Thu]
+:END:
+* 2018-09-01 — [[file:2018-09-01-gotest-tools-skip.org][Golang testing — gotest.tools skip]]
+:PROPERTIES:
+:PUBDATE: [2018-09-01 Sat]
+:END:
+* 2018-08-16 — [[file:2018-08-16-gotest-tools-assertions.org][Golang testing — gotest.tools assertions]]
+:PROPERTIES:
+:PUBDATE: [2018-08-16 Thu]
+:END:
+* 2018-07-28 — [[file:2018-07-28-gotest-tools-intro.org][Golang testing — gotest.tools introduction]]
+:PROPERTIES:
+:PUBDATE: [2018-07-28 Sat]
+:END:
+* 2014-03-24 — [[file:2014-03-24-redesign-et-résolutions.org][Redesign et Résolutions]]
+:PROPERTIES:
+:PUBDATE: [2014-03-24 Mon]
+:END:
+* 2013-10-12 — [[file:2013-10-12-podcasts.org][Podcasts]]
+:PROPERTIES:
+:PUBDATE: [2013-10-12 Sat]
+:END:
+* 2013-09-08 — [[file:2013-09-08-maven-tmpfs.org][Maven Tmpfs]]
+:PROPERTIES:
+:PUBDATE: [2013-09-08 Sun]
+:END:
+* 2012-12-16 — [[file:2012-12-16-gollum-comme-wiki-personnel.org][Gollum comme Wiki personnel]]
+:PROPERTIES:
+:PUBDATE: [2012-12-16 Sun]
+:END:
+* 2012-07-23 — [[file:2012-07-23-maven-release-gitflow.org][Maven Release Gitflow]]
+:PROPERTIES:
+:PUBDATE: [2012-07-23 Mon]
+:END:
+* 2012-05-13 — [[file:2012-05-13-jekyll-foreman-guard-bundler.org][Jekyll Forman Guard Bundler]]
+:PROPERTIES:
+:PUBDATE: [2012-05-13 Sun]
+:END:
+* 2012-05-08 — [[file:2012-05-08-gitolite-quick-and-dirty-mirror.org][Gitolite quick and dirty mirror]]
+:PROPERTIES:
+:PUBDATE: [2012-05-08 Tue]
+:END:
+* 2012-05-07 — [[file:2012-05-07-reinit-and-jekyll.org][Reinit and Jekyll]]
+:PROPERTIES:
+:PUBDATE: [2012-05-07 Mon]
+:END:

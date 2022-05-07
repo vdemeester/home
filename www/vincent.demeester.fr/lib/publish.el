@@ -15,13 +15,13 @@
          :base-extension "org"
          :recursive t
          :publishing-function org-html-publish-to-html
-         :publishing-directory "./public/posts"
-         :exclude ,(regexp-opt '("README.org" "draft" "legacy"))
+         :publishing-directory "./public"
+         :exclude ,(regexp-opt '("README.org" "draft" "legacy" "articles"))
          :auto-sitemap t
          :with-footnotes t
          :with-toc nil
          :with-drawers t
-         :sitemap-filename "index.org"
+         :sitemap-filename "sitemap.org"
          :sitemap-title "content"
          :sitemap-format-entry sbr/org-sitemap-format-entry
          :sitemap-style list
@@ -157,7 +157,7 @@
          :publishing-directory "./public/"
          :publishing-function org-publish-attachment
          :recursive t)
-        ("all" :components ("posts" "about" "index" "articles" "articles-assets" "css" "images" "assets" "legacy" "posts-rss"))))
+        ("all" :components ("content" "posts" "about" "index" "articles" "articles-assets" "css" "images" "assets" "legacy" "posts-rss"))))
 
 (defun publish ()
   "Build vincent.demeester.fr website"

@@ -56,7 +56,7 @@ build: lib/publish.el lib/publish-common.el build-articles
 
 .PHONY: build-articles
 build-articles: $(NOTES)
-	rsync -arv --delete --copy-links --exclude='*.private.org' --exclude='*.db' $(NOTES)/ content/articles/
+	rsync -arv --delete --copy-links --exclude='*.private.org' --exclude='*.db' $(NOTES)/ content/legacy/articles/
 
 $(NOTES):
 	$(error $(NOTES) doesn't exists…)
