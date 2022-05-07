@@ -1,90 +1,813 @@
 #+TITLE: Posts
+#+AUTHOR: Vincent Demeester
+#+OPTIONS: toc:nil
+* [[file:content/legacy/posts/2020-07-08-june-status-update.org][Status update, June 2020]]
+:PROPERTIES:
+:ID:       2020-07-08-june-status-update.org
+:RSS_TITLE: Status update, June 2020
+:RSS_PERMALINK: content/legacy/posts/2020-07-08-june-status-update.html
+:PUBDATE:  <2020-07-08 Wed 00:00>
+:END:
 
-* 2020-07-08 — [[file:2020-07-08-june-status-update.org][Status update, June 2020]]
+
+Time for the first new monthly status update! I do like those updates from [[https://drewdevault.com/2020/06/15/Status-update.html][Drew DeVault]]
+and [[https://emersion.fr/blog/2020/status-update-19/][Simon Ser]], so I figured, why not trying myself 🙃. I am not sure where to start and
+where to end, but I guess I'll figure things out as I go.
+
+
+[[file:content/legacy/posts/2020-07-08-june-status-update.org][(Read more)]]
+
+* [[file:content/legacy/posts/2020-06-21-website-update.org][website update]]
 :PROPERTIES:
-:PUBDATE: [2020-07-08 Wed]
+:ID:       2020-06-21-website-update.org
+:RSS_TITLE: website update
+:RSS_PERMALINK: content/legacy/posts/2020-06-21-website-update.html
+:PUBDATE:  <2020-06-21 Sun 00:00>
 :END:
-* 2020-06-08 — [[file:2020-06-21-website-update.org][website update]]
+
+
+A really small article to talk about small updates on the website (/well, maybe not that
+small/). In a gist: a new css and articles changes.
+
+- Updating the style of the website to something really similar to [[https://newcss.net/][new.css]]. It is way
+  simpler and /pleasing/ (at least for me).
+- My [[../articles][=/articles=]] are now exporting from my [[../articles/personal_knowledge_base.org][personal knowledge base]], powered by
+  [[../articles/org_roam.org][=org-roam=]].
+- A new [[https://dl.sbr.pm/][=/files=]] part is available, where I share some random file. See for example the
+  [[https://dl.sbr.pm/wallpapers/dynamics/][dynamic wallpaper]] part.
+
+[[file:content/legacy/posts/2020-06-21-website-update.org][(Read more)]]
+
+* [[file:content/legacy/posts/2020-04-15-emacs-bankruptcy-is-fun.org][Emacs bankruptcy is fun]]
 :PROPERTIES:
-:PUBDATE: [2020-06-08 Mon]
+:ID:       2020-04-15-emacs-bankruptcy-is-fun.org
+:RSS_TITLE: Emacs bankruptcy is fun
+:RSS_PERMALINK: content/legacy/posts/2020-04-15-emacs-bankruptcy-is-fun.html
+:PUBDATE:  <2020-04-15 Wed 00:00>
 :END:
-* 2020-04-15 — [[file:2020-04-15-emacs-bankruptcy-is-fun.org][Emacs bankruptcy is fun]]
+
+
+Since go 1.14 go released, I've had a broken =go-mode= setup on my Emacs. I was using
+=lsp-mode= and =gopls= and well, the update broke everything. I initally try to fix it but
+I made it worse. At the same time, I started to get fed up with some performance issue of
+my configuration and how slow my Emacs starts, about 6s.
+
+I, thus, declared my third Emacs bankruptcy, =:disabled= everything and slowly started
+from scratch, with the following goal:
+
+- Have it start quick, as less than a second, not too much more than =emacs -Q= would
+- Disable anything that I don't use often initially
+- Try to use as much built-in as possible (example: using =icomplete= instead of
+  =ivy=/=counsel=)
+
+
+[[file:content/legacy/posts/2020-04-15-emacs-bankruptcy-is-fun.org][(Read more)]]
+
+* [[file:content/legacy/posts/2020-03-22-org-mode-website.org][Migrating to an org-mode website]]
 :PROPERTIES:
-:PUBDATE: [2020-04-15 Wed]
+:ID:       2020-03-22-org-mode-website.org
+:RSS_TITLE: Migrating to an org-mode website
+:RSS_PERMALINK: content/legacy/posts/2020-03-22-org-mode-website.html
+:PUBDATE:  <2020-03-22 Sun 00:00>
 :END:
-* 2020-03-22 — [[file:2020-03-22-org-mode-website.org][Migrating to an org-mode website]]
+
 :PROPERTIES:
-:PUBDATE: [2020-03-22 Sun]
+:ID:       24a765bd-a0ed-42cf-b96c-db667f7d37e2
 :END:
-* 2020-02-22 — [[file:2020-02-22-digital-minimalism.org][On digital minimalism, Linux, NixOS and Emacs]]
+
+This is a story… a story of me changing the way I code and publish my website. In the
+past, I've switch from [[https://vincent.demeester.fr/posts/2012-05-07-reinit-and-jekyll/][Jekyll]] to [[https://vincent.demeester.fr/posts/2015-05-01-orgmode-et-jekyll/]["=orgmode= and Jekyll"]] to [[https://vincent.demeester.fr/posts/2015-05-09-migration-to-hugo/][Hugo]] (sorry those are written
+in french). The past year, I've written and documented myself a little bit about
+[[https://www.theminimalists.com/minimalism/][minimalism]] and [[https://www.goodreads.com/book/show/40672036-digital-minimalism][digital minimalism]]. Although I don't see myself as a minimalist, it helped
+me realize some issues I had.
+
+I also realized if I want to write more, I need to lower the barrier between writing and
+publishing my content ; /if I want it to be published, of course/. This /post/ is about
+what I'm putting in place for this, with a premise : I spend my life in [[https://www.gnu.org/software/emacs/][Emacs]] and thus in
+[[https://orgmode.org/][=orgmode=]]. And [[https://orgmode.org/][=orgmode=]] is feature-full and has this badass feature : =org-publish=.
+
+To build and publish this website, we will /try/ to rely on a reproducible setup, meaning
+[[https://www.gnu.org/software/emacs/][Emacs]] and [[https://orgmode.org/][=orgmode=]] of course, [[https://www.gnu.org/software/make/][GNU Make]] of course *but* most importantly, [[https://nixos.org/nix/][Nix]] (in the near
+future 👼).
+
+:update:
+There is now an article about it, that uses literate programming: [[../articles/meta_publishing_this_website.org][publishing this
+website]]. The content of the post might no be up-to-date at some point.
+:end:
+
+
+
+[[file:content/legacy/posts/2020-03-22-org-mode-website.org][(Read more)]]
+
+* [[file:content/legacy/posts/2020-02-22-digital-minimalism.org][On digital minimalism, Linux, NixOS and Emacs]]
 :PROPERTIES:
-:PUBDATE: [2020-02-22 Sat]
+:ID:       2020-02-22-digital-minimalism.org
+:RSS_TITLE: On digital minimalism, Linux, NixOS and Emacs
+:RSS_PERMALINK: content/legacy/posts/2020-02-22-digital-minimalism.html
+:PUBDATE:  <2020-02-22 Sat 00:00>
 :END:
-* 2019-03-23 — [[file:2019-03-23-gotest-tools-poll.org][Golang testing — gotest.tools poll]]
+
+
+I've been reading and listening about Minimalism and Digital Minimalism for a little while
+now. I've watch some [[https://www.youtube.com/channel/UCJ24N4O0bP7LGLBDvye7oCA][Matt D'Avella]] youtube video (and documentary), read [[https://www.goodreads.com/book/show/40672036-digital-minimalism][Digital
+Minimalism]] from [[https://www.goodreads.com/author/show/147891.Cal_Newport][Cal Newport]], and read a bunch of [[Links][articles and blog posts]].
+
+I wouldn't say I am a minimalist, neither am I a digital minimalist *but* it is something
+that is a bit appealing and I feel I am slowly taking inspiration from those. I've started
+reducing to a minimun what my /smart/-phone does, I've reduced the number of /gadgets/
+I've add over time. But in this posts, I am going to focus on my systems and tools — this
+means Linux distributions, Emacs and other tools.
+
+
+[[file:content/legacy/posts/2020-02-22-digital-minimalism.org][(Read more)]]
+
+* [[file:content/legacy/posts/2019-03-23-gotest-tools-poll.org][Golang testing — gotest.tools poll]]
 :PROPERTIES:
-:PUBDATE: [2019-03-23 Sat]
+:ID:       2019-03-23-gotest-tools-poll.org
+:RSS_TITLE: Golang testing — gotest.tools poll
+:RSS_PERMALINK: content/legacy/posts/2019-03-23-gotest-tools-poll.html
+:PUBDATE:  <2019-03-23 Sat 00:00>
 :END:
-* 2019-01-26 — [[file:2019-01-26-nix-run-alias.org][Nix run aliases]]
+
+Let's continue the [[https://gotest.tools][=gotest.tools=]] serie, this time with the =poll= package.
+
+#+BEGIN_QUOTE
+Package poll provides tools for testing asynchronous code.
+#+END_QUOTE
+
+When you write test, you may test a piece of code that work asynchronously, where the
+state you're expecting is gonna take a bit of time to be achieved. This is especially true
+when you work on networking or file-system code. And this happens a lot when you write
+integration (or end-to-end) test, less for unit-tests.
+
+The package =poll= is trying to tackle those use cases. We'll first take a look at the
+main function, =WaitOn=, then how to write a ~Check~, using the ~Result~ type.
+
+
+[[file:content/legacy/posts/2019-03-23-gotest-tools-poll.org][(Read more)]]
+
+* [[file:content/legacy/posts/2019-01-26-nix-run-alias.org][Nix run aliases]]
 :PROPERTIES:
-:PUBDATE: [2019-01-26 Sat]
+:ID:       2019-01-26-nix-run-alias.org
+:RSS_TITLE: Nix run aliases
+:RSS_PERMALINK: content/legacy/posts/2019-01-26-nix-run-alias.html
+:PUBDATE:  <2019-01-26 Sat 00:00>
 :END:
-* 2019-01-20 — [[file:2019-01-20-2018-year-review.org][2018 year review]]
+
+
+I use [[https://nixos.org/][=NixOS=]] each and every day, everywhere. One really cool feature of =nix= is
+=nix-shell= and more recently (with =nix= >= =2.0.0=), =nix run=.
+
+#+begin_src man
+Usage: nix run <FLAGS>... <INSTALLABLES>...
+
+Summary: run a shell in which the specified packages are available.
+
+Flags:
+      --arg <NAME> <EXPR>         argument to be passed to Nix functions
+      --argstr <NAME> <STRING>    string-valued argument to be passed to Nix functions
+  -c, --command <COMMAND> <ARGS>  command and arguments to be executed; defaults to 'bash'
+  -f, --file <FILE>               evaluate FILE rather than the default
+  -i, --ignore-environment        clear the entire environment (except those specified with --keep)
+  -I, --include <PATH>            add a path to the list of locations used to look up <...> file names
+  -k, --keep <NAME>               keep specified environment variable
+  -u, --unset <NAME>              unset specified environment variable
+
+Examples:
+
+  To start a shell providing GNU Hello from NixOS 17.03:
+  $ nix run -f channel:nixos-17.03 hello
+
+  To start a shell providing youtube-dl from your 'nixpkgs' channel:
+  $ nix run nixpkgs.youtube-dl
+
+  To run GNU Hello:
+  $ nix run nixpkgs.hello -c hello --greeting 'Hi everybody!'
+
+  To run GNU Hello in a chroot store:
+  $ nix run --store ~/my-nix nixpkgs.hello -c hello
+
+Note: this program is EXPERIMENTAL and subject to change.
+#+end_src
+
+As you can see from the =-h= summary, it makes it really easy to run a shell or a command
+with some packages that are not in your main configuration. It will download the
+package(s) if there are not available in the Nix store (=/nix/store/=).
+
+A few month ago I decided it would be a perfect use-case for command I do not run
+often. My idea was, let's define =aliases= (in the shell) that would make a simple command
+call, like =ncdu=, become =nix run nixpkgs.ncdu -c ndcu=. My /shell of choice/ is [[https://fishshell.com/][fish]], so
+I decided to dig into the /language/ in order to implement that.
+
+The use case is the following :
+- When I type =foo=, I want the command =foo= in package =bar= to be executed.
+- I want to be able to pin a channel for the package — I'm using [[https://matthewbauer.us/][Matthew Bauer]] [[https://matthewbauer.us/blog/channel-changing.html][Channel
+  Changing with Nix]] setup for pin-pointing a given channel.
+
+
+[[file:content/legacy/posts/2019-01-26-nix-run-alias.org][(Read more)]]
+
+* [[file:content/legacy/posts/2019-01-20-2018-year-review.org][2018 year review]]
 :PROPERTIES:
-:PUBDATE: [2019-01-20 Sun]
+:ID:       2019-01-20-2018-year-review.org
+:RSS_TITLE: 2018 year review
+:RSS_PERMALINK: content/legacy/posts/2019-01-20-2018-year-review.html
+:PUBDATE:  <2019-01-20 Sun 00:00>
 :END:
-* 2018-09-18 — [[file:2018-09-18-gotest-tools-icmd.org][Golang testing — gotest.tools icmd]]
+
+
+Here is my review of 2018, the first of its kind, hopefully not the last 👼. I saw
+some[fn:1] /2018[fn:2] reviews/[fn:3] articles[fn:4] in my Feedly feed and I thought it
+would be a good idea to write my own too.
+
+I'll try in the next year — maybe month if I ever want to do monthly reviews — to automate
+some of it ; using the beloved =org-mode=.
+
+[fn:1] [[https://punchagan.muse-amuse.in/blog/2018-in-review/][2018 in Review - Noetic Nought]]
+[fn:2] [[https://medium.com/@buster/42-dig-deeper-e2278d1fe015][42 — Dig deeper – Buster Benson – Medium]]
+[fn:3] [[https://jvns.ca/blog/2018/12/23/2018--year-in-review/][2018: Year in review - Julia Evans]]
+[fn:4] [[https://writing.natwelch.com/post/685][Nat? Nat. Nat! | #685 2018 Year in Review]]
+
+
+[[file:content/legacy/posts/2019-01-20-2018-year-review.org][(Read more)]]
+
+* [[file:content/legacy/posts/2018-09-18-gotest-tools-icmd.org][Golang testing — gotest.tools icmd]]
 :PROPERTIES:
-:PUBDATE: [2018-09-18 Tue]
+:ID:       2018-09-18-gotest-tools-icmd.org
+:RSS_TITLE: Golang testing — gotest.tools icmd
+:RSS_PERMALINK: content/legacy/posts/2018-09-18-gotest-tools-icmd.html
+:PUBDATE:  <2018-09-18 Tue 00:00>
 :END:
-* 2018-09-14 — [[file:2018-09-14-gotest-tools-fs.org][Golang testing — gotest.tools fs]]
+
+Let's continue the [[https://gotest.tools][=gotest.tools=]] serie, this time with the =icmd= package.
+
+#+BEGIN_QUOTE
+Package icmd executes binaries and provides convenient assertions for testing the results.
+#+END_QUOTE
+
+After file-system operations (seen in [[/posts/2018-09-14-gotest-tools-fs/][=fs=]]), another common use-case in tests is to
+
+[[file:content/legacy/posts/2018-09-18-gotest-tools-icmd.org][(Read more)]]
+
+* [[file:content/legacy/posts/2018-09-14-gotest-tools-fs.org][Golang testing — gotest.tools fs]]
 :PROPERTIES:
-:PUBDATE: [2018-09-14 Fri]
+:ID:       2018-09-14-gotest-tools-fs.org
+:RSS_TITLE: Golang testing — gotest.tools fs
+:RSS_PERMALINK: content/legacy/posts/2018-09-14-gotest-tools-fs.html
+:PUBDATE:  <2018-09-14 Fri 00:00>
 :END:
-* 2018-09-06 — [[file:2018-09-06-gotest-tools-golden.org][Golang testing — gotest.tools golden]]
+
+
+Let's continue the [[https://gotest.tools][=gotest.tools=]] serie, this time with the =fs= package.
+
+#+BEGIN_QUOTE
+Package fs provides tools for creating temporary files, and testing the contents and structure of a directory.
+#+END_QUOTE
+
+This package is heavily using functional arguments (as we saw in [[/posts/2017-01-01-go-testing-functionnal-builders/][functional arguments for
+wonderful builders]]). Functional arguments is, in a nutshell, a combinaison of two Go
+features : /variadic/ functions (=...= operation in a function signature) and the fact
+that =func= are /first class citizen/. This looks more or less like that.
+
+#+BEGIN_SRC go
+  type Config struct {}
+
+  func MyFn(ops ...func(*Config)) *Config {
+          c := &Config{} // with default values
+          for _, op := range ops {
+                  op(c)
+          }
+          return c
+  }
+
+  // Calling it
+  conf := MyFn(withFoo, withBar("baz"))
+#+END_SRC
+
+The =fs= package has too *main* purpose :
+
+1. create folders and files required for testing in a simple manner
+2. compare two folders structure (and content)
+
+
+[[file:content/legacy/posts/2018-09-14-gotest-tools-fs.org][(Read more)]]
+
+* [[file:content/legacy/posts/2018-09-06-gotest-tools-golden.org][Golang testing — gotest.tools golden]]
 :PROPERTIES:
-:PUBDATE: [2018-09-06 Thu]
+:ID:       2018-09-06-gotest-tools-golden.org
+:RSS_TITLE: Golang testing — gotest.tools golden
+:RSS_PERMALINK: content/legacy/posts/2018-09-06-gotest-tools-golden.html
+:PUBDATE:  <2018-09-06 Thu 00:00>
 :END:
-* 2018-09-01 — [[file:2018-09-01-gotest-tools-skip.org][Golang testing — gotest.tools skip]]
+
+Let's continue the [[https://gotest.tools][=gotest.tools=]] serie, this time with the =golden= package. This is a
+[[/posts/2017-04-22-golang-testing-golden-file/][/quick follow-up/ on a previous =golden= post]], but focused on the =gotest.tools=
+implementation. I'm gonna be quicker, please read that one if =golden= files is a new
+concept for you.
+
+#+BEGIN_QUOTE
+Package =golden= provides tools for comparing large mutli-line strings.
+
+Golden files are files in the =./testdata/= sub-directory of the package under test.
+#+END_QUOTE
+
+In the previous article, we described the problem, and how to fix it by writing a small
+helper. Well, that small helper is in =gotest.tools/golden= now, and it has a tiny bit
+more features.
+
+One of the difference between the =gotest.tools= implementation and the previous post is
+the flag name. In =gotest.tools/golden=, the flag is =-test.update-golden= (was just
+=-test.update= before). Just as before, if the =-test.update-golden= flag is set then the
+actual content is written to the golden file, before reading it and comparing.
+
+There is two ways to use the =golden= package:
+- on it's own, using =golden.Assert= or =golden.AssertBytes=
+- as a =cmp.Comparison=, with =golden.String= or =golden.Bytes=
+
+
+[[file:content/legacy/posts/2018-09-06-gotest-tools-golden.org][(Read more)]]
+
+* [[file:content/legacy/posts/2018-09-01-gotest-tools-skip.org][Golang testing — gotest.tools skip]]
 :PROPERTIES:
-:PUBDATE: [2018-09-01 Sat]
+:ID:       2018-09-01-gotest-tools-skip.org
+:RSS_TITLE: Golang testing — gotest.tools skip
+:RSS_PERMALINK: content/legacy/posts/2018-09-01-gotest-tools-skip.html
+:PUBDATE:  <2018-09-01 Sat 00:00>
 :END:
-* 2018-08-16 — [[file:2018-08-16-gotest-tools-assertions.org][Golang testing — gotest.tools assertions]]
+
+
+Let's continue the [[https://gotest.tools][=gotest.tools=]] serie, this time with the =skip= package. This is a
+really simple one so this should be quick.
+
+#+BEGIN_QUOTE
+=skip= provides functions for skipping a test and printing the source code of the
+condition used to skip the test.
+#+END_QUOTE
+
+The package consists of only one function : =If=. The idea comes mainly from
+[[https://github.com/docker/docker][=docker/docker=]] integration test suite, where we wanted to skip some test (or test suites)
+given different context. By context I mean things like the system we are running on
+(=Windows=, =Linux=, …) or the capabilities of the running kernel or node (is =apparmor=
+available or not on the current machine).
+
+This =If= method takes a =testing.T= pointer and either a boolean, a function that
+returns a boolean, *or* an expression.
+
+#+BEGIN_SRC go
+  // boolean
+  //   --- SKIP: TestName (0.00s)
+  //           skip.go:19: MissingFeature
+  var MissingFeature bool
+  skip.If(t, MissingFeature)
+
+  // function
+  //   --- SKIP: TestName (0.00s)
+  //           skip.go:19: !IsExperimentalDaemon(dockerClient): daemon is not experimental
+  skip.If(t, IsExperimentalDaemon(dockerClient), "daemon is not experimental")
+
+  // expression
+  //   --- SKIP: TestName (0.00s)
+  //           skip.go:19: apiVersion < version("v1.24")
+  skip.If(t, apiVersion < version("v1.24"))
+#+END_SRC
+
+There is few elements to note though :
+
+- This package (as other parts of the =gotest.tools= packages), will try to look at source
+  files to display the expression used (same goes for =assert=). This is usually not a
+  problem because you run tests where the source code is. *However*, in the cases you
+  generate a test binary to be executed later (à-la =kubernetes= or other projects), this
+  can display a weird error message if the sources are not available… You shouldn't be
+  worried too much about it, but it's better if you know :)
+- The main reason to use =skip.If= is mainly for new contributors to get in quickly,
+  *reducing potential friction of them running the tests on their environment*. The more
+  the tests are written in a way they explicitely declare their requirements (and skipped
+  if the environment does not meet those), the easier it makes contributors run your
+  tests. *But*, this also means, you should try to measure the skipped tests on your
+  continuous integration system to make sure you run all of them eventually… otherwise
+  it's dead code. /But more on that in later posts 😉/.
+
+That's all for today folks, told you that was going to be quick.
+
+[[file:content/legacy/posts/2018-09-01-gotest-tools-skip.org][(Read more)]]
+
+* [[file:content/legacy/posts/2018-08-16-gotest-tools-assertions.org][Golang testing — gotest.tools assertions]]
 :PROPERTIES:
-:PUBDATE: [2018-08-16 Thu]
+:ID:       2018-08-16-gotest-tools-assertions.org
+:RSS_TITLE: Golang testing — gotest.tools assertions
+:RSS_PERMALINK: content/legacy/posts/2018-08-16-gotest-tools-assertions.html
+:PUBDATE:  <2018-08-16 Thu 00:00>
 :END:
-* 2018-07-28 — [[file:2018-07-28-gotest-tools-intro.org][Golang testing — gotest.tools introduction]]
+
+
+Let's take a closer look at [[https://gotest.tools][=gotest.tools=]] assertions packages. This is mainly about =assert=, =assert/cmp= and
+=assert/opt=.
+
+#+BEGIN_QUOTE
+Package assert provides assertions for comparing expected values to actual values. When assertion fails a helpful error
+message is printed.
+#+END_QUOTE
+
+There is two main functions (=Assert= and =Check=) and some helpers (like =NilError=, …). They all take a =*testing.T= as
+a first argument, pretty common across testing Go libraries. Let's dive into those !
+
+
+[[file:content/legacy/posts/2018-08-16-gotest-tools-assertions.org][(Read more)]]
+
+* [[file:content/legacy/posts/2018-07-28-gotest-tools-intro.org][Golang testing — gotest.tools introduction]]
 :PROPERTIES:
-:PUBDATE: [2018-07-28 Sat]
+:ID:       2018-07-28-gotest-tools-intro.org
+:RSS_TITLE: Golang testing — gotest.tools introduction
+:RSS_PERMALINK: content/legacy/posts/2018-07-28-gotest-tools-intro.html
+:PUBDATE:  <2018-07-28 Sat 00:00>
 :END:
-* 2014-03-24 — [[file:2014-03-24-redesign-et-résolutions.org][Redesign et Résolutions]]
+
+
+I already wrote 2 previous posts about golang and testing. It's something I care deeply
+about and I wanted to continue writing about it. It took me a bit more time than I
+thought, but getting back to it. Since the [[http://vincent.demeester.fr/posts/2017-04-22-golang-testing-golden-file/][last post]], Daniel Nephin and I worked (but
+mainly Daniel 🤗) on bootstrapping a testing helper library.
+
+Let me introduce it to you this library : [[https://gotest.tools][=gotest.tools=]]. As described in the [[https://godoc.org/gotest.tools][godoc]] package comment, =gotest.tools= is a
+collection of packages to augment =testing= and support common patterns. It's an enhanced and growing version of the
+initial helpers we (the docker/moby maintainers) wrote initially in [[https://github.com/docker/docker][=docker/docker=]] repository. We are using in quite some
+project here at [[https://github.com][Docker]].
+
+There is a bunch of packages that will all have their own post (linked here when available) :
+
+- [[file:2018-08-16-gotest-tools-assertions.org][=assert=]] (with =assert/cmp= and =assert/opt=) that provides assertions for comparing expected values to actual values.
+- =env= that provides functions to test code that read environment variable or the current working directory.
+- [[file:2018-09-14-gotest-tools-fs.org][=fs=]] that provides tools for creating temporary files, and testing the contents and structure of a directory.
+- [[file:2018-09-06-gotest-tools-golden.org][=golden=]] that provides tools for comparing large multi-line strings.
+- [[file:2018-09-18-gotest-tools-icmd.org][=icmd=]] that executes binaries and provides convenient assertions for testing the results.
+- [[file:2019-03-23-gotest-tools-poll.org][=poll=]] that provides tools for testing asynchronous code.
+- [[file:2018-09-01-gotest-tools-skip.org][=skip=]] that provides functions for skipping a test and printing the source code of the condition used to skip the test.
+
+There is also experimental package, using the =x= notation (as the golang team uses, for example with =golang.org/x/sync=) :
+
+- =x/subtest= that provides a =TestContext= to subtests which handles cleanup and provides a =testing.TB= and =context.Context=.
+
+There is already some good =testing= helpers in the Go ecosystem : [[https://github.com/stretchr/testify][=testify=]], [[http://labix.org/gocheck][=gocheck=]], [[https://github.com/onsi/ginkgo][=ginkgo=]] and a lot more — so
+why create a new one ? There is multiple reason for it, most of them can be seen in the following [[https://github.com/gotestyourself/gotest.tools/issues/49#issuecomment-362436026][GitHub issue]].
+
+[[https://github.com/dnephin/][Daniel]] also wrote a very useful converter if your code base is currently using =testify= : =gty-migrate-from-testify=.
+
+#+BEGIN_SRC sh
+$ go get -u gotest.tools/assert/cmd/gty-migrate-from-testify
+# […]
+$ go list \
+     -f '{{.ImportPath}} {{if .XTestGoFiles}}{{"\n"}}{{.ImportPath}}_test{{end}}' \
+     ./... | xargs gty-migrate-from-testify
+#+END_SRC
+
+In the next post, let's dig into the assertion part of the library, package =assert= 👼.
+
+[[file:content/legacy/posts/2018-07-28-gotest-tools-intro.org][(Read more)]]
+
+* [[file:content/legacy/posts/2014-03-24-redesign-et-résolutions.org][Redesign et Résolutions]]
 :PROPERTIES:
-:PUBDATE: [2014-03-24 Mon]
+:ID:       2014-03-24-redesign-et-résolutions.org
+:RSS_TITLE: Redesign et Résolutions
+:RSS_PERMALINK: content/legacy/posts/2014-03-24-redesign-et-résolutions.html
+:PUBDATE:  <2014-03-24 Mon 00:00>
 :END:
-* 2013-10-12 — [[file:2013-10-12-podcasts.org][Podcasts]]
+
+
+Un /tout petit/ post pour parler rapidement, entre autre, du redesign de
+[[http://vincent.demeester.fr][vincent.demeester.fr]] et de mes
+résolutions.
+
+
+[[file:content/legacy/posts/2014-03-24-redesign-et-résolutions.org][(Read more)]]
+
+* [[file:content/legacy/posts/2013-10-12-podcasts.org][Podcasts]]
 :PROPERTIES:
-:PUBDATE: [2013-10-12 Sat]
+:ID:       2013-10-12-podcasts.org
+:RSS_TITLE: Podcasts
+:RSS_PERMALINK: content/legacy/posts/2013-10-12-podcasts.html
+:PUBDATE:  <2013-10-12 Sat 00:00>
 :END:
-* 2013-09-08 — [[file:2013-09-08-maven-tmpfs.org][Maven Tmpfs]]
+
+
+#+BEGIN_QUOTE
+  Voici un petit billet présentant les différents podcast que j'écoute
+  plus ou moins régulièrement.
+#+END_QUOTE
+
+J'écoute énormément de musique et de podcast ; je passe beaucoup de
+temps avec des écouteurs sur la tête ou la chaine hifi en route. Les
+podcasts ont une grande place. Voici une liste plus ou moins bien triés
+de ceux auxquels je suis souscrit et/ou que j'écoute en ce moment. Je
+tiendrais peut-être ce post à jour ou en créerait un nouveau sinon :-).
+
+
+[[file:content/legacy/posts/2013-10-12-podcasts.org][(Read more)]]
+
+* [[file:content/legacy/posts/2013-09-08-maven-tmpfs.org][Maven Tmpfs]]
 :PROPERTIES:
-:PUBDATE: [2013-09-08 Sun]
+:ID:       2013-09-08-maven-tmpfs.org
+:RSS_TITLE: Maven Tmpfs
+:RSS_PERMALINK: content/legacy/posts/2013-09-08-maven-tmpfs.html
+:PUBDATE:  <2013-09-08 Sun 00:00>
 :END:
-* 2012-12-16 — [[file:2012-12-16-gollum-comme-wiki-personnel.org][Gollum comme Wiki personnel]]
+
+
+Je suis un utilisateur convaincu de [[http://maven.apache.org/][maven]], malgré ces défauts, le
+moto *"Convention over configuration"* me va vraiment bien. Que ce soit
+au boulot ou à la maison, j'ai plus d'ordinateurs équipés de ssd (ou de
+mémoire flash) que de disque traditionnel (mécanique ?). Pour augmenter
+un peu la durée de vie de ces disques SSD, j'ai cherché à savoir comment
+/déporter/ le /build/ de maven (qui, pour rappel, se passe dans le
+dossier =target/=) hors du SSD ; ici ce sera dans le dossier =/tmp/= qui
+est monté en mémoire (merci =tmpfs=), mais on peut imaginer déporter ça
+sur un autre disque, etc.. Après quelques recherches j'ai trouvés
+quelques inspirations.
+
+#+BEGIN_QUOTE
+  *Limitations*
+
+  Dans la solution présentée ci-dessous les principales limitations sont
+  les suivantes (que j'essaierais de diminuer au fil du temp ;P) :
+
+  1. Il est nécessaire de modifier le pom.xml du projet ; cela ne
+     s'appliquera donc pas à tous les projets maven sans modification du
+     pom.xml.
+  2. Cela ne fonctionne que sur une plateforme qui support les liens
+     symboliques (Linux, Mac OS X, et autre UNIX).
+  3. Cela ne fonctionne qu'avec Java 7 ou plus.
+  4. Si vous utilisez m2e, il va gentillement gueuler et c'est moche ; pour résoudre le
+     problème, il faut faire un tour vers [[http://wiki.eclipse.org/M2E_plugin_execution_not_covered][M2E plugin execution not covered]].
+#+END_QUOTE
+
+Pour [[http://maven.apache.org/][maven]], le dossier =target/= vient de la propriété
+=project.build.directory=. Dans la théorie, il suffirait de modifier
+(dans =$HOME/.m2/settings.xml=) cette propriété et le tour serait jouer.
+Malheuresement ce n'est pas possible, =project.build.directory= est une
+propriété interne et n'est, à priori, pas modifiable.
+
+Notre souhait est le suivant :
+
+1. Le build doit se faire dans =/tmp/m2/=, ce qui pour un projet se
+   traduit par =/tmp/m2/${groupId}:${artifactId}=.
+2. Le dossier =target/= dans les sources est un lien symbolique vers le
+   dossier dans =/tmp/m2/=
+3. On passe par un *profile* qui n'est *pas actif* par défaut (pour ne
+   pas faire chier le monde) mais *activable via une propriété* (maven
+   nous permet de le faire et c'est cool =^_^=). La propriété utilisée
+   sera =external.build.root=.
+
+Le code ci-dessous est repris directement de mon inspiration[fn:1]. Il
+s'occupe de créer le dossier =${groupId}:${artifactId}= dans
+=external.build.root= et de faire le lien dans le dossier courant.
+
+#+begin_src xml
+<project>
+    <!-- […] -->
+    <profiles>
+        <profile>
+            <id>external-build-dir</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>external.build.root</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.alexecollins.maven.plugin</groupId>
+                        <artifactId>script-maven-plugin</artifactId>
+                        <version>1.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>prep-work-tree</id>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <phase>initialize</phase>
+                                <configuration>
+                                    <script>
+                                        import java.nio.file.*
+                                        def dir =
+                                        "${external.build.root}/${project.groupId}:${project.artifactId}"
+                                        println "using Maven dir ${dir}"
+                                        def dirPath = Paths.get(dir)
+                                        if (!Files.exists(dirPath)) {
+                                        Files.createDirectories(dirPath)
+                                        }
+                                        def target = Paths.get("${project.build.directory}")
+                                        if (!Files.exists(target)) {
+                                        Files.createSymbolicLink(target, dirPath)
+                                        }</script>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>drop-symlink</id>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <phase>clean</phase>
+                                <configuration>
+                                    <script>
+                                        import java.nio.file.*
+                                        def target = Paths.get("${project.build.directory}")
+                                        if (Files.isSymbolicLink(target)) {
+                                        Files.delete(target)
+                                        }
+                                    </script>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.groovy</groupId>
+                                <artifactId>groovy</artifactId>
+                                <version>1.8.6</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <language>groovy</language>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <!-- […] -->
+</project>
+#+end_src
+
+Ainsi, il suffit ensuite d'avoir quelques choses du genre dans son
+=$HOME/.m2/settings.xml= pour que les builds qui ont ce profil se
+/build/ dans =/tmp/m2/=. On peut aussi ne rien avoir dans
+=$HOME/.m2/settings.xml= et utilise =-Dexternal.build.root=/tmp/m2/=
+avec la commande =mvn=.
+
+#+begin_src xml
+<settings>
+    <!-- […] -->
+    <profiles>
+        <profile>
+            <id>build-in-ramfs</id>
+            <properties>
+                <external.build.root>/tmp/m2/</external.build.root>
+            </properties>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>build-in-ramfs</activeProfile>
+    </activeProfiles>
+    <!-- […] -->
+</settings>
+#+end_src
+
+
+[fn:1] [[http://elehack.net/writings/programming/maven-target-in-tmpfs][PuttingMaven build directories out-of-tree]] par [[http://elehack.net/][Michal Ekstrand]]
+
+[[file:content/legacy/posts/2013-09-08-maven-tmpfs.org][(Read more)]]
+
+* [[file:content/legacy/posts/2012-12-16-gollum-comme-wiki-personnel.org][Gollum comme Wiki personnel]]
 :PROPERTIES:
-:PUBDATE: [2012-12-16 Sun]
+:ID:       2012-12-16-gollum-comme-wiki-personnel.org
+:RSS_TITLE: Gollum comme Wiki personnel
+:RSS_PERMALINK: content/legacy/posts/2012-12-16-gollum-comme-wiki-personnel.html
+:PUBDATE:  <2012-12-16 Sun 00:00>
 :END:
-* 2012-07-23 — [[file:2012-07-23-maven-release-gitflow.org][Maven Release Gitflow]]
+
+
+Il y a environ 4 mois j'ai eu un accident de vélo ; un traumatisme
+crânien, des brulures sur la face, quelques points de sutures, un doigt
+cassé et une hernie discale m'ont cloué (et me clou encore) plus que
+d'habitude sur ma chaise de bureau. Le bon côté des choses, c'est que
+cela m'a permit de me poser et de réfléchir une bonne façon d'être
+efficace et organiser, au travail et à la maison :-).
+
+Une des principales /action/ que j'ai pris est d'utiliser un wiki local
+et synchronisé sur /tout/ mes PCs. Le /format/ wiki est assez adapté à
+une prise de note et à la création de contenu plus complet (comme des
+[[http://shortbrain.org][articles]] ou de la documentation pour des
+projets en cours). Les conditions étaient les suivantes :
+
+- Facilité de mise en place.
+- Pas de base de données.
+- /Merging/ facile ([[http://git-scm.com][git]] /rules my world/).
+- [[http://daringfireball.net/projects/markdown/][Markdown]] comme
+  syntaxe, car utilisé à peu près partout (blogs, articles, READMEs,
+  documentations).
+- Éditable à partir d'une interface web ou de mon éditeur favoris.
+
+L'outil qui remplit presque toutes ces conditions s'appelle
+[[https://github.com/github/gollum][gollum]]. C'est un moteur wiki,
+écris en ruby, qui se base sur un repository
+[[http://git-scm.com][git]]. Il est développer par l'équipe de
+[[http://github.com][Github]] et c'est celui qui est utilisé par les
+pages wiki là-bas. Il permet d'utiliser à peu près n'importe quel
+syntaxe (dont
+[[https://github.com/github/github-flavored-markdown][github-markdown]]
+qui est assez proche de celle de
+[[http://johnmacfarlane.net/pandoc][pandoc]]). Par ailleurs, comme il se
+base sur [[http://git-scm.com][git]], les points /"pas de base de
+données"/, /"merging facile"/ et /"éditable également à partir de mon
+éditeur favoris"/ sont toutes remplies.
+
+Avec [[https://github.com/github/gollum][Gollum]] vous avez un wiki
+markdown décentralisé, éditable via une interface web ou via votre
+éditeur favoris.
+
+
+[[file:content/legacy/posts/2012-12-16-gollum-comme-wiki-personnel.org][(Read more)]]
+
+* [[file:content/legacy/posts/2012-07-23-maven-release-gitflow.org][Maven Release Gitflow]]
 :PROPERTIES:
-:PUBDATE: [2012-07-23 Mon]
+:ID:       2012-07-23-maven-release-gitflow.org
+:RSS_TITLE: Maven Release Gitflow
+:RSS_PERMALINK: content/legacy/posts/2012-07-23-maven-release-gitflow.html
+:PUBDATE:  <2012-07-23 Mon 00:00>
 :END:
-* 2012-05-13 — [[file:2012-05-13-jekyll-foreman-guard-bundler.org][Jekyll Forman Guard Bundler]]
+
+
+I like a lot the [[http://nvie.com/posts/a-successful-git-branching-model/][gitflow]] way of managing project. When working on maven project, there is
+few great plugins that helps to get the work done. One of them is [[http://maven.apache.org/plugins/maven-release-plugin][maven-release-plugin]].
+
+Inspired on this [[https://gist.github.com/1043970][gist]], I've come
+with a cool way of doing things (let say we want to release a 0.1
+version of an artifact) :
+
+
+[[file:content/legacy/posts/2012-07-23-maven-release-gitflow.org][(Read more)]]
+
+* [[file:content/legacy/posts/2012-05-13-jekyll-foreman-guard-bundler.org][Jekyll Forman Guard Bundler]]
 :PROPERTIES:
-:PUBDATE: [2012-05-13 Sun]
+:ID:       2012-05-13-jekyll-foreman-guard-bundler.org
+:RSS_TITLE: Jekyll Forman Guard Bundler
+:RSS_PERMALINK: content/legacy/posts/2012-05-13-jekyll-foreman-guard-bundler.html
+:PUBDATE:  <2012-05-13 Sun 00:00>
 :END:
-* 2012-05-08 — [[file:2012-05-08-gitolite-quick-and-dirty-mirror.org][Gitolite quick and dirty mirror]]
+
+
+This post is a quick "How did I setup my Jekyll environnement ?". We are
+going all the tools that are quite awesome in Ruby.
+
+
+[[file:content/legacy/posts/2012-05-13-jekyll-foreman-guard-bundler.org][(Read more)]]
+
+* [[file:content/legacy/posts/2012-05-08-gitolite-quick-and-dirty-mirror.org][Gitolite quick and dirty mirror]]
 :PROPERTIES:
-:PUBDATE: [2012-05-08 Tue]
+:ID:       2012-05-08-gitolite-quick-and-dirty-mirror.org
+:RSS_TITLE: Gitolite quick and dirty mirror
+:RSS_PERMALINK: content/legacy/posts/2012-05-08-gitolite-quick-and-dirty-mirror.html
+:PUBDATE:  <2012-05-08 Tue 00:00>
 :END:
-* 2012-05-07 — [[file:2012-05-07-reinit-and-jekyll.org][Reinit and Jekyll]]
+
+
+I'm running a gitolite _instance_ on my personal server to manage my repositories
+(personnal, private or public) ; and I am quickly going to share with you how I setup a
+_quick and dirty_ mirror feature.
+
+First, I am using **gitolite 3**. The mirroring we are going to setup is not the
+_supported_ [[http://sitaramc.github.com/gitolite/mirroring.html][mirroring *built-in*]].  We are going to implement a simplier way to set mirror
+thing :
+
+1. Write a custom gitolite command ; the idea is to be able to write ~git-config~ stuff.
+2. Write a hook that take a specific ~git-config~ (let say ~mirror.url~) and do a simple
+   mirroring.
+
+
+[[file:content/legacy/posts/2012-05-08-gitolite-quick-and-dirty-mirror.org][(Read more)]]
+
+* [[file:content/legacy/posts/2012-05-07-reinit-and-jekyll.org][Reinit and Jekyll]]
 :PROPERTIES:
-:PUBDATE: [2012-05-07 Mon]
+:ID:       2012-05-07-reinit-and-jekyll.org
+:RSS_TITLE: Reinit and Jekyll
+:RSS_PERMALINK: content/legacy/posts/2012-05-07-reinit-and-jekyll.html
+:PUBDATE:  <2012-05-07 Mon 00:00>
 :END:
+
+
+Two weeks ago, my /online/ personal server has been attacked and,
+somehow, died. I'm in the process of re-installation of it but I'm going
+to hardened a bit the security on it. Anyway, this crash meant that
+every piece of site I maintain has been down. That's why I moved this
+/identity site/ on the github pages, using a CNAME ; That way I can
+crash as much as I want my server(s), this page should still be up for a
+while.
+
+And I'm switching on Jekyll for this website as It is supported by
+Github page, easy to use and easy to deploy elsewhere (if one day I want
+to move from Github).
+
+The rest of the post is going to be used as a /sandbox/ post to test the
+site styles.
+
+#+BEGIN_QUOTE
+  This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+  consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+  Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+  Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+  id sem consectetuer libero luctus adipiscing.
+#+END_QUOTE
+
+
+[[file:content/legacy/posts/2012-05-07-reinit-and-jekyll.org][(Read more)]]
+

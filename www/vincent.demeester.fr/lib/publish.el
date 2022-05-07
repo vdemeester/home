@@ -17,56 +17,24 @@
          :publishing-function org-html-publish-to-html
          :publishing-directory "./public"
          :exclude ,(regexp-opt '("README.org" "draft" "legacy" "articles"))
+         :index-filename "index.org"
          :auto-sitemap t
          :with-footnotes t
          :with-toc nil
          :with-drawers t
          :sitemap-filename "sitemap.org"
          :sitemap-title "content"
-         :sitemap-format-entry sbr/org-sitemap-format-entry
-         :sitemap-style list
+         ;; :sitemap-format-entry sbr/org-sitemap-format-entry
+         :sitemap-style tree
          :sitemap-sort-files anti-chronologically
+         :html-head-include-default-style nil
+         :html-head-include-scripts nil
          ;; :sitemap-function sbr/org-publish-sitemap
-         ;; :html-head-include-scripts nil
-         ;; :html-head-include-default-style nil
          ;; :html-head ,sbr-website-html-head
          ;; :html-preamble sbr-website-html-preamble
-         ;; :html-postamble ,sbr-website-html-postamble
+         :html-postamble ,sbr-website-html-postamble
          )
-        ;; TODO: add rss for content
-        ("about"
-         :base-directory "content/about"
-         :base-extension "org"
-         :exclude ,(regexp-opt '("README.org" "draft"))
-         :index-filename "index.org"
-         :recursive nil
-         :with-footnotes t
-         :with-toc nil
-         :with-drawers t
-         :publishing-function org-html-publish-to-html
-         :publishing-directory "./public/about"
-         :html-head-include-scripts nil
-         :html-head-include-default-style nil
-         :html-head ,sbr-website-html-head
-         :html-preamble sbr-website-html-preamble
-         :html-postamble ,sbr-website-html-postamble)
-        ("index"
-         :base-directory "content/"
-         :base-extension "org"
-         :exclude ,(regexp-opt '("README.org" "draft"))
-         :index-filename "index.org"
-         :recursive nil
-         :with-footnotes t
-         :with-toc nil
-         :with-drawers t
-         :with-title nil
-         :publishing-function org-html-publish-to-html
-         :publishing-directory "./public"
-         :html-head-include-scripts nil
-         :html-head-include-default-style nil
-         :html-head ,sbr-website-html-head
-         :html-preamble sbr-website-html-preamble
-         :html-postamble ,sbr-website-html-postamble)
+        ;; TODO: add rss for content, from https://writepermission.com/org-blogging-rss-feed.html
         ("css"
          :base-directory "./css"
          :base-extension ,site-attachments
@@ -151,13 +119,29 @@
          :publishing-directory "./public/articles"
          :publishing-function org-publish-attachment
          :recursive t)
+        ("about"
+         :base-directory "content/legacy/about"
+         :base-extension "org"
+         :exclude ,(regexp-opt '("README.org" "draft"))
+         :index-filename "index.org"
+         :recursive nil
+         :with-footnotes t
+         :with-toc nil
+         :with-drawers t
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "./public/about"
+         :html-head-include-scripts nil
+         :html-head-include-default-style nil
+         :html-head ,sbr-website-html-head
+         :html-preamble sbr-website-html-preamble
+         :html-postamble ,sbr-website-html-postamble)
         ("legacy"
          :base-directory "./content/legacy"
          :base-extension ,site-attachments
          :publishing-directory "./public/"
          :publishing-function org-publish-attachment
          :recursive t)
-        ("all" :components ("content" "posts" "about" "index" "articles" "articles-assets" "css" "images" "assets" "legacy" "posts-rss"))))
+        ("all" :components ("content" "posts" "articles" "articles-assets" "css" "images" "assets" "legacy" "posts-rss"))))
 
 (defun publish ()
   "Build vincent.demeester.fr website"

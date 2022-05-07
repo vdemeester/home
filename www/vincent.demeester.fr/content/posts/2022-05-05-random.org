@@ -1,7 +1,8 @@
 #+title: Random thoughts after 2 years
+#+SUBTITLE: Re-organizing my writing workflow and website
 #+date: <2022-05-05 Thu>
 #+filetags: #home
-#+setupfile: ../templates/2022.post.org
+#+SETUPFILE: ../../templates/2022.org
 
 * Introduction
 
@@ -40,6 +41,18 @@ years ago or now. And, /for some reason/, this is *really* appealing to me.
     (insert-file-contents filePath)
     (buffer-string)))
 #+end_src
+
+<2022-05-07 Sat 10:45> Hello world
+
+<2022-05-07>
+- Hello world
+- Bye world
+
+
+[2022-05-07 Sat 10:45]
+Another content
+
+~code~ versus =code=. {{marking something would be awesome as well}}.
 
 #+begin_quote
 HTML export of drawer with NAME and CONTENT.

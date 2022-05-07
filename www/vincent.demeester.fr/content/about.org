@@ -1,4 +1,5 @@
 #+TITLE: About me
+#+SETUPFILE: ../../templates/2022.org
 
 I develop mainly in Go, a little bit of Java, a tiny bit of Python ; I'm learning Haskell
 and LISP with Clojure (and also Emacs Lisp). The more I learn about about Functionnal

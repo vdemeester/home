@@ -83,7 +83,8 @@ content is the content of the drawer"
                                  (car (plist-get plist :author)))))
 
   ;; Below content will be added anyways
-  "<nav>
+  "<nav style=\"background: yellow;\">This part of the website is \"archived\", it means it is \"stuck in time\" and won't be updated/up-to-date</nav>
+<nav>
 <img src=\"/images/favicon.ico\" id=\"sitelogo\"/> <a href='/'>home</a> /
 <a href='/posts/'>posts</a> (<a href='/index.xml'>rss</a>) /
 <a href='/articles/'>articles</a> /
@@ -93,16 +94,16 @@ content is the content of the drawer"
 
 (defvar sbr-website-html-postamble
   "<footer>
-     <span class='questions'>Questions, comments ? Please use my <a href=\"https://lists.sr.ht/~vdemeester/public-inbox\">public inbox</a> by sending a plain-text email to <a href=\"mailto:~vdemeester/public-inbox@lists.sr.ht\">~vdemeester/public-inbox@lists.sr.ht</a>.</span>
-     <span class='opinions'>Opinions stated here are my own and do not express the views of my employer, spouse, children, pets, neighbors, secret crushes, favorite authors, or anyone else who is not me. And maybe not even me, depending on how old this is.</span>
-     <span class='copyright'>
+     <small><a href=\"/\" rel=\"history\">Index</a> • <a href=\"/sitemap.html\">Sitemap</a> • <a href=\"https://dl.sbr.pm/\">Files</a></small><br/>
+     <small class='questions'>Questions, comments ? Please use my <a href=\"https://lists.sr.ht/~vdemeester/public-inbox\">public inbox</a> by sending a plain-text email to <a href=\"mailto:~vdemeester/public-inbox@lists.sr.ht\">~vdemeester/public-inbox@lists.sr.ht</a>.</small><br/>
+     <small class='copyright'>
       Content and design by Vincent Demeester
       (<a rel='licence' href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>Some rights reserved</a>)
-    </span><br />
-    <span class='engine'>
-      Powered by <a href='https://www.gnu.org/software/emacs/'>Gnu Emacs</a> and <a href='https://orgmode.org'>orgmode</a>
-    </span>
+    </small><br />
 </footer>")
+
+;; TODO: Move in about / colophon
+
 (defvar site-attachments
   (regexp-opt '("jpg" "jpeg" "gif" "png" "svg"
                 "ico" "cur" "css" "js" "woff" "html" "pdf" "otf"))
