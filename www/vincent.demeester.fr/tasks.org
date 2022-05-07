@@ -1,5 +1,12 @@
 #+TITLE: tasks
 
+* TODO Make all in legacy as static
+
+Once I settle with this setup, I should make all in legacy as html.. that way I can
+rewrite =emacs-lisp= without any trouble.
+
+There is a trick to it though…
+
 * TODO Set =<mark>= with orgmode
 
 - https://emacs.stackexchange.com/questions/36496/how-to-mark-code-fragments-in-org-export

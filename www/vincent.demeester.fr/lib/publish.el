@@ -23,17 +23,37 @@
          :with-toc nil
          :with-drawers t
          :sitemap-filename "sitemap.org"
-         :sitemap-title "content"
+         :sitemap-title "Sitemap"
          ;; :sitemap-format-entry sbr/org-sitemap-format-entry
          :sitemap-style tree
          :sitemap-sort-files anti-chronologically
          :html-head-include-default-style nil
          :html-head-include-scripts nil
          ;; :sitemap-function sbr/org-publish-sitemap
-         ;; :html-head ,sbr-website-html-head
-         ;; :html-preamble sbr-website-html-preamble
+         :html-head ,sbr-website-html-head
+         :html-preamble sbr-website-html-preamble
          :html-postamble ,sbr-website-html-postamble
          )
+        ("docs"
+         :base-directory "../../docs"
+         :base-extension "org"
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "./public/docs/"
+         :exclude ,(regexp-opt '("README.org" "draft" "private.org"))
+         :index-filename "index.org"
+         :auto-sitemap t
+         :with-footnotes t
+         :with-toc nil
+         :with-drawers t
+         :sitemap-filename "sitemap.org"
+         :sitemap-title "Docs sitemap"
+         :sitemap-style tree
+         :sitemap-sort-files anti-chronologically
+         :html-head-include-default-style nil
+         :html-head-include-scripts nil
+         :html-head ,sbr-website-html-head
+         :html-preamble sbr-website-html-preamble
+         :html-postamble ,sbr-website-html-postamble)
         ;; TODO: add rss for content, from https://writepermission.com/org-blogging-rss-feed.html
         ("css"
          :base-directory "./css"
@@ -74,7 +94,7 @@
          :sitemap-function sbr/org-publish-sitemap
          :html-head-include-scripts nil
          :html-head-include-default-style nil
-         :html-head ,sbr-website-html-head
+         :html-head ,legacy-sbr-website-html-head
          :html-preamble sbr-website-html-preamble
          :html-postamble ,sbr-website-html-postamble)
         ("posts-rss"
@@ -109,7 +129,7 @@
          ;;:sitemap-function sbr/org-publish-sitemap
          :html-head-include-scripts nil
          :html-head-include-default-style nil
-         :html-head ,sbr-website-html-head
+         :html-head ,legacy-sbr-website-html-head
          :html-preamble sbr-website-html-preamble
          :html-postamble ,sbr-website-html-postamble)
         ("articles-assets"
@@ -132,7 +152,7 @@
          :publishing-directory "./public/about"
          :html-head-include-scripts nil
          :html-head-include-default-style nil
-         :html-head ,sbr-website-html-head
+         :html-head ,legacy-sbr-website-html-head
          :html-preamble sbr-website-html-preamble
          :html-postamble ,sbr-website-html-postamble)
         ("legacy"
@@ -141,7 +161,7 @@
          :publishing-directory "./public/"
          :publishing-function org-publish-attachment
          :recursive t)
-        ("all" :components ("content" "posts" "articles" "articles-assets" "css" "images" "assets" "legacy" "posts-rss"))))
+        ("all" :components ("content" "docs" "posts" "articles" "articles-assets" "css" "images" "assets" "legacy" "posts-rss"))))
 
 (defun publish ()
   "Build vincent.demeester.fr website"

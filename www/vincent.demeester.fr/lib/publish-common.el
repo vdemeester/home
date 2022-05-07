@@ -68,22 +68,35 @@ content is the content of the drawer"
 (defvar sbr-website-html-head
   "<link rel='icon' type='image/x-icon' href='/images/favicon.ico'/>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel='stylesheet' href='/css/2022.css' type='text/css'/>
+<link rel='stylesheet' href='/css/syntax.css' type='text/css'/>
+<link href='/index.xml' rel='alternate' type='application/rss+xml' title='Vincent Demeester' />")
+
+(defvar legacy-sbr-website-html-head
+  "<link rel='icon' type='image/x-icon' href='/images/favicon.ico'/>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
 <link rel='stylesheet' href='/css/new.css' type='text/css'/>
 <link rel='stylesheet' href='/css/syntax.css' type='text/css'/>
 <link href='/index.xml' rel='alternate' type='application/rss+xml' title='Vincent Demeester' />")
 
+(defun islegacy (file)
+  "Returns t if FILE is in the legacy folder"
+  (string-prefix-p "www/vincent.demeester.fr/content/legacy"
+                   (file-relative-name file
+                                       (expand-file-name (locate-dominating-file default-directory ".git")))))
+
 (defun sbr-website-html-preamble (plist)
   "PLIST: An entry."
-  ;; Skip adding subtitle to the post if :KEYWORDS don't have 'post' has a
-  ;; keyword
-  (when (string-match-p "post" (format "%s" (plist-get plist :keywords)))
-    (plist-put plist
-               :subtitle (format "Published on %s by %s."
-                                 (org-export-get-date plist sbr-date-format)
-                                 (car (plist-get plist :author)))))
-
-  ;; Below content will be added anyways
-  "<nav style=\"background: yellow;\">This part of the website is \"archived\", it means it is \"stuck in time\" and won't be updated/up-to-date</nav>
+  (cond ((islegacy (plist-get plist :input-file))
+         ;; Legacy handling
+         ;; Skip adding subtitle to the post if :KEYWORDS don't have 'post' has a
+         ;; keyword
+         (when (string-match-p "post" (format "%s" (plist-get plist :keywords)))
+           (plist-put plist
+                      :subtitle (format "Published on %s by %s."
+                                        (org-export-get-date plist sbr-date-format)
+                                        (car (plist-get plist :author)))))
+         (format "<nav style=\"background: yellow;\">This part of the website is \"archived\", it means it is \"stuck in time\" and won't be updated/up-to-date</nav>
 <nav>
 <img src=\"/images/favicon.ico\" id=\"sitelogo\"/> <a href='/'>home</a> /
 <a href='/posts/'>posts</a> (<a href='/index.xml'>rss</a>) /
@@ -91,6 +104,9 @@ content is the content of the drawer"
 <a href='https://dl.sbr.pm/'>files</a> /
 <a href='/about/'>about</a></li>
 </nav>")
+         )
+        (t nil))
+  )
 
 (defvar sbr-website-html-postamble
   "<footer>

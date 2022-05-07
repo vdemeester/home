@@ -12,8 +12,10 @@ This is my personal space on the /World Wide Web/. It is meant to be simple, /mo
 below is a "selection" of some content. If you are looking for an "index" of all pages
 (almost), there is a [[file:sitemap.org][sitemap]].
 
-- [[file:posts/2022-05-05-random.org][Random thoughts after 2 years]]
+- [[file:2022/random.org][Random thoughts after 2 years]]
 - [[file:sandbox.org][Sandbox]], where I try the /design/ of the website.
+
+See also some [[http:/docs/sitemap.html][documentation]] publish from my [[monorepo][mono-repo]].
 
 #+BEGIN_EXPORT html
 <small class='opinions'>Opinions stated here are my own and do not express the views of my employer, spouse, children, pets, neighbors, secret crushes, favorite authors, or anyone else who is not me. And maybe not even me, depending on how old this is.</small><br/>
