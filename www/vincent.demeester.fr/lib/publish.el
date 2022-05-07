@@ -10,70 +10,30 @@
 (require 'publish-common)
 
 (setq org-publish-project-alist
-      `(("posts"
-         :base-directory "content/posts"
+      `(("content"
+         :base-directory "content"
          :base-extension "org"
          :recursive t
          :publishing-function org-html-publish-to-html
          :publishing-directory "./public/posts"
-         :exclude ,(regexp-opt '("README.org" "draft"))
+         :exclude ,(regexp-opt '("README.org" "draft" "legacy"))
          :auto-sitemap t
          :with-footnotes t
          :with-toc nil
          :with-drawers t
          :sitemap-filename "index.org"
-         :sitemap-title "Posts"
+         :sitemap-title "content"
          :sitemap-format-entry sbr/org-sitemap-format-entry
          :sitemap-style list
          :sitemap-sort-files anti-chronologically
-         :sitemap-function sbr/org-publish-sitemap
-         :html-head-include-scripts nil
-         :html-head-include-default-style nil
-         :html-head ,sbr-website-html-head
-         :html-preamble sbr-website-html-preamble
-         :html-postamble ,sbr-website-html-postamble)
-        ("posts-rss"
-         :base-directory "content/posts"
-         :base-extension "org"
-         :recursive t
-         :html-link-home "https://vincent.demeester.fr/"
-         :rss-link-home "https://vincent.demeester.fr/posts/"
-         :html-link-use-abs-url t
-         :rss-extension "xml"
-         :publishing-directory "./public"
-         :publishing-function (sbr/org-rss-publish-to-rss)
-         :section-number nil
-         :exclude ".*"
-         :include ("index.org"))
-        ("articles"
-         :base-directory "content/articles"
-         :base-extension "org"
-         :recursive t
-         :publishing-function org-html-publish-to-html
-         :publishing-directory "./public/articles"
-         :exclude ,(regexp-opt '("README.org" "draft"))
-         :auto-sitemap t
-         :with-footnotes t
-         :with-toc nil
-         :with-drawers t
-         :sitemap-filename "sitemap.org"
-         :sitemap-title "Articles"
-         :sitemap-style tree
-         :sitemap-sort-files anti-chronologically
-         ;;:sitemap-format-entry sbr/org-sitemap-format-entry
-         ;;:sitemap-function sbr/org-publish-sitemap
-         :html-head-include-scripts nil
-         :html-head-include-default-style nil
-         :html-head ,sbr-website-html-head
-         :html-preamble sbr-website-html-preamble
-         :html-postamble ,sbr-website-html-postamble)
-        ("articles-assets"
-         :exclude ,(regexp-opt '("*.org"))
-         :base-directory "content/articles"
-         :base-extension ,site-attachments
-         :publishing-directory "./public/articles"
-         :publishing-function org-publish-attachment
-         :recursive t)
+         ;; :sitemap-function sbr/org-publish-sitemap
+         ;; :html-head-include-scripts nil
+         ;; :html-head-include-default-style nil
+         ;; :html-head ,sbr-website-html-head
+         ;; :html-preamble sbr-website-html-preamble
+         ;; :html-postamble ,sbr-website-html-postamble
+         )
+        ;; TODO: add rss for content
         ("about"
          :base-directory "content/about"
          :base-extension "org"
@@ -124,6 +84,71 @@
          :base-directory "./assets"
          :base-extension ,site-attachments
          :publishing-directory "./public/assets"
+         :publishing-function org-publish-attachment
+         :recursive t)
+        ;; legacy
+        ("posts"
+         :base-directory "content/legacy/posts"
+         :base-extension "org"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "./public/posts"
+         :exclude ,(regexp-opt '("README.org" "draft"))
+         :auto-sitemap t
+         :with-footnotes t
+         :with-toc nil
+         :with-drawers t
+         :sitemap-filename "index.org"
+         :sitemap-title "Posts"
+         :sitemap-format-entry sbr/org-sitemap-format-entry
+         :sitemap-style list
+         :sitemap-sort-files anti-chronologically
+         :sitemap-function sbr/org-publish-sitemap
+         :html-head-include-scripts nil
+         :html-head-include-default-style nil
+         :html-head ,sbr-website-html-head
+         :html-preamble sbr-website-html-preamble
+         :html-postamble ,sbr-website-html-postamble)
+        ("posts-rss"
+         :base-directory "content/legacy/posts"
+         :base-extension "org"
+         :recursive t
+         :html-link-home "https://vincent.demeester.fr/"
+         :rss-link-home "https://vincent.demeester.fr/posts/"
+         :html-link-use-abs-url t
+         :rss-extension "xml"
+         :publishing-directory "./public"
+         :publishing-function (sbr/org-rss-publish-to-rss)
+         :section-number nil
+         :exclude ".*"
+         :include ("index.org"))
+        ("articles"
+         :base-directory "content/legacy/articles"
+         :base-extension "org"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "./public/articles"
+         :exclude ,(regexp-opt '("README.org" "draft"))
+         :auto-sitemap t
+         :with-footnotes t
+         :with-toc nil
+         :with-drawers t
+         :sitemap-filename "sitemap.org"
+         :sitemap-title "Articles"
+         :sitemap-style tree
+         :sitemap-sort-files anti-chronologically
+         ;;:sitemap-format-entry sbr/org-sitemap-format-entry
+         ;;:sitemap-function sbr/org-publish-sitemap
+         :html-head-include-scripts nil
+         :html-head-include-default-style nil
+         :html-head ,sbr-website-html-head
+         :html-preamble sbr-website-html-preamble
+         :html-postamble ,sbr-website-html-postamble)
+        ("articles-assets"
+         :exclude ,(regexp-opt '("*.org"))
+         :base-directory "content/legacy/articles"
+         :base-extension ,site-attachments
+         :publishing-directory "./public/articles"
          :publishing-function org-publish-attachment
          :recursive t)
         ("legacy"
