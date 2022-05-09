@@ -36,4 +36,4 @@ years ago or now. And, /for some reason/, this is *really* appealing to me. I am
 and incrementally trying to achieve that. Also, /note/ that the redesign is very subtle
 as, the more I am looking at the current theme, the more most of it seems good enough for me.
 
-I am also making sure I keep an [[file:../sandbox.org][sandbox]] page always up-to-date.
+I am also making sure I keep an [[file:../sandbox.org][sandbox]] page always {{{mark(up-to-date)}}}.
