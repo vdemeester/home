@@ -202,11 +202,13 @@ in
       git fetch -p --all
       BRANCH=$(git symbolic-ref --short HEAD)
       # 1.8
+      git clean -fd
       git checkout upstream/pipelines-1.8-rhel-8
       nix-shell /home/vincent/src/osp/shell.nix --command 'make REMOTE=quay.io/vdemeest TAG=1.8 sources/upgrade sources/operator/fetch-payload  bundle/push'
       # make REMOTE=quay.io/vdemeest TAG=1.8 sources/upgrade sources/operator/fetch-payload  bundle/push
       git reset --hard HEAD
       #1.7
+      git clean -fd
       git checkout upstream/pipelines-1.7-rhel-8
       nix-shell /home/vincent/src/osp/shell.nix --command 'make REMOTE=quay.io/vdemeest TAG=1.7 sources/upgrade sources/operator/fetch-payload  bundle/push'
       # make REMOTE=quay.io/vdemeest TAG=1.7 sources/upgrade sources/operator/fetch-payload  bundle/push
