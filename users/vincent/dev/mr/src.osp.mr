@@ -36,6 +36,10 @@ lib =
 lib =
     export BASE_PATH=openshift-pipelines
 
+[pipelines-as-code]
+lib =
+    export BASE_PATH=openshift-pipelines
+
 [toolbox]
 lib =
     export BASE_PATH=openshift-pipelines
