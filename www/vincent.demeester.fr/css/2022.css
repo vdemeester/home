@@ -473,6 +473,11 @@ aside {
     border: 1px solid var(--bg-3);
 }
 
+aside code {
+	background: var(---bg-3);
+	border: 1px solid var(---bg-4);
+}
+
 figure figcaption {
     text-align: center;
     color: var(---tx-2);
