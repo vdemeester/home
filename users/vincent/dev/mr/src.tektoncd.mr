@@ -27,3 +27,6 @@ lib =
 
 [buildkit-tekton]
 checkout = git clone git@github.com:vdemeester/buildkit-tekton.git
+
+[vegetable-resolver]
+checkout = git clone git@github.com:vdemeester/vegetable-resolver.git
