@@ -16,6 +16,7 @@ lib =
 [experimental]
 [friends]
 [homebrew-tools]
+[hub]
 [operator]
 [pipeline]
 [plumbing]
