@@ -44,7 +44,6 @@ let
     dired-subtree
     diredfl
     dockerfile-mode
-    dumb-jump
     easy-kill
     edit-indirect
     elfeed
