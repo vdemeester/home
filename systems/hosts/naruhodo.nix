@@ -132,6 +132,10 @@ in
   ];
 
   services = {
+    logind.extraConfig = ''
+      HandleLidSwitchExternalPower=ignore
+      HandleLidSwitchDocked=ignore
+    '';
     wireguard = {
       enable = true;
       ips = [ "${metadata.hosts.naruhodo.wireguard.addrs.v4}/24" ];
