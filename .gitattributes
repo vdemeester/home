@@ -1,4 +1,4 @@
-*      annex.largefiles=largerthan=200kb
+*      annex.largefiles=largerthan=400kb
 *.org  annex.largefiles=nothing
 *.yaml annex.largefiles=nothing
 *.html annex.largefiles=nothing
