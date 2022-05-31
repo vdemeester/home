@@ -16,7 +16,8 @@
 
     # Flake Dependencies
     home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    home-manager-stable = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-21.11"; inputs.nixpkgs.follows = "nixos-21_11"; };
+    home-manager-21_11 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-21.11"; inputs.nixpkgs.follows = "nixos-21_11"; };
+    home-manager-22_05 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-22.05"; inputs.nixpkgs.follows = "nixos-22_05"; };
     impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
 
     nur.url = "github:nix-community/NUR";
@@ -54,7 +55,8 @@
     , flake-utils-plus
     , flake-utils
     , home-manager
-    , home-manager-stable
+    , home-manager-21_11
+    , home-manager-22_05
     , emacs-overlay
     , nur
     , sops-nix
@@ -65,15 +67,18 @@
     } @ inputs:
     let
       mkApp = flake-utils.lib.mkApp;
-      # homeProfiles = import ./home { inherit (nixpkgs) lib; };
 
       nixosModules = flake-utils-plus.lib.exportModules [
         ./systems/modules/virtualisation/buildkit.nix
       ];
 
-      stableModules = [
-        home-manager-stable.nixosModules.home-manager
+      stableModules_21_11 = [
+        home-manager-21_11.nixosModules.home-manager
         ./systems/modules/profiles/docker.stable.nix
+      ];
+      stableModules_22_05 = [
+        home-manager-22_05.nixosModules.home-manager
+        ./systems/modules/profiles/docker.nix
       ];
       unstableModules = [
         home-manager.nixosModules.home-manager
@@ -178,14 +183,14 @@
         };
         # Servers
         shikoku = {
-          channelName = "nixos-21_11";
-          modules = stableModules ++ [
+          channelName = "nixos-22_05";
+          modules = stableModules_22_05 ++ [
             ./systems/hosts/shikoku.nix
           ];
         };
         wakasu = {
           channelName = "nixos-21_11";
-          modules = stableModules ++ [
+          modules = stableModules_21_11 ++ [
             nixos-hardware.nixosModules.lenovo-thinkpad
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             ./systems/hosts/wakasu.nix
@@ -193,14 +198,14 @@
         };
         sakhalin = {
           channelName = "nixos-21_11";
-          modules = stableModules ++ [
+          modules = stableModules_21_11 ++ [
             nixos-hardware.nixosModules.common-pc-ssd
             ./systems/hosts/sakhalin.nix
           ];
         };
         kerkouane = {
           channelName = "nixos-21_11";
-          modules = stableModules ++ [
+          modules = stableModules_21_11 ++ [
             ./systems/modules/services/govanityurl.nix
             ./systems/hosts/kerkouane.nix
           ];
