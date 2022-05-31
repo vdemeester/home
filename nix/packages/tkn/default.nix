@@ -45,8 +45,8 @@ rec {
 
   tkn = tkn_0_23;
   tkn_0_23 = makeOverridable tknGen {
-    version = "0.23.0";
-    sha256 = "sha256-rzKEjLjX2bPqgNGJYdyTuu15+9bq9WnsrJtsBzL/oOo=";
+    version = "0.23.1";
+    sha256 = "sha256-fOq67Cxtb2A9Obh2o5/aFy5bYBnyFKYQDPcpxOXMy1s=";
   };
   tkn_0_22 = makeOverridable tknGen {
     version = "0.22.0";
