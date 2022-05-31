@@ -237,6 +237,10 @@ in
         locations."/" = {
           index = "index.html";
           extraConfig = ''
+            if ($request_uri ~ ^/(.*)\.html) {
+               return 302 /$1;
+            }
+            try_files $uri $uri.html $uri/ =404;
             fancyindex on;
             fancyindex_localtime on;
             fancyindex_exact_size off;
