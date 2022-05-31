@@ -165,20 +165,21 @@
             ./systems/hosts/naruhodo.nix
           ];
         };
-        aomi = {
-          # channelName = "nixos-21_11";
-          modules = unstableModules ++ [
-            nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
-            nixos-hardware.nixosModules.common-pc-laptop-ssd
-            ./systems/hosts/aomi.nix
-          ];
-        };
         # WSL setup
         # FIXME okinawa doesn't have openssh
         okinawa = {
           modules = unstableModules ++ [
             nixos-wsl.nixosModules.wsl
             ./systems/hosts/okinawa.nix
+          ];
+        };
+        # Work "workstation"
+        aomi = {
+          channelName = "nixos-22_05";
+          modules = stableModules_22_05 ++ [
+            nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
+            nixos-hardware.nixosModules.common-pc-laptop-ssd
+            ./systems/hosts/aomi.nix
           ];
         };
         # Servers
