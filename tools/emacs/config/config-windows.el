@@ -37,10 +37,10 @@
 (use-package windmove
   :unless noninteractive
   :commands (windmove-left windmove-right windmove-down windmove-up)
-  :bind (("C-s-<up>" . windmove-up)
-         ("C-s-<right>" . windmove-right)
-         ("C-s-<down>" . windmove-down)
-         ("C-s-<left>" . windmove-left)))
+  :bind (("C-M-<up>" . windmove-up)
+         ("C-M-<right>" . windmove-right)
+         ("C-M-<down>" . windmove-down)
+         ("C-M-<left>" . windmove-left)))
 ;; -UseWindmove
 
 ;; UseWindow
