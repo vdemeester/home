@@ -22,13 +22,6 @@
     nur.url = "github:nix-community/NUR";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
 
-    deploy-rs = {
-      type = "github";
-      owner = "serokell";
-      repo = "deploy-rs";
-      inputs.utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     sops-nix = {
       type = "github";
       owner = "Mic92";
@@ -68,7 +61,6 @@
     , envfs
     , nixos-wsl
     , nixos-hardware
-    , deploy-rs
     , ...
     } @ inputs:
     let
@@ -215,29 +207,7 @@
         };
       };
 
-      # deploy-rs setup
-      deploy =
-        let
-          mkNode = server: ip: fast: {
-            hostname = "${ip}";
-            fastConnection = false;
-            profiles.system.path =
-              deploy-rs.lib.x86_64-linux.activate.nixos
-                self.nixosConfigurations."${server}";
-          };
-        in
-        {
-          user = "root";
-          sshUser = "root";
-          nodes = {
-            shikoku = mkNode "shikoku" "192.168.1.24" true;
-            wakasu = mkNode "wakasu" "192.168.1.77" true;
-            sakhalin = mkNode "sakhalin" "192.168.1.70" true;
-            kerkouane = mkNode "kerkouane" "kerkouane.vpn" false;
-          };
-        };
-
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
       outputsBuilder = channels:
         let
@@ -269,7 +239,6 @@
                 git
                 nixpkgs-fmt
                 sops
-                deploy-rs.packages."x86_64-linux".deploy-rs
               ];
             };
         };
