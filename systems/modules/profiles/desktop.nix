@@ -55,11 +55,40 @@ in
         "interface-name:br-*"
         "interface-name:ve-*"
         "interface-name:veth*"
-        "interface-name:wg0"
-        "interface-name:docker0"
-        "interface-name:virbr*"
-      ]; # FIXME: add unmanaged depending on profiles (wg0, docker0, …)
+      ]
+      # Do not manager wireguard
+      ++ lib.optionals config.networking.wireguard.enable [ "interface-name:wg0" ]
+      # Do not manage docker interfaces
+      ++ lib.optionals config.virtualisation.docker.enable [ "interface-name:docker0" ]
+      # Do not manager libvirt interfaces
+      ++ lib.optionals config.virtualisation.libvirtd.enable [ "interface-name:virbr*" ];
       packages = with pkgs; [ networkmanager-openvpn ];
+      dispatcherScripts = [{
+        # https://askubuntu.com/questions/1271491/disable-wifi-if-lan-is-connected
+        source = pkgs.writeText "wifi-wired-exclusive" ''
+          #!${pkgs.bash}/bin/bash
+          export LC_ALL=C
+
+          enable_disable_wifi ()
+          {
+              result=$(nmcli dev | grep "ethernet" | grep -w "connected")
+              if [ -n "$result" ]; then
+                  nmcli radio wifi off
+              else
+                  nmcli radio wifi on
+              fi
+          }
+
+          if [ "$2" = "up" ]; then
+              enable_disable_wifi
+          fi
+
+          if [ "$2" = "down" ]; then
+              enable_disable_wifi
+          fi
+        '';
+        type = "basic";
+      }];
     };
 
     services = {
