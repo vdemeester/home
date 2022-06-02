@@ -99,6 +99,7 @@ in
 
   programs.ssh.setXAuthLocation = true;
   profiles = {
+    bind.enable = true;
     home = true;
     dev.enable = lib.mkForce false;
     desktop.enable = lib.mkForce false;
