@@ -27,12 +27,12 @@ in
     nix.buildMachines = (filter isCurrentHost
       [
         {
-          hostName = "${metadata.hosts.wakasu.addrs.v4}";
-          maxJobs = metadata.hosts.wakasu.builder.maxJobs;
+          hostName = "${metadata.hosts.shikoku.addrs.v4}";
+          maxJobs = metadata.hosts.shikoku.builder.maxJobs;
           sshUser = "builder";
           sshKey = config.sops.secrets.builder.path;
-          systems = metadata.hosts.wakasu.builder.systems;
-          supportedFeatures = metadata.hosts.wakasu.builder.features;
+          systems = metadata.hosts.shikoku.builder.systems;
+          supportedFeatures = metadata.hosts.shikoku.builder.features;
         }
         {
           hostName = "${metadata.hosts.aomi.addrs.v4}";
@@ -46,9 +46,9 @@ in
     );
 
     programs.ssh.knownHosts = {
-      "wakasu" = {
-        hostNames = [ "wakasu.home" "${metadata.hosts.wakasu.addrs.v4}" ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2GB030S1+iZMqwgYhkl5CuBOKBjZoujc0aVHII39/x";
+      "shikoku" = {
+        hostNames = [ "shikoku.home" "${metadata.hosts.shikoku.addrs.v4}" ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm";
       };
       "aomi" = {
         hostNames = [ "aomi.home" "${metadata.hosts.aomi.addrs.v4}" ];
