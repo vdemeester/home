@@ -27,7 +27,11 @@ let
       id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
       addresses = [ "tcp://okinawa.home" "tcp://okinawa.vpn" ];
     };
-
+    # Deprecated
+    wakasu = {
+      id = "XNCACMA-LMIZPRZ-J6LEMR5-BVI7IVQ-6HWWMUU-QUCA63X-ZE32NOP-QFDDGQM";
+      addresses = [ "tcp://wakasu.home" "tcp://wakasu.vpn" ];
+    };
   };
   deviceNames = builtins.attrNames (filterAttrs isCurrentHost devices);
 in
