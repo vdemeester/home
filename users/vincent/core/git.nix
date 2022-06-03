@@ -34,7 +34,7 @@ in
     gitAndTools.grv
     mr
     #my.prm
-    my.ape
+    #my.ape
     difftastic
   ];
   programs.git = {
