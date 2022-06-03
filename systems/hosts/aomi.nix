@@ -126,11 +126,9 @@ in
   '';
 
   environment.systemPackages = with pkgs; [
-    virtmanager
     # force xbacklight to work
     acpilight
     brightnessctl
-    steam-run
     asciinema
   ];
 
