@@ -19,14 +19,15 @@ let
       id = "4TYYG7V-A67D5SN-HMEJCI7-POOZRLL-RNCIE4U-ZYVGTOB-JQ5DOSV-ZCGWUAL";
       addresses = [ "tcp://sakhalin.home" "tcp://sakhalin.vpn" ];
     };
-    wakasu = {
-      id = "XNCACMA-LMIZPRZ-J6LEMR5-BVI7IVQ-6HWWMUU-QUCA63X-ZE32NOP-QFDDGQM";
-      addresses = [ "tcp://wakasu.home" "tcp://wakasu.vpn" ];
-    };
     shikoku = {
       id = "KZMMXRR-UINDQTS-H3TV2W7-EIGOUDI-3LW4ZDG-7PRKDFV-MJ5KUTJ-YG5Y5AI";
       addresses = [ "tcp://shikoku.home" "tcp://shikoku.vpn" ];
     };
+    okinawa = {
+      id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
+      addresses = [ "tcp://okinawa.home" "tcp://okinawa.vpn" ];
+    };
+
   };
   deviceNames = builtins.attrNames (filterAttrs isCurrentHost devices);
 in
