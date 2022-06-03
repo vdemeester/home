@@ -7,7 +7,7 @@ let
   isCurrentHost = n: v: n != config.networking.hostName;
   devices = {
     aomi = {
-      id = "WAD7GYV-RXIL3V3-OT5PFZH-NRQHZWV-D3TGJVR-G4IANXZ-HTO5VT7-XE2WIQQ";
+      id = "XCR6WWB-OZUDGFB-LQPFW73-MV5SPJK-4IGOMA4-IAXON3I-C6OFETL-TPK5FQS";
       addresses = [ "tcp://aomi.vpn" "tcp://aomi.home" ];
     };
     naruhodo = {
