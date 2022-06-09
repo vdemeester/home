@@ -44,9 +44,21 @@ rec {
       };
     };
 
-  tkn-pac = tkn-pac_0_5;
+  tkn-pac = tkn-pac_0_8;
+  tkn-pac_0_8 = makeOverridable tknPacGen {
+    version = "0.8.0";
+    sha256 = "sha256-w1kqCXaygy168gsSbexnwECTDXPmHeAnmK0KIOWmWaU=";
+  };
+  tkn-pac_0_7 = makeOverridable tknPacGen {
+    version = "0.7.1";
+    sha256 = "sha256-VMlRz6cKzCBWs+UapyUKWXjF6P92nB5CIaKphz4USMU=";
+  };
+  tkn-pac_0_6 = makeOverridable tknPacGen {
+    version = "0.6.1";
+    sha256 = "sha256-H+zqV2zKrkE3ymwq3ZIYaFDtmrA921kjeT56v0XcjhI=";
+  };
   tkn-pac_0_5 = makeOverridable tknPacGen {
-    version = "0.5.3";
-    sha256 = "sha256-X6zQNYQM1C7+GhaUSXg5V6RQxZzoBPvas1gxQx+y9yw=";
+    version = "0.5.10";
+    sha256 = "sha256-/9QyJIFmFr96/Tv01Oz4rgoiFRi6z1sz/2lSbAzk/4I=";
   };
 }

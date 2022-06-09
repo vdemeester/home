@@ -114,6 +114,9 @@ rec {
     ;
   inherit (pkgs.callPackage ./tkn/tkn-pac.nix { })
     tkn-pac_0_5
+    tkn-pac_0_6
+    tkn-pac_0_7
+    tkn-pac_0_8
     tkn-pac
     ;
   inherit (pkgs.callPackage ./tkn/tkn-local.nix { })

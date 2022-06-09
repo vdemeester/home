@@ -227,6 +227,10 @@
               tkn
               tkn_0_23
               tkn_0_22
+              tkn-pac
+              tkn-pac_0_8
+              tkn-pac_0_7
+              tkn-pac_0_6
               ;
           };
 
