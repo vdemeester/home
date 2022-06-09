@@ -568,5 +568,33 @@ With prefix argument, also display headlines without a TODO keyword."
               (file-relative-name file dir))))
   )
 
+(use-package org-tree-slide
+  :functions (org-display-inline-images
+              org-remove-inline-images)
+  :bind (:map org-mode-map
+              ("s-<f7>" . org-tree-slide-mode)
+              :map org-tree-slide-mode-map
+              ("<left>" . org-tree-slide-move-previous-tree)
+              ("<right>" . org-tree-slide-move-next-tree)
+              ("S-SPC" . org-tree-slide-move-previous-tree)
+              ("SPC" . org-tree-slide-move-next-tree))
+  :hook ((org-tree-slide-play . (lambda ()
+                                  (text-scale-increase 4)
+                                  (org-display-inline-images)
+                                  (read-only-mode 1)))
+         (org-tree-slide-stop . (lambda ()
+                                  (text-scale-increase 0)
+                                  (org-remove-inline-images)
+                                  (read-only-mode -1))))
+  :init (setq org-tree-slide-header t
+              org-tree-slide-slide-in-effect nil
+              org-tree-slide-heading-emphasis nil
+              org-tree-slide-cursor-init t
+              org-tree-slide-modeline-display 'outside
+              org-tree-slide-skip-done nil
+              org-tree-slide-skip-comments t
+              org-tree-slide-content-margin-top 1
+              org-tree-slide-skip-outline-level 4))
+
 (provide 'config-org)
 ;;; config-org.el ends here
