@@ -1,9 +1,9 @@
-{ stdenv, lib, buildGoModule, fetchFromGitHub }:
+{ stdenv, lib, buildGo117Module, fetchFromGitHub }:
 
 with lib;
 rec {
   tknLocalGen = { version, sha256 }:
-    buildGoModule rec {
+    buildGo117Module rec {
       pname = "tkn-local";
       name = "${pname}-${version}";
 
@@ -42,10 +42,14 @@ rec {
         maintainers = with maintainers; [ vdemeester ];
       };
     };
-  tkn-local = tkn-local_0_3;
+  tkn-local = tkn-local_0_4;
+  tkn-local_0_4 = makeOverridable tknLocalGen {
+    version = "0.4.0";
+    sha256 = "sha256-9tWbSKqD03ngwgj7lgcnHhct03q5VJ0LeX2n81SUNS4=";
+  };
   tkn-local_0_3 = makeOverridable tknLocalGen {
-    version = "0.3.0";
-    sha256 = "sha256-HVz01bOxKgwscwkit3XhpHfSXpMaA7+6CpkgOeQRQY8==";
+    version = "0.3.1";
+    sha256 = "sha256-U9C3dzmM99OswxGTsBsfRwefrS8wsfGUCCY5sta46wU=";
   };
   tkn-local_0_2 = makeOverridable tknLocalGen {
     version = "0.2.0";

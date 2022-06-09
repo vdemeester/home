@@ -120,6 +120,7 @@ rec {
     tkn-pac
     ;
   inherit (pkgs.callPackage ./tkn/tkn-local.nix { })
+    tkn-local_0_4
     tkn-local_0_3
     tkn-local_0_2
     tkn-local

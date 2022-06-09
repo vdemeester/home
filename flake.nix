@@ -231,6 +231,9 @@
               tkn-pac_0_8
               tkn-pac_0_7
               tkn-pac_0_6
+              tkn-local
+              tkn-local_0_4
+              tkn-local_0_3
               ;
           };
 
