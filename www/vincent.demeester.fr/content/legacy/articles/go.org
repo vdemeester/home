@@ -127,6 +127,10 @@ Add this to notes (go language)
 :PROPERTIES:
 :CREATED:[2021-10-05 Tue 16:01]
 :END:
+
+** TODO [[https://christine.website/blog/gonads-2022-04-24][Crimes with Go Generics - Xe]]
+[2022-05-05 Thu 22:05]
+
 ** Misc
 - https://peter.bourgon.org/go-for-industrial-programming/#testing
 - https://www.bartfokker.nl/posts/decorators/

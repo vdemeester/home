@@ -1,0 +1,9 @@
+#+title: A Digital Garden you say…
+#+subtitle: Let's try to describe what this "website" is about ✍️.
+#+date: <2022-06-24 Fri>
+#+filetags: #home
+#+SETUPFILE: ../../templates/2022.org
+
+As I said in [[file:random.org]["Random thoughts after 2 years"]], I've been inspired by [[https://joelhooks.com/digital-garden][Joel's digital garden]]
+article. This article aims to provide a bit of how I intend to maintain this space from
+now on.

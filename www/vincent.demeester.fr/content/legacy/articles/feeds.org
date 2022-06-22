@@ -169,6 +169,30 @@
 
 *** https://t-ravis.com/index.xml
 
+*** https://evanhahn.com/blog/index.xml
+
+*** https://sookocheff.com/index.xml
+
+*** https://n.survol.fr/feed
+
+*** https://www.standblog.org/blog/feed/rss2
+
+*** https://www.quaternum.net/atom.xml
+
+*** https://www.arthurperret.fr/feed.xml
+
+*** https://taoofmac.com/feed
+
+*** https://jeffbowman.writeas.com/feed/
+
+*** https://seirdy.one/atom.xml
+
+*** https://blog.einval.eu/index.xml
+
+*** https://gregorymignard.com/posts/index.xml
+
+*** https://jeremyjanin.com/posts/index.xml
+
 ** Journals                                                         :journal:
 
 ** News                                                                :news:
@@ -180,6 +204,7 @@
 *** https://www.reddit.com/r/emacs.rss?sort=new                       :emacs:
 
 *** https://www.reddit.com/r/NixOS.rss?sort=new                       :nixos:
+
 
 ** Youtube                                                    :video:youtube:
 

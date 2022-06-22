@@ -4,4 +4,7 @@
 - [[file:sandbox.org][Emacs org-mode sandbox]]
 - [[file:about.org][About me]]
 - 2022
+  - [[file:2022/digital-garden.org][A Digital Garden you say…]]
   - [[file:2022/random.org][Random thoughts after 2 years]]
+- tekton
+  - [[file:tekton/index.org][Tekton]]
