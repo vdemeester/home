@@ -9,7 +9,7 @@ in
     profiles.docker = {
       enable = mkEnableOption "Enable docker profile";
       package = mkOption {
-        default = pkgs.docker-edge;
+        default = pkgs.docker;
         description = "docker package to be used";
         type = types.package;
       };
