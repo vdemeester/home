@@ -17,6 +17,8 @@ in
     ++ optionals (versionOlder config.system.nixos.release "21.11") [{
       # manpages are broken on 21.05 and home-manager (for some reason..)
       manual.manpages.enable = false;
+    }] ++ [{
+      home.stateVersion = "21.05";
     }]
   );
 }
