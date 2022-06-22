@@ -27,6 +27,7 @@ in
   ];
 
   fileSystems."/" = {
+    # device = "/dev/disk/by-uuid/6bedd234-3179-46f7-9a3f-feeffd880791";
     device = "/dev/vg/root";
     fsType = "ext4";
     options = [ "noatime" "discard" ];
@@ -34,18 +35,18 @@ in
 
   boot.initrd.luks.devices = {
     root = {
-      device = "/dev/disk/by-uuid/9d53a7f3-b75d-4121-b6c3-4b4c4a33ee52";
+      device = "/dev/disk/by-uuid/91b05f64-b97d-4405-8405-8785699ada8f";
       preLVM = true;
       allowDiscards = true;
     };
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/53E3-FA1E";
+    device = "/dev/disk/by-uuid/32B9-94CC";
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/9525a5eb-1e57-47bf-9c62-1caf466cf3be"; }];
+  swapDevices = [{ device = "/dev/disk/by-uuid/24da6a46-cd28-4bff-9220-6f449e3bd8b5"; }];
 
   networking = {
     hostName = hostname;
