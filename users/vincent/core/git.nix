@@ -31,7 +31,6 @@ in
     gitAndTools.hub
     gitAndTools.gh
     gitAndTools.git-appraise
-    gitAndTools.grv
     mr
     #my.prm
     #my.ape
