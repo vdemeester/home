@@ -38,6 +38,9 @@ in
       device = "/dev/disk/by-uuid/91b05f64-b97d-4405-8405-8785699ada8f";
       preLVM = true;
       allowDiscards = true;
+      keyFile = "/dev/disk/by-id/mmc-SD08G_0x704a5a38";
+      keyFileSize = 4096;
+      fallbackToPassword = true;
     };
   };
 
