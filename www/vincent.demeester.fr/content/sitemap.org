@@ -1,10 +1,12 @@
 #+TITLE: Sitemap
 
-- [[file:index.org][Hi, I'm Vincent Demeester]]
 - [[file:sandbox.org][Emacs org-mode sandbox]]
+- [[file:index.org][Hi, I'm Vincent Demeester]]
 - [[file:about.org][About me]]
+- tekton
+  - [[file:tekton/index.org][Tekton]]
 - 2022
   - [[file:2022/digital-garden.org][A Digital Garden you say…]]
   - [[file:2022/random.org][Random thoughts after 2 years]]
-- tekton
-  - [[file:tekton/index.org][Tekton]]
+- linux
+  - [[file:linux/luks-key-sdcard.org][Automatically unlock an luks encrypted partiiton with an SDCard]]
