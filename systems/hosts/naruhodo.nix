@@ -38,6 +38,10 @@ in
       device = "/dev/disk/by-uuid/50d7faba-8923-4b30-88f7-40df26e02def";
       preLVM = true;
       allowDiscards = true;
+      keyFile = "/dev/disk/by-id/usb-_USB_DISK_2.0_070D375D84327E87-0:0";
+      keyFileOffset = 30992883712;
+      keyFileSize = 4096;
+      fallbackToPassword = true;
     };
   };
 
@@ -53,6 +57,7 @@ in
   };
 
   boot = {
+    loader.systemd-boot.netbootxyz.enable = true;
     kernelPackages = pkgs.linuxPackages_latest;
     tmpOnTmpfs = true;
     plymouth = {
