@@ -175,8 +175,8 @@
         };
         # Work "workstation"
         aomi = {
-          channelName = "nixos-22_05";
-          modules = stableModules_22_05 ++ [
+          # channelName = "nixos-22_05";
+          modules = unstableModules ++ [
             nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             ./systems/hosts/aomi.nix
