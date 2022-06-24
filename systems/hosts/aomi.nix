@@ -58,14 +58,9 @@ in
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
 
   boot = {
+    loader.systemd-boot.netbootxyz.enable = true;
     kernelPackages = pkgs.linuxPackages_latest;
     tmpOnTmpfs = true;
-    plymouth = {
-      enable = true;
-      themePackages = [ pkgs.my.adi1090x-plymouth ];
-      theme = "hexagon";
-      # hexagon, green_loader, deus_ex, cuts, sphere, spinner_alt
-    };
     extraModulePackages = with pkgs.linuxPackages_latest; [
       v4l2loopback
     ];
