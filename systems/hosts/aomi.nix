@@ -26,13 +26,6 @@ in
     (import ../../users).root
   ];
 
-  fileSystems."/" = {
-    # device = "/dev/disk/by-uuid/6bedd234-3179-46f7-9a3f-feeffd880791";
-    device = "/dev/vg/root";
-    fsType = "ext4";
-    options = [ "noatime" "discard" ];
-  };
-
   boot.initrd.luks.devices = {
     root = {
       device = "/dev/disk/by-uuid/91b05f64-b97d-4405-8405-8785699ada8f";
@@ -42,6 +35,13 @@ in
       keyFileSize = 4096;
       fallbackToPassword = true;
     };
+  };
+
+  fileSystems."/" = {
+    # device = "/dev/disk/by-uuid/6bedd234-3179-46f7-9a3f-feeffd880791";
+    device = "/dev/mapper/root";
+    fsType = "ext4";
+    options = [ "noatime" "discard" ];
   };
 
   fileSystems."/boot" = {

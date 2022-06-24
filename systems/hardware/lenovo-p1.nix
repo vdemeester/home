@@ -9,7 +9,7 @@
     ./thinkpad.nix
   ];
   boot = {
-    initrd.availableKernelModules = [ "nvme" "rtsx_pci_sdmmc" ];
+    initrd.availableKernelModules = [ "nvme" "rtsx_pci_sdmmc" "thunderbolt" "dm-mod" ];
   };
   hardware = {
     enableAllFirmware = true;
