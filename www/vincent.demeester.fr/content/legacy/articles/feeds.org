@@ -193,6 +193,12 @@
 
 *** https://jeremyjanin.com/posts/index.xml
 
+*** https://sylvaindurand.org/rss.xml
+
+*** https://fev.al/feed.xml
+
+*** https://tomcritchlow.com/feed
+
 ** Journals                                                         :journal:
 
 ** News                                                                :news:

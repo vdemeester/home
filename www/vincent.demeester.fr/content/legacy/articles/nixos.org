@@ -152,3 +152,5 @@ nixery.dev/shell/git/htop
 [2021-08-06 Fri 15:35]
 ** TODO [[https://catgirl.ai/log/nixos-experience/][Eight Months of NixOS | gay robot noises]]
 [2020-11-03 Tue 11:04]
+** TODO [[https://hoverbear.org/blog/configurable-nix-packages/][Configurable Nix packages]]
+[2022-06-10 Fri 22:28]

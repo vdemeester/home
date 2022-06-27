@@ -1,6 +1,7 @@
 #+TITLE: Articles
 
 - [[file:feeds.org][My Feeds]]
+- [[file:nixos.org][NixOS]]
 - [[file:go.org][Go]]
 - [[file:github.org][GitHub]]
 - [[file:gitlab.org][Gitlab]]
@@ -14,7 +15,6 @@
 - [[file:programming.org][Programming]]
 - [[file:linux.org][Linux]]
 - [[file:firefox.org][Firefox]]
-- [[file:nixos.org][NixOS]]
 - [[file:gnupg.org][gnupg]]
 - [[file:css.org][Cascading Style Sheets]]
 - [[file:org_mode.org][org-mode]]
