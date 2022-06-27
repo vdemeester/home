@@ -1,6 +1,0 @@
-#+TITLE: Wireguard
-#+FILETAGS: linux wireguard vpn
-#+SETUPFILE: .setup.org
-
-* Links
-** TODO [[https://reflexivereflection.com/posts/2018-12-18-wireguard-vpn-with-network-namespace-on-nixos.html][Reflexive Reflection - Wireguard vpn with network namespace on NixOS]] :nixos:

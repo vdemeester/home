@@ -1,4 +1,0 @@
-#+AUTHOR: Vincent Demeester
-#+KEYWORDS: article
-#+OPTIONS: toc:nil d:(not "LOGBOOK")
-#+EXCLUDE_TAGS: noexport

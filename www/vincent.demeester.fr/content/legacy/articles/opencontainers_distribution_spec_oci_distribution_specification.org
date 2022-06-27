@@ -1,2 +1,0 @@
-#+title: opencontainers/distribution-spec: OCI Distribution Specification
-#+roam_key: https://github.com/opencontainers/distribution-spec

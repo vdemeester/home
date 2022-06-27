@@ -1,8 +1,0 @@
-#+TITLE: Cascading Style Sheets
-
-* Links
-** TODO [[https://css-tricks.com/snippets/css/complete-guide-grid/][A Complete Guide to Grid | CSS-Tricks]]
-[2020-03-22 Sun 13:58]
-
-** TODO [[https://joshwcomeau.com/css/full-bleed/][CSS Grid full-bleed layout tutorial · Josh W Comeau]]
-[2020-10-07 Wed 12:29]

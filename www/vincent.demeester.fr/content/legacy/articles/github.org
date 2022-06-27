@@ -1,2 +1,0 @@
-#+TITLE: GitHub
-#+ROAM_ALIAS: "Github" "github"

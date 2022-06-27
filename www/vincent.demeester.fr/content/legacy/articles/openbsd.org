@@ -1,3 +1,0 @@
-#+TITLE: openbsd
-* TODO [[https://eradman.com/posts/openbsd-workstation.html][An OpenBSD Workstation]]
-[2020-05-18 Mon 18:32]

@@ -1,4 +1,0 @@
-#+title: Roam Research: Why I Love It and How I Use It - Nat Eliason
-#+roam_key: https://www.nateliason.com/blog/roam
-
-I’ve been deeply interested in personal knowledge management for almost 10 years now.

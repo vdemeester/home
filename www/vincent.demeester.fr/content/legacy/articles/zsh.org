@@ -1,6 +1,0 @@
-#+TITLE: zsh
-
-* Links
-
-** TODO [[https://ebzzry.io/en/zsh-tips-4/][Zsh Tips 4: General Helpers]]                                    :zsh:
-[2020-04-16 Thu 19:00]

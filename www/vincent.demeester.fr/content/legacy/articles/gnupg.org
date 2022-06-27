@@ -1,6 +1,0 @@
-
-#+TITLE: gnupg
-#+ROAM_ALIAS: "GnuPG" "gpg"
-
-* TODO [[https://metacode.biz/openpgp/proofs][Decentralized proofs]]
-[2020-05-09 Sat 13:11]

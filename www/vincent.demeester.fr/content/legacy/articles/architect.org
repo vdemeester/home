@@ -1,8 +1,0 @@
-
-#+TITLE: Architect
-
-Primary responsibilities
-- Provides holistic view of the entire portfolio of products
-- Develops architectural and design principles to improve performance and scalability of product
-- Works with Product Manager in planning and execution of new product releases
-- Assist technical team with issues needing technical expertise or complex systems knowledge

@@ -1,2 +1,0 @@
-#+TITLE: Red Hat
-#+ROAM_ALIAS: "RedHat"

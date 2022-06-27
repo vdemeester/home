@@ -1,1 +1,0 @@
-/run/current-system/sw/bin/wget --directory-prefix=/home/vincent/desktop/org/personal/data/ac/212115-e0c6-448c-9344-17c10aeb9694/2020-02-14T17:45:26+0100// "-e robots=off" --page-requisites --adjust-extension --convert-links https://writequit.org/articles/emacs-org-mode-generate-ids.html

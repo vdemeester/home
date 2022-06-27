@@ -1,3 +1,0 @@
-
-#+TITLE: Yoga
-#+ROAM_ALIAS: "yoga"

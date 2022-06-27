@@ -1,5 +1,0 @@
-#+TITLE: Mac (OSX)
-
-* Links
-** TODO [[http://karolis.koncevicius.lt/posts/cleaning_home_on_macos/][Cleaning home on macos]]
-[2020-09-17 Thu 08:36]

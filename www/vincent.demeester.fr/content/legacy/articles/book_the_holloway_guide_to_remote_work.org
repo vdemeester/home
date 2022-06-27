@@ -1,3 +1,0 @@
-#+TITLE: Book: The Holloway Guide to Remote Work
-
-[[https://www.holloway.com/g/remote-work][Book content]].

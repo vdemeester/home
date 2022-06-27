@@ -1,1 +1,0 @@
-/run/current-system/sw/bin/wget --directory-prefix=/home/vincent/desktop/org/personal/data/7a/f3b3f4-a1f0-4adf-80f5-833d55ca7f86/2020-02-14T17:19:57+0100// "-e robots=off" --page-requisites --adjust-extension --convert-links https://larlet.fr/david/2020/02/14/

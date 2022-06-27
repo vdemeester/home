@@ -1,8 +1,0 @@
-#+TITLE: serverless
-
-* Links
-
-** TODO [[https://martinfowler.com/articles/serverless.html][Serverless Architectures]]
-[2020-02-12 Wed 09:22]
-** TODO [[https://blog.vtemian.com/post/serverless-hosting-platform/][Building a serverless hosting platform]]
-[2020-05-18 Mon 19:51]

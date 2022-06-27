@@ -1,7 +1,0 @@
-#+TITLE: Firefox
-
-* Links
-** TODO [[https://ungleich.ch/en-us/cms/blog/2019/09/10/turn-off-doh-firefox/][ungleich blog - Turn off DoH, Firefox. Now.]]
-[2019-09-16 Mon 09:49]
-** TODO [[http://calpaterson.com/mozilla.html][Firefox usage is down 85% despite Mozilla's top exec pay going up 400%]]
-[2020-09-23 Wed 10:58]

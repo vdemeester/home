@@ -1,7 +1,0 @@
-#+title: Building interactive SSH applications | Drew DeVault’s Blog
-#+roam_key: https://drewdevault.com/2019/09/02/Interactive-SSH-programs.html
-
-After the announcement of shell access for builds.sr.ht jobs, a few people sent me some
-questions, wondering how this sort of thing is done. Writing interactive SSH applications
-is actually pretty easy, but it does require some knowledge of the pieces involved and a
-little bit of general Unix literacy.

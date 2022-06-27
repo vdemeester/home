@@ -1,7 +1,0 @@
-
-#+TITLE: How to drive upstream project
-
-* TODO Track upstream work
-
-- How to track upstream work in your downstream issue tracker
-- How to converge the needs/requirements

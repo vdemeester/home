@@ -1,5 +1,0 @@
-#+TITLE: make
-
-* Links
-** TODO [[https://endler.dev/2017/makefiles/][Afraid of Makefiles? Don't be! | Matthias Endler]]
-[2020-08-20 Thu 16:30]

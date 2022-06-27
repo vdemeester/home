@@ -1,9 +1,0 @@
-
-#+TITLE: dogfooding
-#+ROAM_ALIAS: "Dogfooding"
-
-Usually, "dogfooding" means /eat your own food/. In the software engineer world, it
-usually means /using what your are building/. It is, of course, easier to achieve if you
-are a developer and are building tools for developers 😛.
-
-I am trying to apply that for my work, aka [[file:openshift.org][OpenShift]], [[file:openshift_pipeline.org][OpenShift Pipeline]] and [[file:tekton.org][Tekton]].

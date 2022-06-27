@@ -1,9 +1,0 @@
-#+title: How I decide between many programming languages | Drew DeVault’s Blog
-#+roam_key: https://drewdevault.com/2019/09/08/Enough-to-decide.html
-
-I have a few old standards in my toolbelt that I find myself calling upon most often, but
-I try to learn enough about many programming languages to reason about whether or not
-they’re suitable to any use-case I’m thinking about. The best way is to learn by doing,
-so getting a general impression of the utility of many languages helps equip you with the
-knowledge of whether or not they’d be useful for a particular problem even if you don’t
-know them yet.

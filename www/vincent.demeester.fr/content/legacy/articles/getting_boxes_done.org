@@ -1,2 +1,0 @@
-#+title: Getting Boxes Done
-#+roam_key: http://www.howardism.org/Technical/Emacs/getting-boxes-done.html

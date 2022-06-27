@@ -1,2 +1,0 @@
-#+title: opencontainers/image-spec: OCI Image Format
-#+roam_key: https://github.com/opencontainers/image-spec

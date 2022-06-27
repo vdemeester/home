@@ -1,3 +1,0 @@
-
-#+TITLE: continuous deployment
-#+ROAM_ALIAS: "CD"

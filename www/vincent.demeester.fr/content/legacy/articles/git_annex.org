@@ -1,7 +1,0 @@
-
-#+TITLE: git-annex
-#+ROAM_ALIAS: "Git Annex" "git annex"
-
-* Links
-** [[https://writequit.org/org/git-annex.html][Git-annex notes and configuration]]
-[2020-06-18 Thu 18:28]

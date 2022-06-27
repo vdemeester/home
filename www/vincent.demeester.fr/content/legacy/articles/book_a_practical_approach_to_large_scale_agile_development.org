@@ -1,2 +1,0 @@
-
-#+TITLE: Book: A Practical Approach to Large-Scale Agile Development
