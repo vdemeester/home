@@ -110,6 +110,7 @@ let
     ox-pandoc
     pandoc-mode
     pdf-tools
+    popper
     pkgs.bookmark-plus
     rainbow-delimiters
     rainbow-mode

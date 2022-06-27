@@ -3,6 +3,68 @@
 ;;; Buffer related configurations
 ;;; Code:
 
+(use-package popper
+  :commands (popper-mode)
+  :bind ((("C-`" . popper-toggle-latest)
+          ("M-`" . popper-cycle)
+          ("C-M-`" . popper-toggle-type)))
+  :init
+  (setq popper-reference-buffers
+        '("\\*Messages\\*"
+          "Output\\*$" "\\*Pp Eval Output\\*$"
+          "\\*Compile-Log\\*"
+          "\\*Completions\\*"
+          "\\*Warnings\\*"
+          "\\*Async Shell Command\\*"
+          "\\*Apropos\\*"
+          "\\*Backtrace\\*"
+          "\\*Calendar\\*"
+          "\\*Embark Actions\\*"
+          "\\*Finder\\*"
+          "\\*Kill Ring\\*"
+
+          bookmark-bmenu-mode
+          comint-mode
+          compilation-mode
+          help-mode helpful-mode
+          tabulated-list-mode
+          Buffer-menu-mode
+
+          gnus-article-mode devdocs-mode
+          grep-mode occur-mode rg-mode deadgrep-mode ag-mode pt-mode
+          ivy-occur-mode ivy-occur-grep-mode
+          process-menu-mode list-environment-mode cargo-process-mode
+          youdao-dictionary-mode osx-dictionary-mode fanyi-mode
+
+          "^\\*eshell.*\\*.*$" eshell-mode
+          "^\\*shell.*\\*.*$"  shell-mode
+          "^\\*terminal.*\\*.*$" term-mode
+          "^\\*vterm.*\\*.*$"  vterm-mode
+
+          "\\*DAP Templates\\*$" dap-server-log-mode
+          "\\*ELP Profiling Restuls\\*" profiler-report-mode
+          "\\*Flycheck errors\\*$" " \\*Flycheck checker\\*$"
+          "\\*Paradox Report\\*$" "\\*package update results\\*$" "\\*Package-Lint\\*$"
+          "\\*[Wo]*Man.*\\*$"
+          "\\*ert\\*$" overseer-buffer-mode
+          "\\*gud-debug\\*$"
+          "\\*lsp-help\\*$" "\\*lsp session\\*$"
+          "\\*quickrun\\*$"
+          "\\*tldr\\*$"
+          "\\*vc-.*\\*$"
+          "^\\*elfeed-entry\\*$"
+          "^\\*macro expansion\\**"
+
+          "\\*Agenda Commands\\*" "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
+          "\\*Gofmt Errors\\*$" "\\*Go Test\\*$" godoc-mode
+          "\\*docker-containers\\*" "\\*docker-images\\*" "\\*docker-networks\\*" "\\*docker-volumes\\*"
+          "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
+          "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
+          rustic-cargo-outdated-mode rustic-cargo-test-moed))
+  (setq popper-group-function #'popper-group-by-project)
+  :config
+  (popper-echo-mode 1))
+
 (use-package emacs
   :unless noninteractive
   :config
