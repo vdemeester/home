@@ -93,24 +93,11 @@
                 imenu-space-replacement " "
                 imenu-level-separator "/")
 
-  (defun prot/imenu-vertical ()
-    "Use a vertical Icomplete layout for `imenu'.
-Also configure the value of `orderless-matching-styles' to avoid
-aggressive fuzzy-style matching for this particular command."
-    (interactive)
-    (let ((orderless-matching-styles    ; make sure to check `orderless'
-           '(orderless-literal
-             orderless-regexp
-             orderless-prefixes)))
-      (icomplete-vertical-do (:height (/ (frame-height) 4))
-                             (call-interactively 'imenu))))
-
   :hook ((imenu-after-jump . (lambda ()
                                (when (and (eq major-mode 'org-mode)
                                           (org-at-heading-p))
                                  (org-show-entry)
-                                 (org-reveal t)))))
-  :bind ("C-'" . prot/imenu-vertical))
+                                 (org-reveal t))))))
 
 (use-package flimenu
   :unless noninteractive
