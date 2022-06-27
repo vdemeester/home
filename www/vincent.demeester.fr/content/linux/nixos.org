@@ -1,0 +1,8 @@
+#+title: NixOS
+#+subtitle: A reproductible, declarative and reliable Linux operating system.
+
+[[https://nixos.org/][NixOS]] is a Linux distribution with a unique approach to package and configuration
+management. Built on top of the [[file:nix.org][Nix]] package manager, it is completely declarative, makes
+upgrading systems reliable, and has many other [[https://nixos.org/features.html][advantages]].
+
+Most of my infrastructure is on NixOS.

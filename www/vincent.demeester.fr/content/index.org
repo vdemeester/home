@@ -12,6 +12,7 @@ This is my personal space on the /World Wide Web/. It is meant to be simple, /mo
 below is a "selection" of some content. If you are looking for an "index" of all pages
 (almost), there is a [[file:sitemap.org][sitemap]].
 
+- [[file:2022/digital-garden.org][A Digital Garden]]
 - [[file:2022/random.org][Random thoughts after 2 years]]
 - [[file:sandbox.org][Sandbox]], where I try the /design/ of the website.
 

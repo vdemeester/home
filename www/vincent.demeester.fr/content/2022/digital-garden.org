@@ -8,7 +8,7 @@ As I said in [[file:random.org]["Random thoughts after 2 years"]], I've been ins
 article. This article aims to provide a bit of how I intend to maintain this space from
 now on.
 
-This space is inspired by [[https://www.la-grange.net/][a]] [[https://larlet.fr/david/][lot]] [[https://joelhooks.com/][of]] other spaces, but adapted to my vision. I think I've
+This space is inspired by [[https://www.la-grange.net/][a]] [[https://larlet.fr/david/][lot]] [[https://joelhooks.com/][of]] [[https://tomcritchlow.com/][other]] spaces, but adapted to my vision. I think I've
 always struggled with the blog approach. I sometimes want to publish things that are not
 related to time. That can be true no matter when you read it. The opposite is true as
 well.
