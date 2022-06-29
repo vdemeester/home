@@ -61,13 +61,6 @@ in
     loader.systemd-boot.netbootxyz.enable = true;
     kernelPackages = pkgs.linuxPackages_latest;
     tmpOnTmpfs = true;
-    extraModulePackages = with pkgs.linuxPackages_latest; [
-      v4l2loopback
-    ];
-    kernelModules = [ "v4l2loopback" ];
-    extraModprobeConfig = ''
-      options v4l2loopback exclusive_caps=1
-    '';
     binfmt.registrations = {
       s390x-linux = {
         # interpreter = getEmulator "s390x-linux";
@@ -92,7 +85,7 @@ in
 
   profiles = {
     externalbuilder.enable = true;
-    desktop.i3.enable = true;
+    # desktop.i3.enable = true;
     laptop.enable = true;
     home = true;
     dev.enable = true;
@@ -123,13 +116,6 @@ in
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
   '';
-
-  environment.systemPackages = with pkgs; [
-    # force xbacklight to work
-    acpilight
-    brightnessctl
-    asciinema
-  ];
 
   services = {
     netdata.enable = true;
