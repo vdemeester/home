@@ -138,6 +138,14 @@ in
         sslCAinfo = "${ca-bundle_crt}";
         sslverify = true;
       };
+      credential = {
+        "https://github.com" = {
+          helper = "!${pkgs.gh}/bin/gh auth git-credential";
+        };
+        "https://gist.github.com" = {
+          helper = "!${pkgs.gh}/bin/gh auth git-credential";
+        };
+      };
       github.user = "vdemeester";
       "filter \"lfs\"" = {
         clean = "${pkgs.git-lfs}/bin/git-lfs clean -- %f";
