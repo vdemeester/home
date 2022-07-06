@@ -108,6 +108,8 @@ in
     redhat.enable = true;
     ssh.enable = true;
     docker.enable = true;
+    avahi.enable = true;
+    syncthing.enable = true;
   };
 
 
