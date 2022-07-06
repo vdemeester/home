@@ -13,6 +13,8 @@
   "Directory of private, non-shareable notes.")
 (defconst org-notes-dir (expand-file-name "~/src/www/content" org-directory)
   "Directory of shareable, technical notes.")
+(defconst src-home-dir (expand-file-name "~/src/home" org-directory)
+  "Directory of my home monorepository, can contain todos there.")
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
   "Directory of shareable, technical notes.")
 (defconst org-completed-dir (expand-file-name "projects" org-archive-dir)
@@ -71,6 +73,7 @@
   (defun my/org-agenda-files ()
     `(,org-projects-dir
       ,org-notes-dir
+      ,src-home-dir
       ,org-private-notes-dir))
   (defun my/reload-org-agenda-files ()
     (interactive)
@@ -105,11 +108,21 @@
         org-log-into-drawer t
         org-enforce-todo-dependencies t
         org-refile-targets (append '((org-inbox-file :level . 0))
-                                   (->>
-                                    (directory-files org-projects-dir nil ".org$")
-                                    (--remove (s-starts-with? "." it))
-                                    (--map (format "%s/%s" org-projects-dir it))
-                                    (--map `(,it :level . 1))))
+                                    (->>
+                                     (directory-files org-projects-dir nil ".org$")
+                                     (--remove (s-starts-with? "." it))
+                                     (--map (format "%s/%s" org-projects-dir it))
+                                     (--map `(,it :level . 1)))
+                                    (->>
+                                     (directory-files-recursively src-home-dir ".org$")
+                                     (--remove (s-starts-with? "." it))
+                                     (--map (format "%s" it))
+                                     (--map `(,it :level . 1)))
+                                    (->>
+                                     (directory-files-recursively org-notes-dir ".org$")
+                                     (--remove (s-starts-with? (format "%s/legacy" org-notes-dir) it))
+                                     (--map (format "%s" it))
+                                     (--map `(,it :level . 1))))
         org-refile-use-outline-path 'file
         org-refile-allow-creating-parent-nodes 'confirm
         org-outline-path-complete-in-steps nil
@@ -424,7 +437,8 @@ assumption is that those will generate configuration file (in `~/src/home'),
 and thus keeping the configuration source up-to-date"
     (mapc (lambda (x) (org-babel-tangle-file x))
           (ignore-errors
-            (directory-files-recursively org-notes-dir "\.org$")))))
+            (append (directory-files-recursively org-notes-dir "\.org$")
+                    (directory-files-recursively src-home-dir "\.org$"))))))
 (use-package org-journal
   :commands (org-journal-new-entry org-capture)
   :after (org-capture)
@@ -445,15 +459,15 @@ This can be used for an org-capture template to create an entry in the journal."
     (goto-char (point-min))
     (org-show-entry))
   (add-to-list 'org-capture-templates
-               `("j" "Journal"))
+                `("j" "Journal"))
   (add-to-list 'org-capture-templates
-               `("jj" "Journal entry" entry (function org-journal-find-location)
-                 "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
-                 :empty-lines 1))
+                `("jj" "Journal entry" entry (function org-journal-find-location)
+                  "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
+                  :empty-lines 1))
   (add-to-list 'org-capture-templates
-               `("je" "Weekly review" entry (function org-journal-find-location)
-                 (file ,(expand-file-name "etc/orgmode/weekly.org" user-emacs-directory))
-                 :empty-lines 1 :clock-in t :clock-resume t))
+                `("je" "Weekly review" entry (function org-journal-find-location)
+                  (file ,(expand-file-name "etc/orgmode/weekly.org" user-emacs-directory))
+                  :empty-lines 1 :clock-in t :clock-resume t))
   :custom
   (org-journal-date-prefix "* ")
   (org-journal-file-header "#+TITLE: %Y-v%m Journal\n\n")
