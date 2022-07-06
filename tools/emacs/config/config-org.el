@@ -9,7 +9,9 @@
   "org-mode directory, where most of the org-mode file lives")
 (defconst org-projects-dir (expand-file-name "projects" org-directory)
   "Primary tasks directory.")
-(defconst org-notes-dir (expand-file-name "notes" org-directory)
+(defconst org-private-notes-dir (expand-file-name "notes" org-directory)
+  "Directory of private, non-shareable notes.")
+(defconst org-notes-dir (expand-file-name "~/src/www/content" org-directory)
   "Directory of shareable, technical notes.")
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
   "Directory of shareable, technical notes.")
@@ -21,7 +23,7 @@
   "Todo *next* collected in this file.")
 (defconst org-incubate-file (expand-file-name "incubate.org" org-projects-dir)
   "Ideas simmering on back burner.")
-(defconst org-babel-library-file (expand-file-name "org_library_of_babel.org" org-notes-dir)
+(defconst org-babel-library-file (expand-file-name "org_library_of_babel.org" org-private-notes-dir)
   "Org babel library.")
 (set-register ?i `(file . ,org-inbox-file))
 (set-register ?I `(file . ,org-incubate-file))
@@ -68,7 +70,8 @@
     (org-babel-lob-ingest org-babel-library-file))
   (defun my/org-agenda-files ()
     `(,org-projects-dir
-      ,org-notes-dir))
+      ,org-notes-dir
+      ,org-private-notes-dir))
   (defun my/reload-org-agenda-files ()
     (interactive)
     (setq org-agenda-files (my/org-agenda-files)))
@@ -456,7 +459,7 @@ This can be used for an org-capture template to create an entry in the journal."
   (org-journal-file-header "#+TITLE: %Y-v%m Journal\n\n")
   (org-journal-file-format "%Y-%m.private.org")
   (org-journal-file-type 'monthly)
-  (org-journal-dir org-notes-dir)
+  (org-journal-dir org-private-notes-dir)
   (org-journal-date-format "%A, %d %B %Y")
   (org-journal-enable-agenda-integration nil))
 (use-package org-id
