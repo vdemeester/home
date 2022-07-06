@@ -55,6 +55,20 @@ in
     hostName = hostname;
   };
 
+  # extract this from desktop
+  networking.networkmanager = {
+    enable = true;
+    unmanaged = [
+      "interface-name:br-*"
+      "interface-name:ve-*"
+      "interface-name:veth*"
+      "interface-name:wg0"
+      "interface-name:docker0"
+      "interface-name:virbr*"
+    ];
+    packages = with pkgs; [ networkmanager-openvpn ];
+  };
+
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
 
   boot = {
