@@ -22,6 +22,7 @@ let
     #python-mode
     #whole-line-or-region
     ace-window
+    adoc-mode
     aggressive-indent
     alert
     async
