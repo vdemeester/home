@@ -5,7 +5,9 @@
 set -e
 
 GRAPHICS=1
-if ! timeout 1s xset q &>/dev/null; then
+if ! command -v xset &> /dev/null; then
+    GRAPHICS=0
+elif ! timeout 1s xset q &>/dev/null; then
     GRAPHICS=0
 fi
 
