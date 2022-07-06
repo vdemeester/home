@@ -200,8 +200,10 @@ Else toggle the comment status of the line at point."
                 tab-width 4
                 indent-tabs-mode nil))
 
-(use-package emacs
-  :hook (before-save . delete-trailing-whitespace))
+;; FIXME: enable/disable this through a minor mode
+;;        can be enable by default in code, disable in adoc-mode, …
+;; (use-package emacs
+;; :hook (before-save . delete-trailing-whitespace))
 
 (use-package delsel
   :unless noninteractive

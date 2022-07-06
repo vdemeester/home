@@ -140,6 +140,10 @@ instead."
 (use-package vertico
   :unless noninteractive
   :config
+  (setq vertico-scroll-margin 0)
+  (setq vertico-count 10)
+  (setq vertico-resize nil)
+  (setq vertico-cycle t)
   (vertico-mode))
 
 (use-package embark
