@@ -8,7 +8,7 @@
          ("C-x p s" . vde-project-vterm))
   :config
 
-  (setq vde/project-local-identifier '(".project" "go.mod"))
+  (setq vde/project-local-identifier '(".project")) ;; "go.mod"
   (setq project-switch-commands
         '((?f "File" project-find-file)
           (?g "Grep" project-find-regexp)
