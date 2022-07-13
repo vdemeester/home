@@ -61,23 +61,26 @@
     > "#+title: " (skeleton-read "Title: ") \n
     > "#+date: " (format-time-string "<%Y-%m-%d %a>") \n
     > "#+filetags: " (skeleton-read "Tags: ") \n
-    > "#+setupfile: ../templates/post.org" \n
+    > "#+setupfile: " (skeleton-read "Template (default ../templates/2022.org): ") \n
     > _ \n
     > "* Introduction"
     )
-  (define-auto-insert '("/posts/.*\\.org\\'" . "blog post org files") [vde/org-www-post])
-  (define-auto-insert '("/posts/.*\\.draft\\'" . "blog post draft files") [vde/org-www-post])
+  (define-auto-insert '("/content/.*\\.org\\'" . "blog post org files") [vde/org-www-post])
+  (define-auto-insert '("/content/.*\\.draft\\'" . "blog post draft files") [vde/org-www-post])
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
     (org-babel-lob-ingest org-babel-library-file))
   (defun my/org-agenda-files ()
-    `(,org-projects-dir
-      ,org-notes-dir
-      ,src-home-dir
-      ,org-private-notes-dir))
+    (apply 'append
+		   (mapcar
+			(lambda (directory)
+			  (directory-files-recursively
+			   directory org-agenda-file-regexp))
+			`(,org-projects-dir ,org-notes-dir ,src-home-dir ,org-private-notes-dir))))
   (defun my/reload-org-agenda-files ()
     (interactive)
     (setq org-agenda-files (my/org-agenda-files)))
+  (find-lisp-find-files "~/src/www/content" "\.org$")
   (setq org-agenda-files (my/org-agenda-files)
         org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$"
         org-use-speed-commands t
@@ -108,21 +111,21 @@
         org-log-into-drawer t
         org-enforce-todo-dependencies t
         org-refile-targets (append '((org-inbox-file :level . 0))
-                                    (->>
-                                     (directory-files org-projects-dir nil ".org$")
-                                     (--remove (s-starts-with? "." it))
-                                     (--map (format "%s/%s" org-projects-dir it))
-                                     (--map `(,it :level . 1)))
-                                    (->>
-                                     (directory-files-recursively src-home-dir ".org$")
-                                     (--remove (s-starts-with? "." it))
-                                     (--map (format "%s" it))
-                                     (--map `(,it :level . 1)))
-                                    (->>
-                                     (directory-files-recursively org-notes-dir ".org$")
-                                     (--remove (s-starts-with? (format "%s/legacy" org-notes-dir) it))
-                                     (--map (format "%s" it))
-                                     (--map `(,it :level . 1))))
+                                   (->>
+                                    (directory-files org-projects-dir nil ".org$")
+                                    (--remove (s-starts-with? "." it))
+                                    (--map (format "%s/%s" org-projects-dir it))
+                                    (--map `(,it :level . 1)))
+                                   (->>
+                                    (directory-files-recursively src-home-dir ".org$")
+                                    (--remove (s-starts-with? "." it))
+                                    (--map (format "%s" it))
+                                    (--map `(,it :level . 1)))
+                                   (->>
+                                    (directory-files-recursively org-notes-dir ".org$")
+                                    (--remove (s-starts-with? (format "%s/legacy" org-notes-dir) it))
+                                    (--map (format "%s" it))
+                                    (--map `(,it :level . 1))))
         org-refile-use-outline-path 'file
         org-refile-allow-creating-parent-nodes 'confirm
         org-outline-path-complete-in-steps nil
