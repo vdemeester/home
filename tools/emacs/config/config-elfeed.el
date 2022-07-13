@@ -72,7 +72,7 @@
   (define-key elfeed-search-mode-map (kbd "d") 'elfeed-youtube-dl)
   
   (use-package elfeed-org
-    :command (elfeed-org)
+    :commands (elfeed-org)
     :config
     (setq-default rmh-elfeed-org-files (list (expand-file-name "feeds.org" org-private-notes-dir)))))
 
