@@ -80,7 +80,6 @@
   (defun my/reload-org-agenda-files ()
     (interactive)
     (setq org-agenda-files (my/org-agenda-files)))
-  (find-lisp-find-files "~/src/www/content" "\.org$")
   (setq org-agenda-files (my/org-agenda-files)
         org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$"
         org-use-speed-commands t
