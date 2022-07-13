@@ -11,5 +11,8 @@
 (use-package conf-mode
   :mode ("\\.to?ml\\'" . conf-toml-mode))
 
+(use-package adoc-mode
+  :mode ("\\.adoc\\'" . conf-toml-mode))
+
 (provide 'programming-config)
 ;;; programming-config.el ends here
