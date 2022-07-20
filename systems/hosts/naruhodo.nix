@@ -149,6 +149,7 @@ in
       endpointPublicKey = endpointPublicKey;
     };
     syncthing.guiAddress = "${metadata.hosts.naruhodo.wireguard.addrs.v4}:8384";
+    barrier.enable = true;
   };
 
   virtualisation = {
