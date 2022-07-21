@@ -142,6 +142,7 @@
           ./systems/modules/profiles/yubikey.nix
           ./systems/modules/profiles/zsh.nix
           ./systems/modules/services/wireguard.client.nix
+          ./systems/modules/services/barrier.nix
           sops-nix.nixosModules.sops
           envfs.nixosModules.envfs
           {
