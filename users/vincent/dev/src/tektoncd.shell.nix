@@ -3,7 +3,7 @@ let
   # pkgs = sources.nixpkgs { };
   pkgs = sources.pkgs-unstable { };
   my = import /etc/nixos/nix/packages { pkgs = pkgs; };
-  go = pkgs.go_1_17;
+  go = pkgs.go_1_18;
 in
 pkgs.mkShell {
   name = "tektoncd";
