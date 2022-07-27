@@ -46,6 +46,8 @@ in
     networking.firewall = {
       allowedTCPPorts = [ 57621 57622 4713 ];
       allowedUDPPorts = [ 57621 57622 ];
+      # 57621 57622 spotify
+      # 4713 pulseaudio
     };
     environment.systemPackages = with pkgs; [
       apulse # allow alsa application to use pulse
