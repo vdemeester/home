@@ -110,10 +110,9 @@
           buildkit
           # Common modules
           # FIXME: migrate this to elsewhere, or at least split it
-          ./systems/modules/core/config.nix
-          ./systems/modules/core/nix.nix
-          ./systems/modules/core/users.nix
-          ./systems/modules/hardware/sane-extra-config.nixos.nix
+          ./systems/modules/core/default.nix
+          ./systems/modules/hardware/default.nix
+          # ./systems/modules/hardware/sane-extra-config.nixos.nix
           ./systems/modules/profiles/avahi.nix
           ./systems/modules/profiles/base.nix
           ./systems/modules/profiles/builder.nix
