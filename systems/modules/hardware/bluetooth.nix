@@ -20,8 +20,6 @@ in
         # PulseAudio to be installed.  Only the full build has Bluetooth
         # support, so it must be selected here.
         package = pkgs.pulseaudioFull;
-        # Enable additional codecs
-        extraModules = [ pkgs.pulseaudio-modules-bt ];
       };
     })
     (mkIf (stable && config.modules.hardware.audio.enable) {

@@ -13,9 +13,9 @@ in
         description = "Enable avahi  with the desktop profile";
         type = types.bool;
       };
-      pulseaudio = mkOption {
+      audio = mkOption {
         default = true;
-        description = "Enable pulseaudio with the desktop profile";
+        description = "Enable audio with the desktop profile";
         type = types.bool;
       };
       syncthing = mkOption {
@@ -43,11 +43,14 @@ in
   config = mkIf cfg.enable {
     profiles.avahi.enable = cfg.avahi;
     profiles.printing.enable = cfg.printing;
-    profiles.pulseaudio.enable = cfg.pulseaudio;
+    # profiles.pulseaudio.enable = cfg.pulseaudio;
     profiles.scanning.enable = cfg.scanning;
     profiles.syncthing.enable = cfg.syncthing;
 
-    hardware.bluetooth.enable = true;
+    modules = {
+      hardware.bluetooth.enable = true;
+      hardware.audio.enable = cfg.audio;
+    };
 
     networking.networkmanager = {
       enable = cfg.networkmanager;

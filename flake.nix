@@ -129,7 +129,6 @@
           ./systems/modules/profiles/laptop.nix
           ./systems/modules/profiles/mail.nix
           ./systems/modules/profiles/printing.nix
-          ./systems/modules/profiles/pulseaudio.nix
           ./systems/modules/profiles/qemu.nix
           ./systems/modules/profiles/redhat.nix
           ./systems/modules/profiles/scanning.nix

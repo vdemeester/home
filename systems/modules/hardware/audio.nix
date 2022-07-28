@@ -26,7 +26,6 @@ in
       hardware.pulseaudio = {
         enable = true;
         support32Bit = true;
-        package = pkgs.pulseaudioFull;
       };
       # FIXME is it needed
       security.pam.loginLimits = [

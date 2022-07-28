@@ -17,11 +17,14 @@ in
     #};
     profiles.avahi.enable = true;
     profiles.printing.enable = true;
-    profiles.pulseaudio.enable = true;
+    # profiles.pulseaudio.enable = true;
     profiles.scanning.enable = true;
     profiles.syncthing.enable = true;
 
-    hardware.bluetooth.enable = true;
+    modules = {
+      hardware.bluetooth.enable = true;
+      hardware.audio.enable = true;
+    };
 
     networking.networkmanager = {
       enable = true;
