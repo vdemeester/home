@@ -186,14 +186,6 @@
             ./systems/hosts/shikoku.nix
           ];
         };
-        wakasu = {
-          channelName = "nixos-22_05";
-          modules = stableModules_22_05 ++ [
-            nixos-hardware.nixosModules.lenovo-thinkpad
-            nixos-hardware.nixosModules.common-pc-laptop-ssd
-            ./systems/hosts/wakasu.nix
-          ];
-        };
         sakhalin = {
           channelName = "nixos-22_05";
           modules = stableModules_22_05 ++ [
