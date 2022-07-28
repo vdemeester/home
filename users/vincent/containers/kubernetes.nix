@@ -24,6 +24,7 @@ in
     bekind
     stern
     my.chmouzies.kubernetes
+    kubectx
   ];
   programs.zsh.initExtra = ''
     alias -g SK="|sugarjazy -s --kail --kail-prefix-format='{pod}'"
