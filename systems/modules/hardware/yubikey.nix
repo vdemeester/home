@@ -35,7 +35,7 @@ in
         };
       };
     }
-    (mkIf cfg.config.desktop {
+    (mkIf config.profiles.desktop.enable {
       environment.systemPackages = with pkgs; [
         yubioath-desktop
       ];

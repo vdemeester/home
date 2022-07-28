@@ -97,13 +97,16 @@ in
 
   services.hardware.bolt.enable = true;
 
+  modules = {
+    hardware = { };
+  };
+
   profiles = {
     externalbuilder.enable = true;
     # desktop.i3.enable = true;
     laptop.enable = true;
     home = true;
     dev.enable = true;
-    yubikey.enable = true;
     virtualization = { enable = true; nested = true; };
     redhat.enable = true;
     ssh.enable = true;

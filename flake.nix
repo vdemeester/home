@@ -137,7 +137,6 @@
           ./systems/modules/profiles/sway.nix
           ./systems/modules/profiles/virtualization.nix
           ./systems/modules/profiles/wireguard.server.nix
-          ./systems/modules/profiles/yubikey.nix
           ./systems/modules/profiles/zsh.nix
           ./systems/modules/services/default.nix
           sops-nix.nixosModules.sops
