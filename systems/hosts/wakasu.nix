@@ -27,13 +27,14 @@ in
 
   fileSystems."/" = {
     device = "/dev/mapper/root";
+    # uuid: 637ee2a5-638d-46cd-8845-3cc0fa8551bd
     fsType = "ext4";
     options = [ "noatime" "discard" ];
   };
 
   boot.initrd.luks.devices = {
     root = {
-      device = "/dev/disk/by-uuid/50d7faba-8923-4b30-88f7-40df26e02def";
+      device = "/dev/disk/by-uuid/c0cac87c-53ec-4262-9ab2-a3ee8331c75a";
       preLVM = true;
       allowDiscards = true;
       keyFile = "/dev/disk/by-id/usb-_USB_DISK_2.0_070D375D84327E87-0:0";
@@ -44,11 +45,11 @@ in
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/2294-77F4";
+    device = "/dev/disk/by-uuid/7D17-F310";
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/c00da13a-39ee-4640-9783-baf0a3d13e73"; }];
+  swapDevices = [{ device = "/dev/disk/by-uuid/ab056cfc-fb17-4db7-a393-f93726cc2987"; }];
 
   networking = {
     hostName = hostname;
@@ -87,7 +88,7 @@ in
 
   modules = {
     hardware = {
-      yubikey.enable = true;
+      #yubikey.enable = true;
     };
   };
   environment.systemPackages = with pkgs; [
