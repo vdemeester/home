@@ -91,6 +91,9 @@ in
       #yubikey.enable = true;
     };
   };
+
+  profiles.ssh.enable = true;
+
   environment.systemPackages = with pkgs; [
     docker-client
   ];
