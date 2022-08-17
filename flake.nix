@@ -158,8 +158,13 @@
         naruhodo = {
           modules = unstableModules ++ [
             nixos-hardware.nixosModules.lenovo-thinkpad-t480s
-            nixos-hardware.nixosModules.common-pc-laptop-ssd
             ./systems/hosts/naruhodo.nix
+          ];
+        };
+        wakasu = {
+          modules = unstableModules ++ [
+            nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
+            ./systems/hosts/wakasu.nix
           ];
         };
         # WSL setup
