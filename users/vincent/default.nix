@@ -71,6 +71,9 @@ in
         (import ./core)
         (import ./mails { hostname = config.networking.hostName; pkgs = pkgs; })
       ]
+      ++ optionals config.modules.editors.emacs.enable [
+        (import ./dev/emacs.nix)
+      ]
       ++ optionals config.profiles.dev.enable [
         (import ./dev)
         (import ./containers)
