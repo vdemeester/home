@@ -61,7 +61,7 @@ let
     # };
     wakasu = {
       allowedIPs = [ "${wireguard.ips.wakasu}/32" ];
-      publicKey = "U10ozKSCnTm8aD5i6UULSJHQPouoswtNkwFI3P9Lw3Y=";
+      publicKey = "qyxGnd/YJefqb4eEPqKO5XinvNx14fPcuZMNeYuBvSQ=";
     };
     vincent = {
       allowedIPs = [ "${wireguard.ips.vincent}/32" ];
@@ -119,7 +119,7 @@ let
       authorized = true;
     };
     wakasu = {
-      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKP+HQUk3GEjXuAqbb2psiLfLcBd/lcYHx57yANPhdzw vincent@wakasu";
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIITpgxTnebhBnFyjWiF1nPM7Wl7qF+ce3xy/FvA4ZVN+ vincent@wakasu";
       authorized = true;
     };
     vincent = {
