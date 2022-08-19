@@ -102,7 +102,7 @@ in
   # FIXME generate this file as well
   xdg.configFile."ssh/ssh_known_hosts".text = ''
     # Home
-    wakasu.home,wakasu.vpn,10.100.0.8,192.168.1.77 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2GB030S1+iZMqwgYhkl5CuBOKBjZoujc0aVHII39/x
+    wakasu.home,wakasu.vpn,10.100.0.8,192.168.1.77 wakasu.vpn ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrAh07USjRnAdS3mMNGdKee1KumjYDLzgXaiZ5LYi2D
     aomi.home,aomi.vpn,10.100.0.17,192.168.1.23 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME
     sakhalin.home,sakhalin.vpn,10.100.0.16,192.168.1.70 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/PMBThi4DhgZR8VywbRDzzMVh2Qp3T6NJAcPubfXz6
     shikoku.home,shikoku.vpn,10.100.0.2,192.168.1.24 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm
