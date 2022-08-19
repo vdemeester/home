@@ -7,7 +7,7 @@ let
   '';
   fontConf = {
     names = [ "Ubuntu Mono" ];
-    size = 10.0;
+    size = 12.0;
   };
 in
 {
@@ -38,14 +38,21 @@ in
           xkb_options = "grp:menu_toggle,grp_led:caps,compose:caps";
         };
       };
+      output = {
+        "*" = {
+          # { command = "${pkgs.swaybg}/bin/swaybg -i ~/desktop/pictures/lockscreen -m fill"; }
+          bg = "~/desktop/pictures/lockscreen fill";
+        };
+      };
       fonts = fontConf;
-      bars = [{
-        # statusCommand = "${pkgs.i3status}/bin/i3status";
-        command = "${pkgs.sway}/bin/swaybar";
-        position = "bottom";
-        fonts = fontConf;
-        trayOutput = "*";
-      }];
+      bars = [
+        {
+          command = "${pkgs.waybar}/bin/waybar";
+          mode = "hide";
+          position = "bottom";
+          id = "mainBar";
+        }
+      ];
       keybindings =
         let
           mod = config.wayland.windowManager.sway.config.modifier;
@@ -102,6 +109,8 @@ in
             "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
 
           "${mod}+o" = "mode resize";
+
+          "${mod}+Shift+o" = "exec ${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen";
         };
       window.commands = [
         {
@@ -127,6 +136,7 @@ in
       ];
       startup = [
         { command = "mako"; }
+        { command = "systemctl --user restart waybar"; always = true; }
         { command = "${pkgs.kitty}/bin/kitty --title metask --class metask tmux"; }
         { command = ''emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))''; }
       ];
@@ -161,13 +171,31 @@ in
         bindcode ${mod}+Shift+19 move container to workspace number 0
 
         bindcode ${mod}+Control+39 split h
+
+        bindsym XF86AudioRaiseVolume exec ${pkgs.pamixer}/bin/pamixer -ui 5 && ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
+        bindsym XF86AudioLowerVolume exec ${pkgs.pamixer}/bin/pamixer -ud 5 && ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
+        bindsym XF86AudioMute exec ${pkgs.pamixer}/bin/pamixer --toggle-mute && ( ${pkgs.pamixer}/bin/pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
+
       '';
   };
   programs = {
-    waybar.enable = true;
+    waybar = {
+      enable = true;
+      systemd.enable = true;
+      settings = [{
+        layer = "bottom";
+        position = "bottom";
+        mode = "hide";
+        modules-left = [ "sway/workspaces" "sway/mode" "custom/media" ];
+        modules-center = [ "sway/window" ];
+        modules-right = [ "idle_inhibitor" "pulseaudio" "temperature" "backlight" "sway/language" "battery" "clock" "tray" ];
+        ipc = true;
+        id = "mainBar";
+      }];
+    };
     mako = {
       enable = true;
-      font = "Ubuntu Mono 10";
+      font = "Ubuntu Mono 12";
     };
     kitty = {
       enable = true;
@@ -181,10 +209,28 @@ in
   };
   services = {
     blueman-applet.enable = nixosConfig.modules.hardware.bluetooth.enable;
+    pasystray.enable = nixosConfig.modules.hardware.audio.enable;
+    udiskie.enable = true;
+    network-manager-applet.enable = true;
+    kanshi.enable = true;
+    swayidle = {
+      enable = true;
+      events = [
+        { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"; }
+        { event = "after-resume"; command = ''swaymsg "output * dpms on"''; }
+        { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"; }
+        { event = "unlock"; command = ''swaymsg "output * dpms on"''; }
+      ];
+      timeouts = [
+        { timeout = 600; command = "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"; }
+        { timeout = 1200; command = ''swaymsg "output * dpms off"''; }
+      ];
+    };
   };
   home.packages = with pkgs; [
     swaylock
     swayidle
+    swaybg
     wl-clipboard
     mako
     wofi

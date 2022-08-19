@@ -19,6 +19,8 @@ in
       pipewire.enable = true;
     };
 
+    services.blueman.enable = config.modules.hardware.bluetooth.enable;
+
     xdg = {
       portal = {
         enable = true;
