@@ -8,6 +8,7 @@ in
     enable = mkEnableOption "enable emacs editor";
   };
   config = mkIf cfg.enable {
+    # modules.editors.default = "emacs";
     # FIXME add a default configuration
     environment = {
       systemPackages = [ pkgs.emacs ];
