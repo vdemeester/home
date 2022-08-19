@@ -74,6 +74,7 @@ in
       ++ optionals config.modules.editors.emacs.enable [
         (import ./dev/emacs.nix)
       ]
+      ++ optionals config.modules.desktop.enable [ (import ./desktop) ]
       ++ optionals config.profiles.dev.enable [
         (import ./dev)
         (import ./containers)
@@ -86,8 +87,6 @@ in
         }
       ]
       ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
-      ++ optionals config.profiles.desktop.gnome.enable [ (import ./desktop/gnome.nix) ]
-      # ++ optionals config.profiles.desktop.i3.enable [ (import ./desktop/i3.nix) ]
       ++ optionals (config.networking.hostName == "wakasu") [
         {
           home.packages = with pkgs; [
@@ -102,9 +101,9 @@ in
           home.packages = with pkgs; [ docker docker-compose dive ];
         }
       ]
-      ++ optionals config.profiles.redhat.enable [{
-        home.file.".local/share/applications/redhat-vpn.desktop".source = ./redhat/redhat-vpn.desktop;
-        home.packages = with pkgs; [ gnome3.zenity oathToolkit ];
-      }]
+      #++ optionals config.profiles.redhat.enable [{
+      #  home.file.".local/share/applications/redhat-vpn.desktop".source = ./redhat/redhat-vpn.desktop;
+      #  home.packages = with pkgs; [ gnome3.zenity oathToolkit ];
+      #}]
     );
 }

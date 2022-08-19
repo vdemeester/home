@@ -1,5 +1,8 @@
 { config, lib, pkgs, nixosConfig, ... }:
 
+let
+  inherit (lib) optionals;
+in
 {
   imports = [
     # autorandr
@@ -9,8 +12,11 @@
     ./keyboard.nix
     ./mpv.nix
     ./spotify.nix
-  ] ++ lib.optionals nixosConfig.profiles.desktop.i3.enable [ ./i3.nix ]
-  ++ lib.optionals nixosConfig.profiles.desktop.sway.enable [ ./sway.nix ];
+  ]
+  ++ optionals nixosConfig.modules.desktop.xorg.enable [ ./xorg.nix ]
+  ++ optionals nixosConfig.profiles.desktop.i3.enable [ ./i3.nix ./xorg.nix ]
+  ++ optionals nixosConfig.modules.desktop.wayland.sway.enable [ ./sway.nix ]
+  ++ optionals nixosConfig.profiles.desktop.gnome.enable [ (import ./gnome.nix) ];
 
   home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
   home.packages = with pkgs; [
@@ -37,10 +43,7 @@
     thunderbird
   ];
 
-  programs.autorandr.enable = nixosConfig.profiles.laptop.enable;
-
   home.file.".XCompose".source = ./xorg/XCompose;
-  # home.file.".Xmodmap".source = ./xorg/Xmodmap;
   xdg.configFile."xorg/emoji.compose".source = ./xorg/emoji.compose;
   xdg.configFile."xorg/parens.compose".source = ./xorg/parens.compose;
   xdg.configFile."xorg/modletters.compose".source = ./xorg/modletters.compose;

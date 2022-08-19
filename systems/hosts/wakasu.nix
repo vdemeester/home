@@ -82,13 +82,20 @@ in
     };
   };
 
+  # TODO Migrate to modules
   profiles.ssh.enable = true;
+  profiles.home = true;
+  profiles.avahi.enable = true;
+  profiles.syncthing.enable = true;
+
 
   environment.systemPackages = with pkgs; [
     docker-client
   ];
 
   services = {
+    # automatic login is "safe" as we ask for the encryption passphrase anyway..
+    getty.autologinUser = "vincent";
     wireguard = {
       enable = true;
       ips = [ "${metadata.hosts.wakasu.wireguard.addrs.v4}/24" ];
