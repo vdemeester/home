@@ -45,6 +45,7 @@ in
         in
         {
           "${mod}+p" = "exec ${menu}";
+          "${mod}+Control+p" = "exec ${pkgs.wofi-emoji}/bin/wofi-emoji";
           "${mod}+Return" = "exec ${terminal}";
 
           "${mod}+Shift+q" = "kill";
