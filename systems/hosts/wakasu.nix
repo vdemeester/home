@@ -76,6 +76,7 @@ in
     hardware = {
       yubikey.enable = true;
       laptop.enable = true;
+      bluetooth.enable = true;
     };
     desktop = {
       wayland.sway.enable = true;
