@@ -111,6 +111,11 @@ in
           "${mod}+o" = "mode resize";
 
           "${mod}+Shift+o" = "exec ${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen";
+
+          "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%+";
+          "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%-";
+          "Shift+XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 1%+";
+          "Shift+XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 1%-";
         };
       window.commands = [
         {

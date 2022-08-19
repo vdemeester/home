@@ -30,6 +30,7 @@
     enableAllFirmware = true;
     trackpoint.enable = false;
     cpu.intel.updateMicrocode = true;
+    opengl.extraPackages = with pkgs; [ vaapiIntel ];
   };
   services = {
     hardware.bolt.enable = true;
@@ -71,6 +72,7 @@
     udev.extraRules = ''
       # Rules for Lenovo Thinkpad WS Dock
       ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
+      ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
     '';
   };
 }
