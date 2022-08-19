@@ -11,7 +11,7 @@ in
     };
   };
   config = mkIf cfg.enable {
-    warnings = [ "The option 'profiles.laptop' is deprecated, use modules.hardware.laptop instead" ];
+    warnings = [ "The option 'profiles.laptop' is deprecated, use 'modules.hardware.laptop' instead" ];
     # Use modules.hardware.enable instead
     modules.hardware.laptop.enable = true;
   };

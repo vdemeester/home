@@ -27,9 +27,10 @@ in
       ];
       # Run nix-gc only when on AC power
       systemd.services.nix-gc.unitConfig.ConditionACPower = true;
-      # When a laptop is docked, ignor the lid state (if the laptop is opened or closed)
+      # When a laptop is docked or on external power, ignore the lid state (if the laptop is opened or closed)
       services = {
         logind.extraConfig = ''
+          HandleLidSwitchExternalPower=ignore
           HandleLidSwitchDocked=ignore
         '';
       };

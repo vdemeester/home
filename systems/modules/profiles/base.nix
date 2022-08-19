@@ -20,6 +20,7 @@ in
     };
   };
   config = mkIf cfg.enable {
+    warnings = [ "The option 'profiles.base.boot' is deprecated, use 'core.boot.systemd-boot' instead" ];
     boot.loader.systemd-boot.enable = cfg.systemd-boot;
     environment.pathsToLink = [
       "/share/nix-direnv"

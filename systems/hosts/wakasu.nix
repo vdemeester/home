@@ -52,15 +52,8 @@ in
   };
 
   boot = {
-    loader.systemd-boot.netbootxyz.enable = true;
+    # FIXME move somewhere else
     kernelPackages = pkgs.linuxPackages_latest;
-    tmpOnTmpfs = true;
-    plymouth = {
-      enable = true;
-      themePackages = [ pkgs.my.adi1090x-plymouth ];
-      theme = "deus_ex";
-      # hexagon, green_loader, deus_ex, cuts, sphere, spinner_alt
-    };
   };
 
   services.udev.extraRules = ''
@@ -72,18 +65,21 @@ in
     # Suspend the system when battery level drops to 5% or lower
     SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
   '';
-  services.hardware.bolt.enable = true;
+
   core.nix = {
     # temporary or not
     localCaches = [ ];
   };
 
   modules = {
+    editors.emacs.enable = true;
     hardware = {
       yubikey.enable = true;
       laptop.enable = true;
     };
-    desktop.wayland.sway.enable = true;
+    desktop = {
+      wayland.sway.enable = true;
+    };
   };
 
   profiles.ssh.enable = true;
@@ -93,10 +89,6 @@ in
   ];
 
   services = {
-    logind.extraConfig = ''
-      HandleLidSwitchExternalPower=ignore
-      HandleLidSwitchDocked=ignore
-    '';
     wireguard = {
       enable = true;
       ips = [ "${metadata.hosts.wakasu.wireguard.addrs.v4}/24" ];

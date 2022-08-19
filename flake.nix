@@ -127,8 +127,11 @@
           # Common modules
           # FIXME: migrate this to elsewhere, or at least split it
           ./systems/modules/core/default.nix
+          ./systems/modules/desktop/default.nix
+          ./systems/modules/editors/default.nix
           ./systems/modules/hardware/default.nix
           # ./systems/modules/hardware/sane-extra-config.nixos.nix
+          # Profiles probably need to go away
           ./systems/modules/profiles/avahi.nix
           ./systems/modules/profiles/base.nix
           ./systems/modules/profiles/builder.nix

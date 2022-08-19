@@ -1,20 +1,38 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkDefault;
+  inherit (lib) mkIf mkEnableOption mkDefault mkOption types;
   cfg = config.modules.desktop;
 in
 {
   options = {
     modules.desktop = {
       enable = mkEnableOption "desktop configuration";
+      plymouth = {
+        theme = mkOption {
+          default = "deus_ex";
+          description = "Plymouth theme to use for boot (hexagon, green_loader, deus_ex, cuts, sphere, spinner_alt)";
+          type = types.str;
+        };
+        themePackage = mkOption {
+          default = pkgs.my.adi1090x-plymouth;
+          description = "Plymouth theme package to use";
+          type = types.package;
+        };
+      };
     };
   };
   config = mkIf cfg.enable {
+    # Enable netbootxyz if systemd-boot is enabled
+    loader.systemd-boot.netbootxyz.enable = core.boot.systemd-boot;
     boot = {
       # /tmp to be tmpfs
       tmpOnTmpfs = true;
       # Enable Plymouth on desktops
-      plymouth.enable = true;
+      plymouth = {
+        enable = true;
+        themePackages = [ cfg.plymouth.themePackage ];
+        theme = cfg.plymouth.theme;
+      };
     };
 
     # FIXME Fix tmpOnTmpfs
@@ -44,7 +62,7 @@ in
         noto-fonts-emoji
         noto-fonts-extra
         overpass
-        symbola
+        # symbola
         source-code-pro
         twemoji-color-font
         ubuntu_font_family
