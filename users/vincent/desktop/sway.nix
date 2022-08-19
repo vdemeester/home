@@ -74,8 +74,8 @@ in
           "${mod}+Shift+Up" = "move up";
           "${mod}+Shift+Right" = "move right";
 
-          "${mod}+b" = "splith";
-          "${mod}+v" = "splitv";
+          # "${mod}+b" = "splith";
+          # "${mod}+v" = "splitv";
           "${mod}+f" = "fullscreen toggle";
           "${mod}+a" = "focus parent";
 
@@ -125,7 +125,7 @@ in
         bindcode ${mod}+Shift+18 move container to workspace number 9
         bindcode ${mod}+Shift+19 move container to workspace number 0
 
-        # bindcode ${mod}+25 layout tabbed
+        bindcode ${mod}+Control+39 split h
       '';
   };
   home.packages = with pkgs; [

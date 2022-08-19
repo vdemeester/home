@@ -20,6 +20,7 @@ pkgs.mkShell
     niv
     nixpkgs-fmt
     sops
+    yq-go
   ];
   shellHook = ''
     export NIX_PATH="nixpkgs=${pkgs.path}:nixos=${nixos.path}:nixos-unstable=${nixos-unstable.path}"
