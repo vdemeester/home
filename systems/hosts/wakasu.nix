@@ -81,7 +81,7 @@ in
   modules = {
     hardware = {
       yubikey.enable = true;
-      #laptop.enable = true;
+      laptop.enable = true;
     };
   };
 

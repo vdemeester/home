@@ -19,6 +19,7 @@
     home-manager-21_11 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-21.11"; inputs.nixpkgs.follows = "nixos-21_11"; };
     home-manager-22_05 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-22.05"; inputs.nixpkgs.follows = "nixos-22_05"; };
     impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
+    nixpkgs-wayland = { type = "github"; owner = "nix-community"; repo = "nixpkgs-wayland"; inputs.nixpkgs.follows = "nixpkgs"; };
 
     nur.url = "github:nix-community/NUR";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
@@ -84,6 +85,21 @@
         home-manager.nixosModules.home-manager
         ./systems/modules/profiles/docker.nix
       ];
+      wayland = { pkgs, config, ... }: {
+        config = {
+          nix = {
+            settings = {
+              # add binary caches
+              trusted-public-keys = [
+                "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+              ];
+              substituters = [ "https://nixpkgs-wayland.cachix.org" ];
+            };
+          };
+
+          nixpkgs.overlays = [ inputs.nixpkgs-wayland.overlay ];
+        };
+      };
     in
     flake-utils-plus.lib.mkFlake {
       inherit self inputs nixosModules;
@@ -163,6 +179,7 @@
         };
         wakasu = {
           modules = unstableModules ++ [
+            wayland
             nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
             ./systems/hosts/wakasu.nix
           ];
