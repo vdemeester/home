@@ -99,12 +99,12 @@ in
     '';
     wireguard = {
       enable = true;
-      ips = [ "${metadata.hosts.naruhodo.wireguard.addrs.v4}/24" ];
+      ips = [ "${metadata.hosts.wakasu.wireguard.addrs.v4}/24" ];
       endpoint = endpointIP;
       endpointPort = endpointPort;
       endpointPublicKey = endpointPublicKey;
     };
-    # syncthing.guiAddress = "${metadata.hosts.naruhodo.wireguard.addrs.v4}:8384";
+    syncthing.guiAddress = "${metadata.hosts.wakasu.wireguard.addrs.v4}:8384";
   };
 
 }
