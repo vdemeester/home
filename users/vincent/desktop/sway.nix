@@ -5,6 +5,10 @@ let
     #!/usr/bin/env bash
     fd . -d 3 --type d ~/src | ${pkgs.wofi}/bin/wofi -dmenu | xargs -I {} zsh -i -c "cd {}; emacs ."
   '';
+  fontConf = {
+    names = [ "Ubuntu Mono" ];
+    size = 10.0;
+  };
 in
 {
   wayland.windowManager.sway = {
@@ -19,10 +23,6 @@ in
       export MOZ_ENABLE_WAYLAND=1
     '';
     config = {
-      # left = "c";
-      # down = "t";
-      # up = "s";
-      # right = "r";
       gaps = {
         inner = 2;
         outer = 2;
@@ -38,6 +38,14 @@ in
           xkb_options = "grp:menu_toggle,grp_led:caps,compose:caps";
         };
       };
+      fonts = fontConf;
+      bars = [{
+        # statusCommand = "${pkgs.i3status}/bin/i3status";
+        command = "${pkgs.sway}/bin/swaybar";
+        position = "bottom";
+        fonts = fontConf;
+        trayOutput = "*";
+      }];
       keybindings =
         let
           mod = config.wayland.windowManager.sway.config.modifier;
@@ -95,6 +103,33 @@ in
 
           "${mod}+o" = "mode resize";
         };
+      window.commands = [
+        {
+          command = "inhibit_idle fullscreen";
+          criteria.app_id = "firefox";
+        }
+        {
+          command = "inhibit_idle fullscreen";
+          criteria.app_id = "mpv";
+        }
+        {
+          # spotify doesn't set its WM_CLASS until it has mapped, so the assign is not reliable
+          command = "move to workspace 10";
+          criteria.class = "Spotify";
+        }
+        {
+          command = "move to scratchpad";
+          criteria = {
+            app_id = "kitty";
+            class = "metask";
+          };
+        }
+      ];
+      startup = [
+        { command = "mako"; }
+        { command = "${pkgs.kitty}/bin/kitty --title metask --class metask tmux"; }
+        { command = ''emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))''; }
+      ];
     };
     extraConfig =
       let
@@ -128,6 +163,25 @@ in
         bindcode ${mod}+Control+39 split h
       '';
   };
+  programs = {
+    waybar.enable = true;
+    mako = {
+      enable = true;
+      font = "Ubuntu Mono 10";
+    };
+    kitty = {
+      enable = true;
+      settings = {
+        term = "xterm-256color";
+        close_on_child_death = "yes";
+        font_family = "Ubuntu Mono";
+      };
+      theme = "Tango Light";
+    };
+  };
+  services = {
+    blueman-applet.enable = nixosConfig.modules.hardware.bluetooth.enable;
+  };
   home.packages = with pkgs; [
     swaylock
     swayidle
@@ -138,7 +192,6 @@ in
     # terminals
     # FIXME move this away, they work on both Xorg and Wayland/Sway
     alacritty
-    kitty
   ];
 }
 
