@@ -23,6 +23,12 @@ in
       };
     };
 
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
+    };
+
     # Allow swaylock to unlock the computer for us
     security.pam.services.swaylock = {
       text = "auth include login";
