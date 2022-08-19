@@ -36,13 +36,20 @@
     # throttled.enable = true; # might not be needed
     tlp = {
       settings = {
+        # Charge threshold
+        # If the battery is used somewhat frequently,
+        # set the start threshold at around 85% and stop at 90%. This
+        # will still give a good lifespan benefit over keeping the
+        # battery charged to 100%.
+        START_CHARGE_THRESH_BAT0 = 75;
+        STOP_CHARGE_THRESH_BAT0 = 80;
         # CPU optimizations
         "CPU_SCALING_GOVERNOR_ON_AC" = "performance";
         "CPU_SCALING_GOVERNOR_ON_BAT" = "powersave";
         "CPU_MIN_PERF_ON_AC" = 0;
         "CPU_MAX_PERF_ON_AC" = 100;
         "CPU_MIN_PERF_ON_BAT" = 0;
-        "CPU_MAX_PERF_ON_BAT" = 50;
+        "CPU_MAX_PERF_ON_BAT" = 75;
         # DEVICES (wifi, ..)
         "DEVICES_TO_DISABLE_ON_STARTUP" = "";
         "DEVICES_TO_ENABLE_ON_AC" = "bluetooth wifi wwan";
