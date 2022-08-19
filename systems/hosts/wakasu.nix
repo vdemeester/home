@@ -1,8 +1,3 @@
-# { sources ? import ../../nix
-# , lib ? sources.lib
-# , pkgs ? sources.pkgs { }
-# , ...
-# }:
 { config, lib, pkgs, ... }:
 
 with lib;
@@ -35,6 +30,7 @@ in
   boot.initrd.luks.devices = {
     root = {
       device = "/dev/disk/by-uuid/c0cac87c-53ec-4262-9ab2-a3ee8331c75a";
+      #device = "/dev/nvme0n1p1";
       preLVM = true;
       allowDiscards = true;
       keyFile = "/dev/disk/by-id/usb-_USB_DISK_2.0_070D375D84327E87-0:0";
@@ -67,10 +63,6 @@ in
     };
   };
 
-  # FIXME Fix tmpOnTmpfs
-  systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
-
-
   services.udev.extraRules = ''
     # STM32 rules for the Moonlander and Planck EZ
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \
@@ -88,7 +80,8 @@ in
 
   modules = {
     hardware = {
-      #yubikey.enable = true;
+      yubikey.enable = true;
+      #laptop.enable = true;
     };
   };
 
