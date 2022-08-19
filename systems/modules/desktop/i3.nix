@@ -2,18 +2,18 @@
 
 with lib;
 let
-  cfg = config.modules.desktop.i3;
+  cfg = config.modules.desktop.xorg.i3;
 in
 {
   options = {
-    modules.desktop.i3 = {
+    modules.desktop.xorg.i3 = {
       enable = mkEnableOption "Enable i3 desktop profile";
     };
   };
 
   config = mkIf cfg.enable {
-    # Enable desktop modules if not already
-    modules.desktop.enable = true;
+    # Enable xorg desktop modules if not already
+    modules.desktop.xorg.enable = true;
     services = {
       blueman.enable = true;
       autorandr.enable = true;

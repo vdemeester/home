@@ -20,11 +20,6 @@ in
     # FIXME Fix tmpOnTmpfs
     systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
 
-    # Extra packages to add to the system
-    environment.systemPackages = with pkgs; [
-      xorg.xmessage
-    ];
-
     # Configure some fonts
     fonts = {
       # enableFontDir = true;
@@ -128,18 +123,6 @@ in
         enable = true;
         drivers = [ pkgs.gutenprint ];
       };
-
-      # Enable xserver on desktop
-      xserver = {
-        enable = true;
-        enableTCP = false;
-        libinput.enable = true;
-        synaptics.enable = false;
-        layout = "fr";
-        xkbVariant = "bepo";
-        xkbOptions = "grp:menu_toggle,grp_led:caps,compose:caps";
-      };
-
     };
   };
 }

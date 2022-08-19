@@ -83,6 +83,7 @@ in
       yubikey.enable = true;
       laptop.enable = true;
     };
+    desktop.wayland.sway.enable = true;
   };
 
   profiles.ssh.enable = true;
