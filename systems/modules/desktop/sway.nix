@@ -13,6 +13,12 @@ in
     # Enable wayland desktop modules if not already
     modules.desktop.wayland.enable = true;
 
+    # Enable pipewire
+    modules.hardware.audio = {
+      enable = true;
+      pipewire.enable = true;
+    };
+
     xdg = {
       portal = {
         enable = true;
@@ -21,12 +27,6 @@ in
           xdg-desktop-portal-gtk
         ];
       };
-    };
-
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      pulse.enable = true;
     };
 
     # Allow swaylock to unlock the computer for us

@@ -14,7 +14,7 @@ in
       hardware.bluetooth.enable = true;
       # warnings = if stable then [ ] else [ "NixOS release: ${config.system.nixos.release}" ];
     }
-    (mkIf config.modules.hardware.audio.enable {
+    (mkIf config.modules.hardware.audio.pulseaudio.enable {
       hardware.pulseaudio = {
         # NixOS allows either a lightweight build (default) or full build of
         # PulseAudio to be installed.  Only the full build has Bluetooth

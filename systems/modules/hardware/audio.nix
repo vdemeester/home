@@ -6,27 +6,22 @@ in
 {
   options.modules.hardware.audio = {
     enable = mkEnableOption "enable audio";
-    tcp = mkOption {
-      default = false;
-      description = "enable pulseaudio tcp";
-      type = types.bool;
+    pulseaudio = {
+      enable = mkEnableOption "enable pulseaudio";
+      tcp = mkOption {
+        default = false;
+        description = "enable pulseaudio tcp";
+        type = types.bool;
+      };
+    };
+    pipewire = {
+      enable = mkEnableOption "enable pipewire";
     };
   };
   config = mkIf cfg.enable (mkMerge [
     {
-      # Add extra packages
-      environment.systemPackages = with pkgs; [
-        apulse # allow alsa application to use pulse
-        pavucontrol # pulseaudio volume control
-        pasystray # systray application
-      ];
       # Enable sound (alsa)
       sound.enable = true;
-      # Enable and configure pulseaudio
-      hardware.pulseaudio = {
-        enable = true;
-        support32Bit = true;
-      };
       # FIXME is it needed
       security.pam.loginLimits = [
         { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
@@ -34,7 +29,31 @@ in
         { domain = "@audio"; item = "nofile"; type = "-"; value = "99999"; }
       ];
     }
-    (mkIf cfg.tcp {
+    (mkIf cfg.pipewire.enable {
+      security.rtkit.enable = true;
+      services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+      };
+    })
+    (mkIf cfg.pulseaudio.enable {
+      # Enable and configure pulseaudio
+      hardware.pulseaudio = {
+        enable = true;
+        support32Bit = true;
+      };
+    })
+    (mkIf (cfg.pulseaudio.enable || cfg.pipewire.enable) {
+      # Add extra packages
+      environment.systemPackages = with pkgs; [
+        apulse # allow alsa application to use pulse
+        pavucontrol # pulseaudio volume control
+        pasystray # systray application
+      ];
+    })
+    (mkIf (cfg.pulseaudio.enable && cfg.pulseaudio.tcp) {
       hardware.pulseaudio = {
         zeroconf = {
           discovery.enable = cfg.tcp;
