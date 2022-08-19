@@ -1,4 +1,4 @@
-{ config, pkgs }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkOption types;
@@ -14,6 +14,6 @@ in
     };
   };
   config = {
-    boot.load.systemd-boot.enable = cfg.systemd-boot;
+    boot.loader.systemd-boot.enable = cfg.systemd-boot;
   };
 }

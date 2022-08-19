@@ -23,8 +23,8 @@ in
   };
   config = mkIf cfg.enable {
     # Enable netbootxyz if systemd-boot is enabled
-    loader.systemd-boot.netbootxyz.enable = core.boot.systemd-boot;
     boot = {
+      loader.systemd-boot.netbootxyz.enable = config.core.boot.systemd-boot;
       # /tmp to be tmpfs
       tmpOnTmpfs = true;
       # Enable Plymouth on desktops
@@ -34,9 +34,6 @@ in
         theme = cfg.plymouth.theme;
       };
     };
-
-    # FIXME Fix tmpOnTmpfs
-    systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
 
     # Configure some fonts
     fonts = {
