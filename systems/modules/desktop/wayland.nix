@@ -13,6 +13,13 @@ in
     # Enable desktop module if not already.
     modules.desktop.enable = true;
     # Force disable xorg desktop module
-    modules.desktop.xorg = mkForce false;
+    modules.desktop.xorg.enable = mkForce false;
+    # Hardware Support for Wayland Sway, …
+    hardware = {
+      opengl = {
+        enable = true;
+        driSupport = true;
+      };
+    };
   };
 }

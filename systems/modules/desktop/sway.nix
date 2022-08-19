@@ -9,6 +9,9 @@ in
       enable = mkEnableOption "Enable sway desktop profile";
     };
   };
-  config = mkIf cfg.enable = {};
+  config = mkIf cfg.enable {
+    # Enable wayland desktop modules if not already
+    modules.desktop.wayland.enable = true;
+  };
 }
 
