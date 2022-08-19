@@ -9,4 +9,5 @@ in
       enable = mkEnableOption "Enable server profile";
     };
   };
+  config = mkIf cfg.enable { };
 }

@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
-#let
-#  sources = import ../../nix/sources.nix;
-#in
 {
-  #imports = [ (sources.nixos-hardware + "/lenovo/thinkpad") ];
   boot = {
     blacklistedKernelModules = [
       # Kernel GPU Savings Options (NOTE i915 chipset only)
