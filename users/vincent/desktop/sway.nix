@@ -89,6 +89,11 @@ in
           "${mod}+Shift+Up" = "move up";
           "${mod}+Shift+Right" = "move right";
 
+          "${mod}+Mod1+Left" = "workspace prev_on_output";
+          # "${mod}+Mod1+Down" = "move down";
+          # "${mod}+Mod1+Up" = "move up";
+          "${mod}+Mod1+Right" = "workspace next_on_output";
+
           # "${mod}+b" = "splith";
           # "${mod}+v" = "splitv";
           "${mod}+f" = "fullscreen toggle";
