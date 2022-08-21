@@ -66,11 +66,6 @@ in
     SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
   '';
 
-  core.nix = {
-    # temporary or not
-    localCaches = [ ];
-  };
-
   modules = {
     editors.emacs.enable = true;
     hardware = {
