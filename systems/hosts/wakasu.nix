@@ -80,6 +80,8 @@ in
     };
     desktop = {
       wayland.sway.enable = true;
+    };
+    services = {
       syncthing = {
         enable = true;
         guiAddress = "${metadata.hosts.wakasu.wireguard.addrs.v4}:8384";

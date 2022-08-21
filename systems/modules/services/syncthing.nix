@@ -3,7 +3,7 @@
 with lib;
 let
   # unstable = versionOlder config.system.nixos.release "21.05";
-  cfg = config.modules.desktop.syncthing;
+  cfg = config.modules.services.syncthing;
   isCurrentHost = n: v: n != config.networking.hostName;
   devices = {
     wakasu = {
@@ -36,7 +36,7 @@ let
 in
 {
   options = {
-    modules.desktop.syncthing = {
+    modules.services.syncthing = {
       enable = mkEnableOption "Enable syncthing profile";
       guiAddress = mkOption {
         type = types.str;
