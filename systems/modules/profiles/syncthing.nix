@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
 with lib;
+let
+  cfg = config.profiles.syncthing;
+in
 {
   options = {
     profiles.syncthing = {
@@ -9,6 +12,6 @@ with lib;
   };
   config = mkIf cfg.enable {
     warnings = [ "The option 'profiles.syncthing' is deprecated, use 'modules.desktop.syncthing' instead" ];
-    modules.desktop.syncthing = cfg.enable;
+    modules.services.syncthing.enable = cfg.enable;
   };
 }

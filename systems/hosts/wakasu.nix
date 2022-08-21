@@ -81,6 +81,7 @@ in
         enable = true;
         guiAddress = "${metadata.hosts.wakasu.wireguard.addrs.v4}:8384";
       };
+      ssh.enable = true;
     };
   };
 

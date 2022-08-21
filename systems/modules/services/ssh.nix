@@ -37,7 +37,7 @@ in
         # Move this for kerkouane only
         extraConfig = ''
           StreamLocalBindUnlink yes
-          ${cg.extraConfig}
+          ${cfg.extraConfig}
         '';
       };
       sshguard.enable = true;

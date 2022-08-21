@@ -28,4 +28,5 @@ in
       listenAddresses = cfg.listenAddresses;
       forwardX11 = cfg.forwardX11;
     };
-  }
+  };
+}
