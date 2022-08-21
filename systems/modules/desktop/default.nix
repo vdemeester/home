@@ -5,5 +5,6 @@
     ./sway.nix
     ./wayland.nix
     ./xorg.nix
+    ./syncthing.nix
   ];
 }

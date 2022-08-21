@@ -80,6 +80,10 @@ in
     };
     desktop = {
       wayland.sway.enable = true;
+      syncthing = {
+        enable = true;
+        guiAddress = "${metadata.hosts.wakasu.wireguard.addrs.v4}:8384";
+      };
     };
   };
 
@@ -87,9 +91,6 @@ in
   profiles.ssh.enable = true;
   profiles.home = true;
   profiles.avahi.enable = true;
-  profiles.syncthing.enable = true;
-
-
   environment.systemPackages = with pkgs; [
     docker-client
   ];
@@ -104,7 +105,6 @@ in
       endpointPort = endpointPort;
       endpointPublicKey = endpointPublicKey;
     };
-    syncthing.guiAddress = "${metadata.hosts.wakasu.wireguard.addrs.v4}:8384";
   };
 
 }
