@@ -22,25 +22,10 @@ in
     };
   };
   config = mkIf cfg.enable {
-    services = {
-      openssh = {
-        enable = true;
-        startWhenNeeded = false;
-        forwardX11 = cfg.forwardX11;
-        # listenAddresses = map
-        # Move this for kerkouane only
-        extraConfig = ''
-          StreamLocalBindUnlink yes
-          Match User nginx
-            ChrootDirectory /var/www
-            ForceCommand interfal-sftp
-            AllowTcpForwarding no
-            PermitTunnel no
-            X11Forwarding no
-        '';
-      };
-      sshguard.enable = true;
+    warnings = [ "The option 'profiles.ssh' is deprecated, use 'modules.services.ssh' instead" ];
+    modules.services.ssh = {
+      enable = cfg.enable;
+      listenAddresses = cfg.listenAddresses;
+      forwardX11 = cfg.forwardX11;
     };
-    programs.mosh.enable = true;
-  };
-}
+  }
