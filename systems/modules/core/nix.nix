@@ -60,6 +60,8 @@ in
 
       #daemonIONiceLevel = 5;
       #daemonNiceLevel = 10;
+      daemonIOSchedPriority = 5;
+      daemonCPUSchedPolicy = "batch";
 
       # if hydra is down, don't wait forever
       extraOptions = ''
