@@ -141,6 +141,7 @@ in
       ];
       startup = [
         { command = "mako"; }
+        { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         { command = "systemctl --user restart waybar"; always = true; }
         { command = "${pkgs.kitty}/bin/kitty --title metask --class metask tmux"; }
         { command = ''emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))''; }
