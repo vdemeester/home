@@ -128,6 +128,7 @@ in
           userServices = true;
         };
       };
+      udisks2.enable = true;
 
       # Make `/run/user/X` larger.
       logind.extraConfig = ''
