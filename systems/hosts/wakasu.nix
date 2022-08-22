@@ -107,7 +107,7 @@ in
   services = {
     # automatic login is "safe" as we ask for the encryption passphrase anyway..
     getty.autologinUser = "vincent";
-    services.fprintd.enable = true;
+    fprintd.enable = true;
     wireguard = {
       enable = true;
       ips = [ "${metadata.hosts.wakasu.wireguard.addrs.v4}/24" ];
@@ -117,4 +117,15 @@ in
     };
   };
 
+  security = {
+    pam = {
+      services = {
+        login.fprintAuth = true;
+        swaylock-effects.fprintAuth = true;
+        sudo.fprintAuth = true;
+        system-local-login.fprintAuth = true;
+        su.fprintAuth = true;
+      };
+    };
+  };
 }
