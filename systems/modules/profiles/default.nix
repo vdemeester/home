@@ -1,5 +1,7 @@
 {
   imports = [
+    ./work.nix
+    # Move this "away"
     ./avahi.nix
     ./base.nix
     ./builder.nix

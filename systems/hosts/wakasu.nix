@@ -78,10 +78,10 @@ in
     };
     # dev = {
     # };
-    # profiles = {
-    #   home = true;
-    #   work.redhat = true;
-    # };
+    profiles = {
+      #   home = true;
+      work.redhat = true;
+    };
     services = {
       syncthing = {
         enable = true;
