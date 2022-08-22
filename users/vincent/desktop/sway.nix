@@ -137,10 +137,16 @@ in
           criteria.class = "Spotify";
         }
         {
-          command = "move to scratchpad";
+          command = "move to scratchpad, scratchpad show";
           criteria = {
-            app_id = "kitty";
-            class = "metask";
+            app_id = "metask";
+          };
+        }
+        {
+          command = "move to scratchpad, scratchpad show";
+          criteria = {
+            app_id = "emacs";
+            title = "^_emacs scratchpad_$";
           };
         }
       ];
@@ -148,8 +154,8 @@ in
         { command = "mako"; }
         { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         { command = "systemctl --user restart waybar"; always = true; }
-        { command = "${pkgs.kitty}/bin/kitty --title metask --class metask tmux"; }
-        { command = ''emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))''; }
+        # { command = "${pkgs.kitty}/bin/kitty --title metask --class metask tmux"; }
+        # { command = ''emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))''; }
       ];
     };
     extraConfig =
@@ -187,6 +193,12 @@ in
         bindsym XF86AudioLowerVolume exec ${pkgs.pamixer}/bin/pamixer -ud 5 && ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
         bindsym XF86AudioMute exec ${pkgs.pamixer}/bin/pamixer --toggle-mute && ( ${pkgs.pamixer}/bin/pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
 
+        bindsym XF86AudioPlay exec "playerctl play-pause"
+        bindsym XF86AudioNext exec "playerctl next"
+        bindsym XF86AudioPrev exec "playerctl previous"
+
+        bindcode ${mod}+49 exec swaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
+        bindcode ${mod}+Shift+49 exec swaymsg '[app_id="emacs" title="^_emacs scratchpad_$"]' scratchpad show || exec ${config.programs.emacs.package}/bin/emacsclient -c -F "((name . \"_emacs scratchpad_\"))" 
       '';
   };
   programs = {
