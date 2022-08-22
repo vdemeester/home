@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./emacs.nix
+    # ./emacs.nix
     ./go.nix
     ./js.nix
     ./lisp.nix
@@ -40,6 +40,7 @@
     '';
   };
 
+  # FIXME move this to a "work.redhat" configuration.
   # Upstream Tekton
   home.file."src/tektoncd/.envrc".source = ./src/tektoncd.envrc;
   home.file."src/tektoncd/shell.nix".source = ./src/tektoncd.shell.nix;

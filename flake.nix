@@ -127,6 +127,7 @@
           # Common modules
           ./systems/modules/core/default.nix
           ./systems/modules/desktop/default.nix
+          ./systems/modules/dev/default.nix
           ./systems/modules/editors/default.nix
           ./systems/modules/hardware/default.nix
           ./systems/modules/profiles/default.flake.nix # TODO: rename

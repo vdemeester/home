@@ -76,8 +76,9 @@ in
     desktop = {
       wayland.sway.enable = true;
     };
-    # dev = {
-    # };
+    dev = {
+      enable = true;
+    };
     profiles = {
       #   home = true;
       work.redhat = true;

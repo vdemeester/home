@@ -25,3 +25,15 @@ skip = true
 [gitlab.com]
 chain = true
 skip = true
+
+[home]
+checkout =
+    git clone https://git.sr.ht/~vdemeester/home
+    cd home
+    git remote set-url --add --push origin git@git.sr.ht:~vdemeester/home
+
+[www]
+checkout =
+    git clone https://git.sr.ht/~vdemeester/www
+    cd home
+    git remote set-url --add --push origin git@git.sr.ht:~vdemeester/www

@@ -74,6 +74,9 @@ in
       ++ optionals config.modules.editors.emacs.enable [
         (import ./dev/emacs.nix)
       ]
+      ++ optionals config.modules.dev.enable [
+        (import ./dev)
+      ]
       ++ optionals config.modules.desktop.enable [ (import ./desktop) ]
       ++ optionals config.profiles.dev.enable [
         (import ./dev)
