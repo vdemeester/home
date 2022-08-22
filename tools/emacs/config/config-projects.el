@@ -51,7 +51,7 @@
 If a buffer already exists for running a vterm shell in the project's root,
 switch to it. Otherwise, create a new vterm shell."
     (interactive)
-    (let* ((default-directory (project-root (project-current t)))
+    (let* ((default-directory (vde-project--project-current))
            (default-project-vterm-name (project-prefixed-buffer-name "vterm"))
            (vterm-buffer (get-buffer default-project-vterm-name)))
       (if (and vterm-buffer (not current-prefix-arg))

@@ -121,7 +121,7 @@ Ignores `ARGS'."
      ((boundp 'projectile-project-name) (if (string-equal (projectile-project-name) "-")
                                             (tab-bar-tab-name-current-with-count)
                                           (projectile-project-name)))
-     ((project-current) (let ((project-path (cdr (project-current))))
+     ((project-current) (let ((project-path (vde-project--project-current)))
                           (cond ((string-prefix-p "~/src" project-path)
                                  (directory-file-name (file-relative-name project-path "~/src")))
                                 ((string-prefix-p "~/desktop" project-path)
