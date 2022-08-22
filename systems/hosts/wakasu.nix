@@ -69,7 +69,7 @@ in
   modules = {
     editors.emacs.enable = true;
     hardware = {
-      yubikey.enable = true;
+      yubikey = { enable = true; u2f = true; };
       laptop.enable = true;
       bluetooth.enable = true;
     };
