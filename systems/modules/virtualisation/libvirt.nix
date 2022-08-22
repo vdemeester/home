@@ -15,6 +15,9 @@ in
       virtualisation.libvirtd.enable = true;
       environment.systemPackages = with pkgs; [ qemu vde2 libosinfo ];
     }
+    (mkIf config.modules.desktop.enable {
+      environment.systemPackages = with pkgs; [ virtmanager ];
+    })
     (mkIf cfg.nested {
       boot.kernelParams = [ "kvm_intel.nested=1" ];
       environment.etc."modprobe.d/kvm.conf".text = ''

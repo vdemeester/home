@@ -78,6 +78,11 @@ in
     };
     dev = {
       enable = true;
+      containers = {
+        enable = true;
+        docker.enable = true;
+        podman.enable = true;
+      };
     };
     profiles = {
       #   home = true;

@@ -131,6 +131,8 @@
           ./systems/modules/editors/default.nix
           ./systems/modules/hardware/default.nix
           ./systems/modules/profiles/default.flake.nix # TODO: rename
+          ./systems/modules/virtualisation/default.nix
+          ./systems/modules/services/default.nix
           # ./systems/modules/hardware/sane-extra-config.nixos.nix
           # FIXME: migrate this to elsewhere, or at least split it
           # Profiles probably need to go away
@@ -159,7 +161,6 @@
           ./systems/modules/profiles/virtualization.nix
           ./systems/modules/profiles/wireguard.server.nix
           ./systems/modules/profiles/zsh.nix
-          ./systems/modules/services/default.nix
           sops-nix.nixosModules.sops
           envfs.nixosModules.envfs
           {

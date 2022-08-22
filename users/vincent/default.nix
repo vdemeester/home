@@ -23,12 +23,14 @@ in
     description = "Vincent Demeester";
     extraGroups = [ "wheel" "input" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
-      ++ optionals config.profiles.desktop.enable [ "audio" "video" ]
+      ++ optionals config.modules.desktop.enable [ "audio" "video" ]
+      ++ optionals config.profiles.desktop.enable [ "audio" "video" ] # FIXME deprecated
       ++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
       ++ optionals config.virtualisation.docker.enable [ "docker" ]
       ++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
-      ++ optionals config.profiles.virtualization.enable [ "libvirtd" ]
+      ++ optionals config.modules.virtualisation.libvirt.enable [ "libvirtd" ]
+      ++ optionals config.profiles.virtualization.enable [ "libvirtd" ] # FIXME deprecated
       ++ optionals config.services.nginx.enable [ "nginx" ];
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
     isNormalUser = true;
@@ -76,6 +78,13 @@ in
       ]
       ++ optionals config.modules.dev.enable [
         (import ./dev)
+        # TODO Move it elsewhere ? 
+        (import ./containers/kubernetes.nix)
+        (import ./containers/openshift.nix)
+        (import ./containers/tekton.nix)
+      ]
+      ++ optionals config.modules.dev.containers.enable [
+        (import ./containers)
       ]
       ++ optionals config.modules.desktop.enable [ (import ./desktop) ]
       ++ optionals config.profiles.dev.enable [

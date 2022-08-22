@@ -14,7 +14,7 @@ in
     kubectl
     kustomize
     kind
-    minikube
+    # minikube # probably don't need that always.. only on demand
     ko
     crane
     #my.krew
