@@ -76,6 +76,12 @@ in
     desktop = {
       wayland.sway.enable = true;
     };
+    # dev = {
+    # };
+    # profiles = {
+    #   home = true;
+    #   work.redhat = true;
+    # };
     services = {
       syncthing = {
         enable = true;
@@ -86,7 +92,6 @@ in
   };
 
   # TODO Migrate to modules
-  profiles.ssh.enable = true;
   profiles.home = true;
   profiles.avahi.enable = true;
   environment.systemPackages = with pkgs; [

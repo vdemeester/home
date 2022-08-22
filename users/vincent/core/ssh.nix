@@ -16,13 +16,17 @@ let
   hasWireguard = name: value: hasAttr "wireguard" value;
   hasAddrs = name: value: hasAttr "addrs" value;
   hasSShAndRemoteForward = v: (hasAttr "ssh" v) && (hasAttr "gpgRemoteForward" v.ssh);
+  hasCommand = v: hasAttr "command" v;
 
   hostWireguardIP = v: "${v.wireguard.addrs.v4}";
   hostIP = v: "${v.addrs.v4}";
+  hostRemoteCommand = v: "${v.command}";
 
   hostToSSHConfigItem = value: ipfn: {
     hostname = ipfn value;
     remoteForwards = mkIf (hasSShAndRemoteForward value) [ gpgRemoteForward gpgSSHRemoteForward ];
+    # FIXME: need support for RemoteCommand in home-manager
+    # RemoteCommand = mkIf (hasCommand value) hostRemoteCommand value;
   };
   hostToSSHConfig = suffix: ipfn:
     name: value: attrsets.nameValuePair
@@ -97,6 +101,9 @@ in
       GSSAPIAuthentication yes
       GSSAPIDelegateCredentials yes
       StreamLocalBindUnlink yes
+      IdentityFile ~/.ssh/keys/%h
+      IdentityFile ~/.ssh/id_ed25519
+      IdentityFile ~/.ssh/id_rsa
     '';
   };
   # FIXME generate this file as well

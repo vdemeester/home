@@ -58,7 +58,7 @@ addrs = { v4 = "10.100.0.16" }
 [hosts.kerkouane]
 network = "vpn"
 # addrs = { v4 = "167.99.17.238" } # FIXME probably not right
-ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtEnw+3WMa9ESRyKdBUp/OHd8NPQdHLoqQ58L3YXF1o vincent@kerkouane", gpgRemoteForward = true }
+ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtEnw+3WMa9ESRyKdBUp/OHd8NPQdHLoqQ58L3YXF1o vincent@kerkouane", gpgRemoteForward = true, command = "tmux new -A -s default" }
 
 [hosts.kerkouane.wireguard]
 addrs = { v4 = "10.100.0.1" }
