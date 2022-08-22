@@ -261,6 +261,8 @@ in
     # terminals
     # FIXME move this away, they work on both Xorg and Wayland/Sway
     alacritty
+    # Move away
+    nyxt
   ];
 }
 
