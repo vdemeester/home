@@ -27,6 +27,7 @@ creation_rules:
       - *vincent
       - *naruhodo
       - *aomi
+      - *wakasu
   - path_regex: secrets/wakasu/[^/]+\.yaml$
     key_groups:
     - pgp:
