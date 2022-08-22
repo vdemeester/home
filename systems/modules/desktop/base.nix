@@ -22,6 +22,7 @@ in
     };
   };
   config = mkIf cfg.enable {
+    modules.services.avahi.enable = true;
     # Enable netbootxyz if systemd-boot is enabled
     boot = {
       loader.systemd-boot.netbootxyz.enable = config.core.boot.systemd-boot;

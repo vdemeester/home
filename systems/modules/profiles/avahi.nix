@@ -11,17 +11,7 @@ in
     };
   };
   config = mkIf cfg.enable {
-    services = {
-      avahi = {
-        enable = true;
-        ipv4 = true;
-        ipv6 = true;
-        nssmdns = true;
-        publish = {
-          enable = true;
-          userServices = true;
-        };
-      };
-    };
+    warnings = [ "The option 'profiles.ahavi' is deprecated, use 'modules.services.avahi' instead." ];
+    modules.services.avahi.enable = true;
   };
 }

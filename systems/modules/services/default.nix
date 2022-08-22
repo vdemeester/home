@@ -1,5 +1,6 @@
 {
   imports = [
+    ./avahi.nix
     ./barrier.nix
     ./govanityurl.nix
     ./nix-binary-cache.nix
