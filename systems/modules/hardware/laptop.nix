@@ -38,7 +38,7 @@ in
     (mkIf config.modules.desktop.enable {
       # Graphical interface, we can add additionnal packages
       # Enable setting power-profiles trough DBus
-      services.power-profiles-daemon.enable = true;
+      # services.power-profiles-daemon.enable = true;
     })
   ]);
 }

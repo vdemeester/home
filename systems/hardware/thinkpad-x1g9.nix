@@ -36,6 +36,7 @@
     hardware.bolt.enable = true;
     # throttled.enable = true; # might not be needed
     tlp = {
+      enable = true;
       settings = {
         # Charge threshold
         # If the battery is used somewhat frequently,
