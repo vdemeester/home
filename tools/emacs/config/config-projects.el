@@ -36,12 +36,15 @@
 
   :init
   (setq-default project-compilation-buffer-name-function 'project-prefixed-buffer-name)
+  (defun vde-project--project-current ()
+    "Return directory from `project-current' based on Emacs version."
+    (if (>= emacs-major-version 29)
+        (project-root (project-current))
+      (cdr (project-current))))
   (defun vde-project-magit-status ()
     "Run `magit-status' on project."
     (interactive)
-    (let* ((pr (project-current t))
-           (dir (cdr pr)))
-      (magit-status dir)))
+    (magit-status (vde-project--project-current)))
 
   (defun vde-project-vterm ()
     "Run `vterm' on project.
