@@ -107,6 +107,7 @@ in
   services = {
     # automatic login is "safe" as we ask for the encryption passphrase anyway..
     getty.autologinUser = "vincent";
+    services.fprintd.enable = true;
     wireguard = {
       enable = true;
       ips = [ "${metadata.hosts.wakasu.wireguard.addrs.v4}/24" ];
