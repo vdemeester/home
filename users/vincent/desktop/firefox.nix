@@ -112,5 +112,8 @@
         "network.negotiate-auth.trusted-uris" = ".redhat.com";
       };
     };
+    profiles.redhat = {
+      id = 1;
+    };
   };
 }
