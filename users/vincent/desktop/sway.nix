@@ -154,6 +154,7 @@ in
         { command = "mako"; }
         { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         { command = "systemctl --user restart waybar"; always = true; }
+        { command = "systemctl --user restart kanshi"; always = true; }
         # { command = "${pkgs.kitty}/bin/kitty --title metask --class metask tmux"; }
         # { command = ''emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))''; }
       ];
@@ -185,9 +186,11 @@ in
         bindcode ${mod}+Shift+16 move container to workspace number 7
         bindcode ${mod}+Shift+17 move container to workspace number 8
         bindcode ${mod}+Shift+18 move container to workspace number 9
-        bindcode ${mod}+Shift+19 move container to workspace number 0
+        bindcode ${mod}+Shift+19 move container to workspace number 10
 
         bindcode ${mod}+Control+39 split h
+        bindcode ${mod}+Shift+61 floating toggle
+        bindcode ${mod}+61 focus mode_toggle
 
         bindsym XF86AudioRaiseVolume exec ${pkgs.pamixer}/bin/pamixer -ui 5 && ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
         bindsym XF86AudioLowerVolume exec ${pkgs.pamixer}/bin/pamixer -ud 5 && ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
@@ -276,6 +279,7 @@ in
     mako
     wofi
     waybar
+    slurp
     # terminals
     # FIXME move this away, they work on both Xorg and Wayland/Sway
     alacritty
