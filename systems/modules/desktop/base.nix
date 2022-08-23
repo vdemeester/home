@@ -83,32 +83,32 @@ in
       # Do not manager libvirt interfaces
       ++ lib.optionals config.virtualisation.libvirtd.enable [ "interface-name:virbr*" ];
       packages = with pkgs; [ networkmanager-openvpn ];
-      dispatcherScripts = [{
-        # https://askubuntu.com/questions/1271491/disable-wifi-if-lan-is-connected
-        source = pkgs.writeText "wifi-wired-exclusive" ''
-          #!${pkgs.bash}/bin/bash
-          export LC_ALL=C
-
-          enable_disable_wifi ()
-          {
-              result=$(${pkgs.networkmanager}/bin/nmcli dev | ${pkgs.gnugrep}/bin/grep "ethernet" | ${pkgs.gnugrep}/bin/grep -w "connected")
-              if [ -n "$result" ]; then
-                  ${pkgs.networkmanager}/bin/nmcli radio wifi off
-              else
-                  ${pkgs.networkmanager}/bin/nmcli radio wifi on
-              fi
-          }
-
-          if [ "$2" = "up" ]; then
-              enable_disable_wifi
-          fi
-
-          if [ "$2" = "down" ]; then
-              enable_disable_wifi
-          fi
-        '';
-        type = "basic";
-      }];
+      # dispatcherScripts = [{
+      #   # https://askubuntu.com/questions/1271491/disable-wifi-if-lan-is-connected
+      #   source = pkgs.writeText "wifi-wired-exclusive" ''
+      #     #!${pkgs.bash}/bin/bash
+      #     export LC_ALL=C
+      # 
+      #     enable_disable_wifi ()
+      #     {
+      #         result=$(${pkgs.networkmanager}/bin/nmcli dev | ${pkgs.gnugrep}/bin/grep "ethernet" | ${pkgs.gnugrep}/bin/grep -w "connected")
+      #         if [ -n "$result" ]; then
+      #             ${pkgs.networkmanager}/bin/nmcli radio wifi off
+      #         else
+      #             ${pkgs.networkmanager}/bin/nmcli radio wifi on
+      #         fi
+      #     }
+      # 
+      #     if [ "$2" = "up" ]; then
+      #         enable_disable_wifi
+      #     fi
+      # 
+      #     if [ "$2" = "down" ]; then
+      #         enable_disable_wifi
+      #     fi
+      #   '';
+      #   type = "basic";
+      # }];
     };
 
     nix = {
@@ -117,17 +117,6 @@ in
     };
 
     services = {
-      # Enable avahi with a lot of options
-      avahi = {
-        enable = true;
-        ipv4 = true;
-        ipv6 = true;
-        nssmdns = true;
-        publish = {
-          enable = true;
-          userServices = true;
-        };
-      };
       udisks2.enable = true;
 
       # Make `/run/user/X` larger.

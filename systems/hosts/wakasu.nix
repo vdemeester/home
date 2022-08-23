@@ -99,7 +99,6 @@ in
 
   # TODO Migrate to modules
   profiles.home = true;
-  profiles.avahi.enable = true;
   profiles.externalbuilder.enable = true;
 
   services = {
