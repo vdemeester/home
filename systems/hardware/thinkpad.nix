@@ -29,7 +29,7 @@
   hardware = {
     trackpoint.enable = false;
     cpu.intel.updateMicrocode = true;
-    hardware.opengl.extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau intel-ocl intel-media-driver beignet ];
+    opengl.extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau intel-ocl intel-media-driver beignet ];
   };
   services = {
     acpid = {

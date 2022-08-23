@@ -11,7 +11,7 @@ in
     };
   };
   config = mkIf cfg.enable {
-    warnings = [ "The option 'profiles.syncthing' is deprecated, use 'modules.desktop.syncthing' instead" ];
+    warnings = [ "The option 'profiles.syncthing' is deprecated, use 'modules.services.syncthing' instead" ];
     modules.services.syncthing.enable = cfg.enable;
   };
 }

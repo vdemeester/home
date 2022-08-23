@@ -30,7 +30,7 @@
     enableAllFirmware = true;
     trackpoint.enable = false;
     cpu.intel.updateMicrocode = true;
-    opengl.extraPackages = with pkgs; [ vaapiIntel ];
+    opengl.extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau intel-ocl intel-media-driver beignet ];
   };
   services = {
     hardware.bolt.enable = true;
