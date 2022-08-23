@@ -100,9 +100,7 @@ in
   # TODO Migrate to modules
   profiles.home = true;
   profiles.avahi.enable = true;
-  environment.systemPackages = with pkgs; [
-    docker-client
-  ];
+  profiles.externalbuilder.enable = true;
 
   services = {
     # automatic login is "safe" as we ask for the encryption passphrase anyway..
