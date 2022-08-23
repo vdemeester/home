@@ -64,6 +64,7 @@
     , envfs
     , nixos-wsl
     , nixos-hardware
+    , devshell
     , ...
     } @ inputs:
     let
@@ -112,6 +113,7 @@
         (import ./nix/overlays/sbr.nix)
         emacs-overlay.overlay
         nur.overlay
+        devshell.overlay
       ];
 
       hostDefaults = {
@@ -122,6 +124,7 @@
           inherit self;
         };
         modules = with nixosModules; [
+          { nix.generateRegistryFromInputs = true; }
           # Exported modules
           buildkit
           # Common modules
@@ -234,6 +237,7 @@
 
       outputsBuilder = channels:
         let
+          pkgs = channels.nixpkgs;
         in
         {
           overlays.default = import ./nix/overlays;
@@ -255,22 +259,50 @@
           };
 
           # `nix develop`
-          devShell =
+          # devShells = forEachSystem (system:
+          #   let
+          #     pkgs = pkgsBySystem."${system}";
+          #   in
+          #   {
+          #     cargo = import ./nix/shells/cargo.nix { inherit pkgs; };
+          #     generic-nightly-rust = import ./nix/shells/generic-nightly-rust.nix { inherit pkgs; };
+          #     llvm-clang = import ./nix/shells/llvm-clang.nix { inherit pkgs; };
+          #     rustc = import ./nix/shells/rustc.nix { inherit pkgs; };
+          #     rustc-perf = import ./nix/shells/rustc-perf.nix { inherit pkgs; };
+          #     zulip = import ./nix/shells/zulip.nix { inherit pkgs; };
+          #   }
+          # );
+          devShells =
             let
-              inherit (sops-nix.packages."x86_64-linux") sops-import-keys-hook;
+              ls = builtins.readDir ./shells;
+              files = builtins.filter (name: ls.${name} == "regular") (builtins.attrNames ls);
+              shellNames = builtins.map (filename: builtins.head (builtins.split "\\." filename)) files;
+              nameToValue = name: import (./shells + "/${name}.nix") { inherit pkgs inputs; };
             in
-            with channels.nixpkgs; mkShell {
-              sopsPGPKeyDirs = [ "./secrets/keys" ];
-              nativeBuildInputs = [
-                sops-import-keys-hook
-              ];
-              buildInputs = with pkgs; [
-                cachix
-                git
-                nixpkgs-fmt
-                sops
-              ];
-            };
+            builtins.listToAttrs (builtins.map (name: { inherit name; value = nameToValue name; }) shellNames);
+          # devShell =
+          #   let
+          #     inherit (sops-nix.packages."x86_64-linux") sops-import-keys-hook;
+          #   in
+          #   with channels.nixpkgs; mkShell {
+          #     sopsPGPKeyDirs = [ "./secrets/keys" ];
+          #     nativeBuildInputs = [
+          #       sops-import-keys-hook
+          #     ];
+          #     buildInputs = with pkgs; [
+          #       cachix
+          #       git
+          #       nixpkgs-fmt
+          #       sops
+          #       yq-go
+          #     ];
+          #     shellHook = ''
+          #       test -f .secrets && source .secrets || echo "no secrets"
+          #       export QEMU_OPTS="-m 8096 -cpu host"
+          #       export PATH="${builtins.toString ./.}/bin:$PATH"
+          #       export REPO_ROOT="${builtins.toString ./.}"
+          #     '';
+          #   };
         };
     };
 }
