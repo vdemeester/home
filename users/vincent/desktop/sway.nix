@@ -235,7 +235,25 @@ in
     pasystray.enable = nixosConfig.modules.hardware.audio.enable;
     udiskie.enable = true;
     network-manager-applet.enable = true;
-    kanshi.enable = true;
+    kanshi = {
+      enable = true;
+      profiles = {
+        "home-undocked" = {
+          outputs = [
+            # Output eDP-1 'AU Optronics 0xD291 Unknown'
+            { criteria = "eDP-1"; position = "0,0"; mode = "1920x1200"; scale = 1.0; }
+          ];
+        };
+        "home-docked" = {
+          outputs = [
+            # Output eDP-1 'AU Optronics 0xD291 Unknown'
+            # Output DP-5 'LG Electronics LG ULTRAWIDE 0x0000D50C' (focused)
+            { criteria = "LG Electronics LG ULTRAWIDE 0x0000D50C"; position = "0,0"; mode = "3440x1440"; scale = 1.0; }
+            { criteria = "eDP-1"; position = "1460,1440"; mode = "1920x1200"; scale = 1.0; }
+          ];
+        };
+      };
+    };
     swayidle = {
       enable = true;
       events = [
@@ -264,5 +282,6 @@ in
     # Move away
     nyxt
   ];
+
 }
 
