@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 set -e
 if [ ! $(uname -s) = "Darwin" ]; then
-    xsel --clipboard --input $@
+    if ! command -v wl-copy  &> /dev/null; then
+        wl-copy $@
+    else
+        xsel --clipboard --input $@
+    fi
 else
-    pbpaste $@
+    pbcopy $@
 fi
