@@ -279,13 +279,14 @@ in
     swaylock
     swayidle
     swaybg
+    wf-recorder
     wl-clipboard
     mako
     wofi
     waybar
     slurp
     grim
-    zenity
+    gnome3.zenity
     # terminals
     # FIXME move this away, they work on both Xorg and Wayland/Sway
     alacritty
