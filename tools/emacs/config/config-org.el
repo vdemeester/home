@@ -4,6 +4,7 @@
 ;;; Code:
 
 (use-package s)
+(use-package dash)
 
 (defconst org-directory "~/desktop/org/"
   "org-mode directory, where most of the org-mode file lives")
@@ -233,8 +234,8 @@
   :bind (("C-c o c" . org-capture)))
 
 
-(use-package org-capture-pop-frame
-  :after org)
+;; (use-package org-capture-pop-frame
+;;   :after org)
 (use-package org-protocol
   :after org)
 (use-package org-clock
@@ -443,7 +444,7 @@ and thus keeping the configuration source up-to-date"
                     (directory-files-recursively src-home-dir "\.org$"))))))
 (use-package org-journal
   :commands (org-journal-new-entry org-capture)
-  :after (org-capture)
+  :after org
   :bind
   (("C-c n j" . org-journal-new-entry)
    ("C-c o j" . org-journal-new-entry))
@@ -461,15 +462,15 @@ This can be used for an org-capture template to create an entry in the journal."
     (goto-char (point-min))
     (org-show-entry))
   (add-to-list 'org-capture-templates
-                `("j" "Journal"))
+               `("j" "Journal"))
   (add-to-list 'org-capture-templates
-                `("jj" "Journal entry" entry (function org-journal-find-location)
-                  "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
-                  :empty-lines 1))
+               `("jj" "Journal entry" entry (function org-journal-find-location)
+                 "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
+                 :empty-lines 1))
   (add-to-list 'org-capture-templates
-                `("je" "Weekly review" entry (function org-journal-find-location)
-                  (file ,(expand-file-name "etc/orgmode/weekly.org" user-emacs-directory))
-                  :empty-lines 1 :clock-in t :clock-resume t))
+               `("je" "Weekly review" entry (function org-journal-find-location)
+                 (file ,(expand-file-name "etc/orgmode/weekly.org" user-emacs-directory))
+                 :empty-lines 1 :clock-in t :clock-resume t))
   :custom
   (org-journal-date-prefix "* ")
   (org-journal-file-header "#+TITLE: %Y-v%m Journal\n\n")
