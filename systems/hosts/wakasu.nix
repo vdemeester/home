@@ -80,7 +80,7 @@ in
       enable = true;
       containers = {
         enable = true;
-        docker.enable = true;
+        # docker.enable = true;
         podman.enable = true;
       };
     };
@@ -100,6 +100,10 @@ in
   # TODO Migrate to modules
   profiles.home = true;
   profiles.externalbuilder.enable = true;
+  environment.systemPackages = with pkgs; [
+    # docker client only
+    docker-client
+  ];
 
   services = {
     # automatic login is "safe" as we ask for the encryption passphrase anyway..
