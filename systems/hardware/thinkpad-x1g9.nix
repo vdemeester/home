@@ -48,6 +48,8 @@
         # CPU optimizations
         "CPU_SCALING_GOVERNOR_ON_AC" = "performance";
         "CPU_SCALING_GOVERNOR_ON_BAT" = "powersave";
+        "PLATFORM_PROFILE_ON_AC" = "balanced"; # or performance ?
+        "PLATFORM_PROFILE_ON_BAT" = "low-power";
         "CPU_MIN_PERF_ON_AC" = 0;
         "CPU_MAX_PERF_ON_AC" = 100;
         "CPU_MIN_PERF_ON_BAT" = 0;
