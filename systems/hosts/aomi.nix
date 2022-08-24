@@ -20,8 +20,6 @@ in
 {
   imports = [
     ../hardware/lenovo-p1.nix
-    #(import ../../nix).home-manager
-    #../modules
     (import ../../users).vincent
     (import ../../users).root
   ];
@@ -93,7 +91,7 @@ in
   };
 
   # FIXME Fix tmpOnTmpfs
-  systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
+  # systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
 
   services.hardware.bolt.enable = true;
 
