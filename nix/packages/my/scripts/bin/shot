@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
-maim -g $(slop; sleep ${2:-0}) | {
+SCREENSHOT_BIN=main
+SLOP_BIN=slop
+if ! command -v grim &> /dev/null; then
+    SCREENSHOT_BIN=grim
+fi
+if ! command -v slurp &> /dev/null; then
+    SLOP_BIN=slurp
+fi
+$SCREENSHOT_BIN -g $($SLOP_BIN; sleep ${2:-0}) | {
     case $1 in
 	%c) to='clipboard'; xclip -selection clipboard -t image/png ;;
 	%d) to=~/desktop/pictures/screenshots/$(hostname)/$(date +'%Y-%m-%d-%H%M%S').png; cat > "$to" ;;

@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-maim -d | {
+SCREENSHOT_BIN="main -d"
+if ! command -v grim &> /dev/null; then
+    SCREENSHOT_BIN=grim
+fi
+$SCREENSHOT_BIN | {
     case $1 in
 	%c) to='clipboard'; xclip -selection clipboard -t image/png ;;
 	%d) to=~/desktop/pictures/screenshots/$(hostname)/$(date +'%Y-%m-%d-%H%M%S').png; cat > "$to" ;;

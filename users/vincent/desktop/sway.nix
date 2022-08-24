@@ -201,7 +201,10 @@ in
         bindsym XF86AudioPrev exec "playerctl previous"
 
         bindcode ${mod}+49 exec swaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
-        bindcode ${mod}+Shift+49 exec swaymsg '[app_id="emacs" title="^_emacs scratchpad_$"]' scratchpad show || exec ${config.programs.emacs.package}/bin/emacsclient -c -F "((name . \"_emacs scratchpad_\"))" 
+        bindcode ${mod}+Shift+49 exec swaymsg '[app_id="emacs" title="^_emacs scratchpad_$"]' scratchpad show || exec ${config.programs.emacs.package}/bin/emacsclient -c -F "((name . \"_emacs scratchpad_\"))"
+
+        bindsym ${mod}+F10 exec ${pkgs.my.scripts}/bin/shot %d
+        bindsym ${mod}+Shift+F10 exec ${pkgs.my.scripts}/bin/shotf %d 
       '';
   };
   programs = {
@@ -281,6 +284,8 @@ in
     wofi
     waybar
     slurp
+    grim
+    zenity
     # terminals
     # FIXME move this away, they work on both Xorg and Wayland/Sway
     alacritty
