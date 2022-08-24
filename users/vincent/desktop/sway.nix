@@ -261,13 +261,14 @@ in
       enable = true;
       events = [
         { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"; }
-        { event = "after-resume"; command = ''swaymsg "output * dpms on"''; }
+        #{ event = "after-resume"; command = ''${pkgs.sway}/bin/swaymsg "output * dpms on"''; }
+        #{ event = "resume"; command = ''${pkgs.sway}/bin/swaymsg "output * dpms on"''; }
         { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"; }
-        { event = "unlock"; command = ''swaymsg "output * dpms on"''; }
+        #{ event = "unlock"; command = ''${pkgs.sway}/bin/swaymsg "output * dpms on"''; }
       ];
       timeouts = [
         { timeout = 600; command = "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"; }
-        { timeout = 1200; command = ''swaymsg "output * dpms off"''; }
+        #{ timeout = 1200; command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"''; }
       ];
     };
   };
