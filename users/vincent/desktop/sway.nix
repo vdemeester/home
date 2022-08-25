@@ -240,7 +240,7 @@ in
     blueman-applet.enable = nixosConfig.modules.hardware.bluetooth.enable;
     pasystray.enable = nixosConfig.modules.hardware.audio.enable;
     udiskie.enable = true;
-    network-manager-applet.enable = true;
+    # network-manager-applet.enable = true;
     kanshi = {
       enable = true;
       profiles = {
