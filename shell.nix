@@ -1,5 +1,5 @@
 { system ? builtins.currentSystem }:
 
 # Use flake.nix devshell, similar to "nix develop"
-(builtins.getFlake (toString ./.)).devShell.${system}
+(builtins.getFlake (toString ./.)).devShells.${system}.default
 
