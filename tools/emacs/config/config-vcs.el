@@ -83,6 +83,17 @@
     ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
   (magit-define-popup-switch 'magit-log-popup
     ?m "Omit merge commits" "--no-merges")
+  ;; cargo-culted from https://github.com/magit/magit/issues/3717#issuecomment-734798341
+  ;; valid gitlab options are defined in https://docs.gitlab.com/ee/user/project/push_options.html
+  ;;
+  ;; the second argument to transient-append-suffix is where to append
+  ;; to, not sure what -u is, but this works
+  (transient-append-suffix 'magit-push "-u"
+    '(1 "=s" "Skip gitlab pipeline" "--push-option=ci.skip"))
+  (transient-append-suffix 'magit-push "=s"
+    '(1 "=m" "Create gitlab merge-request" "--push-option=merge_request.create"))
+  (transient-append-suffix 'magit-push "=m"
+    '(1 "=o" "Set push option" "--push-option="))  ;; Will prompt, can only set one extra
 
   ;; Hide "Recent Commits"
   (magit-add-section-hook 'magit-status-sections-hook
