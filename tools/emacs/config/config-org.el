@@ -448,7 +448,7 @@ and thus keeping the configuration source up-to-date"
   :bind
   (("C-c n j" . org-journal-new-entry)
    ("C-c o j" . org-journal-new-entry))
-  :init
+  :config
   (defun org-journal-find-location ()
     "Go to the beginning of the today's journal file.
 
