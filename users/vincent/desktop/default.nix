@@ -24,23 +24,25 @@ in
     aspellDicts.en
     aspellDicts.fr
     desktop-file-utils
+    go-jira
     hunspell
-    hunspellDicts.en_US-large
     hunspellDicts.en_GB-ize
+    hunspellDicts.en_US-large
     hunspellDicts.fr-any
+    keybase
     libreoffice-fresh
+    mpw
+    my.batzconverter
+    nyxt
+    obs-studio
+    playerctl
+    profile-sync-daemon
+    signal-desktop
+    thunderbird
     xdg-user-dirs
     xdg_utils
     xsel
-    obs-studio
-    signal-desktop
-    keybase
-    profile-sync-daemon
     youtube-dl
-    my.batzconverter
-    mpw
-    go-jira
-    thunderbird
   ];
 
   home.file.".XCompose".source = ./xorg/XCompose;
