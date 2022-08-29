@@ -74,12 +74,14 @@ defined keys follow the pattern of <PREFIX> <KEY>.")
   :after eww
   :config
   (setq browse-url-generic-program "google-chrome-stable")
-  (setq browse-url-browser-function '(("^https://gitlab.com.*" . browse-url-firefox)
-                                      ("^https://github.com.*" . browse-url-generic)
-                                      ("^https://issues.redhat.com.*" . browse-url-generic)
-                                      ("^https://.*redhat.com.*" . browse-url-generic)
-                                      ("^https://docs.jboss.org.*" . browse-url-generic)
-                                      (".*" . eww-browse-url))))
+  (setq browse-url-handlers '(("^https://gitlab.com.*" . browse-url-firefox)
+                              ("^https://github.com.*" . browse-url-generic)
+                              ("^https://issues.redhat.com.*" . browse-url-generic)
+                              ("^https://.*redhat.com.*" . browse-url-generic)
+                              ("^https://docs.jboss.org.*" . browse-url-generic)
+                              (".*" . eww-browse-url)))
+  (setq browse-url-browser-function #'eww-browse-url)
+  )
 
 (provide 'config-web)
 ;;; config-web.el ends here
