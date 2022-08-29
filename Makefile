@@ -9,9 +9,11 @@ hosts: ${HOSTS_BUILD}
 host/%/build: FORCE
 	nix build .#nixosConfigurations.$*.config.system.build.toplevel --no-link
 host/%/boot: FORCE
-	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.home --flake .#$* boot
+	nixos-rebuild --target-host root@$*.home --flake .#$* boot
+	# nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.home --flake .#$* boot
 host/%/switch: FORCE
-	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.home --flake .#$* switch
+	nixos-rebuild --target-host root@$*.home --flake .#$* switch
+	# nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.home --flake .#$* switch
 
 boot:
 	sudo nixos-rebuild --flake .# boot
