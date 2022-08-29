@@ -32,22 +32,6 @@ in
     };
   };
 
-  boot.binfmt.registrations = {
-    s390x-linux = {
-      # interpreter = getEmulator "s390x-linux";
-      interpreter = "${pkgs.qemu}/bin/qemu-s390x";
-      magicOrExtension = ''\x7fELF\x02\x02\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x16'';
-      mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff'';
-    };
-  };
-  boot.binfmt.emulatedSystems = [
-    "armv6l-linux"
-    "armv7l-linux"
-    "aarch64-linux"
-    # "s390x-linux"
-    "powerpc64le-linux"
-  ];
-
   # TODO: check if it's done elsewhere
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
@@ -96,6 +80,10 @@ in
   swapDevices = [{
     device = "/dev/disk/by-uuid/a9ec44e6-0c1d-4f60-9f5c-81a7eaa8e8fd";
   }];
+
+  modules = {
+    core.binfmt.enable = true;
+  };
 
   programs.ssh.setXAuthLocation = true;
   profiles = {

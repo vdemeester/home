@@ -73,44 +73,29 @@ in
     loader.systemd-boot.netbootxyz.enable = true;
     kernelPackages = pkgs.linuxPackages_latest;
     tmpOnTmpfs = true;
-    binfmt.registrations = {
-      s390x-linux = {
-        # interpreter = getEmulator "s390x-linux";
-        interpreter = "${pkgs.qemu}/bin/qemu-s390x";
-        magicOrExtension = ''\x7fELF\x02\x02\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x16'';
-        mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff'';
-      };
-    };
-    binfmt.emulatedSystems = [
-      "armv6l-linux"
-      "armv7l-linux"
-      "aarch64-linux"
-      # "s390x-linux"
-      "powerpc64le-linux"
-    ];
   };
-
-  # FIXME Fix tmpOnTmpfs
-  # systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
 
   services.hardware.bolt.enable = true;
 
   modules = {
-    hardware = { };
+    core.binfmt.enable = true;
+    hardware = {
+      laptop.enable = true;
+    };
+    services = {
+      avahi.enable = true;
+      ssh.enable = true;
+      syncthing.enable = true;
+    };
   };
 
   profiles = {
     externalbuilder.enable = true;
-    # desktop.i3.enable = true;
-    laptop.enable = true;
     home = true;
     dev.enable = true;
     virtualization = { enable = true; nested = true; };
     redhat.enable = true;
-    ssh.enable = true;
     docker.enable = true;
-    avahi.enable = true;
-    syncthing.enable = true;
   };
 
 

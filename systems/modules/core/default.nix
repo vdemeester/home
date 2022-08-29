@@ -4,6 +4,7 @@
     ./config.nix
     ./nix.nix
     ./users.nix
+    ./binfmt.nix
   ];
 
   boot = {
