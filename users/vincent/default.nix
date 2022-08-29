@@ -99,7 +99,7 @@ in
         }
       ]
       ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
-      ++ optionals (config.networking.hostName == "wakasu") [
+      ++ optionals (config.networking.hostName == "wakasu" || config.networking.hostName == "aomi") [
         {
           home.packages = with pkgs; [
             libosinfo
