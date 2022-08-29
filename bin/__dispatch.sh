@@ -10,12 +10,6 @@ readonly REPO_ROOT=$(dirname "$0")/..
 TARGET_TOOL=$(basename "$0")
 
 case "${TARGET_TOOL}" in
-    univ)
-        attr="tools.univ"
-        ;;
-    system)
-        attr="tools.system"
-        ;;
     bus)
         attr="tools.bus"
         ;;
