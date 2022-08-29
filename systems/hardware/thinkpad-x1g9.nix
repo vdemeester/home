@@ -36,6 +36,7 @@
     hardware.bolt.enable = true;
     # throttled.enable = true; # might not be needed
     tlp = {
+      # FIXME: to disable
       enable = true;
       settings = {
         # Charge threshold
