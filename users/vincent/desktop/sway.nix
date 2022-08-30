@@ -281,6 +281,7 @@ in
     swaybg
     wf-recorder
     wl-clipboard
+    wtype
     mako
     wofi
     waybar
