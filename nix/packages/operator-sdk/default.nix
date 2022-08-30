@@ -92,6 +92,30 @@ rec {
     sha256 = "sha256-zgiJDmpjmm2rzi12XAT+bHpiOKwi1k6xd9fvPGwFNXQ=";
     vendorSha256 = "sha256:0i74v34ckawxq9r31v1jj3vyp8rp9v3jyfp0pfn896j24ka85dlr";
   };
-  operator-sdk_1 = operator-sdk_1_16;
+  operator-sdk_1_20 = makeOverridable operatorSdkGen {
+    version = "1.20.1";
+    k8sVersion = "1.23";
+    sha256 = "sha256-Rt5F+Zc1BrxKBaQPMtJoeZWkEK/OmmGjM0iG4xzNqdQ=";
+    vendorSha256 = "sha256-YwFJBqvfm+cw4FTNORmsNp1W39bnTT+g7EvNOOBhkqA=";
+  };
+  operator-sdk_1_21 = makeOverridable operatorSdkGen {
+    version = "1.22.0";
+    k8sVersion = "1.23";
+    sha256 = "sha256-RrbO30LVRj5Rg91eXHdsU2yoUeUF7talhawH22Il7KQ=";
+    vendorSha256 = "sha256-2C3ToNPwF4Ruq8xjfyCNz/Zbh1CVQZWUh0WXEgIjhdM=";
+  };
+  operator-sdk_1_22 = makeOverridable operatorSdkGen {
+    version = "1.22.2";
+    k8sVersion = "1.24";
+    sha256 = "sha256-SpSdVJeN+rOZ6jeFPKadXKQLBZmrLjbrBrJsK9zDiZg=";
+    vendorSha256 = "sha256-MiA3XbdSwzZLilvrqlNU8e2nMAfhmVnNeG1oUx4ISRU=";
+  };
+  operator-sdk_1_23 = makeOverridable operatorSdkGen {
+    version = "1.23.0";
+    k8sVersion = "1.24";
+    sha256 = "sha256-2/zXdhRp8Q7e9ty0Zp+fpmcLNW6qfrW6ND83sypx9Xw=";
+    vendorSha256 = "sha256-3/kU+M+oKaPJkqMNuvd1ANlHRnXhaUrofj/rl3CS5Ao=";
+  };
+  operator-sdk_1 = operator-sdk_1_22;
   operator-sdk = operator-sdk_1;
 }
