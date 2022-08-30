@@ -43,8 +43,9 @@ else
     $NOTIFY_CMD "VPN ${name} is already connected." "You are already connected to the Red Hat VPN, let's work !"
 fi
 # Ask for kerberos password if klist returns an error (no creds)
-if ! [[ GRAPHICS -eq 0 ]]; then
-    klist || {
-        zenity --password --title="Kerberos password" | kinit vdemeest@REDHAT.COM
-    }
-fi
+gpg --decrypt $HOME/desktop/documents/Red\ Hat/pass.gpg 2>/dev/null | kinit vdemeest@REDHAT.COM
+# if ! [[ GRAPHICS -eq 0 ]]; then
+#     klist || {
+#         zenity --password --title="Kerberos password" | kinit vdemeest@REDHAT.COM
+#     }
+# fi
