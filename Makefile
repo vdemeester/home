@@ -1,7 +1,7 @@
 # Makefile for home
 HOSTS          = $(shell nix flake show --json | yq '.nixosConfigurations.[] | key')
 HOSTS_BUILD    = $(addprefix host/, $(addsuffix /build,$(HOSTS)))
-BUILDER_HOST   = root@shikoku.home
+BUILDER_HOST   = vincent@shikoku.home
 
 hosts: ${HOSTS_BUILD}
 	echo ${HOSTS_BUILD} ${HOSTS}
@@ -9,11 +9,9 @@ hosts: ${HOSTS_BUILD}
 host/%/build: FORCE
 	nix build .#nixosConfigurations.$*.config.system.build.toplevel --no-link
 host/%/boot: FORCE
-	nixos-rebuild --target-host root@$*.home --flake .#$* boot
-	# nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.home --flake .#$* boot
+	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.home --flake .#$* boot
 host/%/switch: FORCE
-	nixos-rebuild --target-host root@$*.home --flake .#$* switch
-	# nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.home --flake .#$* switch
+	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.home --flake .#$* switch
 
 boot:
 	sudo nixos-rebuild --flake .# boot
@@ -44,22 +42,6 @@ all: switch
 .PHONY: update
 update:
 	nix-channel --update
-
-# .PHONY: build
-# build:
-# 	./bin/system build
-#
-# .PHONY: nixos-dry-build
-# dry-build: setup
-# 	./bin/system dry-build
-#
-# .PHONY: switch
-# switch:
-# 	./bin/system switch
-#
-# .PHONY: boot
-# boot:
-# 	./bin/system boot
 
 .PHONY: install-hooks
 install-hooks:
