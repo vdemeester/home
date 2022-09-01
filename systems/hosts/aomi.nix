@@ -82,6 +82,30 @@ in
     hardware = {
       laptop.enable = true;
     };
+    dev = {
+      enable = true;
+      containers = {
+        enable = true;
+        docker.enable = true;
+        podman.enable = true;
+        image-mirroring = {
+          enable = true;
+          targets = [ "quay.io/vdemeest" "ghcr.io/vdemeester" ];
+          settings = {
+            "docker.io" = {
+              "images" = {
+                # sync latest and edge tags
+                "alpine" = [ "latest" "edge" ];
+              };
+              "images-by-tag-regex" = {
+                # sync all "3.x" images"
+                "alpine" = "^[3-0]\.[0-9]+$";
+              };
+            };
+          };
+        };
+      };
+    };
     services = {
       avahi.enable = true;
       ssh.enable = true;
@@ -92,10 +116,10 @@ in
   profiles = {
     externalbuilder.enable = true;
     home = true;
-    dev.enable = true;
+    # dev.enable = true;
     virtualization = { enable = true; nested = true; };
     redhat.enable = true;
-    docker.enable = true;
+    # docker.enable = true;
   };
 
 
@@ -140,21 +164,21 @@ in
     };
   };
 
-  virtualisation.podman.enable = true;
-  virtualisation.containers = {
-    enable = true;
-    registries = {
-      search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
-    };
-    policy = {
-      default = [{ type = "insecureAcceptAnything"; }];
-      transports = {
-        docker-daemon = {
-          "" = [{ type = "insecureAcceptAnything"; }];
-        };
-      };
-    };
-  };
+  # virtualisation.podman.enable = true;
+  # virtualisation.containers = {
+  #   enable = true;
+  #   registries = {
+  #     search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
+  #   };
+  #   policy = {
+  #     default = [{ type = "insecureAcceptAnything"; }];
+  #     transports = {
+  #       docker-daemon = {
+  #         "" = [{ type = "insecureAcceptAnything"; }];
+  #       };
+  #     };
+  #   };
+  # };
 
   # Move this to a "builder" role
   users.extraUsers.builder = {
