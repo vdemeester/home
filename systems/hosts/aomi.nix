@@ -192,14 +192,14 @@ in
       git rebase upstream/main
       # Make versions
       make versions
-      for v in 1.8 1.9; do
+      for v in 1.7 1.8 1.9; do
         echo "Build $v"
         (
         cd versions/$v
         git clean -fd
         git reset --hard HEAD
         git co upstream/pipelines-$v-rhel-8
-        nix-shell /home/vincent/src/osp/shell.nix --command 'make REMOTE=quay.io/vdemeest TAG=$v sources/upgrade sources/operator/fetch-payload  bundle/push'
+        nix-shell /home/vincent/src/osp/shell.nix --command "make REMOTE=quay.io/vdemeest TAG=$v sources/upgrade sources/operator/fetch-payload  bundle/push"
         )
       done
     '';
