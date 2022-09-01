@@ -386,7 +386,8 @@ toggle, the current window configuration is saved in a register."
   (add-to-list 'tramp-remote-path "/etc/profiles/per-user/root/bin/")
   (add-to-list 'tramp-remote-path "/etc/profiles/per-user/vincent/bin/")
   (add-to-list 'tramp-remote-path "~/.nix-profile/bin")
-  (add-to-list 'tramp-remote-path "~/bin"))
+  (add-to-list 'tramp-remote-path "~/bin")
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
 (defun generic-term-init ()
   (visual-line-mode -1)
