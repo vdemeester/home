@@ -181,31 +181,27 @@ in
       OnFailure = "status-email-root@%.service";
     };
 
-    path = with pkgs; [ git openssh bash coreutils-full nix which ];
+    path = with pkgs; [ git openssh bash coreutils-full nix which gnumake ];
     script = ''
       set -e
       cd /home/vincent/src/osp/p12n/p12n
+      git fetch -p --all
       git clean -fd
       git reset --hard HEAD
       git checkout main
-      git fetch -p --all
-      BRANCH=$(git symbolic-ref --short HEAD)
-      # 1.8
-      git clean -fd
-      git reset --hard HEAD
-      git checkout upstream/pipelines-1.8-rhel-8
-      nix-shell /home/vincent/src/osp/shell.nix --command 'make REMOTE=quay.io/vdemeest TAG=1.8 sources/upgrade sources/operator/fetch-payload  bundle/push'
-      # make REMOTE=quay.io/vdemeest TAG=1.8 sources/upgrade sources/operator/fetch-payload  bundle/push
-      git reset --hard HEAD
-      #1.7
-      git clean -fd
-      git reset --hard HEAD
-      git checkout upstream/pipelines-1.7-rhel-8
-      nix-shell /home/vincent/src/osp/shell.nix --command 'make REMOTE=quay.io/vdemeest TAG=1.7 sources/upgrade sources/operator/fetch-payload  bundle/push'
-      # make REMOTE=quay.io/vdemeest TAG=1.7 sources/upgrade sources/operator/fetch-payload  bundle/push
-      git reset --hard HEAD
-      # revert
-      git checkout $BRANCH
+      git rebase upstream/main
+      # Make versions
+      make versions
+      for v in 1.7 1.8 1.9; do
+        echo "Build $v"
+        (
+        cd versions/$v
+        git clean -fd
+        git reset --hard HEAD
+        git co upstream/pipelines-$v-rhel-8
+        nix-shell /home/vincent/src/osp/shell.nix --command 'make REMOTE=quay.io/vdemeest TAG=$v sources/upgrade sources/operator/fetch-payload  bundle/push'
+        )
+      done
     '';
 
     startAt = "daily";
