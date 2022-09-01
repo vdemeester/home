@@ -38,18 +38,26 @@ rec {
       '';
     };
 
-  oc = oc_4_9;
+  oc = oc_4_11;
+  oc_4_11 = makeOverridable ocGen {
+    version = "4.11.2";
+    sha256 = "sha256-7uCRjf8oo+CIcuSJOvSunrzo8uzoJEWytypXzbAOvm4=";
+  };
+  oc_4_10 = makeOverridable ocGen {
+    version = "4.10.30";
+    sha256 = "sha256-hYlzGgE6MZCfRZpf/1+hv2YbSnmSyqNSsWqt5JC76ps=";
+  };
   oc_4_9 = makeOverridable ocGen {
-    version = "4.9.9";
-    sha256 = "sha256-2n99D2PFEHBV7Cd6Co9S/QXGcMTDsWwFSNVG9ggvEBY=";
+    version = "4.9.47";
+    sha256 = "sha256-jNwZHfGprFS+wU5xfnh0bpI+lNJR/xUbsOlG3Urk2O8=";
   };
   oc_4_8 = makeOverridable ocGen {
-    version = "4.8.22";
-    sha256 = "sha256-sGk7LPDhe3wjG4U2Covu9az2CVROCKRqoB1YxP73/vk=";
+    version = "4.8.48";
+    sha256 = "sha256-M7dwAbYayKNCjkciSoYzv+UwpX+IL6i03hKMBeUVpXY=";
   };
   oc_4_7 = makeOverridable ocGen {
-    version = "4.7.38";
-    sha256 = "sha256-HC/KRRpz2QpdjHpOyoYolZ6CAKBOFyq5Yh3YYszjNFM=";
+    version = "4.7.56";
+    sha256 = "sha256-RKYFW4ir6Gd5GDAGJ/pY4/ysSgGxTCndslvr0VmxgmE=";
   };
   oc_4_6 = makeOverridable ocGen {
     version = "4.6.50";
