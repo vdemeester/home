@@ -106,30 +106,28 @@ in
         };
       };
     };
+    profiles = {
+      #   home = true;
+      work.redhat = true;
+    };
     services = {
       avahi.enable = true;
       ssh.enable = true;
-      syncthing.enable = true;
+      syncthing = {
+        enable = true;
+        guiAddress = "${metadata.hosts.aomi.wireguard.addrs.v4}:8384";
+      };
     };
   };
 
   profiles = {
     externalbuilder.enable = true;
     home = true;
-    # dev.enable = true;
     virtualization = { enable = true; nested = true; };
-    redhat.enable = true;
-    # docker.enable = true;
   };
 
 
   services.udev.extraRules = ''
-    # Teensy rules for the Ergodox EZ
-    ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
-    ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
-    KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
-
     # STM32 rules for the Moonlander and Planck EZ
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \
         MODE:="0666", \
@@ -137,10 +135,6 @@ in
 
     # Suspend the system when battery level drops to 5% or lower
     SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
-
-    # Allow brightness
-    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
-    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
   '';
 
   services = {
@@ -150,7 +144,6 @@ in
       HandleLidSwitchExternalPower=ignore
       HandleLidSwitchDocked=ignore
     '';
-    syncthing.guiAddress = "${metadata.hosts.aomi.wireguard.addrs.v4}:8384";
     smartd = {
       enable = true;
       devices = [{ device = "/dev/nvme0n1"; }];
@@ -163,22 +156,6 @@ in
       endpointPublicKey = endpointPublicKey;
     };
   };
-
-  # virtualisation.podman.enable = true;
-  # virtualisation.containers = {
-  #   enable = true;
-  #   registries = {
-  #     search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
-  #   };
-  #   policy = {
-  #     default = [{ type = "insecureAcceptAnything"; }];
-  #     transports = {
-  #       docker-daemon = {
-  #         "" = [{ type = "insecureAcceptAnything"; }];
-  #       };
-  #     };
-  #   };
-  # };
 
   # Move this to a "builder" role
   users.extraUsers.builder = {
