@@ -60,13 +60,13 @@ in
 
 
         # Pull to dir first
-        skopeo sync --src yaml --dest dir \
+        skopeo sync --preserve-digests --src yaml --dest dir \
                ${settingsFile} \
                $BUILDTMPDIR
 
         # Push to targets
         for target in ${lib.strings.concatStringsSep " " cfg.targets}; do
-            skopeo sync --src dir --dest docker \
+            skopeo sync --preserve-digests --src dir --dest docker \
                    $BUILDTMPDIR \
                    $target
         done

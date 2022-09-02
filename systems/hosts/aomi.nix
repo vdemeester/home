@@ -99,7 +99,7 @@ in
               };
               "images-by-tag-regex" = {
                 # sync all "3.x" images"
-                "alpine" = "^[1-9]\.[0-9]+$";
+                "alpine" = "^3\.[0-9]+$";
               };
             };
           };
