@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs ? import <nixpkgs> { }, ... }:
 let
   go = pkgs.go_1_18;
 in

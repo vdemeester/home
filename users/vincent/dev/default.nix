@@ -43,8 +43,8 @@
   # FIXME move this to a "work.redhat" configuration.
   # Upstream Tekton
   home.file."src/tektoncd/.envrc".source = ./src/tektoncd.envrc;
-  home.file."src/tektoncd/shell.nix".source = ./src/tektoncd.shell.nix;
+  home.file."src/tektoncd/shell.nix".source = ../../../shells/tekton.nix;
   # Downstream OSP
   home.file."src/osp/.envrc".source = ./src/osp.envrc;
-  home.file."src/osp/shell.nix".source = ./src/osp.shell.nix;
+  home.file."src/osp/shell.nix".source = ../../../shells/osp.nix;
 }
