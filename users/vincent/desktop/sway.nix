@@ -29,7 +29,7 @@ in
       };
       modifier = "Mod4";
       terminal = "${pkgs.kitty}/bin/kitty";
-      menu = "${pkgs.wofi}/bin/wofi --show drun -modi 'drun,run,window,ssh'";
+      menu = "${pkgs.wofi}/bin/wofi -G --show drun -modi 'drun,run,window,ssh'";
       bindkeysToCode = true;
       input = {
         "type:keyboard" = {
@@ -60,7 +60,7 @@ in
         in
         {
           "${mod}+p" = "exec ${menu}";
-          "${mod}+Control+p" = "exec ${pkgs.wofi-emoji}/bin/wofi-emoji";
+          "${mod}+Control+p" = "exec ${pkgs.wofi-emoji}/bin/wofi-emoji -G";
           "${mod}+Return" = "exec ${terminal}";
 
           "${mod}+Shift+q" = "kill";
@@ -288,6 +288,7 @@ in
     slurp
     grim
     gnome3.zenity
+    clipman
     # terminals
     # FIXME move this away, they work on both Xorg and Wayland/Sway
     alacritty

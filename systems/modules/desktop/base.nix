@@ -55,12 +55,13 @@ in
         hasklig
         inconsolata
         iosevka
+        iosevka-comfy.comfy
         noto-fonts
         noto-fonts-cjk
         noto-fonts-emoji
         noto-fonts-extra
         overpass
-        # symbola
+        symbola
         source-code-pro
         twemoji-color-font
         ubuntu_font_family
