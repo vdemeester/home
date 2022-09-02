@@ -20,7 +20,7 @@ rec {
       subPackages = [ "cmd/operator-sdk" ];
       ldflags =
         let
-          t = "github.com/operator-framework/operator-sdk/version";
+          t = "github.com/operator-framework/operator-sdk/internal/version";
         in
         [
           "-X ${t}.GitVersion=${version}"

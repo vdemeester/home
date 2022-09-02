@@ -7,5 +7,6 @@
     my.oc
     my.openshift-install
     my.operator-sdk
+    my.opm
   ];
 }

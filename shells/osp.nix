@@ -16,6 +16,7 @@ pkgs.mkShell {
     my.oc
     my.operator-sdk
     my.tkn
+    my.opm
     python39Packages.pyaml
     skopeo
     yq-go

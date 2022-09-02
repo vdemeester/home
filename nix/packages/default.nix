@@ -108,6 +108,11 @@ rec {
     operator-sdk_0_19
     operator-sdk
     ;
+  # OPM
+  inherit (pkgs.callPackage ./operator-sdk/opm.nix { })
+    opm_1_26
+    opm
+    ;
 
   # Tekton
   inherit (pkgs.callPackage ./tkn { })
