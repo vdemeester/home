@@ -1,6 +1,5 @@
 #+TITLE: Moving =home= to nix flakes
 #+FILETAGS: #home nix dotfiles configuration
-#+SETUPFILE: ../www/vincent.demeester.fr/templates/2022.org
 
 This document is a /live/ document on moving this =monorepo= to using nix flakes. It will go
 through why as well as trying to dig around what was done for it.
