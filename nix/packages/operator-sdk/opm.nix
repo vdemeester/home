@@ -19,12 +19,13 @@ rec {
       subPackages = [ "cmd/opm" ];
       ldflags =
         let
-          t = "https://github.com/operator-framework/operator-registry/cmd/opm/version";
+          t = "github.com/operator-framework/operator-registry/cmd/opm/version";
         in
         [
           "-X ${t}.gitCommit=${version}"
           "-X ${t}.opmVersion=${version}"
         ];
+      tags = [ "json1" ];
 
       src = fetchFromGitHub {
         inherit rev;
