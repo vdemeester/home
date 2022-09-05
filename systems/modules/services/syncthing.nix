@@ -55,6 +55,7 @@ in
         user = "vincent";
         dataDir = "/home/vincent/.syncthing";
         configDir = "/home/vincent/.syncthing";
+        guiAddress = cfg.guiAddress;
         devices = filterAttrs isCurrentHost devices;
         folders = {
           "/home/vincent/sync" = {
