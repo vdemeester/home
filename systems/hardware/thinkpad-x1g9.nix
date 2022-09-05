@@ -37,7 +37,7 @@
     # throttled.enable = true; # might not be needed
     tlp = {
       # FIXME: to disable
-      enable = true;
+      enable = false;
       settings = {
         # Charge threshold
         # If the battery is used somewhat frequently,
