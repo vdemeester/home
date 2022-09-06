@@ -154,8 +154,22 @@ in
             title = "^_emacs scratchpad_$";
           };
         }
+        {
+          criteria = { class = "pavucontrol"; };
+          command = "floating enable";
+        }
+        {
+          criteria = { title = "(Sharing Indicator)"; };
+          command = "inhibit_idle visible, floating enable";
+        }
+        {
+          # browser zoom|meet|bluejeans
+          criteria = { title = "(Blue Jeans)|(Meet)|(Zoom Meeting)"; };
+          command = "inhibit_idle visible";
+        }
       ];
       startup = [
+        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP"; } #workaround
         { command = "mako"; }
         { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         { command = "systemctl --user restart waybar"; always = true; }
@@ -268,15 +282,12 @@ in
     swayidle = {
       enable = true;
       events = [
-        { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"; }
-        #{ event = "after-resume"; command = ''${pkgs.sway}/bin/swaymsg "output * dpms on"''; }
-        #{ event = "resume"; command = ''${pkgs.sway}/bin/swaymsg "output * dpms on"''; }
-        { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"; }
-        #{ event = "unlock"; command = ''${pkgs.sway}/bin/swaymsg "output * dpms on"''; }
+        { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock --daemonize -i $HOME/desktop/pictures/lockscreen"; }
+        { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock --daemonize -i $HOME/desktop/pictures/lockscreen"; }
       ];
       timeouts = [
-        { timeout = 600; command = "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"; }
-        #{ timeout = 1200; command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"''; }
+        { timeout = 600; command = "${pkgs.swaylock}/bin/swaylock --daemonize -i $HOME/desktop/pictures/lockscreen"; }
+        { timeout = 1200; command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"''; resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"''; }
       ];
     };
   };
