@@ -88,6 +88,15 @@ in
         enable = true;
         docker.enable = true;
         podman.enable = true;
+        buildkit = {
+          enable = true;
+          grpcAddress = [
+            "unix:///run/buildkit/buildkitd.sock"
+            "tcp://aomi.home:1234"
+            "tcp://${metadata.hosts.aomi.addrs.v4}:1234"
+            "tcp://${metadata.hosts.aomi.wireguard.addrs.v4}:1234"
+          ];
+        };
         image-mirroring = {
           enable = true;
           targets = [ "quay.io/vdemeest" "ghcr.io/vdemeester" ];

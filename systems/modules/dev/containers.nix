@@ -24,6 +24,17 @@ in
       podman = {
         enable = mkEnableOption "Enable podman containers";
       };
+      buildkit = {
+        enable = mkEnableOption "Enable podman containers";
+        grpcAddress = mkOption {
+          type = types.listOf types.str;
+          default = [ "unix:///run/buildkit/buildkitd.sock" ];
+          example = [ "unix:///run/buildkit/buildkitd.sock" "tcp://0.0.0.0:1234" ];
+          description = lib.mdDoc ''
+            A list of address to listen to for the grpc service.
+          '';
+        };
+      };
     };
   };
   config = mkIf cfg.enable (mkMerge [
@@ -38,6 +49,9 @@ in
         buildkitd = {
           enable = true;
           settings = {
+            grpc = {
+              address = cfg.buildkit.grpcAddress;
+            };
             worker.oci = {
               enabled = false;
             };
