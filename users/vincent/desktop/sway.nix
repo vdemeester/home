@@ -155,6 +155,10 @@ in
           };
         }
         {
+          criteria = { title = "Save File"; };
+          command = "floating enable, resize set width 600px height 800px";
+        }
+        {
           criteria = { class = "pavucontrol"; };
           command = "floating enable";
         }
@@ -230,15 +234,35 @@ in
     waybar = {
       enable = true;
       systemd.enable = true;
+      style = ./waybar.css;
       settings = [{
         layer = "bottom";
         position = "bottom";
         mode = "hide";
         modules-left = [ "sway/workspaces" "sway/mode" "custom/media" ];
-        modules-center = [ "sway/window" ];
-        modules-right = [ "idle_inhibitor" "pulseaudio" "temperature" "backlight" "sway/language" "battery" "clock" "tray" ];
+        modules-center = [ "clock" ];
+        modules-right = [ "idle_inhibitor" "network" "temperature" "battery#bat0" "tray" ];
         ipc = true;
         id = "mainBar";
+        "clock" = {
+          "interval" = 30;
+          "format" = "{:<b>%H:%M</b>}";
+          "tooltip-format" = "<big><b>{:%Y %B}</b></big>\n{calendar}";
+          "format-alt" = "{:%A %d %B %Y}";
+        };
+        "battery#bat0" = {
+          "bat" = "BAT0";
+          "states" = {
+            "warning" = 30;
+            "critical" = 15;
+          };
+          "format" = "{icon} {capacity}";
+          "format-charging" = "\uf0e7 {capacity}";
+          "format-plugged" = "";
+          "format-alt" = "{icon} {time}";
+          "format-full" = "";
+          "format-icons" = [ "" "" "" "" "" ];
+        };
       }];
     };
     mako = {
