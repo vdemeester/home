@@ -94,6 +94,11 @@ in
           "${mod}+Control+Up" = "workspace next";
           "${mod}+Control+Right" = "workspace next_on_output";
 
+          "${mod}+Shift+Control+Left" = "move workspace to output left";
+          "${mod}+Shift+Control+Down" = "move workspace to output down";
+          "${mod}+Shift+Control+Up" = "move workspace to output up";
+          "${mod}+Shift+Control+Right" = "move workspace to output right";
+
           # "${mod}+b" = "splith";
           # "${mod}+v" = "splitv";
           "${mod}+f" = "fullscreen toggle";
