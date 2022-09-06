@@ -29,6 +29,7 @@ in
       ncurses
       pciutils
       ripgrep
+      ugrep
       scripts
       tree
       usbutils

@@ -149,6 +149,7 @@ in
     pandoc
     sqlite
     zip
+    ugrep
     # See if I can hide this under an option
     capture
     ec

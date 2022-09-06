@@ -59,6 +59,16 @@ confines of word boundaries (e.g. multiple words)."
          ("M-s d" . find-grep-dired))
   :hook ((hook-mode . toggle-truncate-lines))
   :config
+  (setq-default grep-template (string-join '("ugrep"
+                                             "--color=always"
+                                             "--ignore-binary"
+                                             "--ignore-case"
+                                             "--include=<F>"
+                                             "--line-number"
+                                             "--null"
+                                             "--recursive"
+                                             "--regexp=<R>")
+                                           " "))
   (add-to-list 'grep-find-ignored-directories "auto")
   (add-to-list 'grep-find-ignored-directories "elpa"))
 ;; -UseGrep
@@ -94,9 +104,7 @@ confines of word boundaries (e.g. multiple words)."
                                                  "rg"
                                                (format "rg: %s" (projectile-project-name))))
           (t "rg")))
-  (setq rg-buffer-name #'vde/rg-buffer-name)
-  (with-eval-after-load 'projectile
-    (defalias 'projectile-ripgrep #'rg-project)))
+  (setq rg-buffer-name #'vde/rg-buffer-name))
 ;; -UseRG
 
 (provide 'config-search)
