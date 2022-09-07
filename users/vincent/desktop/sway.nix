@@ -241,7 +241,7 @@ in
         mode = "hide";
         modules-left = [ "sway/workspaces" "sway/mode" "custom/media" ];
         modules-center = [ "clock" ];
-        modules-right = [ "idle_inhibitor" "network" "temperature" "battery#bat0" "tray" ];
+        modules-right = [ "temperature" "battery#bat0" "tray" ];
         ipc = true;
         id = "mainBar";
         "clock" = {

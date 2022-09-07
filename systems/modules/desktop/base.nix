@@ -51,6 +51,7 @@ in
         fira-code
         fira-code-symbols
         fira-mono
+        font-awesome
         go-font
         hasklig
         inconsolata

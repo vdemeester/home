@@ -14,7 +14,8 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: Noto Mono, monospace;
+    /* FontAwesome6Free, FontAwesome6Brands; */
+    font-family: Ubuntu Mono, "Font Awesome 6 Free", monospace;
     font-size: 13px;
     min-height: 0;
     box-shadow: none;
@@ -28,7 +29,7 @@ window#waybar {
 }
 
 #window {
-    font-family: Noto Sans, sans-serif;
+    font-family: Ubuntu Sans, sans-serif;
 }
 
 #workspaces {
@@ -57,7 +58,7 @@ window#waybar {
     padding: 0px 9px;
     background-color: #a3be8c;
     color: #3b4252;
-    font-family: Noto Sans, sans-serif;
+    font-family: Ubuntu Sans, sans-serif;
     font-size: 14px;
     font-weight: bold;
 }
