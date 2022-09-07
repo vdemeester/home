@@ -40,6 +40,10 @@ lib =
 lib =
     export BASE_PATH=openshift-pipelines
 
+[operator-tooling]
+lib = 
+    export BASE_PATH=openshift-pipelines
+
 [toolbox]
 lib =
     export BASE_PATH=openshift-pipelines
