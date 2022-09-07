@@ -25,6 +25,7 @@
     shfmt
     vale
     yq-go
+    fossil
   ];
 
   home.file.".ignore".text = ''
