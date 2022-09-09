@@ -21,6 +21,7 @@ pkgs.mkShell {
     python39Packages.pyaml
     skopeo
     yq-go
+    yamllint
     go
   ];
   shellHook = ''

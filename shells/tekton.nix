@@ -12,6 +12,7 @@ pkgs.mkShell {
     my.operator-tool
     google-cloud-sdk
     gron
+    yamllint
   ];
   shellHook = ''
     export GOMODULE=on
