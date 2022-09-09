@@ -15,6 +15,7 @@ pkgs.mkShell {
     kustomize
     my.oc
     my.operator-sdk
+    my.operator-tool
     my.tkn
     my.opm
     python39Packages.pyaml

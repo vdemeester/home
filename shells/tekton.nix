@@ -9,6 +9,7 @@ pkgs.mkShell {
     ko
     my.oc
     my.tkn
+    my.operator-tool
     google-cloud-sdk
     gron
   ];

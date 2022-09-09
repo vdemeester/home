@@ -83,14 +83,7 @@ rec {
     kam
     ;
 
-  inherit (pkgs.callPackage ./crc { oc_4_4 = oc_4_4; oc_4_3 = oc_4_3; })
-    crc_1_9
-    crc_1_10
-    crc_1_11
-    crc_driver_libvirt_0_12_7
-    crc_driver_libvirt_0_12_8
-    ;
-  crc = crc_1_10;
+  operator-tool = pkgs.callPackage ./operator-tooling { };
 
   # Operator SDK
   inherit (pkgs.callPackage ./operator-sdk { })

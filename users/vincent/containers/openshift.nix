@@ -8,5 +8,6 @@
     my.openshift-install
     my.operator-sdk
     my.opm
+    my.operator-tool
   ];
 }
