@@ -226,10 +226,16 @@ in
         bindsym XF86AudioPrev exec "playerctl previous"
 
         bindcode ${mod}+49 exec swaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
+        bindsym --whole-window button8 exec swaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
         bindcode ${mod}+Shift+49 exec swaymsg '[app_id="emacs" title="^_emacs scratchpad_$"]' scratchpad show || exec ${config.programs.emacs.package}/bin/emacsclient -c -F "((name . \"_emacs scratchpad_\"))"
+        bindsym --whole-window button9 exec swaymsg '[app_id="emacs" title="^_emacs scratchpad_$"]' scratchpad show || exec ${config.programs.emacs.package}/bin/emacsclient -c -F "((name . \"_emacs scratchpad_\"))"
+
+        # Mouse
+        bindsym --whole-window button6 workspace next_on_output
+        bindsym --whole-window button7 workspace prev_on_output
 
         bindsym ${mod}+F10 exec ${pkgs.my.scripts}/bin/shot %d
-        bindsym ${mod}+Shift+F10 exec ${pkgs.my.scripts}/bin/shotf %d 
+        bindsym ${mod}+Shift+F10 exec ${pkgs.my.scripts}/bin/shotf %d
       '';
   };
   programs = {
