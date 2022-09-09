@@ -121,6 +121,7 @@ in
           "${mod}+o" = "mode resize";
 
           "${mod}+Shift+o" = "exec ${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen";
+          "${mod}+Shift+n" = "exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
 
           "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%+";
           "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%-";
@@ -174,7 +175,8 @@ in
       ];
       startup = [
         { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP"; } #workaround
-        { command = "mako"; }
+        # { command = "mako"; }
+        { command = "${pkgs.swaynotificationcenter}/bin/swaync"; }
         { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         { command = "systemctl --user restart waybar"; always = true; }
         { command = "systemctl --user restart kanshi"; always = true; }
@@ -240,8 +242,8 @@ in
         position = "bottom";
         mode = "hide";
         modules-left = [ "sway/workspaces" "sway/mode" "custom/media" ];
-        modules-center = [ "clock" ];
-        modules-right = [ "temperature" "battery#bat0" "tray" ];
+        modules-center = [ "clock" "custom/notification" ];
+        modules-right = [ "temperature" "pulseaudio" "backlight" "battery#bat0" "tray" ];
         ipc = true;
         id = "mainBar";
         "clock" = {
@@ -257,11 +259,55 @@ in
             "critical" = 15;
           };
           "format" = "{icon} {capacity}";
-          "format-charging" = "\uf0e7 {capacity}";
+          "format-charging" = " {capacity}";
           "format-plugged" = "";
           "format-alt" = "{icon} {time}";
           "format-full" = "";
           "format-icons" = [ "" "" "" "" "" ];
+        };
+        "custom/notification" = {
+          "tooltip" = false;
+          "format" = "{icon} ";
+          "format-icons" = {
+            "notification" = "<span foreground='red'></span>";
+            "none" = "";
+            "dnd-notification" = "<sup></sup>";
+            "dnd-none" = "";
+          };
+          "return-type" = "json";
+          # "exec-if" = "which swaync-client";
+          "exec" = "swaync-client -swb";
+          "on-click" = "swaync-client -t -sw";
+          "on-click-right" = "swaync-client -d -sw";
+          "escape" = true;
+        };
+        "pulseaudio" = {
+          "format" = "{icon} {volume:2}% ";
+          "format-bluetooth" = "{icon}  {volume}% ";
+          "format-muted" = " ";
+          "format-icons" = {
+            "phone" = [
+              " "
+              " "
+              " "
+              " "
+            ];
+            "default" = [
+              ""
+              ""
+              ""
+            ];
+          };
+          "scroll-step" = 10;
+          "on-click-right" = "${pkgs.pavucontrol}/bin/pavucontrol";
+          "on-click" = "${pkgs.pamixer}/bin/pamixer -t";
+        };
+        "backlight" = {
+          "format" = "{icon} {percent}% ";
+          "format-icons" = [
+            ""
+            ""
+          ];
         };
       }];
     };
@@ -323,6 +369,7 @@ in
     wl-clipboard
     wtype
     mako
+    swaynotificationcenter
     wofi
     waybar
     slurp
