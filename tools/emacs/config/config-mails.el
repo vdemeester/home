@@ -49,10 +49,7 @@
 
   (defun my-message-hook ()
     "Message mode hook."
-    (turn-on-auto-fill)
-    (set (make-local-variable 'company-backends)
-         '(company-emoji company-capf company-files company-dabbrev))
-    (company-mode 1)))
+    (turn-on-auto-fill)))
 
 (if *sys/full*
     (progn
