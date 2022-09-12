@@ -5,7 +5,8 @@
 
 (use-package project
   :bind (("C-x p v" . vde-project-magit-status)
-         ("C-x p s" . vde-project-vterm))
+         ("C-x p s" . vde-project-vterm)
+         ("C-x p X" . vde/run-in-project-vterm))
   :config
 
   (setq vde/project-local-identifier '(".project")) ;; "go.mod"
@@ -46,7 +47,7 @@
     (interactive)
     (magit-status (vde-project--project-current)))
 
-  (defun vde-project-vterm ()
+  (defun vde-project-vterm (&optional command)
     "Run `vterm' on project.
 If a buffer already exists for running a vterm shell in the project's root,
 switch to it. Otherwise, create a new vterm shell."
@@ -60,7 +61,17 @@ switch to it. Otherwise, create a new vterm shell."
           (vterm default-project-vterm-name)
           (with-current-buffer vterm-buffer
             (vterm-send-string cd-cmd)
-            (vterm-send-return)))))))
+            (vterm-send-return))))
+      (when command
+        (vterm-send-string command)
+        (vterm-send-return))))
+  (defun vde/run-in-project-vterm ()
+    (interactive)
+    (let* ((default-directory (vde-project--project-current))
+           (default-project-vterm-name (project-prefixed-buffer-name "vterm"))
+           (vterm-buffer (get-buffer default-project-vterm-name)))
+      (vde-project-vterm (read-string "Command: "))))
+  )
 
 (provide 'config-projects)
 ;;; config-projects.el ends here
