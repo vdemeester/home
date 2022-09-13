@@ -16,6 +16,7 @@ in
         gitAndTools.git-extras
         (mkIf config.modules.shell.gnupg.enable
           gitAndTools.git-crypt)
+        tig
       ];
       # Default gitconfig
       etc."gitconfig".source = ./git/config;

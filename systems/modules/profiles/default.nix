@@ -2,7 +2,6 @@
   imports = [
     ./work.nix
     # Move this "away"
-    ./avahi.nix
     ./base.nix
     ./builder.nix
     ./desktop.nix
@@ -25,9 +24,6 @@
     ./qemu.nix
     ./redhat.nix
     ./scanning.nix
-    ./ssh.nix
-    ./syncthing.nix
-    ./sway.nix
     ./virtualization.nix
     ./wireguard.server.nix
     ./yubikey.nix

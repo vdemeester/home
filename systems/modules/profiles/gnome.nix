@@ -11,9 +11,9 @@ in
     };
   };
   config = mkIf cfg.enable {
+    modules.services.avahi.enable = true;
     profiles = {
       desktop.enable = true;
-      avahi.enable = true;
     };
     services = {
       gnome3 = {

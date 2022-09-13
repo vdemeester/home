@@ -122,6 +122,7 @@
           buildkit
           # Common modules
           ./systems/modules/core/default.nix
+          ./systems/modules/shell/default.nix
           ./systems/modules/desktop/default.nix
           ./systems/modules/dev/default.nix
           ./systems/modules/editors/default.nix
@@ -132,7 +133,6 @@
           # ./systems/modules/hardware/sane-extra-config.nixos.nix
           # FIXME: migrate this to elsewhere, or at least split it
           # Profiles probably need to go away
-          ./systems/modules/profiles/avahi.nix
           ./systems/modules/profiles/base.nix
           ./systems/modules/profiles/builder.nix
           ./systems/modules/profiles/desktop.nix
@@ -151,9 +151,6 @@
           ./systems/modules/profiles/qemu.nix
           ./systems/modules/profiles/redhat.nix
           ./systems/modules/profiles/scanning.nix
-          ./systems/modules/profiles/ssh.nix
-          ./systems/modules/profiles/syncthing.nix
-          ./systems/modules/profiles/sway.nix
           ./systems/modules/profiles/virtualization.nix
           ./systems/modules/profiles/wireguard.server.nix
           ./systems/modules/profiles/zsh.nix

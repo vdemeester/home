@@ -13,11 +13,15 @@ in
   config = mkIf cfg.enable {
     # Dev means Emacs 🙃
     modules.editors.emacs.enable = true;
+    modules.shell = {
+      direnv.enable = true;
+      git.enable = true;
+      gnupg.enable = true;
+      tmux.enable = true;
+    };
     # Enable lorri (to handle nix shells)
     services.lorri.enable = true;
     environment.systemPackages = with pkgs; [
-      git # will probably be enabled otherwise but still
-      tig
       grc
       ripgrep
       gnumake

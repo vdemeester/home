@@ -11,6 +11,8 @@ let
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
+
+  metadata = importTOML ../../ops/hosts.toml;
 in
 {
   imports = [
@@ -57,13 +59,21 @@ in
     };
   };
 
+  modules = {
+    services = {
+      syncthing = {
+        enable = true;
+        guiAddress = "${metadata.hosts.sakhalin.wireguard.addrs.v4}:8384";
+      };
+      avahi.enable = true;
+      ssh.enable = true;
+    };
+  };
+
   profiles = {
     bind.enable = true;
     home = true;
-    avahi.enable = true;
     git.enable = true;
-    ssh.enable = true;
-    syncthing.enable = true;
     virtualization = { enable = true; nested = true; listenTCP = true; };
   };
 
@@ -109,7 +119,6 @@ in
       listenAddress = "0.0.0.0";
       enableGarbageCollect = true;
     };
-    syncthing.guiAddress = "0.0.0.0:8384";
     wireguard = {
       enable = true;
       ips = ips;

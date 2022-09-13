@@ -11,6 +11,8 @@ let
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
+
+  metadata = importTOML ../../ops/hosts.toml;
 in
 {
   imports = [
@@ -83,6 +85,14 @@ in
 
   modules = {
     core.binfmt.enable = true;
+    services = {
+      syncthing = {
+        enable = true;
+        guiAddress = "${metadata.hosts.shikoku.wireguard.addrs.v4}:8384";
+      };
+      avahi.enable = true;
+      ssh.enable = true;
+    };
   };
 
   programs.ssh.setXAuthLocation = true;
@@ -91,18 +101,11 @@ in
     home = true;
     dev.enable = lib.mkForce false;
     desktop.enable = lib.mkForce false;
-    avahi.enable = true;
-    syncthing.enable = true;
-    ssh = {
-      enable = true;
-      forwardX11 = true;
-    };
     docker.enable = true;
     virtualization = { enable = true; nested = true; listenTCP = true; };
   };
   services = {
     netdata.enable = true;
-    syncthing.guiAddress = "${ip}:8384";
     smartd = {
       enable = true;
       devices = [{ device = "/dev/nvme0n1"; }];

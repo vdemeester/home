@@ -41,15 +41,18 @@ in
     };
   };
   config = mkIf cfg.enable {
-    profiles.avahi.enable = cfg.avahi;
     profiles.printing.enable = cfg.printing;
-    # profiles.pulseaudio.enable = cfg.pulseaudio;
     profiles.scanning.enable = cfg.scanning;
-    profiles.syncthing.enable = cfg.syncthing;
 
     modules = {
-      hardware.bluetooth.enable = true;
-      hardware.audio.enable = cfg.audio;
+      hardware = {
+        bluetooth.enable = true;
+        audio.enable = cfg.audio;
+      };
+      services = {
+        avahi.enable = cfg.avahi;
+        syncthing.enable = cfg.syncthing;
+      };
     };
 
     networking.networkmanager = {
