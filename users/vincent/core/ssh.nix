@@ -83,6 +83,9 @@ in
       "*.redhat.com" = {
         user = "vdemeest";
       };
+      "bootstrap.ospqa.com" = {
+        forwardAgent = true;
+      };
       "192.168.1.*" = {
         forwardAgent = true;
         extraOptions = {
