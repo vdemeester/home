@@ -94,11 +94,6 @@ in
           period = "daily";
           keyfile = "/etc/nixos/assets/tarsnap.org.key";
         };
-        sites = {
-          directories = [ "/home/vincent/desktop/sites" ];
-          period = "daily";
-          keyfile = "/etc/nixos/assets/tarsnap.sites.key";
-        };
       };
     };
     nfs.server = {
