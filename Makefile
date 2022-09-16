@@ -13,6 +13,15 @@ host/%/boot: FORCE
 host/%/switch: FORCE
 	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.home --flake .#$* switch
 
+host/shikoku/boot:
+	nixos-rebuild --build-host root@shikoku.home --target-host root@shikoku.home --flake .#shikoku boot
+host/shikoku/switch:
+	nixos-rebuild --build-host root@shikoku.home --target-host root@shikoku.home --flake .#shikoku switch
+host/kerkouane/boot:
+	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@kerkouane.vpn --flake .#kerkouane boot
+host/kerkouane/switch:
+	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@kerkouane.vpn --flake .#kerkouane switch
+
 boot:
 	sudo nixos-rebuild --flake .# boot
 switch:
