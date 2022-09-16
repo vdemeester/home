@@ -9,7 +9,7 @@ in
   };
   config = mkIf cfg.enable {
     environment = {
-      variables.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
+      # variables.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
       systemPackages = [ pkgs.gnupg ];
     };
   };
