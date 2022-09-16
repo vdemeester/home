@@ -172,6 +172,11 @@ in
           criteria = { title = "(Blue Jeans)|(Meet)|(Zoom Meeting)"; };
           command = "inhibit_idle visible";
         }
+        # for_window [app_id="^chrome-.*"] shortcuts_inhibitor disable
+        {
+          criteria = { app_id = "^chrome-.*"; };
+          command = "shortcuts_inhibitor disable";
+        }
       ];
       startup = [
         { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP"; } #workaround
