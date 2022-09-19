@@ -7,5 +7,6 @@
     my.tkn-pac
     my.tkn-local
     my.sugarjazy
+    rekor-cli
   ];
 }
