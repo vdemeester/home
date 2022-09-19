@@ -16,16 +16,6 @@ let
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
   metadata = importTOML ../../ops/hosts.toml;
-
-  # Scripts
-  officemode = pkgs.writeShellScriptBin "officemode" ''
-    echo "80" > /sys/class/power_supply/BAT0/charge_control_end_threshold
-    echo "70" > /sys/class/power_supply/BAT0/charge_control_start_threshold
-  '';
-  roadmode = pkgs.writeShellScriptBin "roadmode" ''
-    echo "100" > /sys/class/power_supply/BAT0/charge_control_end_threshold
-    echo "99" > /sys/class/power_supply/BAT0/charge_control_start_threshold
-  '';
 in
 {
   imports = [
@@ -62,18 +52,6 @@ in
   networking = {
     hostName = hostname;
   };
-
-  environment.systemPackages = [ officemode roadmode ];
-  security.sudo.extraRules = [
-    # Allow execution of roadmode and officemode by users in wheel, without a password
-    {
-      groups = [ "wheel" ];
-      commands = [
-        { command = "${officemode}"; options = [ "NOPASSWD" ]; }
-        { command = "${roadmode}"; options = [ "NOPASSWD" ]; }
-      ];
-    }
-  ];
 
   # extract this from desktop
   networking.networkmanager = {

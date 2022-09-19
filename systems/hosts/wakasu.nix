@@ -12,6 +12,16 @@ let
 
   getEmulator = system: (lib.systems.elaborate { inherit system; }).emulator pkgs;
   metadata = importTOML ../../ops/hosts.toml;
+
+  # Scripts
+  officemode = pkgs.writeShellScriptBin "officemode" ''
+    echo "80" > /sys/class/power_supply/BAT0/charge_control_end_threshold
+    echo "70" > /sys/class/power_supply/BAT0/charge_control_start_threshold
+  '';
+  roadmode = pkgs.writeShellScriptBin "roadmode" ''
+    echo "100" > /sys/class/power_supply/BAT0/charge_control_end_threshold
+    echo "99" > /sys/class/power_supply/BAT0/charge_control_start_threshold
+  '';
 in
 {
   imports = [
@@ -66,6 +76,17 @@ in
     SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
   '';
 
+  security.sudo.extraRules = [
+    # Allow execution of roadmode and officemode by users in wheel, without a password
+    {
+      groups = [ "wheel" ];
+      commands = [
+        { command = "${officemode}"; options = [ "NOPASSWD" ]; }
+        { command = "${roadmode}"; options = [ "NOPASSWD" ]; }
+      ];
+    }
+  ];
+
   modules = {
     editors.emacs.enable = true;
     hardware = {
@@ -103,6 +124,8 @@ in
   environment.systemPackages = with pkgs; [
     # docker client only
     docker-client
+    officemode
+    roadmode
   ];
 
   services = {
