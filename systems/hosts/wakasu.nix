@@ -81,8 +81,8 @@ in
     {
       groups = [ "wheel" ];
       commands = [
-        { command = "${officemode}"; options = [ "NOPASSWD" ]; }
-        { command = "${roadmode}"; options = [ "NOPASSWD" ]; }
+        { command = "${officemode}/bin/officemode"; options = [ "NOPASSWD" ]; }
+        { command = "${roadmode}/bin/roadmode"; options = [ "NOPASSWD" ]; }
       ];
     }
   ];
