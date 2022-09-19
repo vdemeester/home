@@ -46,12 +46,12 @@ in
       };
       fonts = fontConf;
       bars = [
-        # {
-        #   command = "${pkgs.waybar}/bin/waybar";
-        #   mode = "hide";
-        #   position = "bottom";
-        #   id = "mainBar";
-        # }
+        {
+          command = "${pkgs.waybar}/bin/waybar";
+          mode = "hide";
+          position = "bottom";
+          id = "mainBar";
+        }
       ];
       keybindings =
         let
@@ -183,7 +183,7 @@ in
         # { command = "mako"; }
         { command = "${pkgs.swaynotificationcenter}/bin/swaync"; }
         { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
-        { command = "systemctl --user restart waybar"; always = true; }
+        # { command = "systemctl --user restart waybar"; always = true; }
         { command = "systemctl --user restart kanshi"; always = true; }
         # { command = "${pkgs.kitty}/bin/kitty --title metask --class metask tmux"; }
         # { command = ''emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))''; }
@@ -246,7 +246,7 @@ in
   programs = {
     waybar = {
       enable = true;
-      systemd.enable = true;
+      # systemd.enable = true;
       style = ./waybar.css;
       settings = [{
         layer = "bottom";
