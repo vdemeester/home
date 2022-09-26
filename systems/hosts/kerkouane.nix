@@ -167,6 +167,8 @@ in
       host = "go.sbr.pm";
       config = ''
         paths:
+          /lord:
+            repo: https://git.sr.ht/~vdemeester/lord
           /ape:
             repo: https://git.sr.ht/~vdemeester/ape
           /nr:
@@ -175,7 +177,7 @@ in
             repo: https://git.sr.ht/~vdemeester/ram
           /sec:
             repo: https://git.sr.ht/~vdemeester/sec
-         /foo
+          /foo
             repo: https://git.sr.ht/~vdemeester/foo
       '';
     };
