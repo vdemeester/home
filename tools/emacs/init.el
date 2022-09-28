@@ -102,17 +102,7 @@
          (string-match-p "org$" x))
        load-path))
 
-(defun vde/el-load-dir (dir)
-  "Load el files from the given folder `DIR'."
-  (let ((files (directory-files dir nil "\.el$")))
-    (while files
-      (load-file (concat dir (pop files))))))
-
-(defun vde/short-hostname ()
-  "Return hostname in short (aka wakasu.local -> wakasu)."
-  (string-match "[0-9A-Za-z-]+" system-name)
-  (substring system-name (match-beginning 0) (match-end 0)))
-
+(require 'init-func)
 
 (defconst *sys/gui*
   (display-graphic-p)
@@ -146,9 +136,7 @@
   (not *sys/full*)
   "Is it a light system ?")
 
-(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
-(add-to-list 'load-path (concat user-emacs-directory "lisp/vorg"))
-(require 'init-func)
+(add-to-list 'load-path (concat user-emacs-directory "/lisp/"))
 (vde/el-load-dir (concat user-emacs-directory "/config/"))
 
 (if (file-exists-p (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el")))

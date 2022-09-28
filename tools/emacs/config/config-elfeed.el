@@ -5,12 +5,54 @@
 
 (use-package elfeed
   :commands (elfeed)
-  :bind (("C-c x e" . elfeed))
+  :bind (("C-c x e" . elfeed)
+         :map elfeed-show-mode-map
+         ("q" . 'vde/elfeed-show-quit-window))
+  :init
+  ;; (bind-keys
+  ;;  :map elfeed-show-mode-map
+  ;;  ([remap elfeed-search-quit-window] 'vde/elfeed-show-quit-window))
   :config
   (setq-default elfeed-log-level 'debug
                 elfeed-use-curl 't
                 elfeed-db-directory "~/sync/elfeed/db/"
                 elfeed-db-index "~/sync/elfeed/index")
+
+  (setq elfeed-show-entry-switch #'pop-to-buffer
+        elfeed-show-entry-delete #'delete-window
+        elfeed-show-unique-buffers t)
+
+  (defun vde/elfeed-show-quit-window ()
+    (interactive)
+    (if (window-live-p (get-buffer-window "*elfeed-search*"))
+        (progn
+          (kill-buffer-and-window)      ;Don't use quit-window for this
+          (select-window (get-buffer-window "*elfeed-search*")))
+      (kill-buffer (current-buffer))))
+  ;; TODO define what we want for this..
+  ;; TODO also probably handle "quit", on "next", … (if tab)
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '("^\\*elfeed-entry-"
+  ;;                (display-buffer-below-selected)
+  ;;                (direction . bottom)
+  ;;                (window-height . 0.70)))
+  
+  ;; (add-to-list 'display-buffer-alist
+  ;;              `("^\\*elfeed-entry-"
+  ;;                (display-buffer-in-tab)
+  ;;                (dedicated . t)
+  ;;                (tab-name . (lambda (buffer alist)
+  ;;                              (with-current-buffer buffer
+  ;;                                (concat "🚀 " (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))))))
+  ;;                (tab-group . "📻 Elfeed")))
+  ;; 
+  ;; (add-to-list 'display-buffer-alist
+  ;;              `("\\*elfeed-search\\*"
+  ;;                (display-buffer-in-tab)
+  ;;                (dedicated . t)
+  ;;                (tab-name . "📣 Entries")
+  ;;                (tab-group . "📻 Elfeed")))
+
   (elfeed-org)
   (defun vde/org-elfeed-entry-store-link ()
     (when elfeed-show-entry

@@ -3,6 +3,8 @@
 ;;; Windows configuration
 ;; Code:
 
+(setq switch-to-buffer-obey-display-actions t)
+
 ;; Winner
 (use-package winner
   :unless noninteractive
