@@ -168,7 +168,7 @@ in
       config = ''
         paths:
           /lord:
-            repo: https://git.sr.ht/~vdemeester/lord
+            repo: https://github.com/vdemeester/lord
           /ape:
             repo: https://git.sr.ht/~vdemeester/ape
           /nr:
@@ -177,8 +177,6 @@ in
             repo: https://git.sr.ht/~vdemeester/ram
           /sec:
             repo: https://git.sr.ht/~vdemeester/sec
-          /foo
-            repo: https://git.sr.ht/~vdemeester/foo
       '';
     };
     nginx = {
