@@ -236,8 +236,9 @@ in
         bindsym --whole-window button9 exec swaymsg '[app_id="emacs" title="^_emacs scratchpad_$"]' scratchpad show || exec ${config.programs.emacs.package}/bin/emacsclient -c -F "((name . \"_emacs scratchpad_\"))"
 
         # Mouse
-        bindsym --whole-window button6 workspace next_on_output
-        bindsym --whole-window button7 workspace prev_on_output
+        # Disabled as it doesn't play well with thinkpad's trackpoint :D
+        # bindsym --whole-window button6 workspace next_on_output
+        # bindsym --whole-window button7 workspace prev_on_output
 
         bindsym ${mod}+F10 exec ${pkgs.my.scripts}/bin/shot %d
         bindsym ${mod}+Shift+F10 exec ${pkgs.my.scripts}/bin/shotf %d
