@@ -20,6 +20,8 @@ let
     "src/osp"
     "src/pkg.devel.redhat.com"
     "src/tektoncd"
+    "src/knative.dev"
+    "src/knative-sandbox"
   ];
 in
 {
