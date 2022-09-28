@@ -102,7 +102,8 @@
       channelsConfig.allowUnfree = true;
 
       sharedOverlays = [
-        (import ./nix/overlays)
+        (import ./nix/overlays).openshift
+        (import ./nix/overlays).tekton
         (import ./nix/overlays/sbr.nix)
         emacs-overlay.overlay
         nur.overlay
@@ -225,12 +226,13 @@
 
       # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
+      overlays = import ./nix/overlays;
       outputsBuilder = channels:
         let
           pkgs = channels.nixpkgs;
         in
         {
-          overlays.default = import ./nix/overlays;
+          # overlays = import ./nix/overlays;
 
           packages = with channels.nixpkgs; {
             inherit
