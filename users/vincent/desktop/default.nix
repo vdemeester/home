@@ -39,6 +39,7 @@ in
     profile-sync-daemon
     signal-desktop
     thunderbird
+    trash-cli
     xdg-user-dirs
     xdg_utils
     xsel

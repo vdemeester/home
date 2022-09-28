@@ -105,6 +105,7 @@ in
             libosinfo
             asciinema
             oathToolkit
+            p7zip
           ];
         }
       ]
