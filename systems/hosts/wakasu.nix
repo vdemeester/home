@@ -141,15 +141,16 @@ in
     };
   };
 
-  security = {
-    pam = {
-      services = {
-        login.fprintAuth = true;
-        swaylock-effects.fprintAuth = true;
-        sudo.fprintAuth = true;
-        system-local-login.fprintAuth = true;
-        su.fprintAuth = true;
-      };
-    };
-  };
+  # fingerprint auth is actually very weird.. especially on "office mode", when the lid can be closed.
+  # security = {
+  #   pam = {
+  #     services = {
+  #       login.fprintAuth = true;
+  #       swaylock-effects.fprintAuth = true;
+  #       sudo.fprintAuth = true;
+  #       system-local-login.fprintAuth = true;
+  #       su.fprintAuth = true;
+  #     };
+  #   };
+  # };
 }
