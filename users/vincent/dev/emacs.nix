@@ -77,6 +77,7 @@ let
     icomplete-vertical
     json-mode
     kind-icon
+    lin
     lsp-focus
     lsp-mode
     lsp-ui
@@ -98,6 +99,7 @@ let
     ob-http
     orderless
     org
+    orgalist
     org-appear
     org-capture-pop-frame
     org-contrib
