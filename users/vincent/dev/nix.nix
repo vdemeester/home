@@ -5,7 +5,7 @@
     niv
     nixpkgs-fmt
     nix-update
-    nix-review
+    nixpkgs-review
     nix-prefetch-scripts
     rnix-lsp
   ];
