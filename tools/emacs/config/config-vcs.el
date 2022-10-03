@@ -95,6 +95,12 @@
   (transient-append-suffix 'magit-push "=m"
     '(1 "=o" "Set push option" "--push-option="))  ;; Will prompt, can only set one extra
 
+  (defun vde/fetch-and-rebase-from-upstream ()
+    ""
+    (interactive)
+    (magit-fetch-all "--quiet")
+    (magit-git-rebase (concat "upstream/" (vc-git--symbolic-ref (buffer-file-name))) "-sS"))
+  
   ;; Hide "Recent Commits"
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-modules
