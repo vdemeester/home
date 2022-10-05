@@ -386,7 +386,7 @@ in
     waybar
     slurp
     grim
-    gnome3.zenity
+    gnome.zenity
     clipman
     # terminals
     # FIXME move this away, they work on both Xorg and Wayland/Sway

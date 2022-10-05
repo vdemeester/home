@@ -53,7 +53,7 @@ in
     wmctrl
     xclip
     xdg-user-dirs
-    xdg_utils
+    xdg-utils
     xsel
   ];
   xdg.configFile."rofi/slate.rasi".text = ''

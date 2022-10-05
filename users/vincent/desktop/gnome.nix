@@ -40,7 +40,7 @@
     wmctrl
     xclip
     xdg-user-dirs
-    xdg_utils
+    xdg-utils
     xsel
     # FIXME move this elsewhere
     keybase

@@ -41,7 +41,7 @@ in
     thunderbird
     trash-cli
     xdg-user-dirs
-    xdg_utils
+    xdg-utils
     xsel
     youtube-dl
   ];

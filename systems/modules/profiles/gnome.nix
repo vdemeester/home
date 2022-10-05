@@ -16,7 +16,7 @@ in
       desktop.enable = true;
     };
     services = {
-      gnome3 = {
+      gnome = {
         chrome-gnome-shell.enable = true;
         core-shell.enable = true;
         core-os-services.enable = true;
