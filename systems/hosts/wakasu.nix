@@ -63,7 +63,7 @@ in
 
   boot = {
     # FIXME move somewhere else
-    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.linuxPackages_latest;
   };
 
   services.udev.extraRules = ''
