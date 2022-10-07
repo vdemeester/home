@@ -16,3 +16,5 @@
   - *what works, what doesn't ?*
   - *is there task / stuck projects ?*
   - *enhancement possible ?*
+- Additional /notes/:
+  + …
