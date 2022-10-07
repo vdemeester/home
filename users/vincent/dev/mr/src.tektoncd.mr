@@ -30,3 +30,9 @@ checkout = git clone git@github.com:vdemeester/buildkit-tekton.git
 
 [vegetable-resolver]
 checkout = git clone git@github.com:vdemeester/vegetable-resolver.git
+
+[tkn-local-action]
+checkout = git clone git@github.com:vdemeester/tkn-local-action.git
+
+[setup-tektoncd]
+checkout = git clone git@github.com:vdemeester/setup-tektoncd.git
