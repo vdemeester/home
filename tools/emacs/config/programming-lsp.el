@@ -5,8 +5,7 @@
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :hook ((python-mode . lsp)
-         (go-mode . lsp)
-         (nix-mode . lsp))
+         (go-mode . lsp))
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
