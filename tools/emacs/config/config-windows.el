@@ -55,11 +55,7 @@
          ("S-C-<up>" . enlarge-window)))
 ;; -UseWindow
 
-(use-package zoom-window
-  :commands (zoom-window-zoom)
-  :bind (("C-x C-z" . zoom-window-zoom))
-  :config
-  (setq zoom-window-mode-line-color "#8ac7ff"))
+;; TODO: Move display-buffer-alist here
 
 (provide 'config-windows)
 ;;; config-windows ends here

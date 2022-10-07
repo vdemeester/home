@@ -87,6 +87,7 @@ let
     marginalia
     markdown-mode
     minions
+    modus-themes
     moody
     multi-vterm
     mwim
@@ -135,7 +136,6 @@ let
     with-editor
     xterm-color
     yaml-mode
-    zoom-window
   ];
 in
 {
