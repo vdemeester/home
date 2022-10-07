@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Editing configuration
 ;;; Code:
+
 (setq-default enable-remote-dir-locals t)
 
 ;; When finding file in non-existing directory, offer to create the

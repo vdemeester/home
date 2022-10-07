@@ -5,13 +5,7 @@
 (use-package nix-mode
   :if *nix*
   :after (lsp)
-  :mode ("\\.nix\\'" "\\.nix.in\\'")
-  :config
-  (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
-                    :major-modes '(nix-mode)
-                    :server-id 'nix)))
+  :mode ("\\.nix\\'" "\\.nix.in\\'"))
 
 (use-package nix-drv-mode
   :if *nix*

@@ -10,6 +10,8 @@
   (message "Early init: Emacs Version < 27.0")
   (load (expand-file-name "early-init.el" user-emacs-directory)))
 
+(add-to-list 'load-path (concat user-emacs-directory "/lisp/"))
+
 (setq inhibit-default-init t)           ; Disable the site default settings
 
 (setq inhibit-startup-message t
@@ -136,7 +138,6 @@
   (not *sys/full*)
   "Is it a light system ?")
 
-(add-to-list 'load-path (concat user-emacs-directory "/lisp/"))
 (vde/el-load-dir (concat user-emacs-directory "/config/"))
 
 (if (file-exists-p (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el")))
