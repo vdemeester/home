@@ -28,7 +28,6 @@ rec {
   #gogo-protobuf = pkgs.callPackage ./gogo-protobuf {};
   gorun = pkgs.callPackage ./gorun { };
   govanityurl = pkgs.callPackage ./govanityurl { };
-  ko = pkgs.callPackage ./ko { };
   kss = pkgs.callPackage ./kss { };
   batzconverter = pkgs.callPackage ./batzconverter { };
   sugarjazy = pkgs.callPackage ./sugarjazy { };
