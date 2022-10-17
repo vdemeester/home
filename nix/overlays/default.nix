@@ -1,5 +1,4 @@
 {
-  openshift = final: prev: { };
   tekton = final: prev: {
 
     inherit (prev.callPackage ../packages/tkn { })

@@ -40,6 +40,9 @@
     nixos-wsl = { type = "github"; owner = "nix-community"; repo = "NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-hardware = { type = "github"; owner = "NixOS"; "repo" = "nixos-hardware"; };
 
+    # Red Hat
+    chapeau-rouge = { type = "github"; owner = "vdemeester"; repo = "chapeau-rouge"; };
+
     # Channels
     # FIXME: is it needed or should I just alias nixos-unstable instead
     nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
@@ -56,6 +59,7 @@
     , home-manager
     , home-manager-22_05
     , emacs-overlay
+    , chapeau-rouge
     , nur
     , sops-nix
     , envfs
@@ -102,12 +106,12 @@
       channelsConfig.allowUnfree = true;
 
       sharedOverlays = [
-        (import ./nix/overlays).openshift
         (import ./nix/overlays).tekton
         (import ./nix/overlays/sbr.nix)
         emacs-overlay.overlay
         nur.overlay
         devshell.overlay
+        chapeau-rouge.overlays.openshift
       ];
 
       hostDefaults = {

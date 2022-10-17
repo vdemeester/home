@@ -40,71 +40,12 @@ rec {
   toolbox = pkgs.callPackage ./toolbox { };
   yaspell = pkgs.callPackage ./yaspell { };
 
-  # OpenShift
-  inherit (pkgs.callPackage ./openshift/oc.nix { })
-    oc_4_1
-    oc_4_2
-    oc_4_3
-    oc_4_4
-    oc_4_5
-    oc_4_6
-    oc_4_7
-    oc_4_8
-    oc_4_9
-    oc_4_10
-    oc_4_11
-    oc
-    ;
-  inherit (pkgs.callPackage ./openshift/openshift-install.nix { })
-    openshift-install_4_3
-    openshift-install_4_4
-    openshift-install_4_5
-    openshift-install_4_6
-    openshift-install_4_7
-    openshift-install_4_8
-    openshift-install_4_9
-    openshift-install_4_10
-    openshift-install_4_11
-    openshift-install
-    ;
-
-  inherit (pkgs.callPackage ./openshift/odo.nix { })
-    odo_1_2
-    odo_2_0
-    odo_2_1
-    odo_2_2
-    odo_2_3
-    odo
-    ;
-
   inherit (pkgs.callPackage ./kam { })
     kam_1_1
     kam
     ;
 
   operator-tool = pkgs.callPackage ./operator-tooling { };
-
-  # Operator SDK
-  inherit (pkgs.callPackage ./operator-sdk { })
-    operator-sdk_1
-    operator-sdk_1_23
-    operator-sdk_1_22
-    operator-sdk_1_21
-    operator-sdk_1_20
-    operator-sdk_1_17
-    operator-sdk_1_16
-    operator-sdk_1_15
-    operator-sdk_1_14
-    operator-sdk_1_13
-    operator-sdk_0_18
-    operator-sdk_0_19
-    operator-sdk
-    ;
-  # OPM
-  inherit (pkgs.callPackage ./operator-sdk/opm.nix { })
-    opm_1_26
-    opm
-    ;
 
   # Tekton
   inherit (pkgs.callPackage ./tkn { })
