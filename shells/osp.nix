@@ -13,11 +13,11 @@ pkgs.mkShell {
     gron
     jq
     kustomize
-    my.oc
-    my.operator-sdk
+    oc
+    operator-sdk
     my.operator-tool
     my.tkn
-    my.opm
+    opm
     python39Packages.pyaml
     skopeo
     yq-go

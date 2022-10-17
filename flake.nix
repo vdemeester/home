@@ -41,7 +41,13 @@
     nix-hardware = { type = "github"; owner = "NixOS"; "repo" = "nixos-hardware"; };
 
     # Red Hat
-    chapeau-rouge = { type = "github"; owner = "vdemeester"; repo = "chapeau-rouge"; };
+    chapeau-rouge = {
+      type = "github";
+      owner = "vdemeester";
+      repo = "chapeau-rouge";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Channels
     # FIXME: is it needed or should I just alias nixos-unstable instead

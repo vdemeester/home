@@ -7,7 +7,7 @@ pkgs.mkShell {
   buildInputs = with pkgs; [
     go
     ko
-    my.oc
+    oc
     my.tkn
     my.operator-tool
     google-cloud-sdk

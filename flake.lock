@@ -16,6 +16,29 @@
         "type": "github"
       }
     },
+    "chapeau-rouge": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1666011989,
+        "narHash": "sha256-SZo0gfGInaYm3DTWT10a0k+gPUA3fBGLvvzHy06Gks4=",
+        "owner": "vdemeester",
+        "repo": "chapeau-rouge",
+        "rev": "3f58e651b69277518f1d6b46408f0abad2b796ee",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vdemeester",
+        "repo": "chapeau-rouge",
+        "type": "github"
+      }
+    },
     "devshell": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -508,6 +531,7 @@
     },
     "root": {
       "inputs": {
+        "chapeau-rouge": "chapeau-rouge",
         "devshell": "devshell",
         "emacs-overlay": "emacs-overlay",
         "envfs": "envfs",
