@@ -121,6 +121,7 @@ in
   # TODO Migrate to modules
   profiles.home = true;
   profiles.externalbuilder.enable = true;
+  profiles.virtualization = { enable = true; nested = true; };
   environment.systemPackages = with pkgs; [
     # docker client only
     docker-client
