@@ -76,6 +76,9 @@ in
       core = {
         #editor = "${pkgs.emacs}/bin/emacsclient -t";
       };
+      init = {
+        defaultBranch = "main";
+      };
       color = {
         status = "auto";
         diff = "auto";
