@@ -132,7 +132,6 @@ in
   services = {
     # automatic login is "safe" as we ask for the encryption passphrase anyway..
     getty.autologinUser = "vincent";
-    fprintd.enable = true;
     wireguard = {
       enable = true;
       ips = [ "${metadata.hosts.wakasu.wireguard.addrs.v4}/24" ];
@@ -142,16 +141,4 @@ in
     };
   };
 
-  # fingerprint auth is actually very weird.. especially on "office mode", when the lid can be closed.
-  # security = {
-  #   pam = {
-  #     services = {
-  #       login.fprintAuth = true;
-  #       swaylock-effects.fprintAuth = true;
-  #       sudo.fprintAuth = true;
-  #       system-local-login.fprintAuth = true;
-  #       su.fprintAuth = true;
-  #     };
-  #   };
-  # };
 }
