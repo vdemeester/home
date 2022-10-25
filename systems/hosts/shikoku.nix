@@ -110,6 +110,14 @@ in
       enable = true;
       devices = [{ device = "/dev/nvme0n1"; }];
     };
+    dockerRegistry = {
+      enable = true;
+      listenAddress = "0.0.0.0";
+      port = 5000;
+      enableDelete = true;
+      enableGarbageCollect = true;
+      garbageCollectDates = "daily";
+    };
     wireguard = {
       enable = true;
       ips = ips;

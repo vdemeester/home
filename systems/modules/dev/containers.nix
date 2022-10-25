@@ -89,7 +89,7 @@ in
             default-runtime = "docker-runc";
             containerd = "/run/containerd/containerd.sock";
             features = { buildkit = true; };
-            insecure-registries = [ "172.30.0.0/16" "192.168.12.0/16" "massimo.home:5000" "r.svc.home:5000" "r.svc.home" ];
+            insecure-registries = [ "172.30.0.0/16" "192.168.1.0/16" "10.100.0.0/16" "shikoku.home:5000" "r.svc.home:5000" "r.svc.home" ];
             seccomp-profile = ./my-seccomp.json;
           };
         };
