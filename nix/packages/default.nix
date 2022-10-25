@@ -1,6 +1,4 @@
-{ sources ? import ../.
-, pkgs ? sources.pkgs { }
-}:
+{ pkgs ? import <nixpkgs> { } }:
 
 rec {
   # pre nur-packages import
@@ -39,6 +37,9 @@ rec {
   rmapi = pkgs.callPackage ./rmapi { };
   toolbox = pkgs.callPackage ./toolbox { };
   yaspell = pkgs.callPackage ./yaspell { };
+  gosmee = pkgs.callPackage ./gosmee {
+    buildGoModule = pkgs.buildGo119Module; # build fails with 1.19
+  };
 
   inherit (pkgs.callPackage ./kam { })
     kam_1_1
