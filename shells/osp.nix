@@ -16,7 +16,7 @@ pkgs.mkShell {
     oc
     operator-sdk
     my.operator-tool
-    my.tkn
+    tektoncd-cli
     opm
     python39Packages.pyaml
     skopeo
