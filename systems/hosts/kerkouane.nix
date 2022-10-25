@@ -161,6 +161,10 @@ in
   security.pam.enableSSHAgentAuth = true;
   #systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/www" ];
   services = {
+    gosmee = {
+      enable = true;
+      public-url = "https://webhook.sbr.pm";
+    };
     govanityurl = {
       enable = true;
       user = "nginx";
@@ -217,10 +221,15 @@ in
         enableACME = true;
         forceSSL = true;
         locations."/" = {
-          proxyPass = "http://10.100.0.8:80";
+          proxyPass = "http://127.0.0.1:3333";
           extraConfig = ''
-            proxy_set_header Host            $host;
-            proxy_set_header X-Forwarded-For $remote_addr;
+              proxy_buffering off;
+              proxy_cache off;
+              proxy_set_header Host            $host;
+              proxy_set_header X-Forwarded-For $remote_addr;
+              proxy_set_header Connection "";
+            proxy_http_version 1.1;
+            chunked_transfer_encoding off;
           '';
         };
       };
@@ -250,7 +259,7 @@ in
           index = "index.html";
           extraConfig = ''
             default_type text/html;
-            try_files $uri $uri.html $uri/ =404;
+            try_files $uri $uri.html $uri/ = 404;
             fancyindex on;
             fancyindex_localtime on;
             fancyindex_exact_size off;
@@ -276,3 +285,4 @@ in
     };
   };
 }
+

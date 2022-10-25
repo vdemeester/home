@@ -38,7 +38,7 @@ rec {
   toolbox = pkgs.callPackage ./toolbox { };
   yaspell = pkgs.callPackage ./yaspell { };
   gosmee = pkgs.callPackage ./gosmee {
-    buildGoModule = pkgs.buildGo119Module; # build fails with 1.19
+    buildGoModule = pkgs.buildGo119Module;
   };
 
   inherit (pkgs.callPackage ./kam { })
