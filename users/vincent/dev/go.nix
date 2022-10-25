@@ -23,7 +23,7 @@
     my.esc
     my.yaspell
     # not really go but still
-    gosmee
+    my.gosmee
     cue
   ];
 }
