@@ -77,7 +77,7 @@
 			(lambda (directory)
 			  (directory-files-recursively
 			   directory org-agenda-file-regexp))
-			`(,org-projects-dir ,org-notes-dir ,src-home-dir ,org-private-notes-dir))))
+			`(,org-projects-dir ,org-notes-dir ,src-home-dir ,org-private-notes-dir ,(expand-file-name "~/src/osp/tasks")))))
   (defun my/reload-org-agenda-files ()
     (interactive)
     (setq org-agenda-files (my/org-agenda-files)))
