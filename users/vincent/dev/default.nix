@@ -43,13 +43,13 @@
 
   # FIXME move this to a "work.redhat" configuration.
   # Upstream Tekton
-  home.file."src/tektoncd/.envrc".text = ''
-    eval "$(lorri direnv)"
-  '';
-  home.file."src/tektoncd/shell.nix".source = ../../../shells/tekton.nix;
+  # home.file."src/tektoncd/.envrc".text = ''
+  #   eval "$(lorri direnv)"
+  # '';
+  # home.file."src/tektoncd/shell.nix".source = ../../../shells/tekton.nix;
   # Downstream OSP
-  home.file."src/osp/.envrc".text = ''
-    eval "$(lorri direnv)"
-  '';
-  home.file."src/osp/shell.nix".source = ../../../shells/osp.nix;
+  # home.file."src/osp/.envrc".text = ''
+  #   eval "$(lorri direnv)"
+  # '';
+  # home.file."src/osp/shell.nix".source = ../../../shells/osp.nix;
 }
