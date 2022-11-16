@@ -77,6 +77,10 @@ in
       alias -s org=emacs
       (( $+commands[jq] )) && alias -g MJ="| jq -C '.'"  || alias -g MJ="| ${pkgs.python3}/bin/python -mjson.tool"
       (( $+functions[zshz] )) && compdef _zshz j
+      [[ -n $INSIDE_EMACS ]] && \
+      function ff () {
+        print "\e]51;Efind-file $(readlink -f $1)\e\\"
+      }
     '';
     loginExtra = ''
       # export GOPATH=${config.home.homeDirectory}
