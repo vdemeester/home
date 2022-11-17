@@ -1,9 +1,9 @@
-{ stdenv, lib, buildGo117Module, fetchFromGitHub }:
+{ stdenv, lib, buildGoModule, fetchFromGitHub }:
 
 with lib;
 rec {
   tknLocalGen = { version, sha256 }:
-    buildGo117Module rec {
+    buildGoModule rec {
       pname = "tkn-local";
       name = "${pname}-${version}";
 

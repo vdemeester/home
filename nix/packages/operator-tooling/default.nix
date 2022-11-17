@@ -1,6 +1,6 @@
-{ stdenv, lib, buildGo117Module, git, fetchFromGitHub }:
+{ stdenv, lib, buildGoModule, git, fetchFromGitHub }:
 
-buildGo117Module rec {
+buildGoModule rec {
   name = "operator-tool-${version}";
   version = "0.0.1";
   rev = "v${version}";
