@@ -23,5 +23,8 @@
                      " ")))
   (add-hook 'markdown-mode-hook #'auto-fill-mode))
 
+(use-package adoc-mode
+  :mode ("\\.adoc\\'" . adoc-mode))
+
 (provide 'writing)
 ;;; writing.el ends here
