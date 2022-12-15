@@ -157,6 +157,7 @@ in
     ec
     et
     languagetool
+    asciidoctor
   ];
   programs.emacs = {
     enable = true;
