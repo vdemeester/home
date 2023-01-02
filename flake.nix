@@ -220,21 +220,21 @@
         };
         # Servers
         shikoku = {
-          channelName = "nixos-22_05";
-          modules = stableModules_22_05 ++ [
+          channelName = "nixos-22_11";
+          modules = stableModules_22_11 ++ [
             ./systems/hosts/shikoku.nix
           ];
         };
         sakhalin = {
-          channelName = "nixos-22_05";
-          modules = stableModules_22_05 ++ [
+          channelName = "nixos-22_11";
+          modules = stableModules_22_11 ++ [
             nixos-hardware.nixosModules.common-pc-ssd
             ./systems/hosts/sakhalin.nix
           ];
         };
         kerkouane = {
-          channelName = "nixos-22_05";
-          modules = stableModules_22_05 ++ [
+          channelName = "nixos-22_11";
+          modules = stableModules_22_11 ++ [
             ./systems/modules/services/govanityurl.nix
             ./systems/hosts/kerkouane.nix
           ];
