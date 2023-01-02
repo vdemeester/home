@@ -93,6 +93,7 @@ in
       avahi.enable = true;
       ssh.enable = true;
     };
+    virtualisation.libvirt = { enable = true; nested = true; listenTCP = true; };
   };
 
   # Single node k3s
@@ -111,7 +112,6 @@ in
     dev.enable = lib.mkForce false;
     desktop.enable = lib.mkForce false;
     docker.enable = true;
-    virtualization = { enable = true; nested = true; listenTCP = true; };
   };
   services = {
     netdata.enable = true;

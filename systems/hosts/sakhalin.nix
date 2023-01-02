@@ -68,13 +68,13 @@ in
       avahi.enable = true;
       ssh.enable = true;
     };
+    virtualisation.libvirt = { enable = true; nested = true; listenTCP = true; };
   };
 
   profiles = {
     bind.enable = true;
     home = true;
     git.enable = true;
-    virtualization = { enable = true; nested = true; listenTCP = true; };
   };
 
   fileSystems."/export/gaia" = { device = "/mnt/gaia"; options = [ "bind" ]; };

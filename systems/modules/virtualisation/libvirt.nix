@@ -13,6 +13,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       virtualisation.libvirtd.enable = true;
+      security.polkit.enable = true; # 22.11: libvirtd requires poltkit to be enabled
       environment.systemPackages = with pkgs; [ qemu vde2 libosinfo ];
     }
     (mkIf config.modules.desktop.enable {
