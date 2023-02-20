@@ -201,7 +201,7 @@ in
       git rebase upstream/main
       # Make versions
       make versions
-      for v in 1.7 1.8 1.9; do
+      for v in 1.7 1.8 1.9 1.10; do
         echo "Build $v"
         (
         cd versions/$v
