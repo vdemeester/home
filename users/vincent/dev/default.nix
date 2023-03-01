@@ -26,6 +26,7 @@
     vale
     yq-go
     fossil
+    pre-commit
   ];
 
   home.file.".ignore".text = ''
