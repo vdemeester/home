@@ -123,7 +123,7 @@
         (import ./nix/overlays/sbr.nix)
         emacs-overlay.overlay
         nur.overlay
-        devshell.overlay
+        devshell.overlays.default
         chapeau-rouge.overlays.openshift
       ];
 
