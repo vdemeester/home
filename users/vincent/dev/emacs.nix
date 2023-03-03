@@ -162,7 +162,7 @@ in
   programs.emacs = {
     enable = true;
     # FIXME: choose depending on the enabled modules
-    package = (pkgs.emacsPgtkNativeComp.override { withGTK3 = true; withGTK2 = false; });
+    package = (pkgs.emacsPgtk.override { withGTK3 = true; withGTK2 = false; });
     # package = (pkgs.emacsNativeComp.override { withGTK3 = true; withGTK2 = false; withX = true; withXwidgets = true; });
     extraPackages = myExtraPackages;
   };
