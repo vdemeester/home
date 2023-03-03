@@ -4,6 +4,6 @@
   home.packages = with pkgs; [
     python3
     pipenv
-    python-lsp-server
+    python3Packages.python-lsp-server
   ];
 }
