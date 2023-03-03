@@ -8,5 +8,6 @@
     my.tkn-local
     # my.sugarjazy
     rekor-cli
+    cosign
   ];
 }
