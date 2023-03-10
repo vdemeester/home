@@ -151,7 +151,7 @@ instead."
   :bind (("C-." . embark-act))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
-  (setq embark-cycle-key (kbd "C-.")))
+  (setq embark-cycle-key "C-."))
 
 (use-package embark-consult
   :after (embark consult))
