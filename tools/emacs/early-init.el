@@ -68,32 +68,31 @@
 (defun vde/modus-operandi ()
   "Enable some Modus Operandi variables and load the theme.
 This is used internally by `vde/modus-themes-toggle'."
-  (setq modus-themes-slanted-constructs t
-        modus-themes-bold-constructs t
-        modus-themes-subtle-diffs t
-        modus-themes-rainbow-headings t
-        modus-themes-section-headings nil
-        modus-themes-scale-headings nil
-        modus-themes-fringes 'subtle ; {nil,'subtle,'intense}
-        modus-themes-mode-line '(moody)
-        modus-themes-hl-line nil
-        modus-themes-intense-paren-match t
-        modus-themes-prompts '(subtle-accented) ; {nil,'subtle,'intense}
-        modus-themes-completions '(opinionated) ; {nil,'moderate,'opinionated}
-        modus-themes-diffs 'desaturated ; {nil,'desaturated,'fg-only}
-        modus-themes-org-blocks 'greyscale ; {nil,'greyscale,'rainbow}
-        modus-themes-links '(neutral-underline)
-        modus-themes-paren-match '(subtle-bold)
-        modus-themes-syntax nil
-        modus-themes-variable-pitch-headings nil
-        modus-themes-rainbow-headings t
-        modus-themes-section-headings nil
-        modus-themes-scale-headings t
-        modus-themes-scale-1 1.05
-        modus-themes-scale-2 1.1
-        modus-themes-scale-3 1.15
-        modus-themes-scale-4 1.2
-        x-underline-at-descent-line t)
+  (setq
+   ;; modus-themes-slanted-constructs t
+   ;; modus-themes-bold-constructs t
+   modus-themes-subtle-diffs t
+   modus-themes-fringes 'subtle ; {nil,'subtle,'intense}
+   modus-themes-mode-line '(moody)
+   ;; modus-themes-hl-line nil
+   modus-themes-intense-paren-match t
+   ;; modus-themes-prompts '(subtle-accented) ; {nil,'subtle,'intense}
+   modus-themes-completions '(opinionated) ; {nil,'moderate,'opinionated}
+   modus-themes-diffs 'desaturated ; {nil,'desaturated,'fg-only}
+   modus-themes-org-blocks 'greyscale ; {nil,'greyscale,'rainbow}
+   ;; modus-themes-links '(neutral-underline)
+   modus-themes-paren-match '(subtle-bold)
+   ;; modus-themes-syntax nil
+   modus-themes-variable-pitch-headings nil
+   modus-themes-rainbow-headings t
+   modus-themes-section-headings nil
+   modus-themes-scale-headings t
+   modus-themes-scale-1 1.05
+   modus-themes-scale-2 1.1
+   modus-themes-scale-3 1.15
+   modus-themes-scale-4 1.2
+   ;; x-underline-at-descent-line t
+   )
   (modus-themes-load-themes)
   (modus-themes-load-operandi))
 
