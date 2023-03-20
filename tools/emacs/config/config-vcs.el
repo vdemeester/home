@@ -59,6 +59,8 @@
   (setq diff-font-lock-prettify nil)
   (setq diff-font-lock-syntax nil))
 
+(use-package magit-popup)
+
 (use-package magit
   :unless noninteractive
   :commands (magit-status magit-clone magit-pull magit-blame magit-log-buffer-file magit-log)
@@ -80,9 +82,9 @@
                 magit-display-buffer-function #'magit-display-buffer-traditional)
 
   (magit-define-popup-option 'magit-rebase-popup
-    ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
+                             ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
   (magit-define-popup-switch 'magit-log-popup
-    ?m "Omit merge commits" "--no-merges")
+                             ?m "Omit merge commits" "--no-merges")
   ;; cargo-culted from https://github.com/magit/magit/issues/3717#issuecomment-734798341
   ;; valid gitlab options are defined in https://docs.gitlab.com/ee/user/project/push_options.html
   ;;
