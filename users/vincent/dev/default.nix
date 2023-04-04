@@ -27,6 +27,8 @@
     yq-go
     fossil
     pre-commit
+    # temporary
+    vscode
   ];
 
   home.file.".ignore".text = ''
