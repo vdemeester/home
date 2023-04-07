@@ -124,6 +124,7 @@ let
     smartparens
     symbol-overlay
     trashed
+    treesit-auto
     try
     undo-tree
     use-package
