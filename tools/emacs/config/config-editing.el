@@ -30,63 +30,6 @@
   :config
   (save-place-mode 1))
 
-(use-package smartparens
-  :unless noninteractive
-  :commands (smartparens-mode smartparens-global-mode show-smartparens-global-mode
-                              sp-split-sexp sp-newline sp-up-sexp)
-  :hook ((prog-mode . turn-on-smartparens-mode)
-         (markdown-mode . turn-on-smartparens-mode)
-         (org-mode . turn-on-smartparens-mode)
-         (prog-mode . turn-on-show-smartparens-mode)
-         (markdown-mode . turn-on-show-smartparens-mode)
-         (org-mode . turn-on-show-smartparens-mode)
-         (emacs-lisp-mode . turn-on-smartparens-strict-mode))
-  :config
-  (require 'smartparens-config)
-
-  (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
-  (sp-local-pair 'web-mode "{%" "%}")
-  (sp-with-modes '(org-mode)
-    (sp-local-pair "=" "="))
-  (sp-with-modes 'emacs-lisp-mode
-    ;; disable ', it's the quote character!
-    (sp-local-pair "'" nil :actions nil)
-    ;; also only use the pseudo-quote inside strings where it
-    ;; serves as hyperlink.
-    (sp-local-pair "`" "'" :when '(sp-in-string-p sp-in-comment-p))))
-
-(use-package color-identifiers-mode
-  :unless noninteractive
-  :commands (color-identifiers-mode)
-  :config
-  (setq-default color-identifiers:num-colors 15
-                color-identifiers:min-color-saturation 0.1
-                color-identifiers:max-color-saturation 0.9)
-  (defun myfunc-color-identifiers-mode-hook ()
-    (let ((faces '(font-lock-comment-face font-lock-comment-delimiter-face font-lock-constant-face font-lock-type-face font-lock-function-name-face font-lock-variable-name-face font-lock-keyword-face font-lock-string-face font-lock-builtin-face font-lock-preprocessor-face font-lock-warning-face font-lock-doc-face font-lock-negation-char-face font-lock-regexp-grouping-construct font-lock-regexp-grouping-backslash)))
-      (dolist (face faces)
-        (face-remap-add-relative face '((:foreground "" :weight normal :slant normal)))))
-    (face-remap-add-relative 'font-lock-keyword-face '((:weight bold :slant normal :foreground "#666666")))
-    (face-remap-add-relative 'font-lock-comment-face '((:slant italic :weight bold :foreground "#333333")))
-    (face-remap-add-relative 'font-lock-comment-delimiter-face '((:slant italic :weight bold :foreground "#333333")))
-    (face-remap-add-relative 'font-lock-builtin-face '((:weight bold :foreground "#666666")))
-    (face-remap-add-relative 'font-lock-preprocessor-face '((:weight bold)))
-    (face-remap-add-relative 'font-lock-function-name-face '((:underline t)))
-    (face-remap-add-relative 'font-lock-string-face '((:weight normal :foreground "#333333")))
-    (face-remap-add-relative 'font-lock-constant-face '((:foreground "#666666" :slant italic))))
-  (add-hook 'color-identifiers-mode-hook 'myfunc-color-identifiers-mode-hook)
-  :hook ((go-mode . color-identifiers-mode)
-         (js-mode . color-identifiers-mode)
-         (python-mode . color-identifiers-mode)))
-
-(use-package aggressive-indent
-  :unless noninteractive
-  :bind ("C-c e i" . aggressive-indent-mode)
-  :hook ((lisp-mode       . aggressive-indent-mode)
-         (emacs-lisp-mode . aggressive-indent-mode))
-  :config
-  ;; Free C-c C-q, used in Org and in CIDER
-  (unbind-key "C-c C-q" aggressive-indent-mode-map))
 
 (use-package undo-tree
   :unless noninteractive
@@ -94,7 +37,6 @@
   :config
   (setq-default undo-tree-visualizer-timestamps t
                 undo-tree-enable-undo-in-region t))
-
 (use-package whitespace
   :unless noninteractive
   :commands (whitespace-mode vde/toggle-invisibles)
@@ -107,22 +49,6 @@
         (whitespace-mode -1)
       (whitespace-mode)))
   :bind ("<f6>" . vde/toggle-invisibles))
-
-(use-package expand-region
-  :unless noninteractive
-  :commands (er/expand-region er/contract-region)
-  :bind (("C-=" . er/expand-region)
-         ("C--". er/contract-region)))
-
-(use-package visual-regexp
-  :unless noninteractive
-  :commands (vr/replace vr/query-replace)
-  :bind (("C-c r"   . vr/replace)
-         ("C-c %"   . vr/query-replace)))
-
-(use-package hs-minor-mode
-  :unless noninteractive
-  :hook ((prog-mode . hs-minor-mode)))
 
 (use-package easy-kill
   :unless noninteractive
@@ -173,39 +99,6 @@ Else toggle the comment status of the line at point."
          ("M-;" . comment-indent)
          ("C-x C-;" . comment-box)))
 
-;; FIXME(vdemeester) Do I need on-the-fly spellcheck *or* not ?
-(use-package flyspell
-  :unless noninteractive
-  :commands (flyspell-prog-mode flyspell-mode)
-  :hook((text-mode . flyspell-mode)
-        (prog-mode . flyspell-prog-mode))
-  :config
-  (define-key flyspell-mode-map (kbd "C-;") nil)
-  (setq-default flyspell-issue-message-flag nil
-                flyspell-issue-welcome-flag nil
-                ispell-program-name "hunspell"
-                ispell-local-dictionary "en_GB"
-                ispell-local-dictionary-alist
-                '(("en_GB"
-                   "[[:alpha:]]"
-                   "[^[:alpha:]]"
-                   "[']"
-                   nil
-                   ("-d" "en_GB,fr_FR")
-                   nil
-                   utf-8))))
-
-(use-package emacs
-  :init
-  (setq-default tab-always-indent 'complete
-                tab-width 4
-                indent-tabs-mode nil))
-
-;; FIXME: enable/disable this through a minor mode
-;;        can be enable by default in code, disable in adoc-mode, …
-;; (use-package emacs
-;; :hook (before-save . delete-trailing-whitespace))
-
 (use-package delsel
   :unless noninteractive
   :config
@@ -218,44 +111,17 @@ Else toggle the comment status of the line at point."
   (set-mark-command-repeat-pop t)
   :bind ("M-z" . zap-up-to-char))
 
+(use-package visual-regexp
+  :unless noninteractive
+  :commands (vr/replace vr/query-replace)
+  :bind (("C-c r"   . vr/replace)
+         ("C-c %"   . vr/query-replace)))
+
 (use-package emacs
   :config
-  (defun prot/new-line-below ()
-    "Create a new line below the current one.  Move the point to
-the absolute beginning.  Also see `prot/new-line-above'."
-    (interactive)
-    (end-of-line)
-    (newline))
-
-  (defun prot/new-line-above ()
-    "Create a new line above the current one.  Move the point to
-the absolute beginning.  Also see `prot/new-line-below'."
-    (interactive)
-    (beginning-of-line)
-    (newline)
-    (forward-line -1))
-
-  (defun prot/yank-replace-line-or-region ()
-    "Replace the line at point with the contents of the last
-stretch of killed text.  If the region is active, operate over it
-instead.  This command can then be followed by the standard
-`yank-pop' (default is bound to M-y)."
-    (interactive)
-    (if (use-region-p)
-        (progn
-          (delete-region (region-beginning) (region-end))
-          (yank))
-      (progn
-        (delete-region (point-at-bol) (point-at-eol))
-        (yank))))
-
-  :bind (("C-S-SPC" . contrib/mark-whole-word)
-         ("<C-return>" . prot/new-line-below)
-         ("<C-S-return>" . prot/new-line-above)
-         ("M-SPC" . cycle-spacing)
+  :bind (("M-SPC" . cycle-spacing)
          ("M-o" . delete-blank-lines)
-         ("<C-f6>" . tear-off-window)
-         ("C-S-y" . prot/yank-replace-line-or-region)))
+         ("<C-f6>" . tear-off-window)))
 
 (use-package pdf-tools
   :unless noninteractive
@@ -266,11 +132,6 @@ instead.  This command can then be followed by the standard
   (setq pdf-view-midnight-colors '("#ffffff" . "#000000"))
   (pdf-tools-install :no-query)
   (require 'pdf-occur))
-
-(use-package paste-sbr
-  :unless noninteractive
-  :commands (htmlize-paste-it)
-  :bind ("C-c e p" . htmlize-paste-it))
 
 (use-package scratch
   :unless noninteractive

@@ -1,6 +1,6 @@
 ;;; early-init.el --- Early init configuration file -*- lexical-binding: t; -*-
 
-;; Copyright (c) 2020-2021  Vincent Demeester <vincent@sbr.pm>
+;; Copyright (c) 2020-2023  Vincent Demeester <vincent@sbr.pm>
 
 ;; Author: Vincent Demeester <vincent@sbr.pm>
 ;; URL: https://git.sr.ht/~vdemeester/home

@@ -2,32 +2,37 @@
 ;;; Commentary:
 ;;; Go programming language configuration
 ;;; Code:
-(use-package go-mode
-  :commands (go-mode)
-  :mode "\\.go$"
-  :interpreter "go"
-  :config
-                                        ;(setq gofmt-command "goimports")
-  (if (not (executable-find "goimports"))
-      (warn "go-mode: couldn't find goimports; no code formatting/fixed imports on save")
-    (add-hook 'before-save-hook 'gofmt-before-save))
-  (if (not (string-match "go" compile-command))   ; set compile command default
-      (set (make-local-variable 'compile-command)
-           "go build -v && go test -v && go vet")))
+
 
 (use-package gotest
-  :after go-mode)
+  :commands (my-gotest-maybe-ts-run go-test--get-current-test-info)
+  :after go-mode
+  :custom
+  (go-test-verbose t)
+  :hook
+  (go-test-mode . (lambda () (pop-to-buffer (get-buffer "*Go Test*"))))
+  (go-mode . (lambda ()(interactive) (setq go-run-args "-v")))
+  :config
+  (defun my-go-test-current-project()
+    (interactive)
+    (let ((default-directory (project-root (project-current t))))
+      (go-test-current-project)))
+  (defun my-gotest-maybe-ts-run()
+    (interactive)
+    (let ((testrunname)
+          (gotest (cadr (go-test--get-current-test-info))))
+      (save-excursion
+        (goto-char (line-beginning-position))
+        (re-search-forward "name:[[:blank:]]*\"\\([^\"]*\\)\"" (line-end-position) t))
+      (setq testrunname (match-string-no-properties 1))
+      (if testrunname
+          (setq gotest (format "%s/%s" gotest (shell-quote-argument
+                                               (replace-regexp-in-string " " "_" testrunname)))))
+      (go-test--go-test (concat "-run " gotest "\\$ .")))))
 
-(use-package gotest-ui
-  :commands (gotest-ui-current-test gotest-ui-current-file gotest-ui-current-project)
-  :after (go-mode gotest)
-  :bind (:map go-mode-map
-              ("C-c t t" . gotest-ui-current-test)
-              ("C-c t f" . gotest-ui-current-file)
-              ("C-c t p" . gotest-ui-current-project)))
-
-(use-package go-stacktracer
-  :commands (go-stacktracer-region))
+(use-package go-mode
+  :hook
+  (go-mode . go-ts-mode-hook))
 
 (provide 'programming-go)
 ;;; programming-go.el ends here

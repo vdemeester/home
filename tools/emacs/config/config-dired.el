@@ -3,7 +3,6 @@
 ;;; Configuration of Dired
 ;;; Code:
 
-;; UseDired
 (use-package dired
   :unless noninteractive
   :commands (dired find-name-dired)

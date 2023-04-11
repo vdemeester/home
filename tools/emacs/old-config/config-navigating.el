@@ -58,6 +58,16 @@
          ("C-c j t" . avy-goto-char-timer)
          ("C-c j l" . avy-goto-line)))
 
+(use-package hideshow
+  :unless noninteractive
+  :commands (hs-show-all hs-toggle-hiding hs-hide-all hs-hide-block hs-hide-level)
+  :defer 5
+  :bind (("C-c @ a" . hs-show-all)
+         ("C-c @ c" . hs-toggle-hiding)
+         ("C-c @ t" . hs-hide-all)
+         ("C-c @ d" . hs-hide-block)
+         ("C-c @ l" . hs-hide-level)))
+
 (use-package mwim
   :unless noninteractive
   :commands (mwim-beginning-of-code-or-line mwim-end-of-code-or-line)
@@ -100,6 +110,42 @@
   :bind (:map Man-mode-map
               ("i" . Man-goto-section)
               ("g" . Man-update-manpage)))
+
+(use-package pulse
+  :unless noninteractive
+  :config
+  (defface vde/pulse-line-modus-theme
+    '((t :inherit modus-theme-subtle-green :extend t))
+    "Ad-hoc face for `vde/pulse-line'.
+This is done because it is not possible to highlight empty lines
+without the `:extend' property.")
+
+  (defun vde/pulse-line (&optional face)
+    "Temporarily highlight the current line."
+    (interactive)
+    (let ((start (if (eobp)
+                     (line-beginning-position 0)
+                   (line-beginning-position)))
+          (end (line-beginning-position 2))
+          (pulse-delay .04)
+          (face
+           (if face
+               face
+             'vde/pulse-line-modus-theme)))
+      (pulse-momentary-highlight-region start end face)))
+  (defun ct/yank-pulse-advice (orig-fn &rest args)
+    ;; Define the variables first
+    (let (begin end)
+      ;; Initialize `begin` to the current point before pasting
+      (setq begin (point))
+      ;; Forward to the decorated function (i.e. `yank`)
+      (apply orig-fn args)
+      ;; Initialize `end` to the current point after pasting
+      (setq end (point))
+      ;; Pulse to highlight!
+      (pulse-momentary-highlight-region begin end)))
+  (advice-add 'yank :around #'ct/yank-pulse-advice)
+  :bind ("<C-escape>" . vde/pulse-line))
 
 (provide 'config-navigating)
 ;;; config-navigating.el ends here

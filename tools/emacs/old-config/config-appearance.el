@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Appearance configuration
 ;;; Code:
+(declare-function projectile-project-name "projectile")
 
 (use-package emacs
   :defer 3
@@ -50,6 +51,10 @@
   ;; and for all modes derived from text-mode
   (add-hook 'text-mode-hook #'hl-line-mode))
 
+(use-package hl-todo
+  :commands (hl-todo-mode)
+  :hook ((prog-mode . hl-todo-mode)))
+
 (use-package frame
   :unless noninteractive
   :commands vde/cursor-type-mode
@@ -77,6 +82,7 @@
                        cursor-in-non-selected-windows))
         (kill-local-variable `,local))
       (blink-cursor-mode -1))))
+
 (use-package emacs
   :config
   (setq-default custom-safe-themes t)
@@ -95,6 +101,7 @@ Ignores `ARGS'."
   (setq window-divider-default-bottom-width 1)
   (setq window-divider-default-places 'right-only)
   :hook (after-init . window-divider-mode))
+
 (use-package tab-bar
   :unless noninteractive
   :config

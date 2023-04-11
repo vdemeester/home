@@ -8,9 +8,7 @@
 
 ;; Remap dynamic-abbrev to hippie-expand
 ;; See https://www.masteringemacs.org/article/text-expansion-hippie-expand
-(global-set-key [remap dabbrev-expand] 'hippie-expand)
-
-
+;; (global-set-key [remap dabbrev-expand] 'hippie-expand)
 ;; 
 ;; (provide 'config-keybindings)
 ;; ;;; config-keybindings.el ends here
