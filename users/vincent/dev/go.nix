@@ -17,6 +17,7 @@
     delve
     gotools
     gotestsum
+    gofumpt
     # misc
     protobuf
     my.ram
