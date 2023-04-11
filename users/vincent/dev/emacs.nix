@@ -46,6 +46,7 @@ let
     dockerfile-mode
     easy-kill
     edit-indirect
+    eldoc-box
     elfeed
     elfeed-org
     embark
