@@ -123,6 +123,8 @@ in
         fira-mono
         hasklig
         inconsolata
+        input
+        ia-fonts
         iosevka
         noto-fonts
         noto-fonts-cjk
