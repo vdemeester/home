@@ -14,9 +14,9 @@ if ! [ "${XDG_CURRENT_DESKTOP}" == "sway" ]; then
 fi
 
 if [[ GRAPHICS -eq 0 ]]; then
-    connection=$(nmcli connection show | grep vpn | fzf)
+    connection="$(nmcli connection show | grep vpn | fzf)"
 else
-    connection=$(nmcli connection show | grep vpn | zenity --list --title "Red Hat VPNs" --text "Choose your VPN.." --column "Name" --width=600 --height=450)
+    connection="$(nmcli connection show | grep vpn | zenity --list --title "Red Hat VPNs" --text "Choose your VPN.." --column "Name" --width=600 --height=450)"
 fi
 NOTIFY_CMD="notify-send"
 if [[ GRAPHICS -eq 0 ]]; then
