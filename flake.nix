@@ -225,8 +225,8 @@
           ];
         };
         sakhalin = {
-          channelName = "nixos-22_11";
-          modules = stableModules_22_11 ++ [
+          channelName = "nixos-23_05";
+          modules = stableModules_23_05 ++ [
             nixos-hardware.nixosModules.common-pc-ssd
             ./systems/hosts/sakhalin.nix
           ];
