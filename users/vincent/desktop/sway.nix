@@ -348,16 +348,18 @@ in
         "home-undocked" = {
           outputs = [
             # Output eDP-1 'AU Optronics 0xD291 Unknown'
-            { criteria = "eDP-1"; position = "0,0"; mode = "1920x1200"; scale = 1.0; }
+            { criteria = "eDP-1"; status = "enable"; position = "0,0"; mode = "1920x1200"; scale = 1.0; }
           ];
         };
         "home-docked" = {
           outputs = [
             # Old: Output eDP-1 'AU Optronics 0xD291 Unknown'
             # Output eDP-1 'Unknown 0xD291 Unknown'
-            # Output DP-5 'LG Electronics LG ULTRAWIDE 0x0000D50C' (focused)
-            { criteria = "LG Electronics LG ULTRAWIDE 0x0000D50C"; position = "0,0"; mode = "3440x1440"; scale = 1.0; }
-            { criteria = "eDP-1"; position = "1460,1440"; mode = "1920x1200"; scale = 1.0; }
+            # Output DP-5 'LG Electronics LG ULTRAWIDE 0x0005D10C' (focused)
+            # { criteria = "LG Electronics LG ULTRAWIDE 0x0000D50C"; status = "enable"; position = "0,0"; mode = "3440x1440"; scale = 1.0; }
+            { criteria = "DP-5"; status = "enable"; position = "0,0"; mode = "3440x1440"; scale = 1.0; }
+            # Use it as a "shareable" screen when needed
+            { criteria = "eDP-1"; status = "enable"; position = "1460,1440"; mode = "1920x1200"; scale = 1.0; }
           ];
         };
       };
