@@ -232,8 +232,8 @@
           ];
         };
         kerkouane = {
-          channelName = "nixos-22_11";
-          modules = stableModules_22_11 ++ [
+          channelName = "nixos-23_05";
+          modules = stableModules_23_05 ++ [
             ./systems/modules/services/govanityurl.nix
             ./systems/hosts/kerkouane.nix
           ];
