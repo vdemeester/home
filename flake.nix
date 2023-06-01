@@ -16,7 +16,6 @@
 
     # Flake Dependencies
     home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    home-manager-22_11 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-22.11"; inputs.nixpkgs.follows = "nixos-22_11"; };
     home-manager-23_05 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-23.05"; inputs.nixpkgs.follows = "nixos-23_05"; };
     impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
     nixpkgs-wayland = { type = "github"; owner = "nix-community"; repo = "nixpkgs-wayland"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -53,7 +52,6 @@
     # Channels
     # FIXME: is it needed or should I just alias nixos-unstable instead
     nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
-    nixos-22_11 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-22.11"; };
     nixos-23_05 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-23.05"; };
     nixos-unstable = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
     nixpkgs-unstable = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixpkgs-unstable"; };
@@ -65,7 +63,6 @@
     , flake-utils-plus
     , flake-utils
     , home-manager
-    , home-manager-22_11
     , home-manager-23_05
     , emacs-overlay
     , chapeau-rouge
@@ -84,10 +81,6 @@
         ./systems/modules/virtualisation/buildkit.nix
       ];
 
-      stableModules_22_11 = [
-        home-manager-22_11.nixosModules.home-manager
-        ./systems/modules/profiles/docker.nix
-      ];
       stableModules_23_05 = [
         home-manager-23_05.nixosModules.home-manager
         ./systems/modules/profiles/docker.nix
