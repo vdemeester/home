@@ -16,6 +16,9 @@ in
       bind = {
         enable = true;
         forwarders = [ "8.8.8.8" "8.8.4.4" ];
+        extraOptions = ''
+          dnssec-validation no;
+        '';
         cacheNetworks = [ "192.168.1.0/24" "127.0.0.0/8" "10.100.0.0/24" ];
         zones = [
           {
