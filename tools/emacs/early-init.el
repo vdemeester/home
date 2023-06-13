@@ -93,8 +93,10 @@ This is used internally by `vde/modus-themes-toggle'."
    modus-themes-scale-4 1.2
    ;; x-underline-at-descent-line t
    )
-  (modus-themes-load-themes)
-  (modus-themes-load-operandi))
+  (require-theme 'modus-themes)
+  (load-theme 'modus-operandi :no-confirm)
+  ;; (modus-themes-load-theme modus-operandi)
+  )
 
 (defun vde/modus-operandi-custom ()
   "Customize modus-operandi theme."
