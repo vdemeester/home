@@ -9,7 +9,10 @@
   :config
   (setq-default search-whitespace-regexp ".*?"
                 isearch-lax-whitespace t
-                isearch-regexp-lax-whitespace nil)
+                isearch-regexp-lax-whitespace nil
+		isearch-lazy-count t
+		lazy-count-prefix-format nil
+		lazy-count-suffix-format "   (%s/%s)")
   (defun stribb/isearch-region (&optional not-regexp no-recursive-edit)
     "If a region is active, make this the isearch default search
 pattern."
