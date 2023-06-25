@@ -16,6 +16,7 @@
   home.packages = with pkgs; [
     binutils
     cmake
+    devenv
     difftastic
     fswatch
     gnumake

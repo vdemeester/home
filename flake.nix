@@ -13,6 +13,8 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     devshell = { type = "github"; owner = "numtide"; repo = "devshell"; };
+    devenv.url = "github:cachix/devenv/latest";
+
 
     # Flake Dependencies
     home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -72,6 +74,7 @@
     , nixos-wsl
     , nixos-hardware
     , devshell
+    , devenv
     , ...
     } @ inputs:
     let
@@ -118,6 +121,9 @@
         nur.overlay
         devshell.overlays.default
         chapeau-rouge.overlays.openshift
+        (_: prev: {
+          inherit (devenv.packages.${prev.system}) devenv;
+        })
       ];
 
       hostDefaults = {

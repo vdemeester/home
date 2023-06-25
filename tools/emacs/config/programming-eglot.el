@@ -28,6 +28,7 @@
   (c-mode . eglot-ensure)
   (cc-mode . eglot-ensure)
   (go-mode . eglot-ensure)
+  (go-ts-mode . eglot-ensure)
   :custom
   rustic-lsp-client 'eglot)
 
