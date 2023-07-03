@@ -59,11 +59,7 @@ in
           inherit (config.wayland.windowManager.sway.config) left down up right menu terminal;
         in
         {
-          "${mod}+p" = "exec ${menu}";
-          "${mod}+Control+p" = "exec ${pkgs.wofi-emoji}/bin/wofi-emoji -G";
           "${mod}+Return" = "exec ${terminal}";
-
-          "${mod}+Shift+q" = "kill";
 
           "${mod}+Shift+Return" = "exec emacsclient -c";
           "${mod}+Control+Return" = "exec emacs";
@@ -101,27 +97,13 @@ in
 
           # "${mod}+b" = "splith";
           # "${mod}+v" = "splitv";
-          "${mod}+f" = "fullscreen toggle";
-          "${mod}+a" = "focus parent";
-
-          "${mod}+s" = "layout stacking";
-          "${mod}+w" = "layout tabbed";
-          "${mod}+e" = "layout toggle split";
+          # "${mod}+f" = "fullscreen toggle";
 
           "${mod}+Shift+space" = "floating toggle";
           "${mod}+space" = "focus mode_toggle";
 
-          "${mod}+Shift+minus" = "move scratchpad";
-          "${mod}+minus" = "scratchpad show";
-
-          "${mod}+Shift+c" = "reload";
-          "${mod}+Shift+e" =
-            "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
-
-          "${mod}+o" = "mode resize";
-
-          "${mod}+Shift+o" = "exec ${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen";
-          "${mod}+Shift+n" = "exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
+          #"${mod}+Shift+minus" = "move scratchpad";
+          #"${mod}+minus" = "scratchpad show";
 
           "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%+";
           "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%-";
@@ -192,8 +174,22 @@ in
     extraConfig =
       let
         mod = config.wayland.windowManager.sway.config.modifier;
+        inherit (config.wayland.windowManager.sway.config) left down up right menu terminal;
       in
       ''
+        bindcode ${mod}+33 exec "${menu}"
+        bindcode ${mod}+Control+33 exec "${pkgs.wofi-emoji}/bin/wofi-emoji -G"
+        bindcode ${mod}+Shift+24 kill
+        bindcode ${mod}+38 focus parent
+        bindcode ${mod}+39 layout stacking
+        bindcode ${mod}+25 layout tabbed
+        bindcode ${mod}+26 layout toggle split
+        bindcode ${mod}+Shift+54 reload
+        bindcode ${mod}+Shift+26 exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'"
+        bindcode ${mod}+32 mode resize
+        bindcode ${mod}+Shift+32 exec "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"
+        bindcode ${mod}+Shift+57 exec${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw"
+
         # switch to workspace
         bindcode ${mod}+10 workspace number 1
         bindcode ${mod}+11 workspace number 2
