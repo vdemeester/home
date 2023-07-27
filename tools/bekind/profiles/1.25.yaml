@@ -9,4 +9,4 @@ containerdConfigPatches:
     endpoint = ["http://sakhalin.home:5000"]
 nodes:
 - role: control-plane
-  image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
+  image: kindest/node:v1.25.11@sha256:227fa11ce74ea76a0474eeefb84cb75d8dad1b08638371ecf0e86259b35be0c8
