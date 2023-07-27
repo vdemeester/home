@@ -98,7 +98,7 @@
   (defun yt-dl-it (url)
     "Downloads the URL in an async shell"
     (let ((default-directory "~/desktop/videos"))
-      (async-shell-command (format "youtube-dl \"%s\"" url))))
+      (async-shell-command (format "yt-dlp \"%s\"" url))))
 
   (defun elfeed-youtube-dl (&optional use-generic-p)
     "Youtube-DL link"

@@ -43,7 +43,7 @@ in
     xdg-user-dirs
     xdg-utils
     xsel
-    youtube-dl
+    yt-dlp # youtube-dl
   ];
 
   home.file.".XCompose".source = ./xorg/XCompose;
