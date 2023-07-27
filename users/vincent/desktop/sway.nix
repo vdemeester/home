@@ -188,7 +188,7 @@ in
         bindcode ${mod}+Shift+26 exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'"
         bindcode ${mod}+32 mode resize
         bindcode ${mod}+Shift+32 exec "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"
-        bindcode ${mod}+Shift+57 exec${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw"
+        bindcode ${mod}+Shift+57 exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw"
 
         # switch to workspace
         bindcode ${mod}+10 workspace number 1
@@ -215,8 +215,7 @@ in
         bindcode ${mod}+Shift+19 move container to workspace number 10
 
         bindcode ${mod}+Control+39 split h
-        bindcode ${mod}+Shift+61 floating toggle
-        bindcode ${mod}+61 focus mode_toggle
+        bindcode ${mod}+41 fullscreen toggle
 
         bindsym XF86AudioRaiseVolume exec ${pkgs.pamixer}/bin/pamixer -ui 5 && ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
         bindsym XF86AudioLowerVolume exec ${pkgs.pamixer}/bin/pamixer -ud 5 && ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
@@ -227,7 +226,7 @@ in
         bindsym XF86AudioPrev exec "playerctl previous"
 
         bindcode ${mod}+49 exec swaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
-        bindsym --whole-window button8 exec swaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
+        bindsym --whole-window button8 exec sswaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
         bindcode ${mod}+Shift+49 exec swaymsg '[app_id="emacs" title="^_emacs scratchpad_$"]' scratchpad show || exec ${config.programs.emacs.package}/bin/emacsclient -c -F "((name . \"_emacs scratchpad_\"))"
         bindsym --whole-window button9 exec swaymsg '[app_id="emacs" title="^_emacs scratchpad_$"]' scratchpad show || exec ${config.programs.emacs.package}/bin/emacsclient -c -F "((name . \"_emacs scratchpad_\"))"
 
