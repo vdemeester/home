@@ -114,6 +114,41 @@ in
     docker.enable = true;
   };
   services = {
+    aria2 = {
+      enable = true;
+      openPorts = true;
+      downloadDir = "/data/downloads";
+    };
+    bazarr = {
+      enable = true;
+      # Use reverse proxy instead
+      openFirewall = true;
+    };
+    radarr = {
+      enable = true;
+      # Use reverse proxy instead
+      openFirewall = true;
+    };
+    sonarr = {
+      enable = true;
+      # Use reverse proxy instead
+      openFirewall = true;
+    };
+    prowlarr = {
+      enable = true;
+      # Use reverse proxy instead
+      openFirewall = true;
+    };
+    readarr = {
+      enable = true;
+      # Use reverse proxy instead
+      openFirewall = true;
+    };
+    lidarr = {
+      enable = true;
+      # Use reverse proxy instead
+      openFirewall = true;
+    };
     netdata.enable = true;
     smartd = {
       enable = true;
