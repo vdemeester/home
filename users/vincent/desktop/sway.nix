@@ -65,20 +65,20 @@ in
           "${mod}+Control+Return" = "exec emacs";
           "${mod}+Control+Shift+Return" = "exec ${emacs-in-folder}";
 
-          "${mod}+${left}" = "focus left";
-          "${mod}+${down}" = "focus down";
-          "${mod}+${up}" = "focus up";
-          "${mod}+${right}" = "focus right";
+          # "${mod}+${left}" = "focus left";
+          # "${mod}+${down}" = "focus down";
+          # "${mod}+${up}" = "focus up";
+          # "${mod}+${right}" = "focus right";
 
           "${mod}+Left" = "focus left";
           "${mod}+Down" = "focus down";
           "${mod}+Up" = "focus up";
           "${mod}+Right" = "focus right";
 
-          "${mod}+Shift+${left}" = "move left";
-          "${mod}+Shift+${down}" = "move down";
-          "${mod}+Shift+${up}" = "move up";
-          "${mod}+Shift+${right}" = "move right";
+          # "${mod}+Shift+${left}" = "move left";
+          # "${mod}+Shift+${down}" = "move down";
+          # "${mod}+Shift+${up}" = "move up";
+          # "${mod}+Shift+${right}" = "move right";
 
           "${mod}+Shift+Left" = "move left";
           "${mod}+Shift+Down" = "move down";
