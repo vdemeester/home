@@ -473,7 +473,7 @@ This can be used for an org-capture template to create an entry in the journal."
                  :empty-lines 1 :clock-in t :clock-resume t))
   :custom
   (org-journal-date-prefix "* ")
-  (org-journal-file-header "#+TITLE: %Y-v%m Journal\n\n")
+  (org-journal-file-header "#+TITLE: %Y-%m Journal\n\n")
   (org-journal-file-format "%Y-%m.private.org")
   (org-journal-file-type 'monthly)
   (org-journal-dir org-private-notes-dir)
