@@ -128,6 +128,8 @@ in
     docker-client
     officemode
     roadmode
+    notion-app-enhanced
+    virt-manager
   ];
 
   services = {
