@@ -121,6 +121,8 @@ in
   profiles.home = true;
   profiles.externalbuilder.enable = true;
   profiles.virtualization = { enable = true; nested = true; };
+  virtualisation.podman.dockerSocket.enable = true;
+  virtualisation.podman.autoPrune.enable = true;
   environment.systemPackages = with pkgs; [
     # docker client only
     docker-client
