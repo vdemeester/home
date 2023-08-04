@@ -52,6 +52,7 @@ in
   xdg.configFile."xorg/modletters.compose".source = ./xorg/modletters.compose;
   home.file.".local/share/applications/google-meet.desktop".source = ./xorg/google-meet.desktop;
   home.file.".local/share/applications/chrome-slack.desktop".source = ./xorg/chrome-slack.desktop;
+  home.file.".local/share/applications/notion.desktop".source = ./xorg/notion.desktop;
   home.file.".oath" = {
     source = config.lib.file.mkOutOfStoreSymlink "/home/vincent/desktop/documents/.oath";
     recursive = true;
