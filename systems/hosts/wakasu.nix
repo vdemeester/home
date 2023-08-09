@@ -125,7 +125,7 @@ in
   virtualisation.podman.autoPrune.enable = true;
   environment.systemPackages = with pkgs; [
     # docker client only
-    docker-client
+    (docker_24.override { clientOnly = true; })
     officemode
     roadmode
     notion-app-enhanced

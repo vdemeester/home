@@ -86,7 +86,10 @@ in
       enable = true;
       containers = {
         enable = true;
-        docker.enable = true;
+        docker = {
+          enable = true;
+          package = pkgs.docker_24;
+        };
         podman.enable = true;
         buildkit = {
           enable = true;
