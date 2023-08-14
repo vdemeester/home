@@ -103,7 +103,7 @@ in
   services.k3s.extraFlags = toString [
     # "--kubelet-arg=v=4" # Optionally add additional args to k3s
   ];
-  environment.systemPackages = [ pkgs.k3s ];
+  environment.systemPackages = [ pkgs.k3s pkgs.python310Packages.aria2p ];
 
   programs.ssh.setXAuthLocation = true;
   profiles = {
@@ -117,6 +117,7 @@ in
     aria2 = {
       enable = true;
       openPorts = true;
+      extraArguments = "--max-concurrent-downloads=20";
       downloadDir = "/data/downloads";
     };
     bazarr = {
