@@ -128,7 +128,7 @@ in
     (docker_24.override { clientOnly = true; })
     officemode
     roadmode
-    notion-app-enhanced
+    obsidian
     virt-manager
   ];
 
