@@ -231,6 +231,12 @@ questions.  Else use completion to select the tab to switch to."
           tabulated-list-mode-hook))
   (lin-global-mode))
 
+(use-package emacs
+  :unless noninteractive
+  :config
+  (set-frame-parameter nil 'alpha-background 96)
+  (add-to-list 'default-frame-alist '(alpha-background . 96)))
+
 (use-package tooltip
   :unless noninteractive
   :config
