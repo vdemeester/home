@@ -120,6 +120,7 @@ let
     rainbow-mode
     rg
     ripgrep
+    run-command
     scratch
     shr-tag-pre-highlight
     smartparens
