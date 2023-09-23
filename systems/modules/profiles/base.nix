@@ -32,7 +32,7 @@ in
       systemPackages = with pkgs; [
         cachix
         direnv
-        exa
+        eza
         file
         htop
         iotop

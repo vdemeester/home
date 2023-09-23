@@ -4,7 +4,7 @@ buildFHSUserEnv {
   name = "fhs-std";
   targetPkgs = pkgs: with pkgs; [
     envsubst
-    exa
+    eza
     git
     gnumake
     coreutils

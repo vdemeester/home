@@ -22,7 +22,7 @@ in
     packages = with pkgs; [
       enchive
       entr
-      exa
+      eza
       fd
       htop
       mosh
