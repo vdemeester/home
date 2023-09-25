@@ -129,6 +129,7 @@ in
     officemode
     roadmode
     obsidian
+    discord
     virt-manager
   ];
 
