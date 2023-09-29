@@ -63,6 +63,11 @@ in
             id = "7dshg-r8zr6";
             devices = deviceNames;
           };
+          "/home/vincent/desktop/notes" = {
+            label = "notes";
+            id = "q2eld-jylbu";
+            devices = deviceNames;
+          };
           "/home/vincent/desktop/org" = {
             label = "org";
             id = "sjpsr-xfwdu";
