@@ -87,6 +87,7 @@ let
     magit-popup
     marginalia
     markdown-mode
+    mct
     minions
     modus-themes
     moody
