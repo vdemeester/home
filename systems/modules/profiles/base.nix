@@ -32,7 +32,7 @@ in
       systemPackages = with pkgs; [
         cachix
         direnv
-        eza
+        exa # TODO: switch to eza in 2024
         file
         htop
         iotop

@@ -5,11 +5,11 @@
     cp = ''cp --interactive'';
     mv = ''mv --interactive'';
     gcd = ''cd (git root)'';
-    ls = ''eza'';
-    ll = ''eza --long'';
-    la = ''eza --all'';
-    l = ''eza --long --all --header'';
-    t = ''eza --tree --level=2'';
+    ls = ''exa'';
+    ll = ''exa --long'';
+    la = ''exa --all'';
+    l = ''exa --long --all --header'';
+    t = ''exa --tree --level=2'';
     wget = ''wget -c'';
     map = ''xargs -n1'';
     k = ''kubectl'';

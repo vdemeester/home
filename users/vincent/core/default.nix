@@ -22,7 +22,7 @@ in
     packages = with pkgs; [
       enchive
       entr
-      eza
+      exa # TODO: switch to eza in 2024
       fd
       htop
       mosh
