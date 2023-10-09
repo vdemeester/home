@@ -11,11 +11,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1696729021,
-        "narHash": "sha256-PIVy+hKRlaKd6q9EOdes12Mx5Of3nZGNne2ITPX3ZUU=",
+        "lastModified": 1696858042,
+        "narHash": "sha256-AgL9g1RUOnbZzn953crzVQeTsqcClYUnI4CM7moJL/U=",
         "owner": "vdemeester",
         "repo": "chapeau-rouge",
-        "rev": "ff84b98a1196f1121f241ef2865c871f6bf05a89",
+        "rev": "92fe41243b8e020121e1fd2d987c1da0328c0168",
         "type": "github"
       },
       "original": {
@@ -868,11 +868,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1695576016,
-        "narHash": "sha256-71KxwRhTfVuh7kNrg3/edNjYVg9DCyKZl2QIKbhRggg=",
+        "lastModified": 1696516544,
+        "narHash": "sha256-8rKE8Je6twTNFRTGF63P9mE3lZIq917RAicdc4XJO80=",
         "owner": "cachix",
         "repo": "pre-commit-hooks.nix",
-        "rev": "cb770e93516a1609652fa8e945a0f310e98f10c0",
+        "rev": "66c352d33e0907239e4a69416334f64af2c685cc",
         "type": "github"
       },
       "original": {
