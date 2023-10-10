@@ -112,7 +112,7 @@
       inherit self inputs nixosModules;
 
       supportedSystems = [ "aarch64-linux" "x86_64-linux" ];
-      channelsConfig.allowUnfree = true;
+      channels-config.allowUnfree = true;
 
       sharedOverlays = [
         (import ./nix/overlays).tekton
