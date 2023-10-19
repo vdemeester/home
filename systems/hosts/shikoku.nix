@@ -65,19 +65,22 @@ in
   # SSD1:  469077df-049f-4f5d-a34f-1f5449d782ec
   # SSD2:  e11a3b63-791c-418b-9f4b-5ae0199f1f97
   # NVME2: 3d2dff80-f2b1-4c48-8e76-12b01fdf4137
-  fileSystems."/tank/data" =
-    {
-      device = "tank/data";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-
-  fileSystems."/tank/virt" =
-    {
-      device = "tank/virt";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
+  # boot.zfs.extraPools = [ "tank" ];
+  # networking.hostId = "03129692bea040488878aa0133e54914";
+  # networking.hostId = "03129692";
+  # fileSystems."/tank/data" =
+  #   {
+  #     device = "tank/data";
+  #     fsType = "zfs";
+  #     options = [ "zfsutil" ];
+  #   };
+  # 
+  # fileSystems."/tank/virt" =
+  #   {
+  #     device = "tank/virt";
+  #     fsType = "zfs";
+  #     options = [ "zfsutil" ];
+  #   };
 
   swapDevices = [{
     device = "/dev/disk/by-uuid/a9ec44e6-0c1d-4f60-9f5c-81a7eaa8e8fd";
