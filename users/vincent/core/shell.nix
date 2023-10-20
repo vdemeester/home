@@ -6,9 +6,9 @@
     mv = ''mv --interactive'';
     gcd = ''cd (git root)'';
     # ls = ''exa'';
-    ll = ''ls --long'';
-    la = ''ls --all'';
-    l = ''ls --long --all --header'';
+    ll = ''ls -l'';
+    la = ''ls -a'';
+    l = ''ls -lah'';
     # t = ''exa --tree --level=2'';
     wget = ''wget -c'';
     map = ''xargs -n1'';

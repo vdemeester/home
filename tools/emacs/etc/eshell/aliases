@@ -1,3 +1,2 @@
-alias l exa --color=always -lah $*
-alias ll exa --color=always -l $*
-alias ls exa --color=always $*
+alias l ls -lah $*
+alias ll ls -l $*
