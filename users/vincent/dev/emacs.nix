@@ -42,6 +42,7 @@ let
     dired-narrow
     dired-rsync
     dired-subtree
+    dired-sidebar
     diredfl
     dockerfile-mode
     easy-kill
