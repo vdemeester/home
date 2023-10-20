@@ -15,6 +15,9 @@
   :mode ("\\.adoc\\'" . conf-toml-mode))
 
 (use-package copilot
+  :preface
+  (unless (package-installed-p 'copilot)
+    (package-vc-install "https://github.com/zerolfx/copilot.el"))
   :hook
   (prog-mode . copilot-mode)
     (markdown-mode . copilot-mode)
