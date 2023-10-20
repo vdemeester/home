@@ -46,6 +46,7 @@ let
     dockerfile-mode
     easy-kill
     edit-indirect
+    editorconfig
     eldoc-box
     elfeed
     elfeed-org
@@ -158,6 +159,8 @@ in
     ugrep
     # See if I can hide this under an option
     capture
+    github-copilot-cli # for copilot.el
+    nodejs
     ec
     et
     languagetool
