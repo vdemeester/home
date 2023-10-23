@@ -10,6 +10,6 @@
     my.manifest-tool
     nerdctl
     act
-    dagger
+    # dagger – Remove due to trademark issues : https://github.com/NixOS/nixpkgs/issues/260848, will have to package myself
   ];
 }
