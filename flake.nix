@@ -1,59 +1,6 @@
 {
   description = "System Config";
 
-  inputs = {
-    # Flake for compatibility with non-flake commands
-    flake-compat = { type = "github"; owner = "edolstra"; repo = "flake-compat"; flake = false; };
-
-    devenv = {
-      url = "github:cachix/devenv/latest";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-
-    # nixpkgs
-    nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
-    nixpkgs-23_05 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-23.05"; };
-    # Home Manager
-    home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    home-manager-23_05 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-23.05"; inputs.nixpkgs.follows = "nixpkgs-23_05"; };
-
-    impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
-
-    nixpkgs-wayland = { type = "github"; owner = "nix-community"; repo = "nixpkgs-wayland"; inputs.nixpkgs.follows = "nixpkgs"; };
-
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-
-    sops-nix = {
-      type = "github";
-      owner = "Mic92";
-      repo = "sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    envfs = {
-      type = "github";
-      owner = "Mic92";
-      repo = "envfs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # WSL
-    nixos-wsl = { type = "github"; owner = "nix-community"; repo = "NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
-    nixos-hardware = { type = "github"; owner = "NixOS"; "repo" = "nixos-hardware"; };
-
-    # Red Hat
-    chapeau-rouge = {
-      type = "github";
-      owner = "vdemeester";
-      repo = "chapeau-rouge";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
-
   outputs = { self, ... } @ inputs:
     let
       wayland = { pkgs, config, ... }: {
@@ -189,4 +136,60 @@
       overlays = import ./nix/overlays;
     };
 
+  inputs = {
+    # Flake for compatibility with non-flake commands
+    flake-compat = { type = "github"; owner = "edolstra"; repo = "flake-compat"; flake = false; };
+
+    devenv = {
+      url = "github:cachix/devenv/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+
+    # nixpkgs
+    nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
+    nixpkgs-23_05 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-23.05"; };
+    # Home Manager
+    home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
+    home-manager-23_05 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-23.05"; inputs.nixpkgs.follows = "nixpkgs-23_05"; };
+
+    impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
+
+    nixpkgs-wayland = { type = "github"; owner = "nix-community"; repo = "nixpkgs-wayland"; inputs.nixpkgs.follows = "nixpkgs"; };
+
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-23_05";
+    };
+
+    sops-nix = {
+      type = "github";
+      owner = "Mic92";
+      repo = "sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    envfs = {
+      type = "github";
+      owner = "Mic92";
+      repo = "envfs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # WSL
+    nixos-wsl = { type = "github"; owner = "nix-community"; repo = "NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixos-hardware = { type = "github"; owner = "NixOS"; "repo" = "nixos-hardware"; };
+
+    # Red Hat
+    chapeau-rouge = {
+      type = "github";
+      owner = "vdemeester";
+      repo = "chapeau-rouge";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 }
