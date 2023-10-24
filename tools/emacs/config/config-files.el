@@ -20,7 +20,7 @@
   :defer 2
   :if (executable-find "direnv")
   :bind (:map envrc-mode-map
-              ("C-c d" . envrc-command-map))
+              ("C-c e" . envrc-command-map))
   :config (envrc-global-mode))
 
 (use-package hardhat
