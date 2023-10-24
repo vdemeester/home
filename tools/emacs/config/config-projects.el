@@ -73,5 +73,17 @@ switch to it. Otherwise, create a new vterm shell."
       (vde-project-vterm (read-string "Command: "))))
   )
 
+(use-package project-x
+  :after project
+  :custom
+  (project-x-window-list-file
+   (expand-file-name
+    (concat "auto-save-list/project-window-list") user-emacs-directory))
+  :init
+  (require 'project-x)
+  (setq project-x-save-interval 600)    ;Save project state every 10 min
+  (project-x-mode 1))
+
+
 (provide 'config-projects)
 ;;; config-projects.el ends here
