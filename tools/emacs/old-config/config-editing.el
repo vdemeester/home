@@ -174,26 +174,26 @@ Else toggle the comment status of the line at point."
          ("C-x C-;" . comment-box)))
 
 ;; FIXME(vdemeester) Do I need on-the-fly spellcheck *or* not ?
-;; (use-package flyspell
-;;   :unless noninteractive
-;;   :commands (flyspell-prog-mode flyspell-mode)
-;;   :hook((text-mode . flyspell-mode)
-;;         (prog-mode . flyspell-prog-mode))
-;;   :config
-;;   (define-key flyspell-mode-map (kbd "C-;") nil)
-;;   (setq-default flyspell-issue-message-flag nil
-;;                 flyspell-issue-welcome-flag nil
-;;                 ispell-program-name "hunspell"
-;;                 ispell-local-dictionary "en_GB"
-;;                 ispell-local-dictionary-alist
-;;                 '(("en_GB"
-;;                    "[[:alpha:]]"
-;;                    "[^[:alpha:]]"
-;;                    "[']"
-;;                    nil
-;;                    ("-d" "en_GB,fr_FR")
-;;                    nil
-;;                    utf-8))))
+(use-package flyspell
+  :unless noninteractive
+  :commands (flyspell-prog-mode flyspell-mode)
+  :hook((text-mode . flyspell-mode)
+        (prog-mode . flyspell-prog-mode))
+  :config
+  (define-key flyspell-mode-map (kbd "C-.") nil)
+  (setq-default flyspell-issue-message-flag nil
+                flyspell-issue-welcome-flag nil
+                ispell-program-name "hunspell"
+                ispell-local-dictionary "en_GB"
+                ispell-local-dictionary-alist
+                '(("en_GB"
+                   "[[:alpha:]]"
+                   "[^[:alpha:]]"
+                   "[']"
+                   nil
+                   ("-d" "en_GB,fr_FR")
+                   nil
+                   utf-8))))
 ;; 
 ;; (use-package emacs
 ;;   :init
