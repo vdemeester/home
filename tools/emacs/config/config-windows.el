@@ -5,6 +5,21 @@
 
 (setq switch-to-buffer-obey-display-actions t)
 
+(defun vde/save-desktop-no-ask ()
+  "Save the desktop without asking questions by modifying the modtime."
+  (interactive)
+  (require 'desktop)
+  (desktop--get-file-modtime)
+  (desktop-save (concat desktop-dirname)))
+(defun vde/desktop-load ()
+  "Load saved desktop"
+  (interactive)
+  (require 'desktop)
+  (desktop-read desktop-dirname))
+
+(bind-key "C-c d s" #'vde/save-desktop-no-ask)
+(bind-key "C-c d l" #'vde/desktop-load)
+
 ;; Winner
 (use-package winner
   :unless noninteractive
