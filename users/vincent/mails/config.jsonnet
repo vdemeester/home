@@ -150,7 +150,7 @@ local google_groups(name, label = '', archive = true) =
     rh_mailing_list('pipelines-interests', 'pipelines/interests') +
     rh_mailing_list('pipelines-dev', 'pipelines/dev', false) +
     rh_mailing_list('pipelines-extcomm', 'pipelines/dev', true) +
-    rh_mailing_list('pipelines-extcomm', 'pipelines/ext') +
+    rh_mailing_list('pipelines-extcomm', 'pipelines/ext', true) +
     rh_mailing_list('pipelines-bots', 'pipelines/bots', true) +
     google_groups('tekton-dev', 'tekton/dev', false) +
     google_groups('tekton-users', 'tekton/users', false) +
