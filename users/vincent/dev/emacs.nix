@@ -45,6 +45,7 @@ let
     dired-sidebar
     diredfl
     dockerfile-mode
+    doom-modeline
     easy-kill
     edit-indirect
     editorconfig

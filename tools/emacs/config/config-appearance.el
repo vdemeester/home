@@ -145,51 +145,57 @@ questions.  Else use completion to select the tab to switch to."
   :bind (("C-x t t" . vde/complete-tab-bar-tab-dwim)
          ("C-x t s" . tab-switcher)))
 
-(use-package moody
-  :unless noninteractive
-  :config
-  (setq-default x-underline-at-descent-line t
-                ;; Show buffer position percentage starting from top
-                mode-line-percent-position '(-3 "%o"))
+;; (use-package moody
+;;   :unless noninteractive
+;;   :config
+;;   (setq-default x-underline-at-descent-line t
+;;                 ;; Show buffer position percentage starting from top
+;;                 mode-line-percent-position '(-3 "%o"))
+;; 
+;;   (setq-default mode-line-format
+;;                 '("%e"
+;;                   mode-line-front-space
+;;                   mode-line-client
+;;                   mode-line-modified
+;;                   mode-line-remote
+;;                   mode-line-frame-identification
+;;                   mode-line-buffer-identification " " mode-line-position
+;;                   (vc-mode vc-mode)
+;;                   (multiple-cursors-mode mc/mode-line)
+;;                   " " mode-line-modes
+;;                   mode-line-end-spaces))
+;; 
+;;   (setq-default global-mode-string (remove 'display-time-string global-mode-string)
+;;                 mode-line-end-spaces
+;;                 (list (propertize " " 'display '(space :align-to (- right 19)))
+;;                       'display-time-string))
+;;   (advice-add #'vc-git-mode-line-string :filter-return #'my-replace-git-status)
+;;   (defun my-replace-git-status (tstr)
+;;     (let* ((tstr (replace-regexp-in-string "Git" "" tstr))
+;;            (first-char (substring tstr 0 1))
+;;            (rest-chars (substring tstr 1)))
+;;       (cond
+;;        ((string= ":" first-char) ;;; Modified
+;;         (replace-regexp-in-string "^:" "~ " tstr))
+;;        ((string= "-" first-char) ;; No change
+;;         (replace-regexp-in-string "^-" "- " tstr))
+;;        (t tstr))))
+;;   (moody-replace-mode-line-buffer-identification)
+;;   (moody-replace-vc-mode))
 
-  (setq-default mode-line-format
-                '("%e"
-                  mode-line-front-space
-                  mode-line-client
-                  mode-line-modified
-                  mode-line-remote
-                  mode-line-frame-identification
-                  mode-line-buffer-identification " " mode-line-position
-                  (vc-mode vc-mode)
-                  (multiple-cursors-mode mc/mode-line)
-                  " " mode-line-modes
-                  mode-line-end-spaces))
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode)
+  :init
+  (setq doom-modeline-icon nil)
+  (setq doom-modeline-battery t))
 
-  (setq-default global-mode-string (remove 'display-time-string global-mode-string)
-                mode-line-end-spaces
-                (list (propertize " " 'display '(space :align-to (- right 19)))
-                      'display-time-string))
-  (advice-add #'vc-git-mode-line-string :filter-return #'my-replace-git-status)
-  (defun my-replace-git-status (tstr)
-    (let* ((tstr (replace-regexp-in-string "Git" "" tstr))
-           (first-char (substring tstr 0 1))
-           (rest-chars (substring tstr 1)))
-      (cond
-       ((string= ":" first-char) ;;; Modified
-        (replace-regexp-in-string "^:" "~ " tstr))
-       ((string= "-" first-char) ;; No change
-        (replace-regexp-in-string "^-" "- " tstr))
-       (t tstr))))
-  (moody-replace-mode-line-buffer-identification)
-  (moody-replace-vc-mode))
-
-(use-package minions
-  :unless noninteractive
-  :config
-  (setq-default minions-mode-line-lighter "λ="
-                minions-mode-line-delimiters '("" . "")
-                minions-direct '(flycheck-mode))
-  (minions-mode +1))
+;; (use-package minions
+;;   :unless noninteractive
+;;   :config
+;;   (setq-default minions-mode-line-lighter "λ="
+;;                 minions-mode-line-delimiters '("" . "")
+;;                 minions-direct '(flycheck-mode))
+;;   (minions-mode +1))
 
 (use-package time
   :unless noninteractive
