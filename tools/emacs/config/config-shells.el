@@ -98,9 +98,9 @@ any directory proferred by `consult-dir'."
    'eshell-mode-hook
    (lambda ()
      (let ((ls (if (executable-find "exa") "exa" "ls")))
-       (eshell/alias "ls" (concat ls " --color=always $*"))
-       (eshell/alias "ll" (concat ls " --color=always -l $*"))
-       (eshell/alias "l" (concat ls " --color=always -lah $*")))
+       (eshell/alias "ls" (concat ls " $*"))
+       (eshell/alias "ll" (concat ls " -l $*"))
+       (eshell/alias "l" (concat ls " -lah $*")))
      (eshell-smart-initialize)
      (eshell-dirs-initialize)
      (bind-keys :map eshell-mode-map
