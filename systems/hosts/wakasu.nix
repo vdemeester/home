@@ -26,8 +26,10 @@ in
 {
   imports = [
     ../hardware/thinkpad-x1g9.nix
-    (import ../../users).vincent
-    (import ../../users).root
+    ../../users/vincent
+    ../../users/root
+    # (import ../../users).vincent
+    # (import ../../users).root
   ];
 
   fileSystems."/" = {

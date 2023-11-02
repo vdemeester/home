@@ -18,8 +18,8 @@ in
   imports = [
     # (import ../../nix).home-manager-stable
     #../modules/default.stable.nix
-    (import ../../users).vincent
-    (import ../../users).root
+    import ../../users/vincent
+    import ../../users/root
   ];
 
   boot.supportedFilesystems = [ "zfs" ];

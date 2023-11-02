@@ -23,8 +23,8 @@ in
     ../hardware/thinkpad-t480s.nix
     # (import ../../nix).home-manager
     # ../modules
-    (import ../../users).vincent
-    (import ../../users).root
+    import ../../users/vincent
+    import ../../users/root
   ];
 
   fileSystems."/" = {
