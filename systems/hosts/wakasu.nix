@@ -28,8 +28,6 @@ in
     ../hardware/thinkpad-x1g9.nix
     ../../users/vincent
     ../../users/root
-    # (import ../../users).vincent
-    # (import ../../users).root
   ];
 
   fileSystems."/" = {
