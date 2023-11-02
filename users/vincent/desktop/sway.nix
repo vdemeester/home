@@ -162,8 +162,6 @@ in
       ];
       startup = [
         { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP"; } #workaround
-        # { command = "mako"; }
-        { command = "${pkgs.swaynotificationcenter}/bin/swaync"; }
         { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         # { command = "systemctl --user restart waybar"; always = true; }
         { command = "systemctl --user restart kanshi"; always = true; }
