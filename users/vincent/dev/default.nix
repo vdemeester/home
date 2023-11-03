@@ -11,6 +11,11 @@
     ./python.nix
   ];
 
+  services.lorri = {
+    enable = true;
+    enableNotifications = true;
+  };
+
   home.extraOutputsToInstall = [ "doc" "info" "devdoc" ];
 
   home.packages = with pkgs; [
@@ -29,7 +34,12 @@
     fossil
     pre-commit
     # temporary
-    vscode
+    (vscode-with-extensions.override
+      {
+        vscodeExtensions = with vscode-extensions; [
+          ms-vsliveshare.vsliveshare
+        ];
+      })
   ];
 
   home.file.".ignore".text = ''

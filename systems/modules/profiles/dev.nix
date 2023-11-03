@@ -12,7 +12,7 @@ in
   };
   config = mkIf cfg.enable {
     profiles.git.enable = true;
-    services.lorri.enable = true;
+    # services.lorri.enable = true;
     environment.systemPackages = with pkgs; [
       git
       tig

@@ -20,7 +20,7 @@ in
       tmux.enable = true;
     };
     # Enable lorri (to handle nix shells)
-    services.lorri.enable = true;
+    # services.lorri.enable = true;
     environment.systemPackages = with pkgs; [
       grc
       ripgrep
