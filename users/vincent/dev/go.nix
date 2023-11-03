@@ -26,5 +26,6 @@
     # not really go but still
     my.gosmee
     cue
+    deptree
   ];
 }
