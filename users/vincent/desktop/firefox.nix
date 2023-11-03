@@ -55,7 +55,7 @@
         # Misc
         "privacy.donottrackheader.enabled" = true;
         # "privacy.firstparty.isolate" = true;
-        "privacy.resistFingerprinting" = true;
+        #"privacy.resistFingerprinting" = true;
         "privacy.trackingprotection.cryptomining.enabled" = true;
         "privacy.trackingprotection.enabled" = true;
         "privacy.trackingprotection.fingerprinting.enabled" = true;
@@ -84,7 +84,7 @@
         #"network.http.referer.XOriginPolicy" = 2;
         #"network.http.referer.XOriginTrimmingPolicy" = 2;
         #"network.http.referer.spoofSource" = true;
-        "network.http.sendRefererHeader" = 1;
+        "network.http.sendRefererHeader" = 2;
         #"network.http.sendSecureXSiteReferrer" = false;
         #"network.http.speculative-parallel-limit" = 0;
         "network.predictor.enabled" = false;
