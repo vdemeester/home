@@ -54,7 +54,7 @@
         "gfx.webrender.enable" = true;
         # Misc
         "privacy.donottrackheader.enabled" = true;
-        "privacy.firstparty.isolate" = true;
+        # "privacy.firstparty.isolate" = true;
         "privacy.resistFingerprinting" = true;
         "privacy.trackingprotection.cryptomining.enabled" = true;
         "privacy.trackingprotection.enabled" = true;
@@ -81,12 +81,12 @@
         "network.dns.disablePrefetch" = true;
         "network.dnsCacheEntries" = 100;
         "network.dnsCacheExpiration" = 60;
-        "network.http.referer.XOriginPolicy" = 2;
-        "network.http.referer.XOriginTrimmingPolicy" = 2;
-        "network.http.referer.spoofSource" = true;
-        "network.http.sendRefererHeader" = 0;
-        "network.http.sendSecureXSiteReferrer" = false;
-        "network.http.speculative-parallel-limit" = 0;
+        #"network.http.referer.XOriginPolicy" = 2;
+        #"network.http.referer.XOriginTrimmingPolicy" = 2;
+        #"network.http.referer.spoofSource" = true;
+        "network.http.sendRefererHeader" = 1;
+        #"network.http.sendSecureXSiteReferrer" = false;
+        #"network.http.speculative-parallel-limit" = 0;
         "network.predictor.enabled" = false;
         "network.prefetch-next" = false;
         "media.peerconnection.enabled" = false;

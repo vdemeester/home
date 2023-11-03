@@ -22,6 +22,27 @@
         "type": "github"
       }
     },
+    "chick-group": {
+      "inputs": {
+        "flake-parts": "flake-parts",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1699027440,
+        "narHash": "sha256-xcV2qqTZwVvni3V4mi4Q1lFZ0+bEAt+hPSl5s7rlWvY=",
+        "owner": "vdemeester",
+        "repo": "chick-group",
+        "rev": "8cc58a7beb8ed432c5ecc59f453b5d3f00edc176",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vdemeester",
+        "repo": "chick-group",
+        "type": "github"
+      }
+    },
     "devenv": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -72,7 +93,7 @@
     },
     "envfs": {
       "inputs": {
-        "flake-parts": "flake-parts",
+        "flake-parts": "flake-parts_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -173,6 +194,27 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
+          "chick-group",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1698882062,
+        "narHash": "sha256-HkhafUayIqxXyHH1X8d9RDl1M2CkFgZLjKD3MzabiEo=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "8c9fa2545007b49a5db5f650ae91f227672c3877",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_2": {
+      "inputs": {
+        "nixpkgs-lib": [
           "envfs",
           "nixpkgs"
         ]
@@ -191,7 +233,7 @@
         "type": "github"
       }
     },
-    "flake-parts_2": {
+    "flake-parts_3": {
       "inputs": {
         "nixpkgs-lib": [
           "nixpkgs-wayland",
@@ -528,7 +570,7 @@
     },
     "nix-eval-jobs": {
       "inputs": {
-        "flake-parts": "flake-parts_2",
+        "flake-parts": "flake-parts_3",
         "nixpkgs": "nixpkgs_3",
         "treefmt-nix": "treefmt-nix"
       },
@@ -802,6 +844,7 @@
     "root": {
       "inputs": {
         "chapeau-rouge": "chapeau-rouge",
+        "chick-group": "chick-group",
         "devenv": "devenv",
         "emacs-overlay": "emacs-overlay",
         "envfs": "envfs",

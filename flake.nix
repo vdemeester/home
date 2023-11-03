@@ -33,6 +33,7 @@
             # inputs.nur.overlay
             # inputs.devshell.overlays.default
             inputs.chapeau-rouge.overlays.openshift
+            inputs.chick-group.overlays.default
             (_: prev: {
               inherit (inputs.devenv.packages.${prev.system}) devenv;
             })
@@ -184,6 +185,13 @@
     nixos-wsl = { type = "github"; owner = "nix-community"; repo = "NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-hardware = { type = "github"; owner = "NixOS"; "repo" = "nixos-hardware"; };
 
+    # Me :D
+    chick-group = {
+      type = "github";
+      owner = "vdemeester";
+      repo = "chick-group";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Red Hat
     chapeau-rouge = {
       type = "github";
