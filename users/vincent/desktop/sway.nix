@@ -319,6 +319,7 @@ in
     mako = {
       enable = true;
       font = "Ubuntu Mono 12";
+      defaultTimeout = 5000; # 5s timeout
     };
     kitty = {
       enable = true;
