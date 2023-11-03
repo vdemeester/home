@@ -21,6 +21,7 @@
   (before-save . gofmt-before-save)
   (before-save . eglot-format-buffer)
   (rust-mode . eglot-ensure)
+  (rust-ts-mode . eglot-ensure)
   (sh-script-mode . eglot-ensure)
   (python-mode . eglot-ensure)
   (json-mode . eglot-ensure)
@@ -31,6 +32,12 @@
   (go-ts-mode . eglot-ensure)
   :custom
   rustic-lsp-client 'eglot)
+
+(use-package eldoc-box
+  :hook
+  (eglot-managed-mode . eldoc-box-hover-mode)
+  :custom
+  (eldoc-box-max-pixel-width 1024))
 
 
 (provide 'programming-eglot)

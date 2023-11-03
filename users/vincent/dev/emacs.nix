@@ -50,8 +50,6 @@ let
     edit-indirect
     editorconfig
     eldoc-box
-    elfeed
-    elfeed-org
     embark
     embark-consult
     envrc
@@ -88,12 +86,9 @@ let
     magit
     magit-annex
     magit-popup
-    marginalia
     markdown-mode
     mct
-    minions
     modus-themes
-    moody
     multi-vterm
     mwim
     nix-buffer
@@ -134,7 +129,6 @@ let
     try
     undo-tree
     use-package
-    vertico
     visual-fill-column
     visual-regexp
     vterm

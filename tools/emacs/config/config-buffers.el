@@ -75,6 +75,20 @@
                      (unless (eq ibuffer-sorting-mode 'filename/process)
                        (ibuffer-do-sort-by-filename/process)))))
 
+(use-package popper
+  :bind (("C-`"   . popper-toggle)
+         ("M-`"   . popper-cycle)
+         ("C-M-`" . popper-toggle-type))
+  :init
+  (setq popper-reference-buffers
+        '("\\*Messages\\*"
+          "Output\\*$"
+          "\\*Async Shell Command\\*"
+          help-mode
+	  helpful-mode
+          compilation-mode))
+  (popper-mode +1)
+  (popper-echo-mode +1)) 
 
 (provide 'config-buffers)
 ;;; config-buffers.el ends here
