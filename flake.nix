@@ -74,7 +74,7 @@
         ./systems/modules/profiles/wireguard.server.nix
         ./systems/modules/profiles/zsh.nix
         inputs.sops-nix.nixosModules.sops
-        inputs.envfs.nixosModules.envfs
+        # inputs.envfs.nixosModules.envfs
         {
           # config.nix.generateRegistryFromInputs = true;
           config.home-manager.useGlobalPkgs = true;
@@ -174,12 +174,12 @@
       repo = "sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    envfs = {
-      type = "github";
-      owner = "Mic92";
-      repo = "envfs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # envfs = {
+    #   type = "github";
+    #   owner = "Mic92";
+    #   repo = "envfs";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # WSL
     nixos-wsl = { type = "github"; owner = "nix-community"; repo = "NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };

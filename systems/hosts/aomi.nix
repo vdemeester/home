@@ -20,8 +20,8 @@ in
 {
   imports = [
     ../hardware/lenovo-p1.nix
-    import ../../users/vincent
-    import ../../users/root
+    (import ../../users/vincent)
+    (import ../../users/root)
   ];
 
   boot.initrd.luks.devices = {
@@ -150,6 +150,7 @@ in
   '';
 
   services = {
+    envfs.enable = true;
     netdata.enable = true;
     logind.extraConfig = ''
       HandleLidSwitch=ignore
