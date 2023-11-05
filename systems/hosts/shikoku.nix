@@ -18,14 +18,14 @@ in
   imports = [
     # (import ../../nix).home-manager-stable
     #../modules/default.stable.nix
-    import ../../users/vincent
-    import ../../users/root
+    (import ../../users/vincent)
+    (import ../../users/root)
   ];
 
   boot.supportedFilesystems = [ "zfs" ];
-  networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
-
   networking = {
+    hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
+    hostname = hostname;
     bridges.br1.interfaces = [ "enp0s31f6" ];
     firewall.enable = false; # we are in safe territory :D
     useDHCP = false;
