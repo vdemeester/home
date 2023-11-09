@@ -8,6 +8,7 @@ in
     enable = mkEnableOption "enable direnv";
   };
   config = mkIf cfg.enable {
+    programs.direnv.enable = true;
     environment = {
       # Path to link from packages to /run/current-system/sw
       pathsToLink = [

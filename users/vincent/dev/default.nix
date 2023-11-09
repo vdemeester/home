@@ -11,11 +11,6 @@
     ./python.nix
   ];
 
-  services.lorri = {
-    enable = true;
-    enableNotifications = true;
-  };
-
   home.extraOutputsToInstall = [ "doc" "info" "devdoc" ];
 
   home.packages = with pkgs; [
