@@ -127,6 +127,7 @@ let
     trashed
     treesit-auto
     try
+    typescript-mode
     undo-tree
     use-package
     visual-fill-column
