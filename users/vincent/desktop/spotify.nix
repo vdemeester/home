@@ -1,12 +1,8 @@
 { pkgs, ... }:
 
-let
-  my-spotify = pkgs.writeShellScriptBin "spotify" ''
-    exec ${pkgs.spotify}/bin/spotify --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
-in
 {
+  # FIXME: need a .desktop file..
   home.packages = [
-    my-spotify
+    spotify
   ];
 }
