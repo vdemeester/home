@@ -225,8 +225,9 @@ This relies on the external 'fd' executable."
   (setq trashed-date-format "%Y-%m-%d %H:%M:%S"))
 
 (use-package dired-sidebar
-  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+  :unless noninteractive
   :commands (dired-sidebar-toggle-sidebar)
+  :bind ("C-c C-n" . dired-sidebar-toggle-sidebar)
   :init
   (add-hook 'dired-sidebar-mode-hook
             (lambda ()
