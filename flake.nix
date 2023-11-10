@@ -135,6 +135,19 @@
       # own repository and flake. If they are useful upstream.
 
       overlays = import ./nix/overlays;
+
+      devShells.x86_64-linux.default =
+        let
+          pkgs = import inputs.nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+        in
+        pkgs.mkShell {
+          packages = [ pkgs.alejandra pkgs.git pkgs.nodePackages.prettier ];
+          name = "home";
+          DIRENV_LOG_FORMAT = "";
+        };
     };
 
   inputs = {
