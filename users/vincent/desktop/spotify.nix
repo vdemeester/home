@@ -2,7 +2,7 @@
 
 {
   # FIXME: need a .desktop file..
-  home.packages = [
+  home.packages = with pkgs; [
     spotify
   ];
 }
