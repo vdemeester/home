@@ -186,7 +186,6 @@ in
         bindcode ${mod}+Shift+26 exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'"
         bindcode ${mod}+32 mode resize
         bindcode ${mod}+Shift+32 exec "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"
-        bindcode ${mod}+Shift+57 exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw"
 
         # switch to workspace
         bindcode ${mod}+10 workspace number 1
@@ -235,6 +234,9 @@ in
 
         bindsym ${mod}+F10 exec ${pkgs.my.scripts}/bin/shot %d
         bindsym ${mod}+Shift+F10 exec ${pkgs.my.scripts}/bin/shotf %d
+
+        bindcode F9 exec ${pkgs.mako}/bin/makoctl mode -s do-not-disturb
+        bindcode Shift+F9 exec ${pkgs.mako}/bin/makoctl mode -s default
       '';
   };
   programs = {
@@ -320,6 +322,15 @@ in
       enable = true;
       font = "Ubuntu Mono 12";
       defaultTimeout = 5000; # 5s timeout
+      groupBy = "app-name,summary";
+      extraConfig = ''
+        on-button-left=dismiss
+        on-button-middle=invoke-default-action
+        on-button-right=dismiss
+        
+        [mode=do-not-disturb]
+        invisible=1
+      '';
     };
     kitty = {
       enable = true;
