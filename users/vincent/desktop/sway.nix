@@ -219,8 +219,11 @@ in
         bindsym XF86AudioMute exec ${pkgs.pamixer}/bin/pamixer --toggle-mute && ( ${pkgs.pamixer}/bin/pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
 
         bindsym XF86AudioPlay exec "playerctl play-pause"
+        bindsym XF86Messenger exec "playerctl play-pause"
         bindsym XF86AudioNext exec "playerctl next"
+        bindsym XF86Go exec "playerctl next"
         bindsym XF86AudioPrev exec "playerctl previous"
+        bindsym Cancel exec "playerctl previous"
 
         bindcode ${mod}+49 exec swaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
         bindsym --whole-window button8 exec sswaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
