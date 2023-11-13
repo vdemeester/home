@@ -36,7 +36,9 @@
   :hook (after-init . global-undo-tree-mode)
   :config
   (setq-default undo-tree-visualizer-timestamps t
-                undo-tree-enable-undo-in-region t))
+                undo-tree-enable-undo-in-region t
+	        undo-tree-history-directory-alist `(("." . ,(no-littering-expand-var-file-name "backup/")))))
+
 (use-package whitespace
   :unless noninteractive
   :commands (whitespace-mode vde/toggle-invisibles)
