@@ -119,7 +119,8 @@ in
 
   # TODO Migrate to modules
   profiles.home = true;
-  profiles.externalbuilder.enable = true;
+  # Temporarly disable external builders, home network is down.
+  # profiles.externalbuilder.enable = true;
   profiles.virtualization = { enable = true; nested = true; };
   virtualisation.podman.dockerSocket.enable = true;
   virtualisation.podman.autoPrune.enable = true;
