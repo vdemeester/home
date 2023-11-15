@@ -29,7 +29,7 @@
         ("C-g" . copilot-clear-overlay)
         ("C-j" . copilot-next-completion)
         ("C-k" . copilot-previous-completion)
-        ("RET" . copilot-accept-completion)
+        ("M-RET" . copilot-accept-completion)
         ("C-f" . copilot-accept-completion)
         ("C-l" . copilot-panel-complete)
         ("C-<tab>" . copilot-next-completion)
