@@ -18,8 +18,14 @@ let
     # FIXME(vdemeester) once it is fixed, re-add
     # pkgs.dired-plus
     # org-transclusion
-    #python-mode
-    #whole-line-or-region
+    # python-mode
+    # whole-line-or-region
+    # bongo
+    # git-annex
+    # github-review
+    # edit-indirect
+    # kind-icon
+    # dired-subtree
     ace-window
     adoc-mode
     aggressive-indent
@@ -28,26 +34,25 @@ let
     avy
     bbdb
     beginend
-    bongo
-    cape
+    cape # FIXME: configure
     color-identifiers-mode
     consult
     consult-dir
     consult-lsp
-    corfu
+    consult-notes
+    corfu # FIXME: configure
     dap-mode
     dash
     delight
+    denote
     dired-collapse
     dired-narrow
     dired-rsync
-    dired-subtree
     dired-sidebar
     diredfl
     dockerfile-mode
     doom-modeline
     easy-kill
-    edit-indirect
     editorconfig
     eldoc-box
     embark
@@ -59,13 +64,12 @@ let
     expand-region
     flimenu
     flymake-languagetool
+    fontaine
     focus
-    git-annex
     git-commit
     git-gutter
     git-gutter-fringe
     git-modes
-    github-review
     go-mode
     gotest
     goto-last-change
@@ -78,19 +82,19 @@ let
     ibuffer-vc
     icomplete-vertical
     json-mode
-    kind-icon
     lin
     lsp-focus
     lsp-mode
     lsp-ui
     magit
-    magit-annex
     magit-popup
+    marginalia
     markdown-mode
     mct
     modus-themes
     multi-vterm
     mwim
+    nerd-icons
     nix-buffer
     nix-mode
     nixpkgs-fmt
@@ -98,7 +102,7 @@ let
     ob-async
     ob-go
     ob-http
-    orderless
+    orderless # TODO configure this
     org
     orgalist
     org-appear
@@ -124,6 +128,7 @@ let
     shr-tag-pre-highlight
     smartparens
     symbol-overlay
+    tempel
     trashed
     treesit-auto
     try
