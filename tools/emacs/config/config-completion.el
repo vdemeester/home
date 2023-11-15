@@ -77,6 +77,18 @@
 (use-package embark-consult
   :unless noninteractive)
 
+(use-package mct
+  :unless noninteractive
+  :custom
+  (mct-completion-window-size (cons #'mct-frame-height-third 1))
+  (mct-remove-shadowed-file-names t) ; works when `file-name-shadow-mode' is enabled
+  (mct-hide-completion-mode-line t)
+  (mct-minimum-input 3)
+  (mct-live-completion t)
+  (mct-live-update-delay 0.6)
+  (mct-persist-dynamic-completion t)
+  :config
+  (mct-mode 1))
 
 (provide 'config-completion)
 ;;; config-completion.el ends here
