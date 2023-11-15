@@ -28,6 +28,7 @@
     yq-go
     fossil
     pre-commit
+    yamllint
     # temporary
     (vscode-with-extensions.override
       {
