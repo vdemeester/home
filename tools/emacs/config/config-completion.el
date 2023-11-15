@@ -90,5 +90,9 @@
   :config
   (mct-mode 1))
 
+(use-package marginalia
+  :unless noninteractive
+  :config
+  (marginalia-mode 1))
 (provide 'config-completion)
 ;;; config-completion.el ends here
