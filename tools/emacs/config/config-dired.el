@@ -198,16 +198,6 @@ This relies on the external 'fd' executable."
   :bind (:map dired-mode-map
               ("r" . dired-rsync)))
 
-(use-package dired-subtree
-  :unless noninteractive
-  :after dired
-  :config
-  (setq dired-subtree-use-backgrounds nil)
-  :bind (:map dired-mode-map
-              ("<tab>" . dired-subtree-toggle)
-              ("<C-tab>" . dired-subtree-cycle)
-              ("<S-iso-lefttab>" . dired-subtree-remove)))
-
 (use-package diredfl
   :unless noninteractive
   :commands (diredfl-mode)
