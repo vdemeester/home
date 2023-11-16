@@ -77,6 +77,21 @@
 (use-package embark-consult
   :unless noninteractive)
 
+(use-package emacs
+  :unless noninteractive
+  :custom
+  (completion-cycle-threshold 2)
+  (completion-ignore-case t)
+  (completion-show-inline-help nil)
+  (completions-detailed t)
+  (enable-recursive-minibuffers t)
+  (read-buffer-completion-ignore-case t)
+  (read-file-name-completion-ignore-case t)
+  (resize-mini-windows t)
+  :config
+  (minibuffer-depth-indicate-mode 1)
+  (minibuffer-electric-default-mode 1))
+
 (use-package mct
   :unless noninteractive
   :custom
@@ -114,6 +129,23 @@ Useful for prompts such as `eval-expression' and `shell-command'."
       (corfu-mode 1)))
 
   (add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1))
+
+(use-package orderless
+  :unless noninteractive
+  :config
+  ;; We make the SPC key insert a literal space and the same for the
+  ;; question mark.  Spaces are used to delimit orderless groups, while
+  ;; the quedtion mark is a valid regexp character.
+  (let ((map minibuffer-local-completion-map))
+    (define-key map (kbd "SPC") nil)
+    (define-key map (kbd "?") nil))
+
+  ;; Because SPC works for Orderless and is trivial to activate, I like to
+  ;; put `orderless' at the end of my `completion-styles'.  Like this:
+  (setq completion-styles
+	'(basic substring initials flex partial-completion orderless))
+  (setq completion-category-overrides
+	'((file (styles . (basic partial-completion orderless))))))
 
 (provide 'config-completion)
 ;;; config-completion.el ends here
