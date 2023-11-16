@@ -118,14 +118,6 @@
   ;; Refresh `magit-status' after saving a buffer
   (add-hook 'after-save-hook #'magit-after-save-refresh-status))
 
-(use-package magit-annex
-  :unless noninteractive
-  :after magit)
-
-(use-package git-annex
-  :after dired
-  :defer t)
-
 (use-package git-commit
   :after magit
   :commands (git-commit-mode)
