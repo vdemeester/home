@@ -32,6 +32,8 @@ in
       ugrep
       scripts
       tree
+      broot
+      lf
       usbutils
     ];
   };
