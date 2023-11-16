@@ -6,9 +6,12 @@
 
 (use-package savehist
   :unless noninteractive
+  :init
+  (setq savehist-file (no-littering-expand-var-file-name "savehist"))
   :config
   (setq-default history-length 10000
                 savehist-save-minibuffer-history t
+		savehist-delete-duplicates t
                 savehist-autosave-interval 180
                 savehist-additional-variables '(extended-command-history
                                                 search-ring
