@@ -50,13 +50,17 @@ in
         fira
         fira-code
         fira-code-symbols
+        fira-code-nerdfont
         fira-mono
         font-awesome
         go-font
         hasklig
         inconsolata
+        inconsolata-nerdfont
         iosevka
         iosevka-comfy.comfy
+        jetbrains-mono
+        nerdfonts
         noto-fonts
         noto-fonts-cjk
         noto-fonts-emoji
