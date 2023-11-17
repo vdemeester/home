@@ -149,6 +149,7 @@ Ignores `ARGS'."
   (setq window-divider-default-bottom-width 1)
   (setq window-divider-default-places 'right-only)
   :hook (after-init . window-divider-mode))
+
 (use-package tab-bar
   :unless noninteractive
   :config
@@ -165,9 +166,6 @@ Ignores `ARGS'."
   (defun vde/tab-bar-tab-name ()
     "Generate tab name from the buffer of the selected window *or* projectile."
     (cond
-     ((boundp 'projectile-project-name) (if (string-equal (projectile-project-name) "-")
-                                            (tab-bar-tab-name-current-with-count)
-                                          (projectile-project-name)))
      ((project-current) (let ((project-path (vde-project--project-current)))
                           (cond ((string-prefix-p "~/src" project-path)
                                  (directory-file-name (file-relative-name project-path "~/src")))
@@ -199,57 +197,11 @@ questions.  Else use completion to select the tab to switch to."
   :bind (("C-x t t" . vde/complete-tab-bar-tab-dwim)
          ("C-x t s" . tab-switcher)))
 
-;; (use-package moody
-;;   :unless noninteractive
-;;   :config
-;;   (setq-default x-underline-at-descent-line t
-;;                 ;; Show buffer position percentage starting from top
-;;                 mode-line-percent-position '(-3 "%o"))
-;; 
-;;   (setq-default mode-line-format
-;;                 '("%e"
-;;                   mode-line-front-space
-;;                   mode-line-client
-;;                   mode-line-modified
-;;                   mode-line-remote
-;;                   mode-line-frame-identification
-;;                   mode-line-buffer-identification " " mode-line-position
-;;                   (vc-mode vc-mode)
-;;                   (multiple-cursors-mode mc/mode-line)
-;;                   " " mode-line-modes
-;;                   mode-line-end-spaces))
-;; 
-;;   (setq-default global-mode-string (remove 'display-time-string global-mode-string)
-;;                 mode-line-end-spaces
-;;                 (list (propertize " " 'display '(space :align-to (- right 19)))
-;;                       'display-time-string))
-;;   (advice-add #'vc-git-mode-line-string :filter-return #'my-replace-git-status)
-;;   (defun my-replace-git-status (tstr)
-;;     (let* ((tstr (replace-regexp-in-string "Git" "" tstr))
-;;            (first-char (substring tstr 0 1))
-;;            (rest-chars (substring tstr 1)))
-;;       (cond
-;;        ((string= ":" first-char) ;;; Modified
-;;         (replace-regexp-in-string "^:" "~ " tstr))
-;;        ((string= "-" first-char) ;; No change
-;;         (replace-regexp-in-string "^-" "- " tstr))
-;;        (t tstr))))
-;;   (moody-replace-mode-line-buffer-identification)
-;;   (moody-replace-vc-mode))
-
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   :init
   (setq doom-modeline-icon nil)
   (setq doom-modeline-battery t))
-
-;; (use-package minions
-;;   :unless noninteractive
-;;   :config
-;;   (setq-default minions-mode-line-lighter "λ="
-;;                 minions-mode-line-delimiters '("" . "")
-;;                 minions-direct '(flycheck-mode))
-;;   (minions-mode +1))
 
 (use-package time
   :unless noninteractive
@@ -268,28 +220,6 @@ questions.  Else use completion to select the tab to switch to."
                           monthname day
                           24-hours minutes)))
   (display-time))
-
-(use-package lin
-  :unless noninteractive
-  :config
-  (setq lin-face 'lin-blue)
-  (setq lin-mode-hooks
-	    '(bongo-mode-hook
-          dired-mode-hook
-          elfeed-search-mode-hook
-          git-rebase-mode-hook
-          ibuffer-mode-hook
-          ilist-mode-hook
-          ledger-report-mode-hook
-          log-view-mode-hook
-          magit-log-mode-hook
-          mu4e-headers-mode
-          notmuch-search-mode-hook
-          notmuch-tree-mode-hook
-          occur-mode-hook
-          org-agenda-mode-hook
-          tabulated-list-mode-hook))
-  (lin-global-mode))
 
 (use-package emacs
   :unless noninteractive
