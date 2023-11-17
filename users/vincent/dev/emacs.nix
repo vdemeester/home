@@ -4,7 +4,7 @@ with lib;
 let
   capture = pkgs.writeScriptBin "capture" ''
     #!${pkgs.stdenv.shell}
-    emacsclient -n -F '((name . "capture") (width . 150) (height . 90))' -e '(org-capture)'
+    emacsclient -n -c -F '((name . "capture") (width . 150) (height . 90))' -e '(org-capture)'
   '';
   et = pkgs.writeScriptBin "et" ''
     #!${pkgs.stdenv.shell}
@@ -109,8 +109,9 @@ let
     org-capture-pop-frame
     org-contrib
     org-journal
+    org-modern
     org-ql
-    org-super-agenda
+    # org-super-agenda
     org-tree-slide
     org-web-tools
     orgit
