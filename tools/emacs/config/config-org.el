@@ -56,16 +56,84 @@
          ("C-c o r r" . org-refile)
          ("C-c o a a" . org-agenda)
          ("C-c o s" . org-sort)
-         ("<f12>" . org-agenda)
-         ("C-c o c" . org-capture))
+         ("<f12>" . org-agenda))
+  :custom
+  (org-reverse-note-order '(("inbox.org" . t) ;; Insert items on top of inbox
+                            (".*" . nil)))    ;; On any other file, insert at the bottom
+  (org-archive-location (concat org-archive-dir "/%s::datetree/"))
+  (org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$")
+  (org-use-speed-commands t)
+  (org-special-ctrl-a/e t)
+  (org-special-ctrl-k t)
+  (org-hide-emphasis-markers t)
+  (org-pretty-entities t)
+  (org-ellipsis "…")
   :config
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
-    (org-babel-lob-ingest org-babel-library-file)))
+    (org-babel-lob-ingest org-babel-library-file))
+
+  (defun my/org-agenda-files ()
+    (apply 'append
+		   (mapcar
+			(lambda (directory)
+			  (directory-files-recursively
+			   directory org-agenda-file-regexp))
+			`(,org-projects-dir ,org-areas-dir ,org-resources-dir ,src-home-dir ,(expand-file-name "~/src/osp/tasks")))))
+  (defun my/reload-org-agenda-files ()
+    (interactive)
+    (setq org-agenda-files (my/org-agenda-files)))
+  (setq org-agenda-files (my/org-agenda-files)))
 
 ;; Make sure we load org-protocol
 (use-package org-protocol
   :after org)
+
+(use-package org-tempo
+  :after (org))
+
+(use-package org-bullets
+  :if (not window-system)
+  :hook (org-mode . org-bullets-mode))
+
+(use-package org-modern
+  :if window-system
+  :hook (org-mode . org-modern-mode))
+;; (set-face-attribute 'default nil :family "Iosevka")
+;; (set-face-attribute 'variable-pitch nil :family "Iosevka Aile")
+;; (set-face-attribute 'org-modern-symbol nil :family "Iosevka")
+
+(use-package org-capture
+  :after org
+  :commands (org-capture)
+  :config
+
+  (add-to-list 'org-capture-templates
+               `("l" "Link" entry
+                 (file ,org-inbox-file)
+                 "* %a\n%U\n%?\n%i"
+                 :empty-lines 1))
+  (add-to-list 'org-capture-templates
+               `("t" "Tasks"))
+  (add-to-list 'org-capture-templates
+               `("tt" "New task" entry
+                 (file ,org-inbox-file)
+                 "* %?\n:PROPERTIES:\n:CREATED:\t%U\n:END:\n\n%i\n\nFrom: %a"
+                 :empty-lines 1))
+  (add-to-list 'org-capture-templates
+               `("tr" "PR Review" entry
+                 (file ,org-inbox-file)
+                 "* TODO review gh:%^{issue} :review:\n:PROPERTIES:\n:CREATED:%U\n:END:\n\n%i\n%?\nFrom: %a"
+                 :empty-lines 1))
+
+  ;; (add-to-list 'org-capture-templates
+  ;;              `("m" "Meeting notes" entry
+  ;;                (file+datetree ,org-meeting-notes-file)
+  ;;                (file ,(concat user-emacs-directory "/etc/orgmode/meeting-notes.org"))))
+
+  (add-to-list 'org-capture-templates
+               `("w" "Writing"))
+  :bind (("C-c o c" . org-capture)))
 
 ;; Using denote as the "source" of my second brain *in* org-mode.
 (use-package denote
@@ -241,42 +309,8 @@
 ;;                (:name "Scheduled" :time-grid t)
 ;;                (:habit t))))
 ;;            (org-agenda-list)))))
-;; (use-package org-capture
-;;   :after org
-;;   :commands (org-capture)
-;;   :config
-;; 
-;;   (add-to-list 'org-capture-templates
-;;                `("l" "Link" entry
-;;                  (file ,org-inbox-file)
-;;                  "* %a\n%U\n%?\n%i"
-;;                  :empty-lines 1))
-;; 
-;;   (add-to-list 'org-capture-templates
-;;                `("t" "Tasks"))
-;;   (add-to-list 'org-capture-templates
-;;                `("tt" "New task" entry
-;;                  (file ,org-inbox-file)
-;;                  "* %?\n:PROPERTIES:\n:CREATED:\t%U\n:END:\n\n%i\n\nFrom: %a"
-;;                  :empty-lines 1))
-;;   (add-to-list 'org-capture-templates
-;;                `("tr" "PR Review" entry
-;;                  (file ,org-inbox-file)
-;;                  "* TODO review gh:%^{issue} :review:\n:PROPERTIES:\n:CREATED:%U\n:END:\n\n%i\n%?\nFrom: %a"
-;;                  :empty-lines 1))
-;; 
-;;   ;; (add-to-list 'org-capture-templates
-;;   ;;              `("m" "Meeting notes" entry
-;;   ;;                (file+datetree ,org-meeting-notes-file)
-;;   ;;                (file ,(concat user-emacs-directory "/etc/orgmode/meeting-notes.org"))))
-;; 
-;;   (add-to-list 'org-capture-templates
-;;                `("w" "Writing"))
-;;   :bind (("C-c o c" . org-capture)))
 
 
-;; (use-package org-capture-pop-frame
-;;   :after org)
 ;; (use-package org-clock
 ;;   :after org
 ;;   :commands (org-clock-in org-clock-out org-clock-goto)
@@ -554,8 +588,6 @@
 ;;   :config
 ;;   (org-crypt-use-before-save-magic)
 ;;   (setq org-tags-exclude-from-inheritance '("crypt")))
-;; (use-package org-tempo
-;;   :after (org))
 ;; (use-package org-attach
 ;;   :after org
 ;;   :config
