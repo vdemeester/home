@@ -8,7 +8,6 @@
 (setq read-answer-short t)      ;; accepts single-character answers, very similar to above
 
 (put 'overwrite-mode 'disabled t) ;; I don't really want to use overwrite-mod, ever
-(setq initial-buffer-choice t)    ;; always start with *scratch*
 
 (setq use-dialog-box nil)  ;; never use dialog box (no mouse >:D)
 (setq use-file-dialog nil) ;; never use file dialog (gtk)
