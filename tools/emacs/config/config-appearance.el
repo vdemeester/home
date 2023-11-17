@@ -32,6 +32,60 @@
     (set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
     (set-fontset-font t 'symbol "Symbola" nil 'append)))
 
+(use-package fontaine
+  :if window-system
+  :bind (("C-c f s" . fontaine-set-preset)
+	 ("C-c f S" . fontaine-set-face-font))
+  :init
+  (setq fontaine-presets
+	'((small
+	   :default-family "UbuntuMono Nerd Font"
+	   :default-height 110
+	   :variable-pitch-family "Ubuntu Nerd Font")
+	  (regular) ; like this it uses all the fallback values and is named `regular'
+	  (medium
+	   :default-weight semilight
+	   :default-height 130
+	   :bold-weight extrabold)
+	  (large
+	   :inherit medium
+	   :default-height 140)
+	  (presentation
+	   :inherit medium
+	   :default-weight light
+	   :default-height 180)
+	  (t
+	   ;; I keep all properties for didactic purposes, but most can be
+	   ;; omitted.  See the fontaine manual for the technicalities:
+	   ;; <https://protesilaos.com/emacs/fontaine>.
+	   :default-family "UbuntuMono Nerd Font"
+	   :default-weight regular
+	   :default-height 130
+	   :fixed-pitch-family nil ; falls back to :default-family
+	   :fixed-pitch-weight nil ; falls back to :default-weight
+	   :fixed-pitch-height 1.0
+	   :fixed-pitch-serif-family nil ; falls back to :default-family
+	   :fixed-pitch-serif-weight nil ; falls back to :default-weight
+	   :fixed-pitch-serif-height 1.0
+	   :variable-pitch-family "Ubuntu Nerd Font"
+	   :variable-pitch-weight nil
+	   :variable-pitch-height 1.0
+	   :bold-family nil ; use whatever the underlying face has
+	   :bold-weight bold
+	   :italic-family nil
+	   :italic-slant italic
+	   :line-spacing nil)))
+
+  ;; Set last preset or fall back to desired style from `fontaine-presets'.
+  (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
+
+  ;; The other side of `fontaine-restore-latest-preset'.
+  (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
+
+  ;; Persist font configurations while switching themes.  The
+  ;; `enable-theme-functions' is from Emacs 29.
+  (add-hook 'enable-theme-functions #'fontaine-apply-current-preset))
+
 (use-package emacs
   :config
   (setq-default use-file-dialog nil
