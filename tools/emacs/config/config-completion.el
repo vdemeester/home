@@ -103,7 +103,49 @@
   (mct-live-update-delay 0.6)
   (mct-persist-dynamic-completion t)
   :config
-  (mct-mode 1))
+  (mct-mode 1)
+  (defun my-sort-by-alpha-length (elems)
+    "Sort ELEMS first alphabetically, then by length."
+    (sort elems (lambda (c1 c2)
+                  (or (string-version-lessp c1 c2)
+                      (< (length c1) (length c2))))))
+
+  (defun my-sort-by-history (elems)
+    "Sort ELEMS by minibuffer history.
+Use `mct-sort-sort-by-alpha-length' if no history is available."
+    (if-let ((hist (and (not (eq minibuffer-history-variable t))
+			(symbol-value minibuffer-history-variable))))
+	(minibuffer--sort-by-position hist elems)
+      (my-sort-by-alpha-length elems)))
+
+  (defun my-sort-multi-category (elems)
+    "Sort ELEMS per completion category."
+    (pcase (mct--completion-category)
+      ('nil elems) ; no sorting
+      ('kill-ring elems)
+      ('project-file (my-sort-by-alpha-length elems))
+      (_ (my-sort-by-history elems))))
+
+  ;; Specify the sorting function.
+  (setq completions-sort #'my-sort-multi-category)
+
+  ;; Add prompt indicator to `completing-read-multiple'.  We display
+  ;; [`completing-read-multiple': <separator>], e.g.,
+  ;; [`completing-read-multiple': ,] if the separator is a comma.  This
+  ;; is adapted from the README of the `vertico' package by Daniel
+  ;; Mendler.  I made some small tweaks to propertize the segments of
+  ;; the prompt.
+  (defun crm-indicator (args)
+    (cons (format "[`crm-separator': %s]  %s"
+                  (propertize
+                   (replace-regexp-in-string
+                    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                    crm-separator)
+                   'face 'error)
+                  (car args))
+          (cdr args)))
+
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator))
 
 (use-package marginalia
   :unless noninteractive
