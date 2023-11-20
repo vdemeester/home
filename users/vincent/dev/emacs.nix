@@ -172,8 +172,8 @@ in
   programs.emacs = {
     enable = true;
     # FIXME: choose depending on the enabled modules
-    package = (pkgs.emacs-pgtk.override { withGTK3 = true; withGTK2 = false; });
-    # package = (pkgs.emacsNativeComp.override { withGTK3 = true; withGTK2 = false; withX = true; withXwidgets = true; });
+    package = (pkgs.emacs29.override { withTreeSitter = true; withNativeCompilation = true; withPgtk = true; withWebP = true; withGTK3 = true; withGTK2 = false; withSQLite3 = true; });
+    # package = (pkgs.emacs-pgtk.override { withGTK3 = true; withGTK2 = false; });
     extraPackages = myExtraPackages;
   };
   services.emacs = {
