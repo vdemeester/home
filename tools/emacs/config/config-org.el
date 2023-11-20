@@ -9,7 +9,7 @@
 (defconst org-directory "~/desktop/org/"
   "org-mode directory, where most of the org-mode file lives")
 ;; P.A.R.A. setup
-(defconst org-inbox-file (expand-file-name "inbox.org" org-directory)
+(defconst org-inbox-file (expand-file-name "20231120T124316--inbox__inbox.org" org-directory)
   "New stuff collected in this file.")
 
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
@@ -19,7 +19,7 @@
   "Project files directory.")
 (defconst org-projects-completed-dir (expand-file-name "projects" org-archive-dir)
   "Directory of completed project files.")
-(defconst org-projects-future-file (expand-file-name "future.org" org-projects-dir)
+(defconst org-projects-future-file (expand-file-name "20231120T124316--future-projects-incubation__project_future.org" org-projects-dir)
   "Future projects are collected in this file.")
 
 (defconst org-areas-dir (expand-file-name "areas" org-directory)
@@ -48,6 +48,16 @@
 (set-register ?a `(file . ,org-areas-dir))
 (set-register ?r `(file . ,org-resources-dir))
 
+(defun vde/org-mode-hook ()
+  "Org-mode hook"
+  (setq show-trailing-whitespace t)
+  (when (not (eq major-mode 'org-agenda-mode))
+    (setq fill-column 90)
+    (auto-revert-mode)
+    (auto-fill-mode)
+    (org-indent-mode)
+    (add-hook 'before-save-hook #'save-and-update-includes nil 'make-it-local)))
+
 (use-package org
   :mode (("\\.org$" . org-mode)
          ("\\.org.draft$" . org-mode))
@@ -57,8 +67,9 @@
          ("C-c o a a" . org-agenda)
          ("C-c o s" . org-sort)
          ("<f12>" . org-agenda))
+  :hook (org-mode . vde/org-mode-hook)
   :custom
-  (org-reverse-note-order '(("inbox.org" . t) ;; Insert items on top of inbox
+  (org-reverse-note-order '((org-inbox-file . t) ;; Insert items on top of inbox
                             (".*" . nil)))    ;; On any other file, insert at the bottom
   (org-archive-location (concat org-archive-dir "/%s::datetree/"))
   (org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$")
@@ -90,7 +101,24 @@
   :after org)
 
 (use-package org-tempo
-  :after (org))
+  :after (org)
+  :custom
+  (org-structure-template-alist '(("a" . "aside")
+				  ("c" . "center")
+				  ("C" . "comment")
+				  ("e" . "example")
+				  ("E" . "export")
+				  ("Ea" . "export ascii")
+				  ("Eh" . "export html")
+				  ("El" . "export latex")
+				  ("q" . "quote")
+				  ("s" . "src")
+				  ("se" . "src emacs-lisp")
+				  ("sE" . "src emacs-lisp :results value code :lexical t")
+				  ("sg" . "src go")
+				  ("sr" . "src rust")
+				  ("sp" . "src python")
+				  ("v" . "verse"))))
 
 ;; (use-package org-bullets
 ;;   :if (not window-system)
@@ -137,8 +165,15 @@
 
 ;; Using denote as the "source" of my second brain *in* org-mode.
 (use-package denote
-  :commands (denote denote-date denote-link-or-create denote-open-or-create denote-signature)
-  :after org)
+  :after org
+  :custom
+  (denote-directory org-directory)
+  (denote-rename-buffer-format "📝 %t")
+  :config
+  (denote-rename-buffer-mode 1)
+  (require 'denote-journal-extras)
+  (setq denote-journal-extras-directory (expand-file-name "journal" org-directory)
+	denote-journal-extras-title-format 'day-date-month-year))
 
 ;; (use-package org
 ;;   ;; :ensure org-plus-contrib ;; load from the package instead of internal
