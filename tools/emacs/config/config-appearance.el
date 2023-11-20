@@ -77,7 +77,7 @@
 	   :line-spacing nil)))
 
   ;; Set last preset or fall back to desired style from `fontaine-presets'.
-  (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
+  (fontaine-set-preset (or (fontaine-restore-latest-preset) 'medium))
 
   ;; The other side of `fontaine-restore-latest-preset'.
   (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
