@@ -33,7 +33,7 @@
   "Book resource files directory.")
 (defconst org-resources-people-dir (expand-file-name "people" org-resources-dir)
   "People resource files directory.")
-(defconst org-resources-journal-dir (expand-file-name "journal" org-resources-dir)
+(defconst org-journal-dir (expand-file-name "journal" org-directory)
   "Journal files directory")
 
 (defconst src-home-dir (expand-file-name "~/src/home" org-directory)
@@ -90,7 +90,7 @@
 			(lambda (directory)
 			  (directory-files-recursively
 			   directory org-agenda-file-regexp))
-			`(,org-projects-dir ,org-areas-dir ,org-resources-dir ,src-home-dir ,(expand-file-name "~/src/osp/tasks")))))
+			`(,org-projects-dir ,org-areas-dir ,org-resources-dir ,org-journal-dir ,src-home-dir ,(expand-file-name "~/src/osp/tasks")))))
   (defun my/reload-org-agenda-files ()
     (interactive)
     (setq org-agenda-files (my/org-agenda-files)))
@@ -171,9 +171,21 @@
   (denote-rename-buffer-format "📝 %t")
   :config
   (denote-rename-buffer-mode 1)
+  (add-hook 'dired-mode-hook #'denote-dired-mode)
+  (require 'denote-org-dblock)
   (require 'denote-journal-extras)
-  (setq denote-journal-extras-directory (expand-file-name "journal" org-directory)
-	denote-journal-extras-title-format 'day-date-month-year))
+  (setq denote-journal-extras-directory org-journal-dir
+	denote-journal-extras-title-format 'day-date-month-year)
+  (with-eval-after-load 'org-capture
+  (setq denote-org-capture-specifiers "%l\n%i\n%?")
+  (add-to-list 'org-capture-templates
+               '("n" "New note (with denote.el)" plain
+                 (file denote-last-path)
+                 #'denote-org-capture
+                 :no-save t
+                 :immediate-finish nil
+                 :kill-buffer t
+                 :jump-to-captured t))))
 
 ;; (use-package org
 ;;   ;; :ensure org-plus-contrib ;; load from the package instead of internal
