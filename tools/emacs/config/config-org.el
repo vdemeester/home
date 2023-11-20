@@ -166,6 +166,27 @@
 ;; Using denote as the "source" of my second brain *in* org-mode.
 (use-package denote
   :after org
+  :bind (("C-c n n" . denote)
+	 ("C-c n c" . denote-region)
+	 ("C-c n N" . denote-type)
+	 ("C-c n d" . denote-date)
+	 ("C-c n z" . denote-signature)
+	 ("C-c n s" . denote-subdirectory)
+	 ("C-c n t" . denote-template)
+	 ;; Links
+	 ("C-c n i" . denote-link)
+	 ("C-c n I" . denote-add-links)
+	 ("C-c n b" . denote-backlinks)
+	 ("C-c n f f" . denote-find-link)
+	 ("C-c n f b" . denote-find-backlink)
+	 ;; Renaming
+	 ("C-c n r" . denote-rename-file)
+	 ("C-c n R" . denote-rename-file-using-front-matter)
+	 ;; Journal
+	 ("C-c n j j" . denote-journal-extras-new-or-existing-entry)
+	 ;; Dired
+	 (:map dired-mode-map
+	       ("C-c C-d C-i" . denote-link-dired-marked-notes)))
   :custom
   (denote-directory org-directory)
   (denote-rename-buffer-format "📝 %t")
