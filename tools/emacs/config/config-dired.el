@@ -159,10 +159,10 @@ This relies on the external 'fd' executable."
    ;; Search only file names when point is on a file name
    dired-isearch-filenames'dwim))
 
-(use-package dired-collapse
-  :unless noninteractive
-  :commands (dired-collapse-mode)
-  :hook (dired-mode . dired-collapse-mode))
+;; (use-package dired-collapse
+;;   :unless noninteractive
+;;   :commands (dired-collapse-mode)
+;;   :hook (dired-mode . dired-collapse-mode))
 
 (use-package async)
 (use-package dired-async
