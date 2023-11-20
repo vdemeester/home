@@ -163,10 +163,15 @@
                `("w" "Writing"))
   :bind (("C-c o c" . org-capture)))
 
+(defun vde/dired-notes ()
+  "Open a dired buffer with all my notes"
+  (interactive)
+  (find-dired org-directory "-type f -not -path '*/archive/*'"))
+
 ;; Using denote as the "source" of my second brain *in* org-mode.
 (use-package denote
-  :after org
-  :bind (("C-c n n" . denote)
+  :bind (("C-c n n" . vde/dired-notes)
+	 ("C-c n N" . denote)
 	 ("C-c n c" . denote-region)
 	 ("C-c n N" . denote-type)
 	 ("C-c n d" . denote-date)
