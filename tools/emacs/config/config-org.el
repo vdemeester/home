@@ -92,12 +92,12 @@
 (use-package org-tempo
   :after (org))
 
-(use-package org-bullets
-  :if (not window-system)
-  :hook (org-mode . org-bullets-mode))
+;; (use-package org-bullets
+;;   :if (not window-system)
+;;   :hook (org-mode . org-bullets-mode))
 
 (use-package org-modern
-  :if window-system
+  ;; :if window-system
   :hook (org-mode . org-modern-mode))
 ;; (set-face-attribute 'default nil :family "Iosevka")
 ;; (set-face-attribute 'variable-pitch nil :family "Iosevka Aile")

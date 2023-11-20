@@ -33,7 +33,7 @@
     (set-fontset-font t 'symbol "Symbola" nil 'append)))
 
 (use-package fontaine
-  :if window-system
+  ;; :if window-system
   :bind (("C-c f s" . fontaine-set-preset)
 	 ("C-c f S" . fontaine-set-face-font))
   :init
