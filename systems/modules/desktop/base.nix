@@ -71,6 +71,7 @@ in
         twemoji-color-font
         ubuntu_font_family
         unifont
+        victor-mono
       ];
     };
 
