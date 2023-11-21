@@ -34,6 +34,14 @@
       {
         vscodeExtensions = with vscode-extensions; [
           ms-vsliveshare.vsliveshare
+          golang.go
+          github.codespaces
+          editorconfig.editorconfig
+          eamodio.gitlens
+          github.copilot
+          ms-vscode-remote.remote-ssh
+          ms-vscode-remote.remote-containers
+          redhat.vscode-yaml
         ];
       })
   ];
