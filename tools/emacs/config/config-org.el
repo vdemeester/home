@@ -65,6 +65,7 @@
   :bind (("C-c o l" . org-store-link)
          ("C-c o r r" . org-refile)
          ("C-c o a a" . org-agenda)
+	 ("C-c o a r" . vde/reload-org-agenda-files)
          ("C-c o s" . org-sort)
          ("<f12>" . org-agenda))
   :hook (org-mode . vde/org-mode-hook)
@@ -79,6 +80,15 @@
   (org-hide-emphasis-markers t)
   (org-pretty-entities t)
   (org-ellipsis "…")
+  (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!)" "CANCELED(c@/!)")
+                       (sequence "WAITING(w@/!)" "SOMEDAY(s)" "|" "CANCELED(c@/!)")
+                       (sequence "IDEA(i)" "|" "CANCELED(c@/!)")))
+  (org-todo-state-tags-triggers '(("CANCELLED" ("CANCELLED" . t))
+                                  ("WAITING" ("WAITING" . t))
+                                  (done ("WAITING"))
+                                  ("TODO" ("WAITING") ("CANCELLED"))
+                                  ("NEXT" ("WAITING") ("CANCELLED"))
+                                  ("DONE" ("WAITING") ("CANCELLED"))))
   :config
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
@@ -91,7 +101,7 @@
 			  (directory-files-recursively
 			   directory org-agenda-file-regexp))
 			`(,org-projects-dir ,org-areas-dir ,org-resources-dir ,org-journal-dir ,src-home-dir ,(expand-file-name "~/src/osp/tasks")))))
-  (defun my/reload-org-agenda-files ()
+  (defun vde/reload-org-agenda-files ()
     (interactive)
     (setq org-agenda-files (my/org-agenda-files)))
   (setq org-agenda-files (my/org-agenda-files)))
