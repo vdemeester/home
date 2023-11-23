@@ -65,6 +65,7 @@ in
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
+  hardware.sensor.iio.enable = true;
   services.udev.extraRules = ''
     # STM32 rules for the Moonlander and Planck EZ
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \
