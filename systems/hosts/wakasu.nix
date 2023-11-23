@@ -136,7 +136,7 @@ in
   ];
 
   services = {
-    envfs.enable = true;
+    envfs.enable = false;
     # automatic login is "safe" as we ask for the encryption passphrase anyway..
     getty.autologinUser = "vincent";
     wireguard = {

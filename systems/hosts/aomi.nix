@@ -150,7 +150,7 @@ in
   '';
 
   services = {
-    envfs.enable = true;
+    envfs.enable = false;
     netdata.enable = true;
     logind.extraConfig = ''
       HandleLidSwitch=ignore
