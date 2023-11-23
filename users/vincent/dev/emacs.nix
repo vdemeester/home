@@ -130,6 +130,7 @@ let
     smartparens
     symbol-overlay
     tempel
+    tempel-collection
     trashed
     treesit-auto
     try

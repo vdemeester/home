@@ -221,7 +221,23 @@
                  :no-save t
                  :immediate-finish nil
                  :kill-buffer t
-                 :jump-to-captured t))))
+                 :jump-to-captured t)))
+  (defun vde/org-category-from-buffer ()
+    "Get the org category (#+category:) value from the buffer"
+  (cond
+   ((string-match (format "^%s.*$" org-journal-dir) (buffer-file-name))
+    "journal")
+   (t
+    (denote-sluggify (denote--retrieve-title-or-filename (buffer-file-name) 'org))))))
+
+(use-package consult-notes
+  :commands (consult-notes
+             consult-notes-search-in-all-notes
+	     consult-notes-denote-mode)
+  :bind (("C-c n F" . consult-notes)) 
+  :config
+  (when (locate-library "denote")
+    (consult-notes-denote-mode)))
 
 ;; (use-package org
 ;;   ;; :ensure org-plus-contrib ;; load from the package instead of internal

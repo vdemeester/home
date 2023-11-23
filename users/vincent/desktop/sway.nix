@@ -238,8 +238,8 @@ in
         bindsym ${mod}+F10 exec ${pkgs.my.scripts}/bin/shot %d
         bindsym ${mod}+Shift+F10 exec ${pkgs.my.scripts}/bin/shotf %d
 
-        bindsym F9 exec ${pkgs.mako}/bin/makoctl mode -s do-not-disturb
-        bindsym Shift+F9 exec ${pkgs.mako}/bin/makoctl mode -s default
+        bindsym ${mod}+F9 exec ${pkgs.mako}/bin/makoctl mode -s do-not-disturb
+        bindsym ${mod}+Shift+F9 exec ${pkgs.mako}/bin/makoctl mode -s default
       '';
   };
   programs = {
