@@ -20,7 +20,7 @@
     (package-vc-install "https://github.com/zerolfx/copilot.el"))
   :hook
   (prog-mode . copilot-mode)
-    (markdown-mode . copilot-mode)
+  (markdown-mode . copilot-mode)
   (text-mode . copilot-mode)
   (log-edit-mode . copilot-mode)
   (vc-git-log-edit-mode . copilot-mode)
