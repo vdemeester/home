@@ -10,8 +10,12 @@
               # add binary caches
               trusted-public-keys = [
                 "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+                "chapeau-rouge.cachix.org-1:r34IG766Ez4Eeanr7Zx+egzXLE2Zgvc+XRspYZPDAn8="
               ];
-              substituters = [ "https://nixpkgs-wayland.cachix.org" ];
+              substituters = [
+                "https://nixpkgs-wayland.cachix.org"
+                "https://chapeau-rouge.cachix.org"
+              ];
             };
           };
 
