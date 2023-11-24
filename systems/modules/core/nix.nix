@@ -47,6 +47,7 @@ in
           "https://cache.nixos.org/"
           "https://r-ryantm.cachix.org"
           "https://shortbrain.cachix.org"
+          "https://vdemeester.cachix.org"
           "https://chapeau-rouge.cachix.org"
         ];
         trusted-public-keys = [
@@ -54,6 +55,7 @@ in
           "shortbrain.cachix.org-1:dqXcXzM0yXs3eo9ChmMfmob93eemwNyhTx7wCR4IjeQ="
           "mic92.cachix.org-1:gi8IhgiT3CYZnJsaW7fxznzTkMUOn1RY4GmXdT/nXYQ="
           "chapeau-rouge.cachix.org-1:r34IG766Ez4Eeanr7Zx+egzXLE2Zgvc+XRspYZPDAn8="
+          "vdemeester.cachix.org-1:eZWNOrLR9A9szeMahn9ENaoT9DB3WgOos8va+d2CU44="
         ];
       };
       # FIXME handle this depending on the version

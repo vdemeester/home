@@ -11,10 +11,12 @@
               trusted-public-keys = [
                 "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
                 "chapeau-rouge.cachix.org-1:r34IG766Ez4Eeanr7Zx+egzXLE2Zgvc+XRspYZPDAn8="
+                "vdemeester.cachix.org-1:eZWNOrLR9A9szeMahn9ENaoT9DB3WgOos8va+d2CU44="
               ];
               substituters = [
                 "https://nixpkgs-wayland.cachix.org"
                 "https://chapeau-rouge.cachix.org"
+                "https://vdemeester.cachix.org"
               ];
             };
           };
