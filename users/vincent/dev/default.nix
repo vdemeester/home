@@ -32,7 +32,14 @@
     # temporary
     (vscode-with-extensions.override
       {
-        vscodeExtensions = with vscode-extensions; [
+        vscodeExtensions = with vscode-extensions; pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          # {
+          #   name = "tooltitude";
+          #   publisher = "tooltitudeteam";
+          #   version = "0.43.2";
+          #   sha256 = "sha256-d4h+kEgvSjtLva6c4UWRLR2jP+ydieDzAHkimbptV48=";
+          # }
+        ] ++ [
           ms-vsliveshare.vsliveshare
           golang.go
           github.codespaces
