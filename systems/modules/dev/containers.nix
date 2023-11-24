@@ -44,6 +44,7 @@ in
         containersConf.settings = {
           network = {
             default_subnet_pools = [
+              # See https://github.com/kubernetes-sigs/kind/issues/2872 for this
               { "base" = "11.0.0.0/24"; "size" = 24; }
               {
                 "base" = "192.168.129.0/24";
