@@ -58,7 +58,6 @@ let
     embark
     embark-consult
     envrc
-    esh-autosuggest
     eshell-prompt-extras
     esup
     expand-region

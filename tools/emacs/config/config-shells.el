@@ -256,10 +256,6 @@ using either KUBECONFIG or ~/.kube/config"
      (epe-colorize-with-face (if (= (user-uid) 0) "#" "") 'epe-sudo-symbol-face)
      " ")))
 
-(use-package esh-autosuggest
-  :after eshell
-  :hook (eshell-mode . esh-autosuggest-mode))
-
 (use-package xterm-color
   :after eshell
   :init
