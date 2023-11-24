@@ -39,7 +39,23 @@ in
   };
   config = mkIf cfg.enable (mkMerge [
     {
-      virtualisation.containers.enable = true;
+      virtualisation.containers = {
+        enable = true;
+        containersConf.settings = {
+          network = {
+            default_subnet_pools = [
+              { "base" = "11.0.0.0/24"; "size" = 24; }
+              {
+                "base" = "192.168.129.0/24";
+                "size" = 24;
+              }
+              { "base" = "192.168.130.0/24"; "size" = 24; }
+              { "base" = "192.168.131.0/24"; "size" = 24; }
+              { "base" = "192.168.132.0/24"; "size" = 24; }
+            ];
+          };
+        };
+      };
     }
     (mkIf cfg.docker.enable {
       virtualisation = {
