@@ -114,7 +114,7 @@ in
       environment.systemPackages = with pkgs; [
         my.buildx
       ];
-      networking.firewall.trustedInterfaces = [ "docker0" ];
+      networking.firewall.trustedInterfaces = [ "docker0" "podman" ];
     })
     (mkIf cfg.podman.enable {
       virtualisation.podman.enable = true;
