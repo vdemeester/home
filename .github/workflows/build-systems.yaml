@@ -1,0 +1,48 @@
+name: Nix Flake actions
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  nix-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v23
+      - id: set-matrix
+        name: Generate Nix Matrix
+        run: |
+          set -Eeu
+          nix flake show --json | jq '.nixosConfigurations | to_entries | map({"name": .key})'
+          echo matrix="{\"include\": " $(nix flake show --json | jq '.nixosConfigurations | to_entries | map({"name": .key})') >> "$GITHUB_OUTPUT" "}"
+          cat $GITHUB_OUTPUT
+
+  nix-build:
+    needs: nix-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Keep running if one leg fails.
+      matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
+    steps:
+      - name: Maximize build space
+        uses: AdityaGarg8/remove-unwanted-software@v1
+        with:
+          remove-android: 'true'
+          remove-dotnet: 'true'
+      - name: Build
+        run: |
+          echo "Free space:"
+          df -h
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v23
+      - uses: cachix/cachix-action@v12
+        with:
+          name: chapeau-rouge
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - run: nix build -L ".#nixosConfigurations.${{ matrix.name }}.config.system.build.toplevel"
