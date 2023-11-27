@@ -51,11 +51,6 @@
                 (derived-mode-p 'rg-mode))
       (let ((inhibit-read-only t))
         (ansi-color-apply-on-region compilation-filter-start (point)))))
-  (defun vde/goto-address-mode ()
-    (unless (or (derived-mode-p 'grep-mode)
-                (derived-mode-p 'ag-mode)
-                (derived-mode-p 'rg-mode))
-      (goto-address-mode t)))
   :config
   (setq-default compilation-scroll-output t
                 ;; I'm not scared of saving everything.
@@ -96,8 +91,7 @@
                  "\\|"
                  "Password for 'http.*github.*':"
                  "\\)"))
-  (add-hook 'compilation-filter-hook #'vde/colorize-compilation-buffer)
-  (add-hook 'compilation-mode-hook #'vde/goto-address-mode))
+  (add-hook 'compilation-filter-hook #'vde/colorize-compilation-buffer))
 
 (use-package emacs
   :bind

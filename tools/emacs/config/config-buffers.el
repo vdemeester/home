@@ -91,7 +91,11 @@
 	  helpful-mode
           compilation-mode))
   (popper-mode +1)
-  (popper-echo-mode +1)) 
+  (popper-echo-mode +1))
+
+(use-package goto-addr
+  :hook ((text-mode . goto-address-mode)
+         (prog-mode . goto-address-prog-mode)))
 
 (provide 'config-buffers)
 ;;; config-buffers.el ends here
