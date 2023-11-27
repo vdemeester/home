@@ -208,6 +208,8 @@ any directory proferred by `consult-dir'."
   (eshell-highlight-prompt nil)
   (eshell-prompt-function 'vde-theme-lambda)
   :config
+  (setq epe-path-style 'fish
+	epe-fish-path-max-len 20)
   (defun vde-kubernetes-current-context ()
     "Return the current context"
     (if (not (string-empty-p (getenv "KUBECONFIG")))
