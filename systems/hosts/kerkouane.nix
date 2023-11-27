@@ -67,8 +67,8 @@ in
     # (sources.nixos + "/nixos/modules/profiles/qemu-guest.nix")
     # (import ../../nix).home-manager-stable
     # ../modules/default.stable.nix
-    import ../../users/vincent
-    import ../../users/root
+    (import ../../users/vincent)
+    (import ../../users/root)
   ];
 
   networking.hostName = hostname;
