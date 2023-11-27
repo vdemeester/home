@@ -56,6 +56,8 @@
     (auto-revert-mode)
     (auto-fill-mode)
     (org-indent-mode)
+    (add-hook 'before-save-hook 'org-update-all-dblocks)
+    (add-hook 'auto-save-hook 'org-update-all-dblocks)
     (add-hook 'before-save-hook #'save-and-update-includes nil 'make-it-local)))
 
 (use-package org
