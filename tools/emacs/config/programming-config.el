@@ -3,6 +3,10 @@
 ;;; Configuration files mode configuration
 ;;; Code:
 
+(defconst src-dir "~/src/"
+  "Where all my sources are.")
+(set-register ?s `(file . ,src-dir))
+
 (use-package yaml-mode
   :mode "\\.ya?ml\\'"
   :hook ((yaml-mode . highlight-indentation-mode)
@@ -20,8 +24,8 @@
     (package-vc-install "https://github.com/zerolfx/copilot.el"))
   :hook
   (prog-mode . copilot-mode)
-  (markdown-mode . copilot-mode)
-  (text-mode . copilot-mode)
+  ;; (markdown-mode . copilot-mode)
+  ;; (text-mode . copilot-mode)
   (log-edit-mode . copilot-mode)
   (vc-git-log-edit-mode . copilot-mode)
   :bind
