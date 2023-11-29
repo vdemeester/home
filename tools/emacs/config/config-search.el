@@ -102,11 +102,11 @@ confines of word boundaries (e.g. multiple words)."
   (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
   (cl-pushnew '("gotest" . "*_test.go") rg-custom-type-aliases)
   (defun vde/rg-buffer-name ()
-    "Generate a rg buffer name from projectile if bound"
-    (cond ((boundp 'projectile-project-name) (if (string-equal (projectile-project-name) "-")
-                                                 "rg"
-                                               (format "rg: %s" (projectile-project-name))))
-          (t "rg")))
+    "Generate a rg buffer name from project if in one"
+    (let ((p (project-current)))
+      (if p
+	  (format "rg: %s" (abbreviate-file-name (cdr p)))
+	"rg")))
   (setq rg-buffer-name #'vde/rg-buffer-name))
 ;; -UseRG
 
