@@ -1,10 +1,10 @@
 name: Nix Flake actions
 
 on:
+  workflow_dispatch: {}
   pull_request:
   push:
     branches:
-      - master
       - main
 
 jobs:
@@ -43,6 +43,6 @@ jobs:
       - uses: cachix/install-nix-action@v23
       - uses: cachix/cachix-action@v12
         with:
-          name: chapeau-rouge
+          name: vdemeester
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - run: nix build -L ".#nixosConfigurations.${{ matrix.name }}.config.system.build.toplevel"
