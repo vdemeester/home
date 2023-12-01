@@ -26,7 +26,6 @@ rec {
   kss = pkgs.callPackage ./kss { };
   batzconverter = pkgs.callPackage ./batzconverter { };
   #kubernix = pkgs.callPackage ./kubernix { };
-  krew = pkgs.callPackage ./krew { };
   kail = pkgs.callPackage ./kail { };
   prm = pkgs.callPackage ./prm { };
   #protobuild = pkgs.callPackage ./protobuild { };
