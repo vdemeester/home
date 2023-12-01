@@ -26,6 +26,10 @@ let
     # edit-indirect
     # kind-icon
     # dired-subtree
+    # lsp-focus
+    # lsp-mode
+    # lsp-ui
+    # consult-lsp
     ace-window
     adoc-mode
     aggressive-indent
@@ -38,7 +42,6 @@ let
     color-identifiers-mode
     consult
     consult-dir
-    consult-lsp
     consult-notes
     corfu # FIXME: configure
     dap-mode
@@ -82,9 +85,6 @@ let
     icomplete-vertical
     json-mode
     lin
-    lsp-focus
-    lsp-mode
-    lsp-ui
     magit
     magit-popup
     marginalia
