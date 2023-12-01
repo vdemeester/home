@@ -17,7 +17,6 @@ rec {
 
   # Maybe upstream
   athens = pkgs.callPackage ./athens { };
-  esc = pkgs.callPackage ./esc { };
   #gogo-protobuf = pkgs.callPackage ./gogo-protobuf {};
   gorun = pkgs.callPackage ./gorun { };
   govanityurl = pkgs.callPackage ./govanityurl { };
