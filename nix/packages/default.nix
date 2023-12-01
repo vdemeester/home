@@ -40,11 +40,6 @@ rec {
     buildGoModule = pkgs.buildGo120Module;
   };
 
-  inherit (pkgs.callPackage ./kam { })
-    kam_1_1
-    kam
-    ;
-
   operator-tool = pkgs.callPackage ./operator-tooling { };
 
   manifest-tool = pkgs.callPackage ./manifest-tool { };
