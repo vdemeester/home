@@ -350,6 +350,12 @@ in
     pasystray.enable = nixosConfig.modules.hardware.audio.enable;
     udiskie.enable = true;
     # network-manager-applet.enable = true;
+    gammastep = {
+      enable = true;
+      provider = "geoclue2";
+      # longitude = "2.333333";
+      # latitude = "48.866667";
+    };
     kanshi = {
       enable = true;
       profiles = {
