@@ -23,7 +23,6 @@ rec {
   prm = pkgs.callPackage ./prm { };
   #protobuild = pkgs.callPackage ./protobuild { };
   rmapi = pkgs.callPackage ./rmapi { };
-  toolbox = pkgs.callPackage ./toolbox { };
   yaspell = pkgs.callPackage ./yaspell { };
   gosmee = pkgs.callPackage ./gosmee {
     buildGoModule = pkgs.buildGo120Module;
