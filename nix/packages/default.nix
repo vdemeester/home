@@ -17,7 +17,6 @@ rec {
   ram = pkgs.callPackage ./ram { };
   #sec = pkgs.callPackage ./sec { };
   systemd-email = pkgs.callPackage ./systemd-email { };
-  yak = pkgs.callPackage ./yak { };
 
   # Maybe upstream
   athens = pkgs.callPackage ./athens { };
