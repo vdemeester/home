@@ -53,11 +53,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1701440066,
-        "narHash": "sha256-g2Xnsb3oW/mpa8UtabnBa9gDDHn/SrNoU5HEIFU+8Ts=",
+        "lastModified": 1701444432,
+        "narHash": "sha256-JlQuV8JDg1ZHR8/Z8z8xjBJEU8UtsMbkuYy9KRx7YVU=",
         "owner": "vdemeester",
         "repo": "chick-group",
-        "rev": "f6a792022647e623140946875df31eb96e3aac22",
+        "rev": "fb23fd72cc767295865a4469377331f4849e1080",
         "type": "github"
       },
       "original": {

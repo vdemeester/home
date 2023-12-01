@@ -18,11 +18,8 @@ rec {
   # Maybe upstream
   athens = pkgs.callPackage ./athens { };
   #gogo-protobuf = pkgs.callPackage ./gogo-protobuf {};
-  gorun = pkgs.callPackage ./gorun { };
   govanityurl = pkgs.callPackage ./govanityurl { };
-  kss = pkgs.callPackage ./kss { };
   batzconverter = pkgs.callPackage ./batzconverter { };
-  kail = pkgs.callPackage ./kail { };
   prm = pkgs.callPackage ./prm { };
   #protobuild = pkgs.callPackage ./protobuild { };
   rmapi = pkgs.callPackage ./rmapi { };

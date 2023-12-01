@@ -10,15 +10,15 @@ in
 {
   home.packages = with pkgs; [
     #cri-tools
-    my.kail
+    kail
     kubectl
     kustomize
     kind
     # minikube # probably don't need that always.. only on demand
     ko
     crane
-    #my.krew
-    my.kss
+    krew
+    kss
     # our own scripts
     knd
     bekind
