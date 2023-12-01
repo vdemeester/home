@@ -70,7 +70,7 @@ in
       };
     };
     environment.systemPackages = with pkgs; [
-      my.buildx
+      buildx
     ];
     networking.firewall.trustedInterfaces = [ "docker0" ];
   };

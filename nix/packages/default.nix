@@ -32,9 +32,5 @@ rec {
 
   manifest-tool = pkgs.callPackage ./manifest-tool { };
 
-  # Upstream
-  buildkit = pkgs.callPackage ./buildkit { };
-  buildx = pkgs.callPackage ./buildx { };
-
   adi1090x-plymouth = pkgs.callPackage ./adi1090x-plymouth { };
 }
