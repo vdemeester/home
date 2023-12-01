@@ -30,6 +30,11 @@ in
           xdg-desktop-portal-gtk
         ];
         gtkUsePortal = true;
+        config = {
+          "common" = {
+            "default" = [ "gtk" "wlr" ];
+          };
+        };
       };
     };
 
