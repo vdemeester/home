@@ -13,7 +13,6 @@ rec {
   ape = pkgs.callPackage ./ape { };
   fhs-std = pkgs.callPackage ./fhs/std.nix { };
   ram = pkgs.callPackage ./ram { };
-  #sec = pkgs.callPackage ./sec { };
   systemd-email = pkgs.callPackage ./systemd-email { };
 
   # Maybe upstream
@@ -24,7 +23,6 @@ rec {
   govanityurl = pkgs.callPackage ./govanityurl { };
   kss = pkgs.callPackage ./kss { };
   batzconverter = pkgs.callPackage ./batzconverter { };
-  #kubernix = pkgs.callPackage ./kubernix { };
   kail = pkgs.callPackage ./kail { };
   prm = pkgs.callPackage ./prm { };
   #protobuild = pkgs.callPackage ./protobuild { };
