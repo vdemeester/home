@@ -48,4 +48,5 @@ jobs:
         with:
           name: vdemeester
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: ${{ github.event_name == 'pull_request' }}
       - run: nix build -L ".#nixosConfigurations.${{ matrix.name }}.config.system.build.toplevel"
