@@ -21,7 +21,6 @@
     # misc
     protobuf
     my.ram
-    my.esc
     my.yaspell
     # not really go but still
     my.gosmee
