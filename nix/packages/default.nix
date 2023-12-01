@@ -28,7 +28,6 @@ rec {
   govanityurl = pkgs.callPackage ./govanityurl { };
   kss = pkgs.callPackage ./kss { };
   batzconverter = pkgs.callPackage ./batzconverter { };
-  sugarjazy = pkgs.callPackage ./sugarjazy { };
   #kubernix = pkgs.callPackage ./kubernix { };
   krew = pkgs.callPackage ./krew { };
   kail = pkgs.callPackage ./kail { };

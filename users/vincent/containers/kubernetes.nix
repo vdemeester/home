@@ -27,6 +27,6 @@ in
     kubectx
   ];
   programs.zsh.initExtra = ''
-    alias -g SK="|sugarjazy -s --kail --kail-prefix-format='{pod}'"
+    alias -g SK="|snazy -s --kail --kail-prefix-format='{pod}'"
   '';
 }
