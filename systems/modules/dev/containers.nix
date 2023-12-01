@@ -112,7 +112,7 @@ in
         };
       };
       environment.systemPackages = with pkgs; [
-        buildx
+        docker-buildx
       ];
       networking.firewall.trustedInterfaces = [ "docker0" "podman" ];
     })
