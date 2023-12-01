@@ -136,6 +136,7 @@ in
   ];
 
   services = {
+    geoclue2.enable = true;
     envfs.enable = false;
     # automatic login is "safe" as we ask for the encryption passphrase anyway..
     getty.autologinUser = "vincent";
