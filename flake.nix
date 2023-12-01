@@ -195,12 +195,6 @@
       repo = "sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # envfs = {
-    #   type = "github";
-    #   owner = "Mic92";
-    #   repo = "envfs";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
 
     # WSL
     nixos-wsl = { type = "github"; owner = "nix-community"; repo = "NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
