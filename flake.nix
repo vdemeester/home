@@ -42,6 +42,7 @@
             inputs.chick-group.overlays.default
             (_: prev: {
               inherit (inputs.devenv.packages.${prev.system}) devenv;
+              inherit (inputs.buildkit-tekton.packages.${prev.system}) tkn-local;
             })
           ];
         }
@@ -164,10 +165,11 @@
       url = "github:cachix/devenv/latest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # hyprland = {
+    #   url = "github:hyprwm/Hyprland";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    buildkit-tekton = { url = "github:vdemeester/buildkit-tekton"; inputs.nixpkgs.follows = "nixpkgs"; };
 
 
     # nixpkgs

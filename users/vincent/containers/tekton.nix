@@ -5,9 +5,8 @@
     tektoncd-cli
     kubernetes-helm
     snazy
-    # my.tkn
-    my.tkn-pac
-    my.tkn-local
+    tkn-pac
+    tkn-local
     rekor-cli
     cosign
   ];
