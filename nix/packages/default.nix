@@ -13,7 +13,6 @@ rec {
   # Mine
   ape = pkgs.callPackage ./ape { };
   fhs-std = pkgs.callPackage ./fhs/std.nix { };
-  nr = pkgs.callPackage ./nr { };
   ram = pkgs.callPackage ./ram { };
   #sec = pkgs.callPackage ./sec { };
   systemd-email = pkgs.callPackage ./systemd-email { };
