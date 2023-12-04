@@ -101,5 +101,7 @@
               ("i" . Man-goto-section)
               ("g" . Man-update-manpage)))
 
+(use-package bookmark+)
+
 (provide 'config-navigating)
 ;;; config-navigating.el ends here
