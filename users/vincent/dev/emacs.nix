@@ -127,6 +127,7 @@ let
     scratch
     shr-tag-pre-highlight
     smartparens
+    surround
     symbol-overlay
     tempel
     tempel-collection

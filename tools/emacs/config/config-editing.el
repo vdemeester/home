@@ -171,5 +171,8 @@ If region is active, add its contents to the new buffer."
     (package-vc-install "https://github.com/balloneij/selection-highlight-mode"))
   :config (selection-highlight-mode))
 
+(use-package surround  
+  :bind-keymap ("M-'" . surround-keymap))
+
 (provide 'config-editing)
 ;;; config-editing.el ends here
