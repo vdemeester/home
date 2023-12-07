@@ -207,9 +207,10 @@
   :custom
   (denote-directory org-directory)
   (denote-rename-buffer-format "📝 %t")
+  (denote-date-prompt-denote-date-prompt-use-org-read-date t)
+  :hook (dired-mode . denote-dired-mode)
   :config
   (denote-rename-buffer-mode 1)
-  (add-hook 'dired-mode-hook #'denote-dired-mode)
   (require 'denote-org-dblock)
   (require 'denote-journal-extras)
   (setq denote-journal-extras-directory org-journal-dir
