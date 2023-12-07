@@ -135,6 +135,10 @@ in
       rebase = {
         autosquash = true;
       };
+      status = {
+        short = true;
+        branch = true;
+      };
       advice = {
         statusHints = false;
         pushNonFastForward = false;
