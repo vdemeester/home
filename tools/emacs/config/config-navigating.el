@@ -103,5 +103,7 @@
 
 (use-package bookmark+)
 
+(keymap-global-set "S-<down-mouse-2>" 'strokes-do-stroke)
+
 (provide 'config-navigating)
 ;;; config-navigating.el ends here
