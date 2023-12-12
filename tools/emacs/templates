@@ -51,6 +51,15 @@ emacs-lisp-mode
 (provide "(provide '" (file-name-base (or (buffer-file-name) (buffer-name))) ")" n
          ";;; " (file-name-nondirectory (or (buffer-file-name) (buffer-name)))
          " ends here" n)
+(package ";;; " (file-name-base (or (buffer-file-name) (buffer-name))) " --- " p " -*- lexical-binding: t -*-"
+   n n
+   ";; Copyright (C) " (format-time-string "%Y") " Vincent Demeester" n
+   ";; Author: Vincent Demeester <vincent@sbr.pm>" n n
+   ";; This file is NOT part of GNU Emacs." n
+   ";;; Commentary:" n p n
+   ";;; Code:" n p n
+   "(provide '" (file-name-base (or (buffer-file-name) (buffer-name))) ")" n
+   ";;; " (file-name-nondirectory (or (buffer-file-name) (buffer-name))) " ends here" n)
 
 eshell-mode
 
