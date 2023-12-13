@@ -174,11 +174,9 @@
 
     # nixpkgs
     nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
-    nixpkgs-23_05 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-23.05"; };
     nixpkgs-23_11 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-23.11"; };
     # Home Manager
     home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    home-manager-23_05 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-23.05"; inputs.nixpkgs.follows = "nixpkgs-23_05"; };
     home-manager-23_11 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-23.11"; inputs.nixpkgs.follows = "nixpkgs-23_11"; };
 
     impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
