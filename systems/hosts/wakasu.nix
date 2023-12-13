@@ -130,7 +130,7 @@ in
     (docker_24.override { clientOnly = true; })
     officemode
     roadmode
-    obsidian
+    # obsidian # electron is eol...
     discord
     virt-manager
   ];
