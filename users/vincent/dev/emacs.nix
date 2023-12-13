@@ -57,6 +57,7 @@ let
     diredfl
     dockerfile-mode
     doom-modeline
+    eat
     easy-kill
     editorconfig
     eldoc-box

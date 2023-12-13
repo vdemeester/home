@@ -258,6 +258,12 @@ using either KUBECONFIG or ~/.kube/config"
      (epe-colorize-with-face (if (= (user-uid) 0) "#" "") 'epe-sudo-symbol-face)
      " ")))
 
+(use-package eat
+  :init (setq eat-kill-buffer-on-exit t
+	      eat-enable-yank-to-terminal t)
+  :hook ((eshell-mode . eat-eshell-mode)
+	 (eshell-mode . eat-eshell-visual-command-mode)))
+
 (use-package xterm-color
   :after eshell
   :init

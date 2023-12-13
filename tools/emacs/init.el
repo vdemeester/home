@@ -63,12 +63,14 @@
 (setq package-archives
       '(("melpa" . "http://melpa.org/packages/")
         ("org" . "https://orgmode.org/elpa/")
-        ("gnu" . "https://elpa.gnu.org/packages/")))
+        ("gnu" . "https://elpa.gnu.org/packages/")
+	("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (setq package-archive-priorities
-      '(("melpa" .  3)
-        ("org" . 2)
-        ("gnu" . 1)))
+      '(("melpa" .  4)
+        ("org" . 3)
+        ("gnu" . 2)
+	("non-gnu" . 1)))
 
 (require 'tls)
 
