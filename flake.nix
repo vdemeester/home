@@ -25,7 +25,7 @@
         };
       };
       stableModules = [
-        inputs.home-manager-23_05.nixosModules.home-manager
+        inputs.home-manager-23_11.nixosModules.home-manager
       ];
       unstableModules = [
         inputs.home-manager.nixosModules.home-manager
@@ -115,20 +115,20 @@
             ];
           };
           # Servers (stable)
-          shikoku = inputs.nixpkgs-23_05.lib.nixosSystem {
+          shikoku = inputs.nixpkgs-23_11.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ stableModules ++ [
               ./systems/hosts/shikoku.nix
             ];
           };
-          sakhalin = inputs.nixpkgs-23_05.lib.nixosSystem {
+          sakhalin = inputs.nixpkgs-23_11.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ stableModules ++ [
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               ./systems/hosts/sakhalin.nix
             ];
           };
-          kerkouane = inputs.nixpkgs-23_05.lib.nixosSystem {
+          kerkouane = inputs.nixpkgs-23_11.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ stableModules ++ [
               ./systems/modules/services/govanityurl.nix
@@ -175,9 +175,11 @@
     # nixpkgs
     nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
     nixpkgs-23_05 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-23.05"; };
+    nixpkgs-23_11 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-23.11"; };
     # Home Manager
     home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager-23_05 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-23.05"; inputs.nixpkgs.follows = "nixpkgs-23_05"; };
+    home-manager-23_11 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-23.11"; inputs.nixpkgs.follows = "nixpkgs-23_11"; };
 
     impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
 
@@ -186,7 +188,7 @@
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-23_05";
+      inputs.nixpkgs-stable.follows = "nixpkgs-23_11";
     };
 
     sops-nix = {
