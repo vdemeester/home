@@ -30,6 +30,8 @@ let
     # lsp-mode
     # lsp-ui
     # consult-lsp
+    # dap-mode
+    # icomplete-vertical
     ace-window
     adoc-mode
     aggressive-indent
@@ -44,8 +46,8 @@ let
     consult-dir
     consult-notes
     corfu # FIXME: configure
-    dap-mode
     dash
+    dape
     delight
     denote
     dired-collapse
@@ -82,7 +84,6 @@ let
     hl-todo
     htmlize
     ibuffer-vc
-    icomplete-vertical
     json-mode
     lin
     magit
