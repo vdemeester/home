@@ -132,16 +132,9 @@
 				  ("sp" . "src python")
 				  ("v" . "verse"))))
 
-;; (use-package org-bullets
-;;   :if (not window-system)
-;;   :hook (org-mode . org-bullets-mode))
-
 (use-package org-modern
   ;; :if window-system
   :hook (org-mode . org-modern-mode))
-;; (set-face-attribute 'default nil :family "Iosevka")
-;; (set-face-attribute 'variable-pitch nil :family "Iosevka Aile")
-;; (set-face-attribute 'org-modern-symbol nil :family "Iosevka")
 
 (use-package org-capture
   :after org
