@@ -132,6 +132,20 @@
 				  ("sp" . "src python")
 				  ("v" . "verse"))))
 
+(use-package org-id
+  :after org
+  :commands contrib/org-id-headlines
+  :init
+  (defun contrib/org-id-headlines ()
+    "Add CUSTOM_ID properties to all headlines in the current
+file which do not already have one."
+    (interactive)
+    (org-map-entries
+     (funcall 'contrib/org-get-id (point) 'create)))
+  :config
+  (setq org-id-link-to-org-use-id
+        'create-if-interactive-and-no-custom-id))
+
 (use-package org-modern
   ;; :if window-system
   :hook (org-mode . org-modern-mode))
@@ -647,12 +661,6 @@
 ;;   (org-journal-dir org-private-notes-dir)
 ;;   (org-journal-date-format "%A, %d %B %Y")
 ;;   (org-journal-enable-agenda-integration nil))
-;; (use-package org-id
-;;   :after org
-;;   :commands contrib/org-id-headlines
-;;   :config
-;;   (setq org-id-link-to-org-use-id
-;;         'create-if-interactive-and-no-custom-id)
 ;; 
 ;;   (defun contrib/org-get-id (&optional pom create prefix)
 ;;     "Get the CUSTOM_ID property of the entry at point-or-marker
@@ -671,13 +679,7 @@
 ;;           (org-entry-put pom "CUSTOM_ID" id)
 ;;           (org-id-add-location id (buffer-file-name (buffer-base-buffer)))
 ;;           id)))))
-;; 
-;;   (defun contrib/org-id-headlines ()
-;;     "Add CUSTOM_ID properties to all headlines in the current
-;; file which do not already have one."
-;;     (interactive)
-;;     (org-map-entries
-;;      (funcall 'contrib/org-get-id (point) 'create))))
+;; )
 ;; (use-package org-crypt
 ;;   :after (org)
 ;;   :config
