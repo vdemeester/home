@@ -103,9 +103,9 @@ confines of word boundaries (e.g. multiple words)."
   (cl-pushnew '("gotest" . "*_test.go") rg-custom-type-aliases)
   (defun vde/rg-buffer-name ()
     "Generate a rg buffer name from project if in one"
-    (let ((p (project-current)))
+    (let ((p (project-root (project-current))))
       (if p
-	  (format "rg: %s" (abbreviate-file-name (cdr p)))
+	  (format "rg: %s" (abbreviate-file-name p))
 	"rg")))
   (setq rg-buffer-name #'vde/rg-buffer-name))
 ;; -UseRG
