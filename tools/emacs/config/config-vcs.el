@@ -74,7 +74,10 @@
          ("C-c v p" . magit-pull)
          ("C-c v P" . magit-push)
          ("C-c v r" . magit-rebase)
-         ("C-c v v" . magit-status))
+	 ("C-c v s" . magit-stage)
+         ("C-c v v" . magit-status)
+	 ;; magit-commit ? magit-stage ?
+	 )
   :config
   (setq-default magit-save-repository-buffers 'dontask
                 magit-refs-show-commit-count 'all
