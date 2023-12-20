@@ -1,0 +1,13 @@
+
+* Inspirations
+
+- https://tecosaur.github.io/emacs-config/config.html
+- https://github.com/jeremyf/dotemacs/tree/main
+- https://git.sr.ht/~pkal/emacs-init/tree
+- https://git.acdw.net/emacs/tree/
+- https://github.com/mfiano/emacs-config/tree/main
+- https://github.com/akirak/emacs-config/blob/master/emacs/emacs-config.org
+
+* Packages "inspirations"
+
+- https://www.emacswiki.org/emacs/SetupEl
