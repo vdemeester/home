@@ -72,8 +72,8 @@
          ("<f12>" . org-agenda))
   :hook (org-mode . vde/org-mode-hook)
   :custom
-  (org-reverse-note-order '((org-inbox-file . t) ;; Insert items on top of inbox
-                            (".*" . nil)))    ;; On any other file, insert at the bottom
+  ;; (org-reverse-note-order '((org-inbox-file . t) ;; Insert items on top of inbox
+  ;;                           (".*" . nil)))    ;; On any other file, insert at the bottom
   (org-archive-location (concat org-archive-dir "/%s::datetree/"))
   (org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$")
   (org-use-speed-commands t)
@@ -91,11 +91,16 @@
                                   ("TODO" ("WAITING") ("CANCELLED"))
                                   ("NEXT" ("WAITING") ("CANCELLED"))
                                   ("DONE" ("WAITING") ("CANCELLED"))))
+  (org-log-done 'time)
+  (org-log-redeadline 'time)
+  (org-log-reschedule 'time)
+  (org-log-into-drawer t)
+  (org-refile-use-outline-path 'file)
+  (org-refile-allow-creating-parent-nodes 'confirm)
   :config
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
     (org-babel-lob-ingest org-babel-library-file))
-
   (defun my/org-agenda-files ()
     (apply 'append
 		   (mapcar
@@ -106,7 +111,28 @@
   (defun vde/reload-org-agenda-files ()
     (interactive)
     (setq org-agenda-files (my/org-agenda-files)))
-  (setq org-agenda-files (my/org-agenda-files)))
+  (setq org-agenda-files (my/org-agenda-files)
+	org-refile-targets (append '((org-inbox-file :level . 0))
+				   (->>
+				    (directory-files org-projects-dir nil ".org$")
+				    (--remove (s-starts-with? "." it))
+				    (--map (format "%s/%s" org-projects-dir it))
+				    (--map `(,it :maxlevel . 3)))
+				   (->>
+				    (directory-files org-areas-dir nil ".org$")
+				    (--remove (s-starts-with? "." it))
+				    (--map (format "%s/%s" org-areas-dir it))
+				    (--map `(,it :maxlevel . 3)))
+				   (->>
+				    (directory-files-recursively src-home-dir ".org$")
+				    (--remove (s-starts-with? "." it))
+				    (--map (format "%s" it))
+				    (--map `(,it :maxlevel . 2)))
+				   (->>
+				    (directory-files-recursively org-resources-dir ".org$")
+				    (--remove (s-starts-with? (format "%s/legacy" org-resources-dir) it))
+				    (--map (format "%s" it))
+				    (--map `(,it :maxlevel . 3))))))
 
 ;; Make sure we load org-protocol
 (use-package org-protocol
@@ -249,6 +275,7 @@ file which do not already have one."
   (when (locate-library "denote")
     (consult-notes-denote-mode)))
 
+(use-package orgit)
 ;; (use-package org
 ;;   ;; :ensure org-plus-contrib ;; load from the package instead of internal
 ;;   :mode (("\\.org$" . org-mode)
@@ -289,32 +316,7 @@ file which do not already have one."
 ;;   ;; Org Babel configurations
 ;;   (when (file-exists-p org-babel-library-file)
 ;;     (org-babel-lob-ingest org-babel-library-file))
-;;   (defun my/org-agenda-files ()
-;;     (apply 'append
-;; 		   (mapcar
-;; 			(lambda (directory)
-;; 			  (directory-files-recursively
-;; 			   directory org-agenda-file-regexp))
-;; 			`(,org-projects-dir ,org-notes-dir ,src-home-dir ,org-private-notes-dir ,(expand-file-name "~/src/osp/tasks")))))
-;;   (defun my/reload-org-agenda-files ()
-;;     (interactive)
-;;     (setq org-agenda-files (my/org-agenda-files)))
-;;   (setq org-agenda-files (my/org-agenda-files)
-;;         org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$"
-;;         org-use-speed-commands t
-;;         org-special-ctrl-a/e t
-;;         org-special-ctrl-k t
-;;         org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!)" "CANCELED(c@/!)")
-;;                             (sequence "WAITING(w@/!)" "SOMEDAY(s)" "|" "CANCELED(c@/!)")
-;;                             (sequence "IDEA(i)" "|" "CANCELED(c@/!)"))
-;;         org-todo-state-tags-triggers '(("CANCELLED" ("CANCELLED" . t))
-;;                                        ("WAITING" ("WAITING" . t))
-;;                                        (done ("WAITING"))
-;;                                        ("TODO" ("WAITING") ("CANCELLED"))
-;;                                        ("NEXT" ("WAITING") ("CANCELLED"))
-;;                                        ("DONE" ("WAITING") ("CANCELLED")))
-;;         org-use-tag-inheritance t
-;;         org-tag-alist '(("linux") ("nixos") ("emacs") ("org")
+;;   (setq org-tag-alist '(("linux") ("nixos") ("emacs") ("org")
 ;;                         ("openshift") ("redhat") ("tektoncd") ("kubernetes") ("knative" ) ("docker")
 ;;                         ("docs") ("code") ("review")
 ;;                         (:startgroup . nil)
@@ -323,29 +325,7 @@ file which do not already have one."
 ;;                         (:startgroup . nil)
 ;;                         ("#link" . ?i) ("#read" . ?r) ("#project" . ?p)
 ;;                         (:endgroup . nil))
-;;         org-log-done 'time
-;;         org-log-redeadline 'time
-;;         org-log-reschedule 'time
-;;         org-log-into-drawer t
 ;;         org-enforce-todo-dependencies t
-;;         org-refile-targets (append '((org-inbox-file :level . 0))
-;;                                    (->>
-;;                                     (directory-files org-projects-dir nil ".org$")
-;;                                     (--remove (s-starts-with? "." it))
-;;                                     (--map (format "%s/%s" org-projects-dir it))
-;;                                     (--map `(,it :level . 1)))
-;;                                    (->>
-;;                                     (directory-files-recursively src-home-dir ".org$")
-;;                                     (--remove (s-starts-with? "." it))
-;;                                     (--map (format "%s" it))
-;;                                     (--map `(,it :level . 1)))
-;;                                    (->>
-;;                                     (directory-files-recursively org-notes-dir ".org$")
-;;                                     (--remove (s-starts-with? (format "%s/legacy" org-notes-dir) it))
-;;                                     (--map (format "%s" it))
-;;                                     (--map `(,it :level . 1))))
-;;         org-refile-use-outline-path 'file
-;;         org-refile-allow-creating-parent-nodes 'confirm
 ;;         org-outline-path-complete-in-steps nil
 ;;         org-columns-default-format "%80ITEM(Task) %TODO %3PRIORITY %10Effort(Effort){:} %10CLOCKSUM"
 ;;         org-fontify-whole-heading-line t
