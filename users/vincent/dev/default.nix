@@ -29,6 +29,7 @@
     fossil
     pre-commit
     yamllint
+    tmate
     # temporary
     (vscode-with-extensions.override
       {
