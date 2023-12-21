@@ -60,6 +60,7 @@ let
     eat
     easy-kill
     editorconfig
+    edit-indirect
     eldoc-box
     embark
     embark-consult
