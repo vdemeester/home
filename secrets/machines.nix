@@ -65,7 +65,7 @@ let
     };
     vincent = {
       allowedIPs = [ "${wireguard.ips.vincent}/32" ];
-      publicKey = "z74GLurvsLPOkep9ddw6x+NeUvgBvnqpIwxvSTKGxxQ=";
+      publicKey = "1wzFG60hlrAoSYcRKApsH+WK3Zyz8IjdLgIb/8JbuW0=";
     };
     ipad = {
       allowedIPs = [ "${wireguard.ips.ipad}/32" ];
