@@ -99,7 +99,7 @@
   (mct-remove-shadowed-file-names t) ; works when `file-name-shadow-mode' is enabled
   (mct-hide-completion-mode-line t)
   (mct-minimum-input 3)
-  (mct-live-completion t)
+  (mct-live-completion 'visible)
   (mct-live-update-delay 0.6)
   (mct-persist-dynamic-completion t)
   :config
