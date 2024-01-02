@@ -12,7 +12,11 @@ in
   };
   config = mkIf cfg.enable (mkMerge [
     {
-      virtualisation.libvirtd.enable = true;
+      virtualisation.libvirtd = {
+        enable = true;
+        # Used for UEFI boot of Home Assistant OS guest image
+        qemuOvmf = true;
+      };
       security.polkit.enable = true; # 22.11: libvirtd requires poltkit to be enabled
       environment.systemPackages = with pkgs; [ qemu vde2 libosinfo ];
     }
