@@ -99,14 +99,7 @@ in
     virtualisation.libvirt = { enable = true; nested = true; listenTCP = true; };
   };
 
-  # Single node k3s
-  networking.firewall.allowedTCPPorts = [ 6443 ];
-  services.k3s.enable = true;
-  services.k3s.role = "server";
-  services.k3s.extraFlags = toString [
-    # "--kubelet-arg=v=4" # Optionally add additional args to k3s
-  ];
-  environment.systemPackages = [ pkgs.k3s pkgs.python310Packages.aria2p ];
+  environment.systemPackages = [ pkgs.python310Packages.aria2p ];
 
   programs.ssh.setXAuthLocation = true;
   profiles = {
