@@ -219,4 +219,5 @@ in
 
     startAt = "daily";
   };
+  security.pam.enableSSHAgentAuth = true;
 }

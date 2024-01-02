@@ -176,4 +176,6 @@ in
     openssh.authorizedKeys.keys = [ (builtins.readFile ../../secrets/builder.pub) ];
   };
   nix.trustedUsers = [ "root" "vincent" "builder" ];
+
+  security.pam.enableSSHAgentAuth = true;
 }
