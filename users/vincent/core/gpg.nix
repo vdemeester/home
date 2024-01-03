@@ -8,7 +8,7 @@
       enableSshSupport = true;
       enableExtraSocket = true;
       defaultCacheTtlSsh = 7200;
-      # pinEntryFlavor = "gtk2";
+      pinentryFlavor = "gnome3";
     };
   };
 }
