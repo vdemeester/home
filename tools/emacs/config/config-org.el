@@ -97,6 +97,7 @@
   (org-log-into-drawer t)
   (org-refile-use-outline-path 'file)
   (org-refile-allow-creating-parent-nodes 'confirm)
+  (org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
   :config
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
