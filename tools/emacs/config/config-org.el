@@ -110,10 +110,15 @@
 			   directory org-agenda-file-regexp))
 			`(,org-projects-dir ,org-areas-dir ,org-resources-dir ,org-journal-dir ,src-home-dir ,(expand-file-name "~/src/osp/tasks")))))
   (defun vde/reload-org-agenda-files ()
+    "Reload org-agenda-files variables with up-to-date org files"
     (interactive)
     (setq org-agenda-files (my/org-agenda-files)))
-  (setq org-agenda-files (my/org-agenda-files)
-	org-refile-targets (append '((org-inbox-file :level . 0))
+  (defun vde/reload-org-refile-targets ()
+    "Reload org-refile-targets variables with up-to-date org files"
+    (interactive)
+    (setq org-refile-targets (vde/org-refile-targets)))
+  (defun vde/org-refile-targets ()
+    (append '((org-inbox-file :level . 0))
 				   (->>
 				    (directory-files org-projects-dir nil ".org$")
 				    (--remove (s-starts-with? "." it))
@@ -133,7 +138,10 @@
 				    (directory-files-recursively org-resources-dir ".org$")
 				    (--remove (s-starts-with? (format "%s/legacy" org-resources-dir) it))
 				    (--map (format "%s" it))
-				    (--map `(,it :maxlevel . 3))))))
+				    (--map `(,it :maxlevel . 3)))))
+  (setq org-agenda-files (my/org-agenda-files)
+	;; TODO: extract org-refile-targets into a function
+	org-refile-targets (vde/org-refile-targets)))
 
 ;; Make sure we load org-protocol
 (use-package org-protocol
@@ -347,7 +355,6 @@ file which do not already have one."
 ;;         org-yank-adjusted-subtrees t
 ;;         org-image-actual-width nil
 ;;         org-startup-with-inline-images nil
-;;         org-list-demote-modify-bullet '(("+" . "-") ("-" . "+"))
 ;;         org-catch-invisible-edits 'error
 ;;         ;; Put theses into a minor mode
 ;;         org-indent-indentation-per-level 1
