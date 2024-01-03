@@ -286,6 +286,32 @@ file which do not already have one."
     (consult-notes-denote-mode)))
 
 (use-package orgit)
+
+(use-package ob-async
+  :after org
+  :commands (ob-async-org-babel-execute-src-block))
+(use-package ob-emacs-lisp
+  :after org
+  :commands (org-babel-execute:emacs-lisp org-babel-execute:elisp))
+(use-package ob-go
+  :after org
+  :commands (org-babel-execute:go))
+(use-package ob-python
+  :after org
+  :commands (org-babel-execute:python))
+(use-package ob-shell
+  :after org
+  :commands (org-babel-execute:ash
+             org-babel-execute:bash
+             org-babel-execute:csh
+             org-babel-execute:dash
+             org-babel-execute:fish
+             org-babel-execute:ksh
+             org-babel-execute:mksh
+             org-babel-execute:posh
+             org-babel-execute:sh
+             org-babel-execute:shell
+             org-babel-execute:zsh))
 ;; (use-package org
 ;;   ;; :ensure org-plus-contrib ;; load from the package instead of internal
 ;;   :mode (("\\.org$" . org-mode)
