@@ -66,6 +66,7 @@
   :commands (org-agenda org-capture)
   :bind (("C-c o l" . org-store-link)
          ("C-c o r r" . org-refile)
+	 ("C-c o r R" . vde/reload-org-refile-targets)
          ("C-c o a a" . org-agenda)
 	 ("C-c o a r" . vde/reload-org-agenda-files)
          ("C-c o s" . org-sort)
@@ -102,7 +103,7 @@
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
     (org-babel-lob-ingest org-babel-library-file))
-  (defun my/org-agenda-files ()
+  (defun vde/org-agenda-files ()
     (apply 'append
 		   (mapcar
 			(lambda (directory)
@@ -112,7 +113,7 @@
   (defun vde/reload-org-agenda-files ()
     "Reload org-agenda-files variables with up-to-date org files"
     (interactive)
-    (setq org-agenda-files (my/org-agenda-files)))
+    (setq org-agenda-files (vde/org-agenda-files)))
   (defun vde/reload-org-refile-targets ()
     "Reload org-refile-targets variables with up-to-date org files"
     (interactive)
@@ -139,7 +140,7 @@
 				    (--remove (s-starts-with? (format "%s/legacy" org-resources-dir) it))
 				    (--map (format "%s" it))
 				    (--map `(,it :maxlevel . 3)))))
-  (setq org-agenda-files (my/org-agenda-files)
+  (setq org-agenda-files (vde/org-agenda-files)
 	;; TODO: extract org-refile-targets into a function
 	org-refile-targets (vde/org-refile-targets)))
 
