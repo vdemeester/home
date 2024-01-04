@@ -38,12 +38,28 @@ in
         pulse.enable = true;
         wireplumber.enable = true;
       };
+      environment.etc."pipewire/pipewire.conf.d/raop-discover.conf".text = ''
+        context.modules = [
+           {
+               name = libpipewire-module-raop-discover
+               args = { }
+           }
+        ]
+      '';
+      environment.etc."pipewire/pipewire-pulse.conf.d/50-network-party.conf".text = ''
+        context.exec = [
+            { path = "pactl" args = "load-module module-native-protocol-tcp" }
+            { path = "pactl" args = "load-module module-zeroconf-discover" }
+            { path = "pactl" args = "load-module module-zeroconf-publish" }
+        ]
+      '';
     })
     (mkIf cfg.pulseaudio.enable {
       # Enable and configure pulseaudio
       hardware.pulseaudio = {
         enable = true;
         support32Bit = true;
+        zeroconf.discovery.enable = true;
       };
     })
     (mkIf (cfg.pulseaudio.enable || cfg.pipewire.enable) {
