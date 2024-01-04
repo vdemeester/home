@@ -46,6 +46,9 @@ in
            }
         ]
       '';
+      networking.firewall = {
+        allowedTCPPorts = [ 6001 6002 ];
+      };
       environment.etc."pipewire/pipewire-pulse.conf.d/50-network-party.conf".text = ''
         context.exec = [
             { path = "pactl" args = "load-module module-native-protocol-tcp" }
