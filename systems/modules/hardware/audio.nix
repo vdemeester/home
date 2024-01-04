@@ -38,6 +38,22 @@ in
         pulse.enable = true;
         wireplumber.enable = true;
       };
+      environment.etc."pipewire/pipewire.conf.d/session-manager.conf".text = ''
+        context.modules = [
+           {
+               name = libpipewire-module-session-manager
+               args = { }
+           }
+        ]
+      '';
+      environment.etc."pipewire/pipewire.conf.d/zeroconf-discover.conf".text = ''
+        context.modules = [
+           {
+               name = libpipewire-module-zeroconf-discover
+               args = { }
+           }
+        ]
+      '';
       environment.etc."pipewire/pipewire.conf.d/raop-discover.conf".text = ''
         context.modules = [
            {
