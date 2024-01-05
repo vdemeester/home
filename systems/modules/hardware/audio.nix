@@ -86,6 +86,7 @@ in
         apulse # allow alsa application to use pulse
         pavucontrol # pulseaudio volume control
         pasystray # systray application
+        pulseaudioFull # pactl, etc..
       ];
     })
     (mkIf (cfg.pulseaudio.enable && cfg.pulseaudio.tcp) {
