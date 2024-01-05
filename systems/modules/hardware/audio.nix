@@ -38,40 +38,39 @@ in
         pulse.enable = true;
         wireplumber.enable = true;
       };
-      environment.etc."pipewire/pipewire.conf.d/session-manager.conf".text = ''
-        context.modules = [
-           {
-               name = libpipewire-module-session-manager
-               args = { }
-           }
-        ]
-      '';
-      environment.etc."pipewire/pipewire.conf.d/zeroconf-discover.conf".text = ''
-        context.modules = [
-           {
-               name = libpipewire-module-zeroconf-discover
-               args = { }
-           }
-        ]
-      '';
-      environment.etc."pipewire/pipewire.conf.d/raop-discover.conf".text = ''
-        context.modules = [
-           {
-               name = libpipewire-module-raop-discover
-               args = { }
-           }
-        ]
-      '';
+      environment.etc = {
+        # "pipewire/pipewire.conf.d/session-manager.conf".text = ''
+        #   context.modules = [
+        #      { name = libpipewire-module-session-manager }
+        #      { name = libpipewire-module-client-device }
+        #   ]
+        # '';
+        "pipewire/pipewire-pulse.conf.d/50-network-party.conf".text = ''
+          context.exec = [
+              { path = "pactl" args = "load-module module-native-protocol-tcp" }
+              { path = "pactl" args = "load-module module-zeroconf-discover" }
+              { path = "pactl" args = "load-module module-zeroconf-publish" }
+          ]
+        '';
+        "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
+          bluez_monitor.properties = {
+            ["bluez5.enable-sbc-xq"] = true,
+            ["bluez5.enable-msbc"] = true,
+            ["bluez5.enable-hw-volume"] = true,
+            ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+          }
+        '';
+      };
+      /*
+        wireplumber.profiles = {
+        main = {
+        monitor.alsa = required
+        }
+        }
+      */
       networking.firewall = {
         allowedTCPPorts = [ 6001 6002 ];
       };
-      environment.etc."pipewire/pipewire-pulse.conf.d/50-network-party.conf".text = ''
-        context.exec = [
-            { path = "pactl" args = "load-module module-native-protocol-tcp" }
-            { path = "pactl" args = "load-module module-zeroconf-discover" }
-            { path = "pactl" args = "load-module module-zeroconf-publish" }
-        ]
-      '';
     })
     (mkIf cfg.pulseaudio.enable {
       # Enable and configure pulseaudio

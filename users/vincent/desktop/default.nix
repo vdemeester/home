@@ -13,6 +13,7 @@ in
     ./mpv.nix
     ./spotify.nix
     ./passwordstore.nix
+    ./audio.nix
   ]
   ++ optionals nixosConfig.modules.desktop.xorg.enable [ ./xorg.nix ]
   ++ optionals nixosConfig.profiles.desktop.i3.enable [ ./i3.nix ./xorg.nix ]
