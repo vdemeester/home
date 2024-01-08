@@ -37,7 +37,7 @@ jobs:
       matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
     steps:
       - name: Maximize build space
-        uses: AdityaGarg8/remove-unwanted-software@6241eb8f15184023d3a01e295ab2bc0e67ecc06d # v1
+        uses: AdityaGarg8/remove-unwanted-software@90721b6627698cd8e0c83a46affd0a473accd953 # v2
         with:
           remove-android: 'true'
           remove-dotnet: 'true'
