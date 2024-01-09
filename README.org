@@ -143,6 +143,8 @@ Old
 - https://github.com/gvolpe/nix-config
 
 - https://github.com/myme/dotfiles
+- https://github.com/jedimahdi/.dotfiles/
+- https://github.com/moni-dz/nix-config
 * Licensing
 
 Unless otherwise stated in a subdirectory, all code is licensed under the GNU GPL v3. See

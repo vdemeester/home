@@ -7,6 +7,8 @@
 - https://git.acdw.net/emacs/tree/
 - https://github.com/mfiano/emacs-config/tree/main
 - https://github.com/akirak/emacs-config/blob/master/emacs/emacs-config.org
+- https://robbmann.io/emacsd/
+- https://github.com/drshapeless/.emacs.d/
 
 * Packages "inspirations"
 
