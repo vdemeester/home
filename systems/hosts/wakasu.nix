@@ -96,6 +96,7 @@ in
     };
     desktop = {
       wayland.sway.enable = true;
+      wayland.hyprland.enable = true;
     };
     dev = {
       enable = true;
