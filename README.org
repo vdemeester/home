@@ -145,6 +145,8 @@ Old
 - https://github.com/myme/dotfiles
 - https://github.com/jedimahdi/.dotfiles/
 - https://github.com/moni-dz/nix-config
+- https://github.com/Aylur/dotfiles/
+- https://gitlab.com/Zaney/zaneyos
 * Licensing
 
 Unless otherwise stated in a subdirectory, all code is licensed under the GNU GPL v3. See

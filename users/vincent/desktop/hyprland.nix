@@ -3,7 +3,13 @@
 {
   home.packages = with pkgs; [
     qogir-icon-theme
+    cliphist
   ];
+  xdg.configFile."hypr/hyprpaper.conf".text = ''
+    preload = /home/vincent/desktop/pictures/lockscreen
+    wallpaper = , /home/vincent/desktop/pictures/lockscreen
+    ipc = off
+  '';
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -19,14 +25,32 @@
       ];
 
       exec-once = [
-        "${pkgs.waybar}"
+        "${pkgs.waybar}/bin/waybar -c ~/.config/waybar/config "
         "hyprctl setcursor Qogir 24"
+        "wl-paste -p --watch cliphist store"
+        "${pkgs.hyprpaper}/bin/hyprpaper"
       ];
 
+      animations = {
+        enabled = "yes";
+        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+        animation = [
+          "windows, 1, 5, myBezier"
+          "windowsOut, 1, 7, default, popin 80%"
+          "border, 1, 10, default"
+          "fade, 1, 7, default"
+          "workspaces, 1, 6, default"
+        ];
+      };
+
       monitor = [
+        # "eDP-1, 1920x1080, 0x0, 1"
+        # "HDMI-A-1, 2560x1440, 1920x0, 1"
         # Old: Output eDP-1 'AU Optronics 0xD291 Unknown'
         # Output eDP-1 'Unknown 0xD291 Unknown'
         # Output DP-5 'LG Electronics LG ULTRAWIDE 0x0005D10C' (focused)
+        "eDP-1,preferred,0x0,1" # or 1460,1440
+        "DP-5,3440x1440,-1520x1440,1"
         ",preferred,auto,1"
       ];
 
@@ -41,15 +65,20 @@
       "$mod" = "SUPER";
       bind = [
         "$mod, Return, exec, kitty"
-        "$mod, F, exec, firefox"
-        # "$mod, Shift, L, exec, swaylock -fF -c a6e3a1"
+        "$mod CTRL, Return, exec, emacs"
+        "$mod SHIFT, Return, exec, emacsclient -c"
+
         "$mod, C, killactive,"
         "$mod, Q, exit,"
-        "$mod, E, exec, dolphin"
-        "$mod, V, togglefloating,"
+        "$mod SHIFT, Space, togglefloating,"
         "$mod, R, exec, wofi --show drun"
         "$mod, P, pseudo, # dwindle"
         "$mod, J, togglesplit, # dwindle"
+
+        "$mod, code:41, fullscreen"
+
+        "$mod CTRL, code:33, exec, ${pkgs.wofi-emoji}/bin/wofi-emoji -G"
+        "$mod, code:33, exec, ${pkgs.wofi}/bin/wofi -G --show drun -modi 'drun,run,window,ssh'"
 
         # Move focus with mainMod + arrow keys
         "$mod, left, movefocus, l"
@@ -57,83 +86,66 @@
         "$mod, up, movefocus, u"
         "$mod, down, movefocus, d"
 
-        # Switch workspaces with mainMod + [0-9]
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-        "$mod, 6, workspace, 6"
-        "$mod, 7, workspace, 7"
-        "$mod, 8, workspace, 8"
-        "$mod, 9, workspace, 9"
-        "$mod, 0, workspace, 10"
+        "$mod SHIFT, left, moveactive, l"
+        "$mod SHIFT, right, moveactive, r"
+        "$mod SHIFT, up, moveactive, u"
+        "$mod SHIFT, down, moveactive, d"
 
-        # Move active window to a workspace with mainMod + SHIFT + [0-9]
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
-        "$mod SHIFT, 5, movetoworkspace, 5"
-        "$mod SHIFT, 6, movetoworkspace, 6"
-        "$mod SHIFT, 7, movetoworkspace, 7"
-        "$mod SHIFT, 8, movetoworkspace, 8"
-        "$mod SHIFT, 9, movetoworkspace, 9"
-        "$mod SHIFT, 0, movetoworkspace, 10"
-
-        # Example special workspace (scratchpad)
-        "$mod, $, togglespecialworkspace, magic"
-        "$mod SHIFT, $, movetoworkspace, special:magic"
+        "$mod CTRL, left, workspace, e-1" # FIXME: adapt ?
+        "$mod CTRL, right, workspace, e+1" # FIXME: adapt ?
+        "$mod CTRL, down, workspace, e-1"
+        "$mod CTRL, up, workspace, e+1"
+        "$mod SHIFT CTRL, left, movetoworkspace, e-1" # FIXME: adapt ?
+        "$mod SHIFT CTRL, right, movetoworkspace, e+1" # FIXME: adapt ?
+        "$mod SHIFT CTRL, down, movetoworkspace, e-1"
+        "$mod SHIFT CTRL, up, movetoworkspace, e+1"
 
         # Scroll through existing workspaces with mainMod + scroll
         "$mod, mouse_down, workspace, e+1"
         "$mod, mouse_up, workspace, e-1"
 
+        # Switch workspaces with mainMod + [0-9]
+        "$mod, code:10, workspace, 1"
+        "$mod, code:11, workspace, 2"
+        "$mod, code:12, workspace, 3"
+        "$mod, code:13, workspace, 4"
+        "$mod, code:14, workspace, 5"
+        "$mod, code:15, workspace, 6"
+        "$mod, code:16, workspace, 7"
+        "$mod, code:17, workspace, 8"
+        "$mod, code:18, workspace, 9"
+        "$mod, code:19, workspace, 10"
 
-        # Media controls
+        # Move active window to a workspace with mainMod + SHIFT + [0-9]
+        "$mod SHIFT, code:10, movetoworkspace, 1"
+        "$mod SHIFT, code:11, movetoworkspace, 2"
+        "$mod SHIFT, code:12, movetoworkspace, 3"
+        "$mod SHIFT, code:13, movetoworkspace, 4"
+        "$mod SHIFT, code:14, movetoworkspace, 5"
+        "$mod SHIFT, code:15, movetoworkspace, 6"
+        "$mod SHIFT, code:16, movetoworkspace, 7"
+        "$mod SHIFT, code:17, movetoworkspace, 8"
+        "$mod SHIFT, code:18, movetoworkspace, 9"
+        "$mod SHIFT, code:19, movetoworkspace, 10"
+
+        # Example special workspace (scratchpad)
+        "$mod, code:49, togglespecialworkspace, magic"
+        "$mod SHIFT, code:49, movetoworkspace, special:magic"
+
+
+        # Media CTRLs
         ", XF86AudioRaiseVolume, exec, pamixer -i 5"
         ", XF86AudioLowerVolume, exec, pamixer -d 5"
         ", XF86AudioMicMute, exec, pamixer --default-source -m"
         ", XF86AudioMute, exec, pamixer -m"
         ", XF86AudioPlay, exec, playerctl play-pause"
         ", XF86AudioPause, exec, playerctl play-pause"
+        ", XF86Messenger, exec, playerctl play-pause"
         ", XF86AudioNext, exec, playerctl next"
+        ", XF86Go, exec playerctl next"
         ", XF86AudioPrev, exec, playerctl previous"
+        ", Cancel, exec, playerctl previous"
       ];
-      # The default keybindings are:
-      #   Mod4 + Enter: Launch terminal
-      #   Mod4 + Shift + Enter: Launch dmenu
-      #   Mod4 + Shift + q: Quit
-      #   Mod4 + Shift + r: Restart
-      #   Mod4 + Shift + c: Close window
-      #   Mod4 + Shift + t: Toggle tiling
-      #   Mod4 + Shift + f: Toggle fullscreen
-      #   Mod4 + Shift + m: Toggle monocle
-      #   Mod4 + Shift + s: Toggle sticky
-      #   Mod4 + Shift + n: Toggle floating
-      #   Mod4 + Shift + h: Decrease master size
-      #   Mod4 + Shift + l: Increase master size
-      #   Mod4 + Shift + j: Focus next window
-      #   Mod4 + Shift + k: Focus previous window
-      #   Mod4 + Shift + space: Focus master window
-      #   Mod4 + Shift + 1-9: Switch to workspace 1-9
-      #   Mod4 + Shift + 0: Switch to last workspace
-      #   Mod4 + Shift + Tab: Switch to last workspace
-      #   Mod4 + Shift + Shift + 1-9: Move window to workspace 1-9
-      #   Mod4 + Shift + Shift + 0: Move window to last workspace
-      #   Mod4 + Shift + Shift + Tab: Move window to last workspace
-      #   Mod4 + Shift + Shift + h: Move window to left
-      #   Mod4 + Shift + Shift + l: Move window to right
-      #   Mod4 + Shift + Shift + j: Move window to down
-      #   Mod4 + Shift + Shift + k: Move window to up
-      #   Mod4 + Shift + Shift + space: Toggle floating
-      #   Mod4 + Shift + Shift + f: Toggle fullscreen
-      #   Mod4 + Shift + Shift + m: Toggle monocle
-      #   Mod4 + Shift + Shift + s: Toggle sticky
-      #   Mod4 + Shift + Shift + c: Close window
-      #   Mod4 + Shift + Shift + t: Toggle tiling
-      #   Mod4 + Shift + Shift + r: Restart
-      #   Mod
       misc = {
         force_default_wallpaper = -1; # -1 for no wallpaper, 0 for default wallpaper, 1 for custom wallpaper
       };
