@@ -29,6 +29,8 @@
         "hyprctl setcursor Qogir 24"
         "wl-paste -p --watch cliphist store"
         "${pkgs.hyprpaper}/bin/hyprpaper"
+        "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
+        # kanshi ? (systemctl --user restart kanshi)
       ];
 
       animations = {
@@ -68,12 +70,14 @@
         "$mod CTRL, Return, exec, emacs"
         "$mod SHIFT, Return, exec, emacsclient -c"
 
-        "$mod, C, killactive,"
+        "$mod, BACKSPACE, focuscurrentorlast"
+
+        "$mod SHIFT, code:24, killactive,"
         "$mod, Q, exit,"
         "$mod SHIFT, Space, togglefloating,"
         "$mod, R, exec, wofi --show drun"
-        "$mod, P, pseudo, # dwindle"
-        "$mod, J, togglesplit, # dwindle"
+        # "$mod, P, pseudo, # dwindle"
+        "$mod, P, togglesplit, # dwindle"
 
         "$mod, code:41, fullscreen"
 
@@ -132,22 +136,31 @@
         "$mod, code:49, togglespecialworkspace, magic"
         "$mod SHIFT, code:49, movetoworkspace, special:magic"
 
-
         # Media CTRLs
-        ", XF86AudioRaiseVolume, exec, pamixer -i 5"
-        ", XF86AudioLowerVolume, exec, pamixer -d 5"
-        ", XF86AudioMicMute, exec, pamixer --default-source -m"
-        ", XF86AudioMute, exec, pamixer -m"
+        ", XF86AudioRaiseVolume, exec, ${pkgs.pamixer}/bin/pamixer -ui 5"
+        ", XF86AudioLowerVolume, exec, ${pkgs.pamixer}/bin/pamixer -ud 5"
+        ", XF86AudioMicMute, exec, ${pkgs.pamixer}/bin/pamixer --default-source -m"
+        ", XF86AudioMute, exec, ${pkgs.pamixer}/bin/pamixer -m"
         ", XF86AudioPlay, exec, playerctl play-pause"
         ", XF86AudioPause, exec, playerctl play-pause"
         ", XF86Messenger, exec, playerctl play-pause"
         ", XF86AudioNext, exec, playerctl next"
-        ", XF86Go, exec playerctl next"
+        ", XF86Go, exec, playerctl next"
         ", XF86AudioPrev, exec, playerctl previous"
         ", Cancel, exec, playerctl previous"
+
+        "$mod, F10, exec, ${pkgs.my.scripts}/bin/shot %d"
+        "$mod SHIFT, F10, exec, ${pkgs.my.scripts}/bin/shotf %d"
+
+        "$mod, F9, exec, ${pkgs.mako}/bin/makoctl mode -s do-not-disturb"
+        "$mod SHIFT, F9, exec, ${pkgs.mako}/bin/makoctl mode -s default"
+      ];
+      bindm = [
+        "$mod, mouse:273, resizewindow"
+        "$mod, mouse:272, movewindow"
       ];
       misc = {
-        force_default_wallpaper = -1; # -1 for no wallpaper, 0 for default wallpaper, 1 for custom wallpaper
+        force_default_wallpaper = 0; # -1 for no wallpaper, 0 for default wallpaper, 1 for custom wallpaper
       };
     };
   };
