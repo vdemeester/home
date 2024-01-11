@@ -21,5 +21,8 @@ in
         driSupport = true;
       };
     };
+    environment.systemPackages = with pkgs; [
+      qogir-icon-theme
+    ];
   };
 }
