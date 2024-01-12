@@ -95,7 +95,7 @@ in
       bluetooth.enable = true;
     };
     desktop = {
-      wayland.sway.enable = true;
+      # wayland.sway.enable = true;
       wayland.hyprland.enable = true;
     };
     dev = {

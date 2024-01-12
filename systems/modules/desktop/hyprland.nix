@@ -11,12 +11,23 @@ in
     };
   };
   config = mkIf cfg.enable {
+    # Enable wayland desktop modules if not already
+    modules.desktop.wayland.enable = true;
+
+    # Enable pipewire
+    modules.hardware.audio = {
+      enable = true;
+      pipewire.enable = true;
+    };
+
+    services.blueman.enable = config.modules.hardware.bluetooth.enable;
+
     programs.hyprland.enable = true;
 
     xdg = {
       portal = {
         enable = true;
-        wlr.enable = true;
+        # wlr.enable = true;
         extraPortals = with pkgs; [
           # xdg-desktop-portal-wlr
           # xdg-desktop-portal-gtk
@@ -24,6 +35,17 @@ in
         ];
         gtkUsePortal = true;
       };
+    };
+    # Allow swaylock to unlock the computer for us
+    security.pam.services.swaylock = {
+      text = "auth include login";
+    };
+
+    # FIXME are those needed
+    programs.dconf.enable = true;
+    services.dbus = {
+      enable = true;
+      packages = [ pkgs.dconf pkgs.gcr ];
     };
   };
 }

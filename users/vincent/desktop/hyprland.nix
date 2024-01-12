@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    qogir-icon-theme
-    cliphist
-  ];
   xdg.configFile."hypr/hyprpaper.conf".text = ''
     preload = /home/vincent/desktop/pictures/lockscreen
     wallpaper = , /home/vincent/desktop/pictures/lockscreen
@@ -30,19 +26,41 @@
         "wl-paste -p --watch cliphist store"
         "${pkgs.hyprpaper}/bin/hyprpaper"
         "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
-        # kanshi ? (systemctl --user restart kanshi)
+        "systemctl --user restart kanshi"
       ];
 
+      general = {
+        gaps_in = 6;
+        gaps_out = 6;
+        border_size = 2;
+        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        "col.inactive_border" = "rgba(595959aa)";
+        layout = "master";
+        allow_tearing = false;
+      };
+
+      decoration = {
+        rounding = 2;
+
+        blur = {
+          enabled = true;
+          size = 3;
+          passes = 1;
+        };
+
+        drop_shadow = "yes";
+        shadow_range = 4;
+        shadow_render_power = 3;
+        "col.shadow" = "rgba(1a1a1aee)";
+      };
+
+      master = {
+        new_is_master = true;
+        orientation = "right";
+      };
+
       animations = {
-        enabled = "yes";
-        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
-        animation = [
-          "windows, 1, 5, myBezier"
-          "windowsOut, 1, 7, default, popin 80%"
-          "border, 1, 10, default"
-          "fade, 1, 7, default"
-          "workspaces, 1, 6, default"
-        ];
+        enabled = "no";
       };
 
       monitor = [
@@ -63,6 +81,11 @@
 
         follow_mouse = 1;
       };
+
+      # layerrule = [
+      #   "blur,notifications"
+      #   "blur,wofi"
+      # ];
 
       "$mod" = "SUPER";
       bind = [
@@ -149,11 +172,21 @@
         ", XF86AudioPrev, exec, playerctl previous"
         ", Cancel, exec, playerctl previous"
 
+        ", XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%+"
+        ", XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%-"
+        "Shift, XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 1%+"
+        "Shift, XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 1%-"
+
         "$mod, F10, exec, ${pkgs.my.scripts}/bin/shot %d"
         "$mod SHIFT, F10, exec, ${pkgs.my.scripts}/bin/shotf %d"
 
         "$mod, F9, exec, ${pkgs.mako}/bin/makoctl mode -s do-not-disturb"
         "$mod SHIFT, F9, exec, ${pkgs.mako}/bin/makoctl mode -s default"
+
+        "$mod, G, togglegroup"
+        "$mod, tab, changegroupactive"
+
+        "$mod, b, exec, pkill --signal=SIGUSR1 waybar"
       ];
       bindm = [
         "$mod, mouse:273, resizewindow"
