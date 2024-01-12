@@ -5,6 +5,7 @@
     preload = /home/vincent/desktop/pictures/lockscreen
     wallpaper = , /home/vincent/desktop/pictures/lockscreen
     ipc = off
+    splash = off
   '';
   wayland.windowManager.hyprland = {
     enable = true;
@@ -30,7 +31,7 @@
       ];
 
       general = {
-        gaps_in = 6;
+        gaps_in = 4;
         gaps_out = 6;
         border_size = 2;
         "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
@@ -69,8 +70,8 @@
         # Old: Output eDP-1 'AU Optronics 0xD291 Unknown'
         # Output eDP-1 'Unknown 0xD291 Unknown'
         # Output DP-5 'LG Electronics LG ULTRAWIDE 0x0005D10C' (focused)
-        "eDP-1,preferred,0x0,1" # or 1460,1440
-        "DP-5,3440x1440,-1520x1440,1"
+        # "eDP-1,preferred,0x0,1" # or 1460,1440
+        # "DP-5,3440x1440,-1520x1440,1"
         ",preferred,auto,1"
       ];
 
@@ -86,6 +87,26 @@
       #   "blur,notifications"
       #   "blur,wofi"
       # ];
+
+      workspace = [
+        "2, on-create-empty:emacs"
+        "special:scratchpad, on-created-empty:${pkgs.kitty}/bin/kitty --title metask --class metask tmux"
+        "special:emacs-scratchpad, on-created-empty:emacsclient -c"
+      ];
+      # workspace = 2, on-create-empty:emacs
+      # workspace = special:scratchpad, on-created-empty:${pkgs.kitty}/bin/kitty --title metask --class metask tmux
+      # workspace = special:emacs-scratchpad, on-created-empty:emacsclient -c
+
+      # windowrulev2 = nomaximizerequest, class:.* # You'll probably like this.
+      # windowrule = workspace 1, ^(firefox)$
+      # windowrule = workspace 8, ^(com\.obsproject\.Studio)$
+      windowrule = [
+        "workspace 1, ^(firefox)$"
+        "workspace 8, ^(com\.obsproject\.Studio)$"
+      ];
+      windowrulev2 = [
+        "nomaximizerequest, class:.*" # You'll probably like this.
+      ];
 
       "$mod" = "SUPER";
       bind = [
@@ -103,6 +124,7 @@
         "$mod, P, togglesplit, # dwindle"
 
         "$mod, code:41, fullscreen"
+        "$mod SHIFT, code:41, fakefullscreen"
 
         "$mod CTRL, code:33, exec, ${pkgs.wofi-emoji}/bin/wofi-emoji -G"
         "$mod, code:33, exec, ${pkgs.wofi}/bin/wofi -G --show drun -modi 'drun,run,window,ssh'"
@@ -156,8 +178,10 @@
         "$mod SHIFT, code:19, movetoworkspace, 10"
 
         # Example special workspace (scratchpad)
-        "$mod, code:49, togglespecialworkspace, magic"
-        "$mod SHIFT, code:49, movetoworkspace, special:magic"
+        # "$mod, code:49, togglespecialworkspace, magic"
+        # "$mod SHIFT, code:49, movetoworkspace, special:magic"
+        "$mod, code:49, togglespecialworkspace, scratchpad"
+        "$mod SHIFT, code:49, togglespecialworkspace, emacs-scratchpad"
 
         # Media CTRLs
         ", XF86AudioRaiseVolume, exec, ${pkgs.pamixer}/bin/pamixer -ui 5"
