@@ -31,8 +31,8 @@
   "Article resource files directory.")
 (defconst org-resources-books-dir (expand-file-name "books" org-resources-dir)
   "Book resource files directory.")
-(defconst org-resources-people-dir (expand-file-name "people" org-resources-dir)
-  "People resource files directory.")
+(defconst org-people-dir (expand-file-name "people" org-directory)
+  "People files directory.")
 (defconst org-journal-dir (expand-file-name "journal" org-directory)
   "Journal files directory")
 
@@ -47,6 +47,8 @@
 (set-register ?p `(file . ,org-projects-dir))
 (set-register ?a `(file . ,org-areas-dir))
 (set-register ?r `(file . ,org-resources-dir))
+(set-register ?P `(file . ,org-people-dir))
+(set-register ?j `(file . ,org-journal-dir))
 
 (defun vde/org-mode-hook ()
   "Org-mode hook"

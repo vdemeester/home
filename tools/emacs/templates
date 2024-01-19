@@ -108,6 +108,9 @@ org-mode
 (call & "#+call: " (p "name" name) "(" (s var) "=\"" (s value) "\")")
 (/ "[/]" (org-update-statistics-cookies nil))
 (tsm p " :: " (with-temp-buffer (org-insert-time-stamp (current-time) t t)))
+(pdeadline "#+PROJECT_DEADLINE: " (org-read-date))
+(ppath "#+PROJECT_PATHS: (" p " . " q ")")
+(backlinks "#+BEGIN: denote-backlinks :sort-by-component nil :reverse-sort nil :id-only nil" n> "#+END:")
 
 ;; Local Variables:
 ;; mode: lisp-data
