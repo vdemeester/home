@@ -36,6 +36,7 @@ let
     adoc-mode
     aggressive-indent
     alert
+    all-the-icons
     async
     avy
     bbdb
