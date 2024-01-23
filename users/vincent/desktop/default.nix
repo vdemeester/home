@@ -50,6 +50,11 @@ in
     yt-dlp # youtube-dl
   ];
 
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+  };
+
   home.file.".XCompose".source = ./xorg/XCompose;
   xdg.configFile."xorg/emoji.compose".source = ./xorg/emoji.compose;
   xdg.configFile."xorg/parens.compose".source = ./xorg/parens.compose;
