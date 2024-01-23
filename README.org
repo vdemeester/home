@@ -150,6 +150,7 @@ Old
 - https://github.com/spikespaz/dotfiles
 - https://github.com/fufexan/dotfiles
 - https://github.com/hlissner/dotfiles
+- https://github.com/librephoenix/nixos-config
 
 * Licensing
 

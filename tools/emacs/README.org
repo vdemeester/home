@@ -9,6 +9,8 @@
 - https://github.com/akirak/emacs-config/blob/master/emacs/emacs-config.org
 - https://robbmann.io/emacsd/
 - https://github.com/drshapeless/.emacs.d/
+- https://github.com/librephoenix/nixos-config/tree/main/user/app/doom-emacs
+  + https://github.com/psamim/dotfiles/blob/master/doom/config.el#L73
 
 * Packages "inspirations"
 
