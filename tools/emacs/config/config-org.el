@@ -101,6 +101,17 @@
   (org-refile-use-outline-path 'file)
   (org-refile-allow-creating-parent-nodes 'confirm)
   (org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
+  (org-agenda-span 'day)
+  (org-agenda-start-on-weekday 1)
+  (org-agenda-window-setup 'current-window)
+  (org-agenda-skip-scheduled-if-deadline-is-shown t)
+  (org-agenda-skip-timestamp-if-deadline-is-shown t)
+  (org-agenda-skip-scheduled-if-done nil)
+  (org-agenda-category-icon-alist '(
+					(".*" '(space . (:width (16))))))
+;;         (org-agenda-compact-blocks t)
+;;         (org-agenda-sticky t)
+;;         (org-agenda-include-diary t)
   :config
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
@@ -314,6 +325,7 @@ file which do not already have one."
              org-babel-execute:sh
              org-babel-execute:shell
              org-babel-execute:zsh))
+
 ;; (use-package org
 ;;   ;; :ensure org-plus-contrib ;; load from the package instead of internal
 ;;   :mode (("\\.org$" . org-mode)
