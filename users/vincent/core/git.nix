@@ -104,6 +104,7 @@ in
         untracked = "red";
       };
       diff = {
+        algorithm = "histogram";
         external = "difft";
         tool = "difftastic";
       };
