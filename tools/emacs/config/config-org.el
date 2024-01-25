@@ -107,12 +107,29 @@
   (org-agenda-skip-scheduled-if-deadline-is-shown t)
   (org-agenda-skip-timestamp-if-deadline-is-shown t)
   (org-agenda-skip-scheduled-if-done nil)
-  (org-agenda-category-icon-alist '(
-					(".*" '(space . (:width (16))))))
+  (org-agenda-current-time-string "")
+  (org-agenda-time-grid '((daily) () "" ""))
+  ;; ((agenda . " %i %-12:c%?-12t% s")
+  ;;  (todo . " %i %-12:c")
+  ;;  (tags . " %i %-12:c")
+  ;;  (search . " %i %-12:c"))
+  ;; (org-agenda-prefix-format "   %i %?-2 t%s")
+  (org-agenda-prefix-format '((agenda . " %i %?-12t% s")
+   (todo . " %i")
+   (tags . " %i")
+   (search . " %i")))
+  
+  (org-agenda-category-icon-alist `(("journal"  ,(list (propertize "📝")))
+				    ("project--" ,(list (propertize "💼" )))
+				    ("area--"  ,(list (propertize"🏢" )))
+				    ("area--home"  ,(list (propertize"🏡" )))
+				    ("home"  ,(list (propertize"🏡" )))
+				    (".*" '(space . (:width (16))))))
 ;;         (org-agenda-compact-blocks t)
 ;;         (org-agenda-sticky t)
 ;;         (org-agenda-include-diary t)
   :config
+
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
     (org-babel-lob-ingest org-babel-library-file))
