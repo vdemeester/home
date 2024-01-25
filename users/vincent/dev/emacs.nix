@@ -114,6 +114,7 @@ let
     org-journal
     org-modern
     org-ql
+    org-rich-yank
     # org-super-agenda
     org-tree-slide
     org-web-tools
