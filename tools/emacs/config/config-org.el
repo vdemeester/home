@@ -834,5 +834,60 @@ file which do not already have one."
 ;;               org-tree-slide-content-margin-top 1
 ;;               org-tree-slide-skip-outline-level 4))
 
+;; from https://sachachua.com/blog/2024/01/using-consult-and-org-ql-to-search-my-org-mode-agenda-files-and-sort-the-results-to-prioritize-heading-matches/
+(defun my-consult-org-ql-agenda-jump ()
+  "Search agenda files with preview."
+  (interactive)
+  (let* ((marker (consult--read
+                  (consult--dynamic-collection
+                   #'my-consult-org-ql-agenda-match)
+                  :state (consult--jump-state)
+                  :category 'consult-org-heading
+                  :prompt "Heading: "
+                  :sort nil
+                  :lookup #'consult--lookup-candidate))
+         (buffer (marker-buffer marker))
+         (pos (marker-position marker)))
+    ;; based on org-agenda-switch-to
+    (unless buffer (user-error "Trying to switch to non-existent buffer"))
+    (pop-to-buffer-same-window buffer)
+    (goto-char pos)
+    (when (derived-mode-p 'org-mode)
+      (org-fold-show-context 'agenda)
+      (run-hooks 'org-agenda-after-show-hook))))
+
+(defun my-consult-org-ql-agenda-format (o)
+  (propertize
+   (org-ql-view--format-element o)
+   'consult--candidate (org-element-property :org-hd-marker o)))
+
+(defun my-consult-org-ql-agenda-match (string)
+  "Return candidates that match STRING.
+Sort heading matches first, followed by other matches.
+Within those groups, sort by date and priority."
+  (let* ((query (org-ql--query-string-to-sexp string))
+         (sort '(date reverse priority))
+         (heading-query (-tree-map (lambda (x) (if (eq x 'rifle) 'heading x)) query))
+         (matched-heading
+          (mapcar #'my-consult-org-ql-agenda-format
+                  (org-ql-select 'org-agenda-files heading-query
+                    :action 'element-with-markers
+                    :sort sort)))
+         (all-matches
+          (mapcar #'my-consult-org-ql-agenda-format
+                  (org-ql-select 'org-agenda-files query
+                    :action 'element-with-markers
+                    :sort sort))))
+    (append
+     matched-heading
+     (seq-difference all-matches matched-heading))))
+
+(use-package org-ql
+  :after org
+  :bind ("M-s a" . my-consult-org-ql-agenda-jump))
+
+(use-package org-ql-view
+  :after org-ql)
+
 (provide 'config-org)
 ;;; config-org.el ends here
