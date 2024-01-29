@@ -6,7 +6,7 @@
   };
   home.packages = with pkgs; [
     gcc
-    go_1_20
+    go_1_21
     gopls
     godef
     golangci-lint
@@ -24,7 +24,7 @@
     my.yaspell
     # not really go but still
     my.gosmee
-    cue
+    # cue
     deptree
   ];
 }
