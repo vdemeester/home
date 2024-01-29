@@ -8,8 +8,8 @@
   home.packages = with pkgs; [
     skopeo
     my.manifest-tool
-    nerdctl
-    act
+    # nerdctl
+    # act
     oras
     # dagger – Remove due to trademark issues : https://github.com/NixOS/nixpkgs/issues/260848, will have to package myself
   ];
