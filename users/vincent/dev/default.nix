@@ -29,6 +29,9 @@
     fossil
     pre-commit
     yamllint
+    markdownlint
+    vale
+    codespell
     tmate
     # temporary
     (vscode-with-extensions.override
