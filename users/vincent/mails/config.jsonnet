@@ -176,7 +176,7 @@ local google_groups(name, label = '', archive = true) =
     label_archive({from: 'concursolutions.com'}, '_tracker/concur') +
     label_archive({from: 'errata@redhat.com'}, '_tracker/errata') +
     label_archive({from: 'builds@travis-ci.com'}, '_build/travis') +
-    label_archive({from: 'cvp-ops@redhat.com'}, '_build/cvp') +
+    #label_archive({from: 'cvp-ops@redhat.com'}, '_build/cvp') +
     label_archive({from: 'buildsys@redhat.com'}, '_build/buildsys') +
     label_archive({from: 'meet-recordings-noreply@google.com'}, '_recordings') +
     rh_mailing_list('bugzilla', '_tracker/bz') +
@@ -190,6 +190,19 @@ local google_groups(name, label = '', archive = true) =
         markRead: true,
         labels: [
           "area/github"
+        ]
+      }
+    },
+    {
+      filter: {
+        query: "list:(cvp-ops@redhat.com)"
+      },
+      actions: {
+        archive: true,
+        markRead: true,
+        markSpam: false,
+        labels: [
+          "_build/cvp"
         ]
       }
     },
