@@ -34,27 +34,27 @@
     codespell
     tmate
     # temporary
-    (vscode-with-extensions.override
-      {
-        vscodeExtensions = with vscode-extensions; pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          # {
-          #   name = "tooltitude";
-          #   publisher = "tooltitudeteam";
-          #   version = "0.43.2";
-          #   sha256 = "sha256-d4h+kEgvSjtLva6c4UWRLR2jP+ydieDzAHkimbptV48=";
-          # }
-        ] ++ [
-          ms-vsliveshare.vsliveshare
-          golang.go
-          github.codespaces
-          editorconfig.editorconfig
-          eamodio.gitlens
-          github.copilot
-          ms-vscode-remote.remote-ssh
-          ms-vscode-remote.remote-containers
-          redhat.vscode-yaml
-        ];
-      })
+    # (vscode-with-extensions.override
+    #   {
+    #     vscodeExtensions = with vscode-extensions; pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+    #       # {
+    #       #   name = "tooltitude";
+    #       #   publisher = "tooltitudeteam";
+    #       #   version = "0.43.2";
+    #       #   sha256 = "sha256-d4h+kEgvSjtLva6c4UWRLR2jP+ydieDzAHkimbptV48=";
+    #       # }
+    #     ] ++ [
+    #       ms-vsliveshare.vsliveshare
+    #       golang.go
+    #       github.codespaces
+    #       editorconfig.editorconfig
+    #       eamodio.gitlens
+    #       github.copilot
+    #       ms-vscode-remote.remote-ssh
+    #       ms-vscode-remote.remote-containers
+    #       redhat.vscode-yaml
+    #     ];
+    #   })
   ];
 
   home.file.".ignore".text = ''
