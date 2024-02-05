@@ -118,6 +118,11 @@
    (todo . " %i")
    (tags . " %i")
    (search . " %i")))
+  (org-insert-heading-respect-content t)
+
+  (org-goto-interface 'outline-path-completion)
+  (org-outline-path-complete-in-steps nil)
+  (org-goto-max-level 2)
   
   (org-agenda-category-icon-alist `(("journal"  ,(list (propertize "📝")))
 				    ("project--" ,(list (propertize "💼" )))

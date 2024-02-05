@@ -28,6 +28,13 @@
   (winner-mode 1))
 ;; -UseWinner
 
+(defun toggle-maximize-buffer ()
+  "Maximize buffer"
+  (interactive)
+  (if (one-window-p)
+      (winner-undo)
+    (delete-other-windows)))
+
 ;; UseAceWindow
 (use-package ace-window
   :unless noninteractive
