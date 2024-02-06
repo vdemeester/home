@@ -9,22 +9,19 @@ let
 in
 {
   home.packages = with pkgs; [
-    #cri-tools
     kail
     kubectl
     kustomize
     kind
-    # minikube # probably don't need that always.. only on demand
     ko
     crane
     krew
     kss
     # our own scripts
     knd
-    bekind
-    stern
+    # bekind
     my.chmouzies.kubernetes
-    kubectx
+    # kubectx
   ];
   programs.zsh.initExtra = ''
     alias -g SK="|snazy -s --kail --kail-prefix-format='{pod}'"
