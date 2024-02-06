@@ -221,12 +221,6 @@ questions.  Else use completion to select the tab to switch to."
                           24-hours minutes)))
   (display-time))
 
-(use-package emacs
-  :unless noninteractive
-  :config
-  (set-frame-parameter nil 'alpha-background 96)
-  (add-to-list 'default-frame-alist '(alpha-background . 96)))
-
 (use-package tooltip
   :unless noninteractive
   :config
