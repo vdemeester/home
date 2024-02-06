@@ -16,23 +16,24 @@
   home.packages = with pkgs; [
     binutils
     cmake
+    codespell
     devenv
     difftastic
+    fossil
     fswatch
     gnumake
     gron
     jq
+    markdownlint-cli
     moreutils
-    shfmt
-    vale
-    yq-go
-    fossil
     pre-commit
-    yamllint
-    markdownlint
-    vale
-    codespell
+    shellcheck
+    shfmt
     tmate
+    vale
+    vale
+    yamllint
+    yq-go
     # temporary
     # (vscode-with-extensions.override
     #   {
