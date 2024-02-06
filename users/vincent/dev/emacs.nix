@@ -71,6 +71,7 @@ let
     expand-region
     flimenu
     flymake-languagetool
+    flymake-yamllint
     fontaine
     focus
     git-commit
@@ -168,7 +169,7 @@ in
     ugrep
     # See if I can hide this under an option
     capture
-    github-copilot-cli # for copilot.el
+    # github-copilot-cli # for copilot.el
     nodejs
     ec
     et
