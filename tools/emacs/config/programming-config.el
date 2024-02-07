@@ -18,6 +18,41 @@
 (use-package adoc-mode
   :mode ("\\.adoc\\'" . conf-toml-mode))
 
+(use-package flymake
+  :defer t
+  :bind
+  (
+   :map flymake-diagnostics-buffer-mode-map
+   ("p" .
+    (lambda()(interactive)
+      (previous-line)
+      (save-excursion
+        (flymake-show-diagnostic(point)))))
+   ("n" .
+    (lambda()(interactive)
+      (next-line)
+      (save-excursion
+        (flymake-show-diagnostic(point)))))
+   (
+    :map flymake-project-diagnostics-mode-map
+    ("p" .
+     (lambda()(interactive)
+       (previous-line)
+       (save-excursion
+         (flymake-show-diagnostic(point)))))
+    ("n" .
+     (lambda()(interactive)
+       (next-line)
+       (save-excursion
+         (flymake-show-diagnostic(point)))))))
+  :hook
+  (prog-mode . flyspell-prog-mode)
+  (prog-mode . flymake-mode))
+
+(use-package flymake-codespell
+  :after flymake
+  :hook (prog-mode . flymake-codespell-setup-backend))
+
 ;; (use-package copilot
 ;;   :preface
 ;;   (unless (package-installed-p 'copilot)
