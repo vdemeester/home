@@ -72,6 +72,7 @@ let
     flimenu
     flymake-languagetool
     flymake-yamllint
+    flymake-codespell
     fontaine
     focus
     git-commit
