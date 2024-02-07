@@ -82,7 +82,8 @@
   (setq-default magit-save-repository-buffers 'dontask
                 magit-refs-show-commit-count 'all
                 magit-branch-prefer-remote-upstream '("main")
-                magit-display-buffer-function #'magit-display-buffer-traditional)
+                magit-display-buffer-function #'magit-display-buffer-traditional
+		magit-refresh-status-buffer nil)
 
   (magit-define-popup-option 'magit-rebase-popup
                              ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
@@ -116,10 +117,7 @@
   (setq-default magit-module-sections-nested nil)
 
   ;; Show refined hunks during diffs
-  (set-default 'magit-diff-refine-hunk t)
-
-  ;; Refresh `magit-status' after saving a buffer
-  (add-hook 'after-save-hook #'magit-after-save-refresh-status))
+  (set-default 'magit-diff-refine-hunk t))
 
 (use-package git-commit
   :after magit
