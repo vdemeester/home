@@ -5,10 +5,10 @@
 (use-package eglot
   :bind
   (:map eglot-mode-map
-        ("C-c a" . eglot-code-actions)
-        ("C-c r" . eglot-reconnect)
+        ("C-c e a" . eglot-code-actions)
+        ("C-c e r" . eglot-reconnect)
         ("<f2>" . eglot-rename)
-        ("C-c ?" . eldoc-print-current-symbol-info))
+        ("C-c e ?" . eldoc-print-current-symbol-info))
   :config
   (add-to-list 'eglot-ignored-server-capabilities :documentHighlightProvider)
   (add-to-list 'eglot-server-programs `(json-mode  "vscode-json-language-server" "--stdio"))
