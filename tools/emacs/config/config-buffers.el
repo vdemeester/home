@@ -89,7 +89,11 @@
           "\\*Async Shell Command\\*"
           help-mode
 	  helpful-mode
-          compilation-mode))
+          compilation-mode
+	  flymake-diagnostics-buffer-mode
+	  flymake-project-diagnostics-mode
+	  Man-mode
+	  woman-mode))
   (popper-mode +1)
   (popper-echo-mode +1))
 
