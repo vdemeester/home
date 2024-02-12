@@ -204,6 +204,7 @@ use in `display-buffer-alist'."
                 (derived-mode . grep-mode)
                 (derived-mode . Buffer-menu-mode)
                 (derived-mode . log-view-mode)
+		(derived-mode . helpful-mode)
                 (derived-mode . help-mode) ; See the hooks for `visual-line-mode'
                 "\\*\\(|Buffer List\\|Occur\\|vc-change-log\\).*"
                 prot-window-shell-or-term-p
