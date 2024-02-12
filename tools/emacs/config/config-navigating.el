@@ -105,5 +105,34 @@
 
 (keymap-global-set "S-<down-mouse-2>" 'strokes-do-stroke)
 
+(use-package repeat
+  :config
+  (setq repeat-on-final-keystroke t)
+  (setq set-mark-command-repeat-pop t)
+
+  (repeat-mode 1)
+
+  (defvar isearch-repeat-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "s") #'isearch-repeat-forward)
+    (define-key map (kbd "r") #'isearch-repeat-backward)
+    map))
+
+  (dolist (cmd '(isearch-repeat-forward isearch-repeat-backward))
+    (put cmd 'repeat-map 'isearch-repeat-map))
+
+  (defvar buffer-navigation-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "n") #'next-line)
+      (define-key map (kbd "p") #'previous-line)
+      (define-key map (kbd "f") #'forward-word)
+      (define-key map (kbd "b") #'backward-word)
+      (define-key map (kbd "u") #'scroll-up-command)
+      (define-key map (kbd "d") #'scroll-down-command)
+      map))
+
+  (dolist (cmd '(next-line previous-line forward-word backward-word scroll-up-command scroll-down-command))
+    (put cmd 'repeat-map 'buffer-navigation-map)))
+
 (provide 'config-navigating)
 ;;; config-navigating.el ends here

@@ -18,9 +18,29 @@
 (use-package adoc-mode
   :mode ("\\.adoc\\'" . conf-toml-mode))
 
+(defun repeatize (keymap)
+  "Add `repeat-mode' support to a KEYMAP."
+  (map-keymap
+   (lambda (_key cmd)
+     (when (symbolp cmd)
+       (put cmd 'repeat-map keymap)))
+   (symbol-value keymap)))
+
+(defvar flymake-repeat-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "n") 'flymake-goto-next-error)
+    (define-key map (kbd "p") 'flymake-goto-prev-error)
+    (define-key map (kbd "f") 'attrap-flymake)
+    (define-key map (kbd "M-n") 'flymake-goto-next-error)
+    (define-key map (kbd "M-p") 'flymake-goto-prev-error)
+    map))
+
 (use-package flymake
   :defer t
   :bind
+  (:map flymake-mode-map
+        ("M-n" . flymake-goto-next-error)
+        ("M-p" . flymake-goto-prev-error))
   (
    :map flymake-diagnostics-buffer-mode-map
    ("p" .
@@ -45,6 +65,8 @@
        (next-line)
        (save-excursion
          (flymake-show-diagnostic(point)))))))
+  :config
+  (repeatize 'flymake-repeat-map)
   :hook
   (prog-mode . flyspell-prog-mode)
   (prog-mode . flymake-mode))
