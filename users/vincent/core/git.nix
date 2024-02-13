@@ -74,6 +74,7 @@ in
     ];
     extraConfig = {
       core = {
+        fsmonitor = true;
         #editor = "${pkgs.emacs}/bin/emacsclient -t";
       };
       init = {
@@ -103,6 +104,10 @@ in
         changed = "yellow";
         untracked = "red";
       };
+      # Either use this *or* git maintenance
+      # fetch = {
+      #   writeCommitGraph = true;
+      # };
       diff = {
         algorithm = "histogram";
         external = "difft";
