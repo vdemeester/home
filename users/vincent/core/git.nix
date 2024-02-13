@@ -143,6 +143,9 @@ in
         short = true;
         branch = true;
       };
+      branch = {
+        sort = "-committerdate";
+      };
       advice = {
         statusHints = false;
         pushNonFastForward = false;
