@@ -37,6 +37,7 @@ in
     #my.prm
     #my.ape
     difftastic
+    rs-git-fsmonitor
   ];
   programs.git = {
     enable = true;
@@ -74,7 +75,7 @@ in
     ];
     extraConfig = {
       core = {
-        fsmonitor = true;
+        fsmonitor = "${pkgs.rs-git-fsmonitor}/bin/rs-git-fsmonitor";
         #editor = "${pkgs.emacs}/bin/emacsclient -t";
       };
       init = {
