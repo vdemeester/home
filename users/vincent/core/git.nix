@@ -123,6 +123,9 @@ in
       forge = {
         remote = "upstream";
       };
+      rerere = {
+        enabled = true;
+      };
       hub = {
         protocol = true;
       };
