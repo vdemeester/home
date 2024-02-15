@@ -36,6 +36,7 @@ in
     mr
     #my.prm
     #my.ape
+    delta
     difftastic
     rs-git-fsmonitor
   ];
@@ -76,7 +77,9 @@ in
     extraConfig = {
       core = {
         fsmonitor = "${pkgs.rs-git-fsmonitor}/bin/rs-git-fsmonitor";
-        #editor = "${pkgs.emacs}/bin/emacsclient -t";
+        pager = "${pkgs.delta}/bin/delta";
+        # pager = "${pkgs.delta}/bin/delta --syntax-theme GitHub";
+        # editor = "${pkgs.emacs}/bin/emacsclient -t";
       };
       init = {
         defaultBranch = "main";
@@ -111,8 +114,8 @@ in
       # };
       diff = {
         algorithm = "histogram";
-        external = "difft";
-        tool = "difftastic";
+        # external = "difft";
+        # tool = "difftastic";
       };
       "diff.org" = {
         xfuncname = "\"^\\\\*+.*\"";
@@ -160,6 +163,22 @@ in
         sslCAinfo = "${ca-bundle_crt}";
         sslverify = true;
       };
+      delta = {
+        syntax-theme = "GitHub";
+        features = "decorations";
+      };
+
+      "delta \"decorations\"" = {
+        commit-decoration-style = "blue ol";
+        commit-style = "raw";
+        file-style = "omit";
+        hunk-header-decoration-style = "blue box";
+        hunk-header-file-style = "red";
+        hunk-header-line-number-style = "#067a00";
+        hunk-header-style = "file line-number syntax";
+        navigate = true;
+      };
+
       credential = {
         "https://github.com" = {
           helper = "!${pkgs.gh}/bin/gh auth git-credential";
