@@ -68,7 +68,7 @@
   :config
   (repeatize 'flymake-repeat-map)
   :hook
-  (prog-mode . flyspell-prog-mode)
+  ;; (prog-mode . flyspell-prog-mode) rebind flyspell-auto-correct-previous-word
   (prog-mode . flymake-mode))
 
 (use-package flymake-codespell
