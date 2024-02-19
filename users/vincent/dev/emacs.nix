@@ -115,6 +115,7 @@ let
     org-contrib
     org-journal
     org-modern
+    org-nix-shell
     org-ql
     org-rich-yank
     # org-super-agenda
