@@ -151,6 +151,7 @@ Old
 - https://github.com/fufexan/dotfiles
 - https://github.com/hlissner/dotfiles
 - https://github.com/librephoenix/nixos-config
+- https://github.com/AntonHakansson/nixos-config
 
 * Licensing
 
