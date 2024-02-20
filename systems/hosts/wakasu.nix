@@ -59,6 +59,9 @@ in
 
   networking = {
     hostName = hostname;
+    firewall.allowedTCPPortRanges = [
+      { from = 45000; to = 47000; }
+    ];
   };
 
   boot = {
@@ -132,6 +135,7 @@ in
     # obsidian # electron is eol...
     discord
     virt-manager
+    catt
   ];
 
   services = {
