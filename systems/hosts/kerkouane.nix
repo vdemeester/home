@@ -64,9 +64,6 @@ let
 in
 {
   imports = [
-    # (sources.nixos + "/nixos/modules/profiles/qemu-guest.nix")
-    # (import ../../nix).home-manager-stable
-    # ../modules/default.stable.nix
     (import ../../users/vincent)
     (import ../../users/root)
   ];
@@ -129,9 +126,8 @@ in
     buildCores = 1;
   };
 
+  # FIXME: deprecated, move to modules
   profiles = {
-    git.enable = true;
-    # ssh.enable = true;
     wireguard.server.enable = true;
   };
 

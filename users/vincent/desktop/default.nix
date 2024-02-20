@@ -16,13 +16,13 @@ in
     ./audio.nix
   ]
   ++ optionals nixosConfig.modules.desktop.xorg.enable [ ./xorg.nix ]
-  ++ optionals nixosConfig.profiles.desktop.i3.enable [ ./i3.nix ./xorg.nix ]
   ++ optionals nixosConfig.modules.desktop.wayland.enable [ ./wayland.nix ]
   ++ optionals nixosConfig.modules.desktop.wayland.sway.enable [ ./sway.nix ]
-  ++ optionals nixosConfig.modules.desktop.wayland.hyprland.enable [ ./hyprland.nix ]
-  ++ optionals nixosConfig.profiles.desktop.gnome.enable [ (import ./gnome.nix) ];
+  ++ optionals nixosConfig.modules.desktop.wayland.hyprland.enable [ ./hyprland.nix ];
 
-  home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
+  home.sessionVariables = {
+    WEBKIT_DISABLE_COMPOSITING_MODE = 1;
+  };
   home.packages = with pkgs; [
     aspell
     aspellDicts.en

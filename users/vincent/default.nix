@@ -24,13 +24,11 @@ in
     extraGroups = [ "wheel" "input" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
       ++ optionals config.modules.desktop.enable [ "audio" "video" ]
-      ++ optionals config.profiles.desktop.enable [ "audio" "video" ] # FIXME deprecated
       ++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
       ++ optionals config.virtualisation.docker.enable [ "docker" ]
       ++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
       ++ optionals config.modules.virtualisation.libvirt.enable [ "libvirtd" ]
-      ++ optionals config.profiles.virtualization.enable [ "libvirtd" ] # FIXME deprecated
       ++ optionals config.services.nginx.enable [ "nginx" ];
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
     isNormalUser = true;
@@ -82,23 +80,15 @@ in
         (import ./containers/kubernetes.nix)
         (import ./containers/openshift.nix)
         (import ./containers/tekton.nix)
-      ]
-      ++ optionals config.modules.dev.containers.enable [
-        (import ./containers)
-      ]
-      ++ optionals config.modules.desktop.enable [ (import ./desktop) ]
-      ++ optionals config.profiles.dev.enable [
-        (import ./dev)
-        (import ./containers)
-        (import ./containers/kubernetes.nix)
-        (import ./containers/openshift.nix)
-        (import ./containers/tekton.nix)
         {
           # Enable only on dev, could do something better than this longterm 😀
           services.keybase.enable = true;
         }
       ]
-      ++ optionals config.profiles.desktop.enable [ (import ./desktop) ]
+      ++ optionals config.modules.dev.containers.enable [
+        (import ./containers)
+      ]
+      ++ optionals config.modules.desktop.enable [ (import ./desktop) ]
       ++ optionals (config.networking.hostName == "wakasu" || config.networking.hostName == "aomi") [
         {
           home.packages = with pkgs; [

@@ -21,7 +21,7 @@ in
       environment.systemPackages = with pkgs; [ qemu vde2 libosinfo ];
     }
     (mkIf config.modules.desktop.enable {
-      environment.systemPackages = with pkgs; [ virtmanager ];
+      environment.systemPackages = with pkgs; [ virt-manager ];
     })
     (mkIf cfg.nested {
       boot.kernelParams = [ "kvm_intel.nested=1" ];

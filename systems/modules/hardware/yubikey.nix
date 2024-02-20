@@ -35,9 +35,9 @@ in
         };
       };
     }
-    (mkIf config.profiles.desktop.enable {
+    (mkIf config.modules.desktop.enable {
       environment.systemPackages = with pkgs; [
-        yubioath-desktop
+        yubioath-flutter
       ];
     })
     (mkIf cfg.u2f {

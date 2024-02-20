@@ -88,6 +88,23 @@ in
 
   modules = {
     core.binfmt.enable = true;
+    dev = {
+      enable = false;
+      docker = {
+        enable = true;
+        package = pkgs.docker_24;
+      };
+      podman.enable = true;
+      buildkit = {
+        enable = true;
+        grpcAddress = [
+          "unix:///run/buildkit/buildkitd.sock"
+          "tcp://aomi.home:1234"
+          "tcp://${metadata.hosts.shikoku.addrs.v4}:1234"
+          "tcp://${metadata.hosts.shikoku.wireguard.addrs.v4}:1234"
+        ];
+      };
+    };
     services = {
       syncthing = {
         enable = true;
@@ -105,9 +122,6 @@ in
   profiles = {
     bind.enable = true;
     home = true;
-    dev.enable = lib.mkForce false;
-    desktop.enable = lib.mkForce false;
-    docker.enable = true;
   };
   services = {
     aria2 = {

@@ -74,7 +74,6 @@ in
   profiles = {
     bind.enable = true;
     home = true;
-    git.enable = true;
   };
 
   fileSystems."/export/gaia" = { device = "/mnt/gaia"; options = [ "bind" ]; };

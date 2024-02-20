@@ -117,13 +117,11 @@ in
       };
       ssh.enable = true;
     };
+    virtualisation.libvirt = { enable = true; nested = true; };
   };
 
   # TODO Migrate to modules
   profiles.home = true;
-  # Temporarly disable external builders, home network is down.
-  # profiles.externalbuilder.enable = true;
-  profiles.virtualization = { enable = true; nested = true; };
   virtualisation.podman.dockerSocket.enable = true;
   virtualisation.podman.autoPrune.enable = true;
   environment.systemPackages = with pkgs; [

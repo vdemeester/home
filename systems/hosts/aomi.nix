@@ -130,12 +130,12 @@ in
         guiAddress = "${metadata.hosts.aomi.wireguard.addrs.v4}:8384";
       };
     };
+    virtualisation.libvirt = { enable = true; nested = true; };
   };
 
   profiles = {
     externalbuilder.enable = true;
     home = true;
-    virtualization = { enable = true; nested = true; };
   };
 
 
