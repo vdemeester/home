@@ -29,7 +29,7 @@ in
     gist
     git-lfs
     git-review
-    gitAndTools.git-annex
+    # gitAndTools.git-annex
     gitAndTools.hub
     gitAndTools.gh
     gitAndTools.git-appraise
@@ -42,7 +42,7 @@ in
   ];
   programs.git = {
     enable = true;
-    package = pkgs.gitAndTools.gitFull;
+    package = pkgs.git;
 
     userName = "Vincent Demeester";
     userEmail = "vincent@sbr.pm";

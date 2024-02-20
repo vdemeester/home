@@ -12,9 +12,8 @@ in
   };
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      gitAndTools.gitFull
-      gitAndTools.git-annex
-      gitAndTools.git-extras
+      git
+      # gitAndTools.git-extras
     ];
     environment.etc."gitconfig" = rec {
       text = ''

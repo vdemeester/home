@@ -11,12 +11,11 @@ in
     environment = {
       # Install some packages
       systemPackages = with pkgs; [
-        gitAndTools.gitFull
-        gitAndTools.git-annex
-        gitAndTools.git-extras
+        git
+        # gitAndTools.git-extras
         (mkIf config.modules.shell.gnupg.enable
           gitAndTools.git-crypt)
-        tig
+        lazygit
       ];
       # Default gitconfig
       etc."gitconfig".source = ./git/config;
