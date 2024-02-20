@@ -20,6 +20,7 @@ let
     "src/osp"
     "src/pkg.devel.redhat.com"
     "src/tektoncd"
+    "src/backstage"
     "src/knative.dev"
     "src/knative-sandbox"
   ];
@@ -29,13 +30,10 @@ in
     gist
     git-lfs
     git-review
-    # gitAndTools.git-annex
     gitAndTools.hub
     gitAndTools.gh
     gitAndTools.git-appraise
     mr
-    #my.prm
-    #my.ape
     delta
     difftastic
     rs-git-fsmonitor
