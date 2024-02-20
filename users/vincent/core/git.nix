@@ -29,8 +29,8 @@ in
   home.packages = with pkgs; [
     gist
     git-lfs
-    git-review
-    gitAndTools.hub
+    # git-review
+    # gitAndTools.hub
     gitAndTools.gh
     gitAndTools.git-appraise
     mr
