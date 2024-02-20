@@ -90,19 +90,21 @@ in
     core.binfmt.enable = true;
     dev = {
       enable = false;
-      docker = {
-        enable = true;
-        package = pkgs.docker_24;
-      };
-      podman.enable = true;
-      buildkit = {
-        enable = true;
-        grpcAddress = [
-          "unix:///run/buildkit/buildkitd.sock"
-          "tcp://aomi.home:1234"
-          "tcp://${metadata.hosts.shikoku.addrs.v4}:1234"
-          "tcp://${metadata.hosts.shikoku.wireguard.addrs.v4}:1234"
-        ];
+      containers = {
+        docker = {
+          enable = true;
+          package = pkgs.docker_24;
+        };
+        podman.enable = true;
+        buildkit = {
+          enable = true;
+          grpcAddress = [
+            "unix:///run/buildkit/buildkitd.sock"
+            "tcp://aomi.home:1234"
+            "tcp://${metadata.hosts.shikoku.addrs.v4}:1234"
+            "tcp://${metadata.hosts.shikoku.wireguard.addrs.v4}:1234"
+          ];
+        };
       };
     };
     services = {
