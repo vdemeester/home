@@ -348,6 +348,9 @@ file which do not already have one."
              org-babel-execute:shell
              org-babel-execute:zsh))
 
+(use-package org-nix-shell
+  :hook (org-mode . org-nix-shell-mode))
+
 (use-package org-rich-yank
   :after org
   :bind (:map org-mode-map
