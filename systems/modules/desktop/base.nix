@@ -67,6 +67,7 @@ in
         noto-fonts-extra
         overpass
         symbola
+        sudo-font
         source-code-pro
         twemoji-color-font
         ubuntu_font_family
