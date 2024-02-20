@@ -24,7 +24,7 @@ in
     extraGroups = [ "wheel" "input" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
       ++ optionals config.modules.desktop.enable [ "audio" "video" ]
-      ++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
+      # ++ optionals config.profiles.scanning.enable [ "lp" "scanner" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
       ++ optionals config.virtualisation.docker.enable [ "docker" ]
       ++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
@@ -99,11 +99,11 @@ in
           ];
         }
       ]
-      ++ optionals config.profiles.docker.enable [
-        {
-          home.packages = with pkgs; [ docker docker-compose dive ];
-        }
-      ]
+      # ++ optionals config.virtualisation.docker.enable [
+      #   {
+      #     home.packages = with pkgs; [ docker docker-compose dive ];
+      #   }
+      # ]
       #++ optionals config.profiles.redhat.enable [{
       #  home.file.".local/share/applications/redhat-vpn.desktop".source = ./redhat/redhat-vpn.desktop;
       #  home.packages = with pkgs; [ gnome3.zenity oathToolkit ];

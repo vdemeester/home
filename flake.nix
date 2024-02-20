@@ -61,19 +61,9 @@
         ./systems/modules/profiles/base.nix
         ./systems/modules/profiles/builder.nix
         ./systems/modules/profiles/dns.nix
-        ./systems/modules/profiles/docker.nix
         ./systems/modules/profiles/home.nix
-        ./systems/modules/profiles/i18n.nix
-        ./systems/modules/profiles/ipfs.nix
-        ./systems/modules/profiles/kubernetes.nix
-        ./systems/modules/profiles/laptop.nix
-        ./systems/modules/profiles/mail.nix
-        ./systems/modules/profiles/printing.nix
-        ./systems/modules/profiles/qemu.nix
         ./systems/modules/profiles/redhat.nix
-        ./systems/modules/profiles/scanning.nix
         ./systems/modules/profiles/wireguard.server.nix
-        ./systems/modules/profiles/zsh.nix
         inputs.sops-nix.nixosModules.sops
         # inputs.envfs.nixosModules.envfs
         {
