@@ -3,6 +3,20 @@
 ;;; Setup completion framework
 ;;; Code
 
+(use-package consult
+  :bind
+  ("M-g M-g" . consult-goto-line)
+  ("M-K" . consult-keep-lines)
+  ("M-s M-b" . consult-buffer)
+  ("M-s M-f" . consult-find)
+  ("M-s M-g" . consult-grep)
+  ("M-s M-h" . consult-history)
+  ("M-s M-i" . consult-imenu)
+  ("M-s M-l" . consult-line)
+  ("M-s M-m" . consult-mark)
+  ("M-s M-y" . consult-yank-pop)
+  ("M-s M-s" . consult-outline))
+
 ;; https://github.com/oantolin/embark/blob/master/embark-consult.el
 (use-package embark
   :unless noninteractive
