@@ -85,7 +85,7 @@
   (org-hide-emphasis-markers t)
   (org-pretty-entities t)
   (org-ellipsis "…")
-  (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!)" "CANCELED(c@/!)")
+  (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "IN-REVIEW(r)" "|" "DONE(d!)" "CANCELED(c@/!)")
                        (sequence "WAITING(w@/!)" "SOMEDAY(s)" "|" "CANCELED(c@/!)")
                        (sequence "IDEA(i)" "|" "CANCELED(c@/!)")))
   (org-todo-state-tags-triggers '(("CANCELLED" ("CANCELLED" . t))
@@ -123,7 +123,7 @@
   (org-goto-interface 'outline-path-completion)
   (org-outline-path-complete-in-steps nil)
   (org-goto-max-level 2)
-  
+
   (org-agenda-category-icon-alist `(("journal"  ,(list (propertize "📝")))
 				    ("project--" ,(list (propertize "💼" )))
 				    ("area--"  ,(list (propertize"🏢" )))
@@ -131,7 +131,7 @@
 				    ("home"  ,(list (propertize"🏡" )))
 				    (".*" '(space . (:width (16))))))
 ;;         (org-agenda-compact-blocks t)
-;;         (org-agenda-sticky t)
+        (org-agenda-sticky t)
 ;;         (org-agenda-include-diary t)
   :config
 
