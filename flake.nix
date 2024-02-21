@@ -61,6 +61,7 @@
         ./systems/modules/profiles/base.nix
         ./systems/modules/profiles/builder.nix
         ./systems/modules/profiles/dns.nix
+        ./systems/modules/profiles/i18n.nix
         ./systems/modules/profiles/home.nix
         ./systems/modules/profiles/redhat.nix
         ./systems/modules/profiles/wireguard.server.nix
