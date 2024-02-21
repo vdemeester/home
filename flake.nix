@@ -79,6 +79,16 @@
       ];
     in
     {
+      images = {
+        athena = (self.nixosConfigurations.athena.extendModules {
+          modules = [
+            "${inputs.nixpkgs-23_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            {
+              disabledModules = [ "profiles/base.nix" ];
+            }
+          ];
+        }).config.system.build.sdImage;
+      };
       nixosConfigurations =
         {
           # Work laptop (unstable)
@@ -120,6 +130,15 @@
               ./systems/hosts/kerkouane.nix
             ];
           };
+          # Raspberry PI
+          # athena
+          athena = inputs.nixpkgs-23_11.lib.nixosSystem {
+            system = "aarch64-linux";
+            modules = stableModules ++ [
+              ./systems/hosts/athena.nix
+            ];
+          };
+          # demeter
         };
 
       # TODO: expose some packages ?

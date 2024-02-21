@@ -91,6 +91,7 @@ in
   ];
 
   modules = {
+    core.binfmt.enable = true;
     editors.emacs.enable = true;
     hardware = {
       yubikey = { enable = true; u2f = true; };
