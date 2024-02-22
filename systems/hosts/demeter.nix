@@ -2,7 +2,7 @@
 
 with lib;
 let
-  hostname = "athena";
+  hostname = "demeter";
   # secretPath = ../../secrets/machines.nix;
   # secretCondition = (builtins.pathExists secretPath);
   # 

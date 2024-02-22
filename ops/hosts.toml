@@ -64,6 +64,12 @@ ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtEnw+3WMa9ESRyKdBUp/OHd8
 addrs = { v4 = "10.100.0.1" }
 port = 51820
 
+[hosts.athena]
+addrs = { v4 = "192.168.1.183" }
+
+[hosts.demeter]
+addrs = { v4 = "192.168.1.182" }
+
 [hosts.k8sn1]
 addrs = { v4 = "192.168.1.130" }
 

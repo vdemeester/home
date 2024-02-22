@@ -25,6 +25,8 @@ let
       shikoku = "192.168.1.24";
       synodine = "192.168.1.20";
       wakasu = "192.168.1.77";
+      demeter = "192.168.1.182";
+      athena = "192.168.1.183";
     };
   };
   wireguard = {
@@ -206,6 +208,14 @@ in
     };
     "wakasu.vpn" = {
       hostname = "${wireguard.ips.wakasu}";
+      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+    };
+    "athena.home" = {
+      hostname = "${home.ips.athena}";
+      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+    };
+    "demeter.home" = {
+      hostname = "${home.ips.demeter}";
       remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
     };
     "dev.home" = {

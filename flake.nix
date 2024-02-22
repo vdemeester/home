@@ -134,11 +134,17 @@
           # athena
           athena = inputs.nixpkgs-23_11.lib.nixosSystem {
             system = "aarch64-linux";
-            modules = stableModules ++ [
+            modules = commonModules ++ stableModules ++ [
               ./systems/hosts/athena.nix
             ];
           };
           # demeter
+          demeter = inputs.nixpkgs-23_11.lib.nixosSystem {
+            system = "aarch64-linux";
+            modules = commonModules ++ stableModules ++ [
+              ./systems/hosts/demeter.nix
+            ];
+          };
         };
 
       # TODO: expose some packages ?
