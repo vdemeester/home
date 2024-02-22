@@ -126,6 +126,7 @@
 
   (org-agenda-category-icon-alist `(("journal"  ,(list (propertize "📝")))
 				    ("project--" ,(list (propertize "💼" )))
+				    ("tekton-", (list (propertize "😼")))
 				    ("area--"  ,(list (propertize"🏢" )))
 				    ("area--home"  ,(list (propertize"🏡" )))
 				    ("home"  ,(list (propertize"🏡" )))
