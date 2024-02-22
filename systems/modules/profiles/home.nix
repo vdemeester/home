@@ -33,6 +33,8 @@ in
         "${wireguard.ips.okinawa}" = [ "okinawa.vpn" ];
         "${wireguard.ips.kerkouane}" = [ "kerkouane.vpn" ];
         "${wireguard.ips.naruhodo}" = [ "naruhodo.vpn" ];
+        "${home.ips.demeter}" = [ "demeter.home" ];
+        "${home.ips.athena}" = [ "athena.home" ];
       };
     };
     time.timeZone = "Europe/Paris";
