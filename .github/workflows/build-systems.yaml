@@ -43,7 +43,7 @@ jobs:
           remove-dotnet: 'true'
           remove-haskell: 'true'
           remove-codeql: 'true'
-          remove-docker-images: 'true'
+          remove-docker-images: 'false'
       - name: Build
         run: |
           echo "Free space:"
