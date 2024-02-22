@@ -58,13 +58,18 @@ jobs:
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://hydra.iohk.io https://cache.nixos.org/
-      - uses: dbhi/qus/action@main
-        with:
-          targets: aarch64
+      # - uses: dbhi/qus/action@main
+      #   with:
+      #     targets: aarch64
       - run: |
           # FIXME temporary hack to make system build successfully
           #       I need to create dumb file for mkOutOfStoreSymlink
           sudo mkdir -p /home/vincent/src/home/tools/emacs /home/vincent/desktop/documents
           sudo touch /home/vincent/desktop/documents/.oath
           # build the system
-          nix build -L ".#nixosConfigurations.${{ matrix.name }}.config.system.build.toplevel"
+          # FIXME: move this away from this somehow
+          BUILD_ARGS=""
+          if [[ "${{ matrix.name }}" == "demeter" || "${{ matrix.name }}" == "athena" ]]; then
+            BUILD_ARGS="${BUILD_ARGS} --option system aarch64-linux"
+          fi
+          nix build ${BUILD_ARGS} -L ".#nixosConfigurations.${{ matrix.name }}.config.system.build.toplevel"
