@@ -59,15 +59,15 @@ in
       #       enable = true;
       #       guiAddress = "${metadata.hosts.sakhalin.wireguard.addrs.v4}:8384";
       #     };
-      #     avahi.enable = true;
+      avahi.enable = true;
       ssh.enable = true;
     };
   };
   # 
-  # profiles = {
-  #   bind.enable = true;
-  #   home = true;
-  # };
+  profiles = {
+    bind.enable = true;
+    home = true;
+  };
 
   # services = {
   #   wireguard = {
