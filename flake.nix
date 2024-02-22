@@ -83,9 +83,11 @@
         athena = (self.nixosConfigurations.athena.extendModules {
           modules = [
             "${inputs.nixpkgs-23_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-            {
-              disabledModules = [ "profiles/base.nix" ];
-            }
+          ];
+        }).config.system.build.sdImage;
+        demeter = (self.nixosConfigurations.demeter.extendModules {
+          modules = [
+            "${inputs.nixpkgs-23_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           ];
         }).config.system.build.sdImage;
       };
