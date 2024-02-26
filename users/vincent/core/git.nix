@@ -120,9 +120,13 @@ in
       };
       difftool = {
         prompt = false;
+        trustExitCode = true;
       };
       "difftool.difftastic" = {
         cmd = "difft \"$LOCAL\" \"$REMOTE\"";
+      };
+      "difftool.kitty" = {
+        cmd = "kitten diff $LOCAL $REMOTE";
       };
       pager = {
         difftool = true;
