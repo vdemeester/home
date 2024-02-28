@@ -118,7 +118,8 @@ in
     shikoku.home,shikoku.vpn,10.100.0.2,192.168.1.24 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm
     kerkouane.vpn,10.100.0.1 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJguVoQYObRLyNxELFc3ai2yDJ25+naiM3tKrBGuxwwA
     synodine.home,192.168.1.20 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWdnPJg0Y4kd4lHPAGE4xgMAK2qvMg3oBxh0t+xO+7O
-    naruhodo.vpn,10.100.0.15 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEGwhe8f43F+gtcYgVRlPxjana3LFElWtlXQB2TLH8xZ
+    demeter.home ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqQfEyHyjIGglayB9FtCqL7bnYfNSQlBXks2IuyCPmd
+    athena.home ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4KRP1rzOwyA2zP1Nf1WlLRHqAGutLtOHYWfH732xh
   '';
   xdg.configFile."ssh/ssh_known_hosts.redhat".text = ''
     # Red Hat
