@@ -51,6 +51,7 @@ in
 
   networking = {
     hostName = hostname;
+    firewall.enable = false; # we are in safe territory :D
   };
 
   # extract this from desktop
