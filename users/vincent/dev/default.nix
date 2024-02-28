@@ -22,6 +22,7 @@
     gron
     jq
     markdownlint-cli
+    minica
     moreutils
     pre-commit
     shellcheck
