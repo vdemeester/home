@@ -1,4 +1,13 @@
 { config, lib, pkgs, ... }:
+
+let
+  common = {
+    sopsFile = ../../../secrets/secrets.yaml;
+    mode = "444";
+    owner = "root";
+    group = "root";
+  };
+in
 {
   imports = [
     ./boot.nix
@@ -19,6 +28,12 @@
       Defaults env_keep += SSH_AUTH_SOCK
     '';
   };
+
+  sops.secrets."minica.pem" = {
+    inherit (common) mode owner group sopsFile;
+    path = "/etc/ssl/certs/minica.pem";
+  };
+  # security.pki.certificateFiles = [ "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" "/etc/ssl/certs/minica.pem" ];
 
   # Only keep the last 500MiB of systemd journal.
   services.journald.extraConfig = "SystemMaxUse=500M";

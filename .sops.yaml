@@ -4,11 +4,9 @@ keys:
   - &wakasu 81f3a3b3720f8cab8c53e2f88fd25835fc9db1e6
   - &sakhalin 8b80ab02638ab9c34f6c21bd69928b5908e10cbf
   - &kerkouane b8b02c0885a74753f8fb53f031f0386f20f3e4ec
-  - &naruhodo 5722867ac621fd15d2dfc7eab7bfec55a117c1bf
   - &shikoku c7ebcb8e935bda9466e98b1a659af87ff4f5ab02
-  - &k8sn1 298092af3b4de6f5a6cb51a14f2247aa4fa91e04
-  - &k8sn2 0ebe388f6827fe2eace1055d0b23ac2723c1de53
-  - &k8sn3 95233a9c933a7ff9d7a6ca9a531bfac356b8f712
+  - &demeter 131c2eeb1c88c9b8bc76485df4c7efebe0e72441 # ssh root@demeter.home "cat /etc/ssh/ssh_host_rsa_key" | nix-shell -p ssh-to-pgp --run "ssh-to-pgp -o demeter.asc" 
+  - &athena 73cb7209eb57f9450adbaa3a5cdf368d4cf82a42 # ssh root@athena.home "cat /etc/ssh/ssh_host_rsa_key" | nix-shell -p ssh-to-pgp --run "ssh-to-pgp -o demeter.asc" 
 creation_rules:
   - path_regex: secrets/servers/[^/]+\.yaml$
     key_groups:
@@ -18,14 +16,12 @@ creation_rules:
       - *sakhalin
       - *kerkouane
       - *shikoku
-      - *k8sn1
-      - *k8sn2
-      - *k8sn3
+      - *athena
+      - *demeter
   - path_regex: secrets/desktops/[^/]+\.yaml$
     key_groups:
     - pgp:
       - *vincent
-      - *naruhodo
       - *aomi
       - *wakasu
   - path_regex: secrets/wakasu/[^/]+\.yaml$
@@ -53,18 +49,20 @@ creation_rules:
     - pgp:
       - *vincent
       - *shikoku
-  - path_regex: secrets/naruhodo/[^/]+\.yaml$
+  - path_regex: secrets/athena/[^/]+\.yaml$
     key_groups:
     - pgp:
       - *vincent
-      - *naruhodo
+      - *athena
+  - path_regex: secrets/demeter/[^/]+\.yaml$
+    key_groups:
+    - pgp:
+      - *vincent
+      - *demeter
   - path_regex: secrets/k8s/[^/]+\.yaml$
     key_groups:
     - pgp:
       - *vincent
-      - *k8sn1
-      - *k8sn2
-      - *k8sn3
   - path_regex: secrets/[^/]+\.yaml$
     key_groups:
     - pgp:
@@ -73,8 +71,6 @@ creation_rules:
       - *wakasu
       - *sakhalin
       - *kerkouane
-      - *naruhodo
       - *shikoku
-      - *k8sn1
-      - *k8sn2
-      - *k8sn3
+      - *athena
+      - *demeter
