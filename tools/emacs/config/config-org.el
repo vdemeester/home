@@ -50,6 +50,13 @@
 (set-register ?P `(file . ,org-people-dir))
 (set-register ?j `(file . ,org-journal-dir))
 
+(defun vde/agenda-goto-view ()
+  "Jump to the task narrowed but in view mode only to get a glance."
+  (interactive)
+  (org-agenda-goto)
+  (org-narrow-to-subtree)
+  (view-mode t))
+
 (defun vde/org-mode-hook ()
   "Org-mode hook"
   (setq show-trailing-whitespace t)
@@ -356,6 +363,7 @@ file which do not already have one."
   :after org
   :bind (:map org-mode-map
               ("C-M-y" . org-rich-yank)))
+
 ;; (use-package org
 ;;   ;; :ensure org-plus-contrib ;; load from the package instead of internal
 ;;   :mode (("\\.org$" . org-mode)
