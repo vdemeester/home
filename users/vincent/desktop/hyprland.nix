@@ -90,7 +90,7 @@
 
       workspace = [
         "2, on-create-empty:emacs"
-        "special:scratchpad, on-created-empty:${pkgs.kitty}/bin/kitty --title metask --class metask tmux"
+        "special:scratchpad, on-created-empty:${pkgs.kitty}/bin/kitty --title metask --class metask"
         "special:emacs-scratchpad, on-created-empty:emacsclient -c"
       ];
       # workspace = 2, on-create-empty:emacs
