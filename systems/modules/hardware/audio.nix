@@ -52,12 +52,12 @@ in
         extraConfig = {
           pipewire-pulse = {
             "50-network-party.conf" = {
-              "context.modules" = [
-                { name = "libpipewire-module-protocol-native"; }
-                { name = "libpipewire-module-client-node"; }
-                { name = "libpipewire-module-adapter"; }
-                { name = "libpipewire-module-metadata"; }
-              ];
+              # "context.modules" = [
+              #   { name = "libpipewire-module-protocol-native"; }
+              #   { name = "libpipewire-module-client-node"; }
+              #   { name = "libpipewire-module-adapter"; }
+              #   { name = "libpipewire-module-metadata"; }
+              # ];
               "context.exec" = [
                 { path = "pactl"; args = "load-module module-native-protocol-tcp"; }
                 { path = "pactl"; args = "load-module module-zeroconf-discover"; }
