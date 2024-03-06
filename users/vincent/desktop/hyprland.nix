@@ -135,10 +135,11 @@
         "$mod, up, movefocus, u"
         "$mod, down, movefocus, d"
 
-        "$mod SHIFT, left, moveactive, l"
-        "$mod SHIFT, right, moveactive, r"
-        "$mod SHIFT, up, moveactive, u"
-        "$mod SHIFT, down, moveactive, d"
+        # swapactiveworkspaces
+        "$mod SHIFT, left, movecurrentworkspacetomonitor, l"
+        "$mod SHIFT, right, movecurrentworkspacetomonitor, r"
+        "$mod SHIFT, up, movecurrentworkspacetomonitor, u"
+        "$mod SHIFT, down, movecurrentworkspacetomonitor, d"
 
         "$mod CTRL, left, workspace, e-1" # FIXME: adapt ?
         "$mod CTRL, right, workspace, e+1" # FIXME: adapt ?
