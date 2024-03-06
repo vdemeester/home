@@ -207,7 +207,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
          ("M-*" . tempel-insert))
   :init
-    (defun tempel-setup-capf ()
+  (defun tempel-setup-capf ()
     ;; Add the Tempel Capf to `completion-at-point-functions'.
     ;; `tempel-expand' only triggers on exact matches. Alternatively use
     ;; `tempel-complete' if you want to see all matches, but then you
@@ -218,7 +218,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     (setq-local completion-at-point-functions
                 (cons #'tempel-expand
                       completion-at-point-functions)))
-
+  (setq tempel-path (expand-file-name "templates" user-emacs-directory))
   (add-hook 'conf-mode-hook 'tempel-setup-capf)
   (add-hook 'prog-mode-hook 'tempel-setup-capf)
   (add-hook 'text-mode-hook 'tempel-setup-capf))
