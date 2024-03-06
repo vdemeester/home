@@ -135,7 +135,7 @@ in
   };
 
   profiles = {
-    externalbuilder.enable = true;
+    # externalbuilder.enable = true;
     home = true;
   };
 
