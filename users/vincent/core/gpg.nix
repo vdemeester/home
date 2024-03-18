@@ -1,7 +1,7 @@
 { pkgs, lib, nixosConfig, ... }:
 
 let
-  pinentry = if (nixosConfig.modules.desktop.enable) then "gnome3" else "tty";
+  pinentry = if (nixosConfig.modules.desktop.enable) then pkgs.pinentry-gnome3 else pkgs.pinentry-tty;
 in
 {
   home.packages = with pkgs; [ gnupg ];
@@ -11,7 +11,8 @@ in
       enableSshSupport = true;
       enableExtraSocket = true;
       defaultCacheTtlSsh = 7200;
-      pinentryFlavor = pinentry;
+      pinentryPackage = pinentry;
     };
   };
 }
+
