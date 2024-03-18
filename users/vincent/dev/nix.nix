@@ -7,6 +7,6 @@
     nix-update
     nixpkgs-review
     nix-prefetch-scripts
-    rnix-lsp
+    # rnix-lsp
   ];
 }
