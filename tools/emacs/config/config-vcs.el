@@ -82,7 +82,8 @@
   (setq-default magit-save-repository-buffers 'dontask
                 magit-refs-show-commit-count 'all
                 magit-branch-prefer-remote-upstream '("main")
-                magit-display-buffer-function #'magit-display-buffer-traditional
+		magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
+		magit-bury-buffer-function #'magit-restore-window-configuration
 		magit-refresh-status-buffer nil)
 
   (magit-define-popup-option 'magit-rebase-popup
