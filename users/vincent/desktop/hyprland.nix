@@ -105,7 +105,7 @@
         "workspace 8, ^(com\.obsproject\.Studio)$"
       ];
       windowrulev2 = [
-        "nomaximizerequest, class:.*" # You'll probably like this.
+        "suppressevent maximize, class:.*" # You'll probably like this.
       ];
 
       "$mod" = "SUPER";
