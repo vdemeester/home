@@ -7,6 +7,24 @@
 (use-package isearch
   :unless noninteractive
   :config
+  (defun my-project-search-from-isearch ()
+    (interactive)
+    (let ((query (if isearch-regexp
+               isearch-string
+             (regexp-quote isearch-string))))
+      (isearch-update-ring isearch-string isearch-regexp)
+      (let (search-nonincremental-instead)
+        (ignore-errors (isearch-done t t)))
+      (project-find-regexp query)))
+  (defun my-occur-from-isearch ()
+    (interactive)
+    (let ((query (if isearch-regexp
+		     isearch-string
+		   (regexp-quote isearch-string))))
+      (isearch-update-ring isearch-string isearch-regexp)
+      (let (search-nonincremental-instead)
+        (ignore-errors (isearch-done t t)))
+      (occur query)))
   (setq-default search-whitespace-regexp ".*?"
                 isearch-lax-whitespace t
                 isearch-regexp-lax-whitespace nil
@@ -49,6 +67,9 @@ confines of word boundaries (e.g. multiple words)."
     (when isearch-other-end (goto-char isearch-other-end)))
   :bind (("M-s M-o" . multi-occur)
          :map isearch-mode-map
+	 ("C-o" . my-occur-from-isearch)
+	 ("C-f" . my-project-search-from-isearch)
+	 ("C-d" . isearch-forward-symbol-at-point)
          ("DEL" . contrib/isearchp-remove-failed-part-or-last-char)
          ("<C-return>" . contrib/isearch-done-opposite-end)))
 ;; -UseISearch

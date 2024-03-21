@@ -56,7 +56,8 @@
   :bind (("C-c j w" . avy-goto-word-1)
          ("C-c j b" . avy-pop-mark)
          ("C-c j t" . avy-goto-char-timer)
-         ("C-c j l" . avy-goto-line)))
+         ("C-c j l" . avy-goto-line)
+	 (:map isearch-mode-map ("C-j" . avy-isearch))))
 
 (use-package mwim
   :unless noninteractive

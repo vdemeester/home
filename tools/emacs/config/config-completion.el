@@ -10,6 +10,7 @@
   ("M-s M-b" . consult-buffer)
   ("M-s M-f" . consult-find)
   ("M-s M-g" . consult-grep)
+  ("M-s M-r" . consult-ripgrep)
   ("M-s M-h" . consult-history)
   ("M-s M-i" . consult-imenu)
   ("M-s M-l" . consult-line)
