@@ -294,6 +294,7 @@ file which do not already have one."
   (denote-directory org-directory)
   (denote-rename-buffer-format "📝 %t")
   (denote-date-prompt-denote-date-prompt-use-org-read-date t)
+  (denote-prompts '(subdirectory title keyword))
   :hook (dired-mode . denote-dired-mode)
   :config
   (denote-rename-buffer-mode 1)
