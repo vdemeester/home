@@ -25,7 +25,7 @@ rec {
   rmapi = pkgs.callPackage ./rmapi { };
   yaspell = pkgs.callPackage ./yaspell { };
   gosmee = pkgs.callPackage ./gosmee {
-    buildGoModule = pkgs.buildGo120Module;
+    buildGoModule = pkgs.buildGo121Module;
   };
 
   operator-tool = pkgs.callPackage ./operator-tooling { };
