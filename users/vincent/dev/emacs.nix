@@ -141,6 +141,7 @@ let
     tempel-collection
     trashed
     treesit-auto
+    # treesit-grammars.with-all-grammars
     try
     typescript-mode
     undo-tree
