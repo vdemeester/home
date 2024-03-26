@@ -299,6 +299,7 @@ file which do not already have one."
   :config
   (denote-rename-buffer-mode 1)
   (require 'denote-org-dblock)
+  (require 'denote-org-extras)
   (require 'denote-journal-extras)
   (setq denote-journal-extras-directory org-journal-dir
 	denote-journal-extras-title-format 'day-date-month-year)
