@@ -169,7 +169,7 @@
       };
     };
     swayidle = {
-      enable = true;
+      enable = false;
       events = [
         { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock --daemonize -i $HOME/desktop/pictures/lockscreen"; }
         { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock --daemonize -i $HOME/desktop/pictures/lockscreen"; }
