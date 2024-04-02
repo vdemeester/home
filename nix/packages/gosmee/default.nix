@@ -11,7 +11,7 @@ buildGoModule rec {
     repo = "gosmee";
     sha256 = "sha256-VKH0ajtLndTdW0dOY3XpixkTGy7Kvac7poFZVzj5HQU=";
   };
-  vendorSha256 = null;
+  vendorHash = null;
 
   postUnpack = ''
     printf ${version} > $sourceRoot/gosmee/templates/version

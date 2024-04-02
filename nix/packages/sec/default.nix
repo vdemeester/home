@@ -11,8 +11,8 @@ buildGoModule rec {
     repo = "sec";
     sha256 = "01xmvycdbyvcjsd1pvbd2qjn4ij99pyyw9sasyffhw0bxfnpcvyq";
   };
-  vendorSha256 = "1b8zis0hv32sh51s01n3z3nd20ayfcj4vv3m943r8d0gqd7hj7zw";
-  modSha256 = "${vendorSha256}";
+  vendorHash = "1b8zis0hv32sh51s01n3z3nd20ayfcj4vv3m943r8d0gqd7hj7zw";
+  modHash = "${vendorHash}";
 
   meta = {
     description = "Sec § — a golang opiniated dependency updater";

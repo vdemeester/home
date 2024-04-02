@@ -11,7 +11,7 @@ buildGoModule rec {
     repo = "rmapi";
     sha256 = "sha256-HXWE6688jhRQQEiZuPfuJStSQeueqoWwwa+PfneHprw=";
   };
-  vendorSha256 = "sha256-gu+BU2tL/xZ7D6lZ1ueO/9IB9H3NNm4mloCZaGqZskU=";
+  vendorHash = "Hash-gu+BU2tL/xZ7D6lZ1ueO/9IB9H3NNm4mloCZaGqZskU=";
 
   meta = {
     description = "Go app that allows you to access your reMarkable tablet files through the Cloud API";

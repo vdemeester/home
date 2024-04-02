@@ -15,7 +15,7 @@ buildGoModule rec {
     repo = "manifest-tool";
     sha256 = "sha256-KBX/VgFKm3xT1tRxKKIO3u4JZ3htkTVVnB1GqpJ0xO0=";
   };
-  vendorSha256 = null;
+  vendorHash = null;
 
   meta = {
     description = "";

@@ -10,7 +10,7 @@ buildGoModule rec {
     url = "https://git.sr.ht/~vdemeester/ram";
     sha256 = "1zjyw699cxylvgh9zakqyylmjrwxwq36g0jls5iwwm75admgqnfr";
   };
-  vendorSha256 = null;
+  vendorHash = null;
 
   meta = {
     description = "A golang opiniated continuous testing tool 🐏";
