@@ -145,7 +145,7 @@ let
     try
     typescript-mode
     undo-tree
-    use-package
+    # use-package # it's now part of built-in packages
     visual-fill-column
     visual-regexp
     vterm

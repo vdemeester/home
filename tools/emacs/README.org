@@ -11,6 +11,7 @@
 - https://github.com/drshapeless/.emacs.d/
 - https://github.com/librephoenix/nixos-config/tree/main/user/app/doom-emacs
   + https://github.com/psamim/dotfiles/blob/master/doom/config.el#L73
+- https://git.sr.ht/~sebasmonia/dotfiles/tree/master/item/.config/emacs/init.el
 
 * Packages "inspirations"
 

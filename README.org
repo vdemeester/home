@@ -1,13 +1,14 @@
 #+TITLE: =home= monorepo
 #+FILETAGS: #home infra configuration dotfiles monorepo
 
+~home~ is the monorepo containing my personal tools and infrastructure. Almost everything in
+here is built using [[https://nixos.org/nix][Nix]].
+
 - *I need to rewrite this part based on =flake.nix= and updates*.
 - Explore the =nixos-rebuild --build-host … --target-host … --flake .#host boot= as it might
   remove the need for =deploy-rs= altogether 😈
 - I need to make a *big* overall on the docs.
 
-~home~ is the monorepo containing my personal tools and infrastructure. Everything in here
-should be built using [[https://nixos.org/nix][Nix]].
 
 * Highlights
 
