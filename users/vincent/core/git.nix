@@ -112,6 +112,8 @@ in
       # };
       diff = {
         algorithm = "histogram";
+        colormoved = "default";
+        colormovedws = "allow-indentation-change";
         # external = "difft";
         # tool = "difftastic";
       };
