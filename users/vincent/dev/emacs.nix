@@ -98,6 +98,7 @@ let
     mct
     modus-themes
     multi-vterm
+    multiple-cursors
     mwim
     nerd-icons
     nix-buffer
