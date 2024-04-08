@@ -76,6 +76,7 @@ in
       core = {
         fsmonitor = "${pkgs.rs-git-fsmonitor}/bin/rs-git-fsmonitor";
         pager = "${pkgs.delta}/bin/delta";
+        abbrev = 12;
         # pager = "${pkgs.delta}/bin/delta --syntax-theme GitHub";
         # editor = "${pkgs.emacs}/bin/emacsclient -t";
       };
@@ -132,6 +133,9 @@ in
       };
       pager = {
         difftool = true;
+      };
+      pretty = {
+        fixes = "Fixes: %h (\"%s\")";
       };
       forge = {
         remote = "upstream";
