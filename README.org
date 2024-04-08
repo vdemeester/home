@@ -104,6 +104,7 @@ Repositories
 - https://github.com/foo-dogsquared/nixos-config
   + https://foo-dogsquared.github.io/nixos-config/05-using-parts-of-my-configuration/
 - https://github.com/barrucadu/nixfiles/tree/master
+- https://github.com/EmergentMind/nix-config
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
