@@ -18,6 +18,11 @@
   ("M-s M-y" . consult-yank-pop)
   ("M-s M-s" . consult-outline))
 
+(use-package consult-xref
+  :config
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref))
+
 ;; https://github.com/oantolin/embark/blob/master/embark-consult.el
 (use-package embark
   :unless noninteractive
