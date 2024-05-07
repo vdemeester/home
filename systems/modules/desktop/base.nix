@@ -43,6 +43,7 @@ in
       enableGhostscriptFonts = true;
       fonts = with pkgs; [
         liberation_ttf
+        cascadia-code
         corefonts
         dejavu_fonts
         emojione
