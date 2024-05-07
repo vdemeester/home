@@ -63,6 +63,7 @@ let
     editorconfig
     edit-indirect
     eldoc-box
+    emacs-everywhere
     embark
     embark-consult
     envrc
@@ -145,11 +146,12 @@ let
     # treesit-grammars.with-all-grammars
     try
     typescript-mode
-    undo-tree
+    # undo-tree
     # use-package # it's now part of built-in packages
     visual-fill-column
     visual-regexp
     vterm
+    vundo
     web-mode
     wgrep
     with-editor
