@@ -30,22 +30,10 @@
   :config
   (save-place-mode 1))
 
-;; (use-package undo-tree
-;;   :unless noninteractive
-;;   :hook (after-init . global-undo-tree-mode)
-;;   :config
-;;   (setq-default undo-tree-visualizer-timestamps t
-;;                 undo-tree-enable-undo-in-region t
-;; 	        undo-tree-history-directory-alist `(("." . ,(no-littering-expand-var-file-name "backup/")))))
-
-(use-package vundo                      ; 11oct2023 `undo-tree' -> `vundo', 25oct2023 prettify
+(use-package vundo
   :bind (("M-u"   . undo)
          ("M-U"   . undo-redo)
-         ("C-x u" . vundo))
-  ;; :custom
-  ;; (vundo-compact-display -1)
-  ;; (vundo-glyph-alist vundo-unicode-symbols)
-  )
+         ("C-x u" . vundo)))
 
 (use-package whitespace
   :unless noninteractive
