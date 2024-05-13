@@ -57,16 +57,13 @@ in
           "vdemeester.cachix.org-1:eZWNOrLR9A9szeMahn9ENaoT9DB3WgOos8va+d2CU44="
         ];
       };
-      # FIXME handle this depending on the version
-      # 21.05 has the following
-      # daemonIONiceLevel, daemonNiceLevel
-      # 21.11 and above
-      # daemonCPUSchedPolicy, daemonIOSchedClass, daemonIOSchedPriority
-
-      #daemonIONiceLevel = 5;
-      #daemonNiceLevel = 10;
-      daemonIOSchedPriority = 5;
-      daemonCPUSchedPolicy = "batch";
+      # On laptops at least, make the daemon and builders low priority
+      # to have a responding system while building
+      daemonIOSchedClass = "idle";
+      daemonCPUSchedPolicy = "idle";
+      # FIXME: On servers, we may change this.
+      # daemonIOSchedPriority = 5;
+      # daemonCPUSchedPolicy = "batch";
 
       # if hydra is down, don't wait forever
       extraOptions = ''
