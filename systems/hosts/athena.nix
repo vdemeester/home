@@ -47,7 +47,6 @@ in
     # };
   };
 
-  profiles.base.systemd-boot = lib.mkForce false;
   core.boot.systemd-boot = lib.mkForce false;
   # boot.cleanTmpDir = lib.mkForce false;
   # boot.loader.systemd-boot.enable = lib.mkForce false;
