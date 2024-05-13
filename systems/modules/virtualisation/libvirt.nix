@@ -15,7 +15,7 @@ in
       virtualisation.libvirtd = {
         enable = true;
         # Used for UEFI boot of Home Assistant OS guest image
-        qemuOvmf = true;
+        qemu.ovmf.enable = true;
       };
       security.polkit.enable = true; # 22.11: libvirtd requires poltkit to be enabled
       environment.systemPackages = with pkgs; [ qemu vde2 libosinfo ];
