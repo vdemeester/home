@@ -8,7 +8,7 @@ buildGoModule rec {
   src = fetchgit {
     url = "https://git.sr.ht/~vdemeester/vanityurl";
     rev = "v${version}";
-    sha256 = "05cj3760z3b7z6schp85hfmirfzwkgnx6big0b8j6d8wn9nls1zc";
+    sha256 = "sha256-7AdNbbIcNSPRAi8u0+2b/Lscq4MFXci0+WeND8wZkhU=";
   };
-  vendorHash = "0sqa1gajwb9gha1rq7aia1klny4pgxf526qmkhabg0g6zb3d5vm9";
+  vendorHash = "sha256-qe7SxvrmgbcUnBUbUVx/l3hLZ1BRHZyDgi8tLtULCms=";
 }
