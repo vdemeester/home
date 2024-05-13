@@ -41,7 +41,9 @@ in
   };
 
   nix = {
-    trustedUsers = [ "vincent" ];
+    settings = {
+      trusted-users = [ "vincent" ];
+    };
     sshServe.keys = authorizedKeys;
   };
 

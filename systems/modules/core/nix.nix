@@ -40,7 +40,6 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = [ pkgs.git ];
     nix = {
-      allowedUsers = [ "@wheel" ];
       settings = {
         cores = cfg.buildCores;
         substituters = cfg.localCaches ++ [
@@ -94,8 +93,11 @@ in
       };
       nrBuildUsers = 32;
       #nrBuildUsers = config.nix.maxJobs * 2;
-      trustedUsers = [ "root" "@wheel" ];
-      useSandbox = true;
+      settings = {
+        sandbox = true;
+        allowed-users = [ "@wheel" ];
+        trusted-users = [ "root" "@wheel" ];
+      };
     };
 
     # `nix-daemon` will hit the stack limit when using `nixFlakes`.
