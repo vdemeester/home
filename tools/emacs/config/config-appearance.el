@@ -30,7 +30,11 @@
     (set-fontset-font t 'symbol "Apple Color Emoji")
     (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
     (set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
-    (set-fontset-font t 'symbol "Symbola" nil 'append)))
+    (set-fontset-font t 'symbol "Symbola" nil 'append))
+  (set-face-attribute 'fill-column-indicator nil
+                      :foreground "#717C7C" ; katana-gray
+                      :background "transparent")
+  (global-display-fill-column-indicator-mode 1))
 
 (use-package fontaine
   ;; :if window-system
