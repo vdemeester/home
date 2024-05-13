@@ -121,7 +121,7 @@ in
         ln -sv ${../../../nix/overlays} $out/overlays
       '';
 
-      stateVersion = "20.03";
+      stateVersion = "22.05";
     };
   };
 }

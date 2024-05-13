@@ -18,7 +18,7 @@ in
       # manpages are broken on 21.05 and home-manager (for some reason..)
       manual.manpages.enable = false;
     }] ++ [{
-      home.stateVersion = "21.05";
+      home.stateVersion = "22.05";
     }]
   );
 }
