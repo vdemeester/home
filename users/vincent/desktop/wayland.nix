@@ -88,20 +88,6 @@
         };
       }];
     };
-    mako = {
-      enable = true;
-      font = "Ubuntu Mono 12";
-      defaultTimeout = 5000; # 5s timeout
-      groupBy = "app-name,summary";
-      extraConfig = ''
-        on-button-left=dismiss
-        on-button-middle=invoke-default-action
-        on-button-right=dismiss
-        
-        [mode=do-not-disturb]
-        invisible=1
-      '';
-    };
     kitty = {
       enable = true;
       # shellIntegration.enableZshIntegration = true;
@@ -148,15 +134,17 @@
     };
     kanshi = {
       enable = true;
-      profiles = {
-        "home-undocked" = {
-          outputs = [
+      settings = [
+        {
+          profile.name = "home-undocked";
+          profile.outputs = [
             # Output eDP-1 'AU Optronics 0xD291 Unknown'
             { criteria = "eDP-1"; status = "enable"; position = "0,0"; mode = "1920x1200"; scale = 1.0; }
           ];
-        };
-        "home-docked" = {
-          outputs = [
+        }
+        {
+          profile.name = "home-docked";
+          profile.outputs = [
             # Old: Output eDP-1 'AU Optronics 0xD291 Unknown'
             # Output eDP-1 'Unknown 0xD291 Unknown'
             # Output DP-5 'LG Electronics LG ULTRAWIDE 0x0005D10C' (focused)
@@ -165,8 +153,22 @@
             # Use it as a "shareable" screen when needed
             { criteria = "eDP-1"; status = "enable"; position = "1460,1440"; mode = "1920x1200"; scale = 1.0; }
           ];
-        };
-      };
+        }
+      ];
+    };
+    mako = {
+      enable = true;
+      font = "Ubuntu Mono 12";
+      defaultTimeout = 5000; # 5s timeout
+      groupBy = "app-name,summary";
+      extraConfig = ''
+        on-button-left=dismiss
+        on-button-middle=invoke-default-action
+        on-button-right=dismiss
+        
+        [mode=do-not-disturb]
+        invisible=1
+      '';
     };
     swayidle = {
       enable = false;
