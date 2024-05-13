@@ -17,11 +17,8 @@ in
     ./binfmt.nix
   ];
 
-  boot = {
-    cleanTmpDir = true;
-  };
   # FIXME fix tmpOnTmpfs
-  systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
+  # systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
 
   security.sudo = {
     extraConfig = ''
