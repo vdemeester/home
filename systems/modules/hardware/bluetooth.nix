@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (lib) mkEnableOption mkIf mkMerge versionOlder;
+  inherit (lib) mkEnableOption mkIf mkMerge;
   cfg = config.modules.hardware.bluetooth;
-  stable = versionOlder config.system.nixos.release "21.05";
 in
 {
   options.modules.hardware.bluetooth = {
@@ -21,20 +20,11 @@ in
         # support, so it must be selected here.
         package = pkgs.pulseaudioFull;
       };
-    })
-    (mkIf (stable && config.modules.hardware.audio.enable) {
-      hardware.bluetooth.extraConfig = ''
-        [General]
-        Enable=Source,Sink,Media,Socket
-      '';
-    })
-    (mkIf ((!stable) && config.modules.hardware.audio.enable)
-      {
-        hardware.bluetooth.settings = {
-          General = {
-            Enable = "Source,Sink,Media,Socket";
-          };
+      hardware.bluetooth.settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
         };
-      })
+      };
+    })
   ]);
 }

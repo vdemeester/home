@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (lib) mkEnableOption mkIf mkMerge mkOption types;
+  inherit (lib) mkEnableOption mkIf mkMerge mkOption types versionOlder;
   cfg = config.modules.hardware.audio;
+  stable = versionOlder config.system.nixos.release "24.05";
 in
 {
   options.modules.hardware.audio = {
@@ -38,6 +39,7 @@ in
         pulse.enable = true;
         wireplumber = {
           enable = true;
+        } // (if stable then { } else {
           configPackages = [
             (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
               bluez_monitor.properties = {
@@ -48,7 +50,8 @@ in
               }
             '')
           ];
-        };
+        });
+      } // (if stable then { } else {
         extraConfig = {
           pipewire-pulse = {
             "50-network-party.conf" = {
@@ -66,7 +69,7 @@ in
             };
           };
         };
-      };
+      });
       networking.firewall = {
         allowedTCPPorts = [ 6001 6002 ];
       };

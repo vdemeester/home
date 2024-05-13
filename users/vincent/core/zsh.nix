@@ -1,6 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, nixosConfig, pkgs, ... }:
 let
   shellConfig = import ./shell.nix { inherit config lib pkgs; };
+  stable = lib.versionOlder nixosConfig.system.nixos.release "24.05";
 in
 {
   home.packages = with pkgs; [
@@ -18,7 +19,6 @@ in
 
   programs.zsh = {
     enable = true;
-    autosuggestion.enable = true;
     enableCompletion = true;
     autocd = true;
     dotDir = ".config/zsh";
@@ -163,5 +163,9 @@ in
       }
     ];
     shellAliases = shellConfig.aliases;
-  };
+  } // (if stable then {
+    enableAutosuggestions = true;
+  } else {
+    autosuggestion.enable = true;
+  });
 }
