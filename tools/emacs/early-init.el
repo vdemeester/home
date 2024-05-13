@@ -100,7 +100,8 @@
 
 (defconst font-height 130
   "Default font-height to use.")
-(defconst font-family-mono "Ubuntu Mono"
+;; 2024-10-05: Switching from Ubuntu Mono to Cascadia Mono
+(defconst font-family-mono "Cascadia Mono"
   "Default monospace font-family to use.")
 (defconst font-family-sans "Ubuntu Sans"
   "Default sans font-family to use.")
@@ -117,9 +118,12 @@
 (when (member font-family-mono (font-family-list))
   (set-face-attribute 'default nil
                       :family font-family-mono
-                      :height font-height)
+                      :height font-height
+		      :weight 'semi-light)
   (set-face-attribute 'fixed-pitch nil
-                      :family font-family-mono))
+                      :family font-family-mono
+		      :weight 'medium
+		      :height 1.0))
 (when (member font-family-sans (font-family-list))
   (set-face-attribute 'variable-pitch nil
                       :family font-family-sans

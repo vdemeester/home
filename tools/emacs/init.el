@@ -157,6 +157,21 @@
   (not *sys/full*)
   "Is it a light system ?")
 
+;; If font-family-mono or font-family-sans are not available, use the default Emacs face
+(when (member font-family-mono (font-family-list))
+  (set-face-attribute 'default nil
+                      :family font-family-mono
+                      :height font-height
+		      :weight 'semi-light)
+  (set-face-attribute 'fixed-pitch nil
+                      :family font-family-mono
+		      :weight 'medium
+		      :height 1.0))
+(when (member font-family-sans (font-family-list))
+  (set-face-attribute 'variable-pitch nil
+                      :family font-family-sans
+                      :weight 'regular))
+
 (vde/el-load-dir (concat user-emacs-directory "/config/"))
 
 (if (file-exists-p (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el")))

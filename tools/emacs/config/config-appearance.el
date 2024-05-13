@@ -37,9 +37,11 @@
   :bind (("C-c f s" . fontaine-set-preset)
 	 ("C-c f S" . fontaine-set-face-font))
   :init
+  ;; Test with cascadi code/cascadia mono
+  ;; Use some global constant (from `early-init.el')
   (setq fontaine-presets
 	'((small
-	   :default-family "UbuntuMono Nerd Font"
+	   :default-family font-family-mono
 	   :default-height 110
 	   :variable-pitch-family "Ubuntu Nerd Font")
 	  (regular) ; like this it uses all the fallback values and is named `regular'
@@ -58,7 +60,7 @@
 	   ;; I keep all properties for didactic purposes, but most can be
 	   ;; omitted.  See the fontaine manual for the technicalities:
 	   ;; <https://protesilaos.com/emacs/fontaine>.
-	   :default-family "UbuntuMono Nerd Font"
+	   :default-family font-family-mono
 	   :default-weight regular
 	   :default-height 130
 	   :fixed-pitch-family nil ; falls back to :default-family
