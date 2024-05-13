@@ -47,10 +47,6 @@ jobs:
           remove-large-packages: 'true'
           remove-cached-tools: 'true'
           remove-swapfile: 'true'
-      - name: Build
-        run: |
-          echo "Free space:"
-          df -h
       - uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
       - uses: cachix/install-nix-action@8887e596b4ee1134dae06b98d573bd674693f47c # v26
       - uses: cachix/cachix-action@18cf96c7c98e048e10a83abd92116114cd8504be # v14
@@ -64,7 +60,8 @@ jobs:
       - uses: dbhi/qus/action@main
         with:
           targets: aarch64
-      - run: |
+      - name: build
+        run: |
           # FIXME temporary hack to make system build successfully
           #       I need to create dumb file for mkOutOfStoreSymlink
           sudo mkdir -p /home/vincent/src/home/tools/emacs /home/vincent/desktop/documents
