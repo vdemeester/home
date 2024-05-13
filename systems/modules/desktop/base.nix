@@ -27,7 +27,10 @@ in
     boot = {
       loader.systemd-boot.netbootxyz.enable = config.core.boot.systemd-boot;
       # /tmp to be tmpfs
-      tmpOnTmpfs = true;
+      tmp = {
+        useTmpfs = true;
+        cleanOnBoot = true;
+      };
       # Enable Plymouth on desktops
       plymouth = {
         enable = true;
