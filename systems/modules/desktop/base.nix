@@ -44,7 +44,7 @@ in
       # enableFontDir = true;
       fontDir.enable = true;
       enableGhostscriptFonts = true;
-      fonts = with pkgs; [
+      packages = with pkgs; [
         liberation_ttf
         cascadia-code
         corefonts
@@ -94,7 +94,7 @@ in
       ++ lib.optionals config.virtualisation.docker.enable [ "interface-name:docker0" ]
       # Do not manager libvirt interfaces
       ++ lib.optionals config.virtualisation.libvirtd.enable [ "interface-name:virbr*" ];
-      packages = with pkgs; [ networkmanager-openvpn ];
+      plugins = with pkgs; [ networkmanager-openvpn ];
       # dispatcherScripts = [{
       #   # https://askubuntu.com/questions/1271491/disable-wifi-if-lan-is-connected
       #   source = pkgs.writeText "wifi-wired-exclusive" ''
