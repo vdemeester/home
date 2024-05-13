@@ -8,9 +8,9 @@ buildGoModule rec {
   src = fetchgit {
     inherit rev;
     url = "https://git.sr.ht/~vdemeester/ape";
-    sha256 = "0f2rfmpqy66ris4gqh58dr9qvz8fmskldh41kpniy5vr0jxqf3av";
+    sha256 = "sha256-Ww2HuwR5Fx/tnYHARqeuDv2NU26oQPyIjtkYj291WTg=";
   };
-  vendorHash = "1frjpg21jm543idja5yj96bl5wda1vpr1cp4vds2pwxnkg267d2w";
+  vendorHash = "sha256-XLRjxJu28yt02+SykO8OqvFCl0nSFyVbHKRUGcS7Mrs=";
 
   meta = {
     description = "a git mirror *upstream* updater ";
