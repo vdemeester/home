@@ -27,12 +27,13 @@ in
     };
   };
   config = mkIf cfg.enable {
-    warnings = [ "The option 'profiles.ssh' is deprecated, use 'modules.services.ssh' instead" ];
     services = {
       openssh = {
         enable = true;
         startWhenNeeded = false;
-        forwardX11 = cfg.forwardX11;
+        settings = {
+          X11Forwarding = cfg.forwardX11;
+        };
         # listenAddresses = map
         # Move this for kerkouane only
         extraConfig = ''
