@@ -38,7 +38,8 @@
 
   ;; Handle long file names
   (add-hook 'dired-mode-hook #'toggle-truncate-lines)
-  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+  (add-hook 'dired-mode-hook #'dired-hide
+	    -details-mode)
 
   (defun vde/dired-up ()
     "Go to previous directory."
@@ -374,6 +375,9 @@ See the man page `ls(1)' for details."
       (message "Default sorted by name")))
 
     (dired-sort-other (mapconcat 'identity arg-list " "))))
+
+(use-package casual-dired
+    :bind (:map dired-mode-map ("C-o" . 'casual-dired-tmenu)))
 
 (provide 'config-dired)
 ;; config-dired.el ends here
