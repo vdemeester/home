@@ -33,7 +33,7 @@
     (set-fontset-font t 'symbol "Symbola" nil 'append))
   (set-face-attribute 'fill-column-indicator nil
                       :foreground "#717C7C" ; katana-gray
-                      :background "transparent")
+		      )
   (global-display-fill-column-indicator-mode 1))
 
 (use-package fontaine
