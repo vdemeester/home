@@ -43,6 +43,7 @@ let
     beginend
     cape # FIXME: configure
     color-identifiers-mode
+    conner
     consult
     consult-dir
     consult-notes

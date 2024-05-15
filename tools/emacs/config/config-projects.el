@@ -8,7 +8,6 @@
          ("C-x p s" . vde-project-vterm)
          ("C-x p X" . vde/run-in-project-vterm))
   :config
-
   (setq vde/project-local-identifier '(".project")) ;; "go.mod"
   (setq project-switch-commands
         '((?f "File" project-find-file)
@@ -72,6 +71,9 @@ switch to it. Otherwise, create a new vterm shell."
            (vterm-buffer (get-buffer default-project-vterm-name)))
       (vde-project-vterm (read-string "Command: "))))
   )
+
+(use-package conner
+  :bind (("C-x p C" . conner-run-project-command)))
 
 (provide 'config-projects)
 ;;; config-projects.el ends here
