@@ -89,7 +89,7 @@ in
         enable = true;
         docker = {
           enable = true;
-          package = pkgs.docker_24;
+          package = pkgs.docker_26;
         };
         podman.enable = true;
         buildkit = {

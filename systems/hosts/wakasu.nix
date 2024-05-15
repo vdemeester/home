@@ -130,7 +130,7 @@ in
   virtualisation.podman.autoPrune.enable = true;
   environment.systemPackages = with pkgs; [
     # docker client only
-    (docker_24.override { clientOnly = true; })
+    (docker_26.override { clientOnly = true; })
     officemode
     roadmode
     # obsidian # electron is eol...
