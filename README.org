@@ -108,6 +108,9 @@ Repositories
 - https://github.com/shahinism/45r4r/
 - https://github.com/wimpysworld/nix-config
   This one is very interesting in how it is shaped (the mixins, …)
+- https://github.com/Hoverbear-Consulting/flake
+- https://github.com/jnsgruk/nixos-config
+- https://gitlab.com/ahoneybun/nix-configs
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
