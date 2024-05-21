@@ -111,6 +111,7 @@ Repositories
 - https://github.com/Hoverbear-Consulting/flake
 - https://github.com/jnsgruk/nixos-config
 - https://gitlab.com/ahoneybun/nix-configs
+- https://github.com/akirak/homelab
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
