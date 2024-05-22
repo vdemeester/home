@@ -106,6 +106,7 @@ let
     nerd-icons
     nix-buffer
     nix-mode
+    nix-ts-mode
     nixpkgs-fmt
     no-littering
     ob-async
