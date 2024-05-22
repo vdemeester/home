@@ -16,7 +16,6 @@
                ("^"           . vde/dired-up)
                ("<backspace>" . vde/dired-up)
                ("M-n"         . vde/dired-down)
-               ("RET"         . find-file-reuse-dir-buffer)
                ("!"           . vde/sudired)
                ("<prior>"     . beginend-dired-mode-goto-beginning)
                ("<next>"      . beginend-dired-mode-goto-end)))
@@ -144,7 +143,7 @@ This relies on the external 'fd' executable."
 
 (use-package dired-x
   :after dired
-  :bind ("C-x C-j" . dired-jump)
+  :bind (("C-x C-j" . dired-jump))
   :commands (dired-jump dired-omit-mode)
   :config
   (setq-default dired-omit-files (concat dired-omit-files "\\|^\\.+$\\|^\\..+$")
