@@ -2,12 +2,11 @@
 
 {
   home.packages = with pkgs; [
-    niv
-    nixpkgs-fmt
-    nix-update
-    nixpkgs-review
+    nix-output-monitor
     nix-prefetch-scripts
+    nix-update
+    nixpkgs-fmt
+    nixpkgs-review
     nurl
-    # rnix-lsp
   ];
 }
