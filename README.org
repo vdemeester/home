@@ -82,8 +82,6 @@ Website sources and builders/deployers.
 
 Repositories
 - [[https://github.com/jordanisaacs/dotfiles][https://github.com/jordanisaacs/dotfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/jordanisaacs.dotfiles/][src]]
-- [[https://git.sr.ht/~akirak/nix-config][https://git.sr.ht/~akirak/nix-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/akirak.nix-config/][src]]
-  + [[https://github.com/akirak/nix-desktop][https://github.com/akirak/nix-desktop]]
 - [[https://github.com/chvp/nixos-config][https://github.com/chvp/nixos-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/chvp.nixos-config/][src]]
 - [[https://github.com/gytis-ivaskevicius/nixfiles][https://github.com/gytis-ivaskevicius/nixfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/gytis-ivaskevicius.nixfiles/][src]]
 - [[https://github.com/davidtwco/veritas]] — [[file:/net/sakhalin.home/export/gaia/src/configs/davidtwco.veritas/][src]]
@@ -93,7 +91,6 @@ Repositories
 - https://github.com/hlissner/dotfiles/ — [[file:/net/sakhalin.home/export/gaia/src/configs/hlissner.dotfiles/][src]]
 - [[https://github.com/Mic92/dotfiles][https://github.com/Mic92/dotfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/Mic92.dotfiles/][src]]
 - [[https://github.com/lovesegfault/nix-config][https://github.com/lovesegfault/nix-config]]
-- [[https://github.com/utdemir/dotfiles]]
 - [[https://github.com/bqv/nixrc][https://github.com/bqv/nixrc]]
 - [[https://github.com/leotaku/nixos-config]]
 - [[https://github.com/rasendubi/dotfiles]]
@@ -112,6 +109,8 @@ Repositories
 - https://github.com/jnsgruk/nixos-config
 - https://gitlab.com/ahoneybun/nix-configs
 - https://github.com/akirak/homelab
+  + [[https://git.sr.ht/~akirak/nix-config][https://git.sr.ht/~akirak/nix-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/akirak.nix-config/][src]]
+  + [[https://github.com/akirak/nix-desktop][https://github.com/akirak/nix-desktop]]
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
