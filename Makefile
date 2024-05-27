@@ -22,6 +22,16 @@ host/kerkouane/boot:
 host/kerkouane/switch:
 	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@kerkouane.vpn --flake .#kerkouane switch
 
+host/demeter/boot:
+	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@192.168.1.182 --flake .#demeter boot
+host/demeter/switch:
+	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@192.168.1.182 --flake .#demeter switch
+host/athena/boot:
+	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@192.168.1.183 --flake .#athena boot
+host/athena/switch:
+	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@192.168.1.183 --flake .#athena switch
+
+
 boot:
 	sudo nixos-rebuild --flake .# boot
 switch:
