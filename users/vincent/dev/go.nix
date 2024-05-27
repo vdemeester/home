@@ -23,7 +23,7 @@
     my.ram
     my.yaspell
     # not really go but still
-    my.gosmee
+    gosmee
     # cue
     deptree
   ];
