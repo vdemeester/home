@@ -13,7 +13,8 @@
   (use-package combobulate
     :preface
     (unless (package-installed-p 'combobulate)
-      (package-vc-install "https://github.com/mickeynp/combobulate"))
+      (package-vc-install '(combobulate :url "https://github.com/mickeynp/combobulate"
+					:branch "development")))
     ;; You can customize Combobulate's key prefix here.
     ;; Note that you may have to restart Emacs for this to take effect!
     (setq combobulate-key-prefix "C-c o")
@@ -31,10 +32,7 @@
        (typescript-ts-mode . combobulate-mode)
        (json-ts-mode . combobulate-mode)
        (tsx-ts-mode . combobulate-mode)
-       (go-ts-mode . combobulate-mode))
-    ;; Amend this to the directory where you keep Combobulate's source
-    ;; code.
-    :load-path ("path-to-git-checkout-of-combobulate")))
+       (go-ts-mode . combobulate-mode))))
 
 (provide 'programming-treesitter)
 ;;; programming-treesitter.el ends here
