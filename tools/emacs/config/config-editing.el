@@ -171,5 +171,11 @@ If region is active, add its contents to the new buffer."
 (use-package surround  
   :bind-keymap ("M-'" . surround-keymap))
 
+(use-package substitute
+  :bind (("M-<insert> s" . substitute-target-below-point)
+	 ("M-<insert> r" . substitute-target-above-point)
+	 ("M-<insert> d" . substitute-target-in-defun)
+	 ("M-<insert> b" . substitute-target-in-buffer)))
+
 (provide 'config-editing)
 ;;; config-editing.el ends here

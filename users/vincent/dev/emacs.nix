@@ -140,6 +140,7 @@ let
     scratch
     shr-tag-pre-highlight
     smartparens
+    substitute
     surround
     symbol-overlay
     tempel
