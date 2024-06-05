@@ -69,6 +69,7 @@ let
     emacs-everywhere
     embark
     embark-consult
+    emms
     envrc
     eshell-prompt-extras
     esup
