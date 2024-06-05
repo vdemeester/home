@@ -4,7 +4,6 @@
 ;;; Code:
 (use-package nix-ts-mode
   :if *nix*
-  :after (lsp)
   :mode ("\\.nix\\'" "\\.nix.in\\'"))
 
 (use-package nix-drv-mode

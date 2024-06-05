@@ -30,9 +30,10 @@
                                                (replace-regexp-in-string " " "_" testrunname)))))
       (go-test--go-test (concat "-run " gotest "\\$ .")))))
 
-(use-package go-mode
-  :hook
-  (go-mode . go-ts-mode-hook))
+(use-package go-ts-mode
+  :mode (("\\.go$" . go-ts-mode)
+         ("\\.go" . go-ts-mode)
+         ("\\.go\\'" . go-ts-mode)))
 
 (provide 'programming-go)
 ;;; programming-go.el ends here

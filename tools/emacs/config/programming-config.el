@@ -7,10 +7,10 @@
   "Where all my sources are.")
 (set-register ?s `(file . ,src-dir))
 
-(use-package yaml-mode
+(use-package yaml-ts-mode
   :mode "\\.ya?ml\\'"
-  :hook ((yaml-mode . highlight-indentation-mode)
-         (yaml-mode . highlight-indentation-current-column-mode)))
+  :hook ((yaml-ts-mode . highlight-indentation-mode)
+         (yaml-ts-mode . highlight-indentation-current-column-mode)))
 
 (use-package conf-mode
   :mode ("\\.to?ml\\'" . conf-toml-mode))
