@@ -93,6 +93,7 @@ let
     hl-todo
     htmlize
     ibuffer-vc
+    jinx
     json-mode
     lin
     magit
@@ -186,6 +187,7 @@ in
     et
     languagetool
     asciidoctor
+    enchant
   ];
   programs.emacs = {
     enable = true;

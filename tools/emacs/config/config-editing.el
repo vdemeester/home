@@ -177,5 +177,10 @@ If region is active, add its contents to the new buffer."
 	 ("M-<insert> d" . substitute-target-in-defun)
 	 ("M-<insert> b" . substitute-target-in-buffer)))
 
+(use-package jinx
+  :hook (emacs-startup . global-jinx-mode)
+  :bind (([remap ispell-word] . jinx-correct) ;; ("M-$" . jinx-correct)
+         ("C-M-$" . jinx-languages)))
+
 (provide 'config-editing)
 ;;; config-editing.el ends here
