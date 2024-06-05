@@ -59,6 +59,10 @@
          ("C-c j l" . avy-goto-line)
 	 (:map isearch-mode-map ("C-j" . avy-isearch))))
 
+(use-package casual-avy
+  :unless noninteractive
+  :bind ("C-c j j" . casual-avy-tmenu))
+
 (use-package mwim
   :unless noninteractive
   :commands (mwim-beginning-of-code-or-line mwim-end-of-code-or-line)

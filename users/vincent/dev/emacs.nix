@@ -42,6 +42,7 @@ let
     bbdb
     beginend
     cape # FIXME: configure
+    casual-avy
     casual-dired
     color-identifiers-mode
     conner
