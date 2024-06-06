@@ -49,7 +49,7 @@ let
     consult
     consult-dir
     consult-notes
-    corfu # FIXME: configure
+    corfu
     dash
     dape
     delight
