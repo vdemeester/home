@@ -96,6 +96,7 @@ let
     ibuffer-vc
     jinx
     json-mode
+    ligature
     lin
     magit
     magit-popup
