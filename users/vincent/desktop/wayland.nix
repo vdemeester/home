@@ -95,7 +95,7 @@
       settings = {
         term = "xterm-256color";
         close_on_child_death = "yes";
-        font_family = "Ubuntu Mono";
+        font_family = "JetBrains Mono";
         tab_bar_edge = "top";
         listen_on = "unix:/tmp/my kitty";
         allow_remote_control = "yes";
