@@ -41,7 +41,6 @@
   :bind (("C-c f s" . fontaine-set-preset)
 	 ("C-c f S" . fontaine-set-face-font))
   :init
-  ;; Test with cascadi code/cascadia mono
   ;; Use some global constant (from `early-init.el')
   (setq fontaine-presets
 	'((small

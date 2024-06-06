@@ -101,6 +101,7 @@
 (defconst font-height 130
   "Default font-height to use.")
 ;; 2024-10-05: Switching from Ubuntu Mono to Cascadia Mono
+;; 2024-96-06: Switching from Cascadia Mono to JetBrains Mono
 (defconst font-family-mono "JetBrains Mono"
   "Default monospace font-family to use.")
 (defconst font-family-sans "Ubuntu Sans"
