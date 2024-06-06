@@ -4,6 +4,11 @@
 	:type "vterm"
 	:workdir nil
 	:environment nil)
+ (:name "make switch"
+	:command "make switch"
+	:type "vterm"
+	:workdir nil
+	:environment nil)
  (:name "host/aomi/boot"
 	:command "make host/aomi/boot"
 	:type "compile"
