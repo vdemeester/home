@@ -21,7 +21,28 @@
 (use-package consult-xref
   :config
   (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref))
+        xref-show-definitions-function #'consult-xref)
+  (defvar consult--xref-history nil
+    "History for the `consult-recent-xref' results.")
+
+  (defun consult-recent-xref (&optional markers)
+    "Jump to a marker in MARKERS list (defaults to `xref--history'.
+
+The command supports preview of the currently selected marker position.
+The symbol at point is added to the future history."
+    (interactive)
+    (consult--read
+     (consult--global-mark-candidates
+      (or markers (flatten-list xref--history)))
+     :prompt "Go to Xref: "
+     :annotate (consult--line-prefix)
+     :category 'consult-location
+     :sort nil
+     :require-match t
+     :lookup #'consult--lookup-location
+     :history '(:input consult--xref-history)
+     :add-history (thing-at-point 'symbol)
+     :state (consult--jump-state))))
 
 ;; https://github.com/oantolin/embark/blob/master/embark-consult.el
 (use-package embark
