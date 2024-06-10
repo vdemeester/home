@@ -42,6 +42,7 @@ in
   # (versionOlder nixosConfig.system.nixos.release "21.11");
   manual.manpages.enable = true;
 
+  # FIXME: remove this, we don't need `ape.conf' everywhere
   xdg.configFile."ape.conf".source = ./ape/ape.conf;
   xdg.configFile."nixpkgs/config.nix".text = ''
     {
