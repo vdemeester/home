@@ -15,7 +15,7 @@
     binutils
     cmake
     codespell
-    # devenv
+    devenv
     difftastic
     fswatch
     gnumake
