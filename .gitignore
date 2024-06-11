@@ -5,6 +5,7 @@ hostname
 docs/sitemap.org
 tools/emacs/emacs.pdmp
 tools/emacs/recentf
+tools/emacs/elpa
 qemu
 accounts.nix
 assets/*
