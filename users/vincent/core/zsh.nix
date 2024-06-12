@@ -84,9 +84,9 @@ in
     '';
     loginExtra = ''
       # export GOPATH=${config.home.homeDirectory}
-      # if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then
-      #   exec sway
-      # fi
+      if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then
+        exec Hyprland
+      fi
     '';
     profileExtra = ''
       if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
