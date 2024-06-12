@@ -151,7 +151,7 @@
   "Do we have git?")
 
 (defvar *sys/full*
-  (member (vde/short-hostname) '("wakasu" "naruhodo")) ; "naruhodo" <- put naruhodo back in
+  (member (vde/short-hostname) '("wakasu" "naruhodo"))
   "Is it a full system ?")
 (defvar *sys/light*
   (not *sys/full*)
@@ -172,6 +172,9 @@
                       :family font-family-sans
                       :weight 'regular))
 
+;; 2024-07-12: I wonder if I should be explicit instead, as using
+;; `require' explicitly. The benefit would be that I decide the order
+;; they load instead of relying on file-system.
 (vde/el-load-dir (concat user-emacs-directory "/config/"))
 
 (if (file-exists-p (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el")))
