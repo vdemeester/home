@@ -38,6 +38,9 @@
 
 (defconst src-home-dir (expand-file-name "~/src/home" org-directory)
   "Directory of my home monorepository, can contain todos there.")
+;; 2024-06-11: Should it be in home ? I've been going back and forth on this
+(defconst src-www-dir (expand-file-name "~/src/www" org-directory)
+  "Directory of my www repository, can contain todos there.")
 
 (defconst org-babel-library-file (expand-file-name "org_library_of_babel.org" org-directory)
   "Org babel library.")
@@ -152,7 +155,7 @@
 			(lambda (directory)
 			  (directory-files-recursively
 			   directory org-agenda-file-regexp))
-			`(,org-projects-dir ,org-areas-dir ,org-resources-dir ,org-journal-dir ,src-home-dir ,(expand-file-name "~/src/osp/tasks")))))
+			`(,org-projects-dir ,org-areas-dir ,org-resources-dir ,org-journal-dir ,src-home-dir ,src-www-dir ,(expand-file-name "~/src/osp/tasks")))))
   (defun vde/reload-org-agenda-files ()
     "Reload org-agenda-files variables with up-to-date org files"
     (interactive)
@@ -175,6 +178,11 @@
 				    (--map `(,it :maxlevel . 3)))
 				   (->>
 				    (directory-files-recursively src-home-dir ".org$")
+				    (--remove (s-starts-with? "." it))
+				    (--map (format "%s" it))
+				    (--map `(,it :maxlevel . 2)))
+				   (->>
+				    (directory-files-recursively src-www-dir ".org$")
 				    (--remove (s-starts-with? "." it))
 				    (--map (format "%s" it))
 				    (--map `(,it :maxlevel . 2)))
