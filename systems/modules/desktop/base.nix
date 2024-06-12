@@ -45,7 +45,6 @@ in
       fontDir.enable = true;
       enableGhostscriptFonts = true;
       packages = with pkgs; [
-        liberation_ttf
         cascadia-code
         corefonts
         dejavu_fonts
@@ -53,30 +52,33 @@ in
         feh
         fira
         fira-code
-        fira-code-symbols
         fira-code-nerdfont
+        fira-code-symbols
         fira-mono
         font-awesome
         go-font
-        hasklig
+        #hasklig
         inconsolata
         inconsolata-nerdfont
-        iosevka
-        iosevka-comfy.comfy
+        #iosevka
+        #iosevka-comfy.comfy
         jetbrains-mono
+        liberation_ttf
+	maple-mono
+	maple-mono-NF
         nerdfonts
         noto-fonts
         noto-fonts-cjk
         noto-fonts-emoji
         noto-fonts-extra
         overpass
-        symbola
+        #source-code-pro
         sudo-font
-        source-code-pro
+        symbola
         twemoji-color-font
         ubuntu_font_family
         unifont
-        victor-mono
+        #victor-mono
       ];
     };
 
