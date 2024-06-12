@@ -73,7 +73,9 @@ switch to it. Otherwise, create a new vterm shell."
   )
 
 (use-package conner
-  :bind (("C-x p C" . conner-run-project-command)))
+  :bind (("C-x p C" . conner-run-project-command))
+  :init
+  (require 'vterm))
 
 (provide 'config-projects)
 ;;; config-projects.el ends here
