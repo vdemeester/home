@@ -15,3 +15,13 @@ notetaking apps, backups, etc) this endpoint is all you need!
 #+end_quote
 
 
+* Tasks
+
+** TODO Explore =v3= API
+
+In theory I could rely on the =v3= API to get documents that are "archived" but have no
+highlights. Not sure this is something I want to do though.
+
+I doesn't have highlight so… I would have to query both.
+
+See https://readwise.io/reader_api.
