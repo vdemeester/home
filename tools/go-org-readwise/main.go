@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/vdemeester/home/tools/go-org-readwise/internal/org"
 	"github.com/vdemeester/home/tools/go-org-readwise/internal/readwise"
 )
 
@@ -38,29 +39,18 @@ func main() {
 	fmt.Println(*targetFolder)
 	fmt.Println("updateAfter", updateAfter)
 	ctx := context.Background()
-	highlights, err := readwise.FetchFromAPI(ctx, apikey, updateAfter)
+	results, err := readwise.FetchFromAPI(ctx, apikey, updateAfter)
 	if err != nil {
-		log.Fatalf("Error while fetching highlights: %v", err)
+		log.Fatalf("Error while fetching results: %v", err)
 	}
 	// if err := os.WriteFile(stateFile, []byte(time.Now().Format(readwise.FormatUpdatedAfter)), 0o666); err != nil {
 	// 	log.Fatalf("Error writing readwise state file in %s: %v", stateFile, err)
 	// }
-	fmt.Println("size", len(highlights))
+	fmt.Println("size", len(results))
 
-	// updateAfter := time.Now().Add(-72 * time.Hour)
-	// fmt.Println("updateAfter:", updateAfter)
-	// mhighlights, merr := readwise.FetchFromAPI(ctx, os.Getenv("READWISE_KEY"), &updateAfter)
-	// if merr != nil {
-	// 	fmt.Fprintf(os.Stderr, "%v\n", merr)
-	// 	os.Exit(1)
-	// }
-	// fmt.Println("size", len(mhighlights))
-	// for _, h := range highlights {
-	// 	fmt.Println("title", h.Title, len(h.Highlights), h.BookTags)
-	// 	// for _, hh := range h.Highlights {
-	// 	// 	fmt.Println(">>>", hh.ID, hh.Tags)
-	// 	// }
-	// }
+	if err := org.Sync(ctx, *targetFolder, results); err != nil {
+		log.Fatalf("Error syncing readwise and org file in %s folder: %v", *targetFolder, err)
+	}
 }
 
 func getUpdateAfterFromFile(stateFile string) (*time.Time, error) {

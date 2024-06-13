@@ -1,5 +1,7 @@
 package readwise
 
+import "time"
+
 type Export struct {
 	Count          int      `json:"count"`
 	NextPageCursor *int     `json:"nextPageCursor"`
@@ -23,24 +25,31 @@ type Result struct {
 	Highlights    []Highlight `json:"highlights"`
 }
 
-type Highlight struct {
-	Text          string `json:"text"`
-	ID            int    `json:"id"`
-	Note          string `json:"note"`
-	Location      int    `json:"location"`
-	LocationType  string `json:"location_type"`
-	HighlightedAt string `json:"highlighted_at"`
-	BookID        int    `json:"book_id"`
-	URL           string `json:"url"`
-	Color         string `json:"color"`
-	Updated       string `json:"updated"`
-	Tags          []Tag  `json:"tags"`
+func (r Result) FirstHighlightDate() *time.Time {
+	if len(r.Highlights) == 0 {
+		return nil
+	}
+	var t time.Time
+	for _, h := range r.Highlights {
+		if h.HighlightedAt.After(t) {
+			t = h.HighlightedAt
+		}
+	}
+	return &t
 }
 
-type Tags struct {
-	Count   int    `json:"count"`
-	Next    string `json:"next"`
-	Results []Tag  `json:"results"`
+type Highlight struct {
+	Text          string    `json:"text"`
+	ID            int       `json:"id"`
+	Note          string    `json:"note"`
+	Location      int       `json:"location"`
+	LocationType  string    `json:"location_type"`
+	HighlightedAt time.Time `json:"highlighted_at"`
+	BookID        int       `json:"book_id"`
+	URL           string    `json:"url"`
+	Color         string    `json:"color"`
+	Updated       time.Time `json:"updated"`
+	Tags          []Tag     `json:"tags"`
 }
 
 type Tag struct {
