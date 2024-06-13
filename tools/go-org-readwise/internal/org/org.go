@@ -2,11 +2,12 @@ package org
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"os"
 	"regexp"
 	"strings"
 
-	"github.com/niklasfasching/go-org/org"
 	"github.com/vdemeester/home/tools/go-org-readwise/internal/readwise"
 )
 
@@ -41,6 +42,16 @@ func Sync(ctx context.Context, target string, results []readwise.Result) error {
 		// use a regexp to "detect" part of the thing.
 		filename := denoteFilename(result)
 		fmt.Println("file", filename)
+		if _, err := os.Stat(filename); err == nil {
+			// Append to the file
+			return errors.New("Not implemented")
+		} else if errors.Is(err, os.ErrNotExist) {
+			// Create the file
+		} else {
+			// Schrodinger: file may or may not exist. See err for details.
+			// Therefore, do *NOT* use !os.IsNotExist(err) to test for file existence
+			return err
+		}
 	}
 	return nil
 }
@@ -105,8 +116,4 @@ func sluggify(s string) string {
 	s = strings.TrimPrefix(s, "-")
 	s = strings.TrimSuffix(s, "-")
 	return s
-}
-
-func Foo() {
-	org.New()
 }
