@@ -42,8 +42,7 @@ type Highlight struct {
 	Text          string    `json:"text"`
 	ID            int       `json:"id"`
 	Note          string    `json:"note"`
-	Location      int       `json:"location"`
-	LocationType  string    `json:"location_type"`
+	ReadwiseURL   string    `json:"readwise_url"`
 	HighlightedAt time.Time `json:"highlighted_at"`
 	BookID        int       `json:"book_id"`
 	URL           string    `json:"url"`

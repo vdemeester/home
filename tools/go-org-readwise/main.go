@@ -14,11 +14,6 @@ import (
 )
 
 func main() {
-	// for _, n := range d.Nodes {
-	// 	fmt.Printf("%+v\n", n)
-	// }
-
-	os.Exit(1)
 	apiKeyFile := flag.String("apiKeyFile", "", "File to load the apiKey from. If empty, it will defer to the READWISE_KEY environment variable")
 	targetFolder := flag.String("targetFolder", "", "Folder to write highlights (in org file) into")
 	flag.Parse()
