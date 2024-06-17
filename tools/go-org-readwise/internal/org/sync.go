@@ -27,17 +27,6 @@ var (
 	replaceHypensRegexp             = regexp.MustCompile("[-]+")
 )
 
-/*
-For each results:
-- Define a filename (denote naming — gonna be weird but meh) — from title + first highlight date
-- Detect if the file exists
-- If the file doesn't exist, create the file
-- If the file exist, append
-
-For the file format: org file with denote naming
-And use the update date to add new highlights
-*/
-
 func Sync(ctx context.Context, target string, results []readwise.Result) error {
 	for _, result := range results {
 		// FIXME: handle the case where tags where added after
@@ -46,7 +35,6 @@ func Sync(ctx context.Context, target string, results []readwise.Result) error {
 		// use a regexp to "detect" part of the thing.
 		denotefilename := denoteFilename(result)
 		filename := filepath.Join(target, denotefilename)
-		fmt.Println("file", filename)
 		if _, err := os.Stat(filename); err == nil {
 			// Append to the file
 			p := createPartialOrgDocument(result)
@@ -54,7 +42,12 @@ func Sync(ctx context.Context, target string, results []readwise.Result) error {
 			if err != nil {
 				return err
 			}
-			if err := os.WriteFile(filename, content, 0o644); err != nil {
+			f, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0o600)
+			if err != nil {
+				return err
+			}
+			defer f.Close()
+			if _, err = f.WriteString(string(content)); err != nil {
 				return err
 			}
 		} else if errors.Is(err, os.ErrNotExist) {
@@ -79,7 +72,7 @@ func Sync(ctx context.Context, target string, results []readwise.Result) error {
 func createNewOrgDocument(r readwise.Result) Document {
 	var filetags []string
 	if len(r.BookTags) > 0 {
-		filetags = make([]string, len(r.BookTags)+1)
+		filetags = make([]string, len(r.BookTags))
 		for i, t := range r.BookTags {
 			filetags[i] = sluggify(t.Name)
 		}
@@ -100,15 +93,32 @@ func createNewOrgDocument(r readwise.Result) Document {
 }
 
 func createPartialOrgDocument(r readwise.Result) PartialDocument {
+	now := time.Now()
 	return PartialDocument{
-		Date:       time.Now().Format(orgDateFormat),
-		Highlights: transformHighlights(r.Highlights),
+		Date: now.Format(orgDateFormat),
+		Highlights: transformHighlights(r.Highlights, func(h readwise.Highlight) bool {
+			if h.HighlightedAt.After(now) {
+				return true
+			}
+			return false
+		}),
 	}
 }
 
-func transformHighlights(highlights []readwise.Highlight) []Highlight {
-	orgHighlights := make([]Highlight, len(highlights))
-	for i, h := range highlights {
+func transformHighlights(highlights []readwise.Highlight, filters ...func(readwise.Highlight) bool) []Highlight {
+	orgHighlights := []Highlight{}
+	for _, h := range highlights {
+		skip := false
+		for _, filter := range filters {
+			// If a filter returns false, skip the item
+			if !filter(h) {
+				skip = true
+				break
+			}
+		}
+		if skip {
+			continue
+		}
 		var tags []string
 		if len(h.Tags) > 0 {
 			tags = make([]string, len(h.Tags))
@@ -116,13 +126,13 @@ func transformHighlights(highlights []readwise.Highlight) []Highlight {
 				tags[i] = sluggify(t.Name)
 			}
 		}
-		orgHighlights[i] = Highlight{
+		orgHighlights = append(orgHighlights, Highlight{
 			ID:   fmt.Sprintf("%d", h.ID),
 			URL:  h.ReadwiseURL,
 			Date: h.HighlightedAt.Format(orgDateFormat),
 			Note: h.Note,
 			Text: h.Text,
-		}
+		})
 	}
 	return orgHighlights
 }

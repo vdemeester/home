@@ -49,7 +49,6 @@ func fetchExport(ctx context.Context, client *http.Client, apikey string, update
 		params = append(params, fmt.Sprintf("pageCursor=%d", *nextPageCursor))
 	}
 	endpoint = endpoint + strings.Join(params, "&&")
-	fmt.Println(endpoint)
 	req, err := http.NewRequestWithContext(ctx, "GET", endpoint, nil)
 	if err != nil {
 		return export, err

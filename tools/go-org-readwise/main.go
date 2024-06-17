@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"flag"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -36,17 +35,11 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error reading readwise state file from %s: %v", stateFile, err)
 	}
-	fmt.Println(*targetFolder)
-	fmt.Println("updateAfter", updateAfter)
 	ctx := context.Background()
 	results, err := readwise.FetchFromAPI(ctx, apikey, updateAfter)
 	if err != nil {
 		log.Fatalf("Error while fetching results: %v", err)
 	}
-	// if err := os.WriteFile(stateFile, []byte(time.Now().Format(readwise.FormatUpdatedAfter)), 0o666); err != nil {
-	// 	log.Fatalf("Error writing readwise state file in %s: %v", stateFile, err)
-	// }
-	fmt.Println("size", len(results))
 
 	if err := org.Sync(ctx, *targetFolder, results); err != nil {
 		log.Fatalf("Error syncing readwise and org file in %s folder: %v", *targetFolder, err)

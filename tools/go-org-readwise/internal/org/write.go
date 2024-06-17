@@ -8,14 +8,14 @@ import (
 )
 
 var (
-	additionnalTemplate = `* New Highlights on {{ .Date }}
+	additionnalTemplate = `{{ if .Highlights }}* New Highlights on [{{ .Date }}]
 {{ range $h := .Highlights -}}
 ** [{{ $h.Date }}] Highlight [[{{ $h.URL }}][{{ $h.ID }}]]{{ if $h.Tags }} {{ orgtags $h.Tags }}{{ end }}
 {{ $h.Text }}
 {{ if $h.Note }}*** Note
 {{ $h.Note }}
 {{ end -}}
-{{ end }}`
+{{ end }}{{ end }}`
 
 	mainTemplate = `#+title: {{ .Title }}
 #+author: {{ .Author }}
