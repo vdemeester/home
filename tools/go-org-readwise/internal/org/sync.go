@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/vdemeester/home/tools/go-org-readwise/internal/readwise"
 )
@@ -48,7 +49,14 @@ func Sync(ctx context.Context, target string, results []readwise.Result) error {
 		fmt.Println("file", filename)
 		if _, err := os.Stat(filename); err == nil {
 			// Append to the file
-			return errors.New("Not implemented")
+			p := createPartialOrgDocument(result)
+			content, err := convertPartialDocument(p)
+			if err != nil {
+				return err
+			}
+			if err := os.WriteFile(filename, content, 0o644); err != nil {
+				return err
+			}
 		} else if errors.Is(err, os.ErrNotExist) {
 			// Create the file
 			d := createNewOrgDocument(result)
@@ -76,7 +84,7 @@ func createNewOrgDocument(r readwise.Result) Document {
 			filetags[i] = sluggify(t.Name)
 		}
 	}
-	d := Document{
+	return Document{
 		Title:       r.Title,
 		Author:      r.Author,
 		ReadwiseURL: r.ReadwiseURL,
@@ -89,7 +97,13 @@ func createNewOrgDocument(r readwise.Result) Document {
 		Summary:     r.Summary,
 		Highlights:  transformHighlights(r.Highlights),
 	}
-	return d
+}
+
+func createPartialOrgDocument(r readwise.Result) PartialDocument {
+	return PartialDocument{
+		Date:       time.Now().Format(orgDateFormat),
+		Highlights: transformHighlights(r.Highlights),
+	}
 }
 
 func transformHighlights(highlights []readwise.Highlight) []Highlight {
@@ -134,7 +148,7 @@ func denoteFilename(result readwise.Result) string {
 	// to use them to establish sequential relations between files
 	// (e.g. 1, 1a, 1b, 1b1, 1b2, …).
 	// We use signature to mark files synced from readwise.
-	signature = "==" + result.Category
+	signature = "==" + result.Category + "@readwise"
 
 	// The TITLE field is the title of the note, as provided by
 	// the user. It automatically gets downcased by default and is

@@ -9,7 +9,12 @@ import (
 
 var (
 	additionnalTemplate = `* New Highlights on {{ .Date }}
-{{ range .Highlights }}
+{{ range $h := .Highlights -}}
+** [{{ $h.Date }}] Highlight [[{{ $h.URL }}][{{ $h.ID }}]]{{ if $h.Tags }} {{ orgtags $h.Tags }}{{ end }}
+{{ $h.Text }}
+{{ if $h.Note }}*** Note
+{{ $h.Note }}
+{{ end -}}
 {{ end }}`
 
 	mainTemplate = `#+title: {{ .Title }}
@@ -49,6 +54,24 @@ func convertDocument(d Document) ([]byte, error) {
 	}
 
 	tmpl, err := template.New("org").Funcs(funcMap).Parse(mainTemplate)
+	if err != nil {
+		return []byte{}, err
+	}
+	var buff bytes.Buffer
+	if err := tmpl.Execute(&buff, d); err != nil {
+		return []byte{}, err
+	}
+	return buff.Bytes(), nil
+}
+
+func convertPartialDocument(d PartialDocument) ([]byte, error) {
+	var err error
+
+	funcMap := template.FuncMap{
+		"orgtags": orgtags,
+	}
+
+	tmpl, err := template.New("org").Funcs(funcMap).Parse(additionnalTemplate)
 	if err != nil {
 		return []byte{}, err
 	}
