@@ -30,7 +30,11 @@ in
     inherit (common) mode owner group sopsFile;
     path = "/etc/ssl/certs/minica.pem";
   };
-  # security.pki.certificateFiles = [ "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" "/etc/ssl/certs/minica.pem" ];
+  sops.secrets."redhat.pem" = {
+    inherit (common) mode owner group sopsFile;
+    path = "/etc/ssl/certs/redhat.pem";
+  };
+  # security.pki.certificateFiles = [ "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" "/etc/ssl/certs/minica.pem" ]; 
 
   # Only keep the last 500MiB of systemd journal.
   services.journald.extraConfig = "SystemMaxUse=500M";
