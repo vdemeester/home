@@ -132,6 +132,13 @@
                              (if test-name `["-test.run" ,test-name]
                                (error "No test selected")))))))))
 
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :hook ((markdown-mode . visual-line-mode)
+	 (gfm-mode . visual-line-mode)))
 ;; (use-package copilot
 ;;   :preface
 ;;   (unless (package-installed-p 'copilot)
