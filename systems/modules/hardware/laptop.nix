@@ -33,6 +33,9 @@ in
           HandleLidSwitchExternalPower=ignore
           HandleLidSwitchDocked=ignore
         '';
+	clight = {
+	  enable = true;
+	};
       };
     }
     (mkIf config.modules.desktop.enable {
