@@ -137,6 +137,7 @@ in
     discord
     virt-manager
     catt
+    go-org-readwise
   ];
 
   services = {
