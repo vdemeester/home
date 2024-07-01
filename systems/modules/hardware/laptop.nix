@@ -40,7 +40,6 @@ in
       # Graphical interface, we can add additionnal packages
       # Enable setting power-profiles trough DBus
       services.power-profiles-daemon.enable = true;
-      services.auto-cpufreq.enable = true;
     })
   ]);
 }
