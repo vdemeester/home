@@ -20,6 +20,14 @@ in
         enable = true;
       };
     };
+    services.libinput = {
+      touchpad = {
+	disableWhileTyping = true;
+	additionalOptions = ''
+	  Option "Ignore" "on"
+	'';
+      };
+    };
     environment.systemPackages = with pkgs; [
       qogir-icon-theme
     ];
