@@ -25,7 +25,7 @@
         };
       };
       stableModules = [
-        inputs.home-manager-23_11.nixosModules.home-manager
+        inputs.home-manager-24_05.nixosModules.home-manager
       ];
       unstableModules = [
         inputs.home-manager.nixosModules.home-manager
@@ -82,12 +82,12 @@
       images = {
         athena = (self.nixosConfigurations.athena.extendModules {
           modules = [
-            "${inputs.nixpkgs-23_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            "${inputs.nixpkgs-24_05}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           ];
         }).config.system.build.sdImage;
         demeter = (self.nixosConfigurations.demeter.extendModules {
           modules = [
-            "${inputs.nixpkgs-23_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            "${inputs.nixpkgs-24_05}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           ];
         }).config.system.build.sdImage;
       };
@@ -102,30 +102,29 @@
               ./systems/hosts/wakasu.nix
             ];
           };
-          # Work workstation (unstable)
-          aomi = inputs.nixpkgs.lib.nixosSystem {
+          # Servers (stable)
+          aomi = inputs.nixpkgs-24_05.lib.nixosSystem {
             system = "x86_64-linux";
-            modules = commonModules ++ unstableModules ++ [
+            modules = commonModules ++ stableModules ++ [
               inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
               inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
               ./systems/hosts/aomi.nix
             ];
           };
-          # Servers (stable)
-          shikoku = inputs.nixpkgs-23_11.lib.nixosSystem {
+          shikoku = inputs.nixpkgs-24_05.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ stableModules ++ [
               ./systems/hosts/shikoku.nix
             ];
           };
-          sakhalin = inputs.nixpkgs-23_11.lib.nixosSystem {
+          sakhalin = inputs.nixpkgs-24_05.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ stableModules ++ [
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               ./systems/hosts/sakhalin.nix
             ];
           };
-          kerkouane = inputs.nixpkgs-23_11.lib.nixosSystem {
+          kerkouane = inputs.nixpkgs-24_05.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ stableModules ++ [
               ./systems/modules/services/govanityurl.nix
@@ -134,14 +133,14 @@
           };
           # Raspberry PI
           # athena
-          athena = inputs.nixpkgs-23_11.lib.nixosSystem {
+          athena = inputs.nixpkgs-24_05.lib.nixosSystem {
             system = "aarch64-linux";
             modules = commonModules ++ stableModules ++ [
               ./systems/hosts/athena.nix
             ];
           };
           # demeter
-          demeter = inputs.nixpkgs-23_11.lib.nixosSystem {
+          demeter = inputs.nixpkgs-24_05.lib.nixosSystem {
             system = "aarch64-linux";
             modules = commonModules ++ stableModules ++ [
               ./systems/hosts/demeter.nix
@@ -186,10 +185,10 @@
 
     # nixpkgs
     nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
-    nixpkgs-23_11 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-23.11"; };
+    nixpkgs-24_05 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-24.05"; };
     # Home Manager
     home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    home-manager-23_11 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-23.11"; inputs.nixpkgs.follows = "nixpkgs-23_11"; };
+    home-manager-24_05 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-24.05"; inputs.nixpkgs.follows = "nixpkgs-24_05"; };
 
     impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
 
@@ -198,7 +197,7 @@
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-23_11";
+      inputs.nixpkgs-stable.follows = "nixpkgs-24_05";
     };
 
     sops-nix = {
