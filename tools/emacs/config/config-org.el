@@ -334,7 +334,8 @@ file which do not already have one."
   :commands (consult-notes
              consult-notes-search-in-all-notes
 	     consult-notes-denote-mode)
-  :bind (("C-c n F" . consult-notes)) 
+  :bind (("C-c n F" . consult-notes)
+	 ("C-c n S" . consult-notes-search-in-all-notes))
   :config
   (when (locate-library "denote")
     (consult-notes-denote-mode)))
