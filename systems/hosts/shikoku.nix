@@ -120,17 +120,27 @@ in
 
   environment.systemPackages = [ pkgs.python310Packages.aria2p ];
 
+
+  
   programs.ssh.setXAuthLocation = true;
   profiles = {
     bind.enable = true;
     home = true;
   };
+
+  sops.secrets.aria2RPCSecret = {
+    mode = "444";
+    owner = "root";
+    group = "root";
+  };
+  
   services = {
     aria2 = {
       enable = true;
       openPorts = true;
       extraArguments = "--max-concurrent-downloads=20";
       downloadDir = "/data/downloads";
+      rpcSecretFile = config.sops.secrets.aria2RPCSecret.path;
     };
     bazarr = {
       enable = true;
@@ -193,5 +203,5 @@ in
   };
   nix.settings.trusted-users = [ "root" "vincent" "builder" ];
 
-  security.pam.enableSSHAgentAuth = true;
+  security.pam.sshAgentAuth.enable = true;
 }
