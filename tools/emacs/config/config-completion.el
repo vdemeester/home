@@ -83,7 +83,7 @@ The symbol at point is added to the future history."
   (:map embark-identifier-map
         ("D" . dictionary-lookup-definition))
   :custom
-  (embark-quit-after-action nil)
+  (embark-quit-after-action t)
   (prefix-help-command #'embark-prefix-help-command)
   (embark-indicators '(embark-minimal-indicator
                        embark-highlight-indicator
@@ -113,10 +113,26 @@ The symbol at point is added to the future history."
     (interactive "P")
     (with-current-buffer "*Messages*"
       (goto-char (1- (point-max)))
-      (embark-act arg))))
+      (embark-act arg)))
+
+  (defmacro ct/embark-display-in-side-window (side)
+    `(defun ,(intern (concat "display-in-side-window--" (symbol-name side))) (&optional buffer)
+       (interactive "b")
+       (when-let* ((buffer (or buffer (current-buffer)))
+                   (display-buffer-overriding-action '((display-buffer-in-side-window)
+                                                       (dedicated . t)
+                                                       (side . ,side)
+                                                       (window-parameters . ((no-delete-other-windows . t))))))
+	 (display-buffer buffer))))
+  (define-key embark-buffer-map (kbd "s b") (ct/embark-display-in-side-window bottom))
+  (define-key embark-buffer-map (kbd "s l") (ct/embark-display-in-side-window left))
+  (define-key embark-buffer-map (kbd "s r") (ct/embark-display-in-side-window right))
+)
 
 (use-package embark-consult
-  :unless noninteractive)
+  :unless noninteractive
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package emacs
   :unless noninteractive
