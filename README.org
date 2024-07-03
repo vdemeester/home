@@ -111,6 +111,7 @@ Repositories
 - https://github.com/akirak/homelab
   + [[https://git.sr.ht/~akirak/nix-config][https://git.sr.ht/~akirak/nix-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/akirak.nix-config/][src]]
   + [[https://github.com/akirak/nix-desktop][https://github.com/akirak/nix-desktop]]
+- https://git.rossabaker.com/ross/cromulent
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
