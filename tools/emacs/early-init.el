@@ -5,7 +5,7 @@
 ;; Author: Vincent Demeester <vincent@sbr.pm>
 ;; URL: https://git.sr.ht/~vdemeester/home
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "27.1"))
+;; Package-Requires: ((emacs "29.1"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -36,16 +36,17 @@
 ;;; Code:
 
 ;; Do not initialize installed packages
-(setq package-enable-at-startup nil)
+(setopt package-enable-at-startup nil)
+(setopt use-package-ensure-function 'ignore)
+;; (setopt package-archives nil)
 
 ;; Do not resize the frame at this early stage
-(setq frame-inhibit-implied-resize t)
+(setopt frame-inhibit-implied-resize t)
 
 ;; Disable GUI elements
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
-
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -57,90 +58,13 @@
 (defvar file-name-handler-alist-original file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
-(defvar contrib/after-load-theme-hook nil
-  "Hook run after a color theme is loaded using `load-theme'.")
-
-(defun contrib/run-after-load-theme-hook (&rest _)
-  "Run `contrib/after-load-theme-hook'."
-  (run-hooks 'contrib/after-load-theme-hook))
-
-(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
-
-(advice-add #'load-theme :after #'contrib/run-after-load-theme-hook)
-
-(require 'modus-themes)
-(setq modus-themes-to-toggle '(modus-operandi modus-vivendi)
-      modus-themes-slanted-constructs nil
-      modus-themes-italic-constructs nil
-      modus-themes-bold-constructs nil
-      modus-themes-mixed-fonts t
-      modus-themes-subtle-diffs t
-      modus-themes-fringes 'subtle ; {nil,'subtle,'intense}
-      modus-themes-headings '((0 . (variable-pitch semilight 1.5))
-			      (1 . (regular 1.4))
-			      (2 . (regular 1.3))
-			      (3 . (regular 1.2))
-			      (agenda-structure . (variable-pitch light 2.2))
-			      (agenda-date . (variable-pitch regular 1.3))
-			      (t . (regular 1.15)))
-      modus-themes-intense-paren-match t
-      modus-themes-completions '(opinionated) ; {nil,'moderate,'opinionated}
-      modus-themes-diffs 'desaturated ; {nil,'desaturated,'fg-only}
-      modus-themes-org-blocks 'gray-background
-      modus-themes-paren-match '(subtle-bold)
-      modus-themes-variable-pitch-headings nil
-      modus-themes-rainbow-headings t
-      modus-themes-section-headings nil
-      modus-themes-scale-headings t
-      )
-(define-key global-map (kbd "C-<f5>") #'modus-themes-toggle)
-
-(load-theme 'modus-operandi :no-confirm)
-
-
-(defconst font-height 130
-  "Default font-height to use.")
-;; 2024-10-05: Switching from Ubuntu Mono to Cascadia Mono
-;; 2024-96-06: Switching from Cascadia Mono to JetBrains Mono
-(defconst font-family-mono "JetBrains Mono"
-  "Default monospace font-family to use.")
-(defconst font-family-sans "Ubuntu Sans"
-  "Default sans font-family to use.")
-;; Middle/Near East: שלום, السّلام عليكم
-(when (member "Noto Sans Arabic" (font-family-list))
-  (set-fontset-font t 'arabic "Noto Sans Arabic"))
-(when (member "Noto Sans Hebrew" (font-family-list))
-  (set-fontset-font t 'arabic "Noto Sans Hebrew"))
-;; Africa: ሠላም
-(when (member "Noto Sans Ethiopic" (font-family-list))
-  (set-fontset-font t 'ethiopic "Noto Sans Ethiopic"))
-
-;; If font-family-mono or font-family-sans are not available, use the default Emacs face
-(when (member font-family-mono (font-family-list))
-  (set-face-attribute 'default nil
-                      :family font-family-mono
-                      :height font-height
-		      :weight 'semi-light)
-  (set-face-attribute 'fixed-pitch nil
-                      :family font-family-mono
-		      :weight 'medium
-		      :height 1.0))
-(when (member font-family-sans (font-family-list))
-  (set-face-attribute 'variable-pitch nil
-                      :family font-family-sans
-                      :weight 'regular))
-
-(set-fontset-font t 'symbol "Apple Color Emoji")
-(set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
-(set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
-(set-fontset-font t 'symbol "Symbola" nil 'append)
 
 ;; Ignore X resources; its settings would be redundant with the other settings
 ;; in this file and can conflict with later config (particularly where the
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
 
-;; - Reseting garbage collection and file-name-handler values.
+;; - Resetting garbage collection and file-name-handler values.
 (add-hook 'after-init-hook
           `(lambda ()
              (setq gc-cons-threshold 67108864 ; 64mb
