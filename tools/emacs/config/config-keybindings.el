@@ -12,5 +12,5 @@
 
 
 ;; 
-;; (provide 'config-keybindings)
-;; ;;; config-keybindings.el ends here
+(provide 'config-keybindings)
+;;; config-keybindings.el ends here

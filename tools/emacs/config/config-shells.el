@@ -402,4 +402,5 @@ toggle, the current window configuration is saved in a register."
 (add-hook 'shell-mode-hook #'generic-term-init)
 (add-hook 'eshell-mode-hook #'generic-term-init)
 
-(provide 'setup-shells)
+(provide 'config-shells)
+;;; config-shells.el ends here

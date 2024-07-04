@@ -19,5 +19,5 @@
   :hook
   (json-mode . json-ts-mode-hook))
   
-(provide 'programming-go)
-;;; programming-go.el ends here
+(provide 'programming-js)
+;;; programming-js.el ends here
