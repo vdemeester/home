@@ -39,9 +39,6 @@
 
 (setq inhibit-default-init t)           ; Disable the site default settings
 
-(setq inhibit-startup-message t
-      inhibit-startup-screen t)
-
 (setq confirm-kill-emacs #'y-or-n-p)
 (setq initial-major-mode 'fundamental-mode
       initial-scratch-message nil)
