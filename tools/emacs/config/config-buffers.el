@@ -3,7 +3,6 @@
 ;;; Buffer related configurations
 ;;; Code:
 
-
 (use-package savehist
   :unless noninteractive
   :init

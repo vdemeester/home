@@ -122,15 +122,15 @@ Else toggle the comment status of the line at point."
          ("M-o" . delete-blank-lines)
          ("<C-f6>" . tear-off-window)))
 
-(use-package pdf-tools
-  :unless noninteractive
-  :mode  ("\\.pdf\\'" . pdf-view-mode)
-  :config
-  (setq-default pdf-view-display-size 'fit-page)
-  (setq pdf-annot-activate-created-annotations t)
-  (setq pdf-view-midnight-colors '("#ffffff" . "#000000"))
-  (pdf-tools-install :no-query)
-  (require 'pdf-occur))
+;; (use-package pdf-tools
+;;   :unless noninteractive
+;;   :mode  ("\\.pdf\\'" . pdf-view-mode)
+;;   :config
+;;   (setq-default pdf-view-display-size 'fit-page)
+;;   (setq pdf-annot-activate-created-annotations t)
+;;   (setq pdf-view-midnight-colors '("#ffffff" . "#000000"))
+;;   (pdf-tools-install :no-query)
+;;   (require 'pdf-occur))
 
 (use-package scratch
   :unless noninteractive
@@ -162,11 +162,11 @@ If region is active, add its contents to the new buffer."
   :diminish
   :hook (prog-mode-hook . subword-mode))
 
-(use-package selection-highlight-mode
-  :preface
-  (unless (package-installed-p 'selection-highlight-mode)
-    (package-vc-install "https://github.com/balloneij/selection-highlight-mode"))
-  :config (selection-highlight-mode))
+;; (use-package selection-highlight-mode
+;;   :preface
+;;   (unless (package-installed-p 'selection-highlight-mode)
+;;     (package-vc-install "https://github.com/balloneij/selection-highlight-mode"))
+;;   :config (selection-highlight-mode))
 
 (use-package surround  
   :bind-keymap ("M-'" . surround-keymap))

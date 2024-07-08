@@ -37,7 +37,8 @@
 
 ;; Do not initialize installed packages
 (setopt package-enable-at-startup nil
-	package-archives nil)
+	package-archives nil
+	package-quickstart nil)
 (setopt use-package-ensure-function 'ignore)
 
 ;; Do not resize the frame at this early stage
@@ -78,6 +79,11 @@
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
 (setopt inhibit-x-resources t)
+
+;;
+(when (getenv-internal "DEBUG")
+  (setq init-file-debug t
+	debug-on-error t))
 
 ;; - Resetting garbage collection and file-name-handler values.
 (add-hook 'after-init-hook

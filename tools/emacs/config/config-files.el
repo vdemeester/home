@@ -3,12 +3,12 @@
 ;;; Files related configurations
 ;;; Code:
 
-(use-package autoinsert
-  :init
-  (setq-default auto-insert-query nil
-                auto-insert-alist nil)
-  :config
-  (auto-insert-mode 1))
+;; (use-package autoinsert
+;;   :init
+;;   (setq-default auto-insert-query nil
+;;                 auto-insert-alist nil)
+;;   :config
+;;   (auto-insert-mode 1))
 
 (use-package files
   :commands (revert-buffer)
