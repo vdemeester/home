@@ -218,6 +218,7 @@
         "$mod, mouse:272, movewindow"
       ];
       misc = {
+	focus_on_activate = true;
         force_default_wallpaper = 0; # -1 for no wallpaper, 0 for default wallpaper, 1 for custom wallpaper
       };
     };
