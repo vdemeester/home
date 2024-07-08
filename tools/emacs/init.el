@@ -233,6 +233,11 @@
 (require 'project-func)
 (add-to-list 'load-path (concat user-emacs-directory "/config/"))
 
+;; Make native compilation silent and prune its cache.
+(when (native-comp-available-p)
+  (setq native-comp-async-report-warnings-errors 'silent) ; Emacs 28 with native compilation
+  (setq native-compile-prune-cache t)) ; Emacs 29
+
 (require '00-base)
 (require '00-clean) ;; Maybe refactor no-littering
 (require 'config-appearance)
