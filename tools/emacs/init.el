@@ -49,42 +49,41 @@
 (set-selection-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 
-(defconst font-height 130
-  "Default font-height to use.")
-;; 2024-10-05: Switching from Ubuntu Mono to Cascadia Mono
-;; 2024-96-06: Switching from Cascadia Mono to JetBrains Mono
-(defconst font-family-mono "JetBrains Mono"
-  "Default monospace font-family to use.")
-(defconst font-family-sans "Ubuntu Sans"
-  "Default sans font-family to use.")
-;; Middle/Near East: שלום, السّلام عليكم
-(when (member "Noto Sans Arabic" (font-family-list))
-  (set-fontset-font t 'arabic "Noto Sans Arabic"))
-(when (member "Noto Sans Hebrew" (font-family-list))
-  (set-fontset-font t 'arabic "Noto Sans Hebrew"))
-;; Africa: ሠላም
-(when (member "Noto Sans Ethiopic" (font-family-list))
-  (set-fontset-font t 'ethiopic "Noto Sans Ethiopic"))
+(unless noninteractive
+  (defconst font-height 130
+    "Default font-height to use.")
+  ;; 2024-10-05: Switching from Ubuntu Mono to Cascadia Mono
+  ;; 2024-96-06: Switching from Cascadia Mono to JetBrains Mono
+  (defconst font-family-mono "JetBrains Mono"
+    "Default monospace font-family to use.")
+  (defconst font-family-sans "Ubuntu Sans"
+    "Default sans font-family to use.")
+  ;; Middle/Near East: שלום, السّلام عليكم
+  (when (member "Noto Sans Arabic" (font-family-list))
+    (set-fontset-font t 'arabic "Noto Sans Arabic"))
+  (when (member "Noto Sans Hebrew" (font-family-list))
+    (set-fontset-font t 'arabic "Noto Sans Hebrew"))
+  ;; Africa: ሠላም
+  (when (member "Noto Sans Ethiopic" (font-family-list))
+    (set-fontset-font t 'ethiopic "Noto Sans Ethiopic"))
 
-;; If font-family-mono or font-family-sans are not available, use the default Emacs face
-(when (member font-family-mono (font-family-list))
-  (set-face-attribute 'default nil
-                      :family font-family-mono
-                      :height font-height
-		      :weight 'regular)
-  (set-face-attribute 'fixed-pitch nil
-                      :family font-family-mono
-		      :weight 'medium
-		      :height font-height))
-(when (member font-family-sans (font-family-list))
-  (set-face-attribute 'variable-pitch nil
-                      :family font-family-sans
-                      :weight 'regular))
+  ;; If font-family-mono or font-family-sans are not available, use the default Emacs face
+    (set-face-attribute 'default nil
+			:family font-family-mono
+			:height font-height
+			:weight 'regular)
+    (set-face-attribute 'fixed-pitch nil
+			:family font-family-mono
+			:weight 'medium
+			:height font-height)
+    (set-face-attribute 'variable-pitch nil
+			:family font-family-sans
+			:weight 'regular)
 
-(set-fontset-font t 'symbol "Apple Color Emoji")
-(set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
-(set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
-(set-fontset-font t 'symbol "Symbola" nil 'append)
+  (set-fontset-font t 'symbol "Apple Color Emoji")
+  (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
+  (set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
+  (set-fontset-font t 'symbol "Symbola" nil 'append)
 
 (defvar contrib/after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
@@ -93,7 +92,10 @@
   "Run `contrib/after-load-theme-hook'."
   (run-hooks 'contrib/after-load-theme-hook))
 
-(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
+(mapc
+ (lambda (string)
+   (add-to-list 'load-path (locate-user-emacs-file string)))
+ '("lisp" "config"))
 
 (advice-add #'load-theme :after #'contrib/run-after-load-theme-hook)
 
@@ -124,7 +126,7 @@
       )
 (define-key global-map (kbd "C-<f5>") #'modus-themes-toggle)
 
-(load-theme 'modus-operandi :no-confirm)
+(load-theme 'modus-operandi :no-confirm))
 
 (require 'init-func)
 
@@ -231,7 +233,6 @@
 ;; (vde/el-load-dir (concat user-emacs-directory "/config/"))
 (require 'org-func)
 (require 'project-func)
-(add-to-list 'load-path (concat user-emacs-directory "/config/"))
 
 ;; Make native compilation silent and prune its cache.
 (when (native-comp-available-p)
