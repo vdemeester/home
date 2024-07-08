@@ -305,11 +305,12 @@ file which do not already have one."
   (denote-date-prompt-denote-date-prompt-use-org-read-date t)
   (denote-prompts '(subdirectory title keyword))
   :hook (dired-mode . denote-dired-mode)
-  :config
-  (denote-rename-buffer-mode 1)
+  :init
   (require 'denote-org-dblock)
   (require 'denote-org-extras)
   (require 'denote-journal-extras)
+  :config
+  (denote-rename-buffer-mode 1)
   (setq denote-journal-extras-directory org-journal-dir
 	denote-journal-extras-title-format 'day-date-month-year)
   (with-eval-after-load 'org-capture
