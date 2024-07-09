@@ -77,11 +77,8 @@
                      (unless (eq ibuffer-sorting-mode 'filename/process)
                        (ibuffer-do-sort-by-filename/process)))))
 
-(use-package popper
-  :bind (("C-`"   . popper-toggle)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
-  :init
+(unless noninteractive
+  (require 'popper)
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$"
@@ -93,7 +90,13 @@
 	  flymake-project-diagnostics-mode
 	  Man-mode
 	  woman-mode))
+  (global-set-key (kbd "C-`") 'popper-toggle)
+  (global-set-key (kbd "M-`") 'popper-cycle)
+  (global-set-key (kbd "C-M-`") 'popper-toggle-type)
   (popper-mode +1)
+
+  ;; For echo-area hints
+  (require 'popper-echo)
   (popper-echo-mode +1))
 
 (use-package goto-addr

@@ -36,15 +36,15 @@ let
     adoc-mode
     aggressive-indent
     alert
-    all-the-icons
+    # all-the-icons
     async
     avy
     bbdb
     beginend
-    cape # FIXME: configure
+    cape
     casual-avy
     casual-dired
-    color-identifiers-mode
+    # color-identifiers-mode
     conner
     consult
     consult-dir
@@ -52,12 +52,12 @@ let
     corfu
     dash
     dape
-    delight
+    # delight
     denote
     dired-collapse
     dired-narrow
     dired-rsync
-    dired-sidebar
+    # dired-sidebar
     diredfl
     dockerfile-mode
     doom-modeline
@@ -66,19 +66,19 @@ let
     editorconfig
     edit-indirect
     eldoc-box
-    emacs-everywhere
+    # emacs-everywhere
     embark
     embark-consult
-    emms
+    # emms
     envrc
     eshell-prompt-extras
     esup
-    expand-region
+    # expand-region
     flimenu
-    flymake-languagetool
+    # flymake-languagetool
     flymake-yamllint
-    flymake-codespell
-    fontaine
+    # flymake-codespell
+    # fontaine
     focus
     git-commit
     git-gutter
@@ -86,18 +86,18 @@ let
     git-modes
     go-mode
     gotest
-    goto-last-change
+    # goto-last-change
     hardhat
     helpful
     highlight
     highlight-indentation
-    hl-todo
+    # hl-todo
     htmlize
     ibuffer-vc
     jinx
     json-mode
     ligature
-    lin
+    # lin
     magit
     magit-popup
     marginalia
@@ -105,10 +105,10 @@ let
     mct
     modus-themes
     multi-vterm
-    multiple-cursors
+    # multiple-cursors
     mwim
-    nerd-icons
-    nix-buffer
+    # nerd-icons
+    # nix-buffer
     nix-mode
     nix-ts-mode
     nixpkgs-fmt
@@ -119,10 +119,10 @@ let
     orderless # TODO configure this
     org
     orgalist
-    org-appear
-    org-capture-pop-frame
+    # org-appear
+    # org-capture-pop-frame
     org-contrib
-    org-journal
+    # org-journal
     org-modern
     org-nix-shell
     org-ql
@@ -133,14 +133,14 @@ let
     orgit
     ox-pandoc
     pandoc-mode
-    pdf-tools
+    # pdf-tools
     popper
-    pkgs.bookmark-plus
-    rainbow-delimiters
-    rainbow-mode
+    pkgs.bookmark-plus # Do I use it ?
+    # rainbow-delimiters
+    # rainbow-mode
     rg
     ripgrep
-    run-command
+    run-command # Try this out instead of conner, might be even better
     scratch
     shr-tag-pre-highlight
     smartparens

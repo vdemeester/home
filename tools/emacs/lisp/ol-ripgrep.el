@@ -34,6 +34,7 @@
 ;;; Code:
 
 (require 'ol)
+(require 'ripgrep)
 
 ;; Install the link type
 (org-link-set-parameters "ripgrep"

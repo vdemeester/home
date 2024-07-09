@@ -157,6 +157,7 @@ This relies on the external 'fd' executable."
   (setq-default
    ;; Ask for creation of missing directories when copying/moving
    dired-create-destination-dirs 'ask
+   dired-create-destination-dirs-on-trailing-dirsep t
    ;; Search only file names when point is on a file name
    dired-isearch-filenames'dwim))
 

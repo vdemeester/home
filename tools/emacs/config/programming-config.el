@@ -139,6 +139,12 @@
          ("\\.markdown\\'" . markdown-mode))
   :hook ((markdown-mode . visual-line-mode)
 	 (gfm-mode . visual-line-mode)))
+
+(use-package orgalist
+  :commands (orgalist-mode)
+  :hook ((markdown-mode . orgalist-mode)
+	 (gfm-mode . orgalist-mode)))
+
 ;; (use-package copilot
 ;;   :preface
 ;;   (unless (package-installed-p 'copilot)

@@ -37,15 +37,15 @@
    ((call-interactively 'compile))))
 
 ;; try out consult-gh
-(use-package consult-gh
-  :after consult
-  :config
-  (add-to-list 'consult-gh-default-orgs-list "vdemeester")
-  (setq consult-gh-default-orgs-list (append consult-gh-default-orgs-list (remove "" (split-string (or (consult-gh--command-to-string "org" "list") "") "\n"))))
-  (require 'consult-gh-embark)
-  (require 'consult-gh-transient)
-  (setq consult-gh-show-preview t)
-  (setq consult-gh-preview-key "M-o"))
+;; (use-package consult-gh
+;;   :after consult
+;;   :config
+;;   (add-to-list 'consult-gh-default-orgs-list "vdemeester")
+;;   (setq consult-gh-default-orgs-list (append consult-gh-default-orgs-list (remove "" (split-string (or (consult-gh--command-to-string "org" "list") "") "\n"))))
+;;   (require 'consult-gh-embark)
+;;   (require 'consult-gh-transient)
+;;   (setq consult-gh-show-preview t)
+;;   (setq consult-gh-preview-key "M-o"))
 
 (provide 'config-programming)
 ;;; config-programming.el ends here

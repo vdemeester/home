@@ -34,6 +34,7 @@
 
 ;;; Code:
 
+(require 'rg)
 (require 'ol)
 
 ;; Install the link type
