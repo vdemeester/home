@@ -3,6 +3,8 @@
 ;;; Configure general programming
 ;;; Code:
 
+(declare-function vde-project--project-root-or-default-directory "proj-func")
+
 (defun my-recompile (args)
   (interactive "P")
   (cond
@@ -35,6 +37,28 @@
    ((eq major-mode #'python-mode)
     (compile (concat python-shell-interpreter " " (buffer-file-name))))
    ((call-interactively 'compile))))
+
+(use-package run-command
+  :bind ("C-c c" . run-command)
+  :config
+  ;; TODO (defun run-command-recipe-make ())
+  (defun run-command-recipe-hack ()
+    "Returns a dynamic list of commands based of the presence of an `hack' folder
+in the project root *or* the default-directory."
+    (let* ((dir (vde-project--project-root-or-default-directory))
+	   (hack-dir (expand-file-name "hack" dir))
+	   (files (directory-files hack-dir)))
+      (when (file-accessible-directory-p hack-dir)
+	(mapcar (lambda (file)
+		  (let ((hack-file (expand-file-name file hack-dir)))
+		    (when (and (file-regular-p hack-file)
+			       (file-executable-p hack-file))
+		      (list :command-line hack-file
+			    :command-name file
+			    :working-dir dir
+			    :runner 'run-command-runner-compile))))
+		files))))
+  (add-to-list 'run-command-recipes 'run-command-recipe-hack))
 
 ;; try out consult-gh
 ;; (use-package consult-gh
