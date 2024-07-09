@@ -98,6 +98,7 @@ let
     json-mode
     ligature
     # lin
+    macro-expand
     magit
     magit-popup
     marginalia
