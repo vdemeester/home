@@ -261,6 +261,7 @@
   (require 'programming-config)
   (require 'programming-containers)
   (require 'programming-cue)
+  (require 'programming-elisp)
   (require 'programming-eglot)
   (require 'programming-go)
   (require 'programming-js)
