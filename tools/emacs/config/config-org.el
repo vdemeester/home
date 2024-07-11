@@ -306,7 +306,7 @@ file which do not already have one."
   (denote-prompts '(subdirectory title keyword))
   :hook (dired-mode . denote-dired-mode)
   :init
-  (require 'denote-org-dblock)
+  (require 'denote-rename-buffer)
   (require 'denote-org-extras)
   (require 'denote-journal-extras)
   :config
