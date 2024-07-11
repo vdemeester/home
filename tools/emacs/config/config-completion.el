@@ -211,9 +211,16 @@ Use `mct-sort-sort-by-alpha-length' if no history is available."
 
 (use-package corfu
   :unless noninteractive
+  :bind (("C-<tab>" . corfu-candidate-overlay-complete-at-point))
+  :init
+  (require 'corfu-popupinfo)
+  (require 'corfu-history)
+  (require 'corfu-candidate-overlay)
   :config
   (global-corfu-mode 1)
+  (setq corfu-popupinfo-delay '(1.25 . 0.5))
   (corfu-popupinfo-mode 1)
+  (corfu-candidate-overlay-mode)
     ;; Sort by input history (no need to modify `corfu-sort-function').
   (with-eval-after-load 'savehist
     (corfu-history-mode 1)
@@ -228,6 +235,21 @@ Useful for prompts such as `eval-expression' and `shell-command'."
       (corfu-mode 1)))
 
   (add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1))
+
+(use-package corfu-candidate-overlay
+  :after corfu
+  :bind (("C-<tab>" . corfu-candidate-overlay-complete-at-point))
+  :config
+  (corfu-candidate-overlay-mode +1))
+
+(use-package cape
+  :bind (("C-c p f" . cape-file)
+         ("C-c p /" . cape-dabbrev)
+         :map corfu-map
+         ("M-/" . cape-dabbrev)
+         ("C-x C-f" . cape-file))
+  :config
+  (add-to-list 'completion-at-point-functions #'cape-file))
 
 (use-package orderless
   :unless noninteractive
