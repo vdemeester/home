@@ -3,6 +3,34 @@
 ;;; Configuration of Dired
 ;;; Code:
 
+
+(defmacro vde/dired-fd (name doc prompt &rest flags)
+  "Make commands for selecting 'fd' results with completion.
+NAME is how the function should be named.  DOC is the function's
+documentation string.  PROMPT describes the scope of the query.
+FLAGS are the command-line arguments passed to the 'fd'
+executable, each of which is a string."
+  `(defun ,name (&optional arg)
+     ,doc
+     (interactive "P")
+     (let* ((vc (vc-root-dir))
+            (dir (expand-file-name (if vc vc default-directory)))
+            (regexp (read-regexp
+                     (format "%s matching REGEXP in %s: " ,prompt
+                             (propertize dir 'face 'bold))))
+            (names (process-lines "fd" ,@flags regexp dir))
+            (buf "*FD Dired*"))
+       (if names
+           (if arg
+               (dired (cons (generate-new-buffer-name buf) names))
+             (icomplete-vertical-do ()
+				    (find-file
+				     (completing-read (format "Items matching %s (%s): "
+							      (propertize regexp 'face 'success)
+							      (length names))
+						      names nil t)))))
+       (user-error (format "No matches for « %s » in %s" regexp dir)))))
+
 (use-package dired
   :unless noninteractive
   :commands (dired find-name-dired)
@@ -37,8 +65,7 @@
 
   ;; Handle long file names
   (add-hook 'dired-mode-hook #'toggle-truncate-lines)
-  (add-hook 'dired-mode-hook #'dired-hide
-	    -details-mode)
+  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
   (defun vde/dired-up ()
     "Go to previous directory."
@@ -89,32 +116,6 @@
          (progn
            (re-search-backward "\\(^[0-9.,]+[A-Za-z]+\\).*total$")
            (match-string 1))))))
-  (defmacro vde/dired-fd (name doc prompt &rest flags)
-    "Make commands for selecting 'fd' results with completion.
-NAME is how the function should be named.  DOC is the function's
-documentation string.  PROMPT describes the scope of the query.
-FLAGS are the command-line arguments passed to the 'fd'
-executable, each of which is a string."
-    `(defun ,name (&optional arg)
-       ,doc
-       (interactive "P")
-       (let* ((vc (vc-root-dir))
-              (dir (expand-file-name (if vc vc default-directory)))
-              (regexp (read-regexp
-                       (format "%s matching REGEXP in %s: " ,prompt
-                               (propertize dir 'face 'bold))))
-              (names (process-lines "fd" ,@flags regexp dir))
-              (buf "*FD Dired*"))
-         (if names
-             (if arg
-                 (dired (cons (generate-new-buffer-name buf) names))
-               (icomplete-vertical-do ()
-                 (find-file
-                  (completing-read (format "Items matching %s (%s): "
-                                           (propertize regexp 'face 'success)
-                                           (length names))
-                                   names nil t)))))
-         (user-error (format "No matches for « %s » in %s" regexp dir)))))
 
   (vde/dired-fd
    vde/dired-fd-dirs
