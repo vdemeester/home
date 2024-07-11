@@ -10,6 +10,9 @@
 ;;   :config
 ;;   (auto-insert-mode 1))
 
+(require 'hardhat)
+(global-hardhat-mode)
+
 (use-package files
   :commands (revert-buffer)
   :bind (("<f5>" . revert-buffer))
@@ -22,9 +25,6 @@
   :bind (:map envrc-mode-map
               ("C-c e" . envrc-command-map))
   :config (envrc-global-mode))
-
-(use-package hardhat
-  :init (global-hardhat-mode))
 
 (use-package highlight-indentation
   :unless noninteractive
