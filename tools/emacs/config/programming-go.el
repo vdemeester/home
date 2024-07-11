@@ -6,9 +6,10 @@
 (declare-function project-root "project")
 (declare-function project-current "project")
 (declare-function vde-project--project-root-or-default-directory "proj-func")
+(declare-function go-test--get-current-file-tests "gotest")
 
 (use-package gotest
-  :commands (my-gotest-maybe-ts-run go-test--get-current-test-info)
+  :commands (my-gotest-maybe-ts-run go-test--get-current-test-info go-test--get-current-file-tests)
   :after go-ts-mode
   :custom
   (go-test-verbose t)
@@ -42,7 +43,8 @@
 
 (defun run-command-recipe-go ()
   "Go `run-command' recipes."
-  (let ((dir (vde-project--project-root-or-default-directory)))
+  (let* ((dir (vde-project--project-root-or-default-directory))
+	(package (file-name-directory (concat "./"(file-relative-name (buffer-file-name) dir)))))
     (when (or (go-mode-p) (file-exists-p (expand-file-name "go.mod" dir)))
       (append
        (and (buffer-file-name) (go-mode-p)
@@ -61,14 +63,15 @@
 		   :display "Compile, execute file")))
        (and (string-suffix-p "_test.go" buffer-file-name) (go-mode-p)
 	    (list
-	     ;; go-test--get-current-file-tests
-	     (let ((runArgs (go-test--get-current-file-tests))
-		   (package (file-name-directory (concat "./"(file-relative-name (buffer-file-name) dir)))))
-		 (list :command-name "go-test-file"
-		       :command-line (concat "go test -v " package " -run " (shell-quote-argument runArgs))
-		       :working-dir dir
-		       :display (concat "Test file " (concat "./"(file-relative-name (buffer-file-name) dir)))
-		       :runner 'run-command-runner-compile))))
+	     (let ((runArgs (go-test--get-current-file-tests)))
+	       ;; go test current test
+	       ;; go test current file
+	       (list :command-name "go-test-file"
+		     :command-line (concat "go test -v " package " -run " (shell-quote-argument runArgs))
+		     :working-dir dir
+		     :display (concat "Test file " (concat "./"(file-relative-name (buffer-file-name) dir)))
+		     :runner 'run-command-runner-compile)
+	       )))
        ;; TODO: handle test file as well
        (list
 	(list :command-name "go-build-project"
@@ -80,6 +83,11 @@
 	      :command-line "go test ./..."
 	      :working-dir dir
 	      :display "test all"
+	      :runner 'run-command-runner-compile)
+	(list :command-name "go-test-package"
+	      :command-line (concat "go test -v " package)
+	      :working-dir dir
+	      :display (concat "Test package " package)
 	      :runner 'run-command-runner-compile))))))
 
 (with-eval-after-load 'run-command
