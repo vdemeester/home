@@ -16,27 +16,52 @@ let
   '';
   myExtraPackages = epkgs: with epkgs; [
     # FIXME(vdemeester) once it is fixed, re-add
-    # pkgs.dired-plus
-    # org-transclusion
-    # python-mode
-    # whole-line-or-region
+    # all-the-icons
     # bongo
+    # color-identifiers-mode
+    # consult-lsp
+    # dap-mode
+    # delight
+    # dired-sidebar
+    # dired-subtree
+    # edit-indirect
+    # emacs-everywhere
+    # emms
+    # expand-region
+    # flymake-codespell
+    # flymake-languagetool
+    # fontaine
     # git-annex
     # github-review
-    # edit-indirect
+    # goto-last-change
+    # hl-todo
+    # icomplete-vertical
     # kind-icon
-    # dired-subtree
+    # lin
     # lsp-focus
     # lsp-mode
     # lsp-ui
-    # consult-lsp
-    # dap-mode
-    # icomplete-vertical
+    # multiple-cursors
+    # nerd-icons
+    # nix-buffer
+    # org-appear
+    # org-capture-pop-frame
+    # org-journal
+    # org-super-agenda
+    # org-transclusion
+    # pdf-tools
+    # pkgs.dired-plus
+    # python-mode
+    # rainbow-delimiters
+    # rainbow-mode
+    # treesit-grammars.with-all-grammars
+    # undo-tree
+    # use-package # it's now part of built-in packages
+    # whole-line-or-region
     ace-window
     adoc-mode
     aggressive-indent
     alert
-    # all-the-icons
     async
     avy
     bbdb
@@ -44,41 +69,33 @@ let
     cape
     casual-avy
     casual-dired
-    # color-identifiers-mode
     conner
     consult
     consult-dir
     consult-notes
     corfu
-    dash
+    corfu-candidate-overlay
     dape
-    # delight
+    dash
     denote
     dired-collapse
     dired-narrow
     dired-rsync
-    # dired-sidebar
     diredfl
     dockerfile-mode
     doom-modeline
-    eat
     easy-kill
-    editorconfig
+    eat
     edit-indirect
+    editorconfig
     eldoc-box
-    # emacs-everywhere
     embark
     embark-consult
-    # emms
     envrc
     eshell-prompt-extras
     esup
-    # expand-region
     flimenu
-    # flymake-languagetool
     flymake-yamllint
-    # flymake-codespell
-    # fontaine
     focus
     git-commit
     git-gutter
@@ -86,18 +103,15 @@ let
     git-modes
     go-mode
     gotest
-    # goto-last-change
     hardhat
     helpful
     highlight
     highlight-indentation
-    # hl-todo
     htmlize
     ibuffer-vc
     jinx
     json-mode
     ligature
-    # lin
     macrostep
     magit
     magit-popup
@@ -106,10 +120,7 @@ let
     mct
     modus-themes
     multi-vterm
-    # multiple-cursors
     mwim
-    # nerd-icons
-    # nix-buffer
     nix-mode
     nix-ts-mode
     nixpkgs-fmt
@@ -119,26 +130,19 @@ let
     ob-http
     orderless # TODO configure this
     org
-    orgalist
-    # org-appear
-    # org-capture-pop-frame
     org-contrib
-    # org-journal
     org-modern
     org-nix-shell
     org-ql
     org-rich-yank
-    # org-super-agenda
     org-tree-slide
     org-web-tools
+    orgalist
     orgit
     ox-pandoc
     pandoc-mode
-    # pdf-tools
-    popper
     pkgs.bookmark-plus # Do I use it ?
-    # rainbow-delimiters
-    # rainbow-mode
+    popper
     rg
     ripgrep
     run-command # Try this out instead of conner, might be even better
@@ -152,11 +156,8 @@ let
     tempel-collection
     trashed
     treesit-auto
-    # treesit-grammars.with-all-grammars
     try
     typescript-mode
-    # undo-tree
-    # use-package # it's now part of built-in packages
     visual-fill-column
     visual-regexp
     vterm
