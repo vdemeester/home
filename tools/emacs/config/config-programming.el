@@ -38,10 +38,42 @@
     (compile (concat python-shell-interpreter " " (buffer-file-name))))
    ((call-interactively 'compile))))
 
+(defun run-command-recipes-make--commands (makefile)
+  "Return the list of commands names that was defined in MAKEFILE."
+  (let ((s (f-read makefile))
+        (commands nil)
+        (pos 0))
+    (while (string-match "^\\([^ \n]+\\):" s pos)
+      (push (match-string 1 s) commands)
+      (setq pos (match-end 0)))
+    commands))
+
 (use-package run-command
   :bind ("C-c c" . run-command)
   :config
   ;; TODO (defun run-command-recipe-make ())
+  (defun run-command-recipe-make()
+    "Returns a dynamic list of commands based of a Makefile.
+
+This is condition to the following:
+- `make' executable found
+- `Makefile' file present in project root *or* the default directory."
+    (let* ((dir (vde-project--project-root-or-default-directory))
+	   (makefile (expand-file-name "Makefile" dir)))
+    (when (or
+	   (executable-find "make")
+	   (file-exists-p makefile))
+      (message "Makefile present")
+      (let ((targets (run-command-recipes-make--commands makefile)))
+	(mapcar (lambda (target)
+		  (unless (or (string-prefix-p "." target)
+			      (string-prefix-p "$" target)
+			      (string= "FORCE" target))
+		    (list :command-line (concat "make " target)
+			  :command-name target
+			  :working-dir dir
+			  :runner 'run-command-runner-compile)))
+		targets)))))
   (defun run-command-recipe-hack ()
     "Returns a dynamic list of commands based of the presence of an `hack' folder
 in the project root *or* the default-directory."
@@ -58,7 +90,8 @@ in the project root *or* the default-directory."
 			    :working-dir dir
 			    :runner 'run-command-runner-compile))))
 		files))))
-  (add-to-list 'run-command-recipes 'run-command-recipe-hack))
+  (add-to-list 'run-command-recipes 'run-command-recipe-hack)
+  (add-to-list 'run-command-recipes 'run-command-recipe-make))
 
 ;; try out consult-gh
 ;; (use-package consult-gh
