@@ -71,10 +71,6 @@
   ;; (prog-mode . flyspell-prog-mode) rebind flyspell-auto-correct-previous-word
   (prog-mode . flymake-mode))
 
-(use-package flymake-codespell
-  :after flymake
-  :hook (prog-mode . flymake-codespell-setup-backend))
-
 (defun my-gotest-get-current-test()
   "Get the current test name, if we have a subtest (starting with name) then use it."
   (interactive)
