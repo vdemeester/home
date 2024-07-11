@@ -47,7 +47,7 @@
 in the project root *or* the default-directory."
     (let* ((dir (vde-project--project-root-or-default-directory))
 	   (hack-dir (expand-file-name "hack" dir))
-	   (files (directory-files hack-dir)))
+	   (files (or (ignore-errors (directory-files hack-dir)) [])))
       (when (file-accessible-directory-p hack-dir)
 	(mapcar (lambda (file)
 		  (let ((hack-file (expand-file-name file hack-dir)))
