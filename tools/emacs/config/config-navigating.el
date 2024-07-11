@@ -57,7 +57,17 @@
          ("C-c j b" . avy-pop-mark)
          ("C-c j t" . avy-goto-char-timer)
          ("C-c j l" . avy-goto-line)
-	 (:map isearch-mode-map ("C-j" . avy-isearch))))
+	 (:map isearch-mode-map ("C-j" . avy-isearch)))
+  :config
+  (defun avy-action-helpful (pt)
+    (save-excursion
+      (goto-char pt)
+      (helpful-at-point))
+    (select-window
+     (cdr (ring-ref avy-ring 0)))
+    t)
+
+  (setf (alist-get ?H avy-dispatch-alist) 'avy-action-helpful))
 
 (use-package casual-avy
   :unless noninteractive
