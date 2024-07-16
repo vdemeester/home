@@ -48,10 +48,11 @@
       (setq pos (match-end 0)))
     commands))
 
+;; TODO github run-command: if remote is github.com, add a gh create pr command
+
 (use-package run-command
   :bind ("C-c c" . run-command)
   :config
-  ;; TODO (defun run-command-recipe-make ())
   (defun run-command-recipe-make()
     "Returns a dynamic list of commands based of a Makefile.
 

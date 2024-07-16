@@ -38,6 +38,7 @@
 (use-package flymake
   :defer t
   :bind
+  (("C-c f e" . flymake-show-project-diagnostics))
   (:map flymake-mode-map
         ("M-n" . flymake-goto-next-error)
         ("M-p" . flymake-goto-prev-error))
