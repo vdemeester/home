@@ -49,25 +49,26 @@
      ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
      (t (format "%8d" (buffer-size)))))
 
-  (setq ibuffer-formats
-        '((mark modified read-only " "
-                (name 18 18 :left :elide)
-                " "
-                (size-h 9 -1 :right)
-                " "
-                (mode 16 16 :left :elide)
-                " "
-                filename-and-process)
-          (mark modified read-only " "
-                (name 18 18 :left :elide)
-                " "
-                (size 9 -1 :right)
-                " "
-                (mode 16 16 :left :elide)
-                " "
-                (vc-status 16 16 :left)
-                " "
-                filename-and-process))))
+  ;; (setq ibuffer-formats
+  ;;       '((mark modified read-only " "
+  ;;               (name 18 18 :left :elide)
+  ;;               " "
+  ;;               (size-h 9 -1 :right)
+  ;;               " "
+  ;;               (mode 16 16 :left :elide)
+  ;;               " "
+  ;;               filename-and-process)
+  ;;         (mark modified read-only " "
+  ;;               (name 18 18 :left :elide)
+  ;;               " "
+  ;;               (size 9 -1 :right)
+  ;;               " "
+  ;;               (mode 16 16 :left :elide)
+  ;;               " "
+  ;;               (vc-status 16 16 :left)
+  ;;               " "
+  ;;               filename-and-process)))
+  )
 
 (use-package ibuffer-vc
   :unless noninteractive
