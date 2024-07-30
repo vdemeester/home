@@ -48,7 +48,7 @@ in
         cascadia-code
         corefonts
         dejavu_fonts
-        emojione
+        # emojione
         feh
         fira
         fira-code

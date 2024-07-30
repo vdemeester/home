@@ -198,7 +198,7 @@
     waybar
     slurp
     grim
-    gnome.zenity
+    zenity
     clipman
     qogir-icon-theme
     cliphist

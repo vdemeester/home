@@ -22,7 +22,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       # Enable sound (alsa)
-      sound.enable = true;
+      # sound.enable = true;
       # FIXME is it needed
       security.pam.loginLimits = [
         { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
