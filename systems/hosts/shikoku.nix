@@ -140,7 +140,8 @@ in
       openPorts = true;
       extraArguments = "--max-concurrent-downloads=20";
       downloadDir = "/data/downloads";
-      rpcSecretFile = config.sops.secrets.aria2RPCSecret.path;
+      rpcSecretFile = "${pkgs.writeText "aria" "aria2rpc\n"}";
+      # rpcSecretFile = config.sops.secrets.aria2RPCSecret.path;
     };
     bazarr = {
       enable = true;
