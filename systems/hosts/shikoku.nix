@@ -130,8 +130,8 @@ in
 
   sops.secrets.aria2RPCSecret = {
     mode = "444";
-    owner = "root";
-    group = "root";
+    owner = "aria2";
+    group = "aria2";
   };
   
   services = {
