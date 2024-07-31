@@ -181,7 +181,7 @@ func denoteFilename(result readwise.Result) string {
 		keywords = "__" + strings.Join(tags, "_")
 	}
 
-	return strings.ToLower(fmt.Sprintf("%s%s--%s%s.org", date, signature, title, keywords))
+	return date + strings.ToLower(fmt.Sprintf("%s--%s%s.org", signature, title, keywords))
 }
 
 func sluggify(s string) string {
