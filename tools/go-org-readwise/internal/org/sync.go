@@ -158,7 +158,7 @@ func denoteFilename(result readwise.Result) string {
 	// to use them to establish sequential relations between files
 	// (e.g. 1, 1a, 1b, 1b1, 1b2, …).
 	// We use signature to mark files synced from readwise.
-	signature = "==" + result.Category + "@readwise"
+	signature = "==readwise" + result.Category
 
 	// The TITLE field is the title of the note, as provided by
 	// the user. It automatically gets downcased by default and is
