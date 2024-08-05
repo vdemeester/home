@@ -61,7 +61,7 @@ This is condition to the following:
 - `Makefile' file present in project root *or* the default directory."
     (let* ((dir (vde-project--project-root-or-default-directory))
 	   (makefile (expand-file-name "Makefile" dir)))
-    (when (or
+    (when (and
 	   (executable-find "make")
 	   (file-exists-p makefile))
       (message "Makefile present")
