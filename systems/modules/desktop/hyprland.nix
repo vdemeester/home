@@ -32,7 +32,13 @@ in
           xdg-desktop-portal-hyprland
           xdg-desktop-portal-gtk
         ];
-        gtkUsePortal = true;
+	config = {
+	  common = {
+	    default = [
+	      "gtk"
+	    ];
+	  };
+	};
       };
     };
     # Allow swaylock to unlock the computer for us
