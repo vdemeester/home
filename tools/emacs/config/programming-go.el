@@ -43,52 +43,54 @@
 
 (defun run-command-recipe-go ()
   "Go `run-command' recipes."
-  (let* ((dir (vde-project--project-root-or-default-directory))
-	(package (file-name-directory (concat "./"(file-relative-name (buffer-file-name) dir)))))
-    (when (or (go-mode-p) (file-exists-p (expand-file-name "go.mod" dir)))
-      (append
-       (and (buffer-file-name) (go-mode-p)
-	    (list
-	     (list :command-name "gofumpt"
-		   :command-line (concat "gofumpt -extra -w " (buffer-file-name))
-		   :working-dir dir
-		   :display "gofumpt (reformat) file")
-	     (list :command-name "go-fmt"
-		   :command-line (concat "go fmt " (buffer-file-name))
-		   :working-dir dir
-		   :display "gofmt (reformat) file")
-	     (list :command-name "go-run"
-		   :command-line (concat "go run " (buffer-file-name))
-		   :working-dir dir
-		   :display "Compile, execute file")))
-       (and (string-suffix-p "_test.go" buffer-file-name) (go-mode-p)
-	    (list
-	     (let ((runArgs (go-test--get-current-file-tests)))
-	       ;; go test current test
-	       ;; go test current file
-	       (list :command-name "go-test-file"
-		     :command-line (concat "go test -v " package " -run " (shell-quote-argument runArgs))
+  (when (buffer-file-name) ;; no buffer-file-name means virtual buffer (dired, …)
+    
+    (let* ((dir (vde-project--project-root-or-default-directory))
+	   (package (file-name-directory (concat "./" (file-relative-name (buffer-file-name) dir)))))
+      (when (or (go-mode-p) (file-exists-p (expand-file-name "go.mod" dir)))
+	(append
+	 (and (buffer-file-name) (go-mode-p)
+	      (list
+	       (list :command-name "gofumpt"
+		     :command-line (concat "gofumpt -extra -w " (buffer-file-name))
 		     :working-dir dir
-		     :display (concat "Test file " (concat "./"(file-relative-name (buffer-file-name) dir)))
-		     :runner 'run-command-runner-compile)
-	       )))
-       ;; TODO: handle test file as well
-       (list
-	(list :command-name "go-build-project"
-	      :command-line "go build -v ./..."
-	      :working-dir dir
-	      :display "compile package and dependencies"
-	      :runner 'run-command-runner-compile)
-	(list :command-name "go-test-project"
-	      :command-line "go test ./..."
-	      :working-dir dir
-	      :display "test all"
-	      :runner 'run-command-runner-compile)
-	(list :command-name "go-test-package"
-	      :command-line (concat "go test -v " package)
-	      :working-dir dir
-	      :display (concat "Test package " package)
-	      :runner 'run-command-runner-compile))))))
+		     :display "gofumpt (reformat) file")
+	       (list :command-name "go-fmt"
+		     :command-line (concat "go fmt " (buffer-file-name))
+		     :working-dir dir
+		     :display "gofmt (reformat) file")
+	       (list :command-name "go-run"
+		     :command-line (concat "go run " (buffer-file-name))
+		     :working-dir dir
+		     :display "Compile, execute file")))
+	 (and (string-suffix-p "_test.go" buffer-file-name) (go-mode-p)
+	      (list
+	       (let ((runArgs (go-test--get-current-file-tests)))
+		 ;; go test current test
+		 ;; go test current file
+		 (list :command-name "go-test-file"
+		       :command-line (concat "go test -v " package " -run " (shell-quote-argument runArgs))
+		       :working-dir dir
+		       :display (concat "Test file " (concat "./"(file-relative-name (buffer-file-name) dir)))
+		       :runner 'run-command-runner-compile)
+		 )))
+	 ;; TODO: handle test file as well
+	 (list
+	  (list :command-name "go-build-project"
+		:command-line "go build -v ./..."
+		:working-dir dir
+		:display "compile package and dependencies"
+		:runner 'run-command-runner-compile)
+	  (list :command-name "go-test-project"
+		:command-line "go test ./..."
+		:working-dir dir
+		:display "test all"
+		:runner 'run-command-runner-compile)
+	  (list :command-name "go-test-package"
+		:command-line (concat "go test -v " package)
+		:working-dir dir
+		:display (concat "Test package " package)
+		:runner 'run-command-runner-compile)))))))
 
 (with-eval-after-load 'run-command
   (add-to-list 'run-command-recipes 'run-command-recipe-go))
