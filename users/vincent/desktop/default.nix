@@ -37,7 +37,7 @@ in
     libreoffice-fresh
     mpw
     my.batzconverter
-    nyxt
+    # nyxt
     obs-studio
     playerctl
     profile-sync-daemon
@@ -57,6 +57,13 @@ in
       xdg-desktop-portal-hyprland
       xdg-desktop-portal-gtk
     ];
+    config = {
+      common = {
+	default = [
+	  "gtk"
+	];
+      };
+    };
   };
 
   home.file.".XCompose".source = ./xorg/XCompose;
