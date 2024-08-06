@@ -49,6 +49,9 @@
     commands))
 
 ;; TODO github run-command: if remote is github.com, add a gh create pr command
+;; TODO tektoncd run-command: if project is tektoncd
+;; TODO redhat run-command: if it's a redhat project
+;; TODO local run-command: figure out how it works
 
 (use-package run-command
   :bind ("C-c c" . run-command)
