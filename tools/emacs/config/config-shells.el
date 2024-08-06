@@ -14,11 +14,23 @@
   (unbind-key "C-c C-l" shell-mode-map)
   (bind-key "C-c C-l" #'counsel-shell-history shell-mode-map))
 
+(defun run-in-compile (base-cmd &rest ARGS)
+  "Use `compile' to run the BASE-CMD and ARGS, from eshell."
+  (compile (concat base-cmd " " (apply #'concat ARGS))))
+
 ;; TODO: understand and rework eshell completion
 (use-package eshell
   :commands (eshell eshell-here)
   :bind* ("C-x m t" . eshell-here)
   :config
+  (defun eshell/make (&rest ARGS)
+    "Shortcut to more easily run builds in a compile buffer"
+    (cond ((or (file-exists-p "Makefile")
+	       (file-exists-p "makefile"))
+	   (run-in-compile "make" ARGS))
+	  ((file-exists-p "build.zig")
+	   (run-in-compile "zig build"))
+	  (t "No supported build system found.")))
   (defun eshell-here ()
     "Open EShell in the directory associated with the current buffer's file.
 The EShell is renamed to match that directory to make multiple windows easier."
