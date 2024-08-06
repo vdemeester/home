@@ -68,7 +68,9 @@ let
     beginend
     cape
     casual-avy
+    casual-bookmarks
     casual-dired
+    casual-re-builder
     conner
     consult
     consult-dir

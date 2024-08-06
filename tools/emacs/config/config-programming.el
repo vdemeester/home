@@ -48,7 +48,7 @@
       (setq pos (match-end 0)))
     commands))
 
-;; TODO github run-command: if remote is github.com, add a gh create pr command
+;; TODO github run-command: if remote is github.com, add a gh create pr command, and other "goodies"…
 ;; TODO tektoncd run-command: if project is tektoncd
 ;; TODO redhat run-command: if it's a redhat project
 ;; TODO local run-command: figure out how it works

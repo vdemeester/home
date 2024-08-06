@@ -117,6 +117,13 @@
               ("g" . Man-update-manpage)))
 
 (use-package bookmark+)
+(use-package bookmark)
+(use-package casual-bookmarks
+  :bind (:map bookmark-bmenu-mode-map
+              ("C-o" . casual-bookmarks-tmenu)
+              ("S" . casual-bookmarks-sortby-tmenu)
+              ("J" . bookmark-jump))
+  :after (bookmark))
 
 (keymap-global-set "S-<down-mouse-2>" 'strokes-do-stroke)
 

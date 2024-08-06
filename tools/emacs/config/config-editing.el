@@ -182,5 +182,13 @@ If region is active, add its contents to the new buffer."
   :bind (([remap ispell-word] . jinx-correct) ;; ("M-$" . jinx-correct)
          ("C-M-$" . jinx-languages)))
 
+(use-package re-builder)
+(use-package casual-re-builder
+  :bind (:map
+	 reb-mode-map ("C-o" . casual-re-builder-tmenu)
+	 :map
+	 reb-lisp-mode-map ("C-o" . casual-re-builder-tmenu))
+  :after (re-builder))
+
 (provide 'config-editing)
 ;;; config-editing.el ends here
