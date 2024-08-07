@@ -368,6 +368,51 @@ file which do not already have one."
              org-babel-execute:sh
              org-babel-execute:shell
              org-babel-execute:zsh))
+;; my personal
+(use-package ol-github
+  :after (org))
+(use-package ol-gitlab
+  :after (org))
+(use-package ol-ripgrep
+  :after (org))
+(use-package ol-rg
+  :disabled
+  :after (org))
+(use-package ol-grep
+  :after (org))
+
+;; built-in org-mode
+(use-package ol-eshell
+  :after (org))
+(use-package ol-git-link
+  :defer 2
+  :after (org))
+(use-package ol-gnus
+  :defer 2
+  :after (org))
+(use-package ol-irc
+  :defer 2
+  :after (org))
+(use-package ol-info
+  :defer 2
+  :after (org))
+(use-package ol-man
+  :defer 2
+  :after (org))
+;; (use-package ol-notmuch
+;;   :defer 2
+;;   :after (org))
+;; (use-package ob-dot
+;;   :after org
+;;   :commands (org-babel-execute:dot))
+;; (use-package ob-ditaa
+;;   :after org
+;;   :commands (org-babel-execute:ditaa)
+;;   :config
+;;   (setq org-ditaa-jar-path "/home/vincent/.nix-profile/lib/ditaa.jar"))
+;; (use-package ob-doc-makefile
+;;   :after org
+;;   :commands (org-babel-execute:makefile))
 
 (use-package org-nix-shell
   :hook (org-mode . org-nix-shell-mode))
@@ -605,93 +650,6 @@ file which do not already have one."
 ;;         org-src-tab-acts-natively t
 ;;         org-src-window-setup 'current-window
 ;;         org-edit-src-content-indentation 0))
-;; ;; my personal
-;; (use-package ol-github
-;;   :after (org))
-;; (use-package ol-gitlab
-;;   :after (org))
-;; (use-package ol-ripgrep
-;;   :after (org))
-;; (use-package ol-rg
-;;   :disabled
-;;   :after (org))
-;; (use-package ol-grep
-;;   :after (org))
-;; 
-;; ;; built-in org-mode
-;; (use-package ol-eshell
-;;   :after (org))
-;; (use-package ol-git-link
-;;   :defer 2
-;;   :after (org))
-;; (use-package ol-gnus
-;;   :defer 2
-;;   :after (org))
-;; (use-package ol-irc
-;;   :defer 2
-;;   :after (org))
-;; (use-package ol-info
-;;   :defer 2
-;;   :after (org))
-;; (use-package ol-man
-;;   :defer 2
-;;   :after (org))
-;; (use-package ol-notmuch
-;;   :defer 2
-;;   :after (org))
-;; (use-package orgit
-;;   :after org)
-;; (use-package ob-async
-;;   :after org
-;;   :commands (ob-async-org-babel-execute-src-block))
-;; (use-package ob-css
-;;   :after org
-;;   :commands (org-babel-execute:css))
-;; (use-package ob-dot
-;;   :after org
-;;   :commands (org-babel-execute:dot))
-;; (use-package ob-ditaa
-;;   :after org
-;;   :commands (org-babel-execute:ditaa)
-;;   :config
-;;   (setq org-ditaa-jar-path "/home/vincent/.nix-profile/lib/ditaa.jar"))
-;; (use-package ob-emacs-lisp
-;;   :after org
-;;   :commands (org-babel-execute:emacs-lisp org-babel-execute:elisp))
-;; (use-package ob-go
-;;   :after org
-;;   :commands (org-babel-execute:go))
-;; (use-package ob-gnuplot
-;;   :after org
-;;   :commands (org-babel-execute:gnuplot))
-;; (use-package ob-http
-;;   :after org
-;;   :commands (org-babel-execute:http))
-;; (use-package ob-js
-;;   :after org
-;;   :commands (org-babel-execute:js))
-;; (use-package ob-latex
-;;   :after org
-;;   :commands (org-babel-execute:latex))
-;; (use-package ob-python
-;;   :after org
-;;   :commands (org-babel-execute:python))
-;; (use-package ob-shell
-;;   :after org
-;;   :commands (org-babel-execute:ash
-;;              org-babel-execute:bash
-;;              org-babel-execute:csh
-;;              org-babel-execute:dash
-;;              org-babel-execute:fish
-;;              org-babel-execute:ksh
-;;              org-babel-execute:mksh
-;;              org-babel-execute:posh
-;;              org-babel-execute:sh
-;;              org-babel-execute:shell
-;;              org-babel-execute:zsh))
-;; (use-package ob-doc-makefile
-;;   :after org
-;;   :commands (org-babel-execute:makefile))
 ;; (use-package org
 ;;   :defer 2
 ;;   :config
