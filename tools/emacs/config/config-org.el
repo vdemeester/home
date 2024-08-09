@@ -194,7 +194,32 @@
 				    (--map `(,it :maxlevel . 3)))))
   (setq org-agenda-files (vde/org-agenda-files)
 	;; TODO: extract org-refile-targets into a function
-	org-refile-targets (vde/org-refile-targets)))
+	org-refile-targets (vde/org-refile-targets))
+  (setq org-agenda-custom-commands
+	'(("d" "Daily Agenda"
+	   ((agenda ""
+		    ((org-agenda-span 'day)
+		     (org-deadline-warning-days 5)))
+	    (tags-todo "+PRIORITY=\"A\""
+		       ((org-agenda-overriding-header "High Priority Tasks")))
+	    (tags-todo "+NEXT"
+		       ((org-agenda-overriding-header "Next Tasks")))))
+	  ("i" "Inbox (triage)"
+	   ((tags-todo ".*"
+		  ((org-agenda-files '("~/desktop/org/20231120T124316--inbox__inbox.org"))
+		   (org-agenda-overriding-header "Unprocessed Inbox Item")))))
+	  ("u" "Untagged Tasks"
+	   ((tags-todo "-{.*}"
+		       ((org-agenda-overriding-header "Untagged tasks")))))
+	  ("w" "Weekly Review"
+	   ((agenda ""
+		    ((org-agenda-overriding-header "Completed Tasks")
+		     (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
+		     (org-agenda-span 'week)))
+	    (agenda ""
+		    ((org-agenda-overriding-header "Unfinished Scheduled Tasks")
+		     (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+		     (org-agenda-span 'week))))))))
 
 ;; Make sure we load org-protocol
 (use-package org-protocol
