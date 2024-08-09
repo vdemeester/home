@@ -182,11 +182,11 @@
 				    (--remove (s-starts-with? "." it))
 				    (--map (format "%s" it))
 				    (--map `(,it :maxlevel . 2)))
-				   (->>
-				    (directory-files-recursively src-www-dir ".org$")
-				    (--remove (s-starts-with? "." it))
-				    (--map (format "%s" it))
-				    (--map `(,it :maxlevel . 2)))
+				   ;; (->>
+				   ;;  (directory-files-recursively src-www-dir ".org$")
+				   ;;  (--remove (s-starts-with? "." it))
+				   ;;  (--map (format "%s" it))
+				   ;;  (--map `(,it :maxlevel . 2)))
 				   (->>
 				    (directory-files-recursively org-resources-dir ".org$")
 				    (--remove (s-starts-with? (format "%s/legacy" org-resources-dir) it))
