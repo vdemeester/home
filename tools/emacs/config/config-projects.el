@@ -72,5 +72,15 @@ switch to it. Otherwise, create a new vterm shell."
   :init
   (require 'vterm))
 
+(use-package project-x
+  :after project
+  :config
+  (add-hook 'project-find-functions 'project-x-try-local 90)
+  (add-hook 'kill-emacs-hook 'project-x--window-state-write)
+  (add-to-list 'project-switch-commands
+               '(?j "Restore windows" project-x-windows) t)
+    :bind (("C-x p w" . project-x-window-state-save)
+           ("C-x p j" . project-x-window-state-load)))
+
 (provide 'config-projects)
 ;;; config-projects.el ends here
