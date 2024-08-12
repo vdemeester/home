@@ -202,7 +202,7 @@
 		     (org-deadline-warning-days 5)))
 	    (tags-todo "+PRIORITY=\"A\""
 		       ((org-agenda-overriding-header "High Priority Tasks")))
-	    (tags-todo "+NEXT"
+	    (todo "NEXT"
 		       ((org-agenda-overriding-header "Next Tasks")))))
 	  ("i" "Inbox (triage)"
 	   ((tags-todo ".*"
