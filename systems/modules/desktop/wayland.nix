@@ -17,6 +17,7 @@ in
     modules.desktop.xorg.enable = mkForce false;
     # Hardware Support for Wayland Sway, …
     hardware = {
+      # graphics
       opengl = {
         enable = true;
       };

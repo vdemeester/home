@@ -13,6 +13,7 @@
   + https://github.com/psamim/dotfiles/blob/master/doom/config.el#L73
 - https://git.sr.ht/~sebasmonia/dotfiles/tree/master/item/.config/emacs/init.el
 - https://gitlab.com/andreyorst/dotfiles/
+- https://github.com/gopar/.emacs.d
 
 * Packages "inspirations"
 
