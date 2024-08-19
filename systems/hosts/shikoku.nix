@@ -13,6 +13,11 @@ let
   endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
 
   metadata = importTOML ../../ops/hosts.toml;
+
+  gpuIDs = [
+    "10de:1b80" # Graphics
+    "10de:10f0" # Audio
+  ];
 in
 {
   imports = [
@@ -36,10 +41,28 @@ in
 
   # TODO: check if it's done elsewhere
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [
+    "vfio_pci"
+    "vfio"
+    "vfio_iommu_type1"
+    
+    "nvidia"
+    "nvidia_modeset"
+    "nvidia_uvm"
+    "nvidia_drm"
+  ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.nvidiaPackages.stable
+  ];
+  boot.kernelParams = [
+    "intel_iommu=on"
+    "kvm_intel.nested=1"
+    ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs)
+  ];
 
+  hardware.opengl.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
   # TODO: check if it's done elsewhere
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
