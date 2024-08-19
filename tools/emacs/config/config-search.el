@@ -128,7 +128,22 @@ confines of word boundaries (e.g. multiple words)."
       (if p
 	  (format "rg: %s" (abbreviate-file-name p))
 	"rg")))
-  (setq rg-buffer-name #'vde/rg-buffer-name))
+  (setq rg-buffer-name #'vde/rg-buffer-name)
+  
+  ;; (when (f-dir-p "~/src/tektoncd/")
+  ;;   (rg-define-search rg-projects-tektoncd
+  ;;     "Search tektoncd (projects)."
+  ;;     :dir "~/src/tektoncd/"
+  ;;     :files "*.*"
+  ;;     :menu ("Projects" "t" "tektoncd")))
+  ;; (when (f-dir-p "~/src/home/")
+  ;;   (rg-define-search rg-projects-home
+  ;;     "Search home."
+  ;;     :dir "~/src/home/"
+  ;;     :files "*.*"
+  ;;     :menu ("Projects" "h" "home")))
+  )
+
 ;; -UseRG
 
 (provide 'config-search)
