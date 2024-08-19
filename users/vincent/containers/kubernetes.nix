@@ -22,6 +22,7 @@ in
     # bekind
     my.chmouzies.kubernetes
     # kubectx
+    kubelogin-oidc
   ];
   programs.zsh.initExtra = ''
     alias -g SK="|snazy -s --kail --kail-prefix-format='{pod}'"
