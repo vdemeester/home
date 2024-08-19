@@ -123,6 +123,7 @@ in
   };
   security.apparmor.enable = true;
   security.pam.enableSSHAgentAuth = true;
+  environment.systemPackages = with pkgs; [ yt-dlp ];
   # -----------------------------------
   environment.etc."vrsync".text = ''
     /home/vincent/desktop/pictures/screenshots/ vincent@synodine.home:/volumeUSB2/usbshare/pictures/screenshots/
