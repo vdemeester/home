@@ -6,6 +6,6 @@
 
   home.packages = with pkgs; [
     javascript-typescript-langserver
-    vscode-langservers-extracted
+    # vscode-langservers-extracted
   ];
 }
