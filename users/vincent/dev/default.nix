@@ -30,6 +30,7 @@
     tmate
     vale
     yamllint
+    yamlfmt
     yq-go
   ];
 
