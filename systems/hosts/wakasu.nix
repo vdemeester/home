@@ -69,6 +69,21 @@ in
   };
 
   hardware.sensor.iio.enable = true;
+  hardware.sane = {
+    enable = true;
+    extraBackends = [ pkgs.sane-airscan ];
+  };
+  services.printing.enable = true;
+  services.printing.drivers = [
+    pkgs.gutenprint
+    pkgs.gutenprintBin
+    pkgs.canon-capt
+    pkgs.canon-cups-ufr2
+    pkgs.cups-bjnp
+    pkgs.carps-cups
+    pkgs.cnijfilter2
+  ];
+  services.udev.packages = [ pkgs.sane-airscan ];
   services.udev.extraRules = ''
     # STM32 rules for the Moonlander and Planck EZ
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \

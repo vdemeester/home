@@ -23,6 +23,7 @@ in
             enable = true;
             userServices = true;
           };
+	  openFirewall = true;
         } // (if stable
         then {
           nssmdns = true;
