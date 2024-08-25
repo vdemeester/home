@@ -124,7 +124,7 @@
         "$mod, P, togglesplit, # dwindle"
 
         "$mod, code:41, fullscreen"
-        "$mod SHIFT, code:41, fakefullscreen"
+        #"$mod SHIFT, code:41, fakefullscreen"
 
         "$mod CTRL, code:33, exec, ${pkgs.wofi-emoji}/bin/wofi-emoji -G"
         "$mod, code:33, exec, ${pkgs.wofi}/bin/wofi -G --show drun -modi 'drun,run,window,ssh'"
