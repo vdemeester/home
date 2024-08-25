@@ -10,7 +10,8 @@
 (use-package yaml-ts-mode
   :mode "\\.ya?ml\\'"
   :hook ((yaml-ts-mode . highlight-indentation-mode)
-         (yaml-ts-mode . highlight-indentation-current-column-mode)))
+         (yaml-ts-mode . highlight-indentation-current-column-mode)
+	 (yaml-ts-mode . display-line-numbers-mode)))
 
 (use-package conf-mode
   :mode ("\\.to?ml\\'" . conf-toml-mode))
