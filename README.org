@@ -112,6 +112,7 @@ Repositories
   + [[https://git.sr.ht/~akirak/nix-config][https://git.sr.ht/~akirak/nix-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/akirak.nix-config/][src]]
   + [[https://github.com/akirak/nix-desktop][https://github.com/akirak/nix-desktop]]
 - https://git.rossabaker.com/ross/cromulent
+- https://github.com/thiagokokada/nix-configs
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
