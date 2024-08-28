@@ -162,7 +162,7 @@
           };
         in
         pkgs.mkShell {
-          packages = [ pkgs.alejandra pkgs.git pkgs.nodePackages.prettier pkgs.deadnix pkgs.nix-melt pkgs.k0sctl ];
+          packages = [ pkgs.alejandra pkgs.git pkgs.nodePackages.prettier pkgs.deadnix pkgs.nixfmt ];
           name = "home";
           DIRENV_LOG_FORMAT = "";
         };
