@@ -39,6 +39,7 @@ in
   };
   config = mkIf cfg.enable (mkMerge [
     {
+      networking.firewall.checkReversePath = false;
       virtualisation.containers = {
         enable = true;
         containersConf.settings = {
