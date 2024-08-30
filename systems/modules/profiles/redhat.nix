@@ -60,9 +60,19 @@ in
       mode = "600";
     };
     # Certificates
+    security.pki.certificateFiles = [
+      "/etc/pki/tls/certs/2022-IT-Root-CA.pem"
+      "/etc/pki/tls/certs/2015-RH-IT-Root-CA.pem"
+      "/etc/pki/tls/certs/Eng-CA.crt"
+      "/etc/pki/tls/certs/newca.crt"
+    ];
     sops.secrets."ipa.crt" = {
       inherit (common) mode owner group sopsFile;
       path = "/etc/ipa/ipa.crt";
+    };
+    sops.secrets."2022-IT-Root-CA.pem" = {
+      inherit (common) mode owner group sopsFile;
+      path = "/etc/pki/tls/certs/2022-IT-Root-CA.pem";
     };
     sops.secrets."2015-RH-IT-Root-CA.pem" = {
       inherit (common) mode owner group sopsFile;
