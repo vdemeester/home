@@ -274,6 +274,11 @@ file which do not already have one."
                  "* %a\n%U\n%?\n%i"
                  :empty-lines 1))
   (add-to-list 'org-capture-templates
+	       `("d" "daily entry" entry
+		 (file ,(car (denote-journal-extras--entry-today)))
+                 "* %a\n%U\n%?\n%i"
+                 :empty-lines 1))
+  (add-to-list 'org-capture-templates
                `("t" "Tasks"))
   (add-to-list 'org-capture-templates
                `("tt" "New task" entry
