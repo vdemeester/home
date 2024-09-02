@@ -19,7 +19,7 @@
         position = "bottom";
         mode = "hide";
         modifier-reset = "release";
-        modules-left = [ "sway/workspaces" "hyprland/workspaces" "sway/mode" "custom/media" ];
+        modules-left = [ "sway/workspaces" "sway/mode" "custom/media" ];
         modules-center = [ "clock" "custom/notification" ];
         modules-right = [ "temperature" "pulseaudio" "backlight" "battery#bat0" "tray" ];
         ipc = true;

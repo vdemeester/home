@@ -83,9 +83,8 @@ in
       }
     '';
     loginExtra = ''
-      # export GOPATH=${config.home.homeDirectory}
       if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then
-        exec Hyprland
+        exec sway
       fi
     '';
     profileExtra = ''

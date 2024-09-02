@@ -6,7 +6,7 @@ let
     fd . -d 3 --type d ~/src | ${pkgs.wofi}/bin/wofi -dmenu | xargs -I {} zsh -i -c "cd {}; emacs ."
   '';
   fontConf = {
-    names = [ "Ubuntu Mono" ];
+    names = [ "JetBrains Mono" ];
     size = 12.0;
   };
 in
@@ -22,6 +22,7 @@ in
       export _JAVA_AWT_WM_NONREPARTENTING=1
       export MOZ_ENABLE_WAYLAND=1
     '';
+    checkConfig = false;
     config = {
       gaps = {
         inner = 2;
@@ -225,8 +226,8 @@ in
         bindsym XF86AudioPrev exec "playerctl previous"
         bindsym Cancel exec "playerctl previous"
 
-        bindcode ${mod}+49 exec swaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
-        bindsym --whole-window button8 exec sswaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask tmux
+        bindcode ${mod}+49 exec swaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask
+        bindsym --whole-window button8 exec sswaymsg [app_id="metask"] scratchpad show || exec ${pkgs.kitty}/bin/kitty --title metask --class metask
         bindcode ${mod}+Shift+49 exec swaymsg '[app_id="emacs" title="^_emacs scratchpad_$"]' scratchpad show || exec ${config.programs.emacs.package}/bin/emacsclient -c -F "((name . \"_emacs scratchpad_\"))"
         bindsym --whole-window button9 exec swaymsg '[app_id="emacs" title="^_emacs scratchpad_$"]' scratchpad show || exec ${config.programs.emacs.package}/bin/emacsclient -c -F "((name . \"_emacs scratchpad_\"))"
 
@@ -244,10 +245,10 @@ in
   };
   home.packages = with pkgs; [
     swaybg
-    swaynotificationcenter
+    # swaynotificationcenter
     # terminals
     # FIXME move this away, they work on both Xorg and Wayland/Sway
-    alacritty
+    kitty
   ];
 
 }
