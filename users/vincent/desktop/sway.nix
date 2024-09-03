@@ -28,6 +28,29 @@ in
         inner = 2;
         outer = 2;
       };
+      colors = {
+	  focused = {
+	    border = "#BD93F9";
+	    background = "#282A36";
+	    text = "#ffffff";
+	    indicator = "#8BE9FD";
+	    childBorder = "#BD93F9";
+	  };
+	  focusedInactive = {
+	    border = "#BD93F9";
+	    background = "#282A36";
+	    text = "#F8F8F2";
+	    indicator = "#44475A";
+	    childBorder = "#44475A";
+	  };
+	  unfocused = {
+	    border = "#44475A";
+	    background = "#282A36";
+	    text = "#BFBFBF";
+	    indicator = "#282A36";
+	    childBorder = "#282A36";
+	  };
+      };
       modifier = "Mod4";
       terminal = "${pkgs.kitty}/bin/kitty";
       menu = "${pkgs.wofi}/bin/wofi -G --show drun -modi 'drun,run,window,ssh'";
