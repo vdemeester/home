@@ -268,6 +268,7 @@ file which do not already have one."
   :commands (org-capture)
   :config
 
+  ;; TODO: refine this, create a function that reset this
   (add-to-list 'org-capture-templates
                `("l" "Link" entry
                  (file ,org-inbox-file)
@@ -275,7 +276,7 @@ file which do not already have one."
                  :empty-lines 1))
   (add-to-list 'org-capture-templates
 	       `("d" "daily entry" entry
-		 (file ,(car (denote-journal-extras--entry-today)))
+		 (file (car ,(denote-journal-extras--entry-today)))
                  "* %a\n%U\n%?\n%i"
                  :empty-lines 1))
   (add-to-list 'org-capture-templates

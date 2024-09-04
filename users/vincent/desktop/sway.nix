@@ -64,7 +64,6 @@ in
       };
       output = {
         "*" = {
-          # { command = "${pkgs.swaybg}/bin/swaybg -i ~/desktop/pictures/lockscreen -m fill"; }
           bg = "~/desktop/pictures/lockscreen fill";
         };
       };
@@ -89,20 +88,10 @@ in
           "${mod}+Control+Return" = "exec emacs";
           "${mod}+Control+Shift+Return" = "exec ${emacs-in-folder}";
 
-          # "${mod}+${left}" = "focus left";
-          # "${mod}+${down}" = "focus down";
-          # "${mod}+${up}" = "focus up";
-          # "${mod}+${right}" = "focus right";
-
           "${mod}+Left" = "focus left";
           "${mod}+Down" = "focus down";
           "${mod}+Up" = "focus up";
           "${mod}+Right" = "focus right";
-
-          # "${mod}+Shift+${left}" = "move left";
-          # "${mod}+Shift+${down}" = "move down";
-          # "${mod}+Shift+${up}" = "move up";
-          # "${mod}+Shift+${right}" = "move right";
 
           "${mod}+Shift+Left" = "move left";
           "${mod}+Shift+Down" = "move down";
@@ -119,15 +108,8 @@ in
           "${mod}+Shift+Control+Up" = "move workspace to output up";
           "${mod}+Shift+Control+Right" = "move workspace to output right";
 
-          # "${mod}+b" = "splith";
-          # "${mod}+v" = "splitv";
-          # "${mod}+f" = "fullscreen toggle";
-
           "${mod}+Shift+space" = "floating toggle";
           "${mod}+space" = "focus mode_toggle";
-
-          #"${mod}+Shift+minus" = "move scratchpad";
-          #"${mod}+minus" = "scratchpad show";
 
           "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%+";
           "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%-";
@@ -185,7 +167,7 @@ in
         }
       ];
       startup = [
-        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP"; } #workaround
+        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG _CURRENT_DESKTOP"; } #workaround
         { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         # { command = "systemctl --user restart waybar"; always = true; }
         { command = "systemctl --user restart kanshi"; always = true; }
