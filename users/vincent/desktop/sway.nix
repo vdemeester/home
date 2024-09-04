@@ -68,14 +68,7 @@ in
         };
       };
       fonts = fontConf;
-      # bars = [
-      #   {
-      #     command = "${pkgs.waybar}/bin/waybar";
-      #     mode = "hide";
-      #     position = "bottom";
-      #     id = "mainBar";
-      #   }
-      # ];
+      bars = [];
       keybindings =
         let
           mod = config.wayland.windowManager.sway.config.modifier;
@@ -168,11 +161,8 @@ in
       ];
       startup = [
         { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG _CURRENT_DESKTOP"; } #workaround
-        { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
-        # { command = "systemctl --user restart waybar"; always = true; }
+        # { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         { command = "systemctl --user restart kanshi"; always = true; }
-        # { command = "${pkgs.kitty}/bin/kitty --title metask --class metask tmux"; }
-        # { command = ''emacsclient -n -c -F "((name . \"_emacs scratchpad_\"))''; }
       ];
     };
     extraConfig =

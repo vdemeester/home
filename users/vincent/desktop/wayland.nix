@@ -117,7 +117,6 @@
     wtype
     mako
     wofi
-    waybar
     slurp
     grim
     zenity
