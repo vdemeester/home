@@ -29,7 +29,7 @@
         inactive_tab_background = "#0c0c0c";
       };
       font = {
-        name = "Ubuntu Mono";
+        name = "JetBrains Mono";
         size = 12;
       };
       keybindings = {
@@ -81,7 +81,7 @@
     # FIXME: replace by rotification
     mako = {
       enable = true;
-      font = "Ubuntu Mono 12";
+      font = "JetBrains Mono 12";
       defaultTimeout = 5000; # 5s timeout
       groupBy = "app-name,summary";
       extraConfig = ''
