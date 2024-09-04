@@ -1,6 +1,7 @@
 {
   imports = [
-    ./work.nix
+    ./builder.nix
     ./home.nix
+    ./work.nix
   ];
 }

@@ -56,12 +56,6 @@
         ./systems/modules/virtualisation/default.nix
         ./systems/modules/virtualisation/buildkit.nix
         ./systems/modules/services/default.nix
-        # FIXME: migrate this to elsewhere, or at least split it
-        # Profiles probably need to go away
-        ./systems/modules/profiles/base.nix
-        ./systems/modules/profiles/builder.nix
-        ./systems/modules/profiles/i18n.nix
-        ./systems/modules/profiles/wireguard.server.nix
         inputs.sops-nix.nixosModules.sops
         # inputs.envfs.nixosModules.envfs
         {

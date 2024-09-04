@@ -9,5 +9,6 @@
     ./ssh.nix
     ./syncthing.nix
     ./wireguard.client.nix
+    ./wireguard.server.nix
   ];
 }

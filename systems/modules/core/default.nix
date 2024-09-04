@@ -10,13 +10,27 @@ let
 in
 {
   imports = [
+    ./binfmt.nix
     ./boot.nix
     ./config.nix
+    ./i18n.nix
     ./nix.nix
     ./users.nix
-    ./binfmt.nix
   ];
 
+  environment.systemPackages = with pkgs; [
+    cachix
+    file
+    htop
+    iotop
+    lsof
+    netcat
+    psmisc
+    pv
+    tree
+    vim
+    wget
+  ];
   # FIXME fix tmpOnTmpfs
   # systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
 

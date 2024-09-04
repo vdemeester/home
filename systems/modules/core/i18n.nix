@@ -2,11 +2,11 @@
 
 with lib;
 let
-  cfg = config.profiles.i18n;
+  cfg = config.core.i18n;
 in
 {
   options = {
-    profiles.i18n = {
+    core.i18n = {
       enable = mkOption {
         default = true;
         description = "Enable i18n profile";

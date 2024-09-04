@@ -2,7 +2,7 @@
 
 with lib;
 let
-  cfg = config.profiles.wireguard.server;
+  cfg = config.modules.services.wireguard.server;
 
   secretPath = ../../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
@@ -12,7 +12,7 @@ let
 in
 {
   options = {
-    profiles.wireguard.server = {
+    modules.services.wireguard.server = {
       enable = mkEnableOption "Enable wireguard.server profile";
     };
   };

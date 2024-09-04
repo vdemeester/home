@@ -126,21 +126,19 @@ in
     buildCores = 1;
   };
 
-  # FIXME: deprecated, move to modules
-  profiles = {
+  modules.services = {
     wireguard.server.enable = true;
-  };
-
-  modules.services.ssh = {
-    enable = true;
-    extraConfig = ''
-      Match User nginx
+    ssh = {
+      enable = true;
+      extraConfig = ''
+	Match User nginx
         ChrootDirectory /var/www
         ForceCommand interfal-sftp
         AllowTcpForwarding no
         PermitTunnel no
         X11Forwarding no
-    '';
+      '';
+    };
   };
 
   networking.firewall.allowPing = true;
