@@ -126,7 +126,6 @@ in
       };
     };
     profiles = {
-      #   home = true;
       work.redhat = true;
     };
     services = {
@@ -140,7 +139,7 @@ in
   };
 
   # TODO Migrate to modules
-  profiles.home = true;
+  modules.profiles.home = true;
   virtualisation.podman.dockerSocket.enable = true;
   virtualisation.podman.autoPrune.enable = true;
   environment.systemPackages = with pkgs; [

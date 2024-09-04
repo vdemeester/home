@@ -53,7 +53,9 @@ in
   # profiles.base.systemd-boot = lib.mkForce true;
   # 
   modules = {
+    profiles.home = true;
     services = {
+      bind.enable = true;
       #     syncthing = {
       #       enable = true;
       #       guiAddress = "${metadata.hosts.sakhalin.wireguard.addrs.v4}:8384";
@@ -61,11 +63,6 @@ in
       avahi.enable = true;
       ssh.enable = true;
     };
-  };
-  # 
-  profiles = {
-    bind.enable = true;
-    home = true;
   };
 
   # services = {

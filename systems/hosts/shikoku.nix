@@ -139,17 +139,12 @@ in
       ssh.enable = true;
     };
     virtualisation.libvirt = { enable = true; nested = true; listenTCP = true; };
+    profiles.home = true;
   };
 
   environment.systemPackages = [ pkgs.python310Packages.aria2p ];
 
-
-  
   programs.ssh.setXAuthLocation = true;
-  profiles = {
-    bind.enable = true;
-    home = true;
-  };
 
   sops.secrets.aria2RPCSecret = {
     mode = "444";

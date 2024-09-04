@@ -36,7 +36,6 @@ in
     # nyxt
     obs-studio
     playerctl
-    profile-sync-daemon
     trash-cli
     xdg-user-dirs
     xdg-utils

@@ -52,7 +52,7 @@
         ./systems/modules/dev/default.nix
         ./systems/modules/editors/default.nix
         ./systems/modules/hardware/default.nix
-        ./systems/modules/profiles/default.flake.nix # TODO: rename
+	./systems/modules/profiles/default.nix
         ./systems/modules/virtualisation/default.nix
         ./systems/modules/virtualisation/buildkit.nix
         ./systems/modules/services/default.nix
@@ -60,10 +60,7 @@
         # Profiles probably need to go away
         ./systems/modules/profiles/base.nix
         ./systems/modules/profiles/builder.nix
-        ./systems/modules/profiles/dns.nix
         ./systems/modules/profiles/i18n.nix
-        ./systems/modules/profiles/home.nix
-        ./systems/modules/profiles/redhat.nix
         ./systems/modules/profiles/wireguard.server.nix
         inputs.sops-nix.nixosModules.sops
         # inputs.envfs.nixosModules.envfs

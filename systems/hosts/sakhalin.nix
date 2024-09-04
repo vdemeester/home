@@ -60,6 +60,7 @@ in
   };
 
   modules = {
+    profiles.home = true;
     services = {
       syncthing = {
         enable = true;
@@ -69,11 +70,6 @@ in
       ssh.enable = true;
     };
     virtualisation.libvirt = { enable = true; nested = true; listenTCP = true; };
-  };
-
-  profiles = {
-    bind.enable = true;
-    home = true;
   };
 
   fileSystems."/export/gaia" = { device = "/mnt/gaia"; options = [ "bind" ]; };

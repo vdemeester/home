@@ -2,11 +2,11 @@
 
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.profiles.bind;
+  cfg = config.modules.services.bind;
 in
 {
   options = {
-    profiles.bind = {
+    modules.services.bind = {
       enable = mkEnableOption "Enable bind profile";
     };
   };

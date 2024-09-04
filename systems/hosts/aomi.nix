@@ -119,10 +119,6 @@ in
         };
       };
     };
-    profiles = {
-      #   home = true;
-      work.redhat = true;
-    };
     services = {
       avahi.enable = true;
       ssh.enable = true;
@@ -134,7 +130,7 @@ in
     virtualisation.libvirt = { enable = true; nested = true; };
   };
 
-  profiles = {
+  modules.profiles = {
     # externalbuilder.enable = true;
     home = true;
   };

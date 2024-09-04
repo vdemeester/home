@@ -1,32 +1,6 @@
 {
   imports = [
     ./work.nix
-    # Move this "away"
-    ./base.nix
-    ./builder.nix
-    ./desktop.nix
-    ./dev.nix
-    ./dns.nix
-    ./docker.nix
-    ./gaming.nix
-    ./git.nix
-    ./gnome.nix
     ./home.nix
-    ./i18n.nix
-    ./i3.nix
-    ./ipfs.nix
-    ./kubernetes.nix
-    ./laptop.nix
-    ./mail.nix
-    ./nix-auto-update.nix
-    ./printing.nix
-    ./pulseaudio.nix
-    ./qemu.nix
-    ./redhat.nix
-    ./scanning.nix
-    ./virtualization.nix
-    ./wireguard.server.nix
-    ./yubikey.nix
-    ./zsh.nix
   ];
 }

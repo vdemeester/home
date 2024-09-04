@@ -2,14 +2,14 @@
 
 with lib;
 let
-  cfg = config.profiles.home;
+  cfg = config.modules.profiles.home;
   secretPath = ../../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
   machines = lib.optionalAttrs secretCondition (import secretPath);
 in
 {
   options = {
-    profiles.home = mkEnableOption "Enable home profile";
+    modules.profiles.home = mkEnableOption "Enable home profile";
   };
   config = mkIf cfg {
     boot.kernelParams = [ "nfs.nfs4_disable_idmapping=0" "nfsd.nfs4_disable_idmapping=0" ];
