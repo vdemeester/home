@@ -68,14 +68,14 @@ in
         };
       };
       fonts = fontConf;
-      bars = [
-        {
-          command = "${pkgs.waybar}/bin/waybar";
-          mode = "hide";
-          position = "bottom";
-          id = "mainBar";
-        }
-      ];
+      # bars = [
+      #   {
+      #     command = "${pkgs.waybar}/bin/waybar";
+      #     mode = "hide";
+      #     position = "bottom";
+      #     id = "mainBar";
+      #   }
+      # ];
       keybindings =
         let
           mod = config.wayland.windowManager.sway.config.modifier;
