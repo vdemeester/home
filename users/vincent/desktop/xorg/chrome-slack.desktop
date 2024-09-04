@@ -1,9 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Version=1.0
-Terminal=false
-Type=Application
-Name=CoreOS Slack
-Exec=google-chrome-stable --profile-directory=Default --app-id=bcehlkhnkohehajdlpdmffdkmcgecfjm
-Icon=chrome-bcehlkhnkohehajdlpdmffdkmcgecfjm-Default
-StartupWMClass=crx_bcehlkhnkohehajdlpdmffdkmcgecfjm

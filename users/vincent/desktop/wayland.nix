@@ -10,85 +10,6 @@
   };
 
   programs = {
-    # waybar = {
-    #   enable = true;
-    #   # systemd.enable = true;
-    #   style = ./waybar.css;
-    #   settings = [{
-    #     layer = "bottom";
-    #     position = "bottom";
-    #     mode = "hide";
-    #     modifier-reset = "release";
-    #     modules-left = [ "sway/workspaces" "sway/mode" "custom/media" ];
-    #     modules-center = [ "clock" "custom/notification" ];
-    #     modules-right = [ "temperature" "pulseaudio" "backlight" "battery#bat0" "tray" ];
-    #     ipc = true;
-    #     id = "mainBar";
-    #     "clock" = {
-    #       "interval" = 30;
-    #       "format" = "{:<b>%H:%M</b>}";
-    #       "tooltip-format" = "<big><b>{:%Y %B}</b></big>\n{calendar}";
-    #       "format-alt" = "{:%A %d %B %Y}";
-    #     };
-    #     "battery#bat0" = {
-    #       "bat" = "BAT0";
-    #       "states" = {
-    #         "warning" = 30;
-    #         "critical" = 15;
-    #       };
-    #       "format" = "{icon} {capacity}";
-    #       "format-charging" = " {capacity}";
-    #       "format-plugged" = "";
-    #       "format-alt" = "{icon} {time}";
-    #       "format-full" = "";
-    #       "format-icons" = [ "" "" "" "" "" ];
-    #     };
-    #     "custom/notification" = {
-    #       "tooltip" = false;
-    #       "format" = "{icon} ";
-    #       "format-icons" = {
-    #         "notification" = "<span foreground='red'></span>";
-    #         "none" = "";
-    #         "dnd-notification" = "<sup></sup>";
-    #         "dnd-none" = "";
-    #       };
-    #       "return-type" = "json";
-    #       # "exec-if" = "which swaync-client";
-    #       "exec" = "swaync-client -swb";
-    #       "on-click" = "swaync-client -t -sw";
-    #       "on-click-right" = "swaync-client -d -sw";
-    #       "escape" = true;
-    #     };
-    #     "pulseaudio" = {
-    #       "format" = "{icon} {volume:2}% ";
-    #       "format-bluetooth" = "{icon}  {volume}% ";
-    #       "format-muted" = " ";
-    #       "format-icons" = {
-    #         "phone" = [
-    #           " "
-    #           " "
-    #           " "
-    #           " "
-    #         ];
-    #         "default" = [
-    #           ""
-    #           ""
-    #           ""
-    #         ];
-    #       };
-    #       "scroll-step" = 10;
-    #       "on-click-right" = "${pkgs.pavucontrol}/bin/pavucontrol";
-    #       "on-click" = "${pkgs.pamixer}/bin/pamixer -t";
-    #     };
-    #     "backlight" = {
-    #       "format" = "{icon} {percent}% ";
-    #       "format-icons" = [
-    #         ""
-    #         ""
-    #       ];
-    #     };
-    #   }];
-    # };
     kitty = {
       enable = true;
       # shellIntegration.enableZshIntegration = true;
@@ -157,6 +78,7 @@
         }
       ];
     };
+    # FIXME: replace by rotification
     mako = {
       enable = true;
       font = "Ubuntu Mono 12";
@@ -199,7 +121,6 @@
     slurp
     grim
     zenity
-    clipman
     qogir-icon-theme
     cliphist
   ];

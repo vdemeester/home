@@ -250,10 +250,6 @@ in
   };
   home.packages = with pkgs; [
     swaybg
-    # swaynotificationcenter
-    # terminals
-    # FIXME move this away, they work on both Xorg and Wayland/Sway
-    kitty
   ];
 
 }
