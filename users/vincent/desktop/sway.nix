@@ -163,7 +163,7 @@ in
         { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG _CURRENT_DESKTOP"; } #workaround
         # { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         { command = "systemctl --user restart kanshi"; always = true; }
-	{ command = "${pkgs.pa-notify}/bin/pa-notify -u 2"; always = true;}
+	{ command = "${pkgs.pa-notify}/bin/pa-notify"; always = true;}
       ];
     };
     extraConfig =

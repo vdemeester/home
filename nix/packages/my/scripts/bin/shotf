@@ -16,4 +16,6 @@ maim -d | {
     esac
 }
 fi
-notify-send -i accessories-screenshot 'Screenshot Taken' "Saved to $to"
+notify-send --category=recording \
+	    --icon=$to \
+	    'Screenshot Taken' "Saved to $to"
