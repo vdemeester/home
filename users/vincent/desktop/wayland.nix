@@ -88,7 +88,26 @@
         on-button-left=dismiss
         on-button-middle=invoke-default-action
         on-button-right=dismiss
-        
+	border-radius=3
+        border-size=3
+        border-color=#db7508
+
+        [urgency=low]
+        background-color=#282c30
+        text-color=#888888
+        default-timeout=20000
+
+        [urgency=normal]
+        background-color=#282c30
+        text-color=#ffffff
+        default-timeout=30000
+
+        [urgency=high]
+        background-color=#900000
+        text-color=#ffffff
+        border-color=#ff0000
+        default-timeout=0
+
         [mode=do-not-disturb]
         invisible=1
       '';
