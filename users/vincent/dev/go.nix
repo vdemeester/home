@@ -21,7 +21,6 @@
     # misc
     protobuf
     my.ram
-    my.yaspell
     # not really go but still
     gosmee
     # cue
