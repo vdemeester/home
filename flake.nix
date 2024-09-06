@@ -153,7 +153,7 @@
           };
         in
         pkgs.mkShell {
-          packages = [ pkgs.alejandra pkgs.git pkgs.nodePackages.prettier pkgs.deadnix pkgs.nixfmt pkgs.sops ];
+          packages = [ pkgs.alejandra pkgs.git pkgs.nodePackages.prettier pkgs.deadnix pkgs.nixfmt-classic pkgs.sops ];
           name = "home";
           DIRENV_LOG_FORMAT = "";
         };
