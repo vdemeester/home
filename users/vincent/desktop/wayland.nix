@@ -85,6 +85,7 @@
       groupBy = "app-name,summary";
       # FIXME: hide pulseaudio notifications (maybe they don't show up without pasystray)
       extraConfig = ''
+width=400
 on-button-left=dismiss
 on-button-middle=invoke-default-action
 on-button-right=dismiss
@@ -92,6 +93,7 @@ border-radius=6
 border-size=3
 border-color=#db7508
 format=<b>%s</b>\n%b\n<i>%a</i>
+icon-path=/run/current-system/sw/share/icons/Qogir-dark:/run/current-system/sw/share/icons/hicolor
 
 [urgency=low]
 background-color=#282c30
