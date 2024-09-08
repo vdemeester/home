@@ -86,6 +86,20 @@
 		magit-bury-buffer-function #'magit-restore-window-configuration
 		magit-refresh-status-buffer nil)
 
+  (setq-default git-commit-summary-max-length 50
+                git-commit-known-pseudo-headers
+                '("Signed-off-by"
+                  "Acked-by"
+                  "Modified-by"
+                  "Cc"
+                  "Suggested-by"
+                  "Reported-by"
+                  "Tested-by"
+                  "Reviewed-by")
+                git-commit-style-convention-checks
+                '(non-empty-second-line
+                  overlong-summary-line))
+  
   (magit-define-popup-option 'magit-rebase-popup
                              ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
   (magit-define-popup-switch 'magit-log-popup
@@ -119,27 +133,6 @@
 
   ;; Show refined hunks during diffs
   (set-default 'magit-diff-refine-hunk t))
-
-(use-package git-commit
-  :after magit
-  :commands (git-commit-mode)
-  :hook (git-commit-mode . vde/git-commit-mode-hook)
-  :config
-  (defun vde/git-commit-mode-hook ()
-    "git-commit mode hook")
-  (setq-default git-commit-summary-max-length 50
-                git-commit-known-pseudo-headers
-                '("Signed-off-by"
-                  "Acked-by"
-                  "Modified-by"
-                  "Cc"
-                  "Suggested-by"
-                  "Reported-by"
-                  "Tested-by"
-                  "Reviewed-by")
-                git-commit-style-convention-checks
-                '(non-empty-second-line
-                  overlong-summary-line)))
 
 (use-package gitconfig-mode
   :commands (gitconfig-mode)

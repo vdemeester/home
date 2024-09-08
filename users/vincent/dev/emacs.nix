@@ -99,7 +99,6 @@ let
     flimenu
     flymake-yamllint
     focus
-    git-commit
     git-gutter
     git-gutter-fringe
     git-modes
