@@ -57,28 +57,21 @@ in
         fira-mono
         font-awesome
         go-font
-        #hasklig
+	hack-font
         inconsolata
         inconsolata-nerdfont
-        #iosevka
-        #iosevka-comfy.comfy
         jetbrains-mono
         liberation_ttf
-	maple-mono
-	maple-mono-NF
         nerdfonts
         noto-fonts
         noto-fonts-cjk
         noto-fonts-emoji
         noto-fonts-extra
         overpass
-        #source-code-pro
-        sudo-font
         symbola
         twemoji-color-font
         ubuntu_font_family
         unifont
-        #victor-mono
       ];
     };
 

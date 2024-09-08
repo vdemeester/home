@@ -14,7 +14,7 @@ in
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
-    systemdIntegration = true;
+    systemd.enable = true;
     extraSessionCommands = ''
       export SDL_VIDEODRIVER=wayland
       export QT_QPA_PLATFORM=wayland
@@ -183,6 +183,7 @@ in
         bindcode ${mod}+Shift+26 exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'"
         bindcode ${mod}+32 mode resize
         bindcode ${mod}+Shift+32 exec "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"
+	bindcode ${mod}+24 exec "notify-send --icon=battery --category=info --urgency=critical \"$(acpi)\""
 
         # switch to workspace
         bindcode ${mod}+10 workspace number 1
