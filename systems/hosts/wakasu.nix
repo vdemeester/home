@@ -153,6 +153,7 @@ in
     virt-manager
     catt
     go-org-readwise
+    aerc # move it on its own
   ];
 
   location.provider = "geoclue2";

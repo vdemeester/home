@@ -128,8 +128,8 @@ format=<b>%s</b>\n%b
 anchor=center
 format=<b>%s</b> %b
 
-[app-name="Google Chrome" body~="calendar.google.com.*"]
-max-visible=2
+#[app-name="Google Chrome" body~="calendar.google.com.*"]
+#max-visible=2
 
 [mode=do-not-disturb]
 invisible=1
