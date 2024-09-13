@@ -58,13 +58,13 @@ let
     # undo-tree
     # use-package # it's now part of built-in packages
     # whole-line-or-region
+    # bbdb
     ace-window
     adoc-mode
     aggressive-indent
     alert
     async
     avy
-    bbdb
     beginend
     cape
     casual-avy
