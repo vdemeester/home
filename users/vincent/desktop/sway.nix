@@ -183,7 +183,11 @@ in
         bindcode ${mod}+Shift+26 exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'"
         bindcode ${mod}+32 mode resize
         bindcode ${mod}+Shift+32 exec "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"
-	bindcode ${mod}+24 exec "notify-send --icon=battery --category=info --urgency=critical \"$(acpi)\""
+
+	bindcode ${mod}+24 exec notify-send --icon=battery --category=info --urgency=critical "$(acpi)"
+        # bindcode ${mod}+58 exec
+	bindcode ${mod}+28 exec notify-send --icon=clock --category=info --urgency=critical "$(date +"%I:%M")"
+	bindcode ${mod}+Shift+28 exec notify-send --icon=clock --category=info --urgency=critical "$(date)" 
 
         # switch to workspace
         bindcode ${mod}+10 workspace number 1
