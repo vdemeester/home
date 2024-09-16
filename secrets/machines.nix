@@ -15,6 +15,7 @@ let
   home = {
     ips = {
       aomi = "192.168.1.23";
+      aion = "192.168.1.49";
       dev = "192.168.1.60";
       hokkaido = "192.168.1.115";
       honshu = "192.168.1.17";
@@ -168,6 +169,10 @@ in
     };
     "aomi.home" = {
       hostname = "${home.ips.aomi}";
+      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+    };
+    "aion.home" = {
+      hostname = "${home.ips.aion}";
       remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
     };
     "aomi.vpn" = {

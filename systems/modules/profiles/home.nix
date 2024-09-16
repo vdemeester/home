@@ -17,6 +17,7 @@ in
       domain = "home";
       hosts = with machines; mkIf secretCondition {
         "${home.ips.honshu}" = [ "honshu.home" ];
+        "${home.ips.aion}" = [ "aion.home" ];
         "${home.ips.aomi}" = [ "aomi.home" ];
         "${wireguard.ips.aomi}" = [ "aomi.vpn" ];
         "${home.ips.shikoku}" = [ "shikoku.home" ];
@@ -48,6 +49,12 @@ in
       # FIXME(vdemeester): I think it acts like this because there is only one export
       "/net/sakhalin.home/export" = {
         device = "${machines.home.ips.sakhalin}:/";
+        fsType = "nfs";
+        options = [ "x-systemd.automount" "noauto" ];
+      };
+      # FIXME(vdemeester): I think it acts like this because there is only one export
+      "/net/aion.home/export" = {
+        device = "${machines.home.ips.aion}:/";
         fsType = "nfs";
         options = [ "x-systemd.automount" "noauto" ];
       };
