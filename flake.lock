@@ -133,6 +133,26 @@
         "type": "github"
       }
     },
+    "dagger": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1726685586,
+        "narHash": "sha256-QDZsswnExQwWhS/KfvjaSm9DG2gqmJUVMwNemSedekk=",
+        "owner": "dagger",
+        "repo": "nix",
+        "rev": "6085d224e396db78515a8dba93f7de51ed973a31",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dagger",
+        "repo": "nix",
+        "type": "github"
+      }
+    },
     "devenv": {
       "inputs": {
         "cachix": "cachix",
@@ -1350,6 +1370,7 @@
         "buildkit-tekton": "buildkit-tekton",
         "chapeau-rouge": "chapeau-rouge",
         "chick-group": "chick-group",
+        "dagger": "dagger",
         "devenv": "devenv",
         "emacs-overlay": "emacs-overlay",
         "flake-compat": "flake-compat_5",

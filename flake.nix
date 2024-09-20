@@ -43,6 +43,7 @@
             (_: prev: {
               inherit (inputs.devenv.packages.${prev.system}) devenv;
               inherit (inputs.buildkit-tekton.packages.${prev.system}) tkn-local;
+	      inherit (inputs.dagger.packages.${prev.system}) dagger;
             })
           ];
         }
@@ -180,6 +181,7 @@
     impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
 
     nixpkgs-wayland = { type = "github"; owner = "nix-community"; repo = "nixpkgs-wayland"; inputs.nixpkgs.follows = "nixpkgs"; };
+    dagger = { type = "github"; owner = "dagger"; repo = "nix"; inputs.nixpkgs.follows = "nixpkgs"; };
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
