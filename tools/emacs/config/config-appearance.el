@@ -115,7 +115,9 @@ questions.  Else use completion to select the tab to switch to."
               (completing-read "Select tab: " tabs nil t))))))
 
   :bind (("C-x t t" . vde/complete-tab-bar-tab-dwim)
-         ("C-x t s" . tab-switcher)))
+         ("C-x t s" . tab-switcher)
+	 ("C-<next>" . tab-next)
+	 ("C-<prior>" . tab-previous)))
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
