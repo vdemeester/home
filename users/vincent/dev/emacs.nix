@@ -112,6 +112,7 @@ let
     ibuffer-vc
     jinx
     json-mode
+    kubed
     ligature
     macrostep
     magit
@@ -197,7 +198,7 @@ in
   programs.emacs = {
     enable = true;
     # FIXME: choose depending on the enabled modules
-    package = (pkgs.emacs29.override { withTreeSitter = true; withNativeCompilation = true; withPgtk = true; withWebP = true; withGTK3 = true; withGTK2 = false; withSQLite3 = true; });
+    package = (pkgs.emacs29.override { withTreeSitter = true; withNativeCompilation = true; withPgtk = true; withWebP = true; withGTK3 = true; withSQLite3 = true; });
     # package = (pkgs.emacs-pgtk.override { withGTK3 = true; withGTK2 = false; });
     extraPackages = myExtraPackages;
   };
