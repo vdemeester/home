@@ -54,7 +54,7 @@ in
       };
       # FIXME(vdemeester): I think it acts like this because there is only one export
       "/net/aion.home/export" = {
-        device = "${machines.home.ips.aion}:/";
+        device = "${machines.home.ips.aion}:/export";
         fsType = "nfs";
         options = [ "x-systemd.automount" "noauto" ];
       };
