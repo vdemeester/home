@@ -142,7 +142,7 @@ in
     profiles.home = true;
   };
 
-  environment.systemPackages = [ pkgs.python310Packages.aria2p ];
+  # environment.systemPackages = [ pkgs.python310Packages.aria2p ];
 
   programs.ssh.setXAuthLocation = true;
 
