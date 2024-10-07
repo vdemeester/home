@@ -9,5 +9,6 @@
     tkn-local
     rekor-cli
     cosign
+    python312Packages.pyaml
   ];
 }
