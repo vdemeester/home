@@ -141,6 +141,7 @@
 				    ("area--"  ,(list (propertize"🏢" )))
 				    ("area--home"  ,(list (propertize"🏡" )))
 				    ("home"  ,(list (propertize"🏡" )))
+				    ("machine" ,(list (propertize "🖥️")))
 				    (".*" '(space . (:width (16))))))
 ;;         (org-agenda-compact-blocks t)
         (org-agenda-sticky t)
@@ -261,6 +262,7 @@ file which do not already have one."
 
 (use-package org-modern
   ;; :if window-system
+  :custom (org-modern-table nil)
   :hook (org-mode . org-modern-mode))
 
 (use-package org-capture
