@@ -52,9 +52,29 @@ in
         fsType = "nfs";
         options = [ "x-systemd.automount" "noauto" ];
       };
-      # FIXME(vdemeester): I think it acts like this because there is only one export
-      "/net/aion.home/export" = {
-        device = "${machines.home.ips.aion}:/export";
+      # FIXME(vdemeester): Loop
+      "/net/aion.home/export/documents" = {
+        device = "aion.home:/export/documents";
+        fsType = "nfs";
+        options = [ "x-systemd.automount" "noauto" ];
+      };
+      "/net/aion.home/export/downloads" = {
+        device = "aion.home:/export/downloads";
+        fsType = "nfs";
+        options = [ "x-systemd.automount" "noauto" ];
+      };
+      "/net/aion.home/export/music" = {
+        device = "aion.home:/export/music";
+        fsType = "nfs";
+        options = [ "x-systemd.automount" "noauto" ];
+      };
+      "/net/aion.home/export/pictures" = {
+        device = "aion.home:/export/pictures";
+        fsType = "nfs";
+        options = [ "x-systemd.automount" "noauto" ];
+      };
+      "/net/aion.home/export/videos" = {
+        device = "aion.home:/export/videos";
         fsType = "nfs";
         options = [ "x-systemd.automount" "noauto" ];
       };
