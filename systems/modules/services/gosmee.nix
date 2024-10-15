@@ -12,7 +12,7 @@ in
       '';
       package = mkOption {
         type = types.package;
-        default = pkgs.my.gosmee;
+        default = pkgs.gosmee;
         description = ''
           gosmee package to use.
         '';
