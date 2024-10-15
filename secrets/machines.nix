@@ -29,6 +29,7 @@ let
       hass = "192.168.1.181";
       demeter = "192.168.1.182";
       athena = "192.168.1.183";
+      remarkable = "192.168.1.57";
     };
   };
   wireguard = {
