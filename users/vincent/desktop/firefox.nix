@@ -33,7 +33,7 @@
         # It keeps asking me on startup if I want firefox as default
         "browser.shell.checkDefaultBrowser" = false;
         # Disable pocket
-        "extensions.pocket.enable" = false;
+        "extensions.pocket.enabled" = false;
         "extensions.pocket.site" = "";
         "extensions.pocket.oAuthConsumerKey" = "";
         "extensions.pocket.api" = "";
