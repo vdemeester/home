@@ -21,6 +21,13 @@ in
         '';
         cacheNetworks = [ "192.168.1.0/24" "127.0.0.0/8" "10.100.0.0/24" ];
         zones = [
+	  {
+	    # sbr
+	    name = "sbr.pm";
+	    master = true;
+	    slave = [];
+	    file = ../../../secrets/db.sbr.pm;
+	  }
           {
             # home
             name = "home";
