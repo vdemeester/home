@@ -111,15 +111,17 @@ in
   };
   # FIXME generate this file as well
   xdg.configFile."ssh/ssh_known_hosts".text = ''
-    # Home
-    wakasu.home,wakasu.vpn,10.100.0.8,192.168.1.77 wakasu.vpn ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrAh07USjRnAdS3mMNGdKee1KumjYDLzgXaiZ5LYi2D
-    aomi.home,aomi.vpn,10.100.0.17,192.168.1.23 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME
-    sakhalin.home,sakhalin.vpn,10.100.0.16,192.168.1.70 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/PMBThi4DhgZR8VywbRDzzMVh2Qp3T6NJAcPubfXz6
-    shikoku.home,shikoku.vpn,10.100.0.2,192.168.1.24 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm
-    kerkouane.vpn,10.100.0.1 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJguVoQYObRLyNxELFc3ai2yDJ25+naiM3tKrBGuxwwA
-    synodine.home,192.168.1.20 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWdnPJg0Y4kd4lHPAGE4xgMAK2qvMg3oBxh0t+xO+7O
-    demeter.home,192.168.1.182 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqQfEyHyjIGglayB9FtCqL7bnYfNSQlBXks2IuyCPmd
-    athena.home,192.168.1.183 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4KRP1rzOwyA2zP1Nf1WlLRHqAGutLtOHYWfH732xh
+    # Home ()
+    wakasu.home,wakasu.vpn,wakasu.sbr.pm,10.100.0.8,192.168.1.77 wakasu.vpn ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrAh07USjRnAdS3mMNGdKee1KumjYDLzgXaiZ5LYi2D
+    aomi.home,aomi.sbr.pm,aomi.vpn,10.100.0.17,192.168.1.23 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME
+    sakhalin.home,sakhalin.sbr.pm,sakhalin.vpn,10.100.0.16,192.168.1.70 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/PMBThi4DhgZR8VywbRDzzMVh2Qp3T6NJAcPubfXz6
+    shikoku.home,shikoku.sbr.pm,shikoku.vpn,10.100.0.2,192.168.1.24 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm
+    kerkouane.vpn,kerkouane.sbr.pm,10.100.0.1 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJguVoQYObRLyNxELFc3ai2yDJ25+naiM3tKrBGuxwwA
+    synodine.home,synodine.sbr.pm,192.168.1.20 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWdnPJg0Y4kd4lHPAGE4xgMAK2qvMg3oBxh0t+xO+7O
+    demeter.home,demeter.vpn,demeter.sbr.pm,192.168.1.182 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqQfEyHyjIGglayB9FtCqL7bnYfNSQlBXks2IuyCPmd
+    athena.home,athena.vpn,athena.sbr.pm,192.168.1.183 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4KRP1rzOwyA2zP1Nf1WlLRHqAGutLtOHYWfH732xh
+    aion.home,aion.vpn,aion.sbr.pm,192.168.1.49 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMs2o62unBFN/LHRg3q2N4QyZW0+DC/gjw3yzRbWdzx5
+    
   '';
   xdg.configFile."ssh/ssh_known_hosts.redhat".text = ''
     # Red Hat
