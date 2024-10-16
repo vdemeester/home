@@ -25,7 +25,7 @@ in
 	    # sbr
 	    name = "sbr.pm";
 	    master = true;
-	    slave = [];
+	    slaves = [];
 	    file = ../../../secrets/db.sbr.pm;
 	  }
           {
