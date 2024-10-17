@@ -14,7 +14,7 @@ ns1.sbr.pm. IN A 192.168.1.182
 ns2.sbr.pm. IN A 192.168.1.183
 wakasu.sbr.pm. IN A 192.168.1.77
 shikoku.sbr.pm. IN A 192.168.1.24
-sakhalin.sbr.pm IN A 192.168.1.70
+sakhalin.sbr.pm. IN A 192.168.1.70
 aomi.sbr.pm. IN A 192.168.1.23
 aion.sbr.pm. IN A 192.168.1.49
 demeter.sbr.pm. IN A 19.168.1.182
