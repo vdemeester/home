@@ -142,6 +142,7 @@
 				    ("area--home"  ,(list (propertize"🏡" )))
 				    ("home"  ,(list (propertize"🏡" )))
 				    ("machine" ,(list (propertize "🖥️")))
+				    ("website" ,(list (propertize "🌍")))
 				    (".*" '(space . (:width (16))))))
 ;;         (org-agenda-compact-blocks t)
         (org-agenda-sticky t)
