@@ -68,6 +68,7 @@ in
       unstage = "reset HEAD";
       w = "status -sb";
       wdiff = "diff --color-words";
+      kdiff = "difftool --tool=kitty --no-symlinks --dir-diff";
     };
     attributes = [
       "*.org   diff=org"
