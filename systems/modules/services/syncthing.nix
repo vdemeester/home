@@ -8,33 +8,37 @@ let
   devices = {
     wakasu = {
       id = "3P5BRF6-27NH2OX-3ZUI7EZ-BP4KCSE-EF2GMJL-DHUGPP2-OGHIJVO-LAJOMA7";
-      addresses = [ "tcp://wakasu.home" "tcp://wakasu.vpn" ];
+      addresses = [ "tcp://wakasu.home" "tcp://wakasu.vpn" "tcp://wakasu.sbr.pm" ];
     };
     aomi = {
       id = "XCR6WWB-OZUDGFB-LQPFW73-MV5SPJK-4IGOMA4-IAXON3I-C6OFETL-TPK5FQS";
-      addresses = [ "tcp://aomi.vpn" "tcp://aomi.home" ];
+      addresses = [ "tcp://aomi.vpn" "tcp://aomi.home" "tcp://aomi.sbr.pm" ];
     };
     sakhalin = {
       id = "4TYYG7V-A67D5SN-HMEJCI7-POOZRLL-RNCIE4U-ZYVGTOB-JQ5DOSV-ZCGWUAL";
-      addresses = [ "tcp://sakhalin.home" "tcp://sakhalin.vpn" ];
+      addresses = [ "tcp://sakhalin.home" "tcp://sakhalin.vpn" "tcp://sakhalin.sbr.pm" ];
     };
     shikoku = {
       id = "KZMMXRR-UINDQTS-H3TV2W7-EIGOUDI-3LW4ZDG-7PRKDFV-MJ5KUTJ-YG5Y5AI";
-      addresses = [ "tcp://shikoku.home" "tcp://shikoku.vpn" ];
-    };
-    okinawa = {
-      id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
-      addresses = [ "tcp://okinawa.home" "tcp://okinawa.vpn" ];
+      addresses = [ "tcp://shikoku.home" "tcp://shikoku.vpn" "tcp://shikoku.sbr.pm" ];
     };
     kerkouane = {
       id = "IFVRRQ7-KMIOQXP-5YDJXQU-UJXUKHB-7THCSY6-B3NHRNA-ED7IRI7-2JPPKQY";
       addresses = [ "tcp://10.100.0.1" "tcp://kerkouane.vpn" ];
     };
-    # Deprecated
-    naruhodo = {
-      id = "BKZN3FH-KRP4XRN-XFEVCCG-VANAUJN-YFAUS5Q-WUOLQQ7-II7I6PR-NVJZXQT";
-      addresses = [ "tcp://naruhodo.vpn" "tcp://naruhodo.home" ];
+    aion = {
+      id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
+      addresses = [ "tcp://aion.home" "tcp://aion.vpn" "tcp://aion.sbr.pm" ];
     };
+    # Deprecated
+    # naruhodo = {
+    #   id = "BKZN3FH-KRP4XRN-XFEVCCG-VANAUJN-YFAUS5Q-WUOLQQ7-II7I6PR-NVJZXQT";
+    #   addresses = [ "tcp://naruhodo.vpn" "tcp://naruhodo.home" ];
+    # };
+    # okinawa = {
+    #   id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
+    #   addresses = [ "tcp://okinawa.home" "tcp://okinawa.vpn" "tcp://ok ];
+    # };
   };
   deviceNames = builtins.attrNames (filterAttrs isCurrentHost devices);
 in
