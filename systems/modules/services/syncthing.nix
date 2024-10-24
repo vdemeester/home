@@ -26,6 +26,10 @@ let
       id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
       addresses = [ "tcp://okinawa.home" "tcp://okinawa.vpn" ];
     };
+    kerkouane = {
+      id = "IFVRRQ7-KMIOQXP-5YDJXQU-UJXUKHB-7THCSY6-B3NHRNA-ED7IRI7-2JPPKQY";
+      addresses = [ "tcp://10.100.0.1" "tcp://kerkouane.vpn" ];
+    };
     # Deprecated
     naruhodo = {
       id = "BKZN3FH-KRP4XRN-XFEVCCG-VANAUJN-YFAUS5Q-WUOLQQ7-II7I6PR-NVJZXQT";
@@ -64,11 +68,11 @@ in
               id = "7dshg-r8zr6";
               devices = deviceNames;
             };
-            "/home/vincent/desktop/notes" = {
-              label = "notes";
-              id = "q2eld-jylbu";
-              devices = deviceNames;
-            };
+            # "/home/vincent/desktop/notes" = {
+            #   label = "notes";
+            #   id = "q2eld-jylbu";
+            #   devices = deviceNames;
+            # };
             "/home/vincent/desktop/org" = {
               label = "org";
               id = "sjpsr-xfwdu";
