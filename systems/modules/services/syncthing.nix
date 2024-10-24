@@ -82,6 +82,7 @@ in
               id = "sjpsr-xfwdu";
               devices = deviceNames;
             };
+	  } // (if (config.networking.hostName != "kerkouane") then {
             "/home/vincent/desktop/documents" = {
               label = "documents";
               id = "oftdb-t5anv";
@@ -97,7 +98,7 @@ in
               id = "wpiah-ydwwx";
               devices = deviceNames;
             };
-          };
+          } else {});
         };
       }
       else {
