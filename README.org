@@ -112,6 +112,7 @@ Repositories
   + [[https://github.com/akirak/nix-desktop][https://github.com/akirak/nix-desktop]]
 - https://git.rossabaker.com/ross/cromulent
 - https://github.com/thiagokokada/nix-configs
+- https://github.com/jnsgruk/nixos-config
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
