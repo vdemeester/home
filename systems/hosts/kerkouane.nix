@@ -3,6 +3,7 @@
 with lib;
 let
   hostname = "kerkouane";
+  metadata = importTOML ../../ops/hosts.toml;
 
   secretPath = ../../secrets/machines.nix;
   secretCondition = (builtins.pathExists secretPath);
@@ -128,6 +129,10 @@ in
 
   modules.services = {
     wireguard.server.enable = true;
+    syncthing = {
+      enable = true;
+      guiAddress = "${metadata.hosts.kerkouane.wireguard.addrs.v4}:8384";
+    };
     ssh = {
       enable = true;
       extraConfig = ''
