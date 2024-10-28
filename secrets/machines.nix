@@ -66,15 +66,15 @@ let
     };
     athena = {
       allowedIPs = [ "${wireguard.ips.athena}/32" ];
-      publicKey = "qyxGnd/YJefqb4eEPqKO5XinvNx14fPcuZMNeYuBvSQ=";
+      publicKey = "RWqH7RdIXg+YE9U1nlsNiOC7jH8eWjWQmikqBVDGSXU=";
     };
     demeter = {
       allowedIPs = [ "${wireguard.ips.demeter}/32" ];
-      publicKey = "qyxGnd/YJefqb4eEPqKO5XinvNx14fPcuZMNeYuBvSQ=";
+      publicKey = "/bBh4gvDty/AA2qIiHc7K0OHoOXWmj2SFFXdDq8nsUU=";
     };
     aion = {
       allowedIPs = [ "${wireguard.ips.aion}/32" ];
-      publicKey = "qyxGnd/YJefqb4eEPqKO5XinvNx14fPcuZMNeYuBvSQ=";
+      publicKey = "T8qfsBiOcZNxUeRHFg+2FPdGj4AuGloJ4b+0uI2jM2w=";
     };
     vincent = {
       allowedIPs = [ "${wireguard.ips.vincent}/32" ];
@@ -163,7 +163,7 @@ in
     listenPort = 51820;
     endpointIP = "167.99.17.238";
     persistentKeepalive = 25;
-    peers = [ wireguard.shikoku wireguard.wakasu wireguard.vincent wireguard.sakhalin wireguard.aomi wireguard.ipad wireguard.hass wireguard.demeter wireguard.athena ]; # wireguard.honshu wireguard.hokkaido wireguard.houbeb
+    peers = [ wireguard.shikoku wireguard.wakasu wireguard.vincent wireguard.sakhalin wireguard.aomi wireguard.ipad wireguard.hass wireguard.demeter wireguard.athena wireguard.aion ]; # wireguard.honshu wireguard.hokkaido wireguard.houbeb
   };
   ssh = ssh;
   sshConfig = {
