@@ -50,6 +50,7 @@ let
       hass = "10.100.0.81";
       demeter = "10.100.0.82";
       athena = "10.100.0.83";
+      aion = "10.100.0.49";
     };
     kerkouane = {
       allowedIPs = [ "${wireguard.ips.kerkouane}/32" ];
@@ -61,6 +62,18 @@ let
     };
     wakasu = {
       allowedIPs = [ "${wireguard.ips.wakasu}/32" ];
+      publicKey = "qyxGnd/YJefqb4eEPqKO5XinvNx14fPcuZMNeYuBvSQ=";
+    };
+    athena = {
+      allowedIPs = [ "${wireguard.ips.athena}/32" ];
+      publicKey = "qyxGnd/YJefqb4eEPqKO5XinvNx14fPcuZMNeYuBvSQ=";
+    };
+    demeter = {
+      allowedIPs = [ "${wireguard.ips.demeter}/32" ];
+      publicKey = "qyxGnd/YJefqb4eEPqKO5XinvNx14fPcuZMNeYuBvSQ=";
+    };
+    aion = {
+      allowedIPs = [ "${wireguard.ips.aion}/32" ];
       publicKey = "qyxGnd/YJefqb4eEPqKO5XinvNx14fPcuZMNeYuBvSQ=";
     };
     vincent = {
@@ -90,14 +103,6 @@ let
     hass = {
       allowedIPs = [ "${wireguard.ips.hass}/32" ];
       publicKey = "sLi6Qpm6yyI0kuJ5LzCKXzFhhTW3Q50krxSin+b/sWs=";
-    };
-    demeter = {
-      allowedIPs = [ "${wireguard.ips.demeter}/32" ];
-      publicKey = "0n1CwaCwBUkRYlq0ZRzHK1VFGx1mXPQZvLKtTA3dqRw=";
-    };
-    athena = {
-      allowedIPs = [ "${wireguard.ips.athena}/32" ];
-      publicKey = "3bmLHTJYq++uESQD/WA0Qml38IIchPG3sL4epKPGc0I=";
     };
   };
   ssh = {
@@ -176,6 +181,10 @@ in
       hostname = "${home.ips.aion}";
       remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
     };
+    "aion.vpn" = {
+      hostname = "${wireguard.ips.aion}";
+      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+    };
     "aomi.vpn" = {
       hostname = "${wireguard.ips.aomi}";
       remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
@@ -216,8 +225,16 @@ in
       hostname = "${home.ips.athena}";
       remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
     };
+    "athena.vpn" = {
+      hostname = "${wireguard.ips.athena}";
+      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+    };
     "demeter.home" = {
       hostname = "${home.ips.demeter}";
+      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+    };
+    "demeter.vpn" = {
+      hostname = "${wireguard.ips.demeter}";
       remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
     };
     "dev.home" = {

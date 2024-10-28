@@ -3,14 +3,14 @@
 with lib;
 let
   hostname = "athena";
-  # secretPath = ../../secrets/machines.nix;
-  # secretCondition = (builtins.pathExists secretPath);
-  # 
-  # ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
-  # ips = lists.optionals secretCondition ([ "${ip}/24" ]);
-  # endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
-  # endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
-  # endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
+  secretPath = ../../secrets/machines.nix;
+  secretCondition = (builtins.pathExists secretPath);
+
+  ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
+  ips = lists.optionals secretCondition ([ "${ip}/24" ]);
+  endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
+  endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
+  endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
 
   metadata = importTOML ../../ops/hosts.toml;
 in
@@ -65,15 +65,15 @@ in
     };
   };
 
-  # services = {
-  #   wireguard = {
-  #     enable = true;
-  #     ips = ips;
-  #     endpoint = endpointIP;
-  #     endpointPort = endpointPort;
-  #     endpointPublicKey = endpointPublicKey;
-  #   };
-  # };
+  services = {
+    wireguard = {
+      enable = true;
+      ips = ips;
+      endpoint = endpointIP;
+      endpointPort = endpointPort;
+      endpointPublicKey = endpointPublicKey;
+    };
+  };
   security.apparmor.enable = true;
   security.pam.enableSSHAgentAuth = true;
 }
