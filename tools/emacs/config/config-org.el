@@ -911,5 +911,34 @@ Within those groups, sort by date and priority."
 (use-package org-ql-view
   :after org-ql)
 
+
+;; TODO NEXT STARTED IN-REVIEW DONE CANCELED WAITING SOMEDAY IDEA
+(defun my-org-todo-set-keyword-faces ()
+  (setq org-todo-keyword-faces
+        `(("TODO" . (:foreground ,(modus-themes-get-color-value 'red-faint) :weight bold))
+          ("NEXT" . (:foreground ,(modus-themes-get-color-value 'yellow-warmer) :weight bold))
+          ("STARTED" . (:foreground ,(modus-themes-get-color-value 'yellow-intense) :weight bold))
+          ("IN-REVIEW" . (:foreground ,(modus-themes-get-color-value 'blue-faint) :weight bold))
+          ("DONE" . (:foreground ,(modus-themes-get-color-value 'green-warmer) :weight bold))
+          ("CANCELED" . (:foreground ,(modus-themes-get-color-value 'comment) :weight bold))
+          ("WAITING" . (:foreground ,(modus-themes-get-color-value 'magenta-faint) :weight bold))
+          ("SOMEDAY" . (:foreground ,(modus-themes-get-color-value 'cyan-warmer) :weight bold))
+          ("IDEA" . (:foreground ,(modus-themes-get-color-value 'magenta-cooler) :weight bold))))
+  (setq org-modern-todo-faces
+        `(("TODO" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'red-faint) :weight bold))
+          ("NEXT" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'yellow-warmer) :weight bold))
+          ("STARTED" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'yellow-intense) :weight bold))
+          ("IN-REVIEW" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'blue-faint) :weight bold))
+          ("DONE" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'green-warmer) :weight bold))
+          ("CANCELED" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'comment) :weight bold))
+          ("WAITING" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'magenta-faint) :weight bold))
+          ("SOMEDAY" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'cyan-warmer) :weight bold))
+          ("IDEA" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'magenta-cooler) :weight bold))))
+  (when (derived-mode-p 'org-mode)
+    (font-lock-fontify-buffer)))
+(my-org-todo-set-keyword-faces)
+(with-eval-after-load 'modus-themes
+  (add-hook 'modus-themes-after-load-theme-hook #'my-org-todo-set-keyword-faces))
+
 (provide 'config-org)
 ;;; config-org.el ends here
