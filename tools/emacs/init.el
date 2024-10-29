@@ -124,9 +124,17 @@
       modus-themes-section-headings nil
       modus-themes-scale-headings t
       )
+
+(defun my-update-active-mode-line-colors ()
+  (set-face-attribute
+   'mode-line nil
+   :foreground (modus-themes-get-color-value 'fg-mode-line-active)
+   :background (modus-themes-get-color-value 'bg-blue-nuanced)))
+(add-hook 'modus-themes-after-load-theme-hook #'my-update-active-mode-line-colors)
 (define-key global-map (kbd "C-<f5>") #'modus-themes-toggle)
 
 (load-theme 'modus-operandi :no-confirm))
+(my-update-active-mode-line-colors)
 
 (require 'init-func)
 
