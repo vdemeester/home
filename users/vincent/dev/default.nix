@@ -20,6 +20,7 @@
     fswatch
     gnumake
     gron
+    gum
     jq
     markdownlint-cli
     minica
