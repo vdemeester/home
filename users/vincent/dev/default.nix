@@ -28,6 +28,7 @@
     pre-commit
     shellcheck
     shfmt
+    tldr
     tmate
     vale
     yamllint

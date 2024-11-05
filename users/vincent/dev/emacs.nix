@@ -82,6 +82,7 @@ let
     dape
     dash
     denote
+    devdocs
     dired-collapse
     dired-narrow
     dired-rsync
