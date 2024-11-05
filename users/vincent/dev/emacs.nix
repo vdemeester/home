@@ -75,6 +75,8 @@ let
     consult
     consult-dir
     consult-notes
+    copilot
+    copilot-chat
     corfu
     corfu-candidate-overlay
     dape
@@ -109,6 +111,7 @@ let
     highlight
     highlight-indentation
     htmlize
+    indent-bars
     ibuffer-vc
     jinx
     json-mode
@@ -148,6 +151,7 @@ let
     rg
     ripgrep
     run-command # Try this out instead of conner, might be even better
+    scopeline
     scratch
     shr-tag-pre-highlight
     smartparens
