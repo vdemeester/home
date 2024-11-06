@@ -7,9 +7,14 @@
   "Where all my sources are.")
 (set-register ?s `(file . ,src-dir))
 
-(use-package highlight-indentation
-  :hook ((yaml-ts-mode . highlight-indentation-mode)
-         (yaml-ts-mode . highlight-indentation-current-column-mode)))
+(use-package devdocs
+  :bind (("C-h D" . devdocs-lookup)))
+
+;; TODO: copilot and copilot-chat
+
+;; (use-package highlight-indentation
+;;   :hook ((yaml-ts-mode . highlight-indentation-mode)
+;;          (yaml-ts-mode . highlight-indentation-current-column-mode)))
 
 (use-package yaml-ts-mode
   :mode "\\.ya?ml\\'"
