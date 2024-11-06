@@ -76,6 +76,40 @@ in
   fileSystems."/export/toshito" = { device = "/mnt/toshito"; options = [ "bind" ]; };
 
   services = {
+    grafana = {
+      enable = true;
+      settings = {
+	server = {
+	  http_addr = "0.0.0.0";
+	  http_port = 3000;
+	  domain = "graphana.sbr.pm";
+	};
+      };
+    };
+    prometheus = {
+      enable = true;
+      port = 9001;
+      scrapeConfigs = [
+	{
+	  job_name = "node";
+	  static_configs = [
+	    {
+	      # TODO: make this dynamic
+	      targets = [
+		"sakhalin.sbr.pm:9000"
+		"shikoku.sbr.pm:9000"
+	      ];
+	    }
+	  ];
+	}
+      ];
+      exporters.node = {
+	enable = true;
+	port = 9000;
+	enabledCollectors = [ "systemd" "processes" ];
+	extraFlags = ["--collector.ethtool" "--collector.softirqs" "--collector.tcpstat"];
+      };
+    };
     tarsnap = {
       enable = true;
       archives = {
