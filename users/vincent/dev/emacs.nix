@@ -67,10 +67,8 @@ let
     avy
     beginend
     cape
+    casual
     casual-avy
-    casual-bookmarks
-    casual-dired
-    casual-re-builder
     conner
     consult
     consult-dir
