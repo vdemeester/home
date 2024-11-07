@@ -160,6 +160,12 @@ in
   security.pam.enableSSHAgentAuth = true;
   #systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/www" ];
   services = {
+    prometheus.exporters.node = {
+      enable = true;
+      port = 9000;
+      enabledCollectors = [ "systemd" "processes" ];
+      extraFlags = ["--collector.ethtool" "--collector.softirqs" "--collector.tcpstat"];
+    };
     gosmee = {
       enable = true;
       public-url = "https://webhook.sbr.pm";

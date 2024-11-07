@@ -96,6 +96,11 @@ in
 	    {
 	      # TODO: make this dynamic
 	      targets = [
+		"aion.sbr.pm:9100"
+		"aomi.sbr.pm:9000"
+		"athena.sbr.pm:9000"
+		"demeter.sbr.pm:9000"
+		"kerkouane.sbr.pm:9000"
 		"sakhalin.sbr.pm:9000"
 		"shikoku.sbr.pm:9000"
 	      ];
