@@ -19,3 +19,4 @@ aomi.sbr.pm. IN A 192.168.1.23
 aion.sbr.pm. IN A 192.168.1.49
 demeter.sbr.pm. IN A 192.168.1.182
 athena.sbr.pm. IN A 192.168.1.183
+kerkouane.sbr.pm IN A 10.100.0.1    
