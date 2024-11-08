@@ -107,6 +107,18 @@ in
 	    }
 	  ];
 	}
+	{
+	  job_name = "bind";
+	  static_configs = [{
+	    targets = ["demeter.sbr.pm:9009" "athena.sbr.pm:9009"];
+	  }];
+	}
+	{
+	  job_name = "nginx";
+	  static_configs = [{
+	    targets = ["kerkouane.sbr.pm:9001"];
+	  }];
+	}
       ];
       exporters.node = {
 	enable = true;
