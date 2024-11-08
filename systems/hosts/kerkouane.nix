@@ -197,6 +197,7 @@ in
     };
     nginx = {
       enable = true;
+      statusPage = true;
       package = nginx;
       recommendedGzipSettings = true;
       recommendedTlsSettings = true;
