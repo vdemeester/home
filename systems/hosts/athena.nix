@@ -66,11 +66,14 @@ in
   };
 
   services = {
-    prometheus.exporters.node = {
-      enable = true;
-      port = 9000;
-      enabledCollectors = [ "systemd" "processes" ];
-      extraFlags = ["--collector.ethtool" "--collector.softirqs" "--collector.tcpstat"];
+    prometheus.exporters = {
+      node = {
+	enable = true;
+	port = 9000;
+	enabledCollectors = [ "systemd" "processes" ];
+	extraFlags = ["--collector.ethtool" "--collector.softirqs" "--collector.tcpstat"];
+      };
+      bind = { enable = true; port = 9009; };
     };
     wireguard = {
       enable = true;
