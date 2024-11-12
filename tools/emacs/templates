@@ -112,6 +112,44 @@ org-mode
 (ppath "#+PROJECT_PATHS: (" p " . " q ")")
 (backlinks "#+BEGIN: denote-backlinks :sort-by-component nil :reverse-sort nil :id-only nil" n> "#+END:")
 
+bash-ts-mode bash-mode
+
+(! & "#!/usr/bin/env bash" n "set -euxfo pipefail" n q)
+(setf "set -euxfo pipefail")
+(varu "${" p ":-" p "}")
+(var "${" p "}")
+(getargs "while getopts \"h" p ":\" o; do"
+ n> "case \"${o}\" in"
+ n> ""p")"
+ n> "s=${OPTARG}" q
+ n> ";;"
+ n> "h)"
+ n> "help"
+ n> "exit 0"
+ n> ";;"
+ n> "*)"
+ n> "echo \"Invalid option\"; help; exit 1;"
+ n> "help"
+ n> "exit 1"
+ n> ";;"
+ n> "esac"
+ n> "done"
+ n> "shift $((OPTIND-1))")
+(whiche "command -v " (s bin) " >/dev/null 2>&1 || { echo \"need " bin " in path\"; exit 1; }")
+(tmpf "TMP=$(mktemp /tmp/.mm.XXXXXX)"
+ n> "clean() { rm -f ${TMP}; }"
+ n> "trap clean EXIT"
+ n> q)
+
+go-ts-mode go-mode
+
+(fpln "fmt.Println(" p ")")
+(fpf "fmt.Printf(" p ", " p ")")
+(main "package main" n n "import (" n> "\"fmt\"" n ")" n n "func main() {" n> q n "}")
+(testcase "tests := []struct {" n> "name string" n> p "}{" n> "}" n> "for _, tt := range tests {" n> "t.Run(tt.name, func(t *testing.T) {" n> q n> "})" n> "}")
+(testfunc "func Test" (s name) "(t *testing.T) {" n> q n "}")
+
+
 ;; Local Variables:
 ;; mode: lisp-data
 ;; outline-regexp: "[a-z]"
