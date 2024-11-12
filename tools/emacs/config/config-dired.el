@@ -3,6 +3,8 @@
 ;;; Configuration of Dired
 ;;; Code:
 
+(defun my-substspaces (str)
+  (subst-char-in-string ?\s ?_ str))
 
 (defmacro vde/dired-fd (name doc prompt &rest flags)
   "Make commands for selecting 'fd' results with completion.
@@ -23,12 +25,11 @@ executable, each of which is a string."
        (if names
            (if arg
                (dired (cons (generate-new-buffer-name buf) names))
-             (icomplete-vertical-do ()
-				    (find-file
-				     (completing-read (format "Items matching %s (%s): "
-							      (propertize regexp 'face 'success)
-							      (length names))
-						      names nil t)))))
+	     (find-file
+	      (completing-read (format "Items matching %s (%s): "
+				       (propertize regexp 'face 'success)
+				       (length names))
+			       names nil t))))
        (user-error (format "No matches for « %s » in %s" regexp dir)))))
 
 (use-package dired
@@ -56,6 +57,7 @@ executable, each of which is a string."
                 dired-listing-switches "-lFaGh1v --group-directories-first"
                 dired-ls-F-marks-symlinks t
                 dired-dwim-target t)
+
   (when (string= system-type "darwin")
     (setq dired-use-ls-dired t
           insert-directory-program "/usr/local/bin/gls"))
@@ -66,6 +68,14 @@ executable, each of which is a string."
   ;; Handle long file names
   (add-hook 'dired-mode-hook #'toggle-truncate-lines)
   (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+
+  (defun vde/dired-substspaces (&optional arg)
+    "Rename all marked (or next ARG) files so that spaces are replaced with underscores."
+    (interactive "P")
+    (dired-rename-non-directory #'my-substspaces "Rename by substituting spaces" arg))
+  (if (keymap-lookup dired-mode-map "% s")
+    (message "Error: %% s already defined in dired-mode-map")
+  (define-key dired-mode-map "%s" 'vde/dired-substspaces))
 
   (defun vde/dired-up ()
     "Go to previous directory."
