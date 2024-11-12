@@ -150,28 +150,26 @@
   :hook ((markdown-mode . orgalist-mode)
 	 (gfm-mode . orgalist-mode)))
 
-;; (use-package copilot
-;;   :preface
-;;   (unless (package-installed-p 'copilot)
-;;     (package-vc-install "https://github.com/zerolfx/copilot.el"))
-;;   :hook
-;;   (prog-mode . copilot-mode)
-;;   ;; (markdown-mode . copilot-mode)
-;;   ;; (text-mode . copilot-mode)
-;;   (log-edit-mode . copilot-mode)
-;;   (vc-git-log-edit-mode . copilot-mode)
-;;   :bind
-;;   (:map copilot-completion-map
-;;         ("C-g" . copilot-clear-overlay)
-;;         ("C-j" . copilot-next-completion)
-;;         ("C-k" . copilot-previous-completion)
-;;         ("M-RET" . copilot-accept-completion)
-;;         ("C-f" . copilot-accept-completion)
-;;         ("C-l" . copilot-panel-complete)
-;;         ("C-<tab>" . copilot-next-completion)
-;;         ("C-S-<tab>" . copilot-previous-completion))
-;;   :custom
-;;   (copilot-idle-delay 1))
+(use-package copilot
+  :hook
+  (prog-mode . copilot-mode)
+  (markdown-mode . copilot-mode)
+  (text-mode . copilot-mode)
+  (log-edit-mode . copilot-mode)
+  (vc-git-log-edit-mode . copilot-mode)
+  :bind
+  (:map copilot-completion-map
+        ("C-g" . copilot-clear-overlay)
+        ("C-j" . copilot-next-completion)
+        ("C-k" . copilot-previous-completion)
+        ("M-RET" . copilot-accept-completion)
+        ("C-f" . copilot-accept-completion)
+        ("C-l" . copilot-panel-complete))
+  :custom
+  (copilot-idle-delay 1)
+  (copilot-max-char -1)
+  (copile-indent-offset-warning-disable t))
+
 
 (provide 'programming-config)
 ;;; programming-config.el ends here
