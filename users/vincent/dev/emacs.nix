@@ -138,6 +138,7 @@ let
     org-modern
     org-nix-shell
     org-ql
+    org-review
     org-rich-yank
     org-tree-slide
     org-web-tools
