@@ -6,7 +6,7 @@
     # Temporary fix
     # https://github.com/nix-community/home-manager/issues/1641
     # (https://github.com/NixOS/nixpkgs/pull/105796)
-    package = (pkgs.wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true;}) {
+    package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
       extraPolicies = {
         ExtensionSettings = { };
         CaptivePortal = false;
@@ -23,7 +23,7 @@
           SkipOnboarding = true;
         };
       };
-    });
+    };
     
     profiles.default = {
       id = 0;
