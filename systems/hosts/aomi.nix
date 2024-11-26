@@ -125,6 +125,9 @@ in
         };
       };
     };
+		profiles = {
+			work.redhat = true;
+		};
     services = {
       avahi.enable = true;
       ssh.enable = true;
@@ -158,7 +161,10 @@ in
   '';
 
   services = {
+		geoclue2.enable = true;
     envfs.enable = false;
+    # automatic login is "safe" as we ask for the encryption passphrase anyway..
+		getty.autologinUser = "vincent";
     netdata.enable = true;
     logind.extraConfig = ''
       HandleLidSwitch=ignore
