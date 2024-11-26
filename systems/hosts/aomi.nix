@@ -80,8 +80,14 @@ in
 
   modules = {
     core.binfmt.enable = true;
+		editors.emacs.enable = true;
     hardware = {
+      yubikey = { enable = true; u2f = true; };
       laptop.enable = true;
+      bluetooth.enable = true;
+    };
+    desktop = {
+      wayland.sway.enable = true;
     };
     dev = {
       enable = true;
@@ -135,6 +141,11 @@ in
     home = true;
   };
 
+	environment.systemPackages = with pkgs; [
+		virt-manager
+		catt
+		go-org-readwise
+	];
 
   services.udev.extraRules = ''
     # STM32 rules for the Moonlander and Planck EZ

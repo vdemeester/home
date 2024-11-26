@@ -94,15 +94,15 @@
               ./systems/hosts/wakasu.nix
             ];
           };
-          # Servers (stable)
-          aomi = inputs.nixpkgs-24_05.lib.nixosSystem {
+          aomi = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            modules = commonModules ++ stableModules ++ [
+            modules = commonModules ++ unstableModules ++ [
               inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
               inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
               ./systems/hosts/aomi.nix
             ];
           };
+          # Servers (stable)
           shikoku = inputs.nixpkgs-24_05.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ stableModules ++ [
