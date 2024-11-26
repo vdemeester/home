@@ -12,6 +12,9 @@ $TTL    604800
 
 ns1.sbr.pm. IN A 192.168.1.182
 ns2.sbr.pm. IN A 192.168.1.183
+
+* 10800 IN A 167.99.17.238
+
 wakasu.sbr.pm. IN A 192.168.1.77
 *.wakasu.sbr.pm. IN A 192.168.1.77
 shikoku.sbr.pm. IN A 192.168.1.24
