@@ -97,6 +97,7 @@ in
           liveRestore = false;
           storageDriver = "overlay2";
           daemon.settings = {
+            userland-proxy = false;
             experimental = true;
             bip = "172.26.0.1/16";
             runtimes = {
