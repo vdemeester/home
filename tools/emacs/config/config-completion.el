@@ -47,6 +47,7 @@ The symbol at point is added to the future history."
 ;; https://github.com/oantolin/embark/blob/master/embark-consult.el
 (use-package embark
   :unless noninteractive
+  :commands (emark-act embark-dwim embark-prefix-help-command)
   :bind
   ("C-." . embark-act)
   ("M-." . embark-dwim)
