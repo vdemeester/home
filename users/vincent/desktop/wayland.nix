@@ -57,6 +57,14 @@
     kanshi = {
       enable = true;
       settings = [
+				# Make it configurable per host
+				{
+					profile.name = "aomi";
+					profile.outputs = [
+            { criteria = "eDP-1"; status = "disable"; }
+            { criteria = "DP-1"; status = "enable"; position = "0,0"; mode = "3440x1440"; scale = 1.0; }
+					];
+				}
         {
           profile.name = "home-undocked";
           profile.outputs = [
