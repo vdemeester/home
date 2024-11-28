@@ -16,6 +16,7 @@
          ("\\.tsx\\'" . tsx-ts-mode)))
 
 (use-package json-mode
+  :mode (("\\.json\\'" . json-ts-mode))
   :hook
   (json-mode . json-ts-mode-hook))
   
