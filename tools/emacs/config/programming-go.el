@@ -35,6 +35,9 @@
                                                (replace-regexp-in-string " " "_" testrunname)))))
       (go-test--go-test (concat "-run " gotest "\\$ .")))))
 
+(use-package gotest-ts
+  :bind (("C-c C-t t" . gotest-ts-run-dwim)))
+
 (defun go-mode-p ()
   "Return non-nil value when the major mode is `go-mode' or `go-ts-mode'."
   (memq major-mode '(go-ts-mode go-mode)))
