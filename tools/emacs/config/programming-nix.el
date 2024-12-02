@@ -18,9 +18,9 @@
 
 (use-package nixpkgs-fmt
   :if *nix*
-  :after nix-mode
+  :after nix-ts-mode
   :config
-  (add-hook 'nix-mode-hook 'nixpkgs-fmt-on-save-mode))
+  (add-hook 'nix-ts-mode-hook 'nixpkgs-fmt-on-save-mode))
 
 (provide 'programming-nix)
 ;;; programming-nix.el ends here
