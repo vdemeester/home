@@ -52,17 +52,24 @@ in
         feh
         fira
         fira-code
-        fira-code-nerdfont
         fira-code-symbols
         fira-mono
         font-awesome
         go-font
-	hack-font
+        hack-font
         inconsolata
-        inconsolata-nerdfont
         jetbrains-mono
         liberation_ttf
-        nerdfonts
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.inconsolata
+        nerd-fonts.fira-code
+        nerd-fonts.fira-mono
+        nerd-fonts.caskaydia-cove
+        nerd-fonts.caskaydia-mono
+        nerd-fonts.overpass
+        nerd-fonts.ubuntu
+        nerd-fonts.ubuntu-mono
+        nerd-fonts.ubuntu-sans
         noto-fonts
         noto-fonts-cjk-sans
         noto-fonts-emoji
@@ -72,7 +79,7 @@ in
         twemoji-color-font
         ubuntu_font_family
         unifont
-	recursive
+        recursive
       ];
     };
 
