@@ -3,6 +3,18 @@
 ;;; Project related configuration.
 ;;; Code:
 
+(defun vde/open-readme ()
+  "Open a README file in the current project.
+It will search for README.org, README.md or README in that order"
+  (interactive)
+  (let* ((default-directory (vde-project--project-current)))
+    (cond ((file-exists-p (expand-file-name "README.org" default-directory))
+	   (find-file "README.org"))
+	  ((file-exists-p (expand-file-name "README.md" default-directory))
+	   (find-file "README.md"))
+	  ((file-exists-p (expand-file-name "README" default-directory))
+	   (find-file "README")))))
+
 (use-package project
   :bind (("C-x p v" . vde-project-magit-status)
          ("C-x p s" . vde-project-vterm)
@@ -17,7 +29,8 @@
           (?q "Query replace" project-query-replace-regexp)
           (?m "Magit" vde-project-magit-status)
           (?e "Eshell" project-eshell)
-          (?s "Vterm" vde-project-vterm)))
+          (?s "Vterm" vde-project-vterm)
+	  (?R "README" vde/open-readme)))
 
   (defun vde/project-try-local (dir)
     "Determine if DIR is a non-VC project."
