@@ -33,54 +33,55 @@ in
     };
     envExtra = shellConfig.env;
     initExtra = ''
-      # c.f. https://wiki.gnupg.org/AgentForwarding
-      gpgconf --create-socketdir &!
-      path+="$HOME/${config.programs.zsh.dotDir}/functions"
-      fpath+="$HOME/.nix-profile/share/zsh/site-functions"
-      fpath+="$HOME/${config.programs.zsh.dotDir}/functions"
-      for func ($HOME/${config.programs.zsh.dotDir}/functions) autoload -U $func/*(x:t)
-      autoload -Uz select-word-style; select-word-style bash
-      if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
-      #if [ -n "$INSIDE_EMACS" ]; then
-      #  chpwd() { print -P "\033AnSiTc %d" }
-      #  print -P "\033AnSiTu %n"
-      #  print -P "\033AnSiTc %d"
-      #fi
-      if [[ "$TERM" == "dumb" || "$TERM" == "emacs" ]]
-      then
-        TERM=eterm-color
-        unsetopt zle
-        unsetopt prompt_cr
-        unsetopt prompt_subst
-        unfunction precmd
-        unfunction preexec
-        PS1='$ '
-        return
-      fi
-      # make sure navigation using emacs keybindings works on all non-alphanumerics
-      # syntax highlighting
-      source $HOME/${config.programs.zsh.dotDir}/plugins/zsh-nix-shell/nix-shell.plugin.zsh
-      source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-      ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
-      ZSH_HIGHLIGHT_PATTERNS+=('rm -fR *' 'fg=white,bold,bg=red')
-      ZSH_HIGHLIGHT_PATTERNS+=('rm -fr *' 'fg=white,bold,bg=red')
-      source $HOME/${config.programs.zsh.dotDir}/completion.zsh
-      source $HOME/${config.programs.zsh.dotDir}/plugins/powerlevel10k/powerlevel10k.zsh-theme
-      source $HOME/${config.programs.zsh.dotDir}/prompt.zsh
-      source $HOME/${config.programs.zsh.dotDir}/plugins/kubectl-config-switcher/kubectl-config-switcher.plugin.zsh
-      setopt HIST_IGNORE_SPACE
-      alias -g L="|less"
-      alias -g EEL=' 2>&1 | less'
-      alias -g GB='`git rev-parse --abbrev-ref HEAD`'
-      alias -g GR='`git rev-parse --show-toplevel`'
-      alias -s {ape,avi,flv,m4a,mkv,mov,mp3,mp4,mpeg,mpg,ogg,ogm,wav,webm}=mpv
-      alias -s org=emacs
-      (( $+commands[jq] )) && alias -g MJ="| jq -C '.'"  || alias -g MJ="| ${pkgs.python3}/bin/python -mjson.tool"
-      (( $+functions[zshz] )) && compdef _zshz j
-      [[ -n $INSIDE_EMACS ]] && \
-      function ff () {
-        print "\e]51;Efind-file $(readlink -f $1)\e\\"
-      }
+            # c.f. https://wiki.gnupg.org/AgentForwarding
+            gpgconf --create-socketdir &!
+            path+="$HOME/${config.programs.zsh.dotDir}/functions"
+            fpath+="$HOME/.nix-profile/share/zsh/site-functions"
+            fpath+="$HOME/${config.programs.zsh.dotDir}/functions"
+            for func ($HOME/${config.programs.zsh.dotDir}/functions) autoload -U $func/*(x:t)
+            autoload -Uz select-word-style; select-word-style bash
+            if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
+            #if [ -n "$INSIDE_EMACS" ]; then
+            #  chpwd() { print -P "\033AnSiTc %d" }
+            #  print -P "\033AnSiTu %n"
+            #  print -P "\033AnSiTc %d"
+            #fi
+            if [[ "$TERM" == "dumb" || "$TERM" == "emacs" ]]
+            then
+              TERM=eterm-color
+              unsetopt zle
+              unsetopt prompt_cr
+              unsetopt prompt_subst
+              unfunction precmd
+              unfunction preexec
+              PS1='$ '
+              return
+            fi
+      			# eval "$(${config.programs.atuin.package}/bin/atuin init zsh)"
+            # make sure navigation using emacs keybindings works on all non-alphanumerics
+            # syntax highlighting
+            source $HOME/${config.programs.zsh.dotDir}/plugins/zsh-nix-shell/nix-shell.plugin.zsh
+            source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+            ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
+            ZSH_HIGHLIGHT_PATTERNS+=('rm -fR *' 'fg=white,bold,bg=red')
+            ZSH_HIGHLIGHT_PATTERNS+=('rm -fr *' 'fg=white,bold,bg=red')
+            source $HOME/${config.programs.zsh.dotDir}/completion.zsh
+            source $HOME/${config.programs.zsh.dotDir}/plugins/powerlevel10k/powerlevel10k.zsh-theme
+            source $HOME/${config.programs.zsh.dotDir}/prompt.zsh
+            source $HOME/${config.programs.zsh.dotDir}/plugins/kubectl-config-switcher/kubectl-config-switcher.plugin.zsh
+            setopt HIST_IGNORE_SPACE
+            alias -g L="|less"
+            alias -g EEL=' 2>&1 | less'
+            alias -g GB='`git rev-parse --abbrev-ref HEAD`'
+            alias -g GR='`git rev-parse --show-toplevel`'
+            alias -s {ape,avi,flv,m4a,mkv,mov,mp3,mp4,mpeg,mpg,ogg,ogm,wav,webm}=mpv
+            alias -s org=emacs
+            (( $+commands[jq] )) && alias -g MJ="| jq -C '.'"  || alias -g MJ="| ${pkgs.python3}/bin/python -mjson.tool"
+            (( $+functions[zshz] )) && compdef _zshz j
+            [[ -n $INSIDE_EMACS ]] && \
+            function ff () {
+              print "\e]51;Efind-file $(readlink -f $1)\e\\"
+            }
     '';
     loginExtra = ''
       if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then

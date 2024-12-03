@@ -76,55 +76,69 @@ in
   fileSystems."/export/toshito" = { device = "/mnt/toshito"; options = [ "bind" ]; };
 
   services = {
+    atuin = {
+      enable = true;
+      host = "0.0.0.0";
+      openRegistration = false;
+    };
+
+    # services.postgresql.enable = true;
+    # services.postgresql.package = pkgs.postgresql_15;
+    # services.postgresql.dataDir = "/var/lib/postgresql/15";
+    # services.postgresqlBackup.databases = [ "atuin" "homepage_production" "nextcloud" ];
+    # services.postgresqlBackup.enable = true;
+    # services.postgresqlBackup.location = "/var/backup/postgresql";
+    # services.postgresqlBackup.startAt = "*-*-* 02:15:00";
+
     grafana = {
       enable = true;
       settings = {
-	server = {
-	  http_addr = "0.0.0.0";
-	  http_port = 3000;
-	  domain = "graphana.sbr.pm";
-	};
+        server = {
+          http_addr = "0.0.0.0";
+          http_port = 3000;
+          domain = "graphana.sbr.pm";
+        };
       };
     };
     prometheus = {
       enable = true;
       port = 9001;
       scrapeConfigs = [
-	{
-	  job_name = "node";
-	  static_configs = [
-	    {
-	      # TODO: make this dynamic
-	      targets = [
-		"aion.sbr.pm:9100"
-		"aomi.sbr.pm:9000"
-		"athena.sbr.pm:9000"
-		"demeter.sbr.pm:9000"
-		"kerkouane.sbr.pm:9000"
-		"sakhalin.sbr.pm:9000"
-		"shikoku.sbr.pm:9000"
-	      ];
-	    }
-	  ];
-	}
-	{
-	  job_name = "bind";
-	  static_configs = [{
-	    targets = ["demeter.sbr.pm:9009" "athena.sbr.pm:9009"];
-	  }];
-	}
-	{
-	  job_name = "nginx";
-	  static_configs = [{
-	    targets = ["kerkouane.sbr.pm:9001"];
-	  }];
-	}
+        {
+          job_name = "node";
+          static_configs = [
+            {
+              # TODO: make this dynamic
+              targets = [
+                "aion.sbr.pm:9100"
+                "aomi.sbr.pm:9000"
+                "athena.sbr.pm:9000"
+                "demeter.sbr.pm:9000"
+                "kerkouane.sbr.pm:9000"
+                "sakhalin.sbr.pm:9000"
+                "shikoku.sbr.pm:9000"
+              ];
+            }
+          ];
+        }
+        {
+          job_name = "bind";
+          static_configs = [{
+            targets = [ "demeter.sbr.pm:9009" "athena.sbr.pm:9009" ];
+          }];
+        }
+        {
+          job_name = "nginx";
+          static_configs = [{
+            targets = [ "kerkouane.sbr.pm:9001" ];
+          }];
+        }
       ];
       exporters.node = {
-	enable = true;
-	port = 9000;
-	enabledCollectors = [ "systemd" "processes" ];
-	extraFlags = ["--collector.ethtool" "--collector.softirqs" "--collector.tcpstat"];
+        enable = true;
+        port = 9000;
+        enabledCollectors = [ "systemd" "processes" ];
+        extraFlags = [ "--collector.ethtool" "--collector.softirqs" "--collector.tcpstat" ];
       };
     };
     tarsnap = {
