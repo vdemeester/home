@@ -3,6 +3,9 @@
 ;;; Shell scripting
 ;;; Code:
 
+(defvar ISATUIN (executable-find "atuin")
+  "Whether atuin is available for shell/eshell history.")
+
 (use-package shell
   :commands (shell)
   :bind (("<f1>"      . shell)
@@ -127,6 +130,20 @@ any directory proferred by `consult-dir'."
        (unintern 'eshell/sudo nil)))
 
   (add-hook 'eshell-mode-hook #'with-editor-export-editor))
+
+(use-package eshell-atuin
+  :when ISATUIN
+  :after eshell
+  ;; :bind* ( :map eshell-mode-map
+  ;;          ([remap eshell-previous-matching-input] . eshell-atuin-history))
+  :bind (("C-r" . eshell-atuin-history)
+	 ([remap eshell-list-history] . eshell-atuin-history))
+  :config
+  (eshell-atuin-mode)
+  (setopt eshell-atuin-filter-mode 'global
+          eshell-atuin-search-fields '(time duration command directory host)
+	  eshell-atuin-search-options '() ;; default --exit 0 ignores all the one imported… which is a shame
+          eshell-atuin-history-format "%-80c %-40i %>10t %h"))
 
 (use-package em-prompt
   :after eshell
