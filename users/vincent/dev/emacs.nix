@@ -95,6 +95,7 @@ let
     embark
     embark-consult
     envrc
+    eshell-atuin
     eshell-prompt-extras
     esup
     flimenu
