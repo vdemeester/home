@@ -157,24 +157,12 @@ questions.  Else use completion to select the tab to switch to."
   :hook (after-init-hook . tooltip-mode))
 
 (use-package alert
+  :init
+  (defun alert-after-finish-in-background (buf str)
+    (when (or (not (get-buffer-window buf 'visible)) (not (frame-focus-state)))
+      (alert str :buffer buf)))
   :config
   (setq alert-default-style 'libnotify))
-
-;; (use-package ligature
-;;   :config
-;;   (ligature-set-ligatures 'prog-mode '("-|" "-~" "---" "-<<" "-<" "--" "->" "->>" "-->" "///" "/=" "/=="
-;;                                        "/>" "//" "/*" "*>" "***" "*/" "<-" "<<-" "<=>" "<=" "<|" "<||"
-;;                                        "<|||" "<|>" "<:" "<>" "<-<" "<<<" "<==" "<<=" "<=<" "<==>" "<-|"
-;;                                        "<<" "<~>" "<=|" "<~~" "<~" "<$>" "<$" "<+>" "<+" "</>" "</" "<*"
-;;                                        "<*>" "<->" "<!--" ":>" ":<" ":::" "::" ":?" ":?>" ":=" "::=" "=>>"
-;;                                        "==>" "=/=" "=!=" "=>" "===" "=:=" "==" "!==" "!!" "!=" ">]" ">:"
-;;                                        ">>-" ">>=" ">=>" ">>>" ">-" ">=" "&&&" "&&" "|||>" "||>" "|>" "|]"
-;;                                        "|}" "|=>" "|->" "|=" "||-" "|-" "||=" "||" ".." ".?" ".=" ".-" "..<"
-;;                                        "..." "+++" "+>" "++" "[||]" "[<" "[|" "{|" "??" "?." "?=" "?:" "##"
-;;                                        "###" "####" "#[" "#{" "#=" "#!" "#:" "#_(" "#_" "#?" "#(" ";;" "_|_"
-;;                                        "__" "~~" "~~>" "~>" "~-" "~@" "$>" "^=" "]#"))
-;;   :hook
-;;   (after-init . global-ligature-mode))
 
 (provide 'config-appearance)
 ;;; config-appearance.el ends here

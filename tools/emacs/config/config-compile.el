@@ -66,6 +66,7 @@
                 ;; Show three lines of context around the current message
                 compilation-context-lines 3
                 )
+  (add-hook 'compilation-finish-functions #'alert-after-finish-in-background)
   (add-hook 'comint-output-filter-functions
             'comint-watch-for-password-prompt)
   (setq-default comint-password-prompt-regexp
