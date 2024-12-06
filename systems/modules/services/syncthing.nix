@@ -40,6 +40,7 @@ let
     honshu = {
       id = "RGIR34D-3SH3GZK-CYPNNFI-5M5I2K4-HVTUS56-72GJTLH-SDMOY4I-I7AURQR";
       addresses = [ "tcp://honshu.home" "tcp://honshu.sbr.pm" ];
+      full = true;
     };
     # Deprecated
     # naruhodo = {
