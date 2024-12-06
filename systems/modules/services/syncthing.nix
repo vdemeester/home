@@ -5,30 +5,41 @@ let
   # unstable = versionOlder config.system.nixos.release "21.05";
   cfg = config.modules.services.syncthing;
   isCurrentHost = n: v: n != config.networking.hostName;
+  isFull = n: v: (isCurrentHost n v) && v.full == true; # TODO: handle this 
   devices = {
     wakasu = {
       id = "3P5BRF6-27NH2OX-3ZUI7EZ-BP4KCSE-EF2GMJL-DHUGPP2-OGHIJVO-LAJOMA7";
-      addresses = [ "tcp://wakasu.home" "tcp://wakasu.vpn" "tcp://wakasu.sbr.pm" ];
+      addresses = [ "tcp://wakasu.light" "tcp://wakasu.vpn" "tcp://wakasu.sbr.pm" ];
+      full = true;
     };
     aomi = {
       id = "XCR6WWB-OZUDGFB-LQPFW73-MV5SPJK-4IGOMA4-IAXON3I-C6OFETL-TPK5FQS";
-      addresses = [ "tcp://aomi.vpn" "tcp://aomi.home" "tcp://aomi.sbr.pm" ];
+      addresses = [ "tcp://aomi.vpn" "tcp://aomi.light" "tcp://aomi.sbr.pm" ];
+      full = true;
     };
     sakhalin = {
       id = "4TYYG7V-A67D5SN-HMEJCI7-POOZRLL-RNCIE4U-ZYVGTOB-JQ5DOSV-ZCGWUAL";
-      addresses = [ "tcp://sakhalin.home" "tcp://sakhalin.vpn" "tcp://sakhalin.sbr.pm" ];
+      addresses = [ "tcp://sakhalin.light" "tcp://sakhalin.vpn" "tcp://sakhalin.sbr.pm" ];
+      full = true;
     };
     shikoku = {
       id = "KZMMXRR-UINDQTS-H3TV2W7-EIGOUDI-3LW4ZDG-7PRKDFV-MJ5KUTJ-YG5Y5AI";
-      addresses = [ "tcp://shikoku.home" "tcp://shikoku.vpn" "tcp://shikoku.sbr.pm" ];
+      addresses = [ "tcp://shikoku.light" "tcp://shikoku.vpn" "tcp://shikoku.sbr.pm" ];
+      full = true;
     };
     kerkouane = {
       id = "IFVRRQ7-KMIOQXP-5YDJXQU-UJXUKHB-7THCSY6-B3NHRNA-ED7IRI7-2JPPKQY";
       addresses = [ "tcp://10.100.0.1" "tcp://kerkouane.vpn" ];
+      full = false;
     };
     aion = {
       id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
-      addresses = [ "tcp://aion.home" "tcp://aion.vpn" "tcp://aion.sbr.pm" ];
+      addresses = [ "tcp://aion.light" "tcp://aion.vpn" "tcp://aion.sbr.pm" ];
+      full = true;
+    };
+    honshu = {
+      id = "RGIR34D-3SH3GZK-CYPNNFI-5M5I2K4-HVTUS56-72GJTLH-SDMOY4I-I7AURQR";
+      addresses = [ "tcp://honshu.home" "tcp://honshu.sbr.pm" ];
     };
     # Deprecated
     # naruhodo = {
@@ -41,6 +52,7 @@ let
     # };
   };
   deviceNames = builtins.attrNames (filterAttrs isCurrentHost devices);
+  fullDeviceNames = builtins.attrNames (filterAttrs isFull devices);
 in
 {
   options = {
@@ -82,23 +94,23 @@ in
               id = "sjpsr-xfwdu";
               devices = deviceNames;
             };
-	  } // (if (config.networking.hostName != "kerkouane") then {
+          } // (if (config.networking.hostName != "kerkouane") then {
             "/home/vincent/desktop/documents" = {
               label = "documents";
               id = "oftdb-t5anv";
-              devices = deviceNames;
+              devices = fullDeviceNames;
             };
             "/home/vincent/desktop/pictures/screenshots" = {
               label = "screenshots";
               id = "prpsz-azlz9";
-              devices = deviceNames;
+              devices = fullDeviceNames;
             };
             "/home/vincent/desktop/pictures/wallpapers" = {
               label = "wallpapers";
               id = "wpiah-ydwwx";
-              devices = deviceNames;
+              devices = fullDeviceNames;
             };
-          } else {});
+          } else { });
         };
       }
       else {

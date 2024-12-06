@@ -29,5 +29,7 @@ demeter.sbr.pm. IN A 192.168.1.182
 *.demeter.sbr.pm. IN A 192.168.1.182
 athena.sbr.pm. IN A 192.168.1.183
 *.athena.sbr.pm. IN A 192.168.1.183
+honshu.sbr.pm. IN A 192.168.1.15
+*.honshu.sbr.pm. IN A 192.168.1.15
 kerkouane.sbr.pm IN A 10.100.0.1    
 *.kerkouane.sbr.pm IN A 10.100.0.1    
