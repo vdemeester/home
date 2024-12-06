@@ -5,6 +5,12 @@
 
 (setq switch-to-buffer-obey-display-actions t)
 
+(defun vde/window-delete-popup-frame (&rest _)
+  "Kill selected selected frame if it has parameter `prot-window-popup-frame'.
+Use this function via a hook."
+  (when (frame-parameter nil 'vde/window-popup-frame)
+    (delete-frame)))
+
 (defun vde/save-desktop-no-ask ()
   "Save the desktop without asking questions by modifying the modtime."
   (interactive)

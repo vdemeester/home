@@ -302,6 +302,7 @@ file which do not already have one."
 
   (add-to-list 'org-capture-templates
                `("w" "Writing"))
+  (add-hook 'org-capture-after-finalize-hook #'prot-window-delete-popup-frame)
   :bind (("C-c o c" . org-capture)))
 
 (defun vde/dired-notes ()

@@ -4,7 +4,7 @@ with lib;
 let
   capture = pkgs.writeScriptBin "capture" ''
     #!${pkgs.stdenv.shell}
-    emacsclient -n -c -F '((name . "capture") (width . 150) (height . 90))' -e '(org-capture)'
+    emacsclient -n -c -F '((name . "capture") (width . 150) (height . 90) (vde/window-popup-frame . t))' -e '(org-capture)'
   '';
   et = pkgs.writeScriptBin "et" ''
     #!${pkgs.stdenv.shell}
@@ -59,6 +59,7 @@ let
     # use-package # it's now part of built-in packages
     # whole-line-or-region
     # bbdb
+    age
     ace-window
     adoc-mode
     aggressive-indent
