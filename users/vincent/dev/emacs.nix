@@ -107,6 +107,7 @@ let
     git-modes
     go-mode
     gotest
+    gotest-ts
     hardhat
     helpful
     highlight
