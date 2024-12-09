@@ -42,14 +42,15 @@ let
       addresses = [ "tcp://honshu.home" "tcp://honshu.sbr.pm" ];
       full = true;
     };
+    okinawa = {
+      id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
+      addresses = [ "tcp://okinawa.home" "tcp://okinawa.vpn" "tcp://okinawa.sbr.pm" ];
+      full = true;
+    };
     # Deprecated
     # naruhodo = {
     #   id = "BKZN3FH-KRP4XRN-XFEVCCG-VANAUJN-YFAUS5Q-WUOLQQ7-II7I6PR-NVJZXQT";
     #   addresses = [ "tcp://naruhodo.vpn" "tcp://naruhodo.home" ];
-    # };
-    # okinawa = {
-    #   id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
-    #   addresses = [ "tcp://okinawa.home" "tcp://okinawa.vpn" "tcp://ok ];
     # };
   };
   deviceNames = builtins.attrNames (filterAttrs isCurrentHost devices);
