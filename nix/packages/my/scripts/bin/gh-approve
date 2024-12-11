@@ -4,7 +4,7 @@
 set -eufo pipefail
 
 PROW=0
-MERGE=1
+MERGE=0
 FORCE=0
 COMMENT=""
 
@@ -36,7 +36,7 @@ while getopts "hfpmc:" o; do
 done
 shift $((OPTIND-1))
 
-TO_APPROVE=$(gh pr list --json "number,title" | jq -r '.[] | ((.number | tostring) + " " + (.title))' | fzf --multi --ansi --preview "gh pr checks {1}" | awk 'OFS="\t" {print $1}')
+TO_APPROVE=$(gh pr list --json "number,title" | jq -r '.[] | ((.number | tostring) + " " + (.title))' | fzf --multi --ansi --preview "gh pr checks {1} --json 'name,state' | jq -r 'map(.state + \": \" + .name) | .[]'" | awk 'OFS="\t" {print $1}')
 
 for pr in $TO_APPROVE; do
     if [[ $PROW -eq 1 ]]; then
@@ -51,7 +51,7 @@ $COMMENT"
 	if [[ $FORCE -eq 1 ]]; then
 	    MERGE_ARGS="$MERGE_ARGS --admin"
 	else
-	    MERGE_ARGS="$MERGE_ARGS -auto"
+	    MERGE_ARGS="$MERGE_ARGS --auto"
 	fi
 	gh pr merge $MERGE_ARGS --body "$COMMENT" $pr
     fi
