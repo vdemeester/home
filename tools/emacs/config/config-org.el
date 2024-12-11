@@ -279,7 +279,7 @@ file which do not already have one."
                  :empty-lines 1))
   (add-to-list 'org-capture-templates
 	       `("d" "daily entry" entry
-		 (file ,(car (denote-journal-extras--entry-today)))
+		 (function denote-journal-extras-new-or-existing-entry)
                  "* %a\n%U\n%?\n%i"
                  :empty-lines 1))
   (add-to-list 'org-capture-templates
@@ -302,7 +302,7 @@ file which do not already have one."
 
   (add-to-list 'org-capture-templates
                `("w" "Writing"))
-  (add-hook 'org-capture-after-finalize-hook #'prot-window-delete-popup-frame)
+  (add-hook 'org-capture-after-finalize-hook #'vde/window-delete-popup-frame)
   :bind (("C-c o c" . org-capture)))
 
 (defun vde/dired-notes ()
