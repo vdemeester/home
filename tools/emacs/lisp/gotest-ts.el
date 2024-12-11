@@ -3,7 +3,7 @@
 ;; Author: Chmouel Boudjnah
 ;; Maintainer: Chmouel Boudjnah
 ;; Version: 0.2
-;; Package-Requires: ((emacs "29.1") (gotest "20230221.945"))
+;; Package-Requires: ((emacs "29.1") (gotest "0.16.0"))
 ;; Homepage: https://github.com/chmouel/gotest-ts.el
 ;; Keywords: languages, go, tests
 
@@ -26,12 +26,17 @@
 
 ;;; Commentary:
 
-;; commentary
 ;; This mode provides Emacs functionality for running tests using GoTest
 ;; and Treesitter.
 ;;
 ;; It supports running test functions and subtests in .go files with Treesitter
 ;; support.
+;;
+;; Bug:
+;; When you have different structure inside a subtest that has a Name: it would
+;; pick up the wrong one.You just need to place yourself in the right struct
+;; where the name is.
+;;
 ;;; Code:
 
 ;;; gotest-ts.el ends here
@@ -40,10 +45,9 @@
 
 (defcustom gotest-ts-get-subtest-key "name"
   "The key used to identify a subtest in a struct.
-Default is 'name'."
+Default is \"name\"."
   :type 'string
   :group 'gotest-ts)
-
 
 (defun gotest-ts-get-subtest-ts ()
   "Get the test function or subtest at point."
@@ -71,11 +75,6 @@ Default is 'name'."
   "Run the test function at point or the subtest at point if it is a subtest."
   (interactive)
   (when (string-match "_test\\.go" (buffer-file-name))
-    (let ((gotest (gotest-ts-get-subtest-ts )))
-      (go-test--go-test (concat "-run " gotest " .")))))
-
-(provide 'gotest-ts)
-(string-match "_test\\.go" (buffer-file-name))
     (let ((gotest (gotest-ts-get-subtest-ts )))
       (go-test--go-test (concat "-run " gotest " .")))))
 
