@@ -172,7 +172,10 @@ use in `display-buffer-alist'."
       `(;; Default to no window
 	("\\`\\*Async Shell Command\\*\\'"
 	 (display-buffer-no-window))
-	("\\`\\*\\(Warnings\\|Compile-Log\\|Org Links\\)\\*\\'"
+	("\\`\\*Warnings\\*\\'"
+         (display-buffer-no-window)
+	 (allow-no-window . t))
+	("\\`\\*\\(Compile-Log\\|Org Links\\)\\*\\'"
          (display-buffer-no-window))
 	;; bottom side window
         ("\\*Org \\(Select\\|Note\\)\\*" ; the `org-capture' key selection and `org-add-log-note'

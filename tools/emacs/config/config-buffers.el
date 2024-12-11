@@ -84,6 +84,8 @@
         '("\\*Messages\\*"
           "Output\\*$"
           "\\*Async Shell Command\\*"
+	  "\\*Warnings\\*"
+	  "\\*Compile-Log\\*"
           help-mode
 	  helpful-mode
           compilation-mode
