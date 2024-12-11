@@ -1,8 +1,58 @@
 #!/usr/bin/env bash
 # Approve things
 
+set -eufo pipefail
+
+PROW=0
+MERGE=1
+FORCE=0
+COMMENT=""
+
+while getopts "hfpmc:" o; do
+    case "${o}" in
+	c)
+	    s=${OPTARG}
+	    COMMENT="$s"
+	    ;;
+	p)
+	    PROW=1
+	    ;;
+	m)
+	    MERGE=1
+	    ;;
+	f)
+	    FORCE=1
+	    ;;
+	h)
+	    help
+	    exit 0
+	    ;;
+	*)
+	    echo "Invalid option"; help; exit 1;
+	    help
+	    exit 1
+	    ;;
+    esac
+done
+shift $((OPTIND-1))
+
 TO_APPROVE=$(gh pr list --json "number,title" | jq -r '.[] | ((.number | tostring) + " " + (.title))' | fzf --multi --ansi --preview "gh pr checks {1}" | awk 'OFS="\t" {print $1}')
 
 for pr in $TO_APPROVE; do
-    gh pr review $pr --approve --body "/lgtm"
+    if [[ $PROW -eq 1 ]]; then
+	# if prow, we just review
+	gh pr review $pr --approve --body "/lgtm \
+$COMMENT"
+    else
+	gh pr review $pr --approve --body "$COMMENT"
+    fi
+    if [[ $MERGE -eq 1 ]]; then
+	MERGE_ARGS="--rebase --delete-branch"
+	if [[ $FORCE -eq 1 ]]; then
+	    MERGE_ARGS="$MERGE_ARGS --admin"
+	else
+	    MERGE_ARGS="$MERGE_ARGS -auto"
+	fi
+	gh pr merge $MERGE_ARGS --body "$COMMENT" $pr
+    fi
 done
