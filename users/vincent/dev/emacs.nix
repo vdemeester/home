@@ -175,7 +175,8 @@ let
     wgrep
     with-editor
     xterm-color
-    yaml-mode
+    # yaml-mode
+    yaml-pro
   ];
 in
 {

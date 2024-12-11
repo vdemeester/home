@@ -18,7 +18,25 @@
 
 (use-package yaml-ts-mode
   :mode "\\.ya?ml\\'"
-  :hook ((yaml-ts-mode . display-line-numbers-mode)))
+  :hook ((yaml-ts-mode . display-line-numbers-mode)
+	 (yaml-ts-mode . outline-minor-mode)
+	 (yaml-ts-mode . electric-pair-local-mode))
+  :config
+  (setq-local outline-regexp "^ *\\([A-Za-z0-9_-]*: *[>|]?$\\|-\\b\\)")
+  (font-lock-add-keywords
+   'yaml-ts-mode
+   '(("\\($(\\(workspaces\\|context\\|params\\)\.[^)]+)\\)" 1 'font-lock-constant-face prepend)
+     ("kind:\s*\\(.*\\)\n" 1 'font-lock-keyword-face prepend))))
+
+;; TODO https://github.com/zkry/yaml-pro?tab=readme-ov-file#easy-movement-with-repeat-map
+(use-package yaml-pro
+  :after yaml-ts-mode
+  :hook (yaml-ts-mode . yaml-pro-ts-mode))
+
+(use-package flymake-yamllint
+  :after yaml-ts-mode
+  :hook
+  (yaml-ts-mode . flymake-yamllint-setup))
 
 (use-package conf-mode
   :mode ("\\.to?ml\\'" . conf-toml-mode))
