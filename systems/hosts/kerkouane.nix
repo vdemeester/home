@@ -136,12 +136,12 @@ in
     ssh = {
       enable = true;
       extraConfig = ''
-	Match User nginx
-        ChrootDirectory /var/www
-        ForceCommand interfal-sftp
-        AllowTcpForwarding no
-        PermitTunnel no
-        X11Forwarding no
+        	Match User nginx
+                ChrootDirectory /var/www
+                ForceCommand interfal-sftp
+                AllowTcpForwarding no
+                PermitTunnel no
+                X11Forwarding no
       '';
     };
   };
@@ -162,14 +162,14 @@ in
   services = {
     prometheus.exporters = {
       node = {
-	enable = true;
-	port = 9000;
-	enabledCollectors = [ "systemd" "processes" ];
-	extraFlags = ["--collector.ethtool" "--collector.softirqs" "--collector.tcpstat"];
+        enable = true;
+        port = 9000;
+        enabledCollectors = [ "systemd" "processes" ];
+        extraFlags = [ "--collector.ethtool" "--collector.softirqs" "--collector.tcpstat" ];
       };
       nginx = {
-	enable = true;
-	port = 9001;
+        enable = true;
+        port = 9001;
       };
       # wireguard = { enable = true; };
     };

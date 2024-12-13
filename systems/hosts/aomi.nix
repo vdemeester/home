@@ -24,6 +24,7 @@ in
     (import ../../users/root)
   ];
 
+  # FILESYSTEM
   boot.initrd.luks.devices = {
     root = {
       device = "/dev/disk/by-uuid/91b05f64-b97d-4405-8405-8785699ada8f";
@@ -54,6 +55,53 @@ in
     firewall.enable = false; # we are in safe territory :D
   };
 
+  # modules = {
+  #   desktop.enable = true; # defaults to wayland
+  #   hardware = {
+  #     laptop = true; # infers bluetooth and yubikey
+  #   };
+  #   dev = {
+  #     enable = true; # infers containers by default, one would have to disable it
+  #     containers = {
+  #       buildkit = {
+  #         enable = true;
+  #         grpcAddress = [
+  #           "unix:///run/buildkit/buildkitd.sock"
+  #           "tcp://aomi.home:1234"
+  #           "tcp://${metadata.hosts.aomi.addrs.v4}:1234"
+  #           "tcp://${metadata.hosts.aomi.wireguard.addrs.v4}:1234"
+  #         ];
+  #       };
+  #       image-mirroring = {
+  #         enable = true;
+  #         targets = [ "quay.io/vdemeest" "ghcr.io/vdemeester" ];
+  #         settings = {
+  #           "docker.io" = {
+  #             "images" = {
+  #               # sync latest and edge tags
+  #               "alpine" = [ "latest" "edge" ];
+  #             };
+  #             "images-by-tag-regex" = {
+  #               # sync all "3.x" images"
+  #               "alpine" = "^3\.[0-9]+$";
+  #             };
+  #           };
+  #         };
+  #       };
+  #     };
+  #     profiles = {
+  #       home = true; # with laptop, infers avahi
+  #       work.redhat = true; # rename this probably
+  #     };
+  #     services = {
+  #       ssh.enable = true;
+  #       # syncthing is inferred
+  #     };
+  #   };
+  # };
+
+  # Below this line, migrate
+
   # extract this from desktop
   networking.networkmanager = {
     enable = true;
@@ -80,7 +128,7 @@ in
 
   modules = {
     core.binfmt.enable = true;
-		editors.emacs.enable = true;
+    editors.emacs.enable = true;
     hardware = {
       yubikey = { enable = true; u2f = true; };
       laptop.enable = true;
@@ -125,9 +173,9 @@ in
         };
       };
     };
-		profiles = {
-			work.redhat = true;
-		};
+    profiles = {
+      work.redhat = true;
+    };
     services = {
       avahi.enable = true;
       ssh.enable = true;
@@ -144,11 +192,12 @@ in
     home = true;
   };
 
-	environment.systemPackages = with pkgs; [
-		virt-manager
-		catt
-		go-org-readwise
-	];
+  environment.systemPackages = with pkgs; [
+    virt-manager
+    catt
+    go-org-readwise
+    vscode
+  ];
 
   services.udev.extraRules = ''
     # STM32 rules for the Moonlander and Planck EZ
@@ -161,11 +210,10 @@ in
   '';
 
   services = {
-		geoclue2.enable = true;
+    geoclue2.enable = true;
     envfs.enable = false;
     # automatic login is "safe" as we ask for the encryption passphrase anyway..
-		getty.autologinUser = "vincent";
-    netdata.enable = true;
+    getty.autologinUser = "vincent";
     logind.extraConfig = ''
       HandleLidSwitch=ignore
       HandleLidSwitchExternalPower=ignore
@@ -175,7 +223,7 @@ in
       enable = true;
       port = 9000;
       enabledCollectors = [ "systemd" "processes" ];
-      extraFlags = ["--collector.ethtool" "--collector.softirqs" "--collector.tcpstat"];
+      extraFlags = [ "--collector.ethtool" "--collector.softirqs" "--collector.tcpstat" ];
     };
     smartd = {
       enable = true;
@@ -199,45 +247,5 @@ in
   };
   nix.trustedUsers = [ "root" "vincent" "builder" ];
 
-  # RedHat specific
-  systemd.services.osp-vdemeest-nightly = {
-    description = "Build nightly builds";
-    requires = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-
-    restartIfChanged = false;
-    unitConfig.X-StopOnRemoval = false;
-
-    serviceConfig = {
-      Type = "oneshot";
-      User = "vincent";
-      OnFailure = "status-email-root@%.service";
-    };
-
-    path = with pkgs; [ git openssh bash coreutils-full nix which gnumake ];
-    script = ''
-      set -e
-      cd /home/vincent/src/osp/p12n/p12n
-      git fetch -p --all
-      git clean -fd
-      git reset --hard HEAD
-      git checkout main
-      git rebase upstream/main
-      # Make versions
-      make versions
-      for v in 1.7 1.8 1.9 1.10; do
-        echo "Build $v"
-        (
-        cd versions/$v
-        git clean -fd
-        git reset --hard HEAD
-        git co upstream/pipelines-$v-rhel-8
-        nix-shell /home/vincent/src/osp/shell.nix --command "make REMOTE=quay.io/vdemeest TAG=$v sources/upgrade sources/operator/fetch-payload  bundle/push"
-        )
-      done
-    '';
-
-    startAt = "daily";
-  };
   security.pam.enableSSHAgentAuth = true;
 }
