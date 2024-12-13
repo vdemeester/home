@@ -29,9 +29,10 @@
      ("kind:\s*\\(.*\\)\n" 1 'font-lock-keyword-face prepend))))
 
 ;; TODO https://github.com/zkry/yaml-pro?tab=readme-ov-file#easy-movement-with-repeat-map
-(use-package yaml-pro
-  :after yaml-ts-mode
-  :hook (yaml-ts-mode . yaml-pro-ts-mode))
+;; FIXME it currently gets in the way…
+;; (use-package yaml-pro
+;;   :after yaml-ts-mode
+;;   :hook (yaml-ts-mode . yaml-pro-ts-mode))
 
 (use-package flymake-yamllint
   :after yaml-ts-mode
