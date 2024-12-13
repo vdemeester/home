@@ -190,5 +190,9 @@
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
+(use-package consult-vc-modified-files
+  :bind
+  ("C-x v /" . consult-vc-modified-files))
+
 (provide 'config-vcs)
 ;;; config-vcs.el ends here
