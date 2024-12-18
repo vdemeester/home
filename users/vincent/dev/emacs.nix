@@ -74,6 +74,7 @@ let
     consult
     consult-dir
     consult-notes
+    consult-vc-modified-files
     copilot
     copilot-chat
     corfu
