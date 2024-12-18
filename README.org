@@ -113,6 +113,7 @@ Repositories
 - https://git.rossabaker.com/ross/cromulent
 - https://github.com/thiagokokada/nix-configs
 - https://github.com/jnsgruk/nixos-config
+- https://github.com/JRMurr/NixOsConfig
 
 Old
 - [[https://gitlab.com/samueldr/nixos-configuration]]
