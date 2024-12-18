@@ -141,6 +141,7 @@
 				    ("area--"  ,(list (propertize"🏢" )))
 				    ("area--home"  ,(list (propertize"🏡" )))
 				    ("home"  ,(list (propertize"🏡" )))
+				    ("people"  ,(list (propertize"👤" )))
 				    ("machine" ,(list (propertize "🖥️")))
 				    ("website" ,(list (propertize "🌍")))
 				    (".*" '(space . (:width (16))))))
@@ -221,7 +222,13 @@
 	    (agenda ""
 		    ((org-agenda-overriding-header "Unfinished Scheduled Tasks")
 		     (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-		     (org-agenda-span 'week))))))))
+		     (org-agenda-span 'week)))))
+	  ;; FIXME Should only take into account projects and areas ?
+	  ("R" "Review projects" tags-todo "-CANCELLED/"
+           ((org-agenda-overriding-header "Reviews Scheduled")
+            (org-agenda-skip-function 'org-review-agenda-skip)
+            (org-agenda-cmp-user-defined 'org-review-compare)
+            (org-agenda-sorting-strategy '(user-defined-down)))))))
 
 ;; Make sure we load org-protocol
 (use-package org-protocol
