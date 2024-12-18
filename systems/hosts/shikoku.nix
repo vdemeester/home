@@ -45,7 +45,7 @@ in
     "vfio_pci"
     "vfio"
     "vfio_iommu_type1"
-    
+
     "nvidia"
     "nvidia_modeset"
     "nvidia_uvm"
@@ -151,13 +151,13 @@ in
     owner = "aria2";
     group = "aria2";
   };
-  
+
   services = {
     prometheus.exporters.node = {
       enable = true;
       port = 9000;
       enabledCollectors = [ "systemd" "processes" ];
-      extraFlags = ["--collector.ethtool" "--collector.softirqs" "--collector.tcpstat"];
+      extraFlags = [ "--collector.ethtool" "--collector.softirqs" "--collector.tcpstat" ];
     };
     aria2 = {
       enable = true;
@@ -197,7 +197,6 @@ in
       # Use reverse proxy instead
       openFirewall = true;
     };
-    netdata.enable = true;
     smartd = {
       enable = true;
       devices = [{ device = "/dev/nvme0n1"; }];
