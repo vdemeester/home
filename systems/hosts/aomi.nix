@@ -210,6 +210,10 @@ in
   '';
 
   services = {
+    ollama = {
+      enable = true;
+      # acceleration = "cuda"; # no nivida :D
+    };
     geoclue2.enable = true;
     envfs.enable = false;
     # automatic login is "safe" as we ask for the encryption passphrase anyway..
