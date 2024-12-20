@@ -146,6 +146,7 @@ The symbol at point is added to the future history."
   (read-buffer-completion-ignore-case t)
   (read-file-name-completion-ignore-case t)
   (resize-mini-windows t)
+  (tab-always-indent 'complete)
   :config
   (minibuffer-depth-indicate-mode 1)
   (minibuffer-electric-default-mode 1))
