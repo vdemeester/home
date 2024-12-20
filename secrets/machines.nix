@@ -36,7 +36,6 @@ let
     ips = {
       kerkouane = "10.100.0.1";
       shikoku = "10.100.0.2";
-      #honshu = "10.100.0.4";
       aomi = "10.100.0.17";
       hokkaido = "10.100.0.5";
       wakasu = "10.100.0.8";
@@ -103,6 +102,10 @@ let
     hass = {
       allowedIPs = [ "${wireguard.ips.hass}/32" ];
       publicKey = "sLi6Qpm6yyI0kuJ5LzCKXzFhhTW3Q50krxSin+b/sWs=";
+    };
+    honshu = {
+      allowedIPs = [ "${wireguard.ips.hass}/32" ];
+      publicKey = "vzkizZZMoM8yi5bjKiDZN1vYydZY6NKJhv9OqwSTFAk=";
     };
   };
   ssh = {
