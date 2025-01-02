@@ -153,6 +153,10 @@ in
   };
 
   services = {
+    ollama = {
+      enable = true;
+      acceleration = "cuda";
+    };
     prometheus.exporters.node = {
       enable = true;
       port = 9000;
