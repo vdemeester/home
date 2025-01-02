@@ -90,6 +90,7 @@
   ;;                           (".*" . nil)))    ;; On any other file, insert at the bottom
   (org-archive-location (concat org-archive-dir "/%s::datetree/"))
   (org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$")
+  (org-agenda-remove-tags t)
   (org-use-speed-commands t)
   (org-special-ctrl-a/e t)
   (org-special-ctrl-k t)
