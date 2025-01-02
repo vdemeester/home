@@ -18,8 +18,7 @@
                                                 comint-input-ring
                                                 compile-history
                                                 last-kbd-macro
-                                                shell-command-history
-                                                projectile-project-command-history))
+                                                shell-command-history))
   (savehist-mode 1))
 
 (use-package uniquify
