@@ -30,7 +30,7 @@ in
               address = "vdemeest@redhat.com";
               userName = "vdemeest@redhat.com";
               realName = "Vincent Demeester";
-              passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ${config.home.homeDirectory}/sync/rh.pass -d ${config.home.homeDirectory}/desktop/documents/rh.pass.gpg";
+              passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ${config.home.homeDirectory}/sync/rh.pass -d ${config.home.homeDirectory}/desktop/documents/0\ Archives/rh.pass.gpg";
               imap.host = "imap.gmail.com";
               smtp.host = "smtp.gmail.com";
               mbsync = {
@@ -49,14 +49,14 @@ in
                 };
               };
               notmuch.enable = cfg.sync;
-              astroid.enable = cfg.sync;
+              # astroid.enable = cfg.sync;
               msmtp.enable = true;
             };
             "perso" = {
               address = "vinc.demeester@gmail.com";
               userName = "vinc.demeester@gmail.com";
               realName = "Vincent Demeester";
-              passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ${config.home.homeDirectory}/sync/perso.pass -d ${config.home.homeDirectory}/desktop/documents/perso.pass.gpg";
+              passwordCommand = "${pkgs.gnupg}/bin/gpg -q --for-your-eyes-only --no-tty --exit-on-status-write-error --batch --passphrase-file ${config.home.homeDirectory}/sync/perso.pass -d ${config.home.homeDirectory}/desktop/documents/0\ Archives/perso.pass.gpg";
               imap.host = "imap.gmail.com";
               smtp.host = "smtp.gmail.com";
               mbsync = {
@@ -75,7 +75,7 @@ in
                 };
               };
               notmuch.enable = cfg.sync;
-              astroid.enable = cfg.sync;
+              # astroid.enable = cfg.sync;
               msmtp.enable = true;
             };
             "prv" = {
@@ -102,7 +102,7 @@ in
                 };
               };
               notmuch.enable = cfg.sync;
-              astroid.enable = cfg.sync;
+              # astroid.enable = cfg.sync;
               msmtp.enable = true;
             };
           };
@@ -194,7 +194,7 @@ in
           };
 
           programs.astroid = {
-            enable = true;
+            enable = false;
             externalEditor = "emacsclient -c";
             extraConfig = {
               startup.queries.inbox = "tag:Inbox";
