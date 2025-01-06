@@ -29,7 +29,8 @@ in
       ++ optionals config.virtualisation.docker.enable [ "docker" ]
       ++ optionals config.virtualisation.buildkitd.enable [ "buildkit" ]
       ++ optionals config.modules.virtualisation.libvirt.enable [ "libvirtd" ]
-      ++ optionals config.services.nginx.enable [ "nginx" ];
+      ++ optionals config.services.nginx.enable [ "nginx" ]
+      ++ optionals config.security.tpm2.enable [ "tss" ];
     shell = mkIf config.programs.zsh.enable pkgs.zsh;
     isNormalUser = true;
     openssh.authorizedKeys.keys = authorizedKeys

@@ -157,6 +157,12 @@ in
   ];
 
   location.provider = "geoclue2";
+  security = {
+    tpm2 = {
+      enable = true;
+      pkcs11.enable = true;
+    };
+  };
   services = {
     geoclue2.enable = true;
     # clight = {

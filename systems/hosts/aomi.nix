@@ -251,5 +251,11 @@ in
   };
   nix.trustedUsers = [ "root" "vincent" "builder" ];
 
-  security.pam.enableSSHAgentAuth = true;
+  security = {
+    tpm2 = {
+      enable = true;
+      pkcs11.enable = true;
+    };
+    pam.enableSSHAgentAuth = true;
+  };
 }
