@@ -166,7 +166,7 @@ in
     listenPort = 51820;
     endpointIP = "167.99.17.238";
     persistentKeepalive = 25;
-    peers = [ wireguard.shikoku wireguard.wakasu wireguard.vincent wireguard.sakhalin wireguard.aomi wireguard.ipad wireguard.hass wireguard.demeter wireguard.athena wireguard.aion ]; # wireguard.honshu wireguard.hokkaido wireguard.houbeb
+    peers = [ wireguard.shikoku wireguard.wakasu wireguard.vincent wireguard.sakhalin wireguard.aomi wireguard.ipad wireguard.hass wireguard.demeter wireguard.athena wireguard.aion wireguard.honshu ]; # wireguard.hokkaido wireguard.houbeb
   };
   ssh = ssh;
   sshConfig = {
