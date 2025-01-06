@@ -48,7 +48,7 @@ in
           "https://shortbrain.cachix.org"
           "https://vdemeester.cachix.org"
           "https://chapeau-rouge.cachix.org"
-	  "https://cache.garnix.io"
+          "https://cache.garnix.io"
         ];
         trusted-public-keys = [
           "r-ryantm.cachix.org-1:gkUbLkouDAyvBdpBX0JOdIiD2/DP1ldF3Z3Y6Gqcc4c="
@@ -56,7 +56,7 @@ in
           "mic92.cachix.org-1:gi8IhgiT3CYZnJsaW7fxznzTkMUOn1RY4GmXdT/nXYQ="
           "chapeau-rouge.cachix.org-1:r34IG766Ez4Eeanr7Zx+egzXLE2Zgvc+XRspYZPDAn8="
           "vdemeester.cachix.org-1:eZWNOrLR9A9szeMahn9ENaoT9DB3WgOos8va+d2CU44="
-	  "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+          "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
         ];
       };
       # On laptops at least, make the daemon and builders low priority
