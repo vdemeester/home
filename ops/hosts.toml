@@ -23,11 +23,6 @@ network = "vpn"
 ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJ3QqVCUiE4BIFKTJLN6mSnp9bLSnJ3gE8ScbAajGsH vincent@aomi", gpgRemoteForward = true }
 addrs = { v4 = "192.168.1.23" }
 
-[hosts.aomi.builder]
-maxJobs = 8
-systems = [ "x86_64-linux", "aarch64-linux", "armv7l-linux", "armv6l-linux", "powerpc64le-linux", "s390x-linux" ]
-features = [ "big-parallel", "kvm", "nixos-test" ]
-
 [hosts.aomi.wireguard]
 pubkey = "XT4D9YLeVHwMb9R4mhBLSWHYF8iBO"
 addrs = { v4 = "10.100.0.17" }
@@ -39,7 +34,7 @@ addrs = { v4 = "192.168.1.24" }
 
 [hosts.shikoku.builder]
 maxJobs = 8
-systems = [ "x86_64-linux", "aarch64-linux", "armv7l-linux", "armv6l-linux", "powerpc64le-linux", "s390x-linux" ]
+systems = [ "x86_64-linux", "aarch64-linux", "armv7l-linux", "armv6l-linux" ]
 features = [ "big-parallel", "kvm", "nixos-test" ]
 
 [hosts.shikoku.wireguard]
