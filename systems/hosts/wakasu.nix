@@ -54,16 +54,16 @@ in
   boot = {
     initrd = {
       luks.devices = {
-	root = {
-	  device = "/dev/disk/by-uuid/c0cac87c-53ec-4262-9ab2-a3ee8331c75a";
-	  #device = "/dev/nvme0n1p1";
-	  preLVM = true;
-	  allowDiscards = true;
-	  keyFile = "/dev/disk/by-id/usb-_USB_DISK_2.0_070D375D84327E87-0:0";
-	  keyFileOffset = 30992883712;
-	  keyFileSize = 4096;
-	  fallbackToPassword = lib.mkForce true;
-	};
+        root = {
+          device = "/dev/disk/by-uuid/c0cac87c-53ec-4262-9ab2-a3ee8331c75a";
+          #device = "/dev/nvme0n1p1";
+          preLVM = true;
+          allowDiscards = true;
+          keyFile = "/dev/disk/by-id/usb-_USB_DISK_2.0_070D375D84327E87-0:0";
+          keyFileOffset = 30992883712;
+          keyFileSize = 4096;
+          fallbackToPassword = lib.mkForce true;
+        };
       };
     };
     kernelPackages = pkgs.linuxPackages_latest;
@@ -80,7 +80,7 @@ in
     pkgs.gutenprintBin
     pkgs.canon-capt
     pkgs.canon-cups-ufr2
-    pkgs.cups-bjnp
+    # pkgs.cups-bjnp # Doesn't compile today
     pkgs.carps-cups
     pkgs.cnijfilter2
   ];
