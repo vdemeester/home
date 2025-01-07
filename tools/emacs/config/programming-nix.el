@@ -3,21 +3,21 @@
 ;;; Nix configuration
 ;;; Code:
 (use-package nix-ts-mode
-  :if *nix*
+  :if (executable-find "nix")
   :mode ("\\.nix\\'" "\\.nix.in\\'"))
 
 (use-package nix-drv-mode
-  :if *nix*
+  :if (executable-find "nix")
   :after nix-mode
   :mode "\\.drv\\'")
 
 (use-package nix-shell
-  :if *nix*
+  :if (executable-find "nix")
   :after nix-mode
   :commands (nix-shell-unpack nix-shell-configure nix-shell-build))
 
 (use-package nixpkgs-fmt
-  :if *nix*
+  :if (executable-find "nix")
   :after nix-ts-mode
   :config
   (add-hook 'nix-ts-mode-hook 'nixpkgs-fmt-on-save-mode))
