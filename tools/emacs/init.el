@@ -138,67 +138,6 @@
 
 (require 'init-func)
 
-(defconst *sys/gui*
-  (display-graphic-p)
-  "Are we running on a GUI Emacs ?")
-(defconst *sys/linux*
-  (eq system-type 'gnu/linux)
-  "Are we running on a GNU/Linux system?")
-(defconst *sys/mac*
-  (eq system-type 'darwin)
-  "Are we running on a Mac system?")
-(defconst *sys/root*
-  (string-equal "root" (getenv "USER"))
-  "Are you a ROOT user?")
-(defconst *nix*
-  (executable-find "nix")
-  "Do we have nix? (aka are we running in NixOS or a system using nixpkgs).")
-(defconst *rg*
-  (executable-find "rg")
-  "Do we have ripgrep?")
-(defconst *gcc*
-  (executable-find "gcc")
-  "Do we have gcc?")
-(defconst *git*
-  (executable-find "git")
-  "Do we have git?")
-
-(defvar *sys/full*
-  (member (vde/short-hostname) '("wakasu" "naruhodo"))
-  "Is it a full system ?")
-(defvar *sys/light*
-  (not *sys/full*)
-  "Is it a light system ?")
-
-;; (require 'package)
-;; (setq package-archives nil) ;; To rely only on packages from nix
-;; (setq package-archives
-;;       '(("melpa" . "http://melpa.org/packages/")
-;;         ("org" . "https://orgmode.org/elpa/")
-;;         ("gnu" . "https://elpa.gnu.org/packages/")
-;; 	("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-;; 
-;; (setq package-archive-priorities
-;;       '(("melpa" .  4)
-;;         ("org" . 3)
-;;         ("gnu" . 2)
-;; 	("non-gnu" . 1)))
-
-;; (require 'tls)
-;; 
-;; ;; From https://github.com/hlissner/doom-emacs/blob/5dacbb7cb1c6ac246a9ccd15e6c4290def67757c/core/core-packages.el#L102
-;; (setq gnutls-verify-error (not (getenv "INSECURE")) ; you shouldn't use this
-;;       tls-checktrust gnutls-verify-error
-;;       tls-program (list "gnutls-cli --x509cafile %t -p %p %h"
-;;                         ;; compatibility fallbacks
-;;                         "gnutls-cli -p %p %h"
-;;                         "openssl s_client -connect %h:%p -no_ssl2 -no_ssl3 -ign_eof"))
-
-;; Initialise the packages, avoiding a re-initialisation.
-;; (unless (bound-and-true-p package--initialized)
-;;   (setq package-enable-at-startup nil)
-;;   (package-initialize))
-
 (setq load-prefer-newer t)              ; Always load newer compiled files
 (setq ad-redefinition-action 'accept)   ; Silence advice redefinition warnings
 
