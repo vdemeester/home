@@ -43,11 +43,66 @@
 (setq initial-major-mode 'fundamental-mode
       initial-scratch-message nil)
 
+;; Might not work as well on Windows but meh, I don't use it.
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-language-environment 'utf-8)
 (set-selection-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
+
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(setq
+   custom-buffer-done-kill nil          ; Kill when existing
+   custom-buffer-verbose-help nil       ; Remove redundant help text
+   custom-unlispify-tag-names nil       ; Show me the real variable name
+   custom-unlispify-menu-entries nil)
+;; Create the custom-file if it doesn't exists
+(unless (file-exists-p custom-file)
+  (write-region "" nil custom-file))
+(load custom-file :no-error-if-file-is-missing)
+
+(setq echo-keystrokes 0.1) ;; display command keystrokes quickly
+
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-z"))
+(global-unset-key (kbd "C-h h"))
+
+;; Disable owerwrite-mode, iconify-frame and diary
+(mapc
+ (lambda (command)
+   (put command 'disabled t))
+ '(overwrite-mode iconify-frame diary))
+;; And enable those commands (disabled by default)
+(mapc
+ (lambda (command)
+   (put command 'disabled nil))
+ '(list-timers narrow-to-region narrow-to-page upcase-region downcase-region))
+
+(defun prot/keyboard-quit-dwim ()
+  "Do-What-I-Mean behaviour for a general `keyboard-quit'.
+
+The generic `keyboard-quit' does not do the expected thing when
+the minibuffer is open.  Whereas we want it to close the
+minibuffer, even without explicitly focusing it.
+
+The DWIM behaviour of this command is as follows:
+
+- When the region is active, disable it.
+- When a minibuffer is open, but not focused, close the minibuffer.
+- When the Completions buffer is selected, close it.
+- In every other case use the regular `keyboard-quit'."
+  (interactive)
+  (cond
+   ((region-active-p)
+    (keyboard-quit))
+   ((derived-mode-p 'completion-list-mode)
+    (delete-completion-window))
+   ((> (minibuffer-depth) 0)
+    (abort-recursive-edit))
+   (t
+    (keyboard-quit))))
+
+(define-key global-map (kbd "C-g") #'prot/keyboard-quit-dwim)
 
 (unless noninteractive
   (defconst font-height 130
@@ -187,7 +242,6 @@
   (setq native-compile-prune-cache t)) ; Emacs 29
 
 ;; Refactor this completely. Reduce to the minimum.
-(require '00-base)
 (require '00-clean) ;; Maybe refactor no-littering
 (unless noninteractive
   (require 'config-appearance)
