@@ -31,7 +31,7 @@
 
 (defconst emacs-start-time (current-time))
 
-(let ((minver 28))
+(let ((minver 29))
   (unless (>= emacs-major-version minver)
     (error "Your Emacs is too old -- this configuration requires v%s or higher" minver)))
 
