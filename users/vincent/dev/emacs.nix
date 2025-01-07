@@ -15,50 +15,6 @@ let
     emacsclient --create-frame $@
   '';
   myExtraPackages = epkgs: with epkgs; [
-    # FIXME(vdemeester) once it is fixed, re-add
-    # all-the-icons
-    # bongo
-    # color-identifiers-mode
-    # consult-lsp
-    # dap-mode
-    # delight
-    # dired-sidebar
-    # dired-subtree
-    # edit-indirect
-    # emacs-everywhere
-    # emms
-    # expand-region
-    # flymake-codespell
-    # flymake-languagetool
-    # fontaine
-    # git-annex
-    # github-review
-    # goto-last-change
-    # hl-todo
-    # icomplete-vertical
-    # kind-icon
-    # lin
-    # lsp-focus
-    # lsp-mode
-    # lsp-ui
-    # multiple-cursors
-    # nerd-icons
-    # nix-buffer
-    # org-appear
-    # org-capture-pop-frame
-    # org-journal
-    # org-super-agenda
-    # org-transclusion
-    # pdf-tools
-    # pkgs.dired-plus
-    # python-mode
-    # rainbow-delimiters
-    # rainbow-mode
-    # treesit-grammars.with-all-grammars
-    # undo-tree
-    # use-package # it's now part of built-in packages
-    # whole-line-or-region
-    # bbdb
     age
     ace-window
     adoc-mode
@@ -108,7 +64,6 @@ let
     git-modes
     go-mode
     gotest
-    # gotest-ts
     hardhat
     helpful
     highlight
@@ -153,7 +108,6 @@ let
     pkgs.bookmark-plus # Do I use it ?
     popper
     rg
-    ripgrep
     run-command # Try this out instead of conner, might be even better
     scopeline
     scratch
@@ -165,7 +119,8 @@ let
     tempel
     tempel-collection
     trashed
-    treesit-auto
+    treesit-auto # maybe not needed
+    treesit-grammars.with-all-grammars # see how much it weight
     try
     typescript-mode
     vertico
@@ -177,8 +132,6 @@ let
     wgrep
     with-editor
     xterm-color
-    # yaml-mode
-    # yaml-pro
   ];
 in
 {
