@@ -5,6 +5,7 @@
 
 (use-package savehist
   :unless noninteractive
+  :hook (after-init . savehist-mode)
   :init
   (setq savehist-file (no-littering-expand-var-file-name "savehist"))
   :config
@@ -18,8 +19,7 @@
                                                 comint-input-ring
                                                 compile-history
                                                 last-kbd-macro
-                                                shell-command-history))
-  (savehist-mode 1))
+                                                shell-command-history)))
 
 (use-package uniquify
   :unless noninteractive

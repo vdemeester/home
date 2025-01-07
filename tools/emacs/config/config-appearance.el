@@ -4,8 +4,7 @@
 ;;; Code:
 
 (set-face-attribute 'fill-column-indicator nil
-                    :foreground "#717C7C" ; katana-gray
-		    )
+                    :foreground "#717C7C") ; katana-gray
 (global-display-fill-column-indicator-mode 1)
 
 (setopt echo-keystrokes 0.1
@@ -15,9 +14,7 @@
 
 (line-number-mode 1)
 (column-number-mode 1)
-(global-unset-key (kbd "C-z"))
-(global-unset-key (kbd "C-x C-z"))
-(global-unset-key (kbd "C-h h"))
+
 ;; let's enable it for all programming major modes
 (add-hook 'prog-mode-hook #'hl-line-mode)
 ;; and for all modes derived from text-mode
@@ -154,7 +151,7 @@ questions.  Else use completion to select the tab to switch to."
           (internal-border-width . 6)
           (border-width . 0)
           (no-special-glyphs . t)))
-  :hook (after-init-hook . tooltip-mode))
+  :hook (after-init . tooltip-mode))
 
 (use-package alert
   :init
