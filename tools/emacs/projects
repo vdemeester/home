@@ -1,4 +1,0 @@
-;;; -*- lisp-data -*-
-(("~/src/osp/lord/")
- ("~/src/tektoncd/pipeline/")
- ("~/src/home/"))
