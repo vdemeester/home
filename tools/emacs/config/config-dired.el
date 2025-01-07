@@ -35,6 +35,9 @@ executable, each of which is a string."
 (use-package dired
   :unless noninteractive
   :commands (dired find-name-dired)
+  :hook ((dired-mode . dired-hide-details-mode)
+	 (dired-mode . toggle-truncate-lines)
+	 (dired-mode . hl-line-mode))
   :bind (("C-c RET" . vde/open-in-external-app)
          ("C-c f g" . vde/dired-get-size)
          ("M-s d" . vde/dired-fd-dirs)
@@ -64,10 +67,6 @@ executable, each of which is a string."
 
   ;; Enable dired-find-alternate-file
   (put 'dired-find-alternate-file 'disabled nil)
-
-  ;; Handle long file names
-  (add-hook 'dired-mode-hook #'toggle-truncate-lines)
-  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
   (defun vde/dired-substspaces (&optional arg)
     "Rename all marked (or next ARG) files so that spaces are replaced with underscores."
@@ -172,11 +171,6 @@ This relies on the external 'fd' executable."
    ;; Search only file names when point is on a file name
    dired-isearch-filenames'dwim))
 
-;; (use-package dired-collapse
-;;   :unless noninteractive
-;;   :commands (dired-collapse-mode)
-;;   :hook (dired-mode . dired-collapse-mode))
-
 (use-package async)
 (use-package dired-async
   :unless noninteractive
@@ -200,6 +194,8 @@ This relies on the external 'fd' executable."
   :after dired
   :commands (wdired-mode
              wdired-change-to-wdired-mode)
+  :bind (:map dired-mode-map
+	      ("E" . wdired-change-to-wdired-mode))
   :config
   (setq-default wdired-allow-to-change-permissions t
                 wdired-create-parent-directories t))
@@ -210,13 +206,6 @@ This relies on the external 'fd' executable."
   :commands (dired-rsync)
   :bind (:map dired-mode-map
               ("r" . dired-rsync)))
-
-;; (use-package diredfl
-;;   :unless noninteractive
-;;   :commands (diredfl-mode)
-;;   :config
-;;   (setq diredfl-ignore-compressed-flag nil)
-;;   :hook (dired-mode . diredfl-mode))
 
 (use-package trashed
   :unless noninteractive
