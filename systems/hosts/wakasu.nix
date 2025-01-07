@@ -148,12 +148,16 @@ in
     (docker_27.override { clientOnly = true; })
     officemode
     roadmode
-    # obsidian # electron is eol...
     discord
     virt-manager
     catt
     go-org-readwise
     aerc # move it on its own
+    # move to its own
+    passage
+    age
+    age-plugin-yubikey
+    age-plugin-tpm
   ];
 
   location.provider = "geoclue2";
