@@ -135,6 +135,10 @@ The symbol at point is added to the future history."
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+(setq minibuffer-prompt-properties
+      '(read-only t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
 (use-package emacs
   :unless noninteractive
   :custom
