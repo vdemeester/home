@@ -109,7 +109,7 @@ confines of word boundaries (e.g. multiple words)."
 
 ;; UseRG
 (use-package rg
-  :if *rg*
+  :if (executable-find "rg")
   :commands (rg rg-project rg-dwim)
   :bind (("M-s r r" . rg)
          ("M-s r p" . rg-project)
