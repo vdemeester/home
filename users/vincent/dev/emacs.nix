@@ -168,6 +168,7 @@ let
     treesit-auto
     try
     typescript-mode
+    vertico
     visual-fill-column
     visual-regexp
     vterm
@@ -177,7 +178,7 @@ let
     with-editor
     xterm-color
     # yaml-mode
-    yaml-pro
+    # yaml-pro
   ];
 in
 {
