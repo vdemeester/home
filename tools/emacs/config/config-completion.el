@@ -155,75 +155,23 @@ The symbol at point is added to the future history."
   (minibuffer-depth-indicate-mode 1)
   (minibuffer-electric-default-mode 1))
 
-(use-package mct
+(use-package vertico
   :unless noninteractive
-  :custom
-  (mct-completion-window-size (cons #'mct-frame-height-third 1))
-  (mct-remove-shadowed-file-names t) ; works when `file-name-shadow-mode' is enabled
-  (mct-hide-completion-mode-line t)
-  (mct-minimum-input 3)
-  (mct-live-completion 'visible)
-  (mct-live-update-delay 0.6)
-  (mct-persist-dynamic-completion t)
-  :config
-  (mct-mode 1)
-  (defun my-sort-by-alpha-length (elems)
-    "Sort ELEMS first alphabetically, then by length."
-    (sort elems (lambda (c1 c2)
-                  (or (string-version-lessp c1 c2)
-                      (< (length c1) (length c2))))))
-
-  (defun my-sort-by-history (elems)
-    "Sort ELEMS by minibuffer history.
-Use `mct-sort-sort-by-alpha-length' if no history is available."
-    (if-let ((hist (and (not (eq minibuffer-history-variable t))
-			(symbol-value minibuffer-history-variable))))
-	(minibuffer--sort-by-position hist elems)
-      (my-sort-by-alpha-length elems)))
-
-  (defun my-sort-multi-category (elems)
-    "Sort ELEMS per completion category."
-    (pcase (mct--completion-category)
-      ('nil elems) ; no sorting
-      ('kill-ring elems)
-      ('project-file (my-sort-by-alpha-length elems))
-      (_ (my-sort-by-history elems))))
-
-  ;; Specify the sorting function.
-  (setq completions-sort #'my-sort-multi-category)
-
-  ;; Add prompt indicator to `completing-read-multiple'.  We display
-  ;; [`completing-read-multiple': <separator>], e.g.,
-  ;; [`completing-read-multiple': ,] if the separator is a comma.  This
-  ;; is adapted from the README of the `vertico' package by Daniel
-  ;; Mendler.  I made some small tweaks to propertize the segments of
-  ;; the prompt.
-  (defun crm-indicator (args)
-    (cons (format "[`crm-separator': %s]  %s"
-                  (propertize
-                   (replace-regexp-in-string
-                    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                    crm-separator)
-                   'face 'error)
-                  (car args))
-          (cdr args)))
-
-  (advice-add #'completing-read-multiple :filter-args #'crm-indicator))
+  :hook (after-init . vertico-mode))
 
 (use-package marginalia
   :unless noninteractive
-  :config
-  (marginalia-mode 1))
+  :hook (after-init . marginalia-mode))
 
 (use-package corfu
   :unless noninteractive
   :bind (("C-<tab>" . corfu-candidate-overlay-complete-at-point))
+  :hook (after-init . global-corfu-mode)
   :init
   (require 'corfu-popupinfo)
   (require 'corfu-history)
   (require 'corfu-candidate-overlay)
   :config
-  (global-corfu-mode 1)
   (setq corfu-popupinfo-delay '(1.25 . 0.5))
   (corfu-popupinfo-mode 1)
   (corfu-candidate-overlay-mode)
@@ -260,19 +208,11 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (use-package orderless
   :unless noninteractive
   :config
-  ;; We make the SPC key insert a literal space and the same for the
-  ;; question mark.  Spaces are used to delimit orderless groups, while
-  ;; the quedtion mark is a valid regexp character.
-  (let ((map minibuffer-local-completion-map))
-    (define-key map (kbd "SPC") nil)
-    (define-key map (kbd "?") nil))
-
-  ;; Because SPC works for Orderless and is trivial to activate, I like to
-  ;; put `orderless' at the end of my `completion-styles'.  Like this:
   (setq completion-styles
-	'(basic substring initials flex partial-completion orderless))
-  (setq completion-category-overrides
-	'((file (styles . (basic partial-completion orderless))))))
+	'(orderless basic substring initials flex partial-completion))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides nil)
+)
 
 (use-package tempel
   :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand

@@ -15,9 +15,9 @@ let
     emacsclient --create-frame $@
   '';
   myExtraPackages = epkgs: with epkgs; [
-    age
     ace-window
     adoc-mode
+    age
     aggressive-indent
     alert
     async
@@ -69,8 +69,8 @@ let
     highlight
     highlight-indentation
     htmlize
-    indent-bars
     ibuffer-vc
+    indent-bars
     jinx
     json-mode
     kubed
@@ -80,7 +80,6 @@ let
     magit-popup
     marginalia
     markdown-mode
-    mct
     modus-themes
     multi-vterm
     mwim
@@ -105,6 +104,7 @@ let
     orgit
     ox-pandoc
     pandoc-mode
+    # passage
     pkgs.bookmark-plus # Do I use it ?
     popper
     rg
