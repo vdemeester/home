@@ -161,7 +161,7 @@
 			(lambda (directory)
 			  (directory-files-recursively
 			   directory org-agenda-file-regexp))
-			`(,org-projects-dir ,org-areas-dir ,org-resources-dir ,org-journal-dir ,src-home-dir ,(expand-file-name "~/src/osp/tasks")))))
+			`(,org-projects-dir ,org-areas-dir ,org-resources-dir ,org-journal-dir ,(expand-file-name "~/src/osp/tasks")))))
   (defun vde/reload-org-agenda-files ()
     "Reload org-agenda-files variables with up-to-date org files"
     (interactive)
@@ -182,16 +182,6 @@
 				    (--remove (s-starts-with? "." it))
 				    (--map (format "%s/%s" org-areas-dir it))
 				    (--map `(,it :maxlevel . 3)))
-				   (->>
-				    (directory-files-recursively src-home-dir ".org$")
-				    (--remove (s-starts-with? "." it))
-				    (--map (format "%s" it))
-				    (--map `(,it :maxlevel . 2)))
-				   ;; (->>
-				   ;;  (directory-files-recursively src-www-dir ".org$")
-				   ;;  (--remove (s-starts-with? "." it))
-				   ;;  (--map (format "%s" it))
-				   ;;  (--map `(,it :maxlevel . 2)))
 				   (->>
 				    (directory-files-recursively org-resources-dir ".org$")
 				    (--remove (s-starts-with? (format "%s/legacy" org-resources-dir) it))
