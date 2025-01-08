@@ -417,8 +417,6 @@ file which do not already have one."
   :after (org))
 (use-package ol-gitlab
   :after (org))
-(use-package ol-ripgrep
-  :after (org))
 (use-package ol-rg
   :disabled
   :after (org))
