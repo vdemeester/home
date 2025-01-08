@@ -50,10 +50,11 @@
 
 (use-package easy-kill
   :unless noninteractive
-  :commands (easy-kill)
-  :config
-  (global-set-key [remap kill-ring-save] 'easy-kill)
-  (global-set-key [remap mark-sexp] 'easy-mark))
+  :commands (easy-kill easy-mark)
+  :bind
+  (([remap kill-ring-save] . easy-kill)
+   ([remap mark-sexp] . easy-mark)
+   ("M-r" . easy-mark)))
 
 (use-package display-line-numbers
   :unless noninteractive
@@ -70,6 +71,8 @@
 
 (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
+;; (use-package comment-dwim-2
+;;   :bind (([remap comment-dwim] . comment-dwim-2)))
 (use-package newcomment
   :unless noninteractive
   :config
@@ -122,53 +125,11 @@ Else toggle the comment status of the line at point."
          ("M-o" . delete-blank-lines)
          ("<C-f6>" . tear-off-window)))
 
-;; (use-package pdf-tools
-;;   :unless noninteractive
-;;   :mode  ("\\.pdf\\'" . pdf-view-mode)
-;;   :config
-;;   (setq-default pdf-view-display-size 'fit-page)
-;;   (setq pdf-annot-activate-created-annotations t)
-;;   (setq pdf-view-midnight-colors '("#ffffff" . "#000000"))
-;;   (pdf-tools-install :no-query)
-;;   (require 'pdf-occur))
-
-(use-package scratch
-  :unless noninteractive
-  :commands (scratch)
-  :config
-  (defun vde/scratch-buffer-setup ()
-    "Add contents to `scratch' buffer and name it accordingly.
-If region is active, add its contents to the new buffer."
-    (let* ((mode major-mode)
-           (string (format "Scratch buffer for: %s\n\n" mode))
-           (region (with-current-buffer (current-buffer)
-                     (if (region-active-p)
-                         (buffer-substring-no-properties
-                          (region-beginning)
-                          (region-end)))
-                     ""))
-           (text (concat string region)))
-      (when scratch-buffer
-        (save-excursion
-          (insert text)
-          (goto-char (point-min))
-          (comment-region (point-at-bol) (point-at-eol)))
-        (forward-line 2))
-      (rename-buffer (format "*Scratch for %s*" mode) t)))
-  :hook (scratch-create-buffer . vde/scratch-buffer-setup)
-  :bind ("C-c s" . scratch))
-
 (use-package subword
   :diminish
   :hook (prog-mode-hook . subword-mode))
 
-;; (use-package selection-highlight-mode
-;;   :preface
-;;   (unless (package-installed-p 'selection-highlight-mode)
-;;     (package-vc-install "https://github.com/balloneij/selection-highlight-mode"))
-;;   :config (selection-highlight-mode))
-
-(use-package surround  
+(use-package surround
   :bind-keymap ("M-'" . surround-keymap))
 
 (use-package substitute
