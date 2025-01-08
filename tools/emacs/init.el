@@ -243,6 +243,10 @@ The DWIM behaviour of this command is as follows:
 
 ;; Refactor this completely. Reduce to the minimum.
 (require '00-clean) ;; Maybe refactor no-littering
+(require 'config-editing)
+(require 'config-files)
+(require 'config-keybindings)
+(require 'config-misc)
 (unless noninteractive
   (require 'config-appearance)
   (require 'config-buffers)
@@ -269,10 +273,6 @@ The DWIM behaviour of this command is as follows:
   (require 'programming-nix)
   (require 'programming-treesitter)
   (require 'programming-web))
-(require 'config-editing)
-(require 'config-files)
-(require 'config-keybindings)
-(require 'config-misc)
 
 (if (file-exists-p (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el")))
     (load-file (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el"))))
