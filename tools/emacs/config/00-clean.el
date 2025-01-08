@@ -9,12 +9,20 @@
 (setopt create-lockfiles nil)
 
 (use-package recentf
+  :hook (after-init . recentf-mode)
+  :custom
+  (recentf-max-saved-items 500)
+  (recentf-save-file (locate-user-emacs-file "auto-save-list/recent-file-list.el"))
+  (recentf-auto-cleanup "8:00am")
+  (recentf-show-file-shortcuts-flag nil)
+  (recentf-exclude
+   '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
+     "\\.\\(?:gz\\|gif\\|svg\\|elc\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
+     "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
+     "^/tmp/" "^/var/folders/.+$" "^/sudo:" "^/su:" "^/ssh:"
+     (lambda (file) (file-in-directory-p file package-user-dir))))
   :config
-  (setq recentf-max-saved-items 200
-        recentf-auto-cleanup 360
-        recentf-show-file-shortcuts-flag nil)
-  (recentf-mode 1)
-  (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:")
+  (push (expand-file-name recentf-save-file) recentf-exclude)
   ;; Magic advice to rename entries in recentf when moving files in
   ;; dired.
   (defun rjs/recentf-rename-notify (oldname newname &rest args)
@@ -42,7 +50,7 @@
                       name))
                   recentf-list))
     recentf-cleanup)
-
+  (add-to-list 'recentf-filename-handlers 'abbreviate-file-name)
   (advice-add 'dired-rename-file :after #'rjs/recentf-rename-notify))
 
 
