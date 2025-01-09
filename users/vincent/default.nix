@@ -13,10 +13,6 @@ let
 in
 {
   warnings = if (versionAtLeast config.system.nixos.release "21.11") then [ ] else [ "NixOS release: ${config.system.nixos.release}" ];
-  sops.secrets.u2f_keys = mkIf (config.modules.hardware.yubikey.enable && config.modules.hardware.yubikey.u2f) {
-    path = "/home/vincent/.config/Yubico/u2f_keys";
-    owner = "vincent";
-  };
   users.users.vincent = {
     createHome = true;
     uid = 1000;

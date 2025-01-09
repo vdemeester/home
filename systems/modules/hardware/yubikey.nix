@@ -48,6 +48,12 @@ in
     (mkIf cfg.u2f {
       security.pam.u2f = {
         enable = true;
+        origin = "pam://yubi";
+        authFile = pkgs.writeText "u2f-mappings" (lib.concatStrings [
+          "vincent"
+          ":4IiWZI9g6D8W6LeAW13ug4CnS8PreNRcHdcebkUDny3gWGfmpMJg4TgBWaZSIdh+sgg4jQA4MxYwTCmmP/ipWQ==,qOl+ouBRk6MMEJiE7H5LuTAirhBhN0UQrCNlLQoRsVttp6IBKG4yq4zDwm4fmYlfy1MFhvh7oOapMOmodMKJpQ==,es256,+presence" # yubikey5-a
+          ":Sz4J2qMhoE7bE/uzwUzjJxG/bE0s+cw18zXcQjRsLIdJTVbuMad1ivKlYeLZW6vWV0lYiODlRW21HTSaFzu06A==,p7OZ3z5fiAIuJRHVzm56Y8Ti934+4cVHjsG7kaapmz8cWPfXfXfj5c8QiyIz3EQ0hOoxVV5cbkzUTxe7hdQIsA==,es256,+presence" # yubikey5-c1
+        ]);
       };
     })
     (mkIf cfg.agent {
