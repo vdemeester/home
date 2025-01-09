@@ -52,6 +52,6 @@ in
     })
     (mkIf cfg.agent {
       services.yubikey-agent.enable = true;
-    };)
+    })
   ]);
 }
