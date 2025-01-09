@@ -137,7 +137,6 @@ in
                     };
                   };
                 };
-                aerc.enable = true;
                 mu.enable = true;
                 msmtp.enable = true;
               };
@@ -163,7 +162,31 @@ in
                     };
                   };
                 };
-                aerc.enable = true;
+                mu.enable = true;
+                msmtp.enable = true;
+              };
+              "redhat" = {
+                address = "vdemeest@redhat.com";
+                userName = "vdemeest@redhat.com";
+                realName = "Vincent Demeester";
+                passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/redhat";
+                imap.host = "imap.gmail.com";
+                smtp.host = "smtp.gmail.com";
+                mbsync = {
+                  enable = true;
+                  create = "both";
+                  expunge = "both";
+                  patterns = [ "*" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" ];
+                  extraConfig = {
+                    channel = {
+                      Sync = "All";
+                    };
+                    account = {
+                      Timeout = 120;
+                      PipelineDepth = 1;
+                    };
+                  };
+                };
                 mu.enable = true;
                 msmtp.enable = true;
               };
