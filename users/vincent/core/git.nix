@@ -46,16 +46,22 @@ in
     userEmail = "vincent@sbr.pm";
 
     signing = {
-      key = "6EB699A3";
+      # key = "6EB699A3";
+      # FIXME: This should change depending on the host (could be different yubikey, …)
+      key = "${pkgs.writeText "yubikey5-c1" "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE="}";
       signByDefault = false;
     };
 
     aliases = {
-      b = "branch --color -v";
-      br = "branch";
-      ca = "commit --amend";
-      ci = "commit --signoff";
-      co = "checkout";
+      b = " branch - -color - v ";
+      br = "
+        branch ";
+      ca = "
+        commit - -amend ";
+      ci = "
+        commit - -signoff ";
+      co = "
+        checkout ";
       conflicts = "!git ls-files --unmerged | cut -c51- | sort -u | xargs $EDITOR";
       dft = "difftool";
       lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
@@ -80,6 +86,15 @@ in
         abbrev = 12;
         # pager = "${pkgs.delta}/bin/delta --syntax-theme GitHub";
         # editor = "${pkgs.emacs}/bin/emacsclient -t";
+      };
+      gpg = {
+        format = "ssh";
+      };
+      commit = {
+        gpgSign = true;
+      };
+      tag = {
+        gpgSign = true;
       };
       init = {
         defaultBranch = "main";
