@@ -109,15 +109,29 @@ let
     };
   };
   ssh = {
+    # gpg deprecated
     yubikey = {
       key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDr3bRw6r43BVOltmTXtDQAtZlJ/viBrCb58fG8suSdO97xLEGukZzf1QX46aXQEsenfKOalcd+OrukcoVIiZtlh1BHAaBB09Q0vKjtB1zKcUdZQYb6kA21/ItpW3gNsZq5M98QpwS9soJOLSccQosDoVBWDcHx72Kpzp2x4seKyAIpb1gtPnQjnnwA7urTcANw7CU8lmB3UtJZNPHclJNKso7h0ZBapausk9t0xGP18rmzQAe2ipa6pwUzS5rRq+j0LiY/JZQaQWBfc1i3IcKictKW5EykKmywJcwmr/PcTdcgTT4FaD+b1t1QAPLV82HxGzOYQO+/WBptBdq7Ss5 openpgp:0x86ADD81F";
       authorized = true;
     };
+    # gpg deprecated
     yubikey5 = {
       # key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJoArpBsTXr3m6q2QnA1vI1DSwmgdU0OAp7DUxcxl9CJfeZIEs/iAerk8jmHgJ2xCEF6SpzI0FWSQIXy8dKpF4wLJ0tCoq5LqQx3jEzy3NUBLfxK+/Baa1te4qG2YImlgnzmEEm5uZlCGZRY2L/U9+4Hwo1AgD69Zzin6QGh2pyTWpmZ/WyhwIfGgqsnlM9XlaVzlMHYfStDi+rUU6XEAfdSqo1SnWKDBHc3mDYGTVhfAlt2LucLKu7oI2MsSlSxva072BExctadtB3TGHbt8gRJZj8CdwgRNhT+hFfbsL6YDvQn6dhTSMuiD8sBEvVble0Nj4p+Q6ROCRIuMuhgh3 cardno:000610153832";
       key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJoArpBsTXr3m6q2QnA1vI1DSwmgdU0OAp7DUxcxl9CJfeZIEs/iAerk8jmHgJ2xCEF6SpzI0FWSQIXy8dKpF4wLJ0tCoq5LqQx3jEzy3NUBLfxK+/Baa1te4qG2YImlgnzmEEm5uZlCGZRY2L/U9+4Hwo1AgD69Zzin6QGh2pyTWpmZ/WyhwIfGgqsnlM9XlaVzlMHYfStDi+rUU6XEAfdSqo1SnWKDBHc3mDYGTVhfAlt2LucLKu7oI2MsSlSxva072BExctadtB3TGHbt8gRJZj8CdwgRNhT+hFfbsL6YDvQn6dhTSMuiD8sBEvVble0Nj4p+Q6ROCRIuMuhgh3 cardno:10 153 832";
       authorized = true;
     };
+    yubikey5-a = {
+      key = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFT5Rx+4Wuvd8lMBkcHxb4oHdRhm/OTg+p5tvPzoIN9enSmgRw5Inm/SlS8ZzV87G1NESTgzDRi6hREvqDlKvxs=";
+      authorized = true;
+    };
+    yubikey5-c1 = {
+      key = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE=";
+      authorized = true;
+    };
+    # yubikey5-c2 = {
+    #   key = "";
+    #   authorized = true;
+    # };
     kerkouane = {
       port = 20000;
       key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtEnw+3WMa9ESRyKdBUp/OHd8NPQdHLoqQ58L3YXF1o vincent@kerkouane";
