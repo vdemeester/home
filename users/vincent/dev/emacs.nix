@@ -82,6 +82,7 @@ let
     markdown-mode
     modus-themes
     multi-vterm
+    mu4e
     mwim
     nix-mode
     nix-ts-mode

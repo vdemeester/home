@@ -273,7 +273,8 @@ The DWIM behaviour of this command is as follows:
   (require 'programming-js)
   (require 'programming-nix)
   (require 'programming-treesitter)
-  (require 'programming-web))
+  (require 'programming-web)
+  (require 'config-mu4e))
 
 (if (file-exists-p (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el")))
     (load-file (downcase (concat user-emacs-directory "/hosts/" (vde/short-hostname) ".el"))))
