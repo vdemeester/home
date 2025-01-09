@@ -216,7 +216,8 @@ The DWIM behaviour of this command is as follows:
 (eval-when-compile
   (require 'use-package))
 
-(setenv "SSH_AUTH_SOCK" "/run/user/1000/gnupg/S.gpg-agent.ssh")
+(setenv "SSH_AUTH_SOCK" "/run/user/1000/yubikey-agent/yubikey-agent.sock")
+;; (setenv "SSH_AUTH_SOCK" "/run/user/1000/gnupg/S.gpg-agent.ssh")
 
 (defconst vde/custom-file (locate-user-emacs-file "custom.el")
   "File used to store settings from Customization UI.")
