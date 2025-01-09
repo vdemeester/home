@@ -96,6 +96,79 @@ in
             oathToolkit
             p7zip
           ];
+          programs.mu = {
+            enable = true;
+          };
+          home.file."bin/msmtp" = {
+            text = ''
+              #!${pkgs.stdenv.shell}
+              ${pkgs.libnotify}/bin/notify-send "Sending mail ✉️"
+              ${pkgs.msmtp}/bin/msmtp --read-envelope-from $@
+            '';
+            executable = true;
+          };
+          programs.mbsync.enable = true;
+          programs.aerc.enable = true;
+          programs.msmtp.enable = true;
+          accounts.email = {
+            maildirBasePath = "desktop/mails";
+            accounts = {
+              "icloud" = {
+                primary = true;
+                address = "vincent@demeester.fr";
+                userName = "vdemeester@icloud.com";
+                realName = "Vincent Demeester";
+                passwordCommand = "${pkgs.passage}/bin/passage show mails/icloud/vdemeester";
+                imap.host = "imap.mail.me.com";
+                smtp.host = "smtp.mail.me.com";
+                smtp.port = 587;
+                mbsync = {
+                  enable = true;
+                  create = "both";
+                  expunge = "both";
+                  # patterns = [ "*" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" ];
+                  extraConfig = {
+                    channel = {
+                      Sync = "All";
+                    };
+                    account = {
+                      Timeout = 120;
+                      PipelineDepth = 1;
+                    };
+                  };
+                };
+                aerc.enable = true;
+                mu.enable = true;
+                msmtp.enable = true;
+              };
+              "gmail" = {
+                address = "vinc.demeester@gmail.com";
+                userName = "vinc.demeester@gmail.com";
+                realName = "Vincent Demeester";
+                passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/vinc.demeester";
+                imap.host = "imap.gmail.com";
+                smtp.host = "smtp.gmail.com";
+                mbsync = {
+                  enable = true;
+                  create = "both";
+                  expunge = "both";
+                  patterns = [ "*" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" ];
+                  extraConfig = {
+                    channel = {
+                      Sync = "All";
+                    };
+                    account = {
+                      Timeout = 120;
+                      PipelineDepth = 1;
+                    };
+                  };
+                };
+                aerc.enable = true;
+                mu.enable = true;
+                msmtp.enable = true;
+              };
+            };
+          };
         }
       ]
       # ++ optionals config.virtualisation.docker.enable [
