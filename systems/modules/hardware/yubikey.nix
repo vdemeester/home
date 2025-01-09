@@ -7,6 +7,11 @@ in
   options = {
     modules.hardware.yubikey = {
       enable = mkEnableOption "Enable yubikey profile";
+      agent = mkOption {
+        default = true;
+        description = "wether to enable yubikey-agent";
+        type = types.bool;
+      };
       u2f = mkOption {
         default = true;
         description = "wether to enable auth with yubkeys throguh pam using u2f";
@@ -45,5 +50,8 @@ in
         enable = true;
       };
     })
+    (mkIf cfg.agent {
+      services.yubikey-agent.enable = true;
+    };)
   ]);
 }

@@ -16,9 +16,9 @@ in
   services = {
     gpg-agent = {
       enable = true;
-      enableSshSupport = true;
+      # enableSshSupport = true;
       enableExtraSocket = true;
-      defaultCacheTtlSsh = 7200;
+      # defaultCacheTtlSsh = 7200;
     } // (if stable then {
       pinentryFlavor = if (nixosConfig.modules.desktop.enable) then "gnome3" else "tty";
     } else {
