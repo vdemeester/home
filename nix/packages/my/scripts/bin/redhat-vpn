@@ -33,7 +33,8 @@ then
     passfile=$(mktemp)
 
     echo -n "vpn.secrets.password:" > $passfile
-    gpg --decrypt $HOME/sync/naruhodo.pass.gpg 2>/dev/null >>$passfile
+    passage show redhat/vpn/pass | tr -d '\r' 2>/dev/null >> $passfile
+    # gpg --decrypt $HOME/sync/naruhodo.pass.gpg 2>/dev/null >>$passfile
     echo -n "${key}" >> $passfile
 
     nmcli connection up ${uuid} passwd-file $passfile
@@ -43,7 +44,8 @@ else
     $NOTIFY_CMD "VPN ${name} is already connected." "You are already connected to the Red Hat VPN, let's work !"
 fi
 # Ask for kerberos password if klist returns an error (no creds)
-gpg --decrypt $HOME/sync/pass.gpg 2>/dev/null | kinit vdemeest@REDHAT.COM
+kinit vdemeest@REDHAT.COM <<<"$(passage show redhat/ldap/vdemeest)"
+# gpg --decrypt $HOME/sync/pass.gpg 2>/dev/null | kinit vdemeest@REDHAT.COM
 # if ! [[ GRAPHICS -eq 0 ]]; then
 #     klist || {
 #         zenity --password --title="Kerberos password" | kinit vdemeest@REDHAT.COM
