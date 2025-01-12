@@ -44,6 +44,9 @@ in
       environment.systemPackages = with pkgs; [
         yubioath-flutter
       ];
+      programs.yubikey-touch-detector = {
+        enable = true;
+      };
     })
     (mkIf cfg.u2f {
       security.pam.u2f = {
