@@ -13,6 +13,8 @@ host/%/boot: FORCE
 host/%/switch: FORCE
 	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.sbr.pm --flake .#$* switch
 
+host/carthage/boot:
+	nixos-rebuild --target-host root@13.38.218.220 --flake .#carthage boot
 host/shikoku/boot:
 	nixos-rebuild --build-host root@shikoku.sbr.pm --target-host root@shikoku.sbr.pm --flake .#shikoku boot
 host/shikoku/switch:

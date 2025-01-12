@@ -43,7 +43,7 @@
             (_: prev: {
               inherit (inputs.devenv.packages.${prev.system}) devenv;
               inherit (inputs.buildkit-tekton.packages.${prev.system}) tkn-local;
-	      inherit (inputs.dagger.packages.${prev.system}) dagger;
+              inherit (inputs.dagger.packages.${prev.system}) dagger;
             })
           ];
         }
@@ -53,7 +53,7 @@
         ./systems/modules/dev/default.nix
         ./systems/modules/editors/default.nix
         ./systems/modules/hardware/default.nix
-	./systems/modules/profiles/default.nix
+        ./systems/modules/profiles/default.nix
         ./systems/modules/virtualisation/default.nix
         ./systems/modules/virtualisation/buildkit.nix
         ./systems/modules/services/default.nix
@@ -72,6 +72,15 @@
     in
     {
       images = {
+        # ami(s) (AWS)
+        carthage = inputs.nixos-generators.nixosGenerate rec {
+          system = "aarch64-linux";
+          format = "amazon";
+          modules = commonModules ++ stableModules ++ [
+            ./systems/hosts/carthage.nix
+          ];
+        };
+        # sdimages
         athena = (self.nixosConfigurations.athena.extendModules {
           modules = [
             "${inputs.nixpkgs-24_05}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
@@ -121,6 +130,12 @@
             modules = commonModules ++ stableModules ++ [
               ./systems/modules/services/govanityurl.nix
               ./systems/hosts/kerkouane.nix
+            ];
+          };
+          carthage = inputs.nixpkgs-24_05.lib.nixosSystem {
+            system = "aarch64-linux";
+            modules = commonModules ++ stableModules ++ [
+              ./systems/hosts/carthage.nix
             ];
           };
           # Raspberry PI
@@ -212,6 +227,11 @@
       type = "github";
       owner = "vdemeester";
       repo = "chapeau-rouge";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Used to generate NixOS images for other platforms
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
