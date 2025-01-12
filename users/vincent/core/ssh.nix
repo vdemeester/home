@@ -120,8 +120,7 @@ in
     synodine.home,synodine.sbr.pm,192.168.1.20 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWdnPJg0Y4kd4lHPAGE4xgMAK2qvMg3oBxh0t+xO+7O
     demeter.home,demeter.vpn,demeter.sbr.pm,192.168.1.182 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqQfEyHyjIGglayB9FtCqL7bnYfNSQlBXks2IuyCPmd
     athena.home,athena.vpn,athena.sbr.pm,192.168.1.183 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4KRP1rzOwyA2zP1Nf1WlLRHqAGutLtOHYWfH732xh
-    aion.home,aion.vpn,aion.sbr.pm,192.168.1.49 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMs2o62unBFN/LHRg3q2N4QyZW0+DC/gjw3yzRbWdzx5
-    
+    aion.home,aion.vpn,aion.sbr.pm,10.100.0.49,192.168.1.49 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMs2o62unBFN/LHRg3q2N4QyZW0+DC/gjw3yzRbWdzx5
   '';
   xdg.configFile."ssh/ssh_known_hosts.redhat".text = ''
     # Red Hat
