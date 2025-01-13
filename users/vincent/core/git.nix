@@ -54,14 +54,10 @@ in
 
     aliases = {
       b = " branch - -color - v ";
-      br = "
-        branch ";
-      ca = "
-        commit - -amend ";
-      ci = "
-        commit - -signoff ";
-      co = "
-        checkout ";
+      br = "branch ";
+      ca = "commit - -amend ";
+      ci = "commit - -signoff ";
+      co = "checkout ";
       conflicts = "!git ls-files --unmerged | cut -c51- | sort -u | xargs $EDITOR";
       dft = "difftool";
       lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
