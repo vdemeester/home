@@ -3,6 +3,37 @@
 ;;; Setup completion framework
 ;;; Code
 
+(use-package which-key
+  :custom
+  (which-key-separator " → " )
+  :hook
+  (after-init . which-key-mode)
+  :config
+  
+  ;; Define custom, concise descriptions for `tab-bar` commands under "C-x t"
+  (which-key-add-key-based-replacements
+    "C-x t C-f" "Open file in new tab"
+    "C-x t RET" "Switch tabs"
+    "C-x t C-r" "Open file (read-only) in new tab"
+    "C-x t 0"   "Close current tab"
+    "C-x t 1"   "Close other tabs"
+    "C-x t 2"   "New empty tab"
+    "C-x t G"   "Group tabs"
+    "C-x t M"   "Move tab to position"
+    "C-x t N"   "New tab and switch to it"
+    "C-x t O"   "Previous tab"
+    "C-x t b"   "Switch buffer in new tab"
+    "C-x t d"   "Dired in new tab"
+    "C-x t f"   "Open file in new tab"
+    "C-x t m"   "Move tab left/right"
+    "C-x t n"   "Duplicate tab"
+    "C-x t o"   "Next tab"
+    "C-x t p"   "Project in new tab"
+    "C-x t r"   "Rename tab"
+    "C-x t t"   "Switch to other tab"
+    "C-x t u"   "Undo tab close"
+    "C-x t ^ f" "Detach tab window"))
+
 (use-package consult
   :bind
   ("M-g M-g" . consult-goto-line)
@@ -128,7 +159,44 @@ The symbol at point is added to the future history."
   (define-key embark-buffer-map (kbd "s b") (ct/embark-display-in-side-window bottom))
   (define-key embark-buffer-map (kbd "s l") (ct/embark-display-in-side-window left))
   (define-key embark-buffer-map (kbd "s r") (ct/embark-display-in-side-window right))
-)
+  
+(defun embark-which-key-indicator ()
+  "An embark indicator that displays keymaps using which-key.
+The which-key help message will show the type and value of the
+current target followed by an ellipsis if there are further
+targets."
+  (lambda (&optional keymap targets prefix)
+    (if (null keymap)
+        (which-key--hide-popup-ignore-command)
+      (which-key--show-keymap
+       (if (eq (plist-get (car targets) :type) 'embark-become)
+           "Become"
+         (format "Act on %s '%s'%s"
+                 (plist-get (car targets) :type)
+                 (embark--truncate-target (plist-get (car targets) :target))
+                 (if (cdr targets) "…" "")))
+       (if prefix
+           (pcase (lookup-key keymap prefix 'accept-default)
+             ((and (pred keymapp) km) km)
+             (_ (key-binding prefix 'accept-default)))
+         keymap)
+       nil nil t (lambda (binding)
+                   (not (string-suffix-p "-argument" (cdr binding))))))))
+
+(setq embark-indicators
+  '(embark-which-key-indicator
+    embark-highlight-indicator
+    embark-isearch-highlight-indicator))
+
+(defun embark-hide-which-key-indicator (fn &rest args)
+  "Hide the which-key indicator immediately when using the completing-read prompter."
+  (which-key--hide-popup-ignore-command)
+  (let ((embark-indicators
+         (remq #'embark-which-key-indicator embark-indicators)))
+      (apply fn args)))
+
+(advice-add #'embark-completing-read-prompter
+            :around #'embark-hide-which-key-indicator))
 
 (use-package embark-consult
   :unless noninteractive
