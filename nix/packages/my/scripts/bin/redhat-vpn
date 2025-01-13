@@ -33,7 +33,7 @@ then
     passfile=$(mktemp)
 
     echo -n "vpn.secrets.password:" > $passfile
-    passage show redhat/vpn/pass | tr -d '\r' 2>/dev/null >> $passfile
+    passage show redhat/vpn/pass | tr -d '\r\n' 2>/dev/null >> $passfile
     # gpg --decrypt $HOME/sync/naruhodo.pass.gpg 2>/dev/null >>$passfile
     echo -n "${key}" >> $passfile
 
