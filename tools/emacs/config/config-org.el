@@ -138,7 +138,9 @@
 
   (org-agenda-category-icon-alist `(("journal"  ,(list (propertize "📝")))
 				    ("project--" ,(list (propertize "💼" )))
-				    ("tekton-", (list (propertize "😼")))
+				    ("tekton", (list (propertize "😼")))
+				    ("openshift-pipelines", (list (propertize "🎩")))
+				    ("redhat", (list (propertize "🎩")))
 				    ("area--"  ,(list (propertize"🏢" )))
 				    ("area--home"  ,(list (propertize"🏡" )))
 				    ("home"  ,(list (propertize"🏡" )))
