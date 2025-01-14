@@ -18,7 +18,7 @@ It will search for README.org, README.md or README in that order"
 (use-package project
   :bind (("C-x p v" . vde-project-magit-status)
          ("C-x p s" . vde-project-vterm)
-         ("C-x p X" . vde/run-in-project-vterm))
+         ("C-x p X" . vde-project-run-in-vterm))
   :config
   (setq vde/project-local-identifier '(".project")) ;; "go.mod"
   (setq project-switch-commands
@@ -72,12 +72,6 @@ switch to it. Otherwise, create a new vterm shell."
       (when command
         (vterm-send-string command)
         (vterm-send-return))))
-  (defun vde/run-in-project-vterm ()
-    (interactive)
-    (let* ((default-directory (vde-project--project-current))
-           (default-project-vterm-name (project-prefixed-buffer-name "vterm"))
-           (vterm-buffer (get-buffer default-project-vterm-name)))
-      (vde-project-vterm (read-string "Command: "))))
   )
 
 (use-package conner
