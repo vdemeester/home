@@ -147,21 +147,22 @@ in
                 passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/vinc.demeester";
                 imap.host = "imap.gmail.com";
                 smtp.host = "smtp.gmail.com";
-                mbsync = {
-                  enable = true;
-                  create = "both";
-                  expunge = "both";
-                  patterns = [ "*" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" ];
-                  extraConfig = {
-                    channel = {
-                      Sync = "All";
-                    };
-                    account = {
-                      Timeout = 120;
-                      PipelineDepth = 1;
-                    };
-                  };
-                };
+                # mbsync = {
+                #   enable = true;
+                #   create = "both";
+                #   expunge = "both";
+                #   patterns = [ "*" "![Gmail]*" "[Gmail]/All Mail" "[Gmail]Sent Mail" "[Gmail]Starred" "[Gmail]Trash" ];
+                #   extraConfig = {
+                #     channel = {
+                #       Sync = "All";
+                #     };
+                #     account = {
+                #       Timeout = 120;
+                #       PipelineDepth = 1;
+                #     };
+                #   };
+                # };
+                lieer.enable = true;
                 mu.enable = true;
                 msmtp.enable = true;
               };
@@ -172,21 +173,22 @@ in
                 passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/redhat";
                 imap.host = "imap.gmail.com";
                 smtp.host = "smtp.gmail.com";
-                mbsync = {
-                  enable = true;
-                  create = "both";
-                  expunge = "both";
-                  patterns = [ "*" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" ];
-                  extraConfig = {
-                    channel = {
-                      Sync = "All";
-                    };
-                    account = {
-                      Timeout = 120;
-                      PipelineDepth = 1;
-                    };
-                  };
-                };
+                # mbsync = {
+                #   enable = true;
+                #   create = "both";
+                #   expunge = "both";
+                #   patterns = [ "*" "![Gmail]*" "[Gmail]/All Mail" "[Gmail]Sent Mail" "[Gmail]Starred" "[Gmail]Trash" ];
+                #   extraConfig = {
+                #     channel = {
+                #       Sync = "All";
+                #     };
+                #     account = {
+                #       Timeout = 120;
+                #       PipelineDepth = 1;
+                #     };
+                #   };
+                # };
+                lieer.enable = true;
                 mu.enable = true;
                 msmtp.enable = true;
               };
