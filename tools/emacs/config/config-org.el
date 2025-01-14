@@ -540,5 +540,39 @@ Within those groups, sort by date and priority."
 (with-eval-after-load 'modus-themes
   (add-hook 'modus-themes-after-load-theme-hook #'my-org-todo-set-keyword-faces))
 
+(use-package ox-publish
+  :after org
+  :commands (org-publish org-publish-all org-publish-project org-publish-current-project org-publish-current-file)
+  :config
+  (setq org-html-coding-system 'utf-8-unix
+	org-publish-use-timestamps-flag nil)
+  (defun vde-org-git-exportable-files (directory)
+    "Return a list of files from `DIRECTORY' that can be exported."
+    (directory-files directory nil ".*_www.*\\.org$"))
+  (setq org-publish-project-alist
+	`(("resources"
+	   :base-directory ,org-resources-dir
+	   :base-extension "org"
+	   ;; :include ".*_www*.org"
+	   :include ,(vde-org-git-exportable-files org-resources-dir)
+	   :exclude ".*"
+	   :publishing-directory ,(expand-file-name "resources" src-www-dir)
+	   :publishing-function org-html-publish-to-html
+	   :recursive t
+	   :with-toc nil
+	   :section-numbers nil
+	   :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/2022.css\" />"
+	   :html-head-extra "<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/syntax.css\" />"
+	   :html-preamble t
+	   :html-postamble t
+	   :auto-sitemap t
+	   :sitemap-filename "index.org"
+	   :sitemap-title "Resources"
+	   :sitemap-sort-files anti-chronologically
+	   :sitemap-file-entry-format "%d %t"
+	   :sitemap-date-format "%Y-%m-%d"
+	   ;; :sitemap-function org-publish-org-sitemap
+	   ))))
+
 (provide 'config-org)
 ;;; config-org.el ends here
