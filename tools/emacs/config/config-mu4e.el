@@ -8,7 +8,7 @@
   (mu4e-context-policy 'pick-first)
   :config
 
- (setq
+  (setq
    mu4e-headers-draft-mark     '("D" . "💈")
    mu4e-headers-flagged-mark   '("F" . "📍")
    mu4e-headers-new-mark       '("N" . "🔥")
@@ -47,9 +47,12 @@
 			 ;; 	   ))
 			 ))
   (add-to-list 'mu4e-bookmarks
-  '( :name  "All Inboxes"
-        :query "maildir:/icloud/INBOX OR maildir:/gmail/INBOX"
-     :key   ?b)))
+	       '( :name  "All Inboxes"
+		  :query "maildir:/icloud/INBOX OR maildir:/gmail/INBOX"
+		  :key   ?b))
+  (with-eval-after-load "mm-decode"
+    (add-to-list 'mm-discouraged-alternatives "text/html")
+    (add-to-list 'mm-discouraged-alternatives "text/richtext")))
 
 (provide 'config-mu4e)
 ;;; config-mu4e.el ends here
