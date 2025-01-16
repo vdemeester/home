@@ -44,6 +44,7 @@ let
       honshu = "10.100.0.10";
       houbeb = "10.100.0.13";
       houbeb-ipad = "10.100.0.43";
+      houbeb-iphone = "10.100.0.44";
       okinawa = "10.100.0.14";
       naruhodo = "10.100.0.15";
       sakhalin = "10.100.0.16";
@@ -89,8 +90,12 @@ let
       publicKey = "RANYR3ouf+3Bh+6kJVF1I0s5iglBGs7ucW6iRyv2cGc=";
     };
     houbeb-ipad = {
-      allowedIPs = [ "${wireguard.ips.houbeb}/32" ];
+      allowedIPs = [ "${wireguard.ips.houbeb-ipad}/32" ];
       publicKey = "cwdpRxMJP86QYkJ1O43mBoSyBJaE7d7Kxbsd2nj5vh4=";
+    };
+    houbeb-iphone = {
+      allowedIPs = [ "${wireguard.ips.houbeb-iphone}/32" ];
+      publicKey = "UdgP0UBPfIrzdUe8JNeom4qahtoBxSADI5gKwpoNYEs=";
     };
     okinawa = {
       allowedIPs = [ "${wireguard.ips.okinawa}/32" ];
@@ -185,7 +190,7 @@ in
     listenPort = 51820;
     endpointIP = "167.99.17.238";
     persistentKeepalive = 25;
-    peers = [ wireguard.shikoku wireguard.wakasu wireguard.vincent wireguard.sakhalin wireguard.aomi wireguard.ipad wireguard.hass wireguard.demeter wireguard.athena wireguard.aion wireguard.honshu wireguard.houbeb ]; # wireguard.hokkaido
+    peers = [ wireguard.shikoku wireguard.wakasu wireguard.vincent wireguard.sakhalin wireguard.aomi wireguard.ipad wireguard.hass wireguard.demeter wireguard.athena wireguard.aion wireguard.honshu wireguard.houbeb wireguard.houbeb-ipad wireguard.houbeb-iphone ]; # wireguard.hokkaido
   };
   ssh = ssh;
   sshConfig = {
