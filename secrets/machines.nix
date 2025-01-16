@@ -43,6 +43,7 @@ let
       vincent = "10.100.0.9";
       honshu = "10.100.0.10";
       houbeb = "10.100.0.13";
+      houbeb-ipad = "10.100.0.43";
       okinawa = "10.100.0.14";
       naruhodo = "10.100.0.15";
       sakhalin = "10.100.0.16";
@@ -86,6 +87,10 @@ let
     houbeb = {
       allowedIPs = [ "${wireguard.ips.houbeb}/32" ];
       publicKey = "RANYR3ouf+3Bh+6kJVF1I0s5iglBGs7ucW6iRyv2cGc=";
+    };
+    houbeb-ipad = {
+      allowedIPs = [ "${wireguard.ips.houbeb}/32" ];
+      publicKey = "cwdpRxMJP86QYkJ1O43mBoSyBJaE7d7Kxbsd2nj5vh4=";
     };
     okinawa = {
       allowedIPs = [ "${wireguard.ips.okinawa}/32" ];
