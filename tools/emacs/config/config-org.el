@@ -131,7 +131,7 @@
    (tags . " %i")
    (search . " %i")))
   (org-insert-heading-respect-content t)
-
+  (org-M-RET-may-split-line '((default . nil)))
   (org-goto-interface 'outline-path-completion)
   (org-outline-path-complete-in-steps nil)
   (org-goto-max-level 2)
