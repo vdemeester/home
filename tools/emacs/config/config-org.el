@@ -127,9 +127,9 @@
   ;;  (search . " %i %-12:c"))
   ;; (org-agenda-prefix-format "   %i %?-2 t%s")
   (org-agenda-prefix-format '((agenda . " %i %?-12t% s")
-   (todo . " %i")
-   (tags . " %i")
-   (search . " %i")))
+			      (todo . " %i")
+			      (tags . " %i")
+			      (search . " %i")))
   (org-insert-heading-respect-content t)
   (org-M-RET-may-split-line '((default . nil)))
   (org-goto-interface 'outline-path-completion)
@@ -150,21 +150,19 @@
 				    ("website" ,(list (propertize "🌍")))
 				    ("security" ,(list (propertize "🛡️")))
 				    (".*" '(space . (:width (16))))))
-;;         (org-agenda-compact-blocks t)
-        (org-agenda-sticky t)
-;;         (org-agenda-include-diary t)
+  (org-agenda-sticky t)
   :config
-
+  
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
     (org-babel-lob-ingest org-babel-library-file))
   (defun vde/org-agenda-files ()
     (apply 'append
-		   (mapcar
-			(lambda (directory)
-			  (directory-files-recursively
-			   directory org-agenda-file-regexp))
-			`(,org-projects-dir ,org-areas-dir ,org-resources-dir ,org-journal-dir ,(expand-file-name "~/src/osp/tasks")))))
+	   (mapcar
+	    (lambda (directory)
+	      (directory-files-recursively
+	       directory org-agenda-file-regexp))
+	    `(,org-projects-dir ,org-areas-dir ,org-resources-dir ,org-journal-dir ,(expand-file-name "~/src/osp/tasks")))))
   (defun vde/reload-org-agenda-files ()
     "Reload org-agenda-files variables with up-to-date org files"
     (interactive)
@@ -175,21 +173,21 @@
     (setq org-refile-targets (vde/org-refile-targets)))
   (defun vde/org-refile-targets ()
     (append '((org-inbox-file :level . 0))
-				   (->>
-				    (directory-files org-projects-dir nil ".org$")
-				    (--remove (s-starts-with? "." it))
-				    (--map (format "%s/%s" org-projects-dir it))
-				    (--map `(,it :maxlevel . 3)))
-				   (->>
-				    (directory-files org-areas-dir nil ".org$")
-				    (--remove (s-starts-with? "." it))
-				    (--map (format "%s/%s" org-areas-dir it))
-				    (--map `(,it :maxlevel . 3)))
-				   (->>
-				    (directory-files-recursively org-resources-dir ".org$")
-				    (--remove (s-starts-with? (format "%s/legacy" org-resources-dir) it))
-				    (--map (format "%s" it))
-				    (--map `(,it :maxlevel . 3)))))
+	    (->>
+	     (directory-files org-projects-dir nil ".org$")
+	     (--remove (s-starts-with? "." it))
+	     (--map (format "%s/%s" org-projects-dir it))
+	     (--map `(,it :maxlevel . 3)))
+	    (->>
+	     (directory-files org-areas-dir nil ".org$")
+	     (--remove (s-starts-with? "." it))
+	     (--map (format "%s/%s" org-areas-dir it))
+	     (--map `(,it :maxlevel . 3)))
+	    (->>
+	     (directory-files-recursively org-resources-dir ".org$")
+	     (--remove (s-starts-with? (format "%s/legacy" org-resources-dir) it))
+	     (--map (format "%s" it))
+	     (--map `(,it :maxlevel . 3)))))
   (setq org-agenda-files (vde/org-agenda-files)
 	;; TODO: extract org-refile-targets into a function
 	org-refile-targets (vde/org-refile-targets))
@@ -201,11 +199,11 @@
 	    (tags-todo "+PRIORITY=\"A\""
 		       ((org-agenda-overriding-header "High Priority Tasks")))
 	    (todo "NEXT"
-		       ((org-agenda-overriding-header "Next Tasks")))))
+		  ((org-agenda-overriding-header "Next Tasks")))))
 	  ("i" "Inbox (triage)"
 	   ((tags-todo ".*"
-		  ((org-agenda-files '("~/desktop/org/20231120T124316--inbox__inbox.org"))
-		   (org-agenda-overriding-header "Unprocessed Inbox Item")))))
+		       ((org-agenda-files '("~/desktop/org/20231120T124316--inbox__inbox.org"))
+			(org-agenda-overriding-header "Unprocessed Inbox Item")))))
 	  ("u" "Untagged Tasks"
 	   ((tags-todo "-{.*}"
 		       ((org-agenda-overriding-header "Untagged tasks")))))
@@ -351,22 +349,22 @@ file which do not already have one."
   (setq denote-journal-extras-directory org-journal-dir
 	denote-journal-extras-title-format 'day-date-month-year)
   (with-eval-after-load 'org-capture
-  (setq denote-org-capture-specifiers "%l\n%i\n%?")
-  (add-to-list 'org-capture-templates
-               '("n" "New note (with denote.el)" plain
-                 (file denote-last-path)
-                 #'denote-org-capture
-                 :no-save t
-                 :immediate-finish nil
-                 :kill-buffer t
-                 :jump-to-captured t)))
+    (setq denote-org-capture-specifiers "%l\n%i\n%?")
+    (add-to-list 'org-capture-templates
+		 '("n" "New note (with denote.el)" plain
+                   (file denote-last-path)
+                   #'denote-org-capture
+                   :no-save t
+                   :immediate-finish nil
+                   :kill-buffer t
+                   :jump-to-captured t)))
   (defun vde/org-category-from-buffer ()
     "Get the org category (#+category:) value from the buffer"
-  (cond
-   ((string-match (format "^%s.*$" org-journal-dir) (buffer-file-name))
-    "journal")
-   (t
-    (denote-sluggify (denote--retrieve-title-or-filename (buffer-file-name) 'org))))))
+    (cond
+     ((string-match (format "^%s.*$" org-journal-dir) (buffer-file-name))
+      "journal")
+     (t
+      (denote-sluggify (denote--retrieve-title-or-filename (buffer-file-name) 'org))))))
 
 (use-package consult-notes
   :commands (consult-notes
@@ -494,13 +492,13 @@ Within those groups, sort by date and priority."
          (matched-heading
           (mapcar #'my-consult-org-ql-agenda-format
                   (org-ql-select 'org-agenda-files heading-query
-                    :action 'element-with-markers
-                    :sort sort)))
+				 :action 'element-with-markers
+				 :sort sort)))
          (all-matches
           (mapcar #'my-consult-org-ql-agenda-format
                   (org-ql-select 'org-agenda-files query
-                    :action 'element-with-markers
-                    :sort sort))))
+				 :action 'element-with-markers
+				 :sort sort))))
     (append
      matched-heading
      (seq-difference all-matches matched-heading))))
