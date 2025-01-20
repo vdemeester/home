@@ -144,6 +144,7 @@
 				    ("area--"  ,(list (propertize"🏢" )))
 				    ("area--home"  ,(list (propertize"🏡" )))
 				    ("home"  ,(list (propertize"🏡" )))
+				    ("email"  ,(list (propertize"📨" )))
 				    ("people"  ,(list (propertize"👤" )))
 				    ("machine" ,(list (propertize "🖥️")))
 				    ("website" ,(list (propertize "🌍")))
