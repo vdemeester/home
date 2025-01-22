@@ -29,27 +29,27 @@ in
         outer = 2;
       };
       colors = {
-	  focused = {
-	    border = "#BD93F9";
-	    background = "#282A36";
-	    text = "#ffffff";
-	    indicator = "#8BE9FD";
-	    childBorder = "#BD93F9";
-	  };
-	  focusedInactive = {
-	    border = "#BD93F9";
-	    background = "#282A36";
-	    text = "#F8F8F2";
-	    indicator = "#44475A";
-	    childBorder = "#44475A";
-	  };
-	  unfocused = {
-	    border = "#44475A";
-	    background = "#282A36";
-	    text = "#BFBFBF";
-	    indicator = "#282A36";
-	    childBorder = "#282A36";
-	  };
+        focused = {
+          border = "#BD93F9";
+          background = "#282A36";
+          text = "#ffffff";
+          indicator = "#8BE9FD";
+          childBorder = "#BD93F9";
+        };
+        focusedInactive = {
+          border = "#BD93F9";
+          background = "#282A36";
+          text = "#F8F8F2";
+          indicator = "#44475A";
+          childBorder = "#44475A";
+        };
+        unfocused = {
+          border = "#44475A";
+          background = "#282A36";
+          text = "#BFBFBF";
+          indicator = "#282A36";
+          childBorder = "#282A36";
+        };
       };
       modifier = "Mod4";
       terminal = "${pkgs.kitty}/bin/kitty";
@@ -68,7 +68,7 @@ in
         };
       };
       fonts = fontConf;
-      bars = [];
+      bars = [ ];
       keybindings =
         let
           mod = config.wayland.windowManager.sway.config.modifier;
@@ -163,7 +163,7 @@ in
         { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG _CURRENT_DESKTOP"; } #workaround
         # { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         { command = "systemctl --user restart kanshi"; always = true; }
-	{ command = "${pkgs.pa-notify}/bin/pa-notify"; always = true;}
+        { command = "${pkgs.pa-notify}/bin/pa-notify"; always = true; }
       ];
     };
     extraConfig =
@@ -181,13 +181,36 @@ in
         bindcode ${mod}+26 layout toggle split
         bindcode ${mod}+Shift+54 reload
         bindcode ${mod}+Shift+26 exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'"
-        bindcode ${mod}+32 mode resize
+
+        mode "resize" {
+            bindsym Shift+Left resize grow width 5px
+            bindsym Shift+Down resize shrink height 5px
+            bindsym Shift+Up resize grow height 5px
+            bindsym Shift+Right resize shrink width 5px
+
+            bindsym Control+Left resize grow width 50px
+            bindsym Control+Down resize shrink height 50px
+            bindsym Control+Up resize grow height 50px
+            bindsym Control+Right resize shrink width 50px
+
+            # Ditto, with arrow keys
+            bindsym Left resize grow width 15px
+            bindsym Down resize shrink height 15px
+            bindsym Up resize grow height 15px
+            bindsym Right resize shrink width 15px
+
+            # Return to default mode
+            bindsym Return mode "default"
+            bindsym Escape mode "default"
+        }
+        bindcode ${mod}+32 mode "resize"
+
         bindcode ${mod}+Shift+32 exec "${pkgs.swaylock}/bin/swaylock -i $HOME/desktop/pictures/lockscreen"
 
-	bindcode ${mod}+24 exec notify-send --icon=battery --category=info --urgency=critical "$(acpi)"
+        bindcode ${mod}+24 exec notify-send --icon=battery --category=info --urgency=critical "$(acpi)"
         # bindcode ${mod}+58 exec
-	bindcode ${mod}+28 exec notify-send --icon=clock --category=info --urgency=critical "$(date +"%I:%M")"
-	bindcode ${mod}+Shift+28 exec notify-send --icon=clock --category=info --urgency=critical "$(date)" 
+        bindcode ${mod}+28 exec notify-send --icon=clock --category=info --urgency=critical "$(date +"%I:%M")"
+        bindcode ${mod}+Shift+28 exec notify-send --icon=clock --category=info --urgency=critical "$(date)" 
 
         # switch to workspace
         bindcode ${mod}+10 workspace number 1
