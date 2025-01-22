@@ -20,7 +20,7 @@ addrs = { v4 = "10.100.0.8" }
 
 [hosts.aomi]
 network = "vpn"
-ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJ3QqVCUiE4BIFKTJLN6mSnp9bLSnJ3gE8ScbAajGsH vincent@aomi", gpgRemoteForward = true }
+ssh = { pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJmTdMKYdgqpbQWBif58VBuwX+GqMGsMfB1ey1TKrM3 vincent@aomi" }
 addrs = { v4 = "192.168.1.23" }
 
 [hosts.aomi.wireguard]
