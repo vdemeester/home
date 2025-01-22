@@ -55,8 +55,8 @@ in
     aliases = {
       b = "branch - -color - v";
       br = "branch";
-      ca = "commit - -amend";
-      ci = "commit - -signoff";
+      ca = "commit --amend";
+      ci = "commit --signoff";
       co = "checkout";
       conflicts = "!git ls-files --unmerged | cut -c51- | sort -u | xargs $EDITOR";
       dft = "difftool";
