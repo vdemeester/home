@@ -90,6 +90,7 @@ in
       ++ optionals config.modules.desktop.enable [ (import ./desktop) ]
       ++ optionals (config.networking.hostName == "wakasu" || config.networking.hostName == "aomi") [
         {
+          # Move this to its own module
           home.packages = with pkgs; [
             libosinfo
             asciinema
@@ -125,7 +126,6 @@ in
                   enable = true;
                   create = "both";
                   expunge = "both";
-                  # patterns = [ "*" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" ];
                   extraConfig = {
                     channel = {
                       Sync = "All";
@@ -139,19 +139,20 @@ in
                 mu.enable = true;
                 msmtp.enable = true;
               };
-              "gmail" = {
-                address = "vinc.demeester@gmail.com";
-                userName = "vinc.demeester@gmail.com";
-                realName = "Vincent Demeester";
-                passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/vinc.demeester";
-                imap.host = "imap.gmail.com";
-                smtp.host = "smtp.gmail.com";
-                flavor = "gmail.com";
-                lieer.enable = true;
-                mu.enable = true;
-                notmuch.enable = true;
-                msmtp.enable = true;
-              };
+              # We will forward those to a "central" mail account.
+              # "gmail" = {
+              #   address = "vinc.demeester@gmail.com";
+              #   userName = "vinc.demeester@gmail.com";
+              #   realName = "Vincent Demeester";
+              #   passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/vinc.demeester";
+              #   imap.host = "imap.gmail.com";
+              #   smtp.host = "smtp.gmail.com";
+              #   flavor = "gmail.com";
+              #   lieer.enable = true;
+              #   mu.enable = true;
+              #   notmuch.enable = true;
+              #   msmtp.enable = true;
+              # };
               "redhat" = {
                 primary = true; # because it's work, but it's really just for notmuch
                 address = "vdemeest@redhat.com";
@@ -162,7 +163,7 @@ in
                 smtp.host = "smtp.gmail.com";
                 flavor = "gmail.com";
                 lieer.enable = true;
-                mu.enable = true;
+                # mu.enable = true;
                 notmuch.enable = true;
                 msmtp.enable = true;
               };
