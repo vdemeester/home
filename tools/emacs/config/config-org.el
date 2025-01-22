@@ -148,8 +148,9 @@
 				    ("people"  ,(list (propertize"👤" )))
 				    ("machine" ,(list (propertize "🖥️")))
 				    ("website" ,(list (propertize "🌍")))
+				    ("bike" ,(list (propertize "🚴‍♂️")))
 				    ("security" ,(list (propertize "🛡️")))
-				    (".*" '(space . (:width (16))))))
+				    ("i*" ,(list (propertize "📒")))))
   (org-agenda-sticky t)
   :config
   
