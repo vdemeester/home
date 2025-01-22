@@ -96,9 +96,6 @@ in
             oathToolkit
             p7zip
           ];
-          programs.mu = {
-            enable = true;
-          };
           home.file."bin/msmtp" = {
             text = ''
               #!${pkgs.stdenv.shell}
@@ -108,13 +105,15 @@ in
             executable = true;
           };
           programs.mbsync.enable = true;
+          programs.lieer.enable = true;
           programs.aerc.enable = true;
           programs.msmtp.enable = true;
+          programs.mu.enable = true;
+          programs.notmuch.enable = true;
           accounts.email = {
             maildirBasePath = "desktop/mails";
             accounts = {
               "icloud" = {
-                primary = true;
                 address = "vincent@demeester.fr";
                 userName = "vdemeester@icloud.com";
                 realName = "Vincent Demeester";
@@ -147,49 +146,24 @@ in
                 passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/vinc.demeester";
                 imap.host = "imap.gmail.com";
                 smtp.host = "smtp.gmail.com";
-                # mbsync = {
-                #   enable = true;
-                #   create = "both";
-                #   expunge = "both";
-                #   patterns = [ "*" "![Gmail]*" "[Gmail]/All Mail" "[Gmail]Sent Mail" "[Gmail]Starred" "[Gmail]Trash" ];
-                #   extraConfig = {
-                #     channel = {
-                #       Sync = "All";
-                #     };
-                #     account = {
-                #       Timeout = 120;
-                #       PipelineDepth = 1;
-                #     };
-                #   };
-                # };
+                flavor = "gmail.com";
                 lieer.enable = true;
                 mu.enable = true;
+                notmuch.enable = true;
                 msmtp.enable = true;
               };
               "redhat" = {
+                primary = true; # because it's work, but it's really just for notmuch
                 address = "vdemeest@redhat.com";
                 userName = "vdemeest@redhat.com";
                 realName = "Vincent Demeester";
                 passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/redhat";
                 imap.host = "imap.gmail.com";
                 smtp.host = "smtp.gmail.com";
-                # mbsync = {
-                #   enable = true;
-                #   create = "both";
-                #   expunge = "both";
-                #   patterns = [ "*" "![Gmail]*" "[Gmail]/All Mail" "[Gmail]Sent Mail" "[Gmail]Starred" "[Gmail]Trash" ];
-                #   extraConfig = {
-                #     channel = {
-                #       Sync = "All";
-                #     };
-                #     account = {
-                #       Timeout = 120;
-                #       PipelineDepth = 1;
-                #     };
-                #   };
-                # };
+                flavor = "gmail.com";
                 lieer.enable = true;
                 mu.enable = true;
+                notmuch.enable = true;
                 msmtp.enable = true;
               };
             };
