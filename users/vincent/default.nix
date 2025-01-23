@@ -153,20 +153,20 @@ in
               #   notmuch.enable = true;
               #   msmtp.enable = true;
               # };
-              "redhat" = {
-                primary = true; # because it's work, but it's really just for notmuch
-                address = "vdemeest@redhat.com";
-                userName = "vdemeest@redhat.com";
-                realName = "Vincent Demeester";
-                passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/redhat";
-                imap.host = "imap.gmail.com";
-                smtp.host = "smtp.gmail.com";
-                flavor = "gmail.com";
-                lieer.enable = true;
-                # mu.enable = true;
-                notmuch.enable = true;
-                msmtp.enable = true;
-              };
+              # "redhat" = {
+              #   primary = true; # because it's work, but it's really just for notmuch
+              #   address = "vdemeest@redhat.com";
+              #   userName = "vdemeest@redhat.com";
+              #   realName = "Vincent Demeester";
+              #   passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/redhat";
+              #   imap.host = "imap.gmail.com";
+              #   smtp.host = "smtp.gmail.com";
+              #   flavor = "gmail.com";
+              #   lieer.enable = true;
+              #   # mu.enable = true;
+              #   notmuch.enable = true;
+              #   msmtp.enable = true;
+              # };
             };
           };
         }
