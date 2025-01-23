@@ -222,7 +222,15 @@
            ((org-agenda-overriding-header "Reviews Scheduled")
             (org-agenda-skip-function 'org-review-agenda-skip)
             (org-agenda-cmp-user-defined 'org-review-compare)
-            (org-agenda-sorting-strategy '(user-defined-down)))))))
+	    (org-agenda-sorting-strategy '(user-defined-down)))))))
+
+(use-package org-review
+  :config
+  (setopt org-review-delay "+1w")
+  (add-hook 'org-agenda-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-r")
+                           'org-review-insert-last-review))))
 
 ;; Make sure we load org-protocol
 (use-package org-protocol
