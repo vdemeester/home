@@ -25,7 +25,7 @@
         };
       };
       stableModules = [
-        inputs.home-manager-24_05.nixosModules.home-manager
+        inputs.home-manager-24_11.nixosModules.home-manager
       ];
       unstableModules = [
         inputs.home-manager.nixosModules.home-manager
@@ -83,12 +83,12 @@
         # sdimages
         athena = (self.nixosConfigurations.athena.extendModules {
           modules = [
-            "${inputs.nixpkgs-24_05}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            "${inputs.nixpkgs-24_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           ];
         }).config.system.build.sdImage;
         demeter = (self.nixosConfigurations.demeter.extendModules {
           modules = [
-            "${inputs.nixpkgs-24_05}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            "${inputs.nixpkgs-24_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           ];
         }).config.system.build.sdImage;
       };
@@ -112,42 +112,42 @@
             ];
           };
           # Servers (stable)
-          shikoku = inputs.nixpkgs-24_05.lib.nixosSystem {
+          shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ stableModules ++ [
               ./systems/hosts/shikoku.nix
             ];
           };
-          sakhalin = inputs.nixpkgs-24_05.lib.nixosSystem {
+          sakhalin = inputs.nixpkgs-24_11.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ stableModules ++ [
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               ./systems/hosts/sakhalin.nix
             ];
           };
-          kerkouane = inputs.nixpkgs-24_05.lib.nixosSystem {
+          kerkouane = inputs.nixpkgs-24_11.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ stableModules ++ [
               ./systems/modules/services/govanityurl.nix
               ./systems/hosts/kerkouane.nix
             ];
           };
-          carthage = inputs.nixpkgs-24_05.lib.nixosSystem {
-            system = "aarch64-linux";
-            modules = commonModules ++ stableModules ++ [
-              ./systems/hosts/carthage.nix
-            ];
-          };
+          # carthage = inputs.nixpkgs-24_11.lib.nixosSystem {
+          #   system = "aarch64-linux";
+          #   modules = commonModules ++ stableModules ++ [
+          #     ./systems/hosts/carthage.nix
+          #   ];
+          # };
           # Raspberry PI
           # athena
-          athena = inputs.nixpkgs-24_05.lib.nixosSystem {
+          athena = inputs.nixpkgs-24_11.lib.nixosSystem {
             system = "aarch64-linux";
             modules = commonModules ++ stableModules ++ [
               ./systems/hosts/athena.nix
             ];
           };
           # demeter
-          demeter = inputs.nixpkgs-24_05.lib.nixosSystem {
+          demeter = inputs.nixpkgs-24_11.lib.nixosSystem {
             system = "aarch64-linux";
             modules = commonModules ++ stableModules ++ [
               ./systems/hosts/demeter.nix
