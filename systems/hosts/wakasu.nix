@@ -86,13 +86,18 @@ in
   ];
   services.udev.packages = [ pkgs.sane-airscan ];
   services.udev.extraRules = ''
-    # STM32 rules for the Moonlander and Planck EZ
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \
-        MODE:="0666", \
-        SYMLINK+="stm32_dfu"
+        # STM32 rules for the Moonlander and Planck EZ
+        SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \
+            MODE:="0666", \
+            SYMLINK+="stm32_dfu"
 
-    # Suspend the system when battery level drops to 5% or lower
-    SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
+        # Suspend the system when battery level drops to 5% or lower
+        SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
+
+        #Flipper Zero serial port
+    		SUBSYSTEMS==“usb”, ATTRS{idVendor}==“0483”, ATTRS{idProduct}==“5740”, ATTRS{manufacturer}==“Flipper Devices Inc.”, TAG+=“uaccess”, GROUP=“wheel”
+        #Flipper Zero DFU
+        SUBSYSTEMS==“usb”, ATTRS{idVendor}==“0483”, ATTRS{idProduct}==“df11”, ATTRS{manufacturer}==“STMicroelectronics”, TAG+=“uaccess”, GROUP=“wheel”
   '';
 
   security.sudo.extraRules = [
