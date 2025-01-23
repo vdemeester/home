@@ -106,15 +106,16 @@ in
             executable = true;
           };
           programs.mbsync.enable = true;
-          programs.lieer.enable = true;
-          programs.aerc.enable = true;
+          # programs.lieer.enable = true;
+          # programs.aerc.enable = true;
           programs.msmtp.enable = true;
           programs.mu.enable = true;
-          programs.notmuch.enable = true;
+          # programs.notmuch.enable = true;
           accounts.email = {
             maildirBasePath = "desktop/mails";
             accounts = {
               "icloud" = {
+                primary = true;
                 address = "vincent@demeester.fr";
                 userName = "vdemeester@icloud.com";
                 realName = "Vincent Demeester";
