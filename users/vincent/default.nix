@@ -107,7 +107,7 @@ in
           };
           programs.mbsync.enable = true;
           # programs.lieer.enable = true;
-          # programs.aerc.enable = true;
+          programs.aerc.enable = true;
           programs.msmtp.enable = true;
           programs.mu.enable = true;
           # programs.notmuch.enable = true;
@@ -138,36 +138,40 @@ in
                   };
                 };
                 mu.enable = true;
-                msmtp.enable = true;
+                msmtp = {
+                  enable = true;
+                  extraConfig = {
+                    tls_starttls = "on";
+                  };
+                };
               };
               # We will forward those to a "central" mail account.
-              # "gmail" = {
-              #   address = "vinc.demeester@gmail.com";
-              #   userName = "vinc.demeester@gmail.com";
-              #   realName = "Vincent Demeester";
-              #   passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/vinc.demeester";
-              #   imap.host = "imap.gmail.com";
-              #   smtp.host = "smtp.gmail.com";
-              #   flavor = "gmail.com";
-              #   lieer.enable = true;
-              #   mu.enable = true;
-              #   notmuch.enable = true;
-              #   msmtp.enable = true;
-              # };
-              # "redhat" = {
-              #   primary = true; # because it's work, but it's really just for notmuch
-              #   address = "vdemeest@redhat.com";
-              #   userName = "vdemeest@redhat.com";
-              #   realName = "Vincent Demeester";
-              #   passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/redhat";
-              #   imap.host = "imap.gmail.com";
-              #   smtp.host = "smtp.gmail.com";
-              #   flavor = "gmail.com";
-              #   lieer.enable = true;
-              #   # mu.enable = true;
-              #   notmuch.enable = true;
-              #   msmtp.enable = true;
-              # };
+              "gmail" = {
+                address = "vinc.demeester@gmail.com";
+                userName = "vinc.demeester@gmail.com";
+                realName = "Vincent Demeester";
+                passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/vinc.demeester";
+                imap.host = "imap.gmail.com";
+                smtp.host = "smtp.gmail.com";
+                flavor = "gmail.com";
+                aerc.enable = true;
+                msmtp.enable = true;
+              };
+              "redhat" = {
+                # primary = true; # because it's work, but it's really just for notmuch
+                address = "vdemeest@redhat.com";
+                userName = "vdemeest@redhat.com";
+                realName = "Vincent Demeester";
+                passwordCommand = "${pkgs.passage}/bin/passage show mails/gmail/redhat";
+                imap.host = "imap.gmail.com";
+                smtp.host = "smtp.gmail.com";
+                flavor = "gmail.com";
+                #lieer.enable = true;
+                # mu.enable = true;
+                #notmuch.enable = true;
+                aerc.enable = true;
+                msmtp.enable = true;
+              };
             };
           };
         }
