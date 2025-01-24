@@ -151,7 +151,10 @@ in
     owner = "aria2";
     group = "aria2";
   };
-
+  nixpkgs.config.permittedInsecurePackages = [
+    "dotnet-sdk-6.0.428"
+    "aspnetcore-runtime-6.0.36"
+  ];
   services = {
     ollama = {
       enable = true;
@@ -166,7 +169,10 @@ in
     aria2 = {
       enable = true;
       openPorts = true;
-      extraArguments = "--max-concurrent-downloads=20";
+      # extraArguments = "--max-concurrent-downloads=20";
+      settings = {
+        max-concurrent-downloads = 20;
+      };
       downloadDir = "/data/downloads";
       rpcSecretFile = "${pkgs.writeText "aria" "aria2rpc\n"}";
       # rpcSecretFile = config.sops.secrets.aria2RPCSecret.path;
