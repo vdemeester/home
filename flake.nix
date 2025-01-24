@@ -57,6 +57,7 @@
         ./systems/modules/virtualisation/default.nix
         ./systems/modules/virtualisation/buildkit.nix
         ./systems/modules/services/default.nix
+        inputs.agenix.nixosModules.default
         inputs.sops-nix.nixosModules.sops
         # inputs.envfs.nixosModules.envfs
         {
@@ -236,5 +237,6 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix.url = "github:ryantm/agenix";
   };
 }
