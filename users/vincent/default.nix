@@ -156,6 +156,23 @@ in
                 flavor = "gmail.com";
                 aerc.enable = true;
                 msmtp.enable = true;
+                # This is here for doing backup
+                mbsync = {
+                  enable = true;
+                  create = "both";
+                  expunge = "both";
+                  # Sync everything *but* "[Gmail] All Mail" to get the "organized" view.
+                  patterns = [ "*" "![Gmail]*" "[Gmail]Sent Mail" "[Gmail]Starred" "[Gmail]Trash" ];
+                  extraConfig = {
+                    channel = {
+                      Sync = "All";
+                    };
+                    account = {
+                      Timeout = 120;
+                      PipelineDepth = 1;
+                    };
+                  };
+                };
               };
               "redhat" = {
                 # primary = true; # because it's work, but it's really just for notmuch
