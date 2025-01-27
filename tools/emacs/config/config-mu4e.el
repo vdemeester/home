@@ -8,6 +8,16 @@
   (mu4e-context-policy 'pick-first)
   :config
 
+  (defun vde-mu4e--refile (msg)
+    "Refile function to smartly move `MSG' to a given folder."
+    (cond
+     ;; FIXME
+     ((string= (plist-get (car-safe (mu4e-message-field msg :cc)) :email) "ci_activity@noreply.github.com")
+      "/icloud/Deleted Messages")
+     (t
+      (let ((year (format-time-string "%Y" (mu4e-message-field msg :date))))
+	(format "/icloud/Archives/%s" year)))))
+
   (setq
    mu4e-headers-draft-mark     '("D" . "💈")
    mu4e-headers-flagged-mark   '("F" . "📍")
@@ -25,13 +35,13 @@
    mu4e-headers-calendar-mark  '("c" . "📅"))
 
   (setopt mu4e-completing-read-function completing-read-function)
+  (setq mu4e-refile-folder 'vde-mu4e--refile)
   (setq mu4e-contexts `( ,(make-mu4e-context
 			   :name "icloud"
 			   :match-func (lambda (msg) (when msg
 						       (string-prefix-p "/icloud" (mu4e-message-field msg :maildir))))
 			   :vars '(
 				   (mu4e-trash-folder . "/icloud/Deleted Messages")
-				   ;; (mu4e-refile-folder . vde/mu4e-icloud-refile)
 				   (mu4e-sent-folder . "/icloud/Sent Messages")
 				   (mu4e-draft-folder . "/icloud/Drafts")
 				   (mu4e-get-mail-command . "mbsync icloud")
