@@ -43,6 +43,7 @@ in
 {
   home.packages = [
     pkgs.openssh
+    pkgs.sshfs
   ];
   home.file.".ssh/sockets/.placeholder".text = '''';
   xdg.configFile."ssh/.placeholder".text = '''';
