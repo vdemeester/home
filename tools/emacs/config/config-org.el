@@ -15,22 +15,8 @@
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
   "Directory of archived files.")
 
-(defconst org-projects-dir (expand-file-name "projects" org-directory)
-  "Project files directory.")
-(defconst org-projects-completed-dir (expand-file-name "projects" org-archive-dir)
-  "Directory of completed project files.")
-(defconst org-projects-future-file (expand-file-name "20231120T124316--future-projects-incubation__project_future.org" org-projects-dir)
+(defconst org-projects-future-file (expand-file-name "20231120T124316--future-projects-incubation__project_future.org" org-directory)
   "Future projects are collected in this file.")
-
-(defconst org-areas-dir (expand-file-name "areas" org-directory)
-  "Area files directory.")
-
-(defconst org-resources-dir (expand-file-name "resources" org-directory)
-  "Resource files directory.")
-(defconst org-resources-articles-dir (expand-file-name "articles" org-resources-dir)
-  "Article resource files directory.")
-(defconst org-resources-books-dir (expand-file-name "books" org-resources-dir)
-  "Book resource files directory.")
 (defconst org-people-dir (expand-file-name "people" org-directory)
   "People files directory.")
 (defconst org-journal-dir (expand-file-name "journal" org-directory)
@@ -47,9 +33,7 @@
 
 (set-register ?i `(file . ,org-inbox-file))
 (set-register ?f `(file . ,org-projects-future-file))
-(set-register ?p `(file . ,org-projects-dir))
-(set-register ?a `(file . ,org-areas-dir))
-(set-register ?r `(file . ,org-resources-dir))
+(set-register ?o `(file . ,org-directory))
 (set-register ?P `(file . ,org-people-dir))
 (set-register ?j `(file . ,org-journal-dir))
 
@@ -159,12 +143,14 @@
   (when (file-exists-p org-babel-library-file)
     (org-babel-lob-ingest org-babel-library-file))
   (defun vde/org-agenda-files ()
-    (apply 'append
-	   (mapcar
-	    (lambda (directory)
-	      (directory-files-recursively
-	       directory org-agenda-file-regexp))
-	    `(,org-projects-dir ,org-areas-dir ,org-resources-dir ,org-journal-dir ,(expand-file-name "~/src/osp/tasks")))))
+    (seq-filter (lambda(x) (not (string-match "/archive/"(file-name-directory x)))) 
+		(apply 'append
+		       (mapcar
+			(lambda (directory)
+			  (directory-files-recursively
+			   directory org-agenda-file-regexp))
+			`(,org-directory ,(expand-file-name "~/src/osp/tasks"))))
+		)))
   (defun vde/reload-org-agenda-files ()
     "Reload org-agenda-files variables with up-to-date org files"
     (interactive)
@@ -176,18 +162,13 @@
   (defun vde/org-refile-targets ()
     (append '((org-inbox-file :level . 0))
 	    (->>
-	     (directory-files org-projects-dir nil ".org$")
+	     (directory-files org-directory nil ".org$")
 	     (--remove (s-starts-with? "." it))
-	     (--map (format "%s/%s" org-projects-dir it))
+	     (--map (format "%s/%s" org-directory it))
 	     (--map `(,it :maxlevel . 3)))
 	    (->>
-	     (directory-files org-areas-dir nil ".org$")
-	     (--remove (s-starts-with? "." it))
-	     (--map (format "%s/%s" org-areas-dir it))
-	     (--map `(,it :maxlevel . 3)))
-	    (->>
-	     (directory-files-recursively org-resources-dir ".org$")
-	     (--remove (s-starts-with? (format "%s/legacy" org-resources-dir) it))
+	     (directory-files-recursively org-people-dir ".org$")
+	     (--remove (s-starts-with? (format "%s/legacy" org-people-dir) it))
 	     (--map (format "%s" it))
 	     (--map `(,it :maxlevel . 3)))))
   (setq org-agenda-files (vde/org-agenda-files)
