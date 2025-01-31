@@ -104,6 +104,7 @@ let
     org-web-tools
     orgalist
     orgit
+    outline-indent
     ox-pandoc
     pandoc-mode
     # passage

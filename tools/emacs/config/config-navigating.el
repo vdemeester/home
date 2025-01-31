@@ -186,6 +186,12 @@
           (define-key view-mode-map (kbd "p") 'scroll-down-command)
           (define-key view-mode-map (kbd "n") 'scroll-up-command)))))
 
+(use-package outline-indent
+  :custom
+  (outline-indent-ellipsis " ▼ ")
+  :config
+  (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode))
 
 (provide 'config-navigating)
 ;;; config-navigating.el ends here
