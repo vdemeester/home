@@ -64,7 +64,7 @@
 (use-package magit
   :unless noninteractive
   :commands (magit-status magit-clone magit-pull magit-blame magit-log-buffer-file magit-log)
-  :bind (("C-c v c" . magit-clone)
+  :bind (("C-c v c" . magit-commit)
          ("C-c v C" . magit-checkout)
          ("C-c v b" . magit-branch)
          ("C-c v d" . magit-dispatch)
@@ -75,9 +75,7 @@
          ("C-c v P" . magit-push)
          ("C-c v r" . magit-rebase)
 	 ("C-c v s" . magit-stage)
-         ("C-c v v" . magit-status)
-	 ;; magit-commit ? magit-stage ?
-	 )
+         ("C-c v v" . magit-status))
   :config
   (setq-default magit-save-repository-buffers 'dontask
                 magit-refs-show-commit-count 'all
@@ -87,19 +85,20 @@
 		magit-refresh-status-buffer nil)
 
   (setq-default git-commit-summary-max-length 50
-                git-commit-known-pseudo-headers
-                '("Signed-off-by"
-                  "Acked-by"
-                  "Modified-by"
-                  "Cc"
-                  "Suggested-by"
-                  "Reported-by"
-                  "Tested-by"
-                  "Reviewed-by")
                 git-commit-style-convention-checks
                 '(non-empty-second-line
                   overlong-summary-line))
-  
+
+;; TODO: complete with list of issues (async ?)
+;;   (transient-append-suffix 'git-commit-insert-trailer "t"
+;;   '("i" "Issue numero" hello))
+;; 
+;; (defun hello (foo)
+;;   (interactive (list (completing-read "Foo number"
+;; 				'("foo" "bar" "baz"))))
+;;   (message foo)
+;;   (git-commit--insert-trailer "Hello" foo))
+
   (magit-define-popup-option 'magit-rebase-popup
                              ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
   (magit-define-popup-switch 'magit-log-popup
@@ -193,6 +192,7 @@
 (use-package consult-vc-modified-files
   :bind
   ("C-x v /" . consult-vc-modified-files))
+
 
 (provide 'config-vcs)
 ;;; config-vcs.el ends here
