@@ -149,8 +149,7 @@
 			(lambda (directory)
 			  (directory-files-recursively
 			   directory org-agenda-file-regexp))
-			`(,org-directory ,(expand-file-name "~/src/osp/tasks"))))
-		)))
+			`(,org-directory ,(expand-file-name "~/src/osp/tasks"))))))
   (defun vde/reload-org-agenda-files ()
     "Reload org-agenda-files variables with up-to-date org files"
     (interactive)
