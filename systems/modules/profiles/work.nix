@@ -24,39 +24,26 @@ in
       })
       libnotify
     ];
-    sops.secrets."krb5.conf" = {
-      inherit (common) mode owner group sopsFile;
+    # Kerberos
+    age.secrets."krb5.conf" = {
       path = "/etc/krb5.conf";
     };
     # NetworkManager
-    sops.secrets."1-RHVPN.ovpn" = {
-      inherit (common) owner group sopsFile;
-      path = "/etc/NetworkManager/system-connections/1-RHVPN.ovpn";
+    age.secrets."RHVPN.ovpn" = {
+      path = "/etc/NetworkManager/system-connections/RHVPN.ovpn";
       mode = "600";
     };
-    sops.secrets."AMS2.ovpn" = {
-      inherit (common) owner group sopsFile;
+    age.secrets."redhat/AMS2.ovpn" = {
+      file = ../../../secrets/redhat/AMS2.ovpn.age;
       path = "/etc/NetworkManager/system-connections/AMS2.ovpn";
       mode = "600";
     };
-    sops.secrets."BBRQ.ovpn" = {
-      inherit (common) owner group sopsFile;
+    age.secrets."BBRQ.ovpn" = {
       path = "/etc/NetworkManager/system-connections/BBRQ.ovpn";
       mode = "600";
     };
-    sops.secrets."RDU2.ovpn" = {
-      inherit (common) owner group sopsFile;
+    age.secrets."RDU2.ovpn" = {
       path = "/etc/NetworkManager/system-connections/RDU2.ovpn";
-      mode = "600";
-    };
-    sops.secrets."PNQ2.ovpn" = {
-      inherit (common) owner group sopsFile;
-      path = "/etc/NetworkManager/system-connections/PNQ2.ovpn";
-      mode = "600";
-    };
-    sops.secrets."FAB.ovpn" = {
-      inherit (common) owner group sopsFile;
-      path = "/etc/NetworkManager/system-connections/FAB.ovpn";
       mode = "600";
     };
     # Certificates
