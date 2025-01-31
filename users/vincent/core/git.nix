@@ -36,7 +36,6 @@ in
     mr
     delta
     difftastic
-    rs-git-fsmonitor
   ];
   programs.git = {
     enable = true;
@@ -77,7 +76,6 @@ in
     ];
     extraConfig = {
       core = {
-        fsmonitor = "${pkgs.rs-git-fsmonitor}/bin/rs-git-fsmonitor";
         pager = "${pkgs.delta}/bin/delta";
         abbrev = 12;
         # pager = "${pkgs.delta}/bin/delta --syntax-theme GitHub";
