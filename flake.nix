@@ -15,12 +15,9 @@
             (import ./nix/overlays).tekton
             (import ./nix/overlays/sbr.nix)
             inputs.emacs-overlay.overlay
-            # inputs.nur.overlay
-            # inputs.devshell.overlays.default
             inputs.chapeau-rouge.overlays.openshift
             inputs.chick-group.overlays.default
             (_: prev: {
-              inherit (inputs.devenv.packages.${prev.system}) devenv;
               inherit (inputs.buildkit-tekton.packages.${prev.system}) tkn-local;
               inherit (inputs.dagger.packages.${prev.system}) dagger;
             })
@@ -158,12 +155,7 @@
     # Flake for compatibility with non-flake commands
     flake-compat = { type = "github"; owner = "edolstra"; repo = "flake-compat"; flake = false; };
 
-    devenv = {
-      url = "github:cachix/devenv/latest";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     buildkit-tekton = { url = "github:vdemeester/buildkit-tekton"; inputs.nixpkgs.follows = "nixpkgs"; };
-
 
     # nixpkgs
     nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
