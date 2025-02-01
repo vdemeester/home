@@ -173,7 +173,7 @@
   :hook
   (prog-mode . copilot-mode)
   (markdown-mode . copilot-mode)
-  (text-mode . copilot-mode)
+  ;; (text-mode . copilot-mode) ;; I may not want copilot in org-mode for example.
   (log-edit-mode . copilot-mode)
   (vc-git-log-edit-mode . copilot-mode)
   :bind
