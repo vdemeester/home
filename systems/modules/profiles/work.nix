@@ -26,10 +26,12 @@ in
     ];
     # Kerberos
     age.secrets."krb5.conf" = {
+      file = ../../../secrets/redhat/krb5.conf.age;
       path = "/etc/krb5.conf";
     };
     # NetworkManager
     age.secrets."RHVPN.ovpn" = {
+      file = ../../../secrets/redhat/RHVPN.ovpn.age;
       path = "/etc/NetworkManager/system-connections/RHVPN.ovpn";
       mode = "600";
     };
@@ -39,10 +41,12 @@ in
       mode = "600";
     };
     age.secrets."BBRQ.ovpn" = {
+      file = ../../../secrets/redhat/BBRQ.ovpn.age;
       path = "/etc/NetworkManager/system-connections/BBRQ.ovpn";
       mode = "600";
     };
     age.secrets."RDU2.ovpn" = {
+      file = ../../../secrets/redhat/RDU2.ovpn.age;
       path = "/etc/NetworkManager/system-connections/RDU2.ovpn";
       mode = "600";
     };
