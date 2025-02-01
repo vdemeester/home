@@ -3,27 +3,6 @@
 
   outputs = { self, ... } @ inputs:
     let
-      wayland = { pkgs, config, ... }: {
-        config = {
-          nix = {
-            settings = {
-              # add binary caches
-              trusted-public-keys = [
-                "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
-                "chapeau-rouge.cachix.org-1:r34IG766Ez4Eeanr7Zx+egzXLE2Zgvc+XRspYZPDAn8="
-                "vdemeester.cachix.org-1:eZWNOrLR9A9szeMahn9ENaoT9DB3WgOos8va+d2CU44="
-              ];
-              substituters = [
-                "https://nixpkgs-wayland.cachix.org"
-                "https://chapeau-rouge.cachix.org"
-                "https://vdemeester.cachix.org"
-              ];
-            };
-          };
-
-          nixpkgs.overlays = [ inputs.nixpkgs-wayland.overlay ];
-        };
-      };
       stableModules = [
         inputs.home-manager-24_11.nixosModules.home-manager
       ];
@@ -99,7 +78,6 @@
           wakasu = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ unstableModules ++ [
-              wayland
               inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
               ./systems/hosts/wakasu.nix
             ];
@@ -198,7 +176,6 @@
 
     impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
 
-    nixpkgs-wayland = { type = "github"; owner = "nix-community"; repo = "nixpkgs-wayland"; inputs.nixpkgs.follows = "nixpkgs"; };
     dagger = { type = "github"; owner = "dagger"; repo = "nix"; inputs.nixpkgs.follows = "nixpkgs"; };
 
     emacs-overlay = {
