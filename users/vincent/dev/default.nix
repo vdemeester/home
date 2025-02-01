@@ -4,6 +4,7 @@
   imports = [
     ./go.nix
     ./js.nix
+    ./lisp.nix
     ./mr.nix
     ./nix.nix
     ./python.nix

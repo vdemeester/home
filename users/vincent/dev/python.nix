@@ -5,5 +5,6 @@
     python3
     pipenv
     python3Packages.python-lsp-server
+    uv
   ];
 }
