@@ -336,7 +336,7 @@ file which do not already have one."
   (require 'denote-journal-extras)
   :config
   (denote-rename-buffer-mode 1)
-  (setq denote-journal-extras-directory org-journal-dir
+  (setq denote-journal-extras-directory nil ;; use denote-directory
 	denote-journal-extras-title-format 'day-date-month-year)
   (with-eval-after-load 'org-capture
     (setq denote-org-capture-specifiers "%l\n%i\n%?")
@@ -351,7 +351,7 @@ file which do not already have one."
   (defun vde/org-category-from-buffer ()
     "Get the org category (#+category:) value from the buffer"
     (cond
-     ((string-match (format "^%s.*$" org-journal-dir) (buffer-file-name))
+     ((string-match "__journal.org$" (buffer-file-name))
       "journal")
      (t
       (denote-sluggify (denote--retrieve-title-or-filename (buffer-file-name) 'org))))))
