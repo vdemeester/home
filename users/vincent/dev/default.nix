@@ -35,6 +35,7 @@
     yamllint
     yamlfmt
     yq-go
+    radicle-node
   ];
 
   home.file.".ignore".text = ''
