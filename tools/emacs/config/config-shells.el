@@ -320,6 +320,12 @@ using either KUBECONFIG or ~/.kube/config"
          ("C-c t r" . vde/run-in-vterm))
   :custom
   (vterm-kill-buffer-on-exit t)
+  (vterm-max-scrollback 100000)
+  (vterm-tramp-shells '(("scp" "/usr/bin/env zsh")
+			("ssh" "/usr/bin/env zsh")
+			("sshx" "/usr/bin/env zsh")
+			("sshfs" "/usr/bin/env zsh")
+			("docker" "/bin/sh")))
   :config
   (defun vde/vterm-tramp-get-method-parameter (method param)
     "Return the method parameter PARAM.

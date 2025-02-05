@@ -19,7 +19,7 @@
    '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
      "\\.\\(?:gz\\|gif\\|svg\\|elc\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
      "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
-     "^/tmp/" "^/var/folders/.+$" "^/sudo:" "^/su:" "^/ssh:"
+     "^/tmp/" "^/var/folders/.+$" "^/sudo:" "^/su:" "^/ssh:" "^/sshfs:"
      (lambda (file) (file-in-directory-p file package-user-dir))))
   :config
   (push (expand-file-name recentf-save-file) recentf-exclude)
