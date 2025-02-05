@@ -1,6 +1,9 @@
 { config, nixosConfig, lib, pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    ffmpeg-full
+  ];
   xdg.configFile = lib.mkIf nixosConfig.services.pipewire.wireplumber.enable {
     "pipewire/pipewire.conf.d/raop-discover.conf" = {
       text = ''
