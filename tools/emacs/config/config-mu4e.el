@@ -6,6 +6,7 @@
   :commands (mu4e)
   :custom
   (mu4e-context-policy 'pick-first)
+  (mu4e-change-filenames-when-moving t)
   :config
 
   (defun vde-mu4e--refile (msg)
