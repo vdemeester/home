@@ -208,6 +208,32 @@ local google_groups(name, label = '', archive = true) =
     },
     {
       filter: {
+	from: "noreply+erratatool@redhat.com"
+      },
+      actions: {
+        archive: true,
+        markRead: true,
+        markSpam: false,
+        labels: [
+          "_tracker/errata"
+        ]
+      }
+    },
+    {
+      filter: {
+        from: "cpaas-ops@redhat.com"
+      },
+      actions: {
+        archive: true,
+        markRead: true,
+        markSpam: false,
+        labels: [
+          "_tracker/cpaas"
+        ]
+      }
+    },
+    {
+      filter: {
         from: "noreply-cloud@google.com"
       },
       actions: {
