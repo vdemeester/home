@@ -71,6 +71,7 @@
          ("C-c v f" . magit-fetch)
          ("C-c v g" . magit-blame)
          ("C-c v l" . magit-log-buffer-file)
+         ("C-c v L" . magit-log)
          ("C-c v p" . magit-pull)
          ("C-c v P" . magit-push)
          ("C-c v r" . magit-rebase)
