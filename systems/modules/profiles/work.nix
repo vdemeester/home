@@ -28,6 +28,8 @@ in
     age.secrets."krb5.conf" = {
       file = ../../../secrets/redhat/krb5.conf.age;
       path = "/etc/krb5.conf";
+      mode = "770";
+      group = "wheel";
     };
     # NetworkManager
     age.secrets."RHVPN.ovpn" = {
