@@ -279,12 +279,24 @@ file which do not already have one."
                  (file ,org-inbox-file)
                  "* %?\n:PROPERTIES:\n:CREATED:\t%U\n:END:\n\n%i\n\nFrom: %a"
                  :empty-lines 1))
+  ;; Refine this
   (add-to-list 'org-capture-templates
                `("tr" "PR Review" entry
                  (file ,org-inbox-file)
                  "* TODO review gh:%^{issue} :review:\n:PROPERTIES:\n:CREATED:%U\n:END:\n\n%i\n%?\nFrom: %a"
                  :empty-lines 1))
-
+  ;; emails
+  (add-to-list 'org-capture-templates
+	       `("m" "Email Workflow"))
+  (add-to-list 'org-capture-templates
+	       `("mf" "Follow Up" entry
+		(function denote-journal-extras-new-or-existing-entry)
+		"* TODO Follow up with %:from on %a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i"
+		:immediate-finish t))
+  (add-to-list 'org-capture-templates
+	       `("mr" "Read Later" entry
+		(function denote-journal-extras-new-or-existing-entry)
+		"* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i" :immediate-finish t))
   ;; (add-to-list 'org-capture-templates
   ;;              `("m" "Meeting notes" entry
   ;;                (file+datetree ,org-meeting-notes-file)
