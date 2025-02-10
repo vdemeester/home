@@ -61,6 +61,7 @@ let
   };
   deviceNames = builtins.attrNames (filterAttrs isCurrentHost devices);
   fullDeviceNames = builtins.attrNames (filterAttrs isFull devices);
+  musicDeviceNames = builtins.attrNames (filterAttrs isCurrentHost { wakasu = devices.wakasu; iphone = devices.iphone; aomi = devices.aomi; aion = devices.aion; });
 in
 {
   options = {
@@ -122,7 +123,7 @@ in
             "/home/vincent/desktop/music" = {
               label = "music";
               id = "kcyrf-mugzt";
-              devices = [ wakasu iphone aomi aion ];
+              devices = musicDeviceNames;
             };
           } else { });
         };
