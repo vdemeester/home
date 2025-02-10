@@ -7,8 +7,10 @@
   :custom
   (mu4e-context-policy 'pick-first)
   (mu4e-change-filenames-when-moving t)
+  (mu4e-attachment-dir "~/desktop/downloads")
   :config
-
+  (setq mu4e-get-mail-command (concat (executable-find "mbsync") " -a"))
+  (setq mu4e-update-interval 1800) ; 30m
   (defun vde-mu4e--refile (msg)
     "Refile function to smartly move `MSG' to a given folder."
     (cond
@@ -45,7 +47,7 @@
 				   (mu4e-trash-folder . "/icloud/Deleted Messages")
 				   (mu4e-sent-folder . "/icloud/Sent Messages")
 				   (mu4e-draft-folder . "/icloud/Drafts")
-				   (mu4e-get-mail-command . "mbsync icloud")
+				   ;; (mu4e-get-mail-command . "mbsync icloud")
 				   ))
 			 ;; ,(make-mu4e-context
 			 ;;   :name "gmail"
