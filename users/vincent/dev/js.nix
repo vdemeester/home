@@ -5,7 +5,7 @@
   '';
 
   home.packages = with pkgs; [
-    javascript-typescript-langserver
+    # javascript-typescript-langserver
     # vscode-langservers-extracted
   ];
 }
