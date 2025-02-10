@@ -20,7 +20,10 @@ in
     };
 
     services.blueman.enable = config.modules.hardware.bluetooth.enable;
-
+    environment.sessionVariables = {
+      # only needed for Sway
+      XDG_CURRENT_DESKTOP = "sway";
+    };
     xdg = {
       portal = {
         enable = true;

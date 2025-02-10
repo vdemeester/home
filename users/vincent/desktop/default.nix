@@ -52,13 +52,30 @@ in
     ];
     config = {
       common = {
-	default = [
-	  "gtk"
-	];
+        default = [
+          "gtk"
+        ];
       };
     };
   };
-
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/html" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "x-scheme-handler/unknown" = "firefox.desktop";
+    };
+  };
+  xdg.desktopEntries.firefox = {
+    name = "Firefox";
+    genericName = "Web Browser";
+    exec = "firefox %U";
+    terminal = false;
+    categories = [ "Application" "Network" "WebBrowser" ];
+    mimeType = [ "text/html" "text/xml" ];
+  };
   home.file.".XCompose".source = ./xorg/XCompose;
   xdg.configFile."xorg/emoji.compose".source = ./xorg/emoji.compose;
   xdg.configFile."xorg/parens.compose".source = ./xorg/parens.compose;
