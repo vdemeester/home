@@ -51,6 +51,7 @@ let
       # hokkaido
       id = "XD4XYNZ-DT3PJEY-UJYBHWX-6OQPPUI-HTW752L-FYTX3TW-GVHDTKW-PT336QV";
       # addresses = [ "tcp://okinawa.home" "tcp://okinawa.vpn" "tcp://okinawa.sbr.pm" ];
+      full = false;
     };
     # Deprecated
     # naruhodo = {
@@ -116,6 +117,12 @@ in
               label = "wallpapers";
               id = "wpiah-ydwwx";
               devices = fullDeviceNames;
+            };
+          } else { }) // (if (config.networking.hostName == "wakasu") then {
+            "/home/vincent/desktop/music" = {
+              label = "music";
+              id = "kcyrf-mugzt";
+              devices = [ wakasu iphone aomi aion ];
             };
           } else { });
         };
