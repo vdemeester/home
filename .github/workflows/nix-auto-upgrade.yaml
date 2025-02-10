@@ -18,6 +18,7 @@ jobs:
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@a2bbe0274e3a0c4194390a1e445f734c597ebc37 # v24
         with:
+          token: ${{ secrets.SBR_BOT_TOKEN }}
           pr-title: "Update flake.lock" # Title of PR to be created
           pr-labels: |                  # Labels to be set on the PR
             dependencies
