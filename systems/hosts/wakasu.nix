@@ -79,7 +79,7 @@ in
     pkgs.gutenprint
     pkgs.gutenprintBin
     pkgs.canon-capt
-    pkgs.canon-cups-ufr2
+    # pkgs.canon-cups-ufr2 # Doesn't compile today…
     # pkgs.cups-bjnp # Doesn't compile today
     pkgs.carps-cups
     pkgs.cnijfilter2
