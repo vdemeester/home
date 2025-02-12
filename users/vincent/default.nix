@@ -154,15 +154,20 @@ in
                 imap.host = "imap.gmail.com";
                 smtp.host = "smtp.gmail.com";
                 flavor = "gmail.com";
-                aerc.enable = true;
-                msmtp.enable = true;
+                # aerc.enable = true;
+                msmtp = {
+                  enable = true;
+                  extraConfig = {
+                    tls_starttls = "on";
+                  };
+                };
                 # This is here for doing backup
                 mbsync = {
                   enable = true;
                   create = "both";
                   expunge = "both";
                   # Sync everything *but* "[Gmail] All Mail" to get the "organized" view.
-                  patterns = [ "*" "![Gmail]*" "[Gmail]Sent Mail" "[Gmail]Starred" "[Gmail]Trash" ];
+                  patterns = [ "*" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/Trash" "[Gmail]/Drafts" ];
                   extraConfig = {
                     channel = {
                       Sync = "All";
@@ -183,11 +188,30 @@ in
                 imap.host = "imap.gmail.com";
                 smtp.host = "smtp.gmail.com";
                 flavor = "gmail.com";
-                #lieer.enable = true;
-                # mu.enable = true;
-                #notmuch.enable = true;
-                aerc.enable = true;
-                msmtp.enable = true;
+                mbsync = {
+                  enable = true;
+                  create = "both";
+                  expunge = "both";
+                  # Sync everything *but* "[Gmail] All Mail" to get the "organized" view.
+                  patterns = [ "*" "!area/github" "!memo-list" "![Gmail]*" "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/Trash" "[Gmail]/Drafts" ];
+                  extraConfig = {
+                    channel = {
+                      Sync = "All";
+                    };
+                    account = {
+                      Timeout = 120;
+                      PipelineDepth = 1;
+                    };
+                  };
+                };
+                mu.enable = true;
+                # aerc.enable = true;
+                msmtp = {
+                  enable = true;
+                  extraConfig = {
+                    tls_starttls = "on";
+                  };
+                };
               };
             };
           };

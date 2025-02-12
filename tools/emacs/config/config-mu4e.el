@@ -47,21 +47,34 @@
 				   (mu4e-trash-folder . "/icloud/Deleted Messages")
 				   (mu4e-sent-folder . "/icloud/Sent Messages")
 				   (mu4e-draft-folder . "/icloud/Drafts")
-				   ;; (mu4e-get-mail-command . "mbsync icloud")
+				   (mu4e-get-mail-command . "mbsync icloud")
 				   ))
-			 ;; ,(make-mu4e-context
-			 ;;   :name "gmail"
-			 ;;   :match-func (lambda (msg) (when msg
-			 ;; 			       (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
-			 ;;   :vars '(
-			 ;; 	   (mu4e-trash-folder . "/Gmail/[Gmail].Trash")
-			 ;; 	   (mu4e-refile-folder . "/Gmail/[Gmail].Archive")
-			 ;; 	   (mu4e-get-mail-command . "mbsync gmail")
-			 ;; 	   ))
+			 ,(make-mu4e-context
+			   :name "gmail"
+			   :match-func (lambda (msg) (when msg
+						       (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
+			   :vars '(
+				   (mu4e-drafts-folder  . "/gmail/[Gmail]/Drafts")
+				   (mu4e-sent-folder  . "/gmail/[Gmail]/Sent Mail")
+				   ;; (mu4e-refile-folder  . "/gmail/[Gmail]/All Mail")
+				   (mu4e-trash-folder  . "/gmail/[Gmail]/Trash")
+				   (mu4e-get-mail-command . "mbsync gmail")
+				   ))
+			 ,(make-mu4e-context
+			   :name "redhat"
+			   :match-func (lambda (msg) (when msg
+						       (string-prefix-p "/redhat" (mu4e-message-field msg :maildir))))
+			   :vars '(
+				   (mu4e-drafts-folder  . "/redhat/[Gmail]/Drafts")
+				   (mu4e-sent-folder  . "/redhat/[Gmail]/Sent Mail")
+				   ;; (mu4e-refile-folder  . "/redhat/[Gmail]/All Mail")
+				   (mu4e-trash-folder  . "/redhat/[Gmail]/Trash")
+				   (mu4e-get-mail-command . "mbsync redhat")
+				   ))
 			 ))
   (add-to-list 'mu4e-bookmarks
 	       '( :name  "All Inboxes"
-		  :query "maildir:/icloud/INBOX OR maildir:/gmail/INBOX"
+		  :query "maildir:/icloud/INBOX OR maildir:/gmail/INBOX OR maildir:/redhat/INBOX"
 		  :key   ?b))
   (with-eval-after-load "mm-decode"
     (add-to-list 'mm-discouraged-alternatives "text/html")
