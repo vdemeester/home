@@ -1,13 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  common = {
-    sopsFile = ../../../secrets/secrets.yaml;
-    mode = "444";
-    owner = "root";
-    group = "root";
-  };
-in
 {
   imports = [
     ./binfmt.nix
@@ -40,12 +32,12 @@ in
     '';
   };
 
-  sops.secrets."minica.pem" = {
-    inherit (common) mode owner group sopsFile;
+  age.secrets."minica.pem" = {
+    file = ../../../secrets/minica.pem.age;
     path = "/etc/ssl/certs/minica.pem";
   };
-  sops.secrets."redhat.pem" = {
-    inherit (common) mode owner group sopsFile;
+  age.secrets."redhat.pem" = {
+    file = ../../../secrets/redhat/redhat.pem.age;
     path = "/etc/ssl/certs/redhat.pem";
   };
 
@@ -140,8 +132,6 @@ in
 
   security.pki.certificateFiles = [
     "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
-    # config.sops.secrets."minica.pem".path
-    # config.sops.secrets."redhat.pem".path
     # "/etc/ssl/certs/minica.pem"
     # "/etc/ssl/certs/redhat.pem"
   ];

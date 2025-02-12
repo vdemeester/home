@@ -116,8 +116,6 @@ in
     packages = with pkgs; [ networkmanager-openvpn ];
   };
 
-  sops.defaultSopsFile = ../../secrets/secrets.yaml;
-
   boot = {
     loader.systemd-boot.netbootxyz.enable = true;
     kernelPackages = pkgs.linuxPackages_latest;

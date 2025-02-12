@@ -3,12 +3,6 @@
 with lib;
 let
   cfg = config.modules.profiles.work;
-  common = {
-    sopsFile = ../../../secrets/desktops/redhat.yaml;
-    mode = "444";
-    owner = "root";
-    group = "root";
-  };
 in
 {
   options = {
@@ -28,7 +22,7 @@ in
     age.secrets."krb5.conf" = {
       file = ../../../secrets/redhat/krb5.conf.age;
       path = "/etc/krb5.conf";
-      mode = "770";
+      mode = "444";
       group = "wheel";
     };
     # NetworkManager
@@ -53,37 +47,45 @@ in
       mode = "600";
     };
     # Certificates
-    sops.secrets."ipa.crt" = {
-      inherit (common) mode owner group sopsFile;
+    age.secrets."ipa.crt" = {
+      file = ../../../secrets/redhat/ipa.crt.age;
       path = "/etc/ipa/ipa.crt";
+      mode = "444";
     };
-    sops.secrets."2015-RH-IT-Root-CA.pem" = {
-      inherit (common) mode owner group sopsFile;
+    age.secrets."2015-RH-IT-Root-CA.pem" = {
+      file = ../../../secrets/redhat/2015-RH-IT-Root-CA.pem.age;
       path = "/etc/pki/tls/certs/2015-RH-IT-Root-CA.pem";
+      mode = "444";
     };
-    sops.secrets."Eng-CA.crt" = {
-      inherit (common) mode owner group sopsFile;
+    age.secrets."Eng-CA.crt" = {
+      file = ../../../secrets/redhat/Eng-CA.crt.age;
       path = "/etc/pki/tls/certs/Eng-CA.crt";
+      mode = "444";
     };
-    sops.secrets."newca.crt" = {
-      inherit (common) mode owner group sopsFile;
+    age.secrets."newca.crt" = {
+      file = ../../../secrets/redhat/newca.crt.age;
       path = "/etc/pki/tls/certs/newca.crt";
+      mode = "444";
     };
-    sops.secrets."oracle_ebs.crt" = {
-      inherit (common) mode owner group sopsFile;
+    age.secrets."oracle_ebs.crt" = {
+      file = ../../../secrets/redhat/oracle_ebs.crt.age;
       path = "/etc/pki/tls/certs/oracle_ebs.crt";
+      mode = "444";
     };
-    sops.secrets."pki-ca-chain.crt" = {
-      inherit (common) mode owner group sopsFile;
+    age.secrets."pki-ca-chain.crt" = {
+      file = ../../../secrets/redhat/pki-ca-chain.crt.age;
       path = "/etc/pki/tls/certs/pki-ca-chain.crt";
+      mode = "444";
     };
-    sops.secrets."RH_ITW.crt" = {
-      inherit (common) mode owner group sopsFile;
+    age.secrets."RH_ITW.crt" = {
+      file = ../../../secrets/redhat/RH_ITW.crt.age;
       path = "/etc/pki/tls/certs/RH_ITW.crt";
+      mode = "444";
     };
-    sops.secrets."win-intermediate-ca.cer" = {
-      inherit (common) mode owner group sopsFile;
+    age.secrets."win-intermediate-ca.cer" = {
+      file = ../../../secrets/redhat/win-intermediate-ca.cer.age;
       path = "/etc/pki/tls/certs/win-intermediate-ca.cer";
+      mode = "444";
     };
   };
 

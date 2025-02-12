@@ -24,14 +24,16 @@ in
   "secrets/redhat/AMS2.ovpn.age".publicKeys = users ++ [ aomi wakasu ];
   "secrets/redhat/RDU2.ovpn.age".publicKeys = users ++ [ aomi wakasu ];
   "secrets/redhat/BBRQ.ovpn.age".publicKeys = users ++ [ aomi wakasu ];
-  # "some-secret.age".publickeys = users ++ systems;
-  # "some-desktops-secrets.age".publicKeys = desktops;
-  # "some-servers-secrets.age".publicKeys = servers;
-  # "aomi/foo.age".publicKeys = [ aomi ];
-  # "athena/foo.age".publicKeys = [ athena ];
-  # "demeter/foo.age".publicKeys = [ demeter ];
-  # "kerkouane/foo.age".publicKeys = [ kerkouane ];
-  # "sakhalin/foo.age".publicKeys = [ sakhalin ];
-  # "shikoku/foo.age".publicKeys = [ shikoku ];
-  # "wakasu/foo.age".publicKeys = [ wakasu ];
+  "secrets/redhat/ipa.crt.age".publicKeys = users ++ [ aomi wakasu ];
+  "secrets/redhat/2015-RH-IT-Root-CA.pem.age".publicKeys = users ++ [ aomi wakasu ];
+  "secrets/redhat/Eng-CA.crt.age".publicKeys = users ++ [ aomi wakasu ];
+  "secrets/redhat/newca.crt.age".publicKeys = users ++ [ aomi wakasu ];
+  "secrets/redhat/oracle_ebs.crt.age".publicKeys = users ++ [ aomi wakasu ];
+  "secrets/redhat/pki-ca-chain.crt.age".publicKeys = users ++ [ aomi wakasu ];
+  "secrets/redhat/RH_ITW.crt.age".publicKeys = users ++ [ aomi wakasu ];
+  "secrets/redhat/win-intermediate-ca.cer.age".publicKeys = users ++ [ aomi wakasu ];
+  "secrets/redhat/redhat.pem.age".publicKeys = users ++ systems;
+  # Others
+  "secrets/minica.pem.age".publicKeys = users ++ systems;
+  "secrets/shikoku/aria2rpcsecret.age".publicKeys = users ++ [ shikoku ];
 }

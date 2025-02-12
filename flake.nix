@@ -34,7 +34,6 @@
         ./systems/modules/virtualisation/buildkit.nix
         ./systems/modules/services/default.nix
         inputs.agenix.nixosModules.default
-        inputs.sops-nix.nixosModules.sops
         # inputs.envfs.nixosModules.envfs
         {
           # config.nix.generateRegistryFromInputs = true;
@@ -42,8 +41,6 @@
           config.home-manager.useUserPackages = true;
           # Import custom home-manager modules (NixOS)
           config.home-manager.sharedModules = import ./users/modules/modules.nix;
-          # Default SopsFile
-          config.sops.defaultSopsFile = ./secrets/secrets.yaml;
         }
       ];
     in
@@ -145,7 +142,7 @@
           };
         in
         pkgs.mkShell {
-          packages = [ pkgs.alejandra pkgs.git pkgs.nodePackages.prettier pkgs.deadnix pkgs.nixfmt-classic pkgs.sops inputs.agenix.packages.x86_64-linux.default ];
+          packages = [ pkgs.alejandra pkgs.git pkgs.nodePackages.prettier pkgs.deadnix pkgs.nixfmt-classic inputs.agenix.packages.x86_64-linux.default ];
           name = "home";
           DIRENV_LOG_FORMAT = "";
         };
@@ -174,13 +171,6 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs-24_05";
-    };
-
-    sops-nix = {
-      type = "github";
-      owner = "Mic92";
-      repo = "sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # WSL

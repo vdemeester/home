@@ -18,11 +18,12 @@ in
   };
   config = mkIf cfg.enable {
     nix.distributedBuilds = true;
-    sops.secrets.builder = {
-      sopsFile = ../../../secrets/builder.yaml;
-      mode = "600";
-      path = "/etc/nix/builder.key";
-    };
+    # FIXME Redo this later
+    # sops.secrets.builder = {
+    #   sopsFile = ../../../secrets/builder.yaml;
+    #   mode = "600";
+    #   path = "/etc/nix/builder.key";
+    # };
 
     nix.buildMachines = (filter isCurrentHost
       [
@@ -30,7 +31,7 @@ in
           hostName = "${metadata.hosts.shikoku.addrs.v4}";
           maxJobs = metadata.hosts.shikoku.builder.maxJobs;
           sshUser = "builder";
-          sshKey = config.sops.secrets.builder.path;
+          # sshKey = config.sops.secrets.builder.path;
           systems = metadata.hosts.shikoku.builder.systems;
           supportedFeatures = metadata.hosts.shikoku.builder.features;
         }
@@ -38,7 +39,7 @@ in
           hostName = "${metadata.hosts.aomi.addrs.v4}";
           maxJobs = metadata.hosts.aomi.builder.maxJobs;
           sshUser = "builder";
-          sshKey = config.sops.secrets.builder.path;
+          # sshKey = config.sops.secrets.builder.path;
           systems = metadata.hosts.aomi.builder.systems;
           supportedFeatures = metadata.hosts.aomi.builder.features;
         }

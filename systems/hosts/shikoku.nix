@@ -146,7 +146,8 @@ in
 
   programs.ssh.setXAuthLocation = true;
 
-  sops.secrets.aria2RPCSecret = {
+  age.secrets."aria2RPCSecret" = {
+    file = ../../secrets/shikoku/aria2rpcsecret.age;
     mode = "444";
     owner = "aria2";
     group = "aria2";
@@ -175,7 +176,6 @@ in
       };
       downloadDir = "/data/downloads";
       rpcSecretFile = "${pkgs.writeText "aria" "aria2rpc\n"}";
-      # rpcSecretFile = config.sops.secrets.aria2RPCSecret.path;
     };
     bazarr = {
       enable = true;

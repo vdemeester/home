@@ -1,14 +1,8 @@
 { pkgs, inputs }:
-let
-  inherit (inputs.sops-nix.packages."x86_64-linux") sops-import-keys-hook;
-in
+
 pkgs.mkShell
 {
   name = "NixOS config";
-  sopsPGPKeyDirs = [ "./secrets/keys" ];
-  nativeBuildInputs = [
-    inputs.sops-nix.packages."x86_64-linux".sops-import-keys-hook
-  ];
   buildInputs = with pkgs; [
     cachix
     git
