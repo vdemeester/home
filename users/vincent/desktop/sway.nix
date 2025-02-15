@@ -173,6 +173,7 @@ in
       in
       ''
         bindcode ${mod}+33 exec "${menu}"
+        bindcode ${mod}+Shift+33 exec "raffi -I"
         bindcode ${mod}+Control+33 exec "${pkgs.wofi-emoji}/bin/wofi-emoji -G"
         bindcode ${mod}+Shift+24 kill
         bindcode ${mod}+38 focus parent

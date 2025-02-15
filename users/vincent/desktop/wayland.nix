@@ -158,6 +158,12 @@
       ];
     };
   };
+  xdg.configFile."raffi/raffi.yaml".text = lib.generators.toYAML { } {
+    "firefox" = {
+      binary = "firefox";
+      args = [ "--marionette" ];
+    };
+  };
   home.packages = with pkgs; [
     swaylock
     swayidle
@@ -165,7 +171,9 @@
     wl-clipboard
     wtype
     mako
-    wofi
+    wofi # might deprecate
+    fuzzel
+    raffi
     slurp
     grim
     zenity
