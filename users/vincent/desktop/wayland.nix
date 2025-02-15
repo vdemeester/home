@@ -12,7 +12,7 @@
   programs = {
     kitty = {
       enable = true;
-      # shellIntegration.enableZshIntegration = true;
+      shellIntegration.enableZshIntegration = true;
       settings = {
         term = "xterm-256color";
         close_on_child_death = "yes";
@@ -22,6 +22,7 @@
         allow_remote_control = "yes";
         macos_option_as_alt = "yes";
         copy_on_select = "yes";
+        notify_on_cmd_finish = "invisible 5.0 notify";
 
         active_tab_foreground = "#C6A0F6";
         active_tab_background = "#0c0c0c";
