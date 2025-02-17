@@ -129,19 +129,42 @@ confines of word boundaries (e.g. multiple words)."
 	  (format "rg: %s" (abbreviate-file-name p))
 	"rg")))
   (setq rg-buffer-name #'vde/rg-buffer-name)
-  
-  ;; (when (f-dir-p "~/src/tektoncd/")
-  ;;   (rg-define-search rg-projects-tektoncd
-  ;;     "Search tektoncd (projects)."
-  ;;     :dir "~/src/tektoncd/"
+  (when (f-dir-p "~/src/home/")
+    (rg-define-search rg-projects-dotemacs
+      "Search home"
+      :dir "~/src/home/"
+      :files "*.*"
+      :menu ("Projects" "H" "home")))
+  (when (f-dir-p "~/src/github.com/NixOS/nixpkgs/")
+    (rg-define-search rg-projects-nixpkgs
+      "Search nixpkgs"
+      :dir "~/src/github.com/NixOS/nixpkgs/"
+      :files "*.*"
+      :menu ("Projects" "N" "nixpkgs")))
+  (when (f-dir-p "~/src/tektoncd/pipeline/")
+    (rg-define-search rg-projects-tektoncd-pipeline
+      "Search tektoncd/pipeline"
+      :dir "~/src/tektoncd/pipeline/"
+      :files "*.*"
+      :menu ("tektoncd" "P" "pipeline")))
+  (when (f-dir-p "~/src/tektoncd/operator/")
+    (rg-define-search rg-projects-tektoncd-operator
+      "Search tektoncd/operator"
+      :dir "~/src/tektoncd/operator/"
+      :files "*.*"
+      :menu ("tektoncd" "P" "operator")))
+  (when (f-dir-p "~/src/tektoncd/cli/")
+    (rg-define-search rg-projects-tektoncd-cli
+      "Search tektoncd/cli"
+      :dir "~/src/tektoncd/cli/"
+      :files "*.*"
+      :menu ("tektoncd" "C" "cli")))
+  ;; (when (f-dir-p "~/src/chmouel/")
+  ;;   (rg-define-search rg-projects-chmouel
+  ;;     "Search chmouel"
+  ;;     :dir "~/src/chmouel/"
   ;;     :files "*.*"
-  ;;     :menu ("Projects" "t" "tektoncd")))
-  ;; (when (f-dir-p "~/src/home/")
-  ;;   (rg-define-search rg-projects-home
-  ;;     "Search home."
-  ;;     :dir "~/src/home/"
-  ;;     :files "*.*"
-  ;;     :menu ("Projects" "h" "home")))
+  ;;     :menu ("Configs" "ch" "chmouel")))
   )
 
 ;; -UseRG
