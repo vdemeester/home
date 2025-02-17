@@ -575,5 +575,15 @@ Within those groups, sort by date and priority."
 	   ;; :sitemap-function org-publish-org-sitemap
 	   ))))
 
+(use-package org-download
+  :after (org)
+  :hook ((dired-mode . org-download-enable)
+         (org-mode . org-download-enable))
+  :config
+  (org-download-enable)
+  (setq org-startup-with-inline-images t)
+  (setq org-download-display-inline-images t)
+  (setq org-download-method 'attach))
+
 (provide 'config-org)
 ;;; config-org.el ends here

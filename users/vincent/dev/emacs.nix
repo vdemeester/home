@@ -95,6 +95,7 @@ let
     orderless # TODO configure this
     org
     org-contrib
+    org-download
     org-modern
     org-nix-shell
     org-ql
