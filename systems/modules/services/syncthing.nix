@@ -119,6 +119,11 @@ in
               id = "wpiah-ydwwx";
               devices = fullDeviceNames;
             };
+            "/home/vincent/desktop/pictures/photos" = {
+              label = "photos";
+              id = "uetya-ypa3d";
+              devices = fullDeviceNames;
+            };
           } else { }) // (if (config.networking.hostName == "wakasu") then {
             "/home/vincent/desktop/music" = {
               label = "music";
