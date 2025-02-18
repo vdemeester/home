@@ -229,9 +229,20 @@ Here is the result of `git diff --cached`:")
 
 (use-package copilot-chat
   :bind
-  (:map copilot-chat-prompt-mode-map
-        ("C-M-w" . my-copilot-chat-copy-source-block)
-        ("C-q" . delete-window))
+  (("C-c a p" . copilot-chat-prompt-transient-menu)
+   ("C-c a c" . copilot-chat-insert-commit-message)
+   ("C-c a o" . copilot-chat-optimize)
+   ("C-c a m" . copilot-chat-set-model)
+   ("C-c a w" . my-copilot-chat-copy-source-block)
+   ("C-c a y" . copilot-chat-yank)
+   ("C-c a Y" . copilot-chat-yank-pop)
+   ("C-c a b" . copilot-chat-display)
+   ("C-c a a" . copilot-chat-switch-to-buffer)
+   ("C-c a f" . copilot-chat-custom-prompt-function)
+   ("C-c a s" . copilot-chat-custom-prompt-selection)
+   (:map copilot-chat-prompt-mode-map
+         ("C-M-w" . my-copilot-chat-copy-source-block)
+         ("C-q" . delete-window)))
   :config
   (setq copilot-chat-prompts copilot-chat-markdown-prompt)
   (defun my-copilot-chat-copy-source-block ()
