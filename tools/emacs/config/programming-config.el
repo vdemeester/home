@@ -240,6 +240,12 @@ Here is the result of `git diff --cached`:")
    ("C-c a a" . copilot-chat-switch-to-buffer)
    ("C-c a f" . copilot-chat-custom-prompt-function)
    ("C-c a s" . copilot-chat-custom-prompt-selection)
+   (:map embark-general-map
+	 ("M a d" . copilot-chat-doc)
+	 ("M a e" . copilot-chat-explain)
+	 ("M a o" . copilot-chat-optimize)
+	 ("M a p" . copilot-chat-custom-prompt-selection)
+	 ("M a r" . copilot-chat-review))
    (:map copilot-chat-prompt-mode-map
          ("C-M-w" . my-copilot-chat-copy-source-block)
          ("C-q" . delete-window)))
