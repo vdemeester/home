@@ -189,36 +189,36 @@
   (copilot-max-char -1)
   (copile-indent-offset-warning-disable t))
 
-(setq copilot-chat-commit-prompt "Here is the result of running `git diff
---cached`. Based on this, suggest a **Conventional Commit message**. Ensure the
-message includes both a clear title describing the change and make sure a body
-explaining the change, do not invent anything new just try to comprehend the
-diff and explain it.
+(setq copilot-chat-commit-prompt "Here is the result of running `git diff --cached`. Based on this, suggest a **Conventional Commit message**. Ensure the message includes both a clear title describing the change and a body explaining the change. Do not invent anything new; just comprehend the diff and explain it.
 
-- Do not add extra markdown formatting.
-- Always make sure the commit message is in markdown format.
-- Do not include any additional text outside the commit message
-- Make sure the title is a max of 50 character long and not more. 
-- The summaries needs to be wrapped to 80 character long and not more (or break
-  the line).
+- Do not add extra markdown formatting.  
+- Always make sure the commit message is in markdown format.  
+- Do not include any additional text outside the commit message.  
+- Make sure the title is a max of 50 characters long and not more.  
+- The summaries need to be wrapped to 80 characters long and not more (or break the line).  
+- Avoid overused words and phrases often associated with AI-generated text. Do not use the following words: *delve, tapestry, vibrant, landscape, realm, embark, excels, vital, comprehensive, intricate, pivotal, moreover, arguably, notably.*  
+- Avoid the following phrases: *dive into, it’s important to note, it’s important to remember, certainly, here are, important to consider, based on the information provided, remember that, navigating the [landscape]/[complexities of], delving into the intricacies of, a testament to.*  
+- Do not include any generic AI disclaimers or self-references (e.g., \"As an AI language model...\").  
 
 # Conventional Commits 1.0.0
 
 ## Summary
 
-Conventional Commits is a specification for commit messages that follows
-these rules to ensure clarity and consistency:
+Conventional Commits is a specification for commit messages that follows these rules to ensure clarity and consistency:
 
 ### Format
-<type>[optional scope]: <description>
 
-[body]
+`<type>[optional scope]: <description>`  
+
+`[body]`  
 
 ### Types
-1. **fix:** A bug fix correlating to a PATCH version.
-2. **feat:** A new feature correlating to a MINOR version.
+
+1. **fix:** A bug fix correlating to a PATCH version.  
+2. **feat:** A new feature correlating to a MINOR version.  
 
 Other types include:  
+
 - **build:** Changes to build systems or dependencies.  
 - **chore:** Maintenance tasks (e.g., dependency updates).  
 - **ci:** Changes to CI configuration.  
