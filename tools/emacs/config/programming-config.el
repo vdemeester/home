@@ -264,7 +264,7 @@ Here is the result of `git diff --cached`:")
     (transient-define-prefix copilot-chat-prompt-menu ()
       "Copilot Chat Menu"
       ["Copilot Chat Actions"
-       ["Actions"
+       ["Target"
         ("c" "Commit" copilot-chat-insert-commit-message)
         ("o" "Optimize" copilot-chat-optimize)
         ("r" "Review" copilot-chat-review)
@@ -280,7 +280,7 @@ Here is the result of `git diff --cached`:")
                                 (copilot-chat-display)))
         ("x" "Reset" copilot-chat-reset)
         ("g" "Go to buffer" copilot-chat-switch-to-buffer)
-        ("M" "Set model" copilot-chat-set-model)
+        ("m" "Set model" copilot-chat-set-model)
         ("q" "Quit" transient-quit-one)]
        ["Actions"
         ("p" "Custom prompt" copilot-chat-custom-prompt-selection)
