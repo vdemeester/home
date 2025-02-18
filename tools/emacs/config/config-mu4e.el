@@ -39,6 +39,7 @@
 
   (setopt mu4e-completing-read-function completing-read-function)
   (setq mu4e-refile-folder 'vde-mu4e--refile)
+  (setq mu4e-get-mail-command . "mbsync --all")
   (setq mu4e-contexts `( ,(make-mu4e-context
 			   :name "icloud"
 			   :match-func (lambda (msg) (when msg
@@ -47,7 +48,7 @@
 				   (mu4e-trash-folder . "/icloud/Deleted Messages")
 				   (mu4e-sent-folder . "/icloud/Sent Messages")
 				   (mu4e-draft-folder . "/icloud/Drafts")
-				   (mu4e-get-mail-command . "mbsync icloud")
+				   ;; (mu4e-get-mail-command . "mbsync icloud")
 				   ))
 			 ,(make-mu4e-context
 			   :name "gmail"
@@ -58,7 +59,7 @@
 				   (mu4e-sent-folder  . "/gmail/[Gmail]/Sent Mail")
 				   ;; (mu4e-refile-folder  . "/gmail/[Gmail]/All Mail")
 				   (mu4e-trash-folder  . "/gmail/[Gmail]/Trash")
-				   (mu4e-get-mail-command . "mbsync gmail")
+				   ;; (mu4e-get-mail-command . "mbsync gmail")
 				   ))
 			 ,(make-mu4e-context
 			   :name "redhat"
@@ -69,7 +70,7 @@
 				   (mu4e-sent-folder  . "/redhat/[Gmail]/Sent Mail")
 				   ;; (mu4e-refile-folder  . "/redhat/[Gmail]/All Mail")
 				   (mu4e-trash-folder  . "/redhat/[Gmail]/Trash")
-				   (mu4e-get-mail-command . "mbsync redhat")
+				   ;; (mu4e-get-mail-command . "mbsync redhat")
 				   ))
 			 ))
   (add-to-list 'mu4e-bookmarks
