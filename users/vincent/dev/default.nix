@@ -13,6 +13,7 @@
   home.extraOutputsToInstall = [ "doc" "info" "devdoc" ];
 
   home.packages = with pkgs; [
+    aichat
     binutils
     cmake
     codespell
