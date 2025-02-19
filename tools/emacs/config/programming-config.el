@@ -10,12 +10,6 @@
 (use-package devdocs
   :bind (("C-h D" . devdocs-lookup)))
 
-;; TODO: copilot and copilot-chat
-
-;; (use-package highlight-indentation
-;;   :hook ((yaml-ts-mode . highlight-indentation-mode)
-;;          (yaml-ts-mode . highlight-indentation-current-column-mode)))
-
 (use-package yaml-ts-mode
   :mode "\\.ya?ml\\'"
   :hook ((yaml-ts-mode . display-line-numbers-mode)
@@ -191,14 +185,14 @@
 
 (setq copilot-chat-commit-prompt "Here is the result of running `git diff --cached`. Based on this, suggest a **Conventional Commit message**. Ensure the message includes both a clear title describing the change and a body explaining the change. Do not invent anything new; just comprehend the diff and explain it.
 
-- Do not add extra markdown formatting.  
-- Always make sure the commit message is in markdown format.  
-- Do not include any additional text outside the commit message.  
-- Make sure the title is a max of 50 characters long and not more.  
-- The summaries need to be wrapped to 80 characters long and not more (or break the line).  
-- Avoid overused words and phrases often associated with AI-generated text. Do not use the following words: *delve, tapestry, vibrant, landscape, realm, embark, excels, vital, comprehensive, intricate, pivotal, moreover, arguably, notably.*  
-- Avoid the following phrases: *dive into, it’s important to note, it’s important to remember, certainly, here are, important to consider, based on the information provided, remember that, navigating the [landscape]/[complexities of], delving into the intricacies of, a testament to.*  
-- Do not include any generic AI disclaimers or self-references (e.g., \"As an AI language model...\").  
+- Do not add extra markdown formatting.
+- Always make sure the commit message is in markdown format.
+- Do not include any additional text outside the commit message.
+- Make sure the title is a max of 50 characters long and not more.
+- The summaries need to be wrapped to 80 characters long and not more (or break the line).
+- Avoid overused words and phrases often associated with AI-generated text. Do not use the following words: *delve, tapestry, vibrant, landscape, realm, embark, excels, vital, comprehensive, intricate, pivotal, moreover, arguably, notably.*
+- Avoid the following phrases: *dive into, it’s important to note, it’s important to remember, certainly, here are, important to consider, based on the information provided, remember that, navigating the [landscape]/[complexities of], delving into the intricacies of, a testament to.*
+- Do not include any generic AI disclaimers or self-references (e.g., \"As an AI language model...\").
 
 # Conventional Commits 1.0.0
 
@@ -208,22 +202,22 @@ Conventional Commits is a specification for commit messages that follows these r
 
 ### Format
 
-`<type>[optional scope]: <description>`  
+`<type>[optional scope]: <description>`
 
-`[body]`  
+`[body]`
 
 ### Types
 
-1. **fix:** A bug fix correlating to a PATCH version.  
-2. **feat:** A new feature correlating to a MINOR version.  
+1. **fix:** A bug fix correlating to a PATCH version.
+2. **feat:** A new feature correlating to a MINOR version.
 
-Other types include:  
+Other types include:
 
-- **build:** Changes to build systems or dependencies.  
-- **chore:** Maintenance tasks (e.g., dependency updates).  
-- **ci:** Changes to CI configuration.  
-- **refactor:** Code changes not adding features or fixing bugs.  
-- **test:** Changes to or addition of tests.  
+- **build:** Changes to build systems or dependencies.
+- **chore:** Maintenance tasks (e.g., dependency updates).
+- **ci:** Changes to CI configuration.
+- **refactor:** Code changes not adding features or fixing bugs.
+- **test:** Changes to or addition of tests.
 
 Here is the result of `git diff --cached`:")
 
@@ -297,7 +291,7 @@ Here is the result of `git diff --cached`:")
         ("y" "Yank last code block" copilot-chat-yank)
         ("s" "Send code to buffer" copilot-chat-send-to-buffer)]])
     (copilot-chat-prompt-menu))
-  :after copilot
+  :after (copilot embark)
   :commands
   (copilot-chat-mode))
 
