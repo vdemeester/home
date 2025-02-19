@@ -122,6 +122,7 @@ let
     symbol-overlay
     tempel
     tempel-collection
+    topsy
     trashed
     treesit-auto # maybe not needed
     treesit-grammars.with-all-grammars # see how much it weight
