@@ -39,7 +39,6 @@
 
   (setopt mu4e-completing-read-function completing-read-function)
   (setq mu4e-refile-folder 'vde-mu4e--refile)
-  (setq mu4e-get-mail-command . "mbsync --all")
   (setq mu4e-contexts `( ,(make-mu4e-context
 			   :name "icloud"
 			   :match-func (lambda (msg) (when msg
