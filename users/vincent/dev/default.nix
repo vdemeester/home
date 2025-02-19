@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./ai.nix
     ./go.nix
     ./js.nix
     ./lisp.nix
@@ -13,7 +14,6 @@
   home.extraOutputsToInstall = [ "doc" "info" "devdoc" ];
 
   home.packages = with pkgs; [
-    aichat
     binutils
     cmake
     codespell
