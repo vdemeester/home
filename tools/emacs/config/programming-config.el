@@ -7,6 +7,18 @@
   "Where all my sources are.")
 (set-register ?s `(file . ,src-dir))
 
+(use-package symbol-overlay
+  :custom
+  (symbol-overlay-idle-time 0.2)
+  :bind
+  ("M-s s i" . symbol-overlay-put)
+  ("M-N" . symbol-overlay-jump-next)
+  ("M-P" . symbol-overlay-jump-prev)
+  ("M-s s r" . symbol-overlay-rename)
+  ("M-s s c" . symbol-overlay-remove-all)
+  :hook
+  (prog-mode . symbol-overlay-mode))
+
 (use-package devdocs
   :bind (("C-h D" . devdocs-lookup)))
 
