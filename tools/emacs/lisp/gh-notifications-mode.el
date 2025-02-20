@@ -162,39 +162,42 @@
       (browse-url web-url))))
 
 (defun github-notifications--get-pr-statuses (repo pr-number)
-  "Get CI statuses for a PR using the GitHub API."
+  "Get CI statuses for a PR using the GitHub GraphQL API."
   (when (and repo pr-number)
     (with-temp-buffer
-      ;; Get PR data to obtain statuses_url
       (call-process "gh" nil t nil
-                   "api"
-                   (format "/repos/%s/pulls/%s" repo pr-number))
-      (let* ((pr-data (github-notifications--parse-json (buffer-string)))
-	     (statuses-url (alist-get 'statuses_url pr-data)))
-        ;; Get the actual statuses
-        (when statuses-url
-          (erase-buffer)
-          (call-process "gh" nil t nil
-                       "api"
-                       statuses-url)
-          (let* ((statuses (github-notifications--parse-json (buffer-string)))
-                 (total (length statuses))
-                 (successes (seq-count
-                           (lambda (status)
-                             (string= (alist-get 'state status) "success"))
-                           statuses))
-                 (failures (seq-count
-                          (lambda (status)
-                            (string= (alist-get 'state status) "failure"))
-                          statuses))
-                 (pendings (seq-count
-                          (lambda (status)
-                            (string= (alist-get 'state status) "pending"))
-                          statuses)))
-            (list :total total
-                  :successes successes
-                  :failures failures
-                  :pendings pendings)))))))
+                   "api" "graphql"
+                   "-f" (format "query=%s"
+                              (github-notifications--make-graphql-query repo pr-number)))
+      (let* ((response (github-notifications--parse-json (buffer-string)))
+             (contexts (thread-last response
+                        (alist-get 'data)
+                        (alist-get 'repository)
+                        (alist-get 'pullRequest)
+                        (alist-get 'commits)
+                        (alist-get 'nodes)
+                        (seq-first)
+                        (alist-get 'commit)
+                        (alist-get 'statusCheckRollup)
+                        (alist-get 'contexts)
+                        (alist-get 'nodes)))
+             (statuses (seq-map
+                       (lambda (ctx)
+                         (let ((state (or (alist-get 'state ctx)
+                                        (alist-get 'conclusion ctx))))
+                           (cond
+                            ((member state '("SUCCESS" "success" "COMPLETED")) "success")
+                            ((member state '("FAILURE" "failure" "ERROR" "error")) "failure")
+                            (t "pending"))))
+                       contexts))
+             (total (length statuses))
+             (successes (seq-count (lambda (s) (string= s "success")) statuses))
+             (failures (seq-count (lambda (s) (string= s "failure")) statuses))
+             (pendings (seq-count (lambda (s) (string= s "pending")) statuses)))
+        (list :total total
+              :successes successes
+              :failures failures
+              :pendings pendings)))))
 
 (defun github-notifications--format-ci-status (statuses)
   "Format CI status with appropriate face and count information."
@@ -221,6 +224,40 @@
        (propertize indicator 'face face)
        " "
        (propertize count-str 'face face)))))
+
+(defun github-notifications--make-graphql-query (repo pr-number)
+  "Create a GraphQL query for PR status checks."
+  (format "query {
+    repository(owner: \"%s\", name: \"%s\") {
+      pullRequest(number: %s) {
+        commits(last: 1) {
+          nodes {
+            commit {
+              statusCheckRollup {
+                state
+                contexts(first: 100) {
+                  nodes {
+                    ... on StatusContext {
+                      state
+                      context
+                    }
+                    ... on CheckRun {
+                      status
+                      conclusion
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }"
+          (car (split-string repo "/"))
+          (cadr (split-string repo "/"))
+          pr-number))
 
 ;;;###autoload
 (defun github-notifications ()
