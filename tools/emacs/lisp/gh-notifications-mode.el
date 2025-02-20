@@ -39,7 +39,13 @@
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "g") 'github-notifications-refresh)
     (define-key map (kbd "m") 'github-notifications-mark-read)
+    (define-key map (kbd "c") 'github-notifications-comment-on-pr)
+    (define-key map (kbd "d") 'github-notifications-mark-done)
+    (define-key map (kbd "a") 'github-notifications-approve-pr)
+    (define-key map (kbd "w") 'github-notifications-copy-url)
+    (define-key map (kbd "r") 'github-notifications-request-changes-on-pr)
     (define-key map (kbd "RET") 'github-notifications-open-at-point)
+    ;; m for mark
     map)
   "Keymap for GitHub notifications buffer.")
 
@@ -134,9 +140,8 @@
 (defun github-notifications-mark-read ()
   "Mark notification at point as read."
   (interactive)
-  (when-let* ((entry (tabulated-list-get-entry))
-              (title-col (aref entry 3))
-              (id (get-text-property 0 'notification-id title-col)))
+  (when-let* ((entry (github-notifications--get-entry-data))
+              (id (nth 4 entry)))
     (github-notifications--ensure-gh)
     (with-temp-buffer
       (unless (= 0 (call-process "gh" nil t nil
@@ -145,6 +150,35 @@
                                 (format "/notifications/threads/%s" id)))
         (error "Failed to mark notification as read")))
     (github-notifications-refresh)))
+
+(defun github-notifications-mark-done ()
+  "Mark notification at point as done."
+  (interactive)
+  (when-let* ((entry (github-notifications--get-entry-data))
+              (id (nth 4 entry)))
+    (github-notifications--ensure-gh)
+    (message id)
+    (with-temp-buffer
+      (unless (= 0 (call-process "gh" nil t nil
+                                "api"
+                                "-X" "DELETE"
+                                (format "/notifications/threads/%s" id)))
+        (error "Failed to mark notification as done")))
+    (github-notifications-refresh)))
+
+(defun github-notifications--copy-url ()
+  "Copy the URL of the notification item at point."
+  (interactive)
+  (let* ((entry (github-notifications--get-entry-data))
+	 (api-url (nth 3 entry))
+	 (url (replace-regexp-in-string
+                   "api\\.github\\.com/repos"
+                   "github.com"
+                   (replace-regexp-in-string
+                    "/pulls/"
+                    "/pull/"
+                    api-url))))
+    (kill-new url)))
 
 (defun github-notifications-open-at-point ()
   "Open the notification at point in a web browser."
@@ -160,6 +194,68 @@
                     "/pull/"
                     url))))
       (browse-url web-url))))
+
+(defun github-notifications--get-entry-data ()
+  "Get PR data from current entry."
+  (let* ((entry (tabulated-list-get-entry))
+	 (id (aref entry 3))
+         (title-cell (aref entry 4))
+         (repo (get-text-property 0 'repo title-cell))
+         (url (get-text-property 0 'notification-url title-cell))
+         (notification-id (get-text-property 0 'notification-id title-cell))
+         (pr-number (github-notifications--get-pr-number url)))
+    (list id repo pr-number url notification-id)))
+
+(defun github-notifications-comment-on-pr ()
+  "Add a comment to the pull request at point."
+  (interactive)
+  (let* ((pr-data (github-notifications--get-entry-data))
+         (repo (nth 1 pr-data))
+         (pr-number (nth 2 pr-data))
+         (comment (read-string "Comment: ")))
+    (when (and repo pr-number (not (string-empty-p comment)))
+      (let ((default-directory (make-temp-file "gh-pr" t)))
+        (call-process "gh" nil "*github-notifications process*" nil
+                      "pr" "comment"
+		      pr-number
+                      "--body" comment
+		      "--repo" repo)
+        (message "Comment posted successfully")))))
+
+(defun github-notifications-request-changes-on-pr ()
+  "Add a comment to the pull request at point."
+  (interactive)
+  (let* ((pr-data (github-notifications--get-entry-data))
+         (repo (nth 1 pr-data))
+         (pr-number (nth 2 pr-data))
+         (comment (read-string "Comment: ")))
+    (when (and repo pr-number (not (string-empty-p comment)))
+      (let ((default-directory (make-temp-file "gh-pr" t)))
+        (call-process "gh" nil "*github-notifications process*" nil
+                      "pr" "review"
+		      pr-number
+                      "--body" comment
+		      "--request-changes"
+		      "--repo" repo)
+        (message "Comment posted successfully")))))
+
+(defun github-notifications-approve-pr (&optional comment)
+  "Approve the pull request at point with an optional comment."
+  (interactive
+   (list (read-string "Approval comment (optional): ")))
+  (let* ((pr-data (github-notifications--get-entry-data))
+         (repo (nth 1 pr-data))
+         (pr-number (nth 2 pr-data))
+         (args (list "pr" "review"
+                    pr-number
+                    "--approve"
+		    "--repo" repo)))
+    (when (and repo pr-number)
+      (when (and comment (not (string-empty-p comment)))
+        (setq args (append args (list "--body" comment))))
+      (let ((default-directory (make-temp-file "gh-pr" t)))
+        (apply #'call-process "gh" nil "*github-notifications process*" nil args)
+        (message "PR approved successfully")))))
 
 (defun github-notifications--get-pr-statuses (repo pr-number)
   "Get CI statuses for a PR using the GitHub GraphQL API."
@@ -216,7 +312,7 @@
            (face
             (cond
              ((> failures 0) '(:foreground "red"))
-             ((> pendings 0) '(:foreground "yellow"))
+             ((> pendings 0) '(:foreground "orange"))
              ((= successes total) '(:foreground "green"))
              (t '(:foreground "gray"))))
            (count-str (format "%d/%d" successes total)))
