@@ -157,9 +157,9 @@ in
                 # aerc.enable = true;
                 msmtp = {
                   enable = true;
-                  extraConfig = {
-                    tls_starttls = "on";
-                  };
+                  # extraConfig = {
+                  #   tls_starttls = "on";
+                  # };
                 };
                 # This is here for doing backup
                 mbsync = {
@@ -208,9 +208,9 @@ in
                 # aerc.enable = true;
                 msmtp = {
                   enable = true;
-                  extraConfig = {
-                    tls_starttls = "on";
-                  };
+                  # extraConfig = {
+                  #   tls_starttls = "on";
+                  # };
                 };
               };
             };
