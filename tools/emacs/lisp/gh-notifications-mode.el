@@ -44,10 +44,24 @@
     (define-key map (kbd "a") 'github-notifications-approve-pr)
     (define-key map (kbd "w") 'github-notifications-copy-url)
     (define-key map (kbd "r") 'github-notifications-request-changes-on-pr)
+    (define-key map (kbd "v") 'github-notifications-show-details)
     (define-key map (kbd "RET") 'github-notifications-open-at-point)
     ;; m for mark
     map)
   "Keymap for GitHub notifications buffer.")
+
+(defvar github-notifications-detail-buffer-name "*GitHub Notification Detail*"
+  "Name of the buffer for displaying GitHub notification details.")
+
+(defvar github-notifications-detail-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "q") 'quit-window)
+    map)
+  "Keymap for GitHub notification detail buffer.")
+
+(define-derived-mode github-notifications-detail-mode special-mode "GitHub-Notification-Detail"
+  "Major mode for displaying GitHub notification details."
+  (setq buffer-read-only t))
 
 (defvar github-notifications--process-buffer "*github-notifications-process*"
   "Buffer for GitHub notifications processes.")
@@ -103,37 +117,38 @@ Creates a temporary buffer for the process output."
 (defun github-notifications--format-list-entry (notification)
   "Format a NOTIFICATION as a tabulated list entry."
   (let-alist notification
-      (list .id
-            (vector
-             (github-notifications--format-unread .unread)
-             (if (string= .type "PullRequest")
-		 (github-notifications--format-ci-status .ci_status)
-	       " ")
-	     ;; (if (string= .type "PullRequest")
-	     ;; 	 (or .ci_status "?")
-             ;;   "")
-             .repo
-             .type
-             (propertize .title
-                         'notification-id .id
-                        'github-notifications--copy-url .url
-                        'notification-type .type
-                        'repo .repo)
-             (github-notifications--format-time .updated)))))
+    (list .id
+          (vector
+           (github-notifications--format-unread .unread)
+           (if (string= .type "PullRequest")
+	       (github-notifications--format-ci-status .ci_status)
+	     " ")
+	   ;; (if (string= .type "PullRequest")
+	   ;; 	 (or .ci_status "?")
+           ;;   "")
+           .repo
+           .type
+           (propertize .title
+                       'notification-id .id
+                       'notification-url .url  ; Add this line
+                       'github-notifications--copy-url .url
+                       'notification-type .type
+                       'repo .repo)
+           (github-notifications--format-time .updated)))))
 
 (defun github-notifications-fetch ()
   "Fetch notifications using gh CLI asynchronously."
   (github-notifications--ensure-gh)
   (github-notifications--call-process-async
-     (lambda (output)
-       (let* ((raw-notifications (github-notifications--parse-json output))
-              (normalized-notifications
-               (mapcar #'github-notifications--normalize-notification raw-notifications)))
-         ;; For each PR notification, fetch its status
-         (dolist (notif normalized-notifications)
-           (when (and (equal (alist-get 'type notif) "PullRequest"))
-             (github-notifications--get-pr-statuses notif))
-	   ;; FIXME there is a bug here, it share the same thing
+   (lambda (output)
+     (let* ((raw-notifications (github-notifications--parse-json output))
+            (normalized-notifications
+             (mapcar #'github-notifications--normalize-notification raw-notifications)))
+       ;; For each PR notification, fetch its status
+       (dolist (notif normalized-notifications)
+         (when (and (equal (alist-get 'type notif) "PullRequest"))
+           (github-notifications--get-pr-statuses notif))
+	 ;; FIXME there is a bug here, it share the same thing
          (github-notifications--display normalized-notifications))))
    (get-buffer-create github-notifications--process-buffer)
    "github-notifications"
@@ -175,9 +190,9 @@ Creates a temporary buffer for the process output."
     (github-notifications--ensure-gh)
     (with-temp-buffer
       (unless (= 0 (call-process "gh" nil t nil
-                                "api"
-                                "-X" "PATCH"
-                                (format "/notifications/threads/%s" id)))
+                                 "api"
+                                 "-X" "PATCH"
+                                 (format "/notifications/threads/%s" id)))
         (error "Failed to mark notification as read")))
     (github-notifications-refresh)))
 
@@ -189,9 +204,9 @@ Creates a temporary buffer for the process output."
     (github-notifications--ensure-gh)
     (with-temp-buffer
       (unless (= 0 (call-process "gh" nil t nil
-                                "api"
-                                "-X" "DELETE"
-                                (format "/notifications/threads/%s" id)))
+                                 "api"
+                                 "-X" "DELETE"
+                                 (format "/notifications/threads/%s" id)))
         (error "Failed to mark notification as done")))
     (github-notifications-refresh)))
 
@@ -201,12 +216,12 @@ Creates a temporary buffer for the process output."
   (let* ((entry (github-notifications--get-entry-data))
 	 (api-url (nth 3 entry))
 	 (url (replace-regexp-in-string
-                   "api\\.github\\.com/repos"
-                   "github.com"
-                   (replace-regexp-in-string
-                    "/pulls/"
-                    "/pull/"
-                    api-url))))
+               "api\\.github\\.com/repos"
+               "github.com"
+               (replace-regexp-in-string
+                "/pulls/"
+                "/pull/"
+                api-url))))
     (kill-new url)))
 
 (defun github-notifications-open-at-point ()
@@ -216,12 +231,12 @@ Creates a temporary buffer for the process output."
               (title-col (aref entry 3))
               (url (get-text-property 0 'notification-url title-col)))
     (let ((web-url (replace-regexp-in-string
-                   "api\\.github\\.com/repos"
-                   "github.com"
-                   (replace-regexp-in-string
-                    "/pulls/"
-                    "/pull/"
-                    url))))
+                    "api\\.github\\.com/repos"
+                    "github.com"
+                    (replace-regexp-in-string
+                     "/pulls/"
+                     "/pull/"
+                     url))))
       (browse-url web-url))))
 
 (defun github-notifications--get-entry-data ()
@@ -276,9 +291,9 @@ Creates a temporary buffer for the process output."
          (repo (nth 1 pr-data))
          (pr-number (nth 2 pr-data))
          (args (list "pr" "review"
-                    pr-number
-                    "--approve"
-		    "--repo" repo)))
+                     pr-number
+                     "--approve"
+		     "--repo" repo)))
     (when (and repo pr-number)
       (when (and comment (not (string-empty-p comment)))
         (setq args (append args (list "--body" comment))))
@@ -321,9 +336,9 @@ Creates a temporary buffer for the process output."
 		  (failures (seq-count (lambda (s) (string= s "failure")) statuses))
 		  (pendings (seq-count (lambda (s) (string= s "pending")) statuses))
 		  (ci-status (list :total total
-			:successes successes
-			:failures failures
-			:pendings pendings)))
+				   :successes successes
+				   :failures failures
+				   :pendings pendings)))
 	     (setf (alist-get 'ci_status notification) ci-status)))
 	 (get-buffer-create (format "*github-notifications-%s-%s-process*" repo pr-number))
 	 (format "github-notifications-%s-%s" repo pr-number)
@@ -404,6 +419,85 @@ Creates a temporary buffer for the process output."
   "Extract pull request number from URL."
   (when (string-match "/pulls/\\([0-9]+\\)" url)
     (match-string 1 url)))
+
+(defun github-notifications-show-details ()
+  "Show detailed view of the notification at point."
+  (interactive)
+  (when-let* ((entry (tabulated-list-get-entry))
+              (title-cell (aref entry 4))
+              (type (get-text-property 0 'notification-type title-cell))
+              (repo (get-text-property 0 'repo title-cell))
+              (url (get-text-property 0 'github-notifications--copy-url title-cell)))
+    (let ((buffer (get-buffer-create github-notifications-detail-buffer-name)))
+      (with-current-buffer buffer
+        (let ((inhibit-read-only t))
+          (erase-buffer)
+          (github-notifications-detail-mode)
+          (cond
+           ((string= type "PullRequest")
+            (github-notifications--show-pr-details repo url))
+           ((string= type "Issue")
+            (github-notifications--show-issue-details repo url))
+           (t
+            (insert "No detailed view available for this notification type."))))
+        (goto-char (point-min)))
+      (display-buffer buffer))))
+
+(defun github-notifications--show-pr-details (repo url)
+  "Show pull request details for REPO and URL."
+  (let ((pr-number (github-notifications--get-pr-number url)))
+    (when pr-number
+      (insert (format "=== Pull Request #%s ===\n\n" pr-number))
+      ;; Fetch PR details
+      (github-notifications--call-process-async
+       (lambda (output)
+         (let ((inhibit-read-only t))
+           (save-excursion
+             (goto-char (point-min))
+             (forward-line 2)
+             (let* ((pr-data (github-notifications--parse-json output)))
+               (insert (format "Title: %s\n" (alist-get 'title pr-data)))
+               (insert (format "State: %s\n" (alist-get 'state pr-data)))
+               (insert (format "\nDescription:\n%s\n" (alist-get 'body pr-data)))))))
+       nil
+       "pr-details"
+       "pr" "view" pr-number "--json" "title,body,state" "--repo" repo)
+      
+      ;; Fetch and display diff
+      (insert "\n=== Diff ===\n\n")
+      (github-notifications--call-process-async
+       (lambda (output)
+         (let ((inhibit-read-only t))
+           (save-excursion
+             (goto-char (point-max))
+             (insert output)
+             (let ((diff-start (save-excursion
+                                 (goto-char (point-min))
+                                 (search-forward "\n=== Diff ===\n\n" nil t))))
+               (when diff-start
+                 (diff-mode-setup))))))
+       nil
+       "pr-diff"
+       "pr" "diff" pr-number "--repo" repo))))
+
+(defun github-notifications--get-issue-number (url)
+  "Extract issue number from URL."
+  (when (string-match "/issues/\\([0-9]+\\)" url)
+    (match-string 1 url)))
+
+(defun github-notifications--format-checks (checks)
+  "Format checks data for display."
+  (mapconcat
+   (lambda (check)
+     (let-alist check
+       (format "%s: %s"
+               .name
+               (propertize .status 'face
+                           (pcase .status
+                             ("success" '(:foreground "green"))
+                             ("failure" '(:foreground "red"))
+                             (_ '(:foreground "yellow")))))))
+   checks "\n"))
 
 ;;;###autoload
 (defun github-notifications ()
