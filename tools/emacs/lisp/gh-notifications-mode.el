@@ -49,6 +49,29 @@
     map)
   "Keymap for GitHub notifications buffer.")
 
+(defvar github-notifications--process-buffer "*github-notifications-process*"
+  "Buffer for GitHub notifications processes.")
+
+(defun github-notifications--call-process-async (callback _buf name &rest args)
+  "Call gh process asynchronously with ARGS and CALLBACK when done.
+Creates a temporary buffer for the process output."
+  (let ((temp-buffer (generate-new-buffer (format " *gh-%s*" name))))
+    (setenv "TERM" "dumb")
+    (setenv "CLICOLOR" "0")
+    (setenv "PAGER" "cat")
+    (make-process
+     :name name
+     :buffer temp-buffer
+     :command (cons "gh" args)
+     :sentinel (lambda (process _event)
+                 (unwind-protect
+                     (when (eq (process-status process) 'exit)
+                       (if (= (process-exit-status process) 0)
+                           (with-current-buffer (process-buffer process)
+                             (funcall callback (buffer-string)))
+                         (message "GitHub CLI process failed")))
+                   (kill-buffer temp-buffer))))))
+
 (define-derived-mode github-notifications-mode tabulated-list-mode "GitHub-Notifications"
   "Major mode for displaying GitHub notifications."
   (setq tabulated-list-format
@@ -80,49 +103,56 @@
 (defun github-notifications--format-list-entry (notification)
   "Format a NOTIFICATION as a tabulated list entry."
   (let-alist notification
-    (let* ((type (or .subject.type "Unknown"))
-           (id .id)
-           (url .subject.url)
-           (repo .repository.full_name)
-           (status (propertize "●" 'face 'github-notifications-unread-face))
-           (ci-status
-            (if (string= type "PullRequest")
-                (github-notifications--format-ci-status
-                 (github-notifications--get-pr-statuses
-                  repo
-                  (github-notifications--get-pr-number url)))
-              " ")))
-      (list id
+      (list .id
             (vector
-             status
-             ci-status
-             repo
-             type
-             (propertize .subject.title
-                        'notification-id id
-                        'notification-url url
-                        'notification-type type
-                        'repo repo)
-             (github-notifications--format-time .updated_at))))))
-
-(defun github-notifications--get-pr-number (url)
-  "Extract pull request number from URL."
-  (when (string-match "/pulls/\\([0-9]+\\)" url)
-    (match-string 1 url)))
+             (github-notifications--format-unread .unread)
+             (if (string= .type "PullRequest")
+		 (github-notifications--format-ci-status .ci_status)
+	       " ")
+	     ;; (if (string= .type "PullRequest")
+	     ;; 	 (or .ci_status "?")
+             ;;   "")
+             .repo
+             .type
+             (propertize .title
+                         'notification-id .id
+                        'github-notifications--copy-url .url
+                        'notification-type .type
+                        'repo .repo)
+             (github-notifications--format-time .updated)))))
 
 (defun github-notifications-fetch ()
-  "Fetch notifications using gh CLI."
+  "Fetch notifications using gh CLI asynchronously."
   (github-notifications--ensure-gh)
-  (let* ((json-string
-          (with-temp-buffer
-            (unless (= 0 (call-process "gh" nil t nil
-                                     "api"
-                                     "-H" "Accept: application/vnd.github+json"
-                                     "/notifications"))
-              (error "Failed to fetch notifications"))
-            (buffer-string)))
-         (notifications (github-notifications--parse-json json-string)))
-    (github-notifications--display notifications)))
+  (github-notifications--call-process-async
+     (lambda (output)
+       (let* ((raw-notifications (github-notifications--parse-json output))
+              (normalized-notifications
+               (mapcar #'github-notifications--normalize-notification raw-notifications)))
+         ;; For each PR notification, fetch its status
+         (dolist (notif normalized-notifications)
+           (when (and (equal (alist-get 'type notif) "PullRequest"))
+             (github-notifications--get-pr-statuses notif))
+	   ;; FIXME there is a bug here, it share the same thing
+         (github-notifications--display normalized-notifications))))
+   (get-buffer-create github-notifications--process-buffer)
+   "github-notifications"
+   "api"
+   "-H" "Accept: application/vnd.github+json"
+   "/notifications?all=true"))
+
+(defun github-notifications--normalize-notification (notif)
+  "Convert raw notification to normalized format."
+  (let-alist notif
+    `((id . ,.id)
+      (type . ,.subject.type)
+      (title . ,.subject.title)
+      (repo . ,.repository.full_name)
+      (url . ,.subject.url)
+      (updated . ,.updated_at)
+      (unread . ,.unread)
+      (ci_status . nil)
+      (statuses_url . ,.subject.statuses_url))))
 
 (defun github-notifications--display (notifications)
   "Display NOTIFICATIONS in the buffer."
@@ -157,7 +187,6 @@
   (when-let* ((entry (github-notifications--get-entry-data))
               (id (nth 4 entry)))
     (github-notifications--ensure-gh)
-    (message id)
     (with-temp-buffer
       (unless (= 0 (call-process "gh" nil t nil
                                 "api"
@@ -212,7 +241,7 @@
   (let* ((pr-data (github-notifications--get-entry-data))
          (repo (nth 1 pr-data))
          (pr-number (nth 2 pr-data))
-         (comment (read-string "Comment: ")))
+         (comment (read-string "Comment: "))),
     (when (and repo pr-number (not (string-empty-p comment)))
       (let ((default-directory (make-temp-file "gh-pr" t)))
         (call-process "gh" nil "*github-notifications process*" nil
@@ -257,43 +286,50 @@
         (apply #'call-process "gh" nil "*github-notifications process*" nil args)
         (message "PR approved successfully")))))
 
-(defun github-notifications--get-pr-statuses (repo pr-number)
+(defun github-notifications--get-pr-statuses (notification)
   "Get CI statuses for a PR using the GitHub GraphQL API."
-  (when (and repo pr-number)
-    (with-temp-buffer
-      (call-process "gh" nil t nil
-                   "api" "graphql"
-                   "-f" (format "query=%s"
-                              (github-notifications--make-graphql-query repo pr-number)))
-      (let* ((response (github-notifications--parse-json (buffer-string)))
-             (contexts (thread-last response
-                        (alist-get 'data)
-                        (alist-get 'repository)
-                        (alist-get 'pullRequest)
-                        (alist-get 'commits)
-                        (alist-get 'nodes)
-                        (seq-first)
-                        (alist-get 'commit)
-                        (alist-get 'statusCheckRollup)
-                        (alist-get 'contexts)
-                        (alist-get 'nodes)))
-             (statuses (seq-map
-                       (lambda (ctx)
-                         (let ((state (or (alist-get 'state ctx)
-                                        (alist-get 'conclusion ctx))))
-                           (cond
-                            ((member state '("SUCCESS" "success" "COMPLETED")) "success")
-                            ((member state '("FAILURE" "failure" "ERROR" "error")) "failure")
-                            (t "pending"))))
-                       contexts))
-             (total (length statuses))
-             (successes (seq-count (lambda (s) (string= s "success")) statuses))
-             (failures (seq-count (lambda (s) (string= s "failure")) statuses))
-             (pendings (seq-count (lambda (s) (string= s "pending")) statuses)))
-        (list :total total
-              :successes successes
-              :failures failures
-              :pendings pendings)))))
+  (let* ((url (alist-get 'url notification))
+         (repo (alist-get 'repo notification))
+	 (pr-number(github-notifications--get-pr-number url)))
+    (when (and repo pr-number)
+      (with-temp-buffer
+	(github-notifications--call-process-async
+	 (lambda (output)
+	   (let* ((response (github-notifications--parse-json (buffer-string)))
+		  (contexts (thread-last response
+					 (alist-get 'data)
+					 (alist-get 'repository)
+					 (alist-get 'pullRequest)
+					 (alist-get 'commits)
+					 (alist-get 'nodes)
+					 (seq-first)
+					 (alist-get 'commit)
+					 (alist-get 'statusCheckRollup)
+					 (alist-get 'contexts)
+					 (alist-get 'nodes)))
+		  (statuses (seq-map
+			     (lambda (ctx)
+                               (let ((state (or (alist-get 'state ctx)
+						(alist-get 'conclusion ctx))))
+				 (cond
+				  ((member state '("SUCCESS" "success" "COMPLETED")) "success")
+				  ((member state '("FAILURE" "failure" "ERROR" "error")) "failure")
+				  (t "pending"))))
+			     contexts))
+		  (total (length statuses))
+		  (successes (seq-count (lambda (s) (string= s "success")) statuses))
+		  (failures (seq-count (lambda (s) (string= s "failure")) statuses))
+		  (pendings (seq-count (lambda (s) (string= s "pending")) statuses))
+		  (ci-status (list :total total
+			:successes successes
+			:failures failures
+			:pendings pendings)))
+	     (setf (alist-get 'ci_status notification) ci-status)))
+	 (get-buffer-create (format "*github-notifications-%s-%s-process*" repo pr-number))
+	 (format "github-notifications-%s-%s" repo pr-number)
+	 "api" "graphql" "-f"
+	 (format "query=%s"
+		 (github-notifications--make-graphql-query repo pr-number)))))))
 
 (defun github-notifications--format-ci-status (statuses)
   "Format CI status with appropriate face and count information."
@@ -354,6 +390,20 @@
           (car (split-string repo "/"))
           (cadr (split-string repo "/"))
           pr-number))
+
+(defun github-notifications--format-unread (unread)
+  "Return a propertized string to showcase the status of the notifications"
+  ;; (cond ((unread) (propertize "●" 'face 'github-notifications-unread-face))
+  ;; 	((not unread) (propertize "○" 'face 'github-notifications-unread-face))
+  ;; 	(t (propertize "?" 'face 'github-notifications-unread-face)))
+  (cond (unread (propertize "●" 'face 'github-notifications-unread-face))
+	((not unread) (propertize "○" 'face 'github-notifications-unread-face))
+	(t (propertize "?" 'face 'github-notifications-unread-face))))
+
+(defun github-notifications--get-pr-number (url)
+  "Extract pull request number from URL."
+  (when (string-match "/pulls/\\([0-9]+\\)" url)
+    (match-string 1 url)))
 
 ;;;###autoload
 (defun github-notifications ()
