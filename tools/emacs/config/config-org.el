@@ -552,10 +552,10 @@ Within those groups, sort by date and priority."
     (directory-files directory nil ".*_www.*\\.org$"))
   (setq org-publish-project-alist
 	`(("resources"
-	   :base-directory ,org-resources-dir
+	   :base-directory ,org-directory
 	   :base-extension "org"
 	   ;; :include ".*_www*.org"
-	   :include ,(vde-org-git-exportable-files org-resources-dir)
+	   :include ,(vde-org-git-exportable-files org-directory)
 	   :exclude ".*"
 	   :publishing-directory ,(expand-file-name "resources" src-www-dir)
 	   :publishing-function org-html-publish-to-html
