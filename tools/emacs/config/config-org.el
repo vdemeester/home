@@ -574,7 +574,11 @@ Within those groups, sort by date and priority."
 	   :sitemap-date-format "%Y-%m-%d"
 	   ;; :sitemap-function org-publish-org-sitemap
 	   ))))
-
+(use-package org-habit
+  :after (org)
+  :config
+  (setq org-habit-show-habits-only-for-today nil
+        org-habit-graph-column 80))
 (use-package org-download
   :after (org)
   :hook ((dired-mode . org-download-enable)
