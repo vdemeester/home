@@ -162,6 +162,12 @@
                              (if test-name `["-test.run" ,test-name]
                                (error "No test selected")))))))))
 
+(defconst markdown-regex-italic
+    "\\(?:^\\|[^\\]\\)\\(?1:\\(?2:[_]\\)\\(?3:[^ \n\t\\]\\|[^ \n\t]\\(?:.\\|\n[^\n]\\)[^\\ ]\\)\\(?4:\\2\\)\\)")
+;; and/or
+(defconst markdown-regex-gfm-italic
+    "\\(?:^\\|[^\\]\\)\\(?1:\\(?2:[_]\\)\\(?3:[^ \\]\\2\\|[^ ]\\(?:.\\|\n[^\n]\\)\\)\\(?4:\\2\\)\\)")
+
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
@@ -178,7 +184,7 @@
 (use-package copilot
   :hook
   (prog-mode . copilot-mode)
-  (markdown-mode . copilot-mode)
+  ;; (markdown-mode . copilot-mode) ;; Enable this on-demand only
   ;; (text-mode . copilot-mode) ;; I may not want copilot in org-mode for example.
   (log-edit-mode . copilot-mode)
   (vc-git-log-edit-mode . copilot-mode)

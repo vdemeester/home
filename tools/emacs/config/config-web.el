@@ -74,19 +74,19 @@
   :after eww
   :config
 
-  (defun browse-url-xdg-desktop-portal (url &rest args)
-    "Open URL via a portal backend."
-    (dbus-call-method :session
-                      "org.freedesktop.portal.Desktop"
-                      "/org/freedesktop/portal/desktop"
-                      "org.freedesktop.portal.OpenURI"
-                      "OpenURI"
-                      "" url '(:array :signature "{sv}")))
-  (setopt browse-url-browser-function #'browse-url-xdg-desktop-portal)
+  ;; (defun browse-url-xdg-desktop-portal (url &rest args)
+  ;;   "Open URL via a portal backend."
+  ;;   (dbus-call-method :session
+  ;;                     "org.freedesktop.portal.Desktop"
+  ;;                     "/org/freedesktop/portal/desktop"
+  ;;                     "org.freedesktop.portal.OpenURI"
+  ;;                     "OpenURI"
+  ;;                     "" url '(:array :signature "{sv}")))
+  ;; (setopt browse-url-browser-function #'browse-url-xdg-desktop-portal)
   ;; (setq browse-url-browser-function #'eww-browse-url)
 
   ;; (setq browse-url-generic-program "google-chrome-stable")
-  (setq browse-url-handlers '(("^https://gitlab.com.*" . browse-url-firefox)
+  (setq browse-url-handlers '(("^https://gitlab.com.*" . browse-url-default-browser)
                               ("^https://github.com.*" . browse-url-default-browser)
                               ("^https://issues.redhat.com.*" . browse-url-default-browser)
                               ("^https://.*redhat.com.*" . browse-url-default-browser)

@@ -151,6 +151,7 @@
     (th/magit--with-difftastic
      (get-buffer-create name)
      `("git" "--no-pager" "diff" "--ext-diff" ,@(when arg (list arg))))))
+
 (use-package magit
   :unless noninteractive
   :commands (magit-status magit-clone magit-pull magit-blame magit-log-buffer-file magit-log)
@@ -197,8 +198,8 @@
 ;;   (message foo)
 ;;   (git-commit--insert-trailer "Hello" foo))
 
-  (magit-define-popup-option 'magit-rebase-popup
-                             ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
+  ;; (magit-define-popup-option 'magit-rebase-popup
+  ;;                            ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key)
   (magit-define-popup-switch 'magit-log-popup
                              ?m "Omit merge commits" "--no-merges")
   ;; cargo-culted from https://github.com/magit/magit/issues/3717#issuecomment-734798341
@@ -290,7 +291,6 @@
 (use-package consult-vc-modified-files
   :bind
   ("C-x v /" . consult-vc-modified-files))
-
 
 (provide 'config-vcs)
 ;;; config-vcs.el ends here
