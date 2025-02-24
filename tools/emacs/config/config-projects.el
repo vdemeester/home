@@ -3,6 +3,8 @@
 ;;; Project related configuration.
 ;;; Code:
 
+(require 'json)
+
 (defun vde/open-readme ()
   "Open a README file in the current project.
 It will search for README.org, README.md or README in that order"
@@ -18,7 +20,8 @@ It will search for README.org, README.md or README in that order"
 (use-package project
   :bind (("C-x p v" . vde-project-magit-status)
          ("C-x p s" . vde-project-vterm)
-         ("C-x p X" . vde-project-run-in-vterm))
+         ("C-x p X" . vde-project-run-in-vterm)
+	 ("C-x p G" . checkout-github-pr))
   :config
   (setq vde/project-local-identifier '(".project")) ;; "go.mod"
   (setq project-switch-commands
@@ -30,7 +33,8 @@ It will search for README.org, README.md or README in that order"
           (?m "Magit" vde-project-magit-status)
           (?e "Eshell" project-eshell)
           (?s "Vterm" vde-project-vterm)
-	  (?R "README" vde/open-readme)))
+	  (?R "README" vde/open-readme)
+	  (?g "Checkout GitHub PR" checkout-github-pr)))
 
   (defun vde-project-run-in-vterm (command &optional directory)
     "Run the given `COMMAND' in a new vterm buffer in `project-root' or the
@@ -51,6 +55,7 @@ One reason for this is to be able to run commands that needs a TTY."
 	(pop-to-buffer buffer)
 	(with-current-buffer buffer
           (vterm-mode)))))
+
   (defun vde/project-try-local (dir)
     "Determine if DIR is a non-VC project."
     (if-let ((root (if (listp vde/project-local-identifier)
@@ -66,6 +71,29 @@ One reason for this is to be able to run commands that needs a TTY."
 
   (add-hook 'project-find-functions #'vde/project-try-local)
 
+  (defun fetch-github-prs ()
+    "Fetch GitHub PRs synchronously."
+    (let* ((output (shell-command-to-string "gh pr list --limit=5000 --json number,title,author"))
+           (prs (json-read-from-string output)))
+      prs))
+
+  (defun format-pr-candidates (prs)
+    "Format PR data into candidates for completion."
+    (mapcar (lambda (pr)
+              (let-alist pr
+		(cons (format "#%d %s (by @%s)" .number .title .author.login)
+                      .number)))
+            prs))
+
+  (defun checkout-github-pr ()
+    "Interactive function to select and checkout a GitHub PR."
+    (interactive)
+    (let* ((prs (fetch-github-prs))
+           (candidates (format-pr-candidates prs))
+           (selected (cdr (assoc (completing-read "Checkout PR: " candidates)
+				 candidates))))
+      (when selected
+	(shell-command (format "gh pr checkout %d" selected)))))
   :init
   (setq-default project-compilation-buffer-name-function 'project-prefixed-buffer-name)
   (defun vde-project-magit-status ()
@@ -105,8 +133,8 @@ switch to it. Otherwise, create a new vterm shell."
   (add-hook 'kill-emacs-hook 'project-x--window-state-write)
   (add-to-list 'project-switch-commands
                '(?j "Restore windows" project-x-windows) t)
-    :bind (("C-x p w" . project-x-window-state-save)
-           ("C-x p j" . project-x-window-state-load)))
+  :bind (("C-x p w" . project-x-window-state-save)
+         ("C-x p j" . project-x-window-state-load)))
 
 (provide 'config-projects)
 ;;; config-projects.el ends here
