@@ -170,11 +170,11 @@ in
     package = (pkgs.emacs-unstable.override { withTreeSitter = true; withNativeCompilation = true; withPgtk = true; withWebP = true; withGTK3 = true; withSQLite3 = true; });
     extraPackages = myExtraPackages;
   };
-  services.emacs = {
-    enable = true;
-    client.enable = true;
-    #socketActivation.enable = true;
-  };
+  # services.emacs = {
+  #   enable = true;
+  #   client.enable = true;
+  #   #socketActivation.enable = true;
+  # };
   home.sessionVariables = {
     EDITOR = "emacs";
     ALTERNATE_EDITOR = "emacs -nw";
