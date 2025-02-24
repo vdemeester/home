@@ -85,7 +85,7 @@ in
     '';
     loginExtra = ''
       if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then
-        dbus-run-session sway
+        exec dbus-run-session sway
       fi
     '';
     profileExtra = ''
