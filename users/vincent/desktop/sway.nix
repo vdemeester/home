@@ -14,7 +14,7 @@ in
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
-    systemd.enable = true;
+    # systemd.enable = true;
     extraSessionCommands = ''
       export SDL_VIDEODRIVER=wayland
       export QT_QPA_PLATFORM=wayland
@@ -160,7 +160,9 @@ in
         }
       ];
       startup = [
-        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG _CURRENT_DESKTOP"; } #workaround
+        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP"; } #workaround
+        # Make sure we update systemd service env variables with the current ones. This is required for dbus to work properly.
+        { command = "dbus-update-activation-environment --systemd --all"; }
         # { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         { command = "systemctl --user restart kanshi"; always = true; }
         { command = "${pkgs.pa-notify}/bin/pa-notify"; always = true; }
