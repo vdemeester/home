@@ -270,6 +270,7 @@ in
   };
   home.packages = with pkgs; [
     swaybg
+    pinentry-gnome3
   ];
 
 }
