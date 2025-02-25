@@ -18,24 +18,23 @@ It will search for README.org, README.md or README in that order"
 	   (find-file "README")))))
 
 (use-package project
+  :commands (project-find-file project-find-regexp vde-project-vterm vde-project-run-in-vterm)
+  :custom ((project-switch-commands '((?f "File" project-find-file)
+				      (?g "Grep" project-find-regexp)
+				      (?d "Dired" project-dired)
+				      (?b "Buffer" project-switch-to-buffer)
+				      (?q "Query replace" project-query-replace-regexp)
+				      (?m "Magit" vde-project-magit-status)
+				      (?e "Eshell" project-eshell)
+				      (?s "Vterm" vde-project-vterm)
+				      (?R "README" vde/open-readme)
+				      (?g "Checkout GitHub PR" checkout-github-pr)))
+	   (project-mode-line t))
   :bind (("C-x p v" . vde-project-magit-status)
          ("C-x p s" . vde-project-vterm)
          ("C-x p X" . vde-project-run-in-vterm)
 	 ("C-x p G" . checkout-github-pr))
-  :config
-  (setq vde/project-local-identifier '(".project")) ;; "go.mod"
-  (setq project-switch-commands
-        '((?f "File" project-find-file)
-          (?g "Grep" project-find-regexp)
-          (?d "Dired" project-dired)
-          (?b "Buffer" project-switch-to-buffer)
-          (?q "Query replace" project-query-replace-regexp)
-          (?m "Magit" vde-project-magit-status)
-          (?e "Eshell" project-eshell)
-          (?s "Vterm" vde-project-vterm)
-	  (?R "README" vde/open-readme)
-	  (?g "Checkout GitHub PR" checkout-github-pr)))
-
+  :init
   (defun vde-project-run-in-vterm (command &optional directory)
     "Run the given `COMMAND' in a new vterm buffer in `project-root' or the
 given `DIRECTORY'.
@@ -68,10 +67,11 @@ One reason for this is to be able to run commands that needs a TTY."
     (cdr project))
 
   (cl-defmethod project-root ((project (eql nil))) nil)
+  :config
+  (setq vde/project-local-identifier '(".project")) ;; "go.mod"
 
   (add-hook 'project-find-functions #'vde/project-try-local)
 
-  :init
   (setq-default project-compilation-buffer-name-function 'project-prefixed-buffer-name)
   (defun vde-project-magit-status ()
     "Run `magit-status' on project."
