@@ -117,6 +117,9 @@ let
     scopeline
     scratch
     shr-tag-pre-highlight
+    sideline
+    sideline-eglot
+    sideline-flymake
     smartparens
     substitute
     surround
