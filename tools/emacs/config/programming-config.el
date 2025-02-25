@@ -240,6 +240,8 @@ Other types include:
 Here is the result of `git diff --cached`:")
 
 (use-package copilot-chat
+  :custom
+  (copilot-chat-model "claude-3.7-sonnet")
   :bind
   (("C-c a p" . copilot-chat-prompt-transient-menu)
    ("C-c a c" . copilot-chat-insert-commit-message)
