@@ -80,6 +80,7 @@ let
     magit-popup
     marginalia
     markdown-mode
+    minions
     modus-themes
     multi-vterm
     mu4e

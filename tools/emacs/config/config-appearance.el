@@ -116,11 +116,10 @@ questions.  Else use completion to select the tab to switch to."
 	 ("C-<next>" . tab-next)
 	 ("C-<prior>" . tab-previous)))
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :init
-  (setq doom-modeline-icon nil)
-  (setq doom-modeline-battery t))
+(use-package minions
+  :hook (after-init . minions-mode)
+  :config
+  (add-to-list 'minions-prominent-modes 'flymake-mode))
 
 (use-package time
   :unless noninteractive
