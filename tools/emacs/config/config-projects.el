@@ -71,29 +71,6 @@ One reason for this is to be able to run commands that needs a TTY."
 
   (add-hook 'project-find-functions #'vde/project-try-local)
 
-  (defun fetch-github-prs ()
-    "Fetch GitHub PRs synchronously."
-    (let* ((output (shell-command-to-string "gh pr list --limit=5000 --json number,title,author"))
-           (prs (json-read-from-string output)))
-      prs))
-
-  (defun format-pr-candidates (prs)
-    "Format PR data into candidates for completion."
-    (mapcar (lambda (pr)
-              (let-alist pr
-		(cons (format "#%d %s (by @%s)" .number .title .author.login)
-                      .number)))
-            prs))
-
-  (defun checkout-github-pr ()
-    "Interactive function to select and checkout a GitHub PR."
-    (interactive)
-    (let* ((prs (fetch-github-prs))
-           (candidates (format-pr-candidates prs))
-           (selected (cdr (assoc (completing-read "Checkout PR: " candidates)
-				 candidates))))
-      (when selected
-	(shell-command (format "gh pr checkout %d" selected)))))
   :init
   (setq-default project-compilation-buffer-name-function 'project-prefixed-buffer-name)
   (defun vde-project-magit-status ()
