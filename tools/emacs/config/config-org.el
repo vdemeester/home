@@ -253,6 +253,7 @@ file which do not already have one."
 
 (use-package org-modern
   ;; :if window-system
+  :disabled ;; trying something out.
   :custom (org-modern-table nil)
   :hook (org-mode . org-modern-mode))
 
