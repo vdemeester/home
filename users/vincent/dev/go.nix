@@ -6,7 +6,7 @@
   };
   home.packages = with pkgs; [
     gcc
-    go_1_23
+    go_1_24
     gopls
     godef
     golangci-lint
