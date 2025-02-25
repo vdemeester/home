@@ -3,6 +3,18 @@
 ;;; Code:
 (require 'project)
 (require 'json)
+(require 'vc)
+
+(defun in-git-repo-p ()
+  "Check if current directory is in a git repository."
+  (eq (vc-backend (or buffer-file-name default-directory))
+      'Git))
+
+(defun is-github-repo-p ()
+  "Check if current git repository has a GitHub remote."
+  (when (in-git-repo-p)
+    (string-match-p "github\\.com"
+                    (shell-command-to-string "git remote -v"))))
 
 (defun fetch-github-prs ()
   "Fetch GitHub PRs synchronously."
@@ -14,7 +26,7 @@
   "Format PR data into candidates for completion."
   (mapcar (lambda (pr)
             (let-alist pr
-	      (cons (format "#%d %s (by @%s) on %s" .number .title .author.login .baseRefName)
+              (cons (format "#%d %s (by @%s) on %s" .number .title .author.login .baseRefName)
                     .number)))
           prs))
 
@@ -22,12 +34,21 @@
 (defun checkout-github-pr ()
   "Interactive function to select and checkout a GitHub PR."
   (interactive)
-  (let* ((prs (fetch-github-prs))
-         (candidates (format-pr-candidates prs))
-         (selected (cdr (assoc (completing-read "Checkout PR: " candidates)
-			       candidates))))
-    (when selected
-      (shell-command (format "gh pr checkout %d" selected)))))
+  (cond
+   ((not (in-git-repo-p))
+    (message "Not in a Git repository"))
+   ((not (is-github-repo-p))
+    (message "Not a GitHub repository"))
+   (t
+    (let* ((prs (fetch-github-prs))
+           (candidates (format-pr-candidates prs))
+           (selected (if candidates
+                         (cdr (assoc (completing-read "Checkout PR: " candidates)
+                                    candidates))
+                       nil)))
+      (if selected
+          (shell-command (format "gh pr checkout %d" selected))
+        (message "No pull requests found"))))))
 
 ;;;###autoload
 (defun vde-project--project-current ()
