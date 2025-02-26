@@ -290,7 +290,11 @@
 
 (use-package consult-vc-modified-files
   :bind
-  ("C-x v /" . consult-vc-modified-files))
+  ("C-x v /" . consult-vc-modified-files)
+  :config
+  (setq consult-vc-modified-files-sources
+	'(consult-vc-modified-source-files
+          consult-vc-modified-source-head-files)))
 
 (provide 'config-vcs)
 ;;; config-vcs.el ends here
