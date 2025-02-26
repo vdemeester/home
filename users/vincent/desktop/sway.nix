@@ -57,8 +57,8 @@ in
       bindkeysToCode = true;
       input = {
         "type:keyboard" = {
-          xkb_layout = "fr";
-          xkb_variant = "bepo";
+          xkb_layout = "fr,fr";
+          xkb_variant = "bepo,ergol";
           xkb_options = "grp:menu_toggle,grp_led:caps,compose:caps";
         };
       };
@@ -103,6 +103,7 @@ in
 
           "${mod}+Shift+space" = "floating toggle";
           "${mod}+space" = "focus mode_toggle";
+          "${mod}+Tab" = "[con_mark=_back] focus";
 
           "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%+";
           "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 10%-";
@@ -167,6 +168,8 @@ in
         { command = "${pkgs.pa-notify}/bin/pa-notify"; always = true; }
         # Probably put a condition here.
         { command = "emacs --fg-daemon"; }
+        { command = "i3-back"; }
+        { command = "firefox"; }
       ];
     };
     extraConfig =
@@ -274,6 +277,7 @@ in
   home.packages = with pkgs; [
     swaybg
     pinentry-gnome3
+    i3-back
   ];
 
 }
