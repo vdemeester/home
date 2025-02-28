@@ -3,6 +3,16 @@
 ;;; Search related configuration
 ;;; Code:
 
+(setq xref-search-program
+      (cond
+       ((or (executable-find "ripgrep")
+            (executable-find "rg"))
+        'ripgrep)
+       ((executable-find "ugrep")
+        'ugrep)
+       (t
+        'grep)))
+
 ;; UseISearch
 (use-package isearch
   :unless noninteractive
