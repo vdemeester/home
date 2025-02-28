@@ -342,6 +342,16 @@ file which do not already have one."
   (denote-rename-buffer-format "📝 %t")
   (denote-date-prompt-denote-date-prompt-use-org-read-date t)
   (denote-prompts '(subdirectory title keywords))
+  (denote-journal-extras-directory nil) ;; use denote-directory
+  (denote-journal-extras-title-format 'day-date-month-year)
+  (denote-backlinks-display-buffer-action
+   '((display-buffer-reuse-window
+      display-buffer-in-side-window)
+     (side . bottom)
+     (slot . 99)
+     (window-width . 0.3)
+     (dedicated . t)
+     (preserve-size . (t . t))))
   :hook (dired-mode . denote-dired-mode)
   :init
   (require 'denote-rename-buffer)
@@ -349,8 +359,20 @@ file which do not already have one."
   (require 'denote-journal-extras)
   :config
   (denote-rename-buffer-mode 1)
-  (setq denote-journal-extras-directory nil ;; use denote-directory
-	denote-journal-extras-title-format 'day-date-month-year)
+  (defun my-denote-always-rename-on-save-based-on-front-matter ()
+    "Rename the current Denote file, if needed, upon saving the file.
+Rename the file based on its front matter, checking for changes in the
+title or keywords fields.
+
+Add this function to the `after-save-hook'."
+    (let ((denote-rename-confirmations nil)
+          (denote-save-buffers t)) ; to save again post-rename
+      (when (and buffer-file-name (denote-file-is-note-p buffer-file-name))
+	(ignore-errors (denote-rename-file-using-front-matter buffer-file-name))
+	(message "Buffer saved; Denote file renamed"))))
+
+  (add-hook 'after-save-hook #'my-denote-always-rename-on-save-based-on-front-matter)
+  
   (with-eval-after-load 'org-capture
     (setq denote-org-capture-specifiers "%l\n%i\n%?")
     (add-to-list 'org-capture-templates
