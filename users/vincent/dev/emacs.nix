@@ -128,7 +128,7 @@ let
     tempel-collection
     topsy
     trashed
-    treesit-auto # maybe not needed
+    treesit-fold
     treesit-grammars.with-all-grammars # see how much it weight
     try
     typescript-mode
