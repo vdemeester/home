@@ -14,6 +14,7 @@
 - https://git.sr.ht/~sebasmonia/dotfiles/tree/master/item/.config/emacs/init.el
 - https://gitlab.com/andreyorst/dotfiles/
 - https://github.com/gopar/.emacs.d
+- https://github.com/precompute/CleanEmacs/
 
 * Packages "inspirations"
 
