@@ -2,9 +2,9 @@ let
   vincent-yubikey5a = "";
   #vincent-yubikey5a = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFT5Rx+4Wuvd8lMBkcHxb4oHdRhm/OTg+p5tvPzoIN9enSmgRw5Inm/SlS8ZzV87G1NESTgzDRi6hREvqDlKvxs=";
   vincent-yubikey5c1 = "age1yubikey1q0g72w5n3zgt4qv64fkymcttqlpct0yh0rf29079h3696d6wkruakkst877"; # does this work ? Otherwise the ssh one.
-  # vincent-yubikey5c1 = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE=";
-  # vincent-yubikey5c2 = "";
-  users = [ vincent-yubikey5c1 vincent-yubikey5a ];
+  # vincent-yubikey5c1 = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBFzxC16VqwTgWDQfw2YCiOw2JzpH3z9XgHtKoHhBdHi2i9m9XUc7fIUeEIIf7P8ARRNd8q5bjvl8JY7LtPkNCU=";
+  vincent-yubikey5c2 = "age1yubikey1qf2vcr22ugzj94dzfhdrz39h60ukr6gvk2687de2srg9407azd53kgsajvu";
+  users = [ vincent-yubikey5c1 vincent-yubikey5c2 ];
 
   aomi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME"; # ssh-keyscan -q -t ed25519 aomi.sbr.pm
   athena = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4KRP1rzOwyA2zP1Nf1WlLRHqAGutLtOHYWfH732xh"; # ssh-keyscan -q -t ed25519 athena.sbr.pm
