@@ -50,7 +50,8 @@ executable, each of which is a string."
                ("M-n"         . vde/dired-down)
                ("!"           . vde/sudired)
                ("<prior>"     . beginend-dired-mode-goto-beginning)
-               ("<next>"      . beginend-dired-mode-goto-end)))
+               ("<next>"      . beginend-dired-mode-goto-end)
+	       ("b"           . dired-do-open)))
   :config
   (setq-default dired-auto-revert-buffer t
                 dired-recursive-copies 'always
