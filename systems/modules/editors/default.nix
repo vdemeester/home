@@ -4,7 +4,7 @@ let
   cfg = config.modules.editors;
 in
 {
-  imports = [ ./vim.nix ./emacs.nix ];
+  imports = [ ./vim.nix ./emacs.nix ./neovim.nix ];
   options.modules.editors = {
     default = mkOption {
       description = "default editor";
