@@ -127,6 +127,7 @@ in
   modules = {
     core.binfmt.enable = true;
     editors.emacs.enable = true;
+    editors.neovim.enable = true;
     hardware = {
       yubikey = { enable = true; u2f = true; };
       laptop.enable = true;
@@ -218,7 +219,6 @@ in
       # acceleration = "cuda"; # no nivida :D
     };
     geoclue2.enable = true;
-    envfs.enable = false;
     # automatic login is "safe" as we ask for the encryption passphrase anyway..
     getty.autologinUser = "vincent";
     logind.extraConfig = ''
