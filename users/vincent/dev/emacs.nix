@@ -70,6 +70,7 @@ let
     git-modes
     go-mode
     gotest
+    gptel
     hardhat
     helpful
     highlight

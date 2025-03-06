@@ -1,0 +1,3 @@
+[submodule "tools/emacs/lisp/aider.el"]
+	path = tools/emacs/lisp/aider.el
+	url = https://github.com/tninja/aider.el
