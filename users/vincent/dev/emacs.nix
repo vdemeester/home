@@ -89,7 +89,7 @@ let
     nix-ts-mode
     nixpkgs-fmt
     no-littering
-    notmuch
+    # notmuch
     ob-async
     ob-go
     ob-http
