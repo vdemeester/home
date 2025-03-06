@@ -29,7 +29,12 @@ let
     conner
     consult
     consult-dir
+    consult-denote
+    consult-gh
+    consult-gh-embark
+    # consult-gh-with-pr-review
     consult-notes
+    consult-project-extra
     consult-vc-modified-files
     copilot
     copilot-chat
@@ -50,6 +55,7 @@ let
     edit-indirect
     editorconfig
     eldoc-box
+    pr-review
     embark
     embark-consult
     envrc

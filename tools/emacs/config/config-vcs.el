@@ -289,13 +289,37 @@
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package consult-vc-modified-files
+  :after consult
   :bind
-  ("C-x v /" . consult-vc-modified-files)
+  ("C-x v /" . consult-vc-modified-files))
+
+(use-package consult-gh
+  :after consult
+  :custom
+  (consult-gh-default-clone-directory "~/projects")
+  (consult-gh-show-preview t)
+  (consult-gh-preview-key "C-o")
+  (consult-gh-repo-action #'consult-gh--repo-browse-files-action)
+  (consult-gh-issue-action #'consult-gh--issue-view-action)
+  (consult-gh-pr-action #'consult-gh--pr-view-action)
+  (consult-gh-code-action #'consult-gh--code-view-action)
+  (consult-gh-file-action #'consult-gh--files-view-action)
+  (consult-gh-notifications-action #'consult-gh--notifications-action)
+  (consult-gh-dashboard-action #'consult-gh--dashboard-action)
+  (consult-gh-large-file-warning-threshold 2500000)
+  (consult-gh-prioritize-local-folder 'suggest)
   :config
-  ;; (setq consult-vc-modified-files-sources
-  ;; 	'(consult-vc-modified-source-files
-  ;;         consult-vc-modified-source-head-files))
-)
+  ;; Remember visited orgs and repos across sessions
+  (add-to-list 'savehist-additional-variables 'consult-gh--known-orgs-list)
+  (add-to-list 'savehist-additional-variables 'consult-gh--known-repos-list)
+  ;; Enable default keybindings (e.g. for commenting on issues, prs, ...)
+  (consult-gh-enable-default-keybindings))
+
+
+;; Install `consult-gh-embark' for embark actions
+(use-package consult-gh-embark
+  :config
+  (consult-gh-embark-mode +1))
 
 (provide 'config-vcs)
 ;;; config-vcs.el ends here
