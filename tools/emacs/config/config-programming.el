@@ -97,16 +97,24 @@ in the project root *or* the default-directory."
   (add-to-list 'run-command-recipes 'run-command-recipe-hack)
   (add-to-list 'run-command-recipes 'run-command-recipe-make))
 
-;; try out consult-gh
-;; (use-package consult-gh
-;;   :after consult
-;;   :config
-;;   (add-to-list 'consult-gh-default-orgs-list "vdemeester")
-;;   (setq consult-gh-default-orgs-list (append consult-gh-default-orgs-list (remove "" (split-string (or (consult-gh--command-to-string "org" "list") "") "\n"))))
-;;   (require 'consult-gh-embark)
-;;   (require 'consult-gh-transient)
-;;   (setq consult-gh-show-preview t)
-;;   (setq consult-gh-preview-key "M-o"))
+(defvar highlight-codetags-keywords
+  '(("\\<\\(TODO\\|FIXME\\|BUG\\|XXX\\)\\>" 1 font-lock-warning-face prepend)
+    ("\\<\\(NOTE\\|HACK\\)\\>" 1 font-lock-doc-face prepend)))
+
+(define-minor-mode highlight-codetags-local-mode
+  "Highlight codetags like TODO, FIXME..."
+  :global nil
+  (if highlight-codetags-local-mode
+      (font-lock-add-keywords nil highlight-codetags-keywords)
+    (font-lock-remove-keywords nil highlight-codetags-keywords))
+
+  ;; Fontify the current buffer
+  (when (bound-and-true-p font-lock-mode)
+    (if (fboundp 'font-lock-flush)
+        (font-lock-flush)
+      (with-no-warnings (font-lock-fontify-buffer)))))
+
+(add-hook 'prog-mode-hook #'highlight-codetags-local-mode)
 
 (provide 'config-programming)
 ;;; config-programming.el ends here
