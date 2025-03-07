@@ -174,6 +174,10 @@ in
     };
   };
   services = {
+    locate = {
+      enable = true;
+      pruneBindMounts = true;
+    };
     geoclue2.enable = true;
     # clight = {
     #   enable = true;
