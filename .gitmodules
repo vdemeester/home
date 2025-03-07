@@ -1,3 +1,6 @@
 [submodule "tools/emacs/lisp/aider.el"]
 	path = tools/emacs/lisp/aider.el
 	url = https://github.com/tninja/aider.el
+[submodule "tools/emacs/lisp/consult-mu"]
+	path = tools/emacs/lisp/consult-mu
+	url = https://github.com/armindarvish/consult-mu
