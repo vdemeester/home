@@ -158,11 +158,6 @@ in
     virt-manager
     catt
     go-org-readwise
-    aerc # move it on its own
-    # move to its own
-    passage
-    age
-    age-plugin-yubikey
     age-plugin-tpm
   ];
 

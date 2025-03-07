@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -13,6 +13,9 @@
 
   home.extraOutputsToInstall = [ "doc" "info" "devdoc" ];
 
+  home.sessionVariables = {
+    CARGO_HOME = "${config.xdg.dataHome}/cargo";
+  };
   home.packages = with pkgs; [
     binutils
     cmake

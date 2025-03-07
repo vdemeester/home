@@ -96,6 +96,8 @@ in
         sandbox = true;
         allowed-users = [ "@wheel" ];
         trusted-users = [ "root" "@wheel" ];
+        # See https://nixos.org/manual/nix/stable/command-ref/conf-file#conf-use-xdg-base-directories
+        use-xdg-base-directories = true;
       };
     };
 

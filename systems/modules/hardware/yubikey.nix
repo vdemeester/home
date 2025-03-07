@@ -26,6 +26,7 @@ in
           yubico-piv-tool
           yubikey-personalization
           yubikey-manager
+          age-plugin-yubikey
         ];
       };
       services = {

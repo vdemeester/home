@@ -10,9 +10,9 @@
     la = ''ls -a'';
     l = ''ls -lah'';
     # t = ''exa --tree --level=2'';
-    wget = ''wget -c'';
     map = ''xargs -n1'';
     k = ''kubectl'';
+    wget = ''wget -c --hsts-file=${config.xdg.dataHome}/wget-hsts'';
   };
 
   env = ''
@@ -23,6 +23,8 @@
     if [ -d $HOME/.krew/bin ]; then
       export PATH=$HOME/.krew/bin:$PATH
     fi
+    # TODO Move somewhere else
+    export TLDR_CACHE_DIR="$XDG_CACHE_HOME"/tldr 
   '';
 
   historySize = 10000;

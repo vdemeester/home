@@ -3,6 +3,7 @@
 {
   home.sessionVariables = {
     # GOPATH = "${config.home.homeDirectory}";
+    GOPATH = "${config.xdg.dataHome}/go";
   };
   home.packages = with pkgs; [
     gcc

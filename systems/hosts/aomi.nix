@@ -196,10 +196,6 @@ in
     catt
     go-org-readwise
     vscode
-    # move to its own
-    passage
-    age
-    age-plugin-yubikey
     age-plugin-tpm
   ];
 
