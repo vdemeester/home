@@ -44,6 +44,7 @@
 			   :match-func (lambda (msg) (when msg
 						       (string-prefix-p "/icloud" (mu4e-message-field msg :maildir))))
 			   :vars '(
+				   (user-mail-address . "vincent@demeester.fr")
 				   (mu4e-trash-folder . "/icloud/Deleted Messages")
 				   (mu4e-sent-folder . "/icloud/Sent Messages")
 				   (mu4e-draft-folder . "/icloud/Drafts")
@@ -54,6 +55,7 @@
 			   :match-func (lambda (msg) (when msg
 						       (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
 			   :vars '(
+				   (user-mail-address . "vinc.demeester@gmail.com")
 				   (mu4e-drafts-folder  . "/gmail/[Gmail]/Drafts")
 				   (mu4e-sent-folder  . "/gmail/[Gmail]/Sent Mail")
 				   ;; (mu4e-refile-folder  . "/gmail/[Gmail]/All Mail")
@@ -65,6 +67,7 @@
 			   :match-func (lambda (msg) (when msg
 						       (string-prefix-p "/redhat" (mu4e-message-field msg :maildir))))
 			   :vars '(
+				   (user-mail-address . "vdemeest@redhat.com")
 				   (mu4e-drafts-folder  . "/redhat/[Gmail]/Drafts")
 				   (mu4e-sent-folder  . "/redhat/[Gmail]/Sent Mail")
 				   ;; (mu4e-refile-folder  . "/redhat/[Gmail]/All Mail")
@@ -85,6 +88,44 @@
       message-sendmail-f-is-evil t
       message-sendmail-extra-arguments '("--read-envelope-from")
       message-send-mail-function 'message-send-mail-with-sendmail)
+
+(use-package consult-mu
+  :after mu4e
+  :custom
+  ;;maximum number of results shown in minibuffer
+  (consult-mu-maxnum 200)
+  ;;show preview when pressing any keys
+  (consult-mu-preview-key 'any)
+  ;;do not mark email as read when previewed. If you turn this to t, be aware that the auto-loaded preview if the preview-key above is 'any would also get marked as read!
+  (consult-mu-mark-previewed-as-read nil)
+  ;;mark email as read when selected.
+  (consult-mu-mark-viewed-as-read t)
+  ;;use reply to all when composing reply emails
+  (consult-mu-use-wide-reply t)
+  ;; define a template for headers view in minibuffer. The example below adjusts the width based on the width of the screen.
+  (consult-mu-headers-template (lambda () (concat "%f" (number-to-string (floor (* (frame-width) 0.15))) "%s" (number-to-string (floor (* (frame-width) 0.5))) "%d13" "%g" "%x")))
+
+  :config
+  ;;create a list of saved searches for quick access using `histroy-next-element' with `M-n' in minibuffer. Note the "#" character at the beginning of each query! Change these according to
+  (setq consult-mu-saved-searches-dynamics '("#flag:unread"))
+  (setq consult-mu-saved-searches-async '("#flag:unread"))
+  ;; require embark actions for marking, replying, forwarding, etc. directly from minibuffer
+  (require 'consult-mu-embark)
+  ;; require extra module for composing (e.g. for interactive attachment) as well as embark actions
+  (require 'consult-mu-compose)
+  (require 'consult-mu-compose-embark)
+  ;; require extra module for searching contacts and runing embark actions on contacts
+  (require 'consult-mu-contacts)
+  (require 'consult-mu-contacts-embark)
+  ;; change the prefiew key for compose so you don't open a preview of every file when selecting files to attach
+  (setq consult-mu-compose-preview-key "M-o")
+  ;; pick a key to bind to consult-mu-compose-attach in embark-file-map
+  (setq consult-mu-embark-attach-file-key "C-a")
+  (setq consult-mu-contacts-ignore-list '("^.*no.*reply.*"))
+  (setq consult-mu-contacts-ignore-case-fold-search t)
+  (consult-mu-compose-embark-bind-attach-file-key)
+  ;; choose if you want to use dired for attaching files (choice of 'always, 'in-dired, or nil)
+  (setq consult-mu-compose-use-dired-attachment 'in-dired))
 
 (provide 'config-mu4e)
 ;;; config-mu4e.el ends here

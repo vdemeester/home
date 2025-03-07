@@ -36,6 +36,9 @@
     (error "Your Emacs is too old -- this configuration requires v%s or higher" minver)))
 
 (add-to-list 'load-path (concat user-emacs-directory "/lisp/"))
+(add-to-list 'load-path (concat user-emacs-directory "/lisp/aider.el"))
+(add-to-list 'load-path (concat user-emacs-directory "/lisp/consult-mu"))
+(add-to-list 'load-path (concat user-emacs-directory "/lisp/consult-mu/extras"))
 
 (setq inhibit-default-init t)           ; Disable the site default settings
 
