@@ -315,11 +315,19 @@
   ;; Enable default keybindings (e.g. for commenting on issues, prs, ...)
   (consult-gh-enable-default-keybindings))
 
+(use-package consult-gh-transient
+  :after consult-gh)
 
 ;; Install `consult-gh-embark' for embark actions
 (use-package consult-gh-embark
+  :after consult-gh
   :config
   (consult-gh-embark-mode +1))
+
+(use-package consult-gh-with-pr-review
+  :after consult-gh
+  :config
+  (consult-gh-with-pr-review-mode +1))
 
 (provide 'config-vcs)
 ;;; config-vcs.el ends here
