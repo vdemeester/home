@@ -65,6 +65,7 @@ let
     flimenu
     flymake-yamllint
     focus
+    general
     git-gutter
     git-gutter-fringe
     git-modes
