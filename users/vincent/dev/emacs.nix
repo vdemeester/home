@@ -19,6 +19,7 @@ let
     adoc-mode
     age
     aggressive-indent
+    aidermacs
     alert
     async
     avy
@@ -120,6 +121,7 @@ let
     # passage
     pkgs.bookmark-plus # Do I use it ?
     popper
+    project-rootfile
     rg
     run-command # Try this out instead of conner, might be even better
     scopeline
