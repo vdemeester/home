@@ -249,9 +249,9 @@ The DWIM behaviour of this command is as follows:
 (require '00-clean) ;; Maybe refactor no-littering
 (require 'config-editing)
 (require 'config-files)
-(require 'config-keybindings)
 (require 'config-misc)
 (unless noninteractive
+  (require 'config-keybindings)
   (require 'config-appearance)
   (require 'config-buffers)
   (require 'config-compile)
