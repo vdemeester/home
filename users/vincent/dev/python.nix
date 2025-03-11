@@ -4,8 +4,8 @@
   xdg.configFile."python/pythonrc".source = ./python/pythonrc;
   home.packages = with pkgs; [
     pipenv
-    python3
-    python3Packages.python-lsp-server
+    python313
+    python313Packages.python-lsp-server
     uv
   ];
   home.sessionVariables = {
