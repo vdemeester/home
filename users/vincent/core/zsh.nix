@@ -12,6 +12,7 @@ in
   home.file."${config.programs.zsh.dotDir}/completion.zsh".source = ./zsh/completion.zsh;
   home.file."${config.programs.zsh.dotDir}/prompt.zsh".source = ./zsh/prompt.zsh;
   home.file."${config.programs.zsh.dotDir}/functions/j".source = ./zsh/j;
+  home.file."${config.programs.zsh.dotDir}/auto-expanding-aliases.zsh".source = ./zsh/auto-expanding-aliases.zsh;
 
   programs = {
     direnv.enableZshIntegration = true;
@@ -69,6 +70,7 @@ in
       source $HOME/${config.programs.zsh.dotDir}/plugins/powerlevel10k/powerlevel10k.zsh-theme
       source $HOME/${config.programs.zsh.dotDir}/prompt.zsh
       source $HOME/${config.programs.zsh.dotDir}/plugins/kubectl-config-switcher/kubectl-config-switcher.plugin.zsh
+      source $HOME/${config.programs.zsh.dotDir}/auto-expanding-aliases.zsh
       setopt HIST_IGNORE_SPACE
       alias -g L="|less"
       alias -g EEL=' 2>&1 | less'
