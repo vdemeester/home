@@ -15,6 +15,7 @@
 - https://gitlab.com/andreyorst/dotfiles/
 - https://github.com/gopar/.emacs.d
 - https://github.com/precompute/CleanEmacs/
+- https://github.com/jakebox/jake-emacs
 
 * Packages "inspirations"
 

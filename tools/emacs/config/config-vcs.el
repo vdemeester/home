@@ -296,6 +296,9 @@
 (use-package consult-gh
   :after consult
   :custom
+  (consult-gh-dashboard-maxnum 150)
+  (consult-gh-issues-maxnum 150)
+  (consult-gh-pr-maxnum 150)
   (consult-gh-default-clone-directory "~/projects")
   (consult-gh-show-preview t)
   (consult-gh-preview-key "C-o")
@@ -328,6 +331,47 @@
   :after consult-gh
   :config
   (consult-gh-with-pr-review-mode +1))
+
+(use-package pr-review
+  :custom
+  (pr-review-ghub-host "api.github.com")
+  (pr-review-notification-include-read nil)
+  (pr-review-notification-include-unsubscribed nil)
+  :config
+  (require pr-review-notification)
+  (require pr-review-search)
+  (general-leader
+    "p" '(:ignore t :which-key "PR Review")
+    "pn" #'(pr-review-notification :wk "PR review notifications")
+    "pa" #'(pr-review-current-repository :wk "PR review current repository")
+    ;; This one doesn't really work it seems
+    "ps" #'(pr-review-current-repository-search :wk "PR review search current repository")))
+
+(defun pr-review-current-repository-search (query)
+  "Run pr-review-search on the current repository."
+  (interactive "sSearch query: ")
+  (pr-review-search (format "is:pr archived:false is:open repo:%s %s" (vde/gh-get-current-repo) query)))
+
+(defun pr-review-current-repository ()
+  "Run pr-review-search on the current repository."
+  (interactive)
+  (pr-review-search (format "is:pr archived:false is:open repo:%s" (vde/gh-get-current-repo))))
+
+;; (pr-review-search "build is:pr archive:false is:open repo:tektoncd/pipeline")
+;; (pr-review-search "build")
+
+;; TODO this is relatively slow. Cache result or ?
+(defun vde/gh-get-current-repo ()
+  "Get the current repository name using the `gh' command line."
+  (unless (executable-find "gh")
+    (error "GitHub CLI (gh) command not found"))
+
+  (with-temp-buffer
+    (let ((exit-code (call-process "gh" nil t nil "repo" "view" "--json" "owner,name" "--template" "{{.owner.login}}/{{.name}}")))
+      (unless (= exit-code 0)
+	(error "Failed to get repository info: gh command exited with code %d" exit-code))
+      (string-trim (buffer-string)))))
+
 
 (provide 'config-vcs)
 ;;; config-vcs.el ends here

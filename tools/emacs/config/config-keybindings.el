@@ -19,7 +19,7 @@
   (general-def "C-M-<SPC>" 'cycle-spacing)
 
   (general-leader
-   "f"   '(:ignore t :wk ("File" . "File prefix"))
+   "f"   '(:ignore t :wk "File")
    "ff"  #'(project-find-file :wk "Find in Project")
    ))
 
