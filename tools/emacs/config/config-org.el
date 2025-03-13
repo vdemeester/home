@@ -11,6 +11,8 @@
 ;; P.A.R.A. setup
 (defconst org-inbox-file (expand-file-name "20231120T124316--inbox__inbox.org" org-directory)
   "New stuff collected in this file.")
+(defconst org-remember-file (expand-file-name "20250311T171330--remember__notes_orgmode_remember.org" org-directory)
+  "Remember file, very quick and dirty scratch notes, to be refiled later on.")
 
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
   "Directory of archived files.")
@@ -94,6 +96,7 @@
   (org-log-redeadline 'time)
   (org-log-reschedule 'time)
   (org-log-into-drawer t)
+  (org-refile-use-cache t)
   (org-refile-use-outline-path 'file)
   (org-refile-allow-creating-parent-nodes 'confirm)
   (org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
@@ -138,6 +141,11 @@
 				    ("i*" ,(list (propertize "📒")))))
   (org-agenda-sticky t)
   :config
+
+  ;; Refile org-mode cache when emacs has been idled for 5 minutes
+  (run-with-idle-timer 300 t (lambda ()
+                               (org-refile-cache-clear)
+                               (org-refile-get-targets)))
   
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
@@ -324,7 +332,7 @@ file which do not already have one."
 	 ("C-c n s" . denote-subdirectory)
 	 ("C-c n t" . denote-template)
 	 ;; Links
-	 ("C-c n i" . denote-link)
+	 ("C-c n i" . denote-link-or-create)
 	 ("C-c n I" . denote-add-links)
 	 ("C-c n b" . denote-backlinks)
 	 ("C-c n f f" . denote-find-link)
@@ -611,6 +619,20 @@ Within those groups, sort by date and priority."
   (setq org-startup-with-inline-images t)
   (setq org-download-display-inline-images t)
   (setq org-download-method 'attach))
+
+;; Persistent notes (like persistent-scratch, but built-in)
+(setq initial-buffer-choice org-remember-file
+      remember-data-file org-remember-file
+      remember-handler-functions '(remember-append-to-file)
+      remember-notes-initial-major-mode 'org-mode
+      remember-notes-auto-save-visited-file-name t
+      remember-in-new-frame t)
+
+(defun my/switch-to-scratch-buffer (f)
+  (with-selected-frame f
+    (remember-notes t)))
+	
+(add-hook 'after-make-frame-functions #'my/switch-to-scratch-buffer)
 
 (provide 'config-org)
 ;;; config-org.el ends here
