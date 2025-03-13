@@ -26,6 +26,7 @@
     gnumake
     gron
     gum
+    ijq
     jq
     markdownlint-cli
     minica
