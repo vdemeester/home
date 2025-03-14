@@ -165,11 +165,12 @@ in
         # Make sure we update systemd service env variables with the current ones. This is required for dbus to work properly.
         { command = "dbus-update-activation-environment --systemd --all"; }
         { command = "systemctl --user restart kanshi"; always = true; }
-        { command = "${pkgs.pa-notify}/bin/pa-notify"; always = true; }
+        { command = "${pkgs.pa-notify}/bin/pa-notify -u0"; always = true; }
         # Probably put a condition here.
         { command = "emacs --fg-daemon"; }
         { command = "i3-back"; }
         { command = "firefox"; }
+        { command = "${pkgs.kitty}/bin/kitty --title metask --class metask"; }
       ];
     };
     extraConfig =
