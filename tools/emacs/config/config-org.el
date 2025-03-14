@@ -621,18 +621,11 @@ Within those groups, sort by date and priority."
   (setq org-download-method 'attach))
 
 ;; Persistent notes (like persistent-scratch, but built-in)
-(setq initial-buffer-choice org-remember-file
-      remember-data-file org-remember-file
+(setq remember-data-file org-remember-file
       remember-handler-functions '(remember-append-to-file)
       remember-notes-initial-major-mode 'org-mode
       remember-notes-auto-save-visited-file-name t
       remember-in-new-frame t)
-
-(defun my/switch-to-scratch-buffer (f)
-  (with-selected-frame f
-    (remember-notes t)))
-	
-(add-hook 'after-make-frame-functions #'my/switch-to-scratch-buffer)
 
 (provide 'config-org)
 ;;; config-org.el ends here
