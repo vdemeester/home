@@ -399,6 +399,16 @@ Add this function to the `after-save-hook'."
      (t
       (denote-sluggify (denote--retrieve-title-or-filename (buffer-file-name) 'org))))))
 
+(use-package denote-menu
+  :after denote
+  :bind (("C-c n m" . list-denotes)
+	 (:map denote-menu-mode-map
+	       ("c" . denote-menu-clear-filters)
+	       ("/ r" . denote-menu-filter)
+	       ("/ k" . denote-menu-filter-by-keyboard)
+	       ("/ o" . denote-menu-filter-out-keyboard)
+	       ("e" . denote-menu-export-to-dired))))
+
 (use-package consult-notes
   :commands (consult-notes
              consult-notes-search-in-all-notes
@@ -626,6 +636,9 @@ Within those groups, sort by date and priority."
       remember-notes-initial-major-mode 'org-mode
       remember-notes-auto-save-visited-file-name t
       remember-in-new-frame t)
+
+(use-package consult-org
+  :after (consult))
 
 (provide 'config-org)
 ;;; config-org.el ends here

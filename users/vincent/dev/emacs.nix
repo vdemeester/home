@@ -44,6 +44,7 @@ let
     dape
     dash
     denote
+    denote-menu
     devdocs
     dired-collapse
     dired-narrow
