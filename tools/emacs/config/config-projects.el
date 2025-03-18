@@ -99,14 +99,13 @@ switch to it. Otherwise, create a new vterm shell."
   :config
   (general-leader
     "p"  '(:ignore :which-key "Project")
-    "pp"  #'(my-switch-to-project-dired :wk "Switch to Project")
-    "ps"  #'(my-switch-to-project-search :wk "Grep in Project")
-    "pf"  #'(project-find-file :wk "Find in Project")
-    "pd"  #'(project-dired :wk "Dired in Project")
-    "pc"  #'(project-compile :wk "Compile in Project")
-    "pb"  #'(project-switch-to-buffer :wk "Switch to Project Buffer")
-    "pk"  #'(project-kill-buffers :wk "Kill Project Buffers")
-    "pr"  #'(my-find-recent-file-in-project :wk "List Recentf in Project")
+    "pp"  #'(project-switch-project :which-key "Switch to Project")
+    "ps"  #'(project-search :which-key "Grep in Project")
+    "pf"  #'(project-find-file :which-key "Find in Project")
+    "pd"  #'(project-dired :which-key "Dired in Project")
+    "pc"  #'(project-compile :which-key "Compile in Project")
+    "pb"  #'(project-switch-to-buffer :which-key "Switch to Project Buffer")
+    "pk"  #'(project-kill-buffers :which-key "Kill Project Buffers")
     "ps"  #'(vde-project-vterm :which-key "Start a vterm in Project")
     "px"  #'(vde-project-run-in-vterm :which-key "Execute command in vterm in Project")))
 

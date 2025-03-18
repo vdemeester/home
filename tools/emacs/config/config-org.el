@@ -405,8 +405,8 @@ Add this function to the `after-save-hook'."
 	 (:map denote-menu-mode-map
 	       ("c" . denote-menu-clear-filters)
 	       ("/ r" . denote-menu-filter)
-	       ("/ k" . denote-menu-filter-by-keyboard)
-	       ("/ o" . denote-menu-filter-out-keyboard)
+	       ("/ k" . denote-menu-filter-by-keyword)
+	       ("/ o" . denote-menu-filter-out-keyword)
 	       ("e" . denote-menu-export-to-dired))))
 
 (use-package consult-notes
