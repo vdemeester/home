@@ -169,6 +169,10 @@ in
     };
   };
   services = {
+    dictd = {
+      enable = true;
+      DBs = with pkgs.dictdDBs; [ wiktionary wordnet fra2eng eng2fra ];
+    };
     locate = {
       enable = true;
       pruneBindMounts = true;
