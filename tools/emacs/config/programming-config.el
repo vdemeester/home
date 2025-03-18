@@ -40,6 +40,14 @@
 ;;   :after yaml-ts-mode
 ;;   :hook (yaml-ts-mode . yaml-pro-ts-mode))
 
+(use-package consult-flymake
+  :after (consult)
+  :bind
+  ("M-s M-d" . consult-flymake)
+  :config
+  (general-leader
+    "sd" #'(consult-flymake :which-key "Flymake diagnostics")))
+
 (use-package flymake-yamllint
   :after yaml-ts-mode
   :hook
