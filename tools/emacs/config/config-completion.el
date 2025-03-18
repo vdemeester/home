@@ -43,11 +43,37 @@
   ("M-s M-g" . consult-grep)
   ("M-s M-r" . consult-ripgrep)
   ("M-s M-h" . consult-history)
-  ("M-s M-i" . consult-imenu)
   ("M-s M-l" . consult-line)
   ("M-s M-m" . consult-mark)
   ("M-s M-y" . consult-yank-pop)
-  ("M-s M-s" . consult-outline))
+  ("M-s M-s" . consult-outline)
+  :config
+  (general-leader
+    "y"  #'(consult-yank-pop :which-key "Clipboard history")
+    "b"  '(:ignore t :which-key "buffer")
+    "bb" #'(consult-buffer :which-key "switch buffer")
+    "bd" #'(kill-current-buffer :which-key "kill buffer")
+    "bD" #'((lambda ()(interactive)(kill-current-buffer)(tab-close)) :wk "Kill buffer and tab")
+    "bn" #'(next-buffer :which-key "next buffer")
+    "bp" #'(previous-buffer :which-key "previous buffer")
+    "s"  '(:ignore t :which-key "search")
+    "sg" #'(consult-grep :which-key "Consult grep in current directory")
+    "sR" #'(consult-ripgrep :which-key "Consult ripgrep in current directory")
+    "sr" '(:ignore t :which-key "rg.el")'
+    "srp" #'(rg-project :which-key "rg.el in current project")
+    "srs" #'(rg-dwim :which-key "rg.el Do What I Mean")
+    "sh"  #'(Info-goto-emacs-command-node :wk "Search help")
+    "sc"  #'(consult-mode-command :wk "Mode Command")
+    "s/"  #'(consult-isearch-history :wk "Consult Isearch history")
+    "g"  '(:ignore t :which-key "go")
+    "gu" #'(ffap-next-url :which-key "next url")
+    "gd" #'(xref-find-definitions :which-key "find definition")
+    "gD" #'(xref-find-definitions-other-window :which-key "find definition (other window)")))
+
+(use-package consult-imenu
+  :after (consult)
+  :bind
+  ("M-s M-i" . consult-imenu))
 
 (use-package consult-xref
   :config
@@ -259,11 +285,12 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
   (add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1))
 
-(use-package corfu-candidate-overlay
-  :after corfu
-  :bind (("C-<tab>" . corfu-candidate-overlay-complete-at-point))
-  :config
-  (corfu-candidate-overlay-mode +1))
+;; Seems like it is a bit impacting the performance somehow.
+;; (use-package corfu-candidate-overlay
+;;   :after corfu
+;;   :bind (("C-<tab>" . corfu-candidate-overlay-complete-at-point))
+;;   :config
+;;   (corfu-candidate-overlay-mode +1))
 
 (use-package cape
   :bind (("C-c p f" . cape-file)

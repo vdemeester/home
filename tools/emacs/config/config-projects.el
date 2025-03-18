@@ -96,7 +96,19 @@ switch to it. Otherwise, create a new vterm shell."
       (when command
         (vterm-send-string command)
         (vterm-send-return))))
-  )
+  :config
+  (general-leader
+    "p"  '(:ignore :which-key "Project")
+    "pp"  #'(my-switch-to-project-dired :wk "Switch to Project")
+    "ps"  #'(my-switch-to-project-search :wk "Grep in Project")
+    "pf"  #'(project-find-file :wk "Find in Project")
+    "pd"  #'(project-dired :wk "Dired in Project")
+    "pc"  #'(project-compile :wk "Compile in Project")
+    "pb"  #'(project-switch-to-buffer :wk "Switch to Project Buffer")
+    "pk"  #'(project-kill-buffers :wk "Kill Project Buffers")
+    "pr"  #'(my-find-recent-file-in-project :wk "List Recentf in Project")
+    "ps"  #'(vde-project-vterm :which-key "Start a vterm in Project")
+    "px"  #'(vde-project-run-in-vterm :which-key "Execute command in vterm in Project")))
 
 (use-package conner
   :bind (("C-x p C" . conner-run-project-command))
