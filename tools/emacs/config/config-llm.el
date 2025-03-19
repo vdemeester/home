@@ -171,19 +171,20 @@ Here is the result of `git diff --cached`:")
   (require 'gptel-transient)
   (require 'gptel-rewrite)
   (require 'gptel-org)
+  (require 'gptel-openapi)
+  (require 'gptel-openapi-extras)
+  (require 'gptel-autoloads)
   (setq gptel-model 'gemini-2.0-pro-exp
 	gptel-backend (gptel-make-gemini "Gemini"
 			:models '("gemini-2.0-flash"
-						   "gemini-2.0-flash-lite-preview-02-05")
-					 :key (passage-get "ai/gemini/api_key"))
+				  "gemini-2.0-flash-lite-preview-02-05")
+			:key (passage-get "ai/gemini/api_key"))
 	)
 
-  (message (password-store-get "api/gemini/api_key"))
-  (gptel-backend
-   (gptel-make-deepseek "Deepseek"
-     :key  (passage-get "ai/deepseek/api_key")
-     :models '("deepseek-reasoner" "deepseek-chat" )))
-
+  (gptel-make-deepseek "Deepseek"
+		       :key  (passage-get "ai/deepseek/api_key")
+		       :models '("deepseek-reasoner" "deepseek-chat" ))
+  
   (gptel-make-openai "Groq"
     :host "api.groq.com"
     :endpoint "/openai/v1/chat/completions"
