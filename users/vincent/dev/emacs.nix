@@ -60,6 +60,7 @@ let
     pr-review
     embark
     embark-consult
+    emms
     envrc
     eshell-atuin
     eshell-prompt-extras
@@ -119,7 +120,7 @@ let
     outline-indent
     ox-pandoc
     pandoc-mode
-    # passage
+    passage
     pkgs.bookmark-plus # Do I use it ?
     popper
     project-rootfile
