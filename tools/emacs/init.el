@@ -267,6 +267,7 @@ The DWIM behaviour of this command is as follows:
   (require 'config-vcs)
   (require 'config-web)
   (require 'config-windows)
+  (require 'config-llm)
   (require 'programming-config)
   (require 'programming-containers)
   (require 'programming-cue)

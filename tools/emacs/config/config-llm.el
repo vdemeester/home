@@ -164,28 +164,30 @@ Here is the result of `git diff --cached`:")
     "o m" '(gptel-menu :wk "GPTel menu"))
   :custom
   (gptel-default-mode #'markdown-mode)
-  (gptel-model 'gemini-2.0-pro-exp)
   :config
-  (setq gptel-backend
-        (gptel-make-ollama "Ollama"
-          :host "localhost:11434" 
-          :stream t                             
-          :models '("mistral-small" "deepseek-r1:7b" "deepseek-coder:6.7b" "llama3.2" "llama3.1")))
-  (setq (gptel-make-gemini "Gemini"
-          :models '("gemini-2.0-flash"
-                    "gemini-2.0-flash-lite-preview-02-05")
-          :key (password-store-get "google/gemini-api")))
+  (require 'gptel-curl)
+  (require 'gptel-gemini)
+  (require 'gptel-ollama)
+  (require 'gptel-transient)
+  (require 'gptel-rewrite)
+  (setq gptel-model 'gemini-2.0-pro-exp
+	gptel-backend (gptel-make-gemini "Gemini"
+					 :models '("gemini-2.0-flash"
+						   "gemini-2.0-flash-lite-preview-02-05")
+					 :key (passage-get "ai/gemini/api_key"))
+	))
 
+  (message (password-store-get "api/gemini/api_key"))
   (gptel-backend
    (gptel-make-deepseek "Deepseek"
-     :key  (password-store-get "deepseek/api")
+     :key  (passage-get "ai/deepseek/api_key")
      :models '("deepseek-reasoner" "deepseek-chat" )))
 
   (gptel-make-openai "Groq"
     :host "api.groq.com"
     :endpoint "/openai/v1/chat/completions"
     :stream t
-    :key (password-store-get "groq/api")
+    :key (passage-get "ai/groq/wakasu")
     :models '("llama-3.3-70b-versatile"
               "llama-3.1-70b-versatile"
               "llama-3.1-8b-instant"
@@ -195,7 +197,17 @@ Here is the result of `git diff --cached`:")
               "deepseek-r1-distill-llama-70b-specdec"
               "qwen-2.5-coder-32b"
               "mixtral-8x7b-32768"
-              "gemma-7b-it")))
+              "gemma-7b-it"))
+  
+  (gptel-make-ollama "Ollama"
+    :host "localhost:11434"
+    :stream t
+    :models '("smollm:latest"
+              "llama3.1:latest"
+              "deepseek-r1:latest"
+              "mistral-small:latest"
+              "deepseek-r1:7b"
+              "nomic-embed-text:latest")))
 
 (use-package gptel-context
   :after gptel
