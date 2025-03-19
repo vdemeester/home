@@ -3,6 +3,18 @@
 ;;; Miscellaneous modes configuration
 ;;; Code:
 
+;; (use-package password-store
+;;   :custom
+;;   (password-store-executable "passage"))
+
+(defvar passage-program "passage"
+  "The path to the `passage` executable.")
+
+(defun passage-get (password-name)
+  "Return the password for PASSWORD-NAME from `passage show`."
+  (let ((password (shell-command-to-string (concat passage-program " show " (shell-quote-argument password-name)))))
+    (string-trim password))) ; Trim whitespace here
+
 (use-package helpful
   :unless noninteractive
   :bind (("C-h f" . helpful-callable)
