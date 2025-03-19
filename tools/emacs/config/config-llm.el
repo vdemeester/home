@@ -146,7 +146,8 @@ Here is the result of `git diff --cached`:")
   (aidermacs-setup-minor-mode))
 
 (use-package gptel
-  :hook (gptel-mode . poly-gfm-mode)
+  :hook
+  (gptel-mode . visual-line-mode)
   :bind
   (:map gfm-mode-map
         ("C-c C-k" . gptel-abort)
@@ -156,25 +157,73 @@ Here is the result of `git diff --cached`:")
         ("C-c C-k" . gptel-abort)
         ("C-c C-m" . gptel-menu)
         ("C-c C-c" . gptel-send))
+  :general
+  (general-leader
+    "o"   '(:ignore t :wk "GPTel")
+    "o o" '(gptel :wk "Start GPTel")
+    "o m" '(gptel-menu :wk "GPTel menu"))
+  :custom
+  (gptel-default-mode #'markdown-mode)
+  (gptel-model 'gemini-2.0-pro-exp)
   :config
-  (setq gptel-default-mode #'markdown-mode
-        gptel-backend
+  (setq gptel-backend
         (gptel-make-ollama "Ollama"
           :host "localhost:11434" 
           :stream t                             
           :models '("mistral-small" "deepseek-r1:7b" "deepseek-coder:6.7b" "llama3.2" "llama3.1")))
+  (setq (gptel-make-gemini "Gemini"
+          :models '("gemini-2.0-flash"
+                    "gemini-2.0-flash-lite-preview-02-05")
+          :key (password-store-get "google/gemini-api")))
+
+  (gptel-backend
+   (gptel-make-deepseek "Deepseek"
+     :key  (password-store-get "deepseek/api")
+     :models '("deepseek-reasoner" "deepseek-chat" )))
+
   (gptel-make-openai "Groq"
     :host "api.groq.com"
     :endpoint "/openai/v1/chat/completions"
     :stream t
-    ;; :key (password-store-get "groq/api")
+    :key (password-store-get "groq/api")
     :models '("llama-3.3-70b-versatile"
               "llama-3.1-70b-versatile"
               "llama-3.1-8b-instant"
               "llama3-70b-8192"
               "llama3-8b-8192"
+              "deepseek-r1-distill-qwen-32b"
+              "deepseek-r1-distill-llama-70b-specdec"
+              "qwen-2.5-coder-32b"
               "mixtral-8x7b-32768"
               "gemma-7b-it")))
+
+(use-package gptel-context
+  :after gptel
+  :general
+  (general-leader
+    "o c" '(:ignore t :which-key "GPTel Context")
+    "o c a" 'gptel-context-add
+    "o c r" 'gptel-context-remove
+    "o c s" '(lambda ()
+               (interactive)
+               (gptel-context-remove-all nil)
+               (unless (use-region-p)
+                 (mark-defun))
+               (gptel-context-add)
+               (my-switch-to-gptel-buffer))))
+
+(defun my-switch-to-gptel-buffer (&optional arg)
+  "Switch to the most recent buffer with gptel-mode enabled or start it."
+  (interactive "P")
+  (let (target-buffer)
+    (setq target-buffer (cl-find-if 
+                         (lambda (buf)
+                           (with-current-buffer buf
+                             (bound-and-true-p gptel-mode)))
+                         (buffer-list)))
+    (unless target-buffer
+      (call-interactively 'gptel))
+    (pop-to-buffer target-buffer)))
 
 (provide 'config-llm)
 ;;; config-llm.el ends here
