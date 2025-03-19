@@ -1,3 +1,6 @@
 [submodule "tools/emacs/lisp/consult-mu"]
 	path = tools/emacs/lisp/consult-mu
 	url = https://github.com/armindarvish/consult-mu
+[submodule "passage"]
+	path = tools/emacs/lisp/passage
+	url = https://github.com/anticomputer/passage.el

@@ -120,7 +120,6 @@ let
     outline-indent
     ox-pandoc
     pandoc-mode
-    passage
     pkgs.bookmark-plus # Do I use it ?
     popper
     project-rootfile
