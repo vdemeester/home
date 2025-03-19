@@ -170,12 +170,13 @@ Here is the result of `git diff --cached`:")
   (require 'gptel-ollama)
   (require 'gptel-transient)
   (require 'gptel-rewrite)
+  (require 'gptel-org)
   (setq gptel-model 'gemini-2.0-pro-exp
 	gptel-backend (gptel-make-gemini "Gemini"
-					 :models '("gemini-2.0-flash"
+			:models '("gemini-2.0-flash"
 						   "gemini-2.0-flash-lite-preview-02-05")
 					 :key (passage-get "ai/gemini/api_key"))
-	))
+	)
 
   (message (password-store-get "api/gemini/api_key"))
   (gptel-backend
