@@ -1,3 +1,22 @@
+;;; portal.el --- Run processes in portals
+;;
+;; Copyright (C) 2024 Chris Done
+;;
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 2, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+;; Boston, MA 02111-1307, USA.
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customizations
 
@@ -6,7 +25,7 @@
   :group 'convenience)
 
 (defcustom portal-outputs-directory
-  "~/.portals/"
+  "~/.local/share/portals/"
   "Directory where to create output artifacts."
   :type 'string :group 'portal)
 
@@ -30,6 +49,11 @@
 
 (defface portal-exited-stdout-face
   '((t :foreground "#acac9e"))
+  "Portal exited stdout face."
+  :group 'portal)
+
+(defface portal-timestamp-face
+  '((t :foreground "#888888"))
   "Portal exited stdout face."
   :group 'portal)
 
@@ -77,12 +101,20 @@ buffer."
 (defun portal-open-stdout ()
   "Open the stdout of the file at point."
   (interactive)
-  (find-file (portal-file-name (portal-at-point) "stdout")))
+  (with-current-buffer (find-file-other-window (portal-file-name (portal-at-point) "stdout"))
+    (portal-ansi-colors-minor-mode)
+    (auto-revert-tail-mode)
+    (goto-char (point-max))
+    (push-mark (point-max))))
 
 (defun portal-open-stderr ()
   "Open the stderr of the file at point."
   (interactive)
-  (find-file (portal-file-name (portal-at-point) "stderr")))
+  (with-current-buffer (find-file-other-window (portal-file-name (portal-at-point) "stderr"))
+    (portal-ansi-colors-minor-mode)
+    (auto-revert-tail-mode)
+    (goto-char (point-max))
+    (push-mark (point-max))))
 
 (defun portal-interrupt ()
   "Interrupt the process at point."
@@ -116,7 +148,7 @@ buffer."
            shell-file-name
            shell-command-switch
            (read-from-minibuffer
-            "Command: "
+            "Edit command: "
             (portal-as-shell-command (portal-read-json-file portal "command")))))
          (env (portal-read-json-file portal "env"))
          (default-directory (portal-read-json-file portal "directory")))
@@ -298,6 +330,15 @@ location."
     (concat "portal_" nanoid)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; A minor mode for applying ansi-term colors to a buffer
+
+(define-minor-mode portal-ansi-colors-minor-mode
+  "Apply ANSI colors for terminal outputs."
+  :init-value nil
+  :lighter "ANSI"
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; A small minor mode that just sets up a timer that runs a thing in a
 ;; given buffer every N seconds
 
@@ -372,7 +413,11 @@ later."
                      (portal-last-n-lines
                       5
                       (process-get (process-get process :stderr-process) :buffer))
-                   (portal-tail-file portal 5 "stderr"))))
+                   (portal-tail-file portal 5 "stderr")))
+         (started-time
+          (file-attribute-modification-time (file-attributes (portal-file-name portal "command"))))
+         (exited-time
+          (file-attribute-modification-time (file-attributes (portal-file-name portal "status")))))
     (with-temp-buffer
       (insert (propertize
                (concat "# (" (if (string= status "run") "🌀" status) ") " (portal-as-shell-command command))
@@ -382,6 +427,17 @@ later."
                  (if (string= status "0")
                      'portal-exit-success-face
                    'portal-exit-failure-face))))
+      (insert "\n"
+              (concat
+               (propertize (format-time-string "# Started: %Y-%m-%d %T" started-time)
+                           'face 'portal-timestamp-face)
+               (if (string= status "run")
+                   ""
+                 (propertize (concat
+                              (format-time-string ", exited: %Y-%m-%d %T" exited-time)
+                              " => "
+                              (portal-display-time-difference started-time exited-time))
+                             'face 'portal-timestamp-face))))
       ;; Only show if it's different to the current directory,
       ;; otherwise it's noise.
       (unless (string= default-directory directory) (insert "\n# " directory))
@@ -400,6 +456,29 @@ later."
                               'portal-exited-stderr-face))))
       (propertize (buffer-string)
                   'portal portal))))
+
+(defun portal-display-time-difference (start-time end-time)
+  "Display the time difference between START-TIME and END-TIME in human-readable format.
+START-TIME and END-TIME should be Emacs Lisp time values as returned by `current-time'.
+The function will display the time in the most appropriate unit (from ns to days)."
+  (let* ((diff (float-time (time-subtract end-time start-time))))
+    (apply #'format
+           (cons "%.3f %s"
+                 (cond
+                  ((< diff 1e-6)
+                   (list (* diff 1e9) "ns"))
+                  ((< diff 1e-3)
+                   (list (* diff 1e6) "us"))
+                  ((< diff 1)
+                   (list (* diff 1e3) "ms"))
+                  ((< diff 60)
+                   (list diff "s"))
+                  ((< diff 3600)
+                   (list (/ diff 60) "mins"))
+                  ((< diff 86400)
+                   (list (/ diff 3600) "hours"))
+                  (t
+                   (list (/ diff 86400) "days")))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; String generation
@@ -441,7 +520,12 @@ later."
 
 (defun portal-no-empty-lines (string)
   "Drop empty lines from a string."
-  (replace-regexp-in-string "\n$" "" string))
+  (replace-regexp-in-string
+   ;; Drop ANSI codes from terminal output
+   ;; <https://superuser.com/questions/380772/removing-ansi-color-codes-from-text-stream>
+   "\\(\x1B\\[[0-9;]*[A-Za-z]\\|[\x00-\x09\x0B-\x1F\x7F]\\|\n$\\|^\n\\)"
+   ""
+   string))
 
 (defun portal-last-n-lines (n string)
   "Take last N lines from STRING."
@@ -499,14 +583,16 @@ the same paragraph."
 ;; Major mode
 
 (defvar-keymap portal-mode-map
-  "M-!" 'portal-shell-command
+  "M-!" 'portal-dwim-execute
   "C-c C-c" 'portal-interrupt
   "RET" 'portal-jump-to-thing-at-point
+  "M-p" 'portal-rerun
   )
 
 (define-derived-mode portal-mode
   fundamental-mode "Portals"
   "Major mode for portals."
+  (setq buffer-save-without-query t)
   (portal-alpha-minor-mode))
 
 (defun portal-insert-command (command)
@@ -522,6 +608,15 @@ buffer."
      (car command)
      (cdr command))
     (insert portal)))
+
+(defun portal-dwim-execute ()
+  (interactive)
+  (call-interactively
+   (if (condition-case nil
+           (portal-at-point)
+         (error nil))
+       'portal-edit
+     'portal-shell-command)))
 
 (defun portal-shell-command (command)
   "Run a shell command and insert it at point."
@@ -544,3 +639,6 @@ the file."
      ((eq face 'portal-exited-stdout-face)
       (portal-open-stdout))
      (t (call-interactively 'newline)))))
+
+(provide 'portal)
+

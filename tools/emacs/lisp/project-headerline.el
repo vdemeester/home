@@ -6,6 +6,9 @@
 ;; Author: Victor Gaydov <victor@enise.org>
 ;; Created: 03 Feb 2025
 ;; URL: https://github.com/gavv/project-headerline
+;; Version: 0.4
+;; Package-Requires: ((emacs "28.2") (f "0.21.0") (s "1.13.0") (all-the-icons "5.0.0"))
+;; Keywords: convenience
 
 ;;; License:
 
@@ -44,12 +47,9 @@
 (require 'seq)
 (require 'vc)
 
-(when (featurep 'projectile)
-  (require 'projectile))
-(when (featurep 'magit)
-  (require 'magit))
-(when (featurep 'all-the-icons)
-  (require 'all-the-icons))
+(require 'projectile nil 'noerror)
+(require 'magit nil 'noerror)
+(require 'all-the-icons nil 'noerror)
 
 (require 'f)
 (require 's)
@@ -62,19 +62,19 @@
 
 (defface project-headerline-project-name
   '((t :inherit font-lock-string-face :weight bold))
-  "Face used for 'project-name segment."
+  "Face used for \\='project-name segment."
   :package-version '(project-headerline . "0.1")
   :group 'project-headerline)
 
 (defface project-headerline-path-in-project
   '((t :inherit font-lock-keyword-face))
-  "Face used for 'path-in-project segment."
+  "Face used for \\='path-in-project segment."
   :package-version '(project-headerline . "0.1")
   :group 'project-headerline)
 
 (defface project-headerline-buffer-name
   '((t :inherit font-lock-builtin-face))
-  "Face used for 'buffer-name segment."
+  "Face used for \\='buffer-name segment."
   :package-version '(project-headerline . "0.1")
   :group 'project-headerline)
 
@@ -86,22 +86,35 @@
 
 (defface project-headerline-path-separator
   '((t :inherit shadow :height 0.8))
-  "Face used for between path components inside 'path-in-project' segment."
+  "Face used for between path components inside `path-in-project' segment."
   :package-version '(project-headerline . "0.1")
   :group 'project-headerline)
 
-(defcustom project-headerline-display-segments '(project-name path-in-project buffer-name)
+(defface project-headerline-space
+  '((t :height 0.5))
+  "Face used for spaces around segment and path separators."
+  :package-version '(project-headerline . "0.2")
+  :group 'project-headerline)
+
+(defcustom project-headerline-display-segments
+  '(
+    ;; list of pre-defined symbols, each symbol corresponds to a segment
+    project-name
+    path-in-project
+    buffer-name
+    ;;
+    )
   "Which segments to show and in what order.
 
 Must be a list of symbols, where each symbol represents a segment:
 
-  - 'project-name' - name of project where current file belongs
-  - 'path-in-project' - relative path from project root up to the current file
-  - 'buffer-name' - file name or buffer name
+  - `project-name' - name of project where current file belongs
+  - `path-in-project' - relative path from project root up to the current file
+  - `buffer-name' - file name or buffer name
 
-'path-in-project' segment is present only if buffer is file or directory.
-'buffer-name' segment displays file or directory name if buffer is visiting one,
-and uses (buffer-name) otherwise."
+`path-in-project' segment is present only if buffer is file or directory.
+`buffer-name' segment displays file or directory name if buffer is visiting one,
+and uses function (buffer-name) otherwise."
   :package-version '(project-headerline . "0.1")
   :group 'project-headerline
   :type '(repeat
@@ -127,7 +140,7 @@ to create it with default icon name."
   :set 'project-headerline--set-variable)
 
 (defcustom project-headerline-path-separator nil
-  "String or icon to separate path components inside 'path-in-project' segment.
+  "String or icon to separate path components inside \\='path-in-project segment.
 
 Icon is actually also a string, but with special properties.
 For example, you can create one using `all-the-icons-material'.
@@ -142,7 +155,7 @@ to create it with default icon name."
   :set 'project-headerline--set-variable)
 
 (defcustom project-headerline-path-ellipsis "..."
-  "String or icon used when 'path-in-project' segment is truncated.
+  "String or icon used when \\='path-in-project' segment is truncated.
 
 If the segment is too long, a few leading path components are
 replaced with the value of this variable."
@@ -164,22 +177,23 @@ replaced with the value of this variable."
     ;; detect using builtin project.el package
     (project :allow-remote nil
              :describe ,(lambda ()
-                          (when-let ((project (project-current)))
-                            (list :name (project-name project)
+                          (when-let* ((project (project-current)))
+                            (list :name (f-base (project-root project))
                                   :path (project-root project)))))
     ;; detect using magit, if installed
     (magit :allow-remote nil
            :describe ,(lambda ()
                         (when (featurep 'magit)
-                          (when-let ((magit-root (magit-toplevel)))
+                          (when-let* ((magit-root (magit-toplevel)))
                             (list :name (f-filename magit-root)
                                   :path (f-full magit-root))))))
     ;; detect using builtin vc package
     (vc :allow-remote nil
         :describe ,(lambda ()
-                     (when-let ((vc-root (vc-root-dir)))
+                     (when-let* ((vc-root (vc-root-dir)))
                        (list :name (f-filename vc-root)
                              :path (f-full vc-root)))))
+    ;;
     )
   "Assoc list of project detection methods.
 
@@ -210,8 +224,11 @@ Used by default implementation of
 
 (defcustom project-headerline-fallback-alist
   '(
+    ;; pseudo-project "~" for all orphan files under $HOME
     ("~" . "~/")
+    ;; pseudo-project "/" for all other orphan files
     ("/" . "/")
+    ;;
     )
   "Assoc list of fallback projects when normal detection fails.
 
@@ -219,16 +236,16 @@ Assoc list key is project name.
 Assoc list value is project path.
 
 If no project was detected using `project-headerline-detect-alist',
-then `project-headerline-fallback-alist' is scanned. A fallback
+then `project-headerline-fallback-alist' is scanned.  A fallback
 project is selected if it's path is the parent of buffer's path.
 
 You can use it both for real projects with hard-coded paths
-(e.g. if they're not identified by common methods), and for
+\(e.g. if they're not identified by common methods), and for
 fallbacks for buffers that don't really belong to a project.
 
 By default, two `pseudo projects` are registered: `~' for any
 file inside home directory, and `/' for any file elsewhere
-on filesystem. You can disable this by removing corresponding
+on filesystem.  You can disable this by removing corresponding
 elements from the assoc list."
   :package-version '(project-headerline . "0.1")
   :group 'project-headerline
@@ -239,10 +256,13 @@ elements from the assoc list."
 
 (defcustom project-headerline-rename-alist
   '(
+    ;; magit
     ("^\\(magit\\):.*" . "\\1")
     ("^\\(magit-[a-z]+\\):.*" . "\\1")
+    ;; compilation
     ("^\\*compilation\\*<.*>" . "compilation")
     ("^\\*compilation<.*>\\*" . "compilation")
+    ;;
     )
   "Assoc list of buffer rename rules.
 
@@ -250,7 +270,7 @@ Assoc list key is a regular expression.
 Assoc list value is a replacement string that can use capture groups.
 
 Keys and values are passed to `replace-regexp-in-string' and FROM and
-TO arguments. If any of the rule matches buffer, buffer name displayed
+TO arguments.  If any of the rule matches buffer, buffer name displayed
 in headerline is changed according to the replacement."
   :package-version '(project-headerline . "0.1")
   :group 'project-headerline
@@ -291,9 +311,9 @@ For `dir' buffers, `:dir' is path to directory itself.
 For `other' buffers, `:dir' is path to a directory associated with
 the buffer, typically `default-directory' inside that buffer.
 
-Default implementation reports `dir' for dired buffers, `file' for
-buffers with non-empty `buffer-file-name', and `other' for the rest.
-It also applies buffer renaming rules according to variable
+Default implementation reports `dir' for Dired buffers, `file' for
+buffers with non-empty variable `buffer-file-name', and `other' for
+the rest.  It also applies buffer renaming rules according to variable
 `project-headerline-rename-alist'."
   :package-version '(project-headerline . "0.1")
   :group 'project-headerline
@@ -326,11 +346,11 @@ and applies corresponding faces."
   "Function to create icon from name.
 
 Takes two arguments:
-  - 'icon-name' - string name of the icon
-  - 'icon-face' - face to apply to the icon
+  - `icon-name' - string name of the icon
+  - `icon-face' - face to apply to the icon
 
 Returns propertized string with the icon.
-If icon is not available, returns nil. In this case fallback
+If icon is not available, returns nil.  In this case fallback
 character will be used instead of the icon.
 
 Default implementation uses `all-the-icons-material' when it's
@@ -356,7 +376,11 @@ Takes no arguments and returns number of characters."
     conf-mode
     text-mode
     dired-mode)
-  "Modes in which `global-project-headerline-mode' enables `project-headerline-mode'.
+  "Modes in which to enable `project-headerline-mode' automatically.
+
+When `global-project-headerline-mode' is enabled, it enables headerline
+in buffer if its major mode is derived from one of these modes.
+
 Note that minibuffer and hidden buffers are always excluded."
   :package-version '(project-headerline . "0.1")
   :group 'project-headerline
@@ -370,7 +394,7 @@ and `project-headerline-fallback-alist' and defines project name and path.
 
 It can be either a string or a list:
 
- - If it's a string, it should be a path to project directory. Project name
+ - If it's a string, it should be a path to project directory.  Project name
    is set to the directory name.
 
  - If it's a list, it should be a plist with project properties, in the same
@@ -378,6 +402,9 @@ It can be either a string or a list:
 
 It's convenient to set this from local variables, e.g. in `.dir-locals.el'
 in the project root.")
+
+;; Forward-declate mode variable.
+(defvar project-headerline-mode)
 
 (defun project-headerline--set-variable (symbol value)
   "Setter for defcustom.
@@ -398,15 +425,21 @@ Otherwise, evaluate FORM, store in cache, and return it."
      (or (gethash ,key cache)
          (puthash ,key ,form cache))))
 
-(defmacro project-headerline--call (func &rest args)
+(defmacro project-headerline--call (func-or-cons &rest args)
   "Call user function.
 On error, display warning and return nil."
-  `(condition-case err
-       (funcall ,func ,@args)
-     (error
-      (warn "Caught error from %s: %s" ,(symbol-name func)
-            (error-message-string err))
-      nil)))
+  (let ((func (if (consp func-or-cons)
+                  (car func-or-cons)
+                func-or-cons))
+        (name (if (consp func-or-cons)
+                  (cdr func-or-cons)
+                (symbol-name func-or-cons))))
+    `(condition-case err
+         (funcall ,func ,@args)
+       (error
+        (warn "Caught error from %s: %s" ,name
+              (error-message-string err))
+        nil))))
 
 (defun project-headerline-describe-project ()
   "Get current project properties.
@@ -436,7 +469,8 @@ see its docstring for details."
                 (when (and (or allow-remote
                                (not (file-remote-p default-directory)))
                            describe-fn)
-                  (project-headerline--call describe-fn))))
+                  (project-headerline--call
+                   (describe-fn . "project-headerline-detect-alist :describe")))))
             project-headerline-detect-alist))
 
 (defun project-headerline--project-from-fallback-alist ()
@@ -524,22 +558,27 @@ Otherwise returns buffer name."
    (t
     (buffer-name))))
 
+;; Forward-declare to ensure they are not byte-compiled as lexical.
+(defvar all-the-icons-scale-factor)
+(defvar all-the-icons-default-adjust)
+
 (defun project-headerline-icon (icon-name icon-face)
   "Format propertized icon string from icon name and face.
 Default implementation of `project-headerline-icon-function',
 see its docstring for details."
   (when (functionp 'all-the-icons-material)
     (let ((all-the-icons-scale-factor 1.0)
-          (all-the-icons-default-adjust -0.18))
+          (all-the-icons-default-adjust -0.15))
       (when-let* ((icon (all-the-icons-material icon-name :face icon-face))
-                  (sep (s-concat " " icon " ")))
-        sep))))
+                  (space (propertize " " 'font-lock-face 'project-headerline-space)))
+        (s-concat
+         space icon space)))))
 
 (defun project-headerline-width ()
   "Return maximum number of characters in headerline.
 Default implementation of `project-headerline-width-function',
 see its docstring for details."
-  (/ (window-width) 1.5))
+  (window-width))
 
 (defun project-headerline--separator (key default-icon default-char)
   "Make propertized icon string."
@@ -554,8 +593,9 @@ see its docstring for details."
       (project-headerline--call project-headerline-icon-function
                                 default-icon face-name)
       ;; default char
-      (propertize (s-concat " " default-char " ")
-                  'face face-name)))))
+      (let ((char (propertize default-char 'font-lock-face face-name))
+            (space (propertize " " 'font-lock-face 'project-headerline-space)))
+        (s-concat space char space))))))
 
 (defun project-headerline--path-components (root-path path)
   "Split path from ROOT-PATH to CURR-PATH into components."
@@ -616,22 +656,23 @@ see its docstring for details."
       project buffer))))
 
 (defun project-headerline--format-project-name (project buffer)
-  "Build 'project segment."
+  "Build \\='project segment."
+  (ignore buffer)
   (let ((project-name (plist-get project :name)))
     (when (s-present-p project-name)
       (propertize project-name
                   'font-lock-face 'project-headerline-project-name))))
 
 (defun project-headerline--format-path-in-project (project buffer max-path)
-  "Build 'path-in-project segment."
+  "Build \\='path-in-project segment."
   (let* ((project-path (plist-get project :path))
          (buffer-type (plist-get buffer :type))
          (buffer-dir (plist-get buffer :dir))
          (path-in-project (cond
                            ;; directory
                            ((eq buffer-type 'dir)
-                            (if (and (seq-contains project-headerline-display-segments
-                                                   'buffer-name)
+                            (if (and (seq-contains-p project-headerline-display-segments
+                                                     'buffer-name)
                                      (not (f-same-p project-path
                                                     buffer-dir)))
                                 (f-parent buffer-dir)
@@ -663,7 +704,7 @@ see its docstring for details."
         result))))
 
 (defun project-headerline--format-buffer-name (project buffer)
-  "Build 'buffer segment."
+  "Build \\='buffer segment."
   (let* ((project-path (plist-get project :path))
          (buffer-type (plist-get buffer :type))
          (buffer-dir (plist-get buffer :dir))
@@ -695,7 +736,7 @@ see its docstring for details."
 
 (defun project-headerline--composer-match (elem func)
   "Match `header-line-format' element by composer function."
-  (when-let ((form (car-safe (cdr-safe elem))))
+  (when-let* ((form (car-safe (cdr-safe elem))))
     (and (eq (car form) :eval)
          (eq (caadr form) func))))
 
@@ -735,8 +776,8 @@ see its docstring for details."
 
 (defun project-headerline--magit-compose (text)
   "Build magit headerline.
-If project-headerline-mode is off, produces same result as original
-`magit-set-header-line-format'. Otherwise, produces right-aligned
+If `project-headerline-mode' is off, produces same result as original
+`magit-set-header-line-format'.  Otherwise, produces right-aligned
 headerline that can be use together with `project-headerline'."
   (project-headerline--cached
    'magit-headerline
@@ -751,9 +792,8 @@ headerline that can be use together with `project-headerline'."
     text)))
 
 (defun project-headerline--magit-advice (orig-fn &rest args)
-  "Wraps magit headrline builder to support using `project-headerline'
-in magit buffers. If you don't use project-headerline with magit,
-no visible changes are made."
+  "Wraps magit headrline builder to support `project-headerline' in magit buffers.
+If you don't use project-headerline with magit, no visible changes are made."
   ;; safety check: don't follow advice if signature doesn't
   ;; match what it used to be
   (if (and (eq 1 (length args))
@@ -763,27 +803,32 @@ no visible changes are made."
     (apply orig-fn args)))
 
 (defun project-headerline--rename-file-advice (orig-fn &rest args)
-  "Wraps rename-file to update headerline on name change."
+  "Wraps `rename-file' to update headerline on name change."
   (unwind-protect
       (apply orig-fn args)
     (let ((from (car args))
           (to (cadr args)))
-      (dolist (buffer (buffer-list))
-        (when-let ((buffer-path (buffer-file-name buffer)))
-          (when (or (and from (f-same-p buffer-path from))
-                    (and to (f-same-p buffer-path to)))
-            (project-headerline-reset-buffer buffer)))))))
+      (project-headerline--reset-paths from to))))
 
-(defun project-headerline--rename-buffer-advice (orig-fn &rest args)
-  "Wraps rename-buffer to update headerline on name change."
+(defun project-headerline--add-name-to-file-advice (orig-fn &rest args)
+  "Wraps `add-name-to-file' to update headerline on name change."
   (unwind-protect
       (apply orig-fn args)
-    (project-headerline-reset-buffer)))
+    (let ((from (car args))
+          (to (cadr args)))
+      (project-headerline--reset-paths from to))))
+
+(defun project-headerline--rename-buffer-advice (orig-fn &rest args)
+  "Wraps `rename-buffer' to update headerline on name change."
+  (unwind-protect
+      (apply orig-fn args)
+    (project-headerline--reset-buffer)))
 
 (defun project-headerline--enable-maybe ()
-  "Enable `project-headerline-mode' in current buffer if its major mode is
-derived from one of the modes in `project-headerline-mode-list'.
-Never enable in minibuffer and hidden buffers."
+  "Enable `project-headerline-mode' in current buffer, if needed.
+Headerline is enabled if buffer major mode is derived from one of the modes
+in `project-headerline-mode-list'.
+Never enables in minibuffer and hidden buffers."
   (when (and (not (minibufferp))
              (not (string-match "^ " (buffer-name)))
              (seq-some #'derived-mode-p project-headerline-mode-list)
@@ -797,30 +842,44 @@ Never enable in minibuffer and hidden buffers."
                 :around #'project-headerline--magit-advice))
   (advice-add 'rename-file
               :around #'project-headerline--rename-file-advice)
+  (advice-add 'add-name-to-file
+              :around #'project-headerline--add-name-to-file-advice)
   (advice-add 'rename-buffer
               :around #'project-headerline--rename-buffer-advice))
 
 (defun project-headerline--register-hooks ()
   "Register all hooks."
   (add-hook 'window-configuration-change-hook
-            #'project-headerline-reset-buffer nil :local)
+            #'project-headerline--reset-buffer nil :local)
   (add-hook 'after-revert-hook
-            #'project-headerline-reset-buffer nil :local))
+            #'project-headerline--reset-buffer nil :local)
+  (add-hook 'after-set-visited-file-name-hook
+            #'project-headerline--reset-buffer nil :local))
 
 (defun project-headerline--unregister-hooks ()
   "Unregister all hooks."
   (remove-hook 'window-configuration-change-hook
-               #'project-headerline-reset-buffer :local)
+               #'project-headerline--reset-buffer :local)
   (remove-hook 'after-revert-hook
-               #'project-headerline-reset-buffer :local))
+               #'project-headerline--reset-buffer :local)
+  (remove-hook 'after-set-visited-file-name-hook
+               #'project-headerline--reset-buffer :local))
 
-(defun project-headerline-reset-buffer (&optional buffer)
-  "Invalidate headerline caches and refresh"
+(defun project-headerline--reset-buffer (&optional buffer)
+  "Refresh headerline in given BUFFER (or current)."
   (with-current-buffer (or buffer (current-buffer))
     (when (bound-and-true-p project-headerline--cache)
       (setq-local project-headerline--cache nil))
     (when project-headerline-mode
       (force-mode-line-update))))
+
+(defun project-headerline--reset-paths (&rest paths)
+  "Refresh headerline in buffers visiting any of PATHS."
+  (dolist (buffer (buffer-list))
+    (when-let* ((buffer-path (buffer-file-name buffer)))
+      (dolist (path paths)
+        (when (and path (f-same-p buffer-path path))
+          (project-headerline--reset-buffer buffer))))))
 
 ;;;###autoload
 (defun project-headerline-reset (&optional buffer)
@@ -828,9 +887,9 @@ Never enable in minibuffer and hidden buffers."
 If BUFFER is given, refresh only that buffer."
   (interactive)
   (if buffer
-      (project-headerline-reset-buffer buffer)
+      (project-headerline--reset-buffer buffer)
     (dolist (buffer (buffer-list))
-      (project-headerline-reset-buffer buffer))))
+      (project-headerline--reset-buffer buffer))))
 
 ;;;###autoload
 (define-minor-mode project-headerline-mode
@@ -848,11 +907,11 @@ If BUFFER is given, refresh only that buffer."
     ;; disable mode
     (project-headerline--unregister-hooks)
     (project-headerline--composer-remove 'project-headerline--compose)
-    (project-headerline-reset-buffer)
+    (project-headerline--reset-buffer)
     (force-mode-line-update)))
 
 ;;;###autoload
-(define-global-minor-mode global-project-headerline-mode
+(define-globalized-minor-mode global-project-headerline-mode
   project-headerline-mode
   project-headerline--enable-maybe
   :group 'project-headerline)
