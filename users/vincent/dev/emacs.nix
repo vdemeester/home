@@ -74,6 +74,7 @@ let
     git-modes
     go-mode
     gotest
+    gotest-ts
     gptel
     hardhat
     helpful
@@ -100,6 +101,7 @@ let
     nix-ts-mode
     nixpkgs-fmt
     no-littering
+    noether
     # notmuch
     ob-async
     ob-go
