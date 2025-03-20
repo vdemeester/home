@@ -41,6 +41,7 @@
     yamlfmt
     yq-go
     radicle-node
+    vscode-fhs
   ];
 
   home.file.".ignore".text = ''
