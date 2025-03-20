@@ -4,7 +4,7 @@
 ;; Code:
 
 ;;;###autoload
-(defun vde/split-window-below (arg)
+(defun vde/split-window-below (&optional arg)
   "Split window below from the parent or from the roo with ARG."
   (interactive "P")
   (split-window (if arg (frame-root-window)
@@ -12,7 +12,7 @@
 	       nil 'below nil))
 
 ;;;###autoload
-(defun vde/split-window-right (arg)
+(defun vde/split-window-right (&optional arg)
   "Split window right from the parent or from the roo with ARG."
   (interactive "P")
   (split-window (if arg (frame-root-window)
