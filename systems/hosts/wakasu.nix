@@ -169,6 +169,7 @@ in
     };
   };
   services = {
+    ollama.enable = true;
     dictd = {
       enable = true;
       DBs = with pkgs.dictdDBs; [ wiktionary wordnet fra2eng eng2fra ];
