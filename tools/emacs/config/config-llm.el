@@ -176,15 +176,38 @@ Here is the result of `git diff --cached`:")
   (require 'gptel-autoloads)
   (setq gptel-model 'gemini-2.0-pro-exp
 	gptel-backend (gptel-make-gemini "Gemini"
-			:models '("gemini-2.0-flash"
-				  "gemini-2.0-flash-lite-preview-02-05")
+			;; :models '("gemini-2.0-flash"
+			;; 	  "gemini-2.0-flash-lite-preview-02-05"
+			;; 	  "gemini:gemini-2.0-flash-thinking-exp"
+			;; 	  "gemini:gemini-2.0-pro-exp")
 			:key (passage-get "ai/gemini/api_key"))
 	)
 
   (gptel-make-deepseek "Deepseek"
 		       :key  (passage-get "ai/deepseek/api_key")
-		       :models '("deepseek-reasoner" "deepseek-chat" ))
+		       ;; :models '("deepseek-reasoner" "deepseek-chat" )
+		       )
+
+  (gptel-make-openai "MistralLeChat"
+    :host "api.mistral.ai/v1"
+    :endpoint "/chat/completions"
+    :protocol "https"
+    :key (passage-get "ai/mistralai/api_key")
+    :models '("mistral-small"))
   
+  (gptel-make-openai "OpenRouter"
+    :host "openrouter.ai"
+    :endpoint "/api/v1/chat/completions"
+    :stream t
+    :key (passage-get "ai/openrouter/api_key")
+    ;; :models '(openai/gpt-3.5-turbo
+    ;;           mistralai/mixtral-8x7b-instruct
+    ;;           meta-llama/codellama-34b-instruct
+    ;;           codellama/codellama-70b-instruct
+    ;;           google/palm-2-codechat-bison-32k
+    ;;           google/gemini-pro)
+    )
+
   (gptel-make-openai "Groq"
     :host "api.groq.com"
     :endpoint "/openai/v1/chat/completions"
