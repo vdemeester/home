@@ -3,6 +3,32 @@
 ;;; Version control configuration
 ;;; Code:
 
+
+(defun vde/vc-browse-remote (&optional current-line)
+  "Open the repository's remote URL in the browser.
+If CURRENT-LINE is non-nil, point to the current branch, file, and line.
+Otherwise, open the repository's main page."
+  (interactive "P")
+  (let* ((remote-url (string-trim (vc-git--run-command-string nil "config" "--get" "remote.origin.url")))
+		 (branch (string-trim (vc-git--run-command-string nil "rev-parse" "--abbrev-ref" "HEAD")))
+		 (file (string-trim (file-relative-name (buffer-file-name) (vc-root-dir))))
+		 (line (line-number-at-pos)))
+	(message "Opening remote on browser: %s" remote-url)
+	(if (and remote-url (string-match "\\(?:git@\\|https://\\)\\([^:/]+\\)[:/]\\(.+?\\)\\(?:\\.git\\)?$" remote-url))
+		(let ((host (match-string 1 remote-url))
+			  (path (match-string 2 remote-url)))
+		  ;; Convert SSH URLs to HTTPS (e.g., git@github.com:user/repo.git -> https://github.com/user/repo)
+		  (when (string-prefix-p "git@" host)
+			(setq host (replace-regexp-in-string "^git@" "" host)))
+		  ;; Construct the appropriate URL based on CURRENT-LINE
+		  (browse-url
+		   (if current-line
+			   (format "https://%s/%s/blob/%s/%s#L%d" host path branch file line)
+			 (format "https://%s/%s" host path))))
+	  (message "Could not determine repository URL"))))
+
+(global-set-key (kbd "C-x v B") 'vde/vc-browse-remote)
+
 (use-package vc
   :config
   (setq-default vc-find-revision-no-save t
