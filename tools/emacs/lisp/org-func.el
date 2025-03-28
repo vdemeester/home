@@ -47,7 +47,7 @@ BEGIN and END are regexps which define the line range to use."
           (setq r (1+ (line-number-at-pos (match-end 0)))))
         (format "%s-%s" (+ l 1) (- r 1)))))) ;; Exclude wrapper
 
-(defun vde--get-outline-path (element)
+(defun vde/get-outline-path (element)
   "Return the outline path (as a list of titles) for ELEMENT, which is a headline."
   (let (path)
     (while (and element (eq (org-element-type element) 'headline))
@@ -59,7 +59,7 @@ BEGIN and END are regexps which define the line range to use."
 
 ;;;###autoload
 (defun vde/org-clock-in-any-heading ()
-  "Clock into any Org heading from `org-agenda-files'."
+  "Clock into any Org heading from `org-agenda-files' that is not DONE or CANCELED."
   (interactive)
   (let (headings)
     (dolist (file org-agenda-files)
@@ -67,11 +67,13 @@ BEGIN and END are regexps which define the line range to use."
         (with-current-buffer (find-file-noselect file)
           (org-map-entries (lambda ()
                               (let* ((element (org-element-context))
-                                     (path (vde--get-outline-path element)))
-                                (push (list :path path
-                                            :file (buffer-file-name)
-                                            :position (point))
-                                      headings)))
+                                     (todo (org-element-property :todo-keyword element)))
+                                (when (not (member todo '("DONE" "CANCELED")))
+                                  (let* ((path (vde/get-outline-path element)))
+                                    (push (list :path path
+                                                :file (buffer-file-name)
+                                                :position (point))
+                                          headings)))))
                            t 'file))))
     (let* (candidates)
       (dolist (h headings)
