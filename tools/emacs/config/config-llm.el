@@ -171,8 +171,8 @@ Here is the result of `git diff --cached`:")
   (require 'gptel-transient)
   (require 'gptel-rewrite)
   (require 'gptel-org)
-  (require 'gptel-openapi)
-  (require 'gptel-openapi-extras)
+  (require 'gptel-openai)
+  (require 'gptel-openai-extras)
   (require 'gptel-autoloads)
   (setq gptel-model 'gemini-2.0-pro-exp
 	gptel-backend (gptel-make-gemini "Gemini"
@@ -199,14 +199,31 @@ Here is the result of `git diff --cached`:")
     :host "openrouter.ai"
     :endpoint "/api/v1/chat/completions"
     :stream t
-    :key (passage-get "ai/openrouter/api_key")
-    ;; :models '(openai/gpt-3.5-turbo
-    ;;           mistralai/mixtral-8x7b-instruct
-    ;;           meta-llama/codellama-34b-instruct
-    ;;           codellama/codellama-70b-instruct
-    ;;           google/palm-2-codechat-bison-32k
-    ;;           google/gemini-pro)
-    )
+    :key (passage-get "ai/openroute/api_key")
+    :models '(cognitivecomputations/dolphin3.0-mistral-24b:free
+	      cognitivecomputations/dolphin3.0-r1-mistral-24b:free
+	      deepseek/deepseek-r1-zero:free
+	      deepseek/deepseek-chat:free
+	      deepseek/deepseek-r1-distill-qwen-32b:free
+	      deepseek/deepseek-r1-distill-llama-70b:free
+	      google/gemini-2.0-flash-lite-preview-02-05:free
+	      google/gemini-2.0-pro-exp-02-05:free
+	      google/gemini-2.5-pro-exp-03-25
+	      google/gemini-2.5-pro-exp-03-25:free
+	      google/gemma-3-12b-it:free
+	      google/gemma-3-27b-it:free
+	      google/gemma-3-4b-it:free
+	      mistralai/mistral-small-3.1-24b-instruct:free
+	      open-r1/olympiccoder-32b:free
+	      qwen/qwen2.5-vl-3b-instruct:free
+	      qwen/qwen-2.5-coder-32b-instruct:free
+	      qwen/qwq-32b:free
+              codellama/codellama-70b-instruct
+              google/gemini-pro
+              google/palm-2-codechat-bison-32k
+              meta-llama/codellama-34b-instruct
+              mistralai/mixtral-8x7b-instruct
+	      openai/gpt-3.5-turbo))
 
   (gptel-make-openai "Groq"
     :host "api.groq.com"
