@@ -126,73 +126,73 @@ The DWIM behaviour of this command is as follows:
     (set-fontset-font t 'ethiopic "Noto Sans Ethiopic"))
 
   ;; If font-family-mono or font-family-sans are not available, use the default Emacs face
-    (set-face-attribute 'default nil
-			:family font-family-mono
-			:height font-height
-			:weight 'regular)
-    (set-face-attribute 'fixed-pitch nil
-			:family font-family-mono
-			:weight 'medium
-			:height font-height)
-    (set-face-attribute 'variable-pitch nil
-			:family font-family-sans
-			:weight 'regular)
+  (set-face-attribute 'default nil
+		      :family font-family-mono
+		      :height font-height
+		      :weight 'regular)
+  (set-face-attribute 'fixed-pitch nil
+		      :family font-family-mono
+		      :weight 'medium
+		      :height font-height)
+  (set-face-attribute 'variable-pitch nil
+		      :family font-family-sans
+		      :weight 'regular)
 
   (set-fontset-font t 'symbol "Apple Color Emoji")
   (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
   (set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
   (set-fontset-font t 'symbol "Symbola" nil 'append)
 
-(defvar contrib/after-load-theme-hook nil
-  "Hook run after a color theme is loaded using `load-theme'.")
+  (defvar contrib/after-load-theme-hook nil
+    "Hook run after a color theme is loaded using `load-theme'.")
 
-(defun contrib/run-after-load-theme-hook (&rest _)
-  "Run `contrib/after-load-theme-hook'."
-  (run-hooks 'contrib/after-load-theme-hook))
+  (defun contrib/run-after-load-theme-hook (&rest _)
+    "Run `contrib/after-load-theme-hook'."
+    (run-hooks 'contrib/after-load-theme-hook))
 
-(mapc
- (lambda (string)
-   (add-to-list 'load-path (locate-user-emacs-file string)))
- '("lisp" "config"))
+  (mapc
+   (lambda (string)
+     (add-to-list 'load-path (locate-user-emacs-file string)))
+   '("lisp" "config"))
 
-(advice-add #'load-theme :after #'contrib/run-after-load-theme-hook)
+  (advice-add #'load-theme :after #'contrib/run-after-load-theme-hook)
 
-(require 'modus-themes)
-(setq modus-themes-to-toggle '(modus-operandi modus-vivendi)
-      modus-themes-slanted-constructs nil
-      modus-themes-italic-constructs nil
-      modus-themes-bold-constructs nil
-      modus-themes-mixed-fonts t
-      modus-themes-subtle-diffs t
-      modus-themes-fringes 'subtle ; {nil,'subtle,'intense}
-      modus-themes-headings '((0 . (variable-pitch semilight 1.5))
-			      (1 . (regular 1.4))
-			      (2 . (regular 1.3))
-			      (3 . (regular 1.2))
-			      (agenda-structure . (variable-pitch light 2.2))
-			      (agenda-date . (variable-pitch regular 1.3))
-			      (t . (regular 1.15)))
-      modus-themes-intense-paren-match t
-      modus-themes-completions '(opinionated) ; {nil,'moderate,'opinionated}
-      modus-themes-diffs 'desaturated ; {nil,'desaturated,'fg-only}
-      modus-themes-org-blocks 'gray-background
-      modus-themes-paren-match '(subtle-bold)
-      modus-themes-variable-pitch-headings nil
-      modus-themes-rainbow-headings t
-      modus-themes-section-headings nil
-      modus-themes-scale-headings t
-      )
+  (require 'modus-themes)
+  (setq modus-themes-to-toggle '(modus-operandi modus-vivendi)
+	modus-themes-slanted-constructs nil
+	modus-themes-italic-constructs nil
+	modus-themes-bold-constructs nil
+	modus-themes-mixed-fonts t
+	modus-themes-subtle-diffs t
+	modus-themes-fringes 'subtle ; {nil,'subtle,'intense}
+	modus-themes-headings '((0 . (variable-pitch semilight 1.5))
+				(1 . (regular 1.4))
+				(2 . (regular 1.3))
+				(3 . (regular 1.2))
+				(agenda-structure . (variable-pitch light 2.2))
+				(agenda-date . (variable-pitch regular 1.3))
+				(t . (regular 1.15)))
+	modus-themes-intense-paren-match t
+	modus-themes-completions '(opinionated) ; {nil,'moderate,'opinionated}
+	modus-themes-diffs 'desaturated ; {nil,'desaturated,'fg-only}
+	modus-themes-org-blocks 'gray-background
+	modus-themes-paren-match '(subtle-bold)
+	modus-themes-variable-pitch-headings nil
+	modus-themes-rainbow-headings t
+	modus-themes-section-headings nil
+	modus-themes-scale-headings t
+	)
 
-(defun my-update-active-mode-line-colors ()
-  (set-face-attribute
-   'mode-line nil
-   :foreground (modus-themes-get-color-value 'fg-mode-line-active)
-   :background (modus-themes-get-color-value 'bg-blue-nuanced)))
-(add-hook 'modus-themes-after-load-theme-hook #'my-update-active-mode-line-colors)
-(define-key global-map (kbd "C-<f5>") #'modus-themes-toggle)
+  (defun my-update-active-mode-line-colors ()
+    (set-face-attribute
+     'mode-line nil
+     :foreground (modus-themes-get-color-value 'fg-mode-line-active)
+     :background (modus-themes-get-color-value 'bg-blue-nuanced)))
+  (add-hook 'modus-themes-after-load-theme-hook #'my-update-active-mode-line-colors)
+  (define-key global-map (kbd "C-<f5>") #'modus-themes-toggle)
 
-(load-theme 'modus-operandi :no-confirm))
-(my-update-active-mode-line-colors)
+  (load-theme 'modus-operandi :no-confirm)
+  (my-update-active-mode-line-colors))
 
 (require 'init-func)
 
