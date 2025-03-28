@@ -288,6 +288,7 @@ using either KUBECONFIG or ~/.kube/config"
      " ")))
 
 (use-package eat
+  :commands (eat)
   :init (setq eat-kill-buffer-on-exit t
 	      eat-enable-yank-to-terminal t)
   :hook ((eshell-mode . eat-eshell-mode)
