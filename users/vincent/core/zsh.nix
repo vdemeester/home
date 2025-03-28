@@ -33,9 +33,10 @@ in
       share = true;
     };
     envExtra = shellConfig.env;
+    # TODO Extract this to files.
     initExtra = ''
       # c.f. https://wiki.gnupg.org/AgentForwarding
-      gpgconf --create-socketdir &!
+      # gpgconf --create-socketdir &!
       path+="$HOME/${config.programs.zsh.dotDir}/functions"
       fpath+="$HOME/.nix-profile/share/zsh/site-functions"
       fpath+="$HOME/${config.programs.zsh.dotDir}/functions"
@@ -85,7 +86,11 @@ in
         print "\e]51;Efind-file $(readlink -f $1)\e\\"
       }
 
-      export _Z_DATA="${config.xdg.dataHome}/z" 
+      export _Z_DATA="${config.xdg.dataHome}/z"
+
+
+      [ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+        source "$EAT_SHELL_INTEGRATION_DIR/zsh"
     '';
     loginExtra = ''
       if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then
