@@ -47,5 +47,49 @@ BEGIN and END are regexps which define the line range to use."
           (setq r (1+ (line-number-at-pos (match-end 0)))))
         (format "%s-%s" (+ l 1) (- r 1)))))) ;; Exclude wrapper
 
+(defun vde--get-outline-path (element)
+  "Return the outline path (as a list of titles) for ELEMENT, which is a headline."
+  (let (path)
+    (while (and element (eq (org-element-type element) 'headline))
+      (let ((title (org-element-property :title element)))
+        (when title
+          (push title path)))
+      (setq element (org-element-property :parent element)))
+    (reverse path)))
+
+;;;###autoload
+(defun vde/org-clock-in-any-heading ()
+  "Clock into any Org heading from `org-agenda-files'."
+  (interactive)
+  (let (headings)
+    (dolist (file org-agenda-files)
+      (when (file-exists-p file)
+        (with-current-buffer (find-file-noselect file)
+          (org-map-entries (lambda ()
+                              (let* ((element (org-element-context))
+                                     (path (vde--get-outline-path element)))
+                                (push (list :path path
+                                            :file (buffer-file-name)
+                                            :position (point))
+                                      headings)))
+                           t 'file))))
+    (let* (candidates)
+      (dolist (h headings)
+        (let* ((path (plist-get h :path))
+               (path-str (mapconcat 'identity path " > "))
+               (file (plist-get h :file))
+               (candidate (format "%s : %s" path-str (file-name-nondirectory file)))
+               (data (list file (plist-get h :position))))
+          (push (cons candidate data) candidates)))
+      (let* ((selected-candidate (completing-read "Select heading: " candidates))
+             (matching (cl-find-if (lambda (c) (string= (car c) selected-candidate)) candidates)))
+        (when matching
+          (let* ((data (cdr matching))
+                 (file (car data))
+                 (pos (cadr data)))
+            (find-file file)
+            (goto-char pos)
+            (org-clock-in)))))))
+
 (provide 'org-func)
 ;;; org-func.el ends here

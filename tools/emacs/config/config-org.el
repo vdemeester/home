@@ -68,6 +68,7 @@
 	 ("C-c o r R" . vde/reload-org-refile-targets)
          ("C-c o a a" . org-agenda)
 	 ("C-c o a r" . vde/reload-org-agenda-files)
+	 ("C-c C-x i" . vde/org-clock-in-any-heading)
          ("C-c o s" . org-sort)
          ("<f12>" . org-agenda))
   :hook (org-mode . vde/org-mode-hook)
@@ -639,14 +640,6 @@ Within those groups, sort by date and priority."
 
 (use-package consult-org
   :after (consult))
-
-;; FIXME still doesn't do what I want. I want a simple thing: list me the org heading (with =TODO=, … keywords) and let me clock on it.
-(use-package org-mru-clock
-  :bind* (("C-c C-x i" . org-mru-clock-in)
-          ("C-c C-x C-j" . org-mru-clock-select-recent-task))
-  :config
-  (setq org-mru-clock-how-many 300)
-  (add-hook 'minibuffer-setup-hook #'org-mru-clock-embark-minibuffer-hook))
 
 (provide 'config-org)
 ;;; config-org.el ends here
