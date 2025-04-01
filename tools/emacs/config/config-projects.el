@@ -6,7 +6,7 @@
 (require 'json)
 
 (use-package project
-  :commands (project-find-file project-find-regexp vde-project-vterm vde-project-run-in-vterm)
+  :commands (project-find-file project-find-regexp vde/project-vterm vde/project-run-in-vterm)
   :custom ((project-switch-commands '((?f "File" project-find-file)
 				      (?g "Grep" project-find-regexp)
 				      (?d "Dired" project-dired)
@@ -14,13 +14,14 @@
 				      (?q "Query replace" project-query-replace-regexp)
 				      (?m "Magit" vde-project-magit-status)
 				      (?e "Eshell" project-eshell)
-				      (?s "Vterm" vde-project-vterm)
+				      (?E "Eat" vde/project-eat)
+				      (?s "Vterm" vde/project-vterm)
 				      (?R "README" vde/open-readme)
 				      (?g "Checkout GitHub PR" checkout-github-pr)))
 	   (project-mode-line t))
   :bind (("C-x p v" . vde-project-magit-status)
-         ("C-x p s" . vde-project-vterm)
-         ("C-x p X" . vde-project-run-in-vterm)
+         ("C-x p s" . vde/project-vterm)
+         ("C-x p X" . vde/project-run-in-vterm)
 	 ("C-x p G" . checkout-github-pr))
   :init
   (require project-rootfile)
@@ -44,24 +45,6 @@
     (interactive)
     (magit-status (vde-project--project-current)))
 
-  (defun vde-project-vterm (&optional command)
-    "Run `vterm' on project.
-If a buffer already exists for running a vterm shell in the project's root,
-switch to it. Otherwise, create a new vterm shell."
-    (interactive)
-    (let* ((default-directory (vde-project--project-current))
-           (default-project-vterm-name (project-prefixed-buffer-name "vterm"))
-           (vterm-buffer (get-buffer default-project-vterm-name)))
-      (if (and vterm-buffer (not current-prefix-arg))
-          (pop-to-buffer-same-window vterm-buffer)
-        (let* ((cd-cmd (concat " cd " (shell-quote-argument default-directory))))
-          (vterm default-project-vterm-name)
-          (with-current-buffer vterm-buffer
-            (vterm-send-string cd-cmd)
-            (vterm-send-return))))
-      (when command
-        (vterm-send-string command)
-        (vterm-send-return))))
   (general-leader
     "p"  '(:ignore :which-key "Project")
     "pp"  #'(project-switch-project :which-key "Switch to Project")
@@ -71,8 +54,10 @@ switch to it. Otherwise, create a new vterm shell."
     "pc"  #'(project-compile :which-key "Compile in Project")
     "pb"  #'(project-switch-to-buffer :which-key "Switch to Project Buffer")
     "pk"  #'(project-kill-buffers :which-key "Kill Project Buffers")
-    "ps"  #'(vde-project-vterm :which-key "Start a vterm in Project")
-    "px"  #'(vde-project-run-in-vterm :which-key "Execute command in vterm in Project")))
+    "ps"  #'(vde/project-vterm :which-key "Start a vterm in Project")
+    "pe"  #'(project-eshell :which-key "Start a eshell in Project")
+    "pE"  #'(vde/project-eat :which-key "Start a eat term in Project")
+    "px"  #'(vde/project-run-in-vterm :which-key "Execute command in vterm in Project")))
 
 (use-package conner
   :bind (("C-x p C" . conner-run-project-command))

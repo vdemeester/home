@@ -44,7 +44,7 @@
            (candidates (format-pr-candidates prs))
            (selected (if candidates
                          (cdr (assoc (completing-read "Checkout PR: " candidates)
-                                    candidates))
+                                     candidates))
                        nil)))
       (if selected
           (shell-command (format "gh pr checkout %d" selected))
@@ -66,7 +66,7 @@
    (t default-directory)))
 
 ;;;##autoload
-(defun vde-project-run-in-vterm (command &optional directory)
+(defun vde/project-run-in-vterm (command &optional directory)
   "Run the given `COMMAND' in a new vterm buffer in `project-root' or the
 given `DIRECTORY'.
 
@@ -101,13 +101,49 @@ It will search for README.org, README.md or README in that order"
 
 ;;;###autoload
 (defun vde/project-try-local (dir)
-    "Determine if DIR is a non-VC project."
-    (if-let ((root (if (listp vde/project-local-identifier)
-                       (seq-some (lambda (n)
-                                   (locate-dominating-file dir n))
-                                 vde/project-local-identifier)
-                     (locate-dominating-file dir vde/project-local-identifier))))
-        (cons 'local root)))
+  "Determine if DIR is a non-VC project."
+  (if-let ((root (if (listp vde/project-local-identifier)
+                     (seq-some (lambda (n)
+                                 (locate-dominating-file dir n))
+                               vde/project-local-identifier)
+                   (locate-dominating-file dir vde/project-local-identifier))))
+      (cons 'local root)))
+
+;;;###autoload
+(defun vde/project-vterm (&optional command)
+  "Run `vterm' on project.
+If a buffer already exists for running a vterm shell in the project's root,
+switch to it. Otherwise, create a new vterm shell."
+  (interactive)
+  (let* ((default-directory (vde-project--project-current))
+         (default-project-vterm-name (project-prefixed-buffer-name "vterm"))
+         (vterm-buffer (get-buffer default-project-vterm-name)))
+    (if (and vterm-buffer (not current-prefix-arg))
+        (pop-to-buffer-same-window vterm-buffer)
+      (let* ((cd-cmd (concat " cd " (shell-quote-argument default-directory))))
+        (vterm default-project-vterm-name)
+        (with-current-buffer vterm-buffer
+          (vterm-send-string cd-cmd)
+          (vterm-send-return))))
+    (when command
+      (vterm-send-string command)
+      (vterm-send-return))))
+
+;;;###autoload
+(defun vde/project-eat ()
+  "Run Eat term in the current project's root directory.
+If a buffer already exists for running Eshell in the project's root,
+switch to it.  Otherwise, create a new Eshell buffer.
+With \\[universal-argument] prefix arg, create a new Eshell buffer even
+if one already exists."
+  (interactive)
+  (defvar eat-buffer-name)
+  (let* ((default-directory (project-root (project-current t)))
+	 (eat-buffer-name (project-prefixed-buffer-name "eat"))
+	 (eat-buffer (get-buffer eat-buffer-name)))
+    (if (and eat-buffer (not current-prefix-arg))
+	(pop-to-buffer eat-buffer (bound-and-true-p display-comint-buffer-action))
+      (eat shell-file-name))))
 
 (provide 'project-func)
 ;;; project-func.el ends here
