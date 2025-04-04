@@ -164,6 +164,8 @@ in
     catt
     go-org-readwise
     age-plugin-tpm
+    keymapp
+    kontroll
   ];
 
   location.provider = "geoclue2";
