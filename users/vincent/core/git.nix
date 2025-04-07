@@ -33,6 +33,7 @@ in
     # gitAndTools.hub
     gitAndTools.gh
     gitAndTools.git-appraise
+    codeberg-cli
     mr
     delta
     difftastic
