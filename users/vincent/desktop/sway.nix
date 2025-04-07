@@ -57,8 +57,8 @@ in
       bindkeysToCode = true;
       input = {
         "type:keyboard" = {
-          xkb_layout = "fr,fr";
-          xkb_variant = "bepo,ergol";
+          xkb_layout = "fr,fr,us";
+          xkb_variant = "bepo,ergol,";
           xkb_options = "grp:menu_toggle,grp_led:caps,compose:caps";
         };
       };
