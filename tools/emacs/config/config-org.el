@@ -70,7 +70,10 @@
 	 ("C-c o a r" . vde/reload-org-agenda-files)
 	 ("C-c C-x i" . vde/org-clock-in-any-heading)
          ("C-c o s" . org-sort)
-         ("<f12>" . org-agenda))
+         ("<f12>" . org-agenda)
+	 (:map org-mode-map
+	  ("<tab>" . vde/org-tab)
+	  ("<backtab>" . vde/org-shifttab)))
   :hook (org-mode . vde/org-mode-hook)
   :custom
   ;; (org-reverse-note-order '((org-inbox-file . t) ;; Insert items on top of inbox
@@ -84,6 +87,7 @@
   (org-hide-emphasis-markers t)
   (org-pretty-entities t)
   (org-ellipsis "…")
+  (org-return-follows-link t)
   (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "IN-REVIEW(r)" "|" "DONE(d!)" "CANCELED(c@/!)")
                        (sequence "WAITING(w@/!)" "SOMEDAY(s)" "|" "CANCELED(c@/!)")
                        (sequence "IDEA(i)" "|" "CANCELED(c@/!)")))
