@@ -243,7 +243,11 @@ The DWIM behaviour of this command is as follows:
 ;; Make native compilation silent and prune its cache.
 (when (native-comp-available-p)
   (setq native-comp-async-report-warnings-errors 'silent) ; Emacs 28 with native compilation
-  (setq native-compile-prune-cache t)) ; Emacs 29
+  (setq native-compile-prune-cache t)
+  (setq native-comp-jit-compilation t)
+  (setq native-comp-async-query-on-exit t)) ; Emacs 29
+
+(setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
 
 ;; Refactor this completely. Reduce to the minimum.
 (require '00-clean) ;; Maybe refactor no-littering
