@@ -31,9 +31,6 @@ let
     consult
     consult-dir
     consult-denote
-    consult-gh
-    consult-gh-embark
-    # consult-gh-with-pr-review
     consult-notes
     consult-project-extra
     consult-vc-modified-files
