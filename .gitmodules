@@ -1,3 +1,6 @@
 [submodule "tools/emacs/lisp/consult-mu"]
 	path = tools/emacs/lisp/consult-mu
 	url = https://github.com/armindarvish/consult-mu
+[submodule "tools/emacs/lisp/auto-side-windows"]
+	path = tools/emacs/lisp/auto-side-windows
+	url = https://github.com/MArpogaus/auto-side-windows
