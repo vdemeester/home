@@ -21,8 +21,6 @@
   "Future projects are collected in this file.")
 (defconst org-people-dir (expand-file-name "people" org-directory)
   "People files directory.")
-(defconst org-journal-dir (expand-file-name "journal" org-directory)
-  "Journal files directory")
 
 (defconst src-home-dir (expand-file-name "~/src/home" org-directory)
   "Directory of my home monorepository, can contain todos there.")
@@ -37,7 +35,6 @@
 (set-register ?f `(file . ,org-projects-future-file))
 (set-register ?o `(file . ,org-directory))
 (set-register ?P `(file . ,org-people-dir))
-(set-register ?j `(file . ,org-journal-dir))
 
 (defun vde/agenda-goto-view ()
   "Jump to the task narrowed but in view mode only to get a glance."
