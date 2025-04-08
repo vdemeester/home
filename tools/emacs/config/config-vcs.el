@@ -319,7 +319,6 @@ Otherwise, open the repository's main page."
   :bind
   ("C-x v /" . consult-vc-modified-files))
 
-
 (use-package pr-review
   :custom
   (pr-review-ghub-host "api.github.com")

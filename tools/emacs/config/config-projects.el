@@ -22,6 +22,7 @@
   :bind (("C-x p v" . vde-project-magit-status)
          ("C-x p s" . vde/project-vterm)
          ("C-x p X" . vde/project-run-in-vterm)
+	 ("C-x p E" . vde/project-eat)
 	 ("C-x p G" . checkout-github-pr))
   :init
   (require project-rootfile)
