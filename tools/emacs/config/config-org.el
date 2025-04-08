@@ -44,7 +44,7 @@
   (view-mode t))
 
 (defun vde/org-mode-hook ()
-  "Org-mode hook"
+  "Org-mode hook."
   (setq show-trailing-whitespace t)
   (when (not (eq major-mode 'org-agenda-mode))
     (setq fill-column 90)
@@ -67,6 +67,7 @@
 	 ("C-c o a r" . vde/reload-org-agenda-files)
 	 ("C-c C-x i" . vde/org-clock-in-any-heading)
          ("C-c o s" . org-sort)
+	 ("C-c O" . org-open-at-point-global)
          ("<f12>" . org-agenda)
 	 (:map org-mode-map
 	  ("<tab>" . vde/org-tab)
@@ -144,6 +145,13 @@
   (org-agenda-sticky t)
   :config
 
+  (defun vde/org-use-speed-commands-for-headings-and-lists ()
+    "Activate speed commands on list items too."
+    (or (and (looking-at org-outline-regexp) (looking-back "^\**" nil))
+	(save-excursion (and (looking-at (org-item-re)) (looking-back "^[ \t]*" nil)))))
+  (setq org-use-speed-commands 'vde/org-use-speed-commands-for-headings-and-lists)
+  ;; TODO: see https://sachachua.com/blog/2025/03/org-mode-cutting-the-current-list-item-including-nested-lists-with-a-speed-command/
+  
   ;; Refile org-mode cache when emacs has been idled for 5 minutes
   (run-with-idle-timer 300 t (lambda ()
                                (org-refile-cache-clear)
@@ -153,7 +161,7 @@
   (when (file-exists-p org-babel-library-file)
     (org-babel-lob-ingest org-babel-library-file))
   (defun vde/org-agenda-files ()
-    (seq-filter (lambda(x) (not (string-match "/archive/"(file-name-directory x)))) 
+    (seq-filter (lambda(x) (not (string-match "/archive/"(file-name-directory x))))
 		(apply 'append
 		       (mapcar
 			(lambda (directory)
