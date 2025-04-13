@@ -77,29 +77,29 @@
                      (unless (eq ibuffer-sorting-mode 'filename/process)
                        (ibuffer-do-sort-by-filename/process)))))
 
-(unless noninteractive
-  (require 'popper)
-  (setq popper-reference-buffers
-        '("\\*Messages\\*"
-          "Output\\*$"
-          "\\*Async Shell Command\\*"
-	  "\\*Warnings\\*"
-	  "\\*Compile-Log\\*"
-          help-mode
-	  helpful-mode
-          compilation-mode
-	  flymake-diagnostics-buffer-mode
-	  flymake-project-diagnostics-mode
-	  Man-mode
-	  woman-mode))
-  (global-set-key (kbd "C-`") 'popper-toggle)
-  (global-set-key (kbd "M-`") 'popper-cycle)
-  (global-set-key (kbd "C-M-`") 'popper-toggle-type)
-  (popper-mode +1)
-
-  ;; For echo-area hints
-  (require 'popper-echo)
-  (popper-echo-mode +1))
+;; (unless noninteractive
+;;   (require 'popper)
+;;   (setq popper-reference-buffers
+;;         '("\\*Messages\\*"
+;;           "Output\\*$"
+;;           "\\*Async Shell Command\\*"
+;; 	  "\\*Warnings\\*"
+;; 	  "\\*Compile-Log\\*"
+;;           help-mode
+;; 	  helpful-mode
+;;           compilation-mode
+;; 	  flymake-diagnostics-buffer-mode
+;; 	  flymake-project-diagnostics-mode
+;; 	  Man-mode
+;; 	  woman-mode))
+;;   (global-set-key (kbd "C-`") 'popper-toggle)
+;;   (global-set-key (kbd "M-`") 'popper-cycle)
+;;   (global-set-key (kbd "C-M-`") 'popper-toggle-type)
+;;   (popper-mode +1)
+;; 
+;;   ;; For echo-area hints
+;;   (require 'popper-echo)
+;;   (popper-echo-mode +1))
 
 (use-package goto-addr
   :hook ((text-mode . goto-address-mode)
