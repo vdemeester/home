@@ -35,11 +35,6 @@
   (unless (>= emacs-major-version minver)
     (error "Your Emacs is too old -- this configuration requires v%s or higher" minver)))
 
-(add-to-list 'load-path (concat user-emacs-directory "/lisp/"))
-(add-to-list 'load-path (concat user-emacs-directory "/lisp/aider.el"))
-(add-to-list 'load-path (concat user-emacs-directory "/lisp/consult-mu"))
-(add-to-list 'load-path (concat user-emacs-directory "/lisp/consult-mu/extras"))
-
 (setq inhibit-default-init t)           ; Disable the site default settings
 
 (setq confirm-kill-emacs #'y-or-n-p)
@@ -107,6 +102,13 @@ The DWIM behaviour of this command is as follows:
 
 (define-key global-map (kbd "C-g") #'prot/keyboard-quit-dwim)
 
+(add-to-list 'load-path (concat user-emacs-directory "/lisp/"))
+(add-to-list 'load-path (concat user-emacs-directory "/lisp/aider.el"))
+(add-to-list 'load-path (concat user-emacs-directory "/lisp/auto-side-windows"))
+(add-to-list 'load-path (concat user-emacs-directory "/lisp/consult-mu"))
+(add-to-list 'load-path (concat user-emacs-directory "/lisp/consult-mu/extras"))
+(add-to-list 'load-path (concat user-emacs-directory "/config/"))
+
 (unless noninteractive
   (defconst font-height 130
     "Default font-height to use.")
@@ -150,11 +152,6 @@ The DWIM behaviour of this command is as follows:
     "Run `contrib/after-load-theme-hook'."
     (run-hooks 'contrib/after-load-theme-hook))
 
-  (mapc
-   (lambda (string)
-     (add-to-list 'load-path (locate-user-emacs-file string)))
-   '("lisp" "config"))
-
   (advice-add #'load-theme :after #'contrib/run-after-load-theme-hook)
 
   (require 'modus-themes)
@@ -193,8 +190,6 @@ The DWIM behaviour of this command is as follows:
 
   (load-theme 'modus-operandi :no-confirm)
   (my-update-active-mode-line-colors))
-
-(require 'init-func)
 
 (setq load-prefer-newer t)              ; Always load newer compiled files
 (setq ad-redefinition-action 'accept)   ; Silence advice redefinition warnings
@@ -237,6 +232,7 @@ The DWIM behaviour of this command is as follows:
 ;; `require' explicitly. The benefit would be that I decide the order
 ;; they load instead of relying on file-system.
 ;; (vde/el-load-dir (concat user-emacs-directory "/config/"))
+(require 'init-func)
 (require 'org-func)
 (require 'project-func)
 
@@ -250,11 +246,11 @@ The DWIM behaviour of this command is as follows:
 (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
 
 ;; Refactor this completely. Reduce to the minimum.
-(require '00-clean) ;; Maybe refactor no-littering
-(require 'config-editing)
-(require 'config-files)
-(require 'config-misc)
 (unless noninteractive
+  (require '00-clean) ;; Maybe refactor no-littering
+  (require 'config-editing)
+  (require 'config-files)
+  (require 'config-misc)
   (require 'config-keybindings)
   (require 'config-appearance)
   (require 'config-buffers)
