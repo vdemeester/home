@@ -3,6 +3,18 @@
 
   outputs = { self, ... } @ inputs:
     let
+      inherit (self) outputs;
+      stateVersion = "24.11";
+
+      libx = import ./lib {
+        inherit
+          self
+          inputs
+          outputs
+          stateVersion
+          ;
+      };
+
       stableModules = [
         inputs.home-manager-24_11.nixosModules.home-manager
       ];
@@ -45,29 +57,31 @@
       ];
     in
     {
-      images = {
-        # ami(s) (AWS)
-        carthage = inputs.nixos-generators.nixosGenerate rec {
+      homeConfigurations = {
+        # headless machine
+        "vincent@aion" = libx.mkHome {
+          username = "vincent";
+          hostname = "aion";
           system = "aarch64-linux";
-          format = "amazon";
-          modules = commonModules ++ stableModules ++ [
-            ./systems/hosts/carthage.nix
-          ];
         };
-        # sdimages
-        athena = (self.nixosConfigurations.athena.extendModules {
-          modules = [
-            "${inputs.nixpkgs-24_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-          ];
-        }).config.system.build.sdImage;
-        demeter = (self.nixosConfigurations.demeter.extendModules {
-          modules = [
-            "${inputs.nixpkgs-24_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-          ];
-        }).config.system.build.sdImage;
+        "houbeb@aion" = libx.mkHome {
+          username = "houbeb";
+          hostname = "aion";
+          system = "aarch64-linux";
+        };
       };
       nixosConfigurations =
         {
+          # Work laptop (unstable)
+          kyushu = libx.mkHost {
+            hostname = "kyushu";
+            desktop = "sway";
+          };
+          # sakhalin = libx.mkHost {
+          #   hostname = "sakhalin";
+          #   pkgsInput = inputs.nixpkgs-24_11;
+          #   homeInput = inputs.home-manager-24_11;
+          # };
           # Work laptop (unstable)
           wakasu = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
@@ -128,6 +142,35 @@
           };
         };
 
+      # system-manager configurations
+      systemConfigs = {
+        aion = libx.mkSystemmanager {
+          hostname = "aion";
+          system = "aarch64-linux";
+        };
+      };
+
+      images = {
+        # ami(s) (AWS)
+        carthage = inputs.nixos-generators.nixosGenerate rec {
+          system = "aarch64-linux";
+          format = "amazon";
+          modules = commonModules ++ stableModules ++ [
+            ./systems/hosts/carthage.nix
+          ];
+        };
+        # sdimages
+        athena = (self.nixosConfigurations.athena.extendModules {
+          modules = [
+            "${inputs.nixpkgs-24_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+          ];
+        }).config.system.build.sdImage;
+        demeter = (self.nixosConfigurations.demeter.extendModules {
+          modules = [
+            "${inputs.nixpkgs-24_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+          ];
+        }).config.system.build.sdImage;
+      };
       # TODO: expose some packages ?
       # This is probably not gonna happen, instead I should move any internal package here outside, in their
       # own repository and flake. If they are useful upstream.
@@ -158,6 +201,7 @@
     nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
     nixpkgs-24_05 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-24.05"; };
     nixpkgs-24_11 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-24.11"; };
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
     # Home Manager
     home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager-24_05 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-24.05"; inputs.nixpkgs.follows = "nixpkgs-24_05"; };
@@ -197,5 +241,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    lanzaboote.url = "github:nix-community/lanzaboote";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    system-manager.url = "github:numtide/system-manager";
+    system-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nix-system-graphics.url = "github:soupglasses/nix-system-graphics";
+    # nix-system-graphics.inputs.nixpkgs.follows = "nixpkgs";
   };
 }
