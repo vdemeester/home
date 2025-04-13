@@ -28,8 +28,18 @@
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
       # =========================[ Line #1 ]=========================
       # os_icon               # os identifier
+      status                  # exit code of the last command
+      context                 # user@hostname
       dir                     # current directory
       vcs                     # git status
+      go_version            # go version (https://golang.org)
+      rust_version          # rustc version (https://www.rust-lang.org)
+      background_jobs         # presence of background jobs
+      direnv                  # direnv status (https://direnv.net/)
+      virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
+      in_nix_shell
+      docker_host
+      kubecontext             # current kubernetes context (https://kubernetes.io/)
       prompt_char             # prompt symbol
   )
 
@@ -39,36 +49,26 @@
   # last prompt line gets hidden if it would overlap with left prompt.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
       # =========================[ Line #1 ]=========================
-      status                  # exit code of the last command
-      command_execution_time  # duration of the last command
-      background_jobs         # presence of background jobs
-      direnv                  # direnv status (https://direnv.net/)
-      virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
+      # command_execution_time  # duration of the last command
       #anaconda                # conda environment (https://conda.io/)
-      pyenv                   # python environment (https://github.com/pyenv/pyenv)
+      # pyenv                   # python environment (https://github.com/pyenv/pyenv)
       #nodenv                  # node.js version from nodenv (https://github.com/nodenv/nodenv)
       #nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
       #nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
       # node_version          # node.js version
-      go_version            # go version (https://golang.org)
-      rust_version          # rustc version (https://www.rust-lang.org)
       # dotnet_version        # .NET version (https://dotnet.microsoft.com)
       #rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
       #rvm                     # ruby version from rvm (https://rvm.io)
-      kubecontext             # current kubernetes context (https://kubernetes.io/)
-      terraform               # terraform workspace (https://www.terraform.io)
+      # terraform               # terraform workspace (https://www.terraform.io)
       #aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
       # aws_eb_env            # aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/)
       # azure                 # azure account name (https://docs.microsoft.com/en-us/cli/azure)
-      context                 # user@hostname
       #nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
       #ranger                  # ranger shell (https://github.com/ranger/ranger)
       # vpn_ip                # virtual private network indicator
       # ram                   # free RAM
       # load                  # CPU load
-      in_nix_shell
-      docker_host
-      time                    # current time
+      # time                    # current time
       # =========================[ Line #2 ]=========================
       #newline
       # public_ip             # public IP address
@@ -201,7 +201,7 @@
   # Red prompt symbol if the last command failed.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=196
   # Default prompt symbol.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='λ'
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='$'
   # Prompt symbol in command vi mode.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='❮'
   # Prompt symbol in visual vi mode.
