@@ -120,7 +120,7 @@ let
     ox-pandoc
     pandoc-mode
     # password-store
-    pkgs.bookmark-plus # Do I use it ?
+    # pkgs.bookmatrk-plus # Do I use it ?
     popper
     project-rootfile
     rg
