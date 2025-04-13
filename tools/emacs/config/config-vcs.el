@@ -320,17 +320,26 @@ Otherwise, open the repository's main page."
   ("C-x v /" . consult-vc-modified-files))
 
 (use-package pr-review
+  :commands (pr-review)
   :custom
   (pr-review-ghub-host "api.github.com")
   (pr-review-notification-include-read nil)
   (pr-review-notification-include-unsubscribed nil)
   :config
-  (require pr-review-notification)
   (require pr-review-search)
   (general-leader
     "p" '(:ignore t :which-key "PR Review")
     "pn" #'(pr-review-notification :wk "PR review notifications")
     "pa" #'(pr-review-current-repository :wk "PR review current repository")
+    ;; This one doesn't really work it seems
+    "ps" #'(pr-review-current-repository-search :wk "PR review search current repository")))
+
+(use-package pr-review-notification
+  :after (pr-review)
+  :commands (pr-review-notification)
+  :config
+  (general-leader
+    "pn" #'(pr-review-notification :wk "PR review notifications")
     ;; This one doesn't really work it seems
     "ps" #'(pr-review-current-repository-search :wk "PR review search current repository")))
 
