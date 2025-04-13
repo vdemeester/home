@@ -25,16 +25,16 @@
 	 ("C-x p E" . vde/project-eat)
 	 ("C-x p G" . checkout-github-pr))
   :init
-  (require project-rootfile)
-  (add-to-list 'project-find-functions #'project-rootfile-try-detect t)
-  (setq project-rootfile-list '(".project"
-    "default.nix" "flake.nix"                               ; nix
-    "Makefile" "GNUMakefile" "CMakeLists.txt"               ; Make & CMake
-    "Cask" "Eldev" "Keg" "Eask"                             ; Emacs
-    "stack.yaml"                                            ; Haskell
-    "Cargo.toml"                                            ; Rust
-    "go.mod"                                                ; Go
-    ))
+  ;; (require project-rootfile)
+  ;; (add-to-list 'project-find-functions #'project-rootfile-try-detect t)
+  ;; (setq project-rootfile-list '(".project"
+  ;;   "default.nix" "flake.nix"                               ; nix
+  ;;   "Makefile" "GNUMakefile" "CMakeLists.txt"               ; Make & CMake
+  ;;   "Cask" "Eldev" "Keg" "Eask"                             ; Emacs
+  ;;   "stack.yaml"                                            ; Haskell
+  ;;   "Cargo.toml"                                            ; Rust
+  ;;   "go.mod"                                                ; Go
+  ;;   ))
   :config
   (setq vde/project-local-identifier '(".project")) ;; "go.mod"
 
