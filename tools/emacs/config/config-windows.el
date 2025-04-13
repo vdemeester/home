@@ -238,7 +238,7 @@ use in `display-buffer-alist'."
   ;; Bottom side window configurations
   (auto-side-windows-bottom-buffer-names
    '("^\\*.*eshell.*\\*$" "^\\*.*shell.*\\*$" "^\\*.*term.*\\*$"
-     "^\\*.*vterm.*\\*$"))
+     "^\\*.*vterm.*\\*$" "^\\*.*eat.*\\*$"))
   (auto-side-windows-bottom-buffer-modes
    '(eshell-mode shell-mode term-mode vterm-mode comint-mode debugger-mode))
 
