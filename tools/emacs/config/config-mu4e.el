@@ -11,6 +11,38 @@
   :config
   (setq mu4e-get-mail-command (concat (executable-find "mbsync") " -a"))
   (setq mu4e-update-interval 1800) ; 30m
+  
+  (defun vde-mu4e--mark-get-copy-target ()
+    "Ask for a copy target, and propose to create it if it does not exist."
+    (let* ((target (mu4e-ask-maildir "Copy message to: "))
+           (target (if (string= (substring target 0 1) "/")
+                       target
+                     (concat "/" target)))
+           (fulltarget (mu4e-join-paths (mu4e-root-maildir) target)))
+      (when (mu4e-create-maildir-maybe fulltarget)
+	target)))
+
+  (defun copy-message-to-target(docid msg target)
+    (let (
+          (new_msg_path nil) ;; local variable                                                                
+          (msg_flags (mu4e-message-field msg :flags))                                                                                                       
+          )                                                                                                   
+      ;; 1. target is already determined interactively when executing the mark (:ask-target)                     
+
+      ;; 2. Determine the path for the new file: we use mu4e~draft-message-filename-construct from            
+      ;; mu4e-draft.el to create a new random filename, and append the original's msg_flags                   
+      (setq new_msg_path (format "%s/%s/cur/%s" mu4e-maildir target (mu4e~draft-message-filename-construct    
+								     (mu4e-flags-to-string msg_flags))))                                                                     
+
+      ;; 3. Copy the message using file system call (copy-file) to new_msg_path:                              
+      ;; (See e.g. mu4e-draft.el > mu4e-draft-open > resend)                                             
+      (copy-file (mu4e-message-field msg :path) new_msg_path)                                                 
+
+      ;; 4. Add the information to the database (may need to update current search query with 'g' if duplicating to current box. Try also 'V' to toggle the display of duplicates) 
+      (mu4e~proc-add new_msg_path (mu4e~mark-check-target target))                                              
+      )                                                                                                       
+    )
+
   (defun vde-mu4e--refile (msg)
     "Refile function to smartly move `MSG' to a given folder."
     (cond
