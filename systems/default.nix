@@ -17,7 +17,8 @@
     ./common/base
     # ./common/users/${username}
   ]
-  ++ lib.optional (builtins.pathExists (./. + "/${hostname}/extra.nix")) ./${hostname}/extra.nix;
+  ++ lib.optional (builtins.pathExists (./. + "/${hostname}/extra.nix")) ./${hostname}/extra.nix
+  ++ lib.optional (builtins.isString desktop) ./common/desktop;
 
   nixpkgs = {
     overlays = [
@@ -75,14 +76,20 @@
       ];
       # See https://nixos.org/manual/nix/stable/command-ref/conf-file#conf-use-xdg-base-directories
       use-xdg-base-directories = true;
-      extraOptions = ''
-        connect-timeout = 20
-        build-cores = 0
-        keep-outputs = true
-        keep-derivations = true
-        builders-use-substitutes = true
-      '';
     };
+
+    extraOptions = ''
+      connect-timeout = 20
+      build-cores = 0
+      keep-outputs = true
+      keep-derivations = true
+      builders-use-substitutes = true
+    '';
+
+    # On laptops at least, make the daemon and builders low priority
+    # to have a responding system while building
+    daemonIOSchedClass = "idle";
+    daemonCPUSchedPolicy = "idle";
   };
 
   # `nix-daemon` will hit the stack limit when using `nixFlakes`.
