@@ -38,7 +38,7 @@
     , system ? "x86_64-linux"
     , pkgsInput ? inputs.nixpkgs
     , homeInput ? inputs.home-manager
-    , ,
+    ,
     }:
     pkgsInput.lib.nixosSystem {
       specialArgs = {
@@ -57,7 +57,7 @@
         inputs.agenix.nixosModules.default
         # inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager
-        ../host
+        ../systems
       ];
     };
 
@@ -78,4 +78,4 @@
         }
       ];
     };
-};
+}

@@ -175,7 +175,7 @@
       # This is probably not gonna happen, instead I should move any internal package here outside, in their
       # own repository and flake. If they are useful upstream.
 
-      overlays = import ./nix/overlays;
+      overlays = import ./nix/overlays { inherit inputs; };
 
       devShells.x86_64-linux.default =
         let
