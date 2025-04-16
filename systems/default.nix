@@ -92,7 +92,7 @@
     daemonCPUSchedPolicy = "idle";
 
     # Add some "caches" (substituters)
-    substituters = cfg.localCaches ++ [
+    substituters = [
       "https://cache.nixos.org/"
       "https://r-ryantm.cachix.org"
       "https://shortbrain.cachix.org"
