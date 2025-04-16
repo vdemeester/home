@@ -54,7 +54,10 @@
                 settings = {
                   # Make sure there is no trailing newline in keyfile if used for interactive unlock.
                   # Use `echo -n "password" > /tmp/data.keyfile`
-                  keyFile = "/tmp/data.keyfile";
+                  askPassword = true;
+                  keyFile = "/dev/disk/by-id/usb-_USB_DISK_2.0_070D375D84327E87-0:0";
+                  keyFileOffset = 30992883712;
+                  keyFileSize = 4096;
                   allowDiscards = true;
                 };
                 content = {
