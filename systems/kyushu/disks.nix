@@ -36,7 +36,7 @@
           partitions = {
             ESP = {
               start = "0%";
-              size = "512MiB";
+              size = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -46,7 +46,7 @@
               };
             };
             luks = {
-              start = "512MiB";
+              start = "512M";
               size = "100%";
               content = {
                 type = "luks";
