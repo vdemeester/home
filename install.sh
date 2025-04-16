@@ -1,9 +1,8 @@
-#!/usr/bin/env
+#!/usr/bin/env bash
 # Install a new system
 
 SYSTEM=$1
 shift
 
 nix --extra-experimental-features "nix-command flakes" run \
-    'github:nix-community/disko/latest#disko-install' -- \
-    --flake '.#${SYSTEM}' $@
+    'github:nix-community/disko/latest#disko-install' -- --flake '.#${SYSTEM}' $@
