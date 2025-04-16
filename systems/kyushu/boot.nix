@@ -2,7 +2,7 @@
 {
   boot = {
     # Secure boot configuration
-    bootspec.enable = true;
+    # bootspec.enable = true;
     # First boot systemd-boot has to be enabled, then switch to lanzaboote
     # loader.systemd-boot.enable = lib.mkForce false;
     # lanzaboote = {
