@@ -28,31 +28,34 @@
       # 512GB root/boot drive. Configured with:
       # - A FAT32 ESP partition for systemd-boot
       # - A LUKS container which contains an EXT4 filesystem
-      nvme0 = {
-        device = "/dev/nvme0n1";
+      root = {
         type = "disk";
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
             ESP = {
-              start = "0%";
-              size = "512M";
+              size = "1G";
               type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                # mountOptions = [ "umask=0077" ];
+                mountOptions = [ "umask=0077" ];
               };
             };
-            luks = {
-              start = "512M";
+            root = {
               size = "100%";
               content = {
+                # LUKS passphrase will be prompted interactively only
                 type = "luks";
-                name = "root";
-                settings.allowDiscards = true;
-                passwordFile = "/tmp/secret.key";
+                name = "crypted";
+                settings = {
+                  # Make sure there is no trailing newline in keyfile if used for interactive unlock.
+                  # Use `echo -n "password" > /tmp/data.keyfile`
+                  keyFile = "/tmp/data.keyfile";
+                  allowDiscards = true;
+                };
                 content = {
                   type = "filesystem";
                   format = "ext4";
