@@ -37,6 +37,7 @@
     pciutils
     psmisc
     pv
+    ripgrep
     rsync
     tpm2-tss
     traceroute
