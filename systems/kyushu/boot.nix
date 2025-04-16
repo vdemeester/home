@@ -3,11 +3,12 @@
   boot = {
     # Secure boot configuration
     bootspec.enable = true;
-    loader.systemd-boot.enable = lib.mkForce false;
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/etc/secureboot";
-    };
+    # First boot systemd-boot has to be enabled, then switch to lanzaboote
+    # loader.systemd-boot.enable = lib.mkForce false;
+    # lanzaboote = {
+    #   enable = true;
+    #   pkiBundle = "/etc/secureboot";
+    # };
 
     initrd = { };
 
