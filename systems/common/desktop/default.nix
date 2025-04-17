@@ -14,17 +14,17 @@
     # ../virt
   ];
   # Enable Plymouth and surpress some logs by default.
-  # boot = {
-  #   # initrd.systemd.enable = true;
-  #   plymouth.enable = true;
-  #   kernelParams = [
-  #     # The 'splash' arg is included by the plymouth option
-  #     "quiet"
-  #     "loglevel=3"
-  #     "rd.udev.log_priority=3"
-  #     "vt.global_cursor_default=0"
-  #   ];
-  # };
+  boot = {
+    initrd.systemd.enable = true;
+    plymouth.enable = true;
+    kernelParams = [
+      # The 'splash' arg is included by the plymouth option
+      "quiet"
+      "loglevel=3"
+      "rd.udev.log_priority=3"
+      "vt.global_cursor_default=0"
+    ];
+  };
 
   hardware.graphics.enable = true;
 
