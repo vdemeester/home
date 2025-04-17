@@ -157,14 +157,13 @@ Here is the result of `git diff --cached`:")
         ("C-c C-k" . gptel-abort)
         ("C-c C-m" . gptel-menu)
         ("C-c C-c" . gptel-send))
-  :general
-  (general-leader
-    "o"   '(:ignore t :wk "GPTel")
-    "o o" '(gptel :wk "Start GPTel")
-    "o m" '(gptel-menu :wk "GPTel menu"))
   :custom
   (gptel-default-mode #'markdown-mode)
   :config
+  ;; (general-leader
+  ;;   "o"   '(:ignore t :wk "GPTel")
+  ;;   "o o" '(gptel :wk "Start GPTel")
+  ;;   "o m" '(gptel-menu :wk "GPTel menu"))
   (require 'gptel-curl)
   (require 'gptel-gemini)
   (require 'gptel-ollama)
@@ -253,18 +252,19 @@ Here is the result of `git diff --cached`:")
 
 (use-package gptel-context
   :after gptel
-  :general
-  (general-leader
-    "o c" '(:ignore t :which-key "GPTel Context")
-    "o c a" 'gptel-context-add
-    "o c r" 'gptel-context-remove
-    "o c s" '(lambda ()
-               (interactive)
-               (gptel-context-remove-all nil)
-               (unless (use-region-p)
-                 (mark-defun))
-               (gptel-context-add)
-               (my-switch-to-gptel-buffer))))
+  :config
+  ;; (general-leader
+  ;;   "o c" '(:ignore t :which-key "GPTel Context")
+  ;;   "o c a" 'gptel-context-add
+  ;;   "o c r" 'gptel-context-remove
+  ;;   "o c s" '(lambda ()
+  ;;              (interactive)
+  ;;              (gptel-context-remove-all nil)
+  ;;              (unless (use-region-p)
+  ;;                (mark-defun))
+  ;;              (gptel-context-add)
+  ;;              (my-switch-to-gptel-buffer)))
+  )
 
 (defun my-switch-to-gptel-buffer (&optional arg)
   "Switch to the most recent buffer with gptel-mode enabled or start it."

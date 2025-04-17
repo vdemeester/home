@@ -116,7 +116,6 @@
               ("i" . Man-goto-section)
               ("g" . Man-update-manpage)))
 
-(use-package bookmark+)
 (use-package bookmark)
 (use-package casual-bookmarks
   :bind (:map bookmark-bmenu-mode-map

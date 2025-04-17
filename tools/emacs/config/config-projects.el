@@ -46,19 +46,20 @@
     (interactive)
     (magit-status (vde-project--project-current)))
 
-  (general-leader
-    "p"  '(:ignore :which-key "Project")
-    "pp"  #'(project-switch-project :which-key "Switch to Project")
-    "ps"  #'(project-search :which-key "Grep in Project")
-    "pf"  #'(project-find-file :which-key "Find in Project")
-    "pd"  #'(project-dired :which-key "Dired in Project")
-    "pc"  #'(project-compile :which-key "Compile in Project")
-    "pb"  #'(project-switch-to-buffer :which-key "Switch to Project Buffer")
-    "pk"  #'(project-kill-buffers :which-key "Kill Project Buffers")
-    "ps"  #'(vde/project-vterm :which-key "Start a vterm in Project")
-    "pe"  #'(project-eshell :which-key "Start a eshell in Project")
-    "pE"  #'(vde/project-eat :which-key "Start a eat term in Project")
-    "px"  #'(vde/project-run-in-vterm :which-key "Execute command in vterm in Project")))
+  ;; (general-leader
+  ;;   "p"  '(:ignore :which-key "Project")
+  ;;   "pp"  #'(project-switch-project :which-key "Switch to Project")
+  ;;   "ps"  #'(project-search :which-key "Grep in Project")
+  ;;   "pf"  #'(project-find-file :which-key "Find in Project")
+  ;;   "pd"  #'(project-dired :which-key "Dired in Project")
+  ;;   "pc"  #'(project-compile :which-key "Compile in Project")
+  ;;   "pb"  #'(project-switch-to-buffer :which-key "Switch to Project Buffer")
+  ;;   "pk"  #'(project-kill-buffers :which-key "Kill Project Buffers")
+  ;;   "ps"  #'(vde/project-vterm :which-key "Start a vterm in Project")
+  ;;   "pe"  #'(project-eshell :which-key "Start a eshell in Project")
+  ;;   "pE"  #'(vde/project-eat :which-key "Start a eat term in Project")
+  ;;   "px"  #'(vde/project-run-in-vterm :which-key "Execute command in vterm in Project"))
+  )
 
 (use-package conner
   :bind (("C-x p C" . conner-run-project-command))

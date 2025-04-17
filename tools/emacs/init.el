@@ -248,10 +248,10 @@ The DWIM behaviour of this command is as follows:
 ;; Refactor this completely. Reduce to the minimum.
 (unless noninteractive
   (require '00-clean) ;; Maybe refactor no-littering
+  (require 'config-keybindings)
   (require 'config-editing)
   (require 'config-files)
   (require 'config-misc)
-  (require 'config-keybindings)
   (require 'config-appearance)
   (require 'config-buffers)
   (require 'config-compile)

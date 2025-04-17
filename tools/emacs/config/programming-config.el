@@ -45,8 +45,9 @@
   :bind
   ("M-s M-d" . consult-flymake)
   :config
-  (general-leader
-    "sd" #'(consult-flymake :which-key "Flymake diagnostics")))
+  ;; (general-leader
+  ;;   "sd" #'(consult-flymake :which-key "Flymake diagnostics"))
+  )
 
 (use-package flymake-yamllint
   :after yaml-ts-mode
