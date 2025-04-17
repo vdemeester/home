@@ -319,29 +319,27 @@ Otherwise, open the repository's main page."
   :bind
   ("C-x v /" . consult-vc-modified-files))
 
+;; FIXME bind pr-review-submit-review
 (use-package pr-review
-  :commands (pr-review)
+  :commands (pr-review pr-review-open pr-review-submit-review)
+  :bind
+  (("M-<SPC> p r" . pr-review-submit-review))
   :custom
   (pr-review-ghub-host "api.github.com")
   (pr-review-notification-include-read nil)
-  (pr-review-notification-include-unsubscribed nil)
-  :config
-  (require pr-review-search)
-  (general-leader
-    "p" '(:ignore t :which-key "PR Review")
-    "pn" #'(pr-review-notification :wk "PR review notifications")
-    "pa" #'(pr-review-current-repository :wk "PR review current repository")
-    ;; This one doesn't really work it seems
-    "ps" #'(pr-review-current-repository-search :wk "PR review search current repository")))
+  (pr-review-notification-include-unsubscribed nil))
+
+(use-package pr-review-search
+  :commands (pr-review-search pr-review-search-open pr-review-current-repository pr-review-current-repository-search)
+  :bind
+  (("M-<SPC> p a" . pr-review-current-repository)
+   ;; FIXME understand why this one doesn't work
+   ("M-<SPC> p s" . pr-review-current-repository-search)))
 
 (use-package pr-review-notification
-  :after (pr-review)
   :commands (pr-review-notification)
-  :config
-  (general-leader
-    "pn" #'(pr-review-notification :wk "PR review notifications")
-    ;; This one doesn't really work it seems
-    "ps" #'(pr-review-current-repository-search :wk "PR review search current repository")))
+  :bind
+  (("M-<SPC> p n" . pr-review-notification)))
 
 (defun pr-review-current-repository-search (query)
   "Run pr-review-search on the current repository."
