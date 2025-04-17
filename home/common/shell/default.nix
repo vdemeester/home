@@ -3,6 +3,7 @@
   imports = [
     ./atuin.nix
     ./direnv.nix
+    ./fzf.nix
     ./git.nix
     ./htop.nix
     ./tmux.nix
