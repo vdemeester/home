@@ -1,4 +1,9 @@
 { config, pkgs, ... }: {
+  home.file."${config.programs.zsh.dotDir}/completion.zsh".source = ./zsh/completion.zsh;
+  home.file."${config.programs.zsh.dotDir}/prompt.zsh".source = ./zsh/prompt.zsh;
+  home.file."${config.programs.zsh.dotDir}/functions/j".source = ./zsh/j;
+  home.file."${config.programs.zsh.dotDir}/auto-expanding-aliases.zsh".source = ./zsh/auto-expanding-aliases.zsh;
+
   home.packages = with pkgs; [
     nix-zsh-completions
   ];
