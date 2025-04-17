@@ -20,7 +20,7 @@
 
   networking = {
     hostName = hostname;
-    useDHCP = lib.mkDefault true;
+    # useDHCP = lib.mkDefault true;
   };
 
   environment.systemPackages = with pkgs; [

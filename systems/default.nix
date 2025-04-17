@@ -17,8 +17,8 @@
     ./common/base
     ./common/users
   ]
-  ++ lib.optional (builtins.pathExists (./. + "/${hostname}/extra.nix")) ./${hostname}/extra.nix
-  ++ lib.optional (builtins.isString desktop) ./common/desktop;
+  ++ lib.optional (builtins.pathExists (./. + "/${hostname}/extra.nix")) ./${hostname}/extra.nix;
+  # ++ lib.optional (builtins.isString desktop) ./common/desktop;
 
   nixpkgs = {
     overlays = [

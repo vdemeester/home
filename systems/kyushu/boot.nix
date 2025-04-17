@@ -10,7 +10,7 @@
     #   pkiBundle = "/etc/secureboot";
     # };
 
-    initrd = { };
+    # initrd = { };
 
     # extraModprobeConfig = ''
     #   options snd_hda_intel power_save=1
