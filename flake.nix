@@ -57,6 +57,7 @@
       ];
     in
     {
+      # Standalone home configurations
       homeConfigurations = {
         # headless machine
         "vincent@aion" = libx.mkHome {

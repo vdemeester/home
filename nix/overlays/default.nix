@@ -12,7 +12,7 @@
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {
-    master = import inputs.master {
+    master = import inputs.nixpkgs-master {
       inherit (final) system;
       config.allowUnfree = true;
       overlays = [
@@ -23,7 +23,7 @@
         })
       ];
     };
-    unstable = import inputs.unstable {
+    unstable = import inputs.nixpkgs {
       inherit (final) system;
       config.allowUnfree = true;
       overlays = [
