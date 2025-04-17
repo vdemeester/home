@@ -67,6 +67,8 @@ Use this function via a hook."
 (use-package windmove
   :unless noninteractive
   :commands (windmove-left windmove-right windmove-down windmove-up)
+  :custom
+  (windmove-allow-all-windows t)
   :bind (("C-M-<up>" . windmove-up)
          ("C-M-<right>" . windmove-right)
          ("C-M-<down>" . windmove-down)
@@ -240,7 +242,7 @@ use in `display-buffer-alist'."
    '("^\\*.*eshell.*\\*$" "^\\*.*shell.*\\*$" "^\\*.*term.*\\*$"
      "^\\*.*vterm.*\\*$" "^\\*.*eat.*\\*$"))
   (auto-side-windows-bottom-buffer-modes
-   '(eshell-mode shell-mode term-mode vterm-mode comint-mode debugger-mode))
+   '(eshell-mode shell-mode term-mode vterm-mode comint-mode compilation-mode debugger-mode))
 
   ;; Right side window configurations
   (auto-side-windows-right-buffer-names
