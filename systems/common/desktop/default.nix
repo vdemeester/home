@@ -15,6 +15,7 @@
   ];
   # Enable Plymouth and surpress some logs by default.
   boot = {
+    initrd.systemd.enable = true;
     plymouth.enable = true;
     kernelParams = [
       # The 'splash' arg is included by the plymouth option
