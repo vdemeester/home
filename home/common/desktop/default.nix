@@ -11,6 +11,9 @@
     ./mpv.nix
     ./passage.nix
     ./xdg.nix
+
+    ../dev/base.nix
+    ../dev/desktop.nix
   ];
 
   home.packages = with pkgs; [

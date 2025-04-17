@@ -68,7 +68,7 @@ in
   # Do I user home-manager nixosModule *or* home-manager on its own
   home-manager.users.vincent =
     (import ../../../home/default.nix {
-      inherit pkgs lib hostname desktop outputs inputs stateVersion;
+      inherit config pkgs lib hostname desktop outputs inputs stateVersion;
       username = "vincent";
     });
   # This is a workaround for not seemingly being able to set $EDITOR in home-manager

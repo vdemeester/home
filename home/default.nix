@@ -1,4 +1,5 @@
-{ desktop
+{ config
+, desktop
 , hostname
 , lib
 , pkgs
