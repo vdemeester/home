@@ -57,9 +57,9 @@ in
   };
 
   # Enable user units to persist after sessions end.
-  system.activationScripts.loginctl-enable-linger-vincent = lib.stringAfter [ "users" ] ''
-    ${pkgs.systemd}/bin/loginctl enable-linger ${config.users.users.vincent.name}
-  '';
+  # system.activationScripts.loginctl-enable-linger-vincent = lib.stringAfter [ "users" ] ''
+  #   ${pkgs.systemd}/bin/loginctl enable-linger ${config.users.users.vincent.name}
+  # '';
 
   # Do I user home-manager nixosModule *or* home-manager on its own
   # home-manager.users.vincent = …
