@@ -38,4 +38,4 @@
 
   programs.gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
   services.yubikey-agent.enable = true;
-};
+}
