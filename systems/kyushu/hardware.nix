@@ -6,8 +6,8 @@
 
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen
 
-    # ../common/hardware/acpid.nix
-    # ../common/hardware/bluetooth.nix
+    ../common/hardware/acpid.nix
+    ../common/hardware/bluetooth.nix
   ];
 
   hardware = {

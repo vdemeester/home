@@ -10,7 +10,7 @@
     ./binfmt.nix
     ../programs/nix-ld.nix
     ../services/pipewire.nix
-    # ../hardware/yubikey.nix
+    ../hardware/yubikey.nix
     # ../virt
   ];
   # Enable Plymouth and surpress some logs by default.
