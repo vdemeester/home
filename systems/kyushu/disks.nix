@@ -22,7 +22,7 @@
 
   # TODO: Remove this if/when machine is reinstalled.
   # This is a workaround for the legacy -> gpt tables disko format.
-  fileSystems."/boot".device = lib.mkForce "/dev/disk/by-partlabel/ESP";
+  # fileSystems."/boot".device = lib.mkForce "/dev/disk/by-partlabel/ESP";
 
   disko.devices = {
     disk = {
