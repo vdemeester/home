@@ -2,6 +2,7 @@
 , lib
 , config
 , desktop
+, syncthingFolders
 , hostname
 , outputs
 , stateVersion
@@ -68,7 +69,7 @@ in
   # Do I user home-manager nixosModule *or* home-manager on its own
   home-manager.users.vincent =
     (import ../../../home/default.nix {
-      inherit config pkgs lib hostname desktop outputs inputs stateVersion;
+      inherit config pkgs lib hostname syncthingFolders desktop outputs inputs stateVersion;
       username = "vincent";
     });
   # This is a workaround for not seemingly being able to set $EDITOR in home-manager

@@ -92,7 +92,7 @@
               inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
               ./systems/hosts/wakasu.nix
             ];
-            syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
           };
           aomi = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
@@ -101,7 +101,7 @@
               inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
               ./systems/hosts/aomi.nix
             ];
-            syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
           };
           # Servers (stable)
           shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {
@@ -109,7 +109,7 @@
             modules = commonModules ++ stableModules ++ [
               ./systems/hosts/shikoku.nix
             ];
-            syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
           };
           sakhalin = inputs.nixpkgs-24_11.lib.nixosSystem {
             system = "x86_64-linux";
@@ -117,7 +117,7 @@
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               ./systems/hosts/sakhalin.nix
             ];
-            syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
           };
           kerkouane = inputs.nixpkgs-24_11.lib.nixosSystem {
             system = "x86_64-linux";
@@ -125,7 +125,7 @@
               ./systems/modules/services/govanityurl.nix
               ./systems/hosts/kerkouane.nix
             ];
-            syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
           };
           # carthage = inputs.nixpkgs-24_11.lib.nixosSystem {
           #   system = "aarch64-linux";
@@ -140,7 +140,7 @@
             modules = commonModules ++ stableModules ++ [
               ./systems/hosts/athena.nix
             ];
-            syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
           };
           # demeter
           demeter = inputs.nixpkgs-24_11.lib.nixosSystem {
@@ -148,7 +148,7 @@
             modules = commonModules ++ stableModules ++ [
               ./systems/hosts/demeter.nix
             ];
-            syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
           };
         };
 

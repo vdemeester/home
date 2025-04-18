@@ -1,6 +1,7 @@
 { config
 , desktop
 , hostname
+, syncthingFolders
 , lib
 , pkgs
 , outputs
@@ -8,7 +9,8 @@
 , username
 , inputs
 , ...
-}: {
+}:
+{
   imports = [
     ./common/shell
   ]
@@ -16,7 +18,8 @@
   ++ lib.optional
     (builtins.pathExists (
       ./. + "/common/users/${username}"
-    )) ./common/users/${username};
+    )) ./common/users/${username}
+  ++ lib.optional ((builtins.length syncthingFolders) > 0) ./common/services/syncthing.nix;
 
   home = {
     inherit username stateVersion;

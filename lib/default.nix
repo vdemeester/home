@@ -50,7 +50,7 @@
           stateVersion
           hostname
           desktop
-          # syncthingFolders
+          syncthingFolders
           system
           ;
       };
