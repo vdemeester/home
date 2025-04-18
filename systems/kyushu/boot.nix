@@ -1,16 +1,27 @@
 { pkgs, lib, ... }:
 {
+  environment.systemPackages = with pkgs; [
+    sbctl
+  ];
+
   boot = {
     # Secure boot configuration
-    # bootspec.enable = true;
+    bootspec.enable = true;
     # First boot systemd-boot has to be enabled, then switch to lanzaboote
-    # loader.systemd-boot.enable = lib.mkForce false;
-    # lanzaboote = {
-    #   enable = true;
-    #   pkiBundle = "/etc/secureboot";
-    # };
+    loader.systemd-boot.enable = lib.mkForce false;
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
 
-    # initrd = { };
+    initrd = {
+      luks.devices."cryptroot" = {
+        crypttabExtraOpts = [ "fido2-device=auto" ];
+      };
+      systemd = {
+        fido2.enable = true;
+      };
+    };
 
     # extraModprobeConfig = ''
     #   options snd_hda_intel power_save=1

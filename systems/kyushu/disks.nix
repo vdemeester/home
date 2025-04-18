@@ -5,21 +5,6 @@
 , ...
 }:
 {
-
-  boot.initrd.luks.devices."cryptroot" = {
-    # FIXME setup this
-    # TODO: Remove this "device" attr if/when machine is reinstalled.
-    # This is a workaround for the legacy -> gpt tables disko format.
-    # device = lib.mkForce "/dev/disk/by-uuid/c0cac87c-53ec-4262-9ab2-a3ee8331c75a";
-    # device = "/dev/disk/by-partlabel/cryptroot";
-    preLVM = true;
-    allowDiscards = true;
-    # keyFile = "/dev/disk/by-id/usb-_USB_DISK_2.0_070D375D84327E87-0:0";
-    # keyFileOffset = 30992883712;
-    # keyFileSize = 4096;
-    # fallbackToPassword = lib.mkForce true;
-  };
-
   disko.devices = {
     disk = {
       # 512GB root/boot drive. Configured with:
