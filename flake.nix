@@ -24,7 +24,7 @@
       commonModules = [
         {
           config.nixpkgs.overlays = [
-            (import ./nix/overlays).tekton
+            (import ./nix/overlays/tekton.nix)
             (import ./nix/overlays/sbr.nix)
             inputs.emacs-overlay.overlay
             inputs.chapeau-rouge.overlays.openshift
