@@ -16,6 +16,7 @@
   };
 
   services = {
+    gnome.gnome-keyring.enable = true;
     dbus = {
       enable = true;
       implementation = "broker"; # trying this one out
