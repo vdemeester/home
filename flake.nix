@@ -209,22 +209,20 @@
 
     # nixpkgs
     nixpkgs = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
-    nixpkgs-24_05 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-24.05"; };
     nixpkgs-24_11 = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-24.11"; };
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     # Home Manager
     home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    home-manager-24_05 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-24.05"; inputs.nixpkgs.follows = "nixpkgs-24_05"; };
     home-manager-24_11 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-24.11"; inputs.nixpkgs.follows = "nixpkgs-24_11"; };
 
-    impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
+    # impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
 
     dagger = { type = "github"; owner = "dagger"; repo = "nix"; inputs.nixpkgs.follows = "nixpkgs"; };
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-24_05";
+      inputs.nixpkgs-stable.follows = "nixpkgs-24_11";
     };
 
     # WSL
@@ -252,6 +250,8 @@
     };
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix-24_11.url = "github:ryantm/agenix";
+    agenix-24_11.inputs.nixpkgs.follows = "nixpkgs-24_11";
 
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";

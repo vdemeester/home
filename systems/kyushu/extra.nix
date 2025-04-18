@@ -7,7 +7,8 @@
     ../common/programs/git.nix
     ../common/programs/tmux.nix
     ../common/services/networkmanager.nix
-    ../common/services/syncthing.nix
+
+    ../redhat
   ];
 
 }
