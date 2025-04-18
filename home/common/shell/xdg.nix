@@ -16,7 +16,7 @@ in
       createDirectories = lib.mkDefault true;
 
       desktop = desktopDirectory;
-      documents = desktopDirectory + "documents";
+      documents = desktopDirectory + "/documents";
       download = desktopDirectory + "/downloads";
       music = desktopDirectory + "/music";
       pictures = desktopDirectory + "/pictures";
