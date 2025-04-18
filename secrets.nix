@@ -13,25 +13,26 @@ let
   sakhalin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/PMBThi4DhgZR8VywbRDzzMVh2Qp3T6NJAcPubfXz6"; # ssh-keyscan -q -t ed25519 sakhalin.sbr.pm
   shikoku = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm"; # ssh-keyscan -q -t ed25519 shikoku.sbr.pm
   wakasu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrAh07USjRnAdS3mMNGdKee1KumjYDLzgXaiZ5LYi2D"; # ssh-keyscan -q -t ed25519 wakasu.sbr.pm
-  desktops = [ aomi wakasu ];
+  kyushu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINd795m+P54GlGJdMaGci9pQ9N942VUz8ri2F14+LWxg"; # ssh-keyscan -q -t ed25519 kyushu.sbr.pm
+  desktops = [ aomi wakasu kyushu ];
   servers = [ athena demeter kerkouane sakhalin shikoku ];
   systems = servers ++ desktops;
 in
 {
   # Red Hat
-  "secrets/redhat/krb5.conf.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/RHVPN.ovpn.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/AMS2.ovpn.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/RDU2.ovpn.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/BBRQ.ovpn.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/ipa.crt.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/2015-RH-IT-Root-CA.pem.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/Eng-CA.crt.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/newca.crt.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/oracle_ebs.crt.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/pki-ca-chain.crt.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/RH_ITW.crt.age".publicKeys = users ++ [ aomi wakasu ];
-  "secrets/redhat/win-intermediate-ca.cer.age".publicKeys = users ++ [ aomi wakasu ];
+  "secrets/redhat/krb5.conf.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/RHVPN.ovpn.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/AMS2.ovpn.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/RDU2.ovpn.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/BBRQ.ovpn.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/ipa.crt.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/2015-RH-IT-Root-CA.pem.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/Eng-CA.crt.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/newca.crt.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/oracle_ebs.crt.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/pki-ca-chain.crt.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/RH_ITW.crt.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/win-intermediate-ca.cer.age".publicKeys = users ++ [ aomi wakasu kyushu ];
   "secrets/redhat/redhat.pem.age".publicKeys = users ++ systems;
   # Others
   "secrets/minica.pem.age".publicKeys = users ++ systems;
