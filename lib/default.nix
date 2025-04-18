@@ -35,6 +35,7 @@
   mkHost =
     { hostname
     , desktop ? null
+    , syncthingFolders ? [ ]
     , system ? "x86_64-linux"
     , pkgsInput ? inputs.nixpkgs
     , homeInput ? inputs.home-manager
@@ -49,6 +50,7 @@
           stateVersion
           hostname
           desktop
+          # syncthingFolders
           system
           ;
       };
