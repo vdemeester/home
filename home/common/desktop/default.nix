@@ -46,6 +46,7 @@
 
   services = {
     udiskie.enable = true;
+    poweralertd.enable = true;
   };
 
   home.file.".oath" = {
