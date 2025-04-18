@@ -15,6 +15,7 @@
     # All my machine have this running
     ../services/avahi.nix
     ../services/openssh.nix
+    ../programs/age.nix
     # ../services/wireguard.nix # or netbird
   ];
 
@@ -24,8 +25,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    age
-    agenix
     binutils
     curl
     file
