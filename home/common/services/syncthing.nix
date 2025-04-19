@@ -26,6 +26,7 @@ let
   deviceHasFolder = folder: n: v: lib.lists.any (s: s == folder) (getSyncthingFolders v);
   devicesForFolder = folder: lib.attrsets.filterAttrs (deviceHasFolder folder) outputs.nixosConfigurations;
   # outputs.nixosConfigurations.$.syncthingFolders will contains the folders for a host
+  # FIXME: we could use another file, and a "configuration" so that I don't import it ? or in the flake, but not in makeHost
 
   # non-nixos syncthing machines
   extras = [
