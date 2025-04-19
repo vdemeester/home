@@ -58,6 +58,16 @@
       "intel_iommu=on"
     ];
 
+    kernel.sysctl = {
+      # optimize power consumption
+      "kernel.nmi_watchdog" = 0;
+      "vm.swappiness" = 10;
+      "vm.dirty_ratio" = 25;
+      "vm.dirty_background_ratio" = 10;
+      "vm.dirty_writeback_centisecs" = 6000;
+      "vm.dirty_expire_centisecs" = 6000;
+    };
+
     kernelPackages = pkgs.linuxPackages_latest;
   };
 }
