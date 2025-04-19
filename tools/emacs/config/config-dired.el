@@ -236,7 +236,9 @@ This relies on the external 'fd' executable."
 ;;   (setq dired-sidebar-use-term-integration t))
 
 (use-package casual-dired
-    :bind (:map dired-mode-map ("C-o" . 'casual-dired-tmenu)))
+  :after dired
+  :commands (casual-dired-tmenu)
+  :bind (:map dired-mode-map ("C-o" . 'casual-dired-tmenu)))
 
 (provide 'config-dired)
 ;; config-dired.el ends here

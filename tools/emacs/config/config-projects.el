@@ -63,7 +63,8 @@
 
 (use-package conner
   :bind (("C-x p C" . conner-run-project-command))
-  :init
+  :commands (conner-run-project-command)
+  :config
   (require 'vterm))
 
 (use-package project-x

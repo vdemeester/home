@@ -73,10 +73,13 @@
 
 (use-package consult-imenu
   :after (consult)
+  :commands (consult-imenu)
   :bind
   ("M-s M-i" . consult-imenu))
 
 (use-package consult-xref
+  :after (consult)
+  :commands (consult-xref)
   :config
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)

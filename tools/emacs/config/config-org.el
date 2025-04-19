@@ -167,7 +167,7 @@
 			(lambda (directory)
 			  (directory-files-recursively
 			   directory org-agenda-file-regexp))
-			`(,org-directory ,(expand-file-name "~/src/osp/tasks"))))))
+			`(,org-directory)))))
   (defun vde/reload-org-agenda-files ()
     "Reload org-agenda-files variables with up-to-date org files"
     (interactive)
@@ -224,6 +224,8 @@
 	    (org-agenda-sorting-strategy '(user-defined-down)))))))
 
 (use-package org-review
+  :defer t
+  :after (org)
   :config
   (setopt org-review-delay "+1w")
   (add-hook 'org-agenda-mode-hook
@@ -333,20 +335,27 @@ file which do not already have one."
 
 ;; Using denote as the "source" of my second brain *in* org-mode.
 (use-package denote
+  :commands (denote denote-region denote-type denote-date
+		    denote-signature denote-subdirectory
+		    denote-template denote-link-or-create
+		    denote-add-links denote-find-link
+		    denote-find-backlink denote-rename-file
+		    denote-rename-file-using-front-matter
+		    denote-journal-extras-new-or-existing-entry)
   :bind (("C-c n n" . vde/dired-notes)
 	 ("C-c n N" . denote)
 	 ("C-c n c" . denote-region)
 	 ("C-c n N" . denote-type)
 	 ("C-c n d" . denote-date)
 	 ("C-c n z" . denote-signature)
-	 ("C-c n s" . denote-subdirectory)
+	 ("C-c n S" . denote-subdirectory)
 	 ("C-c n t" . denote-template)
 	 ;; Links
 	 ("C-c n i" . denote-link-or-create)
 	 ("C-c n I" . denote-add-links)
 	 ("C-c n b" . denote-backlinks)
-	 ("C-c n f f" . denote-find-link)
-	 ("C-c n f b" . denote-find-backlink)
+	 ("C-c n F f" . denote-find-link)
+	 ("C-c n F b" . denote-find-backlink)
 	 ;; Renaming
 	 ("C-c n r" . denote-rename-file)
 	 ("C-c n R" . denote-rename-file-using-front-matter)
@@ -371,11 +380,10 @@ file which do not already have one."
      (dedicated . t)
      (preserve-size . (t . t))))
   :hook (dired-mode . denote-dired-mode)
-  :init
+  :config
   (require 'denote-rename-buffer)
   (require 'denote-org-extras)
   (require 'denote-journal-extras)
-  :config
   (denote-rename-buffer-mode 1)
   (defun my-denote-always-rename-on-save-based-on-front-matter ()
     "Rename the current Denote file, if needed, upon saving the file.
@@ -423,13 +431,14 @@ Add this function to the `after-save-hook'."
   :commands (consult-notes
              consult-notes-search-in-all-notes
 	     consult-notes-denote-mode)
-  :bind (("C-c n F" . consult-notes)
-	 ("C-c n S" . consult-notes-search-in-all-notes))
+  :bind (("C-c n f" . consult-notes)
+	 ("C-c n s" . consult-notes-search-in-all-notes))
   :config
   (when (locate-library "denote")
     (consult-notes-denote-mode)))
 
-(use-package orgit)
+(use-package orgit
+  :defer t)
 
 (use-package ob-async
   :after org
@@ -648,7 +657,8 @@ Within those groups, sort by date and priority."
       remember-in-new-frame t)
 
 (use-package consult-org
-  :after (consult))
+  :after (consult org)
+  :commands (consult-org-agenda consult-org-heading))
 
 (provide 'config-org)
 ;;; config-org.el ends here
