@@ -1,4 +1,4 @@
-_: {
+{ pkgs, ... }: {
   virtualisation = {
     docker = {
       enable = true;
