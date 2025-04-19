@@ -58,6 +58,7 @@
     in
     {
       # Standalone home configurations
+      # FIXME set this up
       homeConfigurations = {
         # headless machine
         "vincent@aion" = libx.mkHome {
@@ -70,6 +71,8 @@
           hostname = "aion";
           system = "aarch64-linux";
         };
+        # TODO vincent@honshu (darwin)
+        # TODO vincent@okinawa (wsl ?)
       };
       nixosConfigurations =
         {
@@ -79,21 +82,8 @@
             desktop = "sway";
             syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
           };
-
-          # sakhalin = libx.mkHost {
-          #   hostname = "sakhalin";
-          #   pkgsInput = inputs.nixpkgs-24_11;
-          #   homeInput = inputs.home-manager-24_11;
-          # };
-          # Work laptop (unstable)
-          wakasu = inputs.nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = commonModules ++ unstableModules ++ [
-              inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
-              ./systems/hosts/wakasu.nix
-            ];
-            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
-          };
+          # Work workstation (unstable)
+          # FIXME migrate to libx.mkHost
           aomi = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = commonModules ++ unstableModules ++ [
@@ -103,6 +93,13 @@
             ];
             # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
           };
+          # Work server (stable ?)
+          # kobe = libx.mkHost {
+          #   hostname = "sakhalin";
+          #   pkgsInput = inputs.nixpkgs-24_11;
+          #   homeInput = inputs.home-manager-24_11;
+          # };
+
           # Servers (stable)
           shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {
             system = "x86_64-linux";
@@ -153,6 +150,7 @@
         };
 
       # system-manager configurations
+      # FIXME set this up
       systemConfigs = {
         aion = libx.mkSystemmanager {
           hostname = "aion";
