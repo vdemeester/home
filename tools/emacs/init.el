@@ -205,7 +205,8 @@ The DWIM behaviour of this command is as follows:
   (setq use-package-always-defer nil)
   (setq use-package-always-demand nil)
   (setq use-package-expand-minimally nil)
-  (setq use-package-enable-imenu-support t))
+  (setq use-package-enable-imenu-support t)
+  (setq use-package-compute-statistics t))
 
 ;; (unless (package-installed-p 'use-package)
 ;;   (package-refresh-contents)
