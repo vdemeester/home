@@ -2,11 +2,12 @@
 {
   # Some systctl options for all laptops
   boot.kernel.sysctl = {
+    "kernel.nmi_watchdog" = 0;
     "vm.swappiness" = 10;
     "vm.dirty_ratio" = 25;
     "vm.dirty_background_ratio" = 10;
-    "vm.dirty_writeback_centisecs" = 5000;
-    "vm.dirty_expire_centisecs" = 5000;
+    "vm.dirty_writeback_centisecs" = 6000;
+    "vm.dirty_expire_centisecs" = 6000;
   };
 
   environment.systemPackages = with pkgs; [
