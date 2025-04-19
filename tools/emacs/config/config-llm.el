@@ -4,12 +4,12 @@
 ;;; Code:
 
 (use-package copilot
-  :hook
-  (prog-mode . copilot-mode)
+  ;; :hook
+  ;; (prog-mode . copilot-mode)
   ;; (markdown-mode . copilot-mode) ;; Enable this on-demand only
   ;; (text-mode . copilot-mode) ;; I may not want copilot in org-mode for example.
-  (log-edit-mode . copilot-mode)
-  (vc-git-log-edit-mode . copilot-mode)
+  ;; (log-edit-mode . copilot-mode)
+  ;; (vc-git-log-edit-mode . copilot-mode)
   :bind
   (:map copilot-completion-map
         ("C-g" . copilot-clear-overlay)

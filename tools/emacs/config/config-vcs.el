@@ -344,8 +344,8 @@ Otherwise, open the repository's main page."
 ;; FIXME bind pr-review-submit-review
 (use-package pr-review
   :commands (pr-review pr-review-open pr-review-submit-review)
-  :bind
-  (("M-<SPC> p r" . pr-review-submit-review))
+;;  :bind
+;;  (("M-<SPC> p r" . pr-review-submit-review))
   :custom
   (pr-review-ghub-host "api.github.com")
   (pr-review-notification-include-read nil)
@@ -353,15 +353,17 @@ Otherwise, open the repository's main page."
 
 (use-package pr-review-search
   :commands (pr-review-search pr-review-search-open pr-review-current-repository pr-review-current-repository-search)
-  :bind
-  (("M-<SPC> p a" . pr-review-current-repository)
-   ;; FIXME understand why this one doesn't work
-   ("M-<SPC> p s" . pr-review-current-repository-search)))
+;;  :bind
+;;  (("M-<SPC> p a" . pr-review-current-repository)
+;;   ;; FIXME understand why this one doesn't work
+  ;;  ("M-<SPC> p s" . pr-review-current-repository-search)))
+  )
 
 (use-package pr-review-notification
   :commands (pr-review-notification)
-  :bind
-  (("M-<SPC> p n" . pr-review-notification)))
+;;  :bind
+  ;;  (("M-<SPC> p n" . pr-review-notification)))
+  )
 
 (defun pr-review-current-repository-search (query)
   "Run pr-review-search on the current repository."
