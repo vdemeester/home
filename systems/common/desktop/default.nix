@@ -1,6 +1,5 @@
 { desktop
 , pkgs
-, self
 , ...
 }:
 {

@@ -1,8 +1,4 @@
-{ lib
-, disks ? [
-    "/dev/nvme0n1"
-  ]
-, ...
+{ ...
 }:
 {
   disko.devices = {

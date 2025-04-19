@@ -1,4 +1,4 @@
-{ config, pkgs, desktop, ... }:
+{ config, pkgs, ... }:
 {
   imports = [
     # FIXME why the infinite recusion
