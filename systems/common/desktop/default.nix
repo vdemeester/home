@@ -38,6 +38,7 @@
     fd # find
     duf # df
     ripgrep
+    desktop-file-utils
   ];
 
   fonts = {
