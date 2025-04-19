@@ -303,16 +303,38 @@ Otherwise, open the repository's main page."
       (kill-buffer log-buf))
     (kill-buffer commit-buf)))
 
-(use-package git-gutter
-  :hook (prog-mode . git-gutter-mode)
+(use-package diff-hl
+  :hook (find-file . diff-hl-mode)
+  :hook (prog-mode . diff-hl-mode)
+  :hook (magit-post-refresh . diff-hl-magit-post-refresh)
+  :bind
+  (:map diff-hl-command-map
+	("n" . diff-hl-next-hunk)
+	("p" . diff-hl-previous-hunk)
+	("[" . nil)
+	("]" . nil)
+	("DEL"   . diff-hl-revert-hunk)
+	("<delete>" . diff-hl-revert-hunk)
+	("SPC" . diff-hl-mark-hunk)
+	:map vc-prefix-map
+	("n" . diff-hl-next-hunk)
+	("p" . diff-hl-previous-hunk)
+	("s" . diff-hl-stage-dwim)
+	("DEL"   . diff-hl-revert-hunk)
+	("<delete>" . diff-hl-revert-hunk)
+	("SPC" . diff-hl-mark-hunk))
   :config
-  (setq git-gutter:update-interval 0.2))
+  (put 'diff-hl-inline-popup-hide
+       'repeat-map 'diff-hl-command-map))
 
-(use-package git-gutter-fringe
-  :config
-  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+(use-package diff-hl-inline-popup
+  :after (diff-hl))
+(use-package diff-hl-show-hunk
+  :after (diff-hl))
+
+(use-package diff-hl-dired
+  :after (diff-hl)
+  :hook (dired-mode . diff-hl-dired-mode))
 
 (use-package consult-vc-modified-files
   :after consult

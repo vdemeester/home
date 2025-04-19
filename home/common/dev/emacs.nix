@@ -41,6 +41,7 @@ let
     denote
     denote-menu
     devdocs
+    diff-hl
     dired-collapse
     dired-narrow
     dired-rsync
@@ -62,8 +63,6 @@ let
     esup
     flimenu
     flymake-yamllint
-    git-gutter
-    git-gutter-fringe
     git-modes
     go-mode
     gotest
