@@ -38,11 +38,10 @@
       # c.f. https://wiki.gnupg.org/AgentForwarding
       # gpgconf --create-socketdir &!
       path+="$HOME/${config.programs.zsh.dotDir}/functions"
-      fpath+="$HOME/.nix-profile/share/zsh/site-functions"
+      fpath+="$HOME/.local/state/nix/profile/share/zsh/site-functions"
       fpath+="$HOME/${config.programs.zsh.dotDir}/functions"
       for func ($HOME/${config.programs.zsh.dotDir}/functions) autoload -U $func/*(x:t)
       autoload -Uz select-word-style; select-word-style bash
-      if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
       #if [ -n "$INSIDE_EMACS" ]; then
       #  chpwd() { print -P "\033AnSiTc %d" }
       #  print -P "\033AnSiTu %n"
@@ -96,9 +95,6 @@
       if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then
         exec dbus-run-session sway
       fi
-    '';
-    profileExtra = ''
-      if [ -e /home/vincent/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vincent/.nix-profile/etc/profile.d/nix.sh; fi
     '';
     sessionVariables = { RPROMPT = ""; };
 
