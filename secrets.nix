@@ -26,6 +26,7 @@ in
   "secrets/redhat/RDU2.ovpn.age".publicKeys = users ++ [ aomi wakasu kyushu ];
   "secrets/redhat/BBRQ.ovpn.age".publicKeys = users ++ [ aomi wakasu kyushu ];
   "secrets/redhat/ipa.crt.age".publicKeys = users ++ [ aomi wakasu kyushu ];
+  "secrets/redhat/2022-RH-IT-Root-CA.pem.age".publicKeys = users ++ [ aomi wakasu kyushu ];
   "secrets/redhat/2015-RH-IT-Root-CA.pem.age".publicKeys = users ++ [ aomi wakasu kyushu ];
   "secrets/redhat/Eng-CA.crt.age".publicKeys = users ++ [ aomi wakasu kyushu ];
   "secrets/redhat/newca.crt.age".publicKeys = users ++ [ aomi wakasu kyushu ];

@@ -1,4 +1,10 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
+  environment.systemPackages = with pkgs; [
+    krb5
+    (google-chrome.override {
+      commandLineArgs = "--auth-negotiate-delegate-whitelist='*.redhat.com' --auth-server-whitelist=.redhat.com --enable-features=UseOzonePlatform --enable-gpu --ozone-platform=wayland";
+    })
+  ];
   # Kerberos
   age.secrets."krb5.conf" = {
     file = ../../secrets/redhat/krb5.conf.age;
@@ -33,4 +39,17 @@
     path = "/etc/ipa/ipa.crt";
     mode = "444";
   };
+  age.secrets."2022-RH-IT-Root-CA.pem" = {
+    file = ../../secrets/redhat/2022-RH-IT-Root-CA.pem.age;
+    path = "/etc/pki/tls/certs/2022-RH-IT-Root-CA.pem";
+    mode = "444";
+  };
+
+  # security.pki.certificates =[];
+  security.pki.certificateFiles = [
+    "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+    # "${config.age.secrets."2022-RH-IT-Root-CA.pem".path}"
+    # "/home/vincent/tmp/2022-IT-Root-CA.pem"
+    ../../secrets/redhat/2022-IT-Root-CA.pem
+  ];
 }
