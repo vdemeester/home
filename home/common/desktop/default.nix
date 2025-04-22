@@ -47,6 +47,7 @@
   services = {
     udiskie.enable = true;
     poweralertd.enable = true;
+    gnome-keyring.enable = true;
   };
 
   home.file.".oath" = {
