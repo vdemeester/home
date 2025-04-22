@@ -58,6 +58,11 @@
   security = {
     polkit.enable = true;
     rtkit.enable = true;
+    tpm2 = {
+      enable = true;
+      pkcs11.enable = true;
+      abrmd.enable = true;
+    };
   };
 
   # Clear out /tmp after a fortnight and give all normal users a ~/tmp
