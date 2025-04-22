@@ -33,6 +33,8 @@
       inputs.chick-group.overlays.default
       inputs.agenix.overlays.default
 
+      (import ../nix/overlays/sbr.nix)
+
       # Migrate to "modifications"
       (_: prev: {
         inherit (inputs.buildkit-tekton.packages.${prev.system}) tkn-local;
