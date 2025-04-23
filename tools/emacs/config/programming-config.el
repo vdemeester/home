@@ -20,7 +20,40 @@
   (prog-mode . symbol-overlay-mode))
 
 (use-package devdocs
-  :bind (("C-h D" . devdocs-lookup)))
+  :commands (devdocs-lookup devdocs-install vde/install-devdocs)
+  :bind (("C-h D" . devdocs-lookup))
+  :config
+  (defun vde/install-devdocs ()
+    "Install the devdocs I am using the most."
+    (interactive)
+    (dolist (docset '("bash"
+		      "c"
+		      "click"
+		      "cpp"
+		      "css"
+		      "elisp"
+		      "flask"
+		      "git"
+		      "gnu_make"
+		      "go"
+		      "html"
+		      "htmx"
+		      "http"
+		      "javascript"
+		      "jq"
+		      "jquery"
+		      "kubectl"
+		      "kubernetes"
+		      "lua~5.4"
+		      "nix"
+		      "python~3.13"
+		      "python~3.12"
+		      "requests"
+		      "sqlite"
+		      "terraform"
+		      "werkzeug"
+		      "zig"))
+    (devdocs-install docset))))
 
 (use-package yaml-ts-mode
   :mode "\\.ya?ml\\'"
