@@ -27,7 +27,7 @@
         username = user;
       };
       modules = [
-        # ../home
+        ../home
       ];
     };
 
@@ -41,7 +41,7 @@
     , homeInput ? inputs.home-manager
     ,
     }:
-    pkgsInput.lib.nixosSystem {
+    let
       specialArgs = {
         inherit
           self
@@ -54,11 +54,15 @@
           system
           ;
       };
+    in
+    pkgsInput.lib.nixosSystem {
+      inherit specialArgs;
       system = system;
       modules = [
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager
+        { home-manager.extraSpecialArgs = specialArgs; }
         ../systems
       ];
     };
