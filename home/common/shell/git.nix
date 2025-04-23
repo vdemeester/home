@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, hostname, ... }:
 let
   redhat_folders = [
     "src/github.com/containers"
@@ -21,6 +21,11 @@ let
     "src/knative.dev"
     "src/knative-sandbox"
   ];
+  sshkeyPerHost = {
+    kyushu = "${pkgs.writeText "yubikey5-c1" "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE="}";
+  };
+  defaultSSHKey = sshkeyPerHost.kyushu;
+  getSSHKeyForHost = h: if builtins.hasAttr h sshkeyPerHost then sshkeyPerHost."${h}" else defaultSSHKey;
 in
 {
   xdg.configFile."git/allowed_signers".text = ''
@@ -48,7 +53,8 @@ in
     signing = {
       # key = "6EB699A3";
       # FIXME: This should change depending on the host (could be different yubikey, …)
-      key = "${pkgs.writeText "yubikey5-c1" "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE="}";
+      key = getSSHKeyForHost hostname;
+      # key = "${pkgs.writeText "yubikey5-c1" "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE="}";
       signByDefault = false;
     };
 
