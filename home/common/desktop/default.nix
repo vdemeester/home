@@ -27,7 +27,9 @@
     hunspellDicts.en_US-large
     hunspellDicts.fr-any
     libnotify
+    libosinfo
     loupe
+    p7zip
     papers
     playerctl
     pwvucontrol
