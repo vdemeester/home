@@ -28,7 +28,7 @@ _: {
       "shift+up" = "neighboring_window up";
       "shift+down" = "neighboring_window down";
     };
-    theme = "Tango Light";
+    themeFile = "Tango_Light";
     # action_alias mkh kitten hints --alphabet asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM 
     # map kitty_mod+n    mkh --type=linenum emacsclient -c -nw +{line} {path}
   };
