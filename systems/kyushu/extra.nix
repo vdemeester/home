@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 {
 
   imports = [
@@ -13,6 +13,10 @@
     ../common/services/lxd.nix
 
     ../redhat
+  ];
+
+  environment.systemPackages = with pkgs; [
+    go-org-readwise
   ];
 
   # Make sure we don't start docker until required
