@@ -8,6 +8,7 @@
     ./firefox.nix
     ./gtk.nix
     ./kitty.nix
+    ./mails.nix
     ./mpv.nix
     ./passage.nix
     ./xdg.nix
