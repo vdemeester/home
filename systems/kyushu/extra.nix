@@ -15,6 +15,14 @@
     ../redhat
   ];
 
+  services.wireguard = {
+    enable = true;
+    # FIXME get this from some globals
+    ips = [ "10.100.0.18/24" ];
+    endpoint = "167.99.17.238";
+    endpointPublicKey = "+H3fxErP9HoFUrPgU19ra9+GDLQw+VwvLWx3lMct7QI=";
+  };
+
   environment.systemPackages = with pkgs; [
     go-org-readwise
   ];

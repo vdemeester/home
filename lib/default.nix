@@ -59,6 +59,7 @@
       inherit specialArgs;
       system = system;
       modules = [
+        self.nixosModules.wireguard-client
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager

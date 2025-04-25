@@ -36,6 +36,7 @@ let
       kerkouane = "10.100.0.1";
       shikoku = "10.100.0.2";
       aomi = "10.100.0.17";
+      kyushu = "10.100.0.19";
       hokkaido = "10.100.0.5";
       wakasu = "10.100.0.8";
       ipad = "10.100.0.3";
@@ -107,6 +108,10 @@ let
     aomi = {
       allowedIPs = [ "${wireguard.ips.aomi}/32" ];
       publicKey = "XT4D9YLeVHwMb9R4mhBLSWHYF8iBO/UOT86MQL1jnA4=";
+    };
+    kyushu = {
+      allowedIPs = [ "${wireguard.ips.kyushu}/32" ];
+      publicKey = "KVRzoPUw8UTQblYtbs/NLYLIVmtQehrc4Hacbpf5Ugs=";
     };
     hass = {
       allowedIPs = [ "${wireguard.ips.hass}/32" ];
@@ -186,7 +191,7 @@ in
     listenPort = 51820;
     endpointIP = "167.99.17.238";
     persistentKeepalive = 25;
-    peers = [ wireguard.shikoku wireguard.wakasu wireguard.vincent wireguard.sakhalin wireguard.aomi wireguard.ipad wireguard.hass wireguard.demeter wireguard.athena wireguard.aion wireguard.honshu wireguard.houbeb wireguard.houbeb-ipad wireguard.houbeb-iphone ]; # wireguard.hokkaido
+    peers = [ wireguard.shikoku wireguard.wakasu wireguard.vincent wireguard.sakhalin wireguard.aomi wireguard.kyushu wireguard.ipad wireguard.hass wireguard.demeter wireguard.athena wireguard.aion wireguard.honshu wireguard.houbeb wireguard.houbeb-ipad wireguard.houbeb-iphone ]; # wireguard.hokkaido
   };
   ssh = ssh;
   sshConfig = {

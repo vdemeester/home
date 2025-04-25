@@ -148,6 +148,10 @@
             # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
           };
         };
+      nixosModules = {
+        # provided modules (to be upstreamed)
+        wireguard-client = ./modules/wireguard-client.nix;
+      };
 
       # system-manager configurations
       # FIXME set this up
