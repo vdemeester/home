@@ -74,80 +74,80 @@
         # TODO vincent@honshu (darwin)
         # TODO vincent@okinawa (wsl ?)
       };
-      nixosConfigurations =
-        {
-          # Work laptop (unstable)
-          kyushu = libx.mkHost {
-            hostname = "kyushu";
-            desktop = "sway";
-            syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
-          };
-          # Work workstation (unstable)
-          # FIXME migrate to libx.mkHost
-          aomi = inputs.nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = commonModules ++ unstableModules ++ [
-              inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
-              inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-              ./systems/hosts/aomi.nix
-            ];
-            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
-          };
-          # Work server (stable ?)
-          # kobe = libx.mkHost {
-          #   hostname = "sakhalin";
-          #   pkgsInput = inputs.nixpkgs-24_11;
-          #   homeInput = inputs.home-manager-24_11;
-          # };
-
-          # Servers (stable)
-          shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = commonModules ++ stableModules ++ [
-              ./systems/hosts/shikoku.nix
-            ];
-            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
-          };
-          sakhalin = inputs.nixpkgs-24_11.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = commonModules ++ stableModules ++ [
-              inputs.nixos-hardware.nixosModules.common-pc-ssd
-              ./systems/hosts/sakhalin.nix
-            ];
-            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
-          };
-          kerkouane = inputs.nixpkgs-24_11.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = commonModules ++ stableModules ++ [
-              ./systems/modules/services/govanityurl.nix
-              ./systems/hosts/kerkouane.nix
-            ];
-            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
-          };
-          # carthage = inputs.nixpkgs-24_11.lib.nixosSystem {
-          #   system = "aarch64-linux";
-          #   modules = commonModules ++ stableModules ++ [
-          #     ./systems/hosts/carthage.nix
-          #   ];
-          # };
-          # Raspberry PI
-          # athena
-          athena = inputs.nixpkgs-24_11.lib.nixosSystem {
-            system = "aarch64-linux";
-            modules = commonModules ++ stableModules ++ [
-              ./systems/hosts/athena.nix
-            ];
-            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
-          };
-          # demeter
-          demeter = inputs.nixpkgs-24_11.lib.nixosSystem {
-            system = "aarch64-linux";
-            modules = commonModules ++ stableModules ++ [
-              ./systems/hosts/demeter.nix
-            ];
-            # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
-          };
+      nixosConfigurations = {
+        # Work laptop (unstable)
+        kyushu = libx.mkHost {
+          hostname = "kyushu";
+          desktop = "sway";
+          syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
         };
+        # Work workstation (unstable)
+        # FIXME migrate to libx.mkHost
+        aomi = inputs.nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = commonModules ++ unstableModules ++ [
+            inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
+            inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+            ./systems/hosts/aomi.nix
+          ];
+          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+        };
+        # Work server (stable ?)
+        # kobe = libx.mkHost {
+        #   hostname = "sakhalin";
+        #   pkgsInput = inputs.nixpkgs-24_11;
+        #   homeInput = inputs.home-manager-24_11;
+        # };
+
+        # Servers (stable)
+        shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = commonModules ++ stableModules ++ [
+            ./systems/hosts/shikoku.nix
+          ];
+          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+        };
+        sakhalin = inputs.nixpkgs-24_11.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = commonModules ++ stableModules ++ [
+            inputs.nixos-hardware.nixosModules.common-pc-ssd
+            ./systems/hosts/sakhalin.nix
+          ];
+          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+        };
+        kerkouane = inputs.nixpkgs-24_11.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = commonModules ++ stableModules ++ [
+            ./systems/modules/services/govanityurl.nix
+            ./systems/hosts/kerkouane.nix
+          ];
+          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+        };
+        # carthage = inputs.nixpkgs-24_11.lib.nixosSystem {
+        #   system = "aarch64-linux";
+        #   modules = commonModules ++ stableModules ++ [
+        #     ./systems/hosts/carthage.nix
+        #   ];
+        # };
+        # Raspberry PI
+        # athena
+        athena = inputs.nixpkgs-24_11.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = commonModules ++ stableModules ++ [
+            ./systems/hosts/athena.nix
+          ];
+          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+        };
+        # demeter
+        demeter = inputs.nixpkgs-24_11.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = commonModules ++ stableModules ++ [
+            ./systems/hosts/demeter.nix
+          ];
+          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
+        };
+      };
+
       nixosModules = {
         # provided modules (to be upstreamed)
         wireguard-client = ./modules/wireguard-client.nix;
@@ -217,6 +217,7 @@
     home-manager = { type = "github"; owner = "nix-community"; repo = "home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager-24_11 = { type = "github"; owner = "nix-community"; repo = "home-manager"; ref = "release-24.11"; inputs.nixpkgs.follows = "nixpkgs-24_11"; };
 
+    # FIXME could still be useful for servers
     # impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
 
     dagger = { type = "github"; owner = "dagger"; repo = "nix"; inputs.nixpkgs.follows = "nixpkgs"; };
