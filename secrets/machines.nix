@@ -118,7 +118,7 @@ let
       publicKey = "sLi6Qpm6yyI0kuJ5LzCKXzFhhTW3Q50krxSin+b/sWs=";
     };
     honshu = {
-      allowedIPs = [ "${wireguard.ips.hass}/32" ];
+      allowedIPs = [ "${wireguard.ips.honshu}/32" ];
       publicKey = "vzkizZZMoM8yi5bjKiDZN1vYydZY6NKJhv9OqwSTFAk=";
     };
   };

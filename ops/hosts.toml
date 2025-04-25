@@ -87,7 +87,7 @@ addrs = { v4 = "10.100.0.82" }
 network = "vpn"
 
 [hosts.honshu.vpn]
-addrs = { v4 = "10.100.0.17" }
+addrs = { v4 = "10.100.0.10" }
 pubkey = "vzkizZZMoM8yi5bjKiDZN1vYydZY6NKJhv9OqwSTFAk="
 
 [hosts.k8sn1]
