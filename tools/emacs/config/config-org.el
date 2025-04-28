@@ -367,6 +367,7 @@ file which do not already have one."
   (denote-rename-buffer-format "📝 %t")
   (denote-date-prompt-denote-date-prompt-use-org-read-date t)
   (denote-prompts '(subdirectory title keywords))
+  (denote-excluded-directories-regexp ".*/archive/*")
   (denote-journal-extras-directory nil) ;; use denote-directory
   (denote-journal-extras-title-format 'day-date-month-year)
   (denote-backlinks-display-buffer-action
@@ -425,15 +426,14 @@ Add this function to the `after-save-hook'."
 	       ("/ o" . denote-menu-filter-out-keyword)
 	       ("e" . denote-menu-export-to-dired))))
 
-(use-package consult-notes
-  :commands (consult-notes
-             consult-notes-search-in-all-notes
-	     consult-notes-denote-mode)
-  :bind (("C-c n f" . consult-notes)
-	 ("C-c n s" . consult-notes-search-in-all-notes))
+(use-package consult-denote
+  :commands (consult-denote-mode
+	     consult-denote-find
+	     consult-denote-grep)
+  :bind (("C-c n f" . consult-denote-find)
+	 ("C-c n s" . consult-denote-grep))
   :config
-  (when (locate-library "denote")
-    (consult-notes-denote-mode)))
+  (consult-denote-mode 1))
 
 (use-package orgit
   :defer t)

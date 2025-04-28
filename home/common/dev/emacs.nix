@@ -29,7 +29,7 @@ let
     consult
     consult-dir
     consult-denote
-    consult-notes
+    # consult-notes
     consult-project-extra
     consult-vc-modified-files
     copilot
