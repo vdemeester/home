@@ -19,6 +19,10 @@
     (builtins.pathExists (
       ./. + "/common/users/${username}"
     )) ./common/users/${username}
+  ++ lib.optional
+    (builtins.pathExists (
+      ../systems/. + "/${hostname}/home.nix"
+    )) ../systems/${hostname}/home.nix
   ++ lib.optional ((builtins.length syncthingFolders) > 0) ./common/services/syncthing.nix;
 
   home = {
