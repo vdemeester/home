@@ -68,10 +68,7 @@
 	 ("C-c C-x i" . vde/org-clock-in-any-heading)
          ("C-c o s" . org-sort)
 	 ("C-c O" . org-open-at-point-global)
-         ("<f12>" . org-agenda)
-	 (:map org-mode-map
-	  ("<tab>" . vde/org-tab)
-	  ("<backtab>" . vde/org-shifttab)))
+         ("<f12>" . org-agenda))
   :hook (org-mode . vde/org-mode-hook)
   :custom
   ;; (org-reverse-note-order '((org-inbox-file . t) ;; Insert items on top of inbox
