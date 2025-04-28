@@ -158,7 +158,8 @@
   (when (file-exists-p org-babel-library-file)
     (org-babel-lob-ingest org-babel-library-file))
   (defun vde/org-agenda-files ()
-    (seq-filter (lambda(x) (not (string-match "/archive/"(file-name-directory x))))
+    (seq-filter (lambda(x) (and (not (string-match "/archive/" (file-name-directory x)))
+				(not (string-match ".*==readwise=.*" x))))
 		(apply 'append
 		       (mapcar
 			(lambda (directory)
