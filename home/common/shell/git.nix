@@ -47,7 +47,7 @@ in
 
     includes = [ ] ++ lib.lists.forEach redhat_folders (x: {
       condition = "gitdir:${config.home.homeDirectory}/${x}/**";
-      contents.users.emal = "vdemeest@redhat.com";
+      contents.users.email = "vdemeest@redhat.com";
     });
 
     signing = {
