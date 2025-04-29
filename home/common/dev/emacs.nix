@@ -29,7 +29,6 @@ let
     consult
     consult-dir
     consult-denote
-    # consult-notes
     consult-project-extra
     consult-vc-modified-files
     copilot
@@ -39,6 +38,9 @@ let
     dape
     dash
     denote
+    denote-org
+    denote-journal
+    denote-sequence # maybe ?
     denote-menu
     devdocs
     diff-hl

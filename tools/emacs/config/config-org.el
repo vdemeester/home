@@ -8,23 +8,27 @@
 
 (defconst org-directory "~/desktop/org/"
   "org-mode directory, where most of the org-mode file lives")
-;; P.A.R.A. setup
-(defconst org-inbox-file (expand-file-name "20231120T124316--inbox__inbox.org" org-directory)
+(defconst org-notes-directory (expand-file-name "notes" org-directory)
+  "org-mode notes directory, for notes, managed by denote")
+(defconst org-inbox-file (expand-file-name "inbox.org" org-directory)
   "New stuff collected in this file.")
-(defconst org-remember-file (expand-file-name "20250311T171330--remember__notes_orgmode_remember.org" org-directory)
+(defconst org-work-file (expand-file-name "work.org" org-directory)
+  "New stuff collected in this file.")
+(defconst org-personal-file (expand-file-name "personal.org" org-directory)
+  "New stuff collected in this file.")
+;; I am not using this too much
+(defconst org-remember-file (expand-file-name "rembmer.org" org-directory)
   "Remember file, very quick and dirty scratch notes, to be refiled later on.")
 
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
   "Directory of archived files.")
 
-(defconst org-projects-future-file (expand-file-name "20231120T124316--future-projects-incubation__project_future.org" org-directory)
+;; FIXME move this file
+(defconst org-projects-future-file (expand-file-name "20231120T124316--future-projects-incubation__project_future.org" org-notes-directory)
   "Future projects are collected in this file.")
-(defconst org-people-dir (expand-file-name "people" org-directory)
+(defconst org-people-dir (expand-file-name "people" org-notes-directory)
   "People files directory.")
 
-(defconst src-home-dir (expand-file-name "~/src/home" org-directory)
-  "Directory of my home monorepository, can contain todos there.")
-;; 2024-06-11: Should it be in home ? I've been going back and forth on this
 (defconst src-www-dir (expand-file-name "~/src/www" org-directory)
   "Directory of my www repository, can contain todos there.")
 
@@ -32,6 +36,8 @@
   "Org babel library.")
 
 (set-register ?i `(file . ,org-inbox-file))
+(set-register ?w `(file . ,org-work-file))
+(set-register ?p `(file . ,org-personal-file))
 (set-register ?f `(file . ,org-projects-future-file))
 (set-register ?o `(file . ,org-directory))
 (set-register ?P `(file . ,org-people-dir))
@@ -157,7 +163,7 @@
   ;; Org Babel configurations
   (when (file-exists-p org-babel-library-file)
     (org-babel-lob-ingest org-babel-library-file))
-  (defun vde/org-agenda-files ()
+  (defun vde/all-org-agenda-files ()
     (seq-filter (lambda(x) (and (not (string-match "/archive/" (file-name-directory x)))
 				(not (string-match ".*==readwise=.*" x))))
 		(apply 'append
@@ -166,10 +172,10 @@
 			  (directory-files-recursively
 			   directory org-agenda-file-regexp))
 			`(,org-directory)))))
-  (defun vde/reload-org-agenda-files ()
-    "Reload org-agenda-files variables with up-to-date org files"
-    (interactive)
-    (setq org-agenda-files (vde/org-agenda-files)))
+  ;; (defun vde/reload-org-agenda-files ()
+  ;;   "Reload org-agenda-files variables with up-to-date org files"
+  ;;   (interactive)
+  ;;   (setq org-agenda-files (vde/org-agenda-files)))
   (defun vde/reload-org-refile-targets ()
     "Reload org-refile-targets variables with up-to-date org files"
     (interactive)
@@ -186,7 +192,7 @@
 	     (--remove (s-starts-with? (format "%s/legacy" org-people-dir) it))
 	     (--map (format "%s" it))
 	     (--map `(,it :maxlevel . 3)))))
-  (setq org-agenda-files (vde/org-agenda-files)
+  (setq org-agenda-files `(,org-inbox-file ,org-work-file ,org-personal-file)
 	;; TODO: extract org-refile-targets into a function
 	org-refile-targets (vde/org-refile-targets))
   (setq org-agenda-custom-commands
@@ -198,10 +204,24 @@
 		       ((org-agenda-overriding-header "High Priority Tasks")))
 	    (todo "NEXT"
 		  ((org-agenda-overriding-header "Next Tasks")))))
+	  ("D" "Daily Agenda (old)"
+	   ((agenda ""
+		    ((org-agenda-files (vde/all-org-agenda-files))
+		     (org-agenda-span 'day)
+		     (org-deadline-warning-days 5)))
+	    (tags-todo "+PRIORITY=\"A\""
+		       ((org-agenda-files (vde/all-org-agenda-files))
+			(org-agenda-overriding-header "High Priority Tasks")))
+	    (todo "NEXT"
+		  ((org-agenda-files (vde/all-org-agenda-files))
+		   (org-agenda-overriding-header "Next Tasks")))))
 	  ("i" "Inbox (triage)"
 	   ((tags-todo ".*"
-		       ((org-agenda-files '("~/desktop/org/20231120T124316--inbox__inbox.org"))
+		       ((org-agenda-files `(,org-inbox-file)) ;; FIXME use constant here
 			(org-agenda-overriding-header "Unprocessed Inbox Item")))))
+	  ("A" "All (old)"
+	   ((tags-todo ".*"
+		       ((org-agenda-files (vde/all-org-agenda-files))))))
 	  ("u" "Untagged Tasks"
 	   ((tags-todo "-{.*}"
 		       ((org-agenda-overriding-header "Untagged tasks")))))
@@ -269,12 +289,6 @@ file which do not already have one."
   (setq org-id-link-to-org-use-id
         'create-if-interactive-and-no-custom-id))
 
-(use-package org-modern
-  ;; :if window-system
-  :disabled ;; trying something out.
-  :custom (org-modern-table nil)
-  :hook (org-mode . org-modern-mode))
-
 (use-package org-capture
   :after org
   :commands (org-capture)
@@ -338,8 +352,7 @@ file which do not already have one."
 		    denote-template denote-link-or-create
 		    denote-add-links denote-find-link
 		    denote-find-backlink denote-rename-file
-		    denote-rename-file-using-front-matter
-		    denote-journal-extras-new-or-existing-entry)
+		    denote-rename-file-using-front-matter)
   :bind (("C-c n n" . vde/dired-notes)
 	 ("C-c n N" . denote)
 	 ("C-c n c" . denote-region)
@@ -357,19 +370,14 @@ file which do not already have one."
 	 ;; Renaming
 	 ("C-c n r" . denote-rename-file)
 	 ("C-c n R" . denote-rename-file-using-front-matter)
-	 ;; Journal
-	 ("C-c n j j" . denote-journal-extras-new-or-existing-entry)
 	 ;; Dired
 	 (:map dired-mode-map
 	       ("C-c C-d C-i" . denote-link-dired-marked-notes)))
   :custom
-  (denote-directory org-directory)
+  (denote-directory org-notes-directory)
   (denote-rename-buffer-format "📝 %t")
   (denote-date-prompt-denote-date-prompt-use-org-read-date t)
   (denote-prompts '(subdirectory title keywords))
-  (denote-excluded-directories-regexp ".*/archive/*")
-  (denote-journal-extras-directory nil) ;; use denote-directory
-  (denote-journal-extras-title-format 'day-date-month-year)
   (denote-backlinks-display-buffer-action
    '((display-buffer-reuse-window
       display-buffer-in-side-window)
@@ -380,9 +388,6 @@ file which do not already have one."
      (preserve-size . (t . t))))
   :hook (dired-mode . denote-dired-mode)
   :config
-  (require 'denote-rename-buffer)
-  (require 'denote-org-extras)
-  (require 'denote-journal-extras)
   (denote-rename-buffer-mode 1)
   (defun my-denote-always-rename-on-save-based-on-front-matter ()
     "Rename the current Denote file, if needed, upon saving the file.
@@ -415,6 +420,21 @@ Add this function to the `after-save-hook'."
       "journal")
      (t
       (denote-sluggify (denote--retrieve-title-or-filename (buffer-file-name) 'org))))))
+
+(use-package denote-journal
+  :commands (denote-journal-new-entry
+             denote-journal-new-or-existing-entry
+             denote-journal-link-or-create-entry)
+  :custom
+  (denote-journal-directory nil) ;; use denote-directory
+  (denote-journal-title-format 'day-date-month-year)
+  :hook (calendar-mode . denote-journal-calendar-mode)
+  :bind (("C-c n j j" . denote-journal-new-or-existing-entry)
+	 ("C-c n j i" . denote-journal-link-or-create-entry)
+	 ("C-c n j n" . denote-journal-new-entry)))
+
+(use-package denote-org
+  :after denote)
 
 (use-package denote-menu
   :after denote
