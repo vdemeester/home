@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 (require 'project)
+(require 'vterm)
 (require 'json)
 (require 'vc)
 
