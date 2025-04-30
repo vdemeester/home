@@ -32,4 +32,5 @@
   # Make sure we don't start lxd until required
   systemd.services.lxd.wantedBy = lib.mkForce [ ];
 
+  services.hardware.bolt.enable = true;
 }
