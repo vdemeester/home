@@ -291,7 +291,11 @@ in
         # bindsym XF86AudioMute exec ${pkgs.pamixer}/bin/pamixer --toggle-mute && ( ${pkgs.pamixer}/bin/pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || ${pkgs.pamixer}/bin/pamixer --get-volume > $SWAYSOCK.wob
         bindsym XF86AudioRaiseVolume exec ${pkgs.avizo}/bin/volumectl -u up
         bindsym XF86AudioLowerVolume exec ${pkgs.avizo}/bin/volumectl -u down
-        bindsym XF86AudioMute exec exec ${pkgs.avizo}/bin/volumectl toogle-mute
+        bindsym XF86AudioMute exec ${pkgs.avizo}/bin/volumectl toggle-mute
+        bindsym Control+XF86AudioRaiseVolume exec ${pkgs.avizo}/bin/volumectl -m -u up
+        bindsym Control+XF86AudioLowerVolume exec ${pkgs.avizo}/bin/volumectl -m -u down
+        bindsym Control+XF86AudioMute exec ${pkgs.avizo}/bin/volumectl -m toggle-mute
+        bindsym XF86AudioMicMute exec ${pkgs.avizo}/bin/volumectl -m toggle-mute
 
         bindsym XF86AudioPlay exec "playerctl play-pause"
         bindsym XF86Messenger exec "playerctl play-pause"
