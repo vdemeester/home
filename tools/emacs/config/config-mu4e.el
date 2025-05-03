@@ -5,11 +5,12 @@
 (use-package mu4e
   :commands (mu4e)
   :custom
+  (mu4e-mu-home "/home/vincent/.local/cache/mu")
   (mu4e-context-policy 'pick-first)
   (mu4e-change-filenames-when-moving t)
   (mu4e-attachment-dir "~/desktop/downloads")
   :config
-  (setq mu4e-get-mail-command (concat (executable-find "mbsync") " -a"))
+  (setq mu4e-get-mail-command (concat (executable-find "mbsync") " --all"))
   (setq mu4e-update-interval 1800) ; 30m
   
   (defun vde-mu4e--mark-get-copy-target ()
