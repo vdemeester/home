@@ -23,6 +23,10 @@
     shellcheck
     shfmt
 
+    # try
+    jujutsu
+    jj-fzf
+
     # old
     cmake
     codespell

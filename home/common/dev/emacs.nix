@@ -138,8 +138,9 @@ let
     trashed
     treesit-fold
     treesit-grammars.with-all-grammars # see how much it weight
-    try
     typescript-mode
+    vc-jj
+    verb
     vertico
     visual-fill-column
     visual-regexp
