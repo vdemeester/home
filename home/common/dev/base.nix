@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
+    ./ai.nix
     ./go.nix
     ./nix.nix
     ./python.nix
