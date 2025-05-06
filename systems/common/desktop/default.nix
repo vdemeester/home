@@ -1,7 +1,7 @@
 { desktop
+, config
 , pkgs
 , lib
-, config
 , ...
 }:
 {
