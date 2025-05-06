@@ -80,13 +80,6 @@
         kyushu = libx.mkHost {
           hostname = "kyushu";
           desktop = "sway";
-          syncthingFolders = [
-            "org"
-            "documents"
-            "sync"
-            "screenshots"
-            "wallpapers"
-          ];
         };
         # Work workstation (unstable)
         # FIXME migrate to libx.mkHost
@@ -100,7 +93,6 @@
               inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
               ./systems/hosts/aomi.nix
             ];
-          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
         };
         # Work server (stable ?)
         # kobe = libx.mkHost {
@@ -118,7 +110,6 @@
             ++ [
               ./systems/hosts/shikoku.nix
             ];
-          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
         };
         sakhalin = inputs.nixpkgs-24_11.lib.nixosSystem {
           system = "x86_64-linux";
@@ -129,7 +120,6 @@
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               ./systems/hosts/sakhalin.nix
             ];
-          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
         };
         kerkouane = inputs.nixpkgs-24_11.lib.nixosSystem {
           system = "x86_64-linux";
@@ -140,7 +130,6 @@
               ./systems/modules/services/govanityurl.nix
               ./systems/hosts/kerkouane.nix
             ];
-          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
         };
         # carthage = inputs.nixpkgs-24_11.lib.nixosSystem {
         #   system = "aarch64-linux";
@@ -158,7 +147,6 @@
             ++ [
               ./systems/hosts/athena.nix
             ];
-          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
         };
         # demeter
         demeter = inputs.nixpkgs-24_11.lib.nixosSystem {
@@ -169,7 +157,6 @@
             ++ [
               ./systems/hosts/demeter.nix
             ];
-          # syncthingFolders = [ "org" "documents" "sync" "screenshots" "wallpapers" ];
         };
       };
 

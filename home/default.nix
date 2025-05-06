@@ -2,12 +2,12 @@
   config,
   desktop,
   hostname,
-  syncthingFolders,
   lib,
   outputs,
   stateVersion,
   username,
   inputs,
+  globals,
   ...
 }:
 {
@@ -20,7 +20,9 @@
     ++ lib.optional (builtins.pathExists (
       ../systems/. + "/${hostname}/home.nix"
     )) ../systems/${hostname}/home.nix
-    ++ lib.optional ((builtins.length syncthingFolders) > 0) ./common/services/syncthing.nix;
+    ++ lib.optional (globals.fn.hasSyncthingFolders
+      globals.machines."${hostname}"
+    ) ./common/services/syncthing.nix;
 
   home = {
     inherit username stateVersion;

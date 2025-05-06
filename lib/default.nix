@@ -14,6 +14,9 @@
       desktop ? null,
       system ? "x86_64-linux",
     }:
+    let
+      globals = import ../globals.nix { inherit (inputs.nixpkgs) lib; };
+    in
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       extraSpecialArgs = {
@@ -24,6 +27,7 @@
           stateVersion
           hostname
           desktop
+          globals
           ;
         username = user;
       };
@@ -37,13 +41,12 @@
     {
       hostname,
       desktop ? null,
-      syncthingFolders ? [ ],
       system ? "x86_64-linux",
       pkgsInput ? inputs.nixpkgs,
       homeInput ? inputs.home-manager,
     }:
     let
-      globals = import ../globals.nix;
+      globals = import ../globals.nix { inherit (pkgsInput) lib; };
       specialArgs = {
         inherit
           self
@@ -52,7 +55,6 @@
           stateVersion
           hostname
           desktop
-          syncthingFolders
           system
           globals
           ;

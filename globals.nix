@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
   net = {
     vpn = {
@@ -17,9 +18,28 @@
           ips = [ "10.100.0.19" ];
         };
       };
+      syncthing = {
+        folders = {
+          org = { };
+          documents = { };
+          sync = { };
+          screenshots = { };
+          wallpapers = { };
+          photos = {
+            type = "receiveonly";
+            paused = true; # TODO: implement this, start as paused
+          };
+          music = {
+            type = "receiveonly";
+            paused = true; # TODO: implement this, start as paused
+          };
+        };
+      };
     };
   };
+  # FIXME Maybe I should move this elsewhere, in ./lib maybe ?
   fn = {
     wg-ips = ips: builtins.map (x: "${x}/24") ips;
+    hasSyncthingFolders = host: (builtins.length (lib.attrsets.attrValues host.syncthing.folders)) > 0;
   };
 }

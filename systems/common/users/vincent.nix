@@ -3,11 +3,11 @@
   lib,
   config,
   desktop,
-  syncthingFolders,
   hostname,
   outputs,
   stateVersion,
   inputs,
+  globals,
   ...
 }:
 let
@@ -89,8 +89,8 @@ in
       pkgs
       lib
       hostname
-      syncthingFolders
       desktop
+      globals
       outputs
       inputs
       stateVersion

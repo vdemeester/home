@@ -1,4 +1,9 @@
-{ pkgs, lib, globals, ... }:
+{
+  pkgs,
+  lib,
+  globals,
+  ...
+}:
 {
 
   imports = [
