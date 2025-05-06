@@ -12,20 +12,15 @@
   "org-mode notes directory, for notes, managed by denote")
 (defconst org-inbox-file (expand-file-name "inbox.org" org-directory)
   "New stuff collected in this file.")
-(defconst org-work-file (expand-file-name "work.org" org-directory)
-  "New stuff collected in this file.")
-(defconst org-personal-file (expand-file-name "personal.org" org-directory)
-  "New stuff collected in this file.")
+(defconst org-todos-file (expand-file-name "todos.org" org-directory)
+  "TODOs collected in this file.")
 ;; I am not using this too much
-(defconst org-remember-file (expand-file-name "rembmer.org" org-directory)
+(defconst org-remember-file (expand-file-name "remember.org" org-directory)
   "Remember file, very quick and dirty scratch notes, to be refiled later on.")
 
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
   "Directory of archived files.")
 
-;; FIXME move this file
-(defconst org-projects-future-file (expand-file-name "20231120T124316--future-projects-incubation__project_future.org" org-notes-directory)
-  "Future projects are collected in this file.")
 (defconst org-people-dir (expand-file-name "people" org-notes-directory)
   "People files directory.")
 
@@ -36,9 +31,7 @@
   "Org babel library.")
 
 (set-register ?i `(file . ,org-inbox-file))
-(set-register ?w `(file . ,org-work-file))
-(set-register ?p `(file . ,org-personal-file))
-(set-register ?f `(file . ,org-projects-future-file))
+(set-register ?t `(file . ,org-todos-file))
 (set-register ?o `(file . ,org-directory))
 (set-register ?P `(file . ,org-people-dir))
 
@@ -129,14 +122,19 @@
   (org-outline-path-complete-in-steps nil)
   (org-goto-max-level 2)
 
-  (org-agenda-category-icon-alist `(("journal"  ,(list (propertize "📝")))
+  (org-agenda-category-icon-alist `(("personal"  ,(list (propertize "🏡")))
+				    ("work"  ,(list (propertize "🏢")))
+				    ("appointments"  ,(list (propertize "📅")))
+				    ("health"  ,(list (propertize "⚕️")))
+				    ("systems"  ,(list (propertize "🖥️")))
+				    ("journal"  ,(list (propertize "📝")))
 				    ("project--" ,(list (propertize "💼" )))
 				    ("tekton", (list (propertize "😼")))
 				    ("openshift-pipelines", (list (propertize "🎩")))
 				    ("redhat", (list (propertize "🎩")))
 				    ("area--"  ,(list (propertize"🏢" )))
-				    ("area--home"  ,(list (propertize"🏡" )))
-				    ("home"  ,(list (propertize"🏡" )))
+				    ("area--home"  ,(list (propertize "🏡")))
+				    ("home"  ,(list (propertize "🏡")))
 				    ("home-services" ,(list (propertize "☕ ")))
 				    ("email"  ,(list (propertize"📨" )))
 				    ("people"  ,(list (propertize"👤" )))
@@ -188,11 +186,16 @@
 	     (--map (format "%s/%s" org-directory it))
 	     (--map `(,it :maxlevel . 3)))
 	    (->>
+	     (directory-files org-notes-directory nil ".org$")
+	     (--remove (s-starts-with? "." it))
+	     (--map (format "%s/%s" org-note-sdirectory it))
+	     (--map `(,it :maxlevel . 3)))
+	    (->>
 	     (directory-files-recursively org-people-dir ".org$")
 	     (--remove (s-starts-with? (format "%s/legacy" org-people-dir) it))
 	     (--map (format "%s" it))
 	     (--map `(,it :maxlevel . 3)))))
-  (setq org-agenda-files `(,org-inbox-file ,org-work-file ,org-personal-file)
+  (setq org-agenda-files `(,org-inbox-file ,org-todos-file )
 	;; TODO: extract org-refile-targets into a function
 	org-refile-targets (vde/org-refile-targets))
   (setq org-agenda-custom-commands
