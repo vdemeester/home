@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib) mkEnableOption mkIf mkMerge;
@@ -18,7 +23,11 @@ in
         qemu.ovmf.enable = true;
       };
       security.polkit.enable = true; # 22.11: libvirtd requires poltkit to be enabled
-      environment.systemPackages = with pkgs; [ qemu vde2 libosinfo ];
+      environment.systemPackages = with pkgs; [
+        qemu
+        vde2
+        libosinfo
+      ];
     }
     (mkIf config.modules.desktop.enable {
       environment.systemPackages = with pkgs; [ virt-manager ];
@@ -30,7 +39,9 @@ in
       '';
     })
     (mkIf cfg.listenTCP {
-      boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
+      boot.kernel.sysctl = {
+        "net.ipv4.ip_forward" = 1;
+      };
       virtualisation.libvirtd = {
         allowedBridges = [ "br1" ];
         extraConfig = ''

@@ -1,4 +1,10 @@
-{ config, lib, pkgs, hostname, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  hostname,
+  ...
+}:
 let
   redhat_folders = [
     "src/github.com/containers"
@@ -25,11 +31,11 @@ let
     kyushu = "${pkgs.writeText "yubikey5-c1" "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE="}";
   };
   defaultSSHKey = sshkeyPerHost.kyushu;
-  getSSHKeyForHost = h: if builtins.hasAttr h sshkeyPerHost then sshkeyPerHost."${h}" else defaultSSHKey;
+  getSSHKeyForHost =
+    h: if builtins.hasAttr h sshkeyPerHost then sshkeyPerHost."${h}" else defaultSSHKey;
 in
 {
-  xdg.configFile."git/allowed_signers".text = ''
-  '';
+  xdg.configFile."git/allowed_signers".text = '''';
   home.packages = with pkgs; [
     git-lfs
     gh
@@ -45,7 +51,7 @@ in
     userName = "Vincent Demeester";
     userEmail = "vincent@sbr.pm";
 
-    includes = [ ] ++ lib.lists.forEach redhat_folders (x: {
+    includes = lib.lists.forEach redhat_folders (x: {
       condition = "gitdir:${config.home.homeDirectory}/${x}/**";
       contents.users.email = "vdemeest@redhat.com";
     });

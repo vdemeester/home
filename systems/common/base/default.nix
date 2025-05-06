@@ -1,8 +1,9 @@
-{ hostname
-, config
-, pkgs
-, lib
-, ...
+{
+  hostname,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 {
   imports = [
@@ -67,10 +68,13 @@
 
   # Clear out /tmp after a fortnight and give all normal users a ~/tmp
   # cleaned out weekly.
-  systemd.tmpfiles.rules = [ "d /tmp 1777 root root 14d" ] ++
-    (
-      let mkTmpDir = n: u: "d ${u.home}/tmp 0700 ${n} ${u.group} 7d";
-      in lib.mapAttrsToList mkTmpDir (lib.filterAttrs (_: u: u.isNormalUser) config.users.extraUsers)
+  systemd.tmpfiles.rules =
+    [ "d /tmp 1777 root root 14d" ]
+    ++ (
+      let
+        mkTmpDir = n: u: "d ${u.home}/tmp 0700 ${n} ${u.group} 7d";
+      in
+      lib.mapAttrsToList mkTmpDir (lib.filterAttrs (_: u: u.isNormalUser) config.users.extraUsers)
     );
 
 }

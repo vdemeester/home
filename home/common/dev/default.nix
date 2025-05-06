@@ -1,6 +1,7 @@
-{ lib
-, desktop
-, ...
+{
+  lib,
+  desktop,
+  ...
 }:
 {
   imports = [

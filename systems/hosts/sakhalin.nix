@@ -4,13 +4,14 @@ with lib;
 let
   hostname = "sakhalin";
   secretPath = ../../secrets/machines.nix;
-  secretCondition = (builtins.pathExists secretPath);
+  secretCondition = builtins.pathExists secretPath;
 
   ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
-  ips = lists.optionals secretCondition ([ "${ip}/24" ]);
+  ips = lists.optionals secretCondition [ "${ip}/24" ];
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
-  endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
+  endpointPublicKey = strings.optionalString secretCondition (import secretPath)
+  .wireguard.kerkouane.publicKey;
 
   metadata = importTOML ../../ops/hosts.toml;
 in
@@ -26,7 +27,10 @@ in
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/92ce650d-873e-41c1-a44e-71c2b9191b9d";
     fsType = "ext4";
-    options = [ "noatime" "discard" ];
+    options = [
+      "noatime"
+      "discard"
+    ];
   };
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/B226-075A";
@@ -35,7 +39,10 @@ in
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/4f614c00-d94d-42f9-8386-3ecd396aa246";
     fsType = "ext4";
-    options = [ "noatime" "discard" ];
+    options = [
+      "noatime"
+      "discard"
+    ];
   };
   fileSystems."/mnt/gaia" = {
     device = "/dev/disk/by-uuid/88d3d686-d451-4ba9-bd6e-373601ed2683";
@@ -47,7 +54,7 @@ in
     fsType = "ext4";
     options = [ "noatime" ];
   };
-  swapDevices = [{ device = "/dev/disk/by-uuid/9eb067d1-b329-4fbb-ae27-38abfbe7c108"; }];
+  swapDevices = [ { device = "/dev/disk/by-uuid/9eb067d1-b329-4fbb-ae27-38abfbe7c108"; } ];
 
   networking = {
     hostName = hostname;
@@ -69,11 +76,21 @@ in
       avahi.enable = true;
       ssh.enable = true;
     };
-    virtualisation.libvirt = { enable = true; nested = true; listenTCP = true; };
+    virtualisation.libvirt = {
+      enable = true;
+      nested = true;
+      listenTCP = true;
+    };
   };
 
-  fileSystems."/export/gaia" = { device = "/mnt/gaia"; options = [ "bind" ]; };
-  fileSystems."/export/toshito" = { device = "/mnt/toshito"; options = [ "bind" ]; };
+  fileSystems."/export/gaia" = {
+    device = "/mnt/gaia";
+    options = [ "bind" ];
+  };
+  fileSystems."/export/toshito" = {
+    device = "/mnt/toshito";
+    options = [ "bind" ];
+  };
 
   services = {
     atuin = {
@@ -123,22 +140,36 @@ in
         }
         {
           job_name = "bind";
-          static_configs = [{
-            targets = [ "demeter.sbr.pm:9009" "athena.sbr.pm:9009" ];
-          }];
+          static_configs = [
+            {
+              targets = [
+                "demeter.sbr.pm:9009"
+                "athena.sbr.pm:9009"
+              ];
+            }
+          ];
         }
         {
           job_name = "nginx";
-          static_configs = [{
-            targets = [ "kerkouane.sbr.pm:9001" ];
-          }];
+          static_configs = [
+            {
+              targets = [ "kerkouane.sbr.pm:9001" ];
+            }
+          ];
         }
       ];
       exporters.node = {
         enable = true;
         port = 9000;
-        enabledCollectors = [ "systemd" "processes" ];
-        extraFlags = [ "--collector.ethtool" "--collector.softirqs" "--collector.tcpstat" ];
+        enabledCollectors = [
+          "systemd"
+          "processes"
+        ];
+        extraFlags = [
+          "--collector.ethtool"
+          "--collector.softirqs"
+          "--collector.tcpstat"
+        ];
       };
     };
     tarsnap = {
@@ -176,10 +207,10 @@ in
     };
     wireguard = {
       enable = true;
-      ips = ips;
+      inherit ips;
       endpoint = endpointIP;
-      endpointPort = endpointPort;
-      endpointPublicKey = endpointPublicKey;
+      inherit endpointPort;
+      inherit endpointPublicKey;
     };
   };
   security.apparmor.enable = true;
@@ -201,7 +232,12 @@ in
     unitConfig.X-StopOnRemoval = false;
     restartIfChanged = false;
 
-    path = with pkgs; [ rsync coreutils bash openssh ];
+    path = with pkgs; [
+      rsync
+      coreutils
+      bash
+      openssh
+    ];
     script = ''
       ${pkgs.vrsync}/bin/vrsync
     '';
@@ -227,7 +263,10 @@ in
       OnFailure = "status-email-root@%n.service";
     };
 
-    path = with pkgs; [ git mr ];
+    path = with pkgs; [
+      git
+      mr
+    ];
     script = ''
       set -e
        cd /mnt/gaia/src/configs/

@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   # Default users, to create everywhere
   imports = [
     ./vincent.nix

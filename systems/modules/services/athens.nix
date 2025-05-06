@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -58,7 +63,9 @@ in
       preStart = ''
         mkdir -p /var/lib/athens
       '';
-      environment = { HOME = "/var/lib/athens"; };
+      environment = {
+        HOME = "/var/lib/athens";
+      };
       serviceConfig = {
         User = cfg.user;
         Restart = "on-failure";
@@ -66,7 +73,12 @@ in
           ${cfg.package}/bin/proxy -config_file=/etc/athens/config.toml
         '';
       };
-      path = [ cfg.package ] ++ [ pkgs.go pkgs.git ];
+      path =
+        [ cfg.package ]
+        ++ [
+          pkgs.go
+          pkgs.git
+        ];
     };
   };
 }

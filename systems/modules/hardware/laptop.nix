@@ -1,6 +1,11 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkEnableOption mkIf mkMerge mkOption types;
+  inherit (lib) mkEnableOption mkIf mkMerge;
   cfg = config.modules.hardware.laptop;
 in
 {

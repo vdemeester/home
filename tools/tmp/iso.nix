@@ -7,18 +7,18 @@
 #   nix-build <SAME AS BEFORE> --argStr system i686-linux
 #
 
-{ config, lib, pkgs, system ? builtins.currentSystem, ... }:
+{ lib, pkgs, ... }:
 
 with lib;
 let
   secretPath = ../../secrets/machines.nix;
-  secretCondition = (builtins.pathExists secretPath);
+  secretCondition = builtins.pathExists secretPath;
 
   isAuthorized = p: builtins.isAttrs p && p.authorized or false;
   authorizedKeys = lists.optionals secretCondition (
-    attrsets.mapAttrsToList
-      (name: value: value.key)
-      (attrsets.filterAttrs (name: value: isAuthorized value) (import secretPath).ssh)
+    attrsets.mapAttrsToList (_name: value: value.key) (
+      attrsets.filterAttrs (_name: isAuthorized) (import secretPath).ssh
+    )
   );
 in
 {

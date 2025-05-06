@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 #let
 #  sources = import ../../nix/sources.nix;
 #in
@@ -9,7 +9,11 @@
     ./thinkpad.nix
   ];
   boot = {
-    initrd.availableKernelModules = [ "nvme" "rtsx_pci_sdmmc" "thunderbolt" ];
+    initrd.availableKernelModules = [
+      "nvme"
+      "rtsx_pci_sdmmc"
+      "thunderbolt"
+    ];
     kernelParams = [ "intel_idle.max_cstate=4" ];
   };
   hardware = {

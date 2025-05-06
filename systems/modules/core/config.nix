@@ -1,9 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ lib, ... }:
 
 with lib;
-let
-  cfg = config.profiles;
-in
 {
   # This options are mainly used for user side for now
   # aka, in users/vincent, there is a check if these are enabled, to conditionnally

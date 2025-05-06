@@ -1,6 +1,7 @@
-{ pkgs
-, lib
-, ...
+{
+  pkgs,
+  lib,
+  ...
 }:
 let
   swayRun = pkgs.writeShellScript "sway-run" ''
@@ -30,7 +31,9 @@ in
   services.greetd.settings = {
     default_session = {
       # command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway";
-      command = "${lib.makeBinPath [ pkgs.greetd.tuigreet ]}/tuigreet -r --asterisks --time --cmd ${swayRun}";
+      command = "${
+        lib.makeBinPath [ pkgs.greetd.tuigreet ]
+      }/tuigreet -r --asterisks --time --cmd ${swayRun}";
       users = "greeter";
     };
     initial_session = {

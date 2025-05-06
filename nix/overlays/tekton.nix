@@ -1,5 +1,4 @@
-final: prev:
-rec {
+_final: prev: rec {
 
   inherit (prev.callPackage ../packages/tkn { })
     tkn_0_17

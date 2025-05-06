@@ -1,14 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
 with lib;
 let
   cfg = config.hardware.sane;
-  pkg =
-    if cfg.snapshot
-    then pkgs.sane-backends-git
-    else pkgs.sane-backends;
-  backends = [ pkg ] ++ cfg.extraBackends;
-  saneConfig = pkgs.mkSaneConfig { paths = backends; };
   # saneExtraConfig =
   #   pkgs.runCommand "sane-extra-config"
   #     { } ''
@@ -32,7 +30,9 @@ in
     hardware.sane.extraConfig = mkOption {
       type = types.attrsOf types.lines;
       default = { };
-      example = { "some-backend" = "# some lines to add to its .conf"; };
+      example = {
+        "some-backend" = "# some lines to add to its .conf";
+      };
     };
   };
 

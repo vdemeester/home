@@ -1,4 +1,8 @@
-{ stdenv, lib, buildGoModule, fetchgit }:
+{
+  lib,
+  buildGoModule,
+  fetchgit,
+}:
 
 buildGoModule rec {
   name = "ram-${version}";

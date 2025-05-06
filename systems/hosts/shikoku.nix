@@ -1,16 +1,22 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
   hostname = "shikoku";
   secretPath = ../../secrets/machines.nix;
-  secretCondition = (builtins.pathExists secretPath);
+  secretCondition = builtins.pathExists secretPath;
 
   ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
-  ips = lists.optionals secretCondition ([ "${ip}/24" ]);
+  ips = lists.optionals secretCondition [ "${ip}/24" ];
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
-  endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
+  endpointPublicKey = strings.optionalString secretCondition (import secretPath)
+  .wireguard.kerkouane.publicKey;
 
   metadata = importTOML ../../ops/hosts.toml;
 
@@ -40,7 +46,15 @@ in
   };
 
   # TODO: check if it's done elsewhere
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "nvme"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+    "sr_mod"
+  ];
   boot.initrd.kernelModules = [
     "vfio_pci"
     "vfio"
@@ -69,7 +83,10 @@ in
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/73fd8864-f6af-4fdd-b826-0dfdeacd3c19";
     fsType = "ext4";
-    options = [ "noatime" "discard" ];
+    options = [
+      "noatime"
+      "discard"
+    ];
   };
 
   fileSystems."/boot" = {
@@ -97,7 +114,7 @@ in
   #     fsType = "zfs";
   #     options = [ "zfsutil" ];
   #   };
-  # 
+  #
   # fileSystems."/tank/virt" =
   #   {
   #     device = "tank/virt";
@@ -105,9 +122,11 @@ in
   #     options = [ "zfsutil" ];
   #   };
 
-  swapDevices = [{
-    device = "/dev/disk/by-uuid/a9ec44e6-0c1d-4f60-9f5c-81a7eaa8e8fd";
-  }];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-uuid/a9ec44e6-0c1d-4f60-9f5c-81a7eaa8e8fd";
+    }
+  ];
 
   modules = {
     core.binfmt.enable = true;
@@ -138,7 +157,11 @@ in
       avahi.enable = true;
       ssh.enable = true;
     };
-    virtualisation.libvirt = { enable = true; nested = true; listenTCP = true; };
+    virtualisation.libvirt = {
+      enable = true;
+      nested = true;
+      listenTCP = true;
+    };
     profiles.home = true;
   };
 
@@ -164,8 +187,15 @@ in
     prometheus.exporters.node = {
       enable = true;
       port = 9000;
-      enabledCollectors = [ "systemd" "processes" ];
-      extraFlags = [ "--collector.ethtool" "--collector.softirqs" "--collector.tcpstat" ];
+      enabledCollectors = [
+        "systemd"
+        "processes"
+      ];
+      extraFlags = [
+        "--collector.ethtool"
+        "--collector.softirqs"
+        "--collector.tcpstat"
+      ];
     };
     aria2 = {
       enable = true;
@@ -209,7 +239,7 @@ in
     };
     smartd = {
       enable = true;
-      devices = [{ device = "/dev/nvme0n1"; }];
+      devices = [ { device = "/dev/nvme0n1"; } ];
     };
     dockerRegistry = {
       enable = true;
@@ -221,10 +251,10 @@ in
     };
     wireguard = {
       enable = true;
-      ips = ips;
+      inherit ips;
       endpoint = endpointIP;
-      endpointPort = endpointPort;
-      endpointPublicKey = endpointPublicKey;
+      inherit endpointPort;
+      inherit endpointPublicKey;
     };
   };
 
@@ -235,7 +265,11 @@ in
     extraGroups = [ ];
     openssh.authorizedKeys.keys = [ (builtins.readFile ../../secrets/builder.pub) ];
   };
-  nix.settings.trusted-users = [ "root" "vincent" "builder" ];
+  nix.settings.trusted-users = [
+    "root"
+    "vincent"
+    "builder"
+  ];
 
   security.pam.sshAgentAuth.enable = true;
 }

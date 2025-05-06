@@ -1,4 +1,8 @@
-{ stdenv, lib, buildGoModule, git, fetchFromGitHub }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+}:
 
 buildGoModule rec {
   name = "operator-tool-${version}";
@@ -15,7 +19,7 @@ buildGoModule rec {
 
   meta = {
     description = "Tooling for managing operator remote payload";
-    homepage = https://github.com/openshift-pipelines/operator-tooling;
+    homepage = "https://github.com/openshift-pipelines/operator-tooling";
     license = lib.licenses.asl20;
   };
 }

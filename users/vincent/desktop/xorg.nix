@@ -1,4 +1,4 @@
-{ config, lib, pkgs, nixosConfig, ... }:
+{ nixosConfig, ... }:
 
 {
   # home.file.".Xmodmap".source = ./xorg/Xmodmap;

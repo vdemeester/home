@@ -1,7 +1,4 @@
-{ lib, ... }:
-let
-  inherit (lib) mkEnableOption;
-in
+{ ... }:
 {
   imports = [
     ./direnv.nix

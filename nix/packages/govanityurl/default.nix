@@ -1,4 +1,4 @@
-{ stdenv, lib, buildGoModule, fetchgit }:
+{ buildGoModule, fetchgit }:
 
 buildGoModule rec {
   pname = "govanityurl";

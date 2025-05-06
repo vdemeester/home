@@ -2,7 +2,7 @@
 {
   # FIXME: migrate to pkgs and overlays on root
   additions = final: _prev: import ../../pkgs { pkgs = final; };
-  modifications = _final: prev: {
+  modifications = _final: _prev: {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
@@ -36,7 +36,7 @@
     };
   };
   # tekton = final: prev: {
-  # 
+  #
   #   inherit (prev.callPackage ../packages/tkn { })
   #     tkn_0_17
   #     tkn_0_18

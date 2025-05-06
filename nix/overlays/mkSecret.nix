@@ -1,7 +1,9 @@
-self: super:
-with builtins; with self.lib;
+self: _super:
+with builtins;
+with self.lib;
 {
-  mkSecret = path:
+  mkSecret =
+    path:
     let
       name = baseNameOf (toString path);
       stub = toFile name "This is a stub!\n";

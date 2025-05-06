@@ -1,3 +1,3 @@
-alias l ls -lah $*
-alias ll ls -l $*
-alias ls ls $*
+alias l exa -lah $*
+alias ll exa -l $*
+alias ls exa $*

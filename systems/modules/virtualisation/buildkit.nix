@@ -1,8 +1,21 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.virtualisation.buildkitd;
   inherit (lib) mkOption mkIf;
-  inherit (lib.types) attrsOf str nullOr path bool package listOf;
+  inherit (lib.types)
+    attrsOf
+    str
+    nullOr
+    path
+    bool
+    package
+    listOf
+    ;
 
   configFile =
     if cfg.configFile == null then
@@ -31,7 +44,10 @@ in
 
     packages = mkOption {
       type = listOf package;
-      default = [ pkgs.runc pkgs.git ];
+      default = [
+        pkgs.runc
+        pkgs.git
+      ];
       description = "List of packages to be added to buildkitd service path";
     };
 
@@ -51,7 +67,7 @@ in
     };
 
     settings = lib.mkOption {
-      type = settingsFormat.type;
+      inherit (settingsFormat) type;
       default = {
         grpc.address = [ "unix:///run/buildkit/buildkitd.sock" ];
       };
@@ -77,10 +93,15 @@ in
     };
 
     systemd.services.buildkitd = {
-      after = [ "network.target" "containerd.service" ];
+      after = [
+        "network.target"
+        "containerd.service"
+      ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = ''${cfg.package}/bin/buildkitd ${lib.concatStringsSep " " (lib.cli.toGNUCommandLine {} cfg.args)}'';
+        ExecStart = ''${cfg.package}/bin/buildkitd ${
+          lib.concatStringsSep " " (lib.cli.toGNUCommandLine { } cfg.args)
+        }'';
         Delegate = "yes";
         KillMode = "process";
         Type = "notify";
@@ -98,6 +119,5 @@ in
     };
 
   };
-
 
 }

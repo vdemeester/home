@@ -1,6 +1,4 @@
-{ ...
-}:
-{
+_: {
   disko.devices = {
     disk = {
       # 512GB root/boot drive. Configured with:
@@ -41,7 +39,11 @@
                   type = "filesystem";
                   format = "ext4";
                   mountpoint = "/";
-                  mountOptions = [ "noatime" "nodiratime" "discard" ];
+                  mountOptions = [
+                    "noatime"
+                    "nodiratime"
+                    "discard"
+                  ];
                 };
               };
             };

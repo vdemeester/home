@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -215,7 +220,7 @@ in
       "url \"git@github.com:\"".insteadOf = "git://github.com/";
     };
 
-    includes = [ ] ++ lists.forEach redhat_folders (x: {
+    includes = lists.forEach redhat_folders (x: {
       path = "${config.xdg.configHome}/git/config.d/redhat.gitconfig";
       condition = "gitdir:${config.home.homeDirectory}/${x}/**";
     });

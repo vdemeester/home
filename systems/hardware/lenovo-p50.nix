@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 #let
 #  sources = import ../../nix/sources.nix;
 #in
@@ -8,7 +8,10 @@
     ./thinkpad.nix
   ];
   boot = {
-    initrd.availableKernelModules = [ "nvme" "rtsx_pci_sdmmc" ];
+    initrd.availableKernelModules = [
+      "nvme"
+      "rtsx_pci_sdmmc"
+    ];
   };
   hardware = {
 

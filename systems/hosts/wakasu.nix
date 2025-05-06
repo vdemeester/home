@@ -1,16 +1,15 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 with lib;
 let
   hostname = "wakasu";
   secretPath = ../../secrets/machines.nix;
-  secretCondition = (builtins.pathExists secretPath);
+  secretCondition = builtins.pathExists secretPath;
 
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
-  endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
-
-  getEmulator = system: (lib.systems.elaborate { inherit system; }).emulator pkgs;
+  endpointPublicKey = strings.optionalString secretCondition (import secretPath)
+  .wireguard.kerkouane.publicKey;
   metadata = importTOML ../../ops/hosts.toml;
 
   # Scripts
@@ -34,7 +33,10 @@ in
     device = "/dev/mapper/root";
     # uuid: 637ee2a5-638d-46cd-8845-3cc0fa8551bd
     fsType = "ext4";
-    options = [ "noatime" "discard" ];
+    options = [
+      "noatime"
+      "discard"
+    ];
   };
 
   fileSystems."/boot" = {
@@ -42,12 +44,15 @@ in
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/ab056cfc-fb17-4db7-a393-f93726cc2987"; }];
+  swapDevices = [ { device = "/dev/disk/by-uuid/ab056cfc-fb17-4db7-a393-f93726cc2987"; } ];
 
   networking = {
     hostName = hostname;
     firewall.allowedTCPPortRanges = [
-      { from = 45000; to = 47000; }
+      {
+        from = 45000;
+        to = 47000;
+      }
     ];
   };
 
@@ -110,8 +115,14 @@ in
     {
       groups = [ "wheel" ];
       commands = [
-        { command = "${officemode}/bin/officemode"; options = [ "NOPASSWD" ]; }
-        { command = "${roadmode}/bin/roadmode"; options = [ "NOPASSWD" ]; }
+        {
+          command = "${officemode}/bin/officemode";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "${roadmode}/bin/roadmode";
+          options = [ "NOPASSWD" ];
+        }
       ];
     }
   ];
@@ -121,7 +132,10 @@ in
     editors.emacs.enable = true;
     editors.neovim.enable = true;
     hardware = {
-      yubikey = { enable = true; u2f = true; };
+      yubikey = {
+        enable = true;
+        u2f = true;
+      };
       laptop.enable = true;
       bluetooth.enable = true;
     };
@@ -147,7 +161,10 @@ in
       };
       ssh.enable = true;
     };
-    virtualisation.libvirt = { enable = true; nested = true; };
+    virtualisation.libvirt = {
+      enable = true;
+      nested = true;
+    };
   };
 
   # TODO Migrate to modules
@@ -179,7 +196,12 @@ in
     ollama.enable = true;
     dictd = {
       enable = true;
-      DBs = with pkgs.dictdDBs; [ wiktionary wordnet fra2eng eng2fra ];
+      DBs = with pkgs.dictdDBs; [
+        wiktionary
+        wordnet
+        fra2eng
+        eng2fra
+      ];
     };
     locate = {
       enable = true;
@@ -196,8 +218,8 @@ in
       enable = true;
       ips = [ "${metadata.hosts.wakasu.wireguard.addrs.v4}/24" ];
       endpoint = endpointIP;
-      endpointPort = endpointPort;
-      endpointPublicKey = endpointPublicKey;
+      inherit endpointPort;
+      inherit endpointPublicKey;
     };
   };
 

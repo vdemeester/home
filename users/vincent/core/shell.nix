@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   aliases = {
     mkdir = ''mkdir --parents --verbose'';
     rm = ''rm --interactive'';

@@ -11,5 +11,5 @@
     };
   };
   environment.systemPackages = if (builtins.isString desktop) then [ pkgs.blueberry ] else [ ];
-  services.blueman.enable = (builtins.isString desktop);
+  services.blueman.enable = builtins.isString desktop;
 }

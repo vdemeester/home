@@ -8,10 +8,9 @@ _: {
         # PasswordAuthentication = false;
         # PermitRootLogin = "no"
       };
-      extraConfig =
-        ''
-          StreamLocalBindUnlink yes
-        '';
+      extraConfig = ''
+        StreamLocalBindUnlink yes
+      '';
     };
     sshguard.enable = true;
   };

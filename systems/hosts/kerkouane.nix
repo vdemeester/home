@@ -6,16 +6,11 @@ let
   metadata = importTOML ../../ops/hosts.toml;
 
   secretPath = ../../secrets/machines.nix;
-  secretCondition = (builtins.pathExists secretPath);
+  secretCondition = builtins.pathExists secretPath;
 
-  isAuthorized = p: builtins.isAttrs p && p.authorized or false;
-  authorizedKeys = lists.optionals secretCondition (
-    attrsets.mapAttrsToList
-      (name: value: value.key)
-      (attrsets.filterAttrs (name: value: isAuthorized value) (import secretPath).ssh)
-  );
-
-  wireguardIp = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
+  wireguardIp =
+    strings.optionalString secretCondition
+      (import secretPath).wireguard.ips."${hostname}";
 
   nginxExtraConfig = ''
     expires 31d;
@@ -27,7 +22,7 @@ let
     add_header X-XSS-Protection "1; mode=block";
   '';
 
-  nginx = pkgs.nginxMainline.override (old: {
+  nginx = pkgs.nginxMainline.override (_old: {
     modules = with pkgs.nginxModules; [
       fancyindex
     ];
@@ -70,16 +65,27 @@ in
   networking.hostName = hostname;
 
   ## From qemu-quest.nix
-  boot.initrd.availableKernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "9p" "9pnet_virtio" ];
-  boot.initrd.kernelModules = [ "virtio_balloon" "virtio_console" "virtio_rng" ];
+  boot.initrd.availableKernelModules = [
+    "virtio_net"
+    "virtio_pci"
+    "virtio_mmio"
+    "virtio_blk"
+    "virtio_scsi"
+    "9p"
+    "9pnet_virtio"
+  ];
+  boot.initrd.kernelModules = [
+    "virtio_balloon"
+    "virtio_console"
+    "virtio_rng"
+  ];
 
-  boot.initrd.postDeviceCommands =
-    ''
-      # Set the system time from the hardware clock to work around a
-      # bug in qemu-kvm > 1.5.2 (where the VM clock is initialised
-      # to the *boot time* of the host).
-      hwclock -s
-    '';
+  boot.initrd.postDeviceCommands = ''
+    # Set the system time from the hardware clock to work around a
+    # bug in qemu-kvm > 1.5.2 (where the VM clock is initialised
+    # to the *boot time* of the host).
+    hwclock -s
+  '';
 
   # START OF DigitalOcean specifics
   # FIXME: move this into a secret ?
@@ -97,11 +103,20 @@ in
     interfaces = {
       eth0 = {
         ipv4.addresses = [
-          { address = "188.166.102.243"; prefixLength = 18; }
-          { address = "10.18.0.5"; prefixLength = 16; }
+          {
+            address = "188.166.102.243";
+            prefixLength = 18;
+          }
+          {
+            address = "10.18.0.5";
+            prefixLength = 16;
+          }
         ];
         ipv6.addresses = [
-          { address = "fe80::8035:3aff:fe72:1036"; prefixLength = 64; }
+          {
+            address = "fe80::8035:3aff:fe72:1036";
+            prefixLength = 64;
+          }
         ];
       };
 
@@ -116,8 +131,16 @@ in
   boot.loader.grub.device = "/dev/vda";
   boot.loader.grub.enable = lib.mkForce true;
   boot.loader.systemd-boot.enable = lib.mkForce false;
-  fileSystems."/" = { device = "/dev/vda1"; fsType = "ext4"; };
-  swapDevices = [{ device = "/swapfile"; size = 1024; }];
+  fileSystems."/" = {
+    device = "/dev/vda1";
+    fsType = "ext4";
+  };
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 1024;
+    }
+  ];
 
   core.nix = {
     # FIXME move this away
@@ -145,7 +168,10 @@ in
   };
 
   networking.firewall.allowPing = true;
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
   security = {
     acme = {
       acceptTerms = true;
@@ -162,8 +188,15 @@ in
       node = {
         enable = true;
         port = 9000;
-        enabledCollectors = [ "systemd" "processes" ];
-        extraFlags = [ "--collector.ethtool" "--collector.softirqs" "--collector.tcpstat" ];
+        enabledCollectors = [
+          "systemd"
+          "processes"
+        ];
+        extraFlags = [
+          "--collector.ethtool"
+          "--collector.softirqs"
+          "--collector.tcpstat"
+        ];
       };
       nginx = {
         enable = true;
@@ -214,7 +247,9 @@ in
       virtualHosts."go.sbr.pm" = {
         enableACME = true;
         forceSSL = true;
-        locations."/" = { proxyPass = "http://127.0.0.1:8080"; };
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8080";
+        };
         extraConfig = nginxExtraConfig;
       };
       virtualHosts."whoami.sbr.pm" = {
@@ -288,7 +323,10 @@ in
     };
     openssh = {
       listenAddresses = [
-        { addr = wireguardIp; port = 22; }
+        {
+          addr = wireguardIp;
+          port = 22;
+        }
       ];
       openFirewall = false;
       passwordAuthentication = false;
@@ -296,4 +334,3 @@ in
     };
   };
 }
-

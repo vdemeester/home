@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -49,12 +54,12 @@ in
     networking.wireguard.enable = true;
     networking.wireguard.interfaces = {
       wg0 = {
-        ips = cfg.ips;
+        inherit (cfg) ips;
         privateKeyFile = "/etc/nixos/secrets/wireguard/private.key";
         peers = [
           {
             publicKey = cfg.endpointPublicKey;
-            allowedIPs = cfg.allowedIPs;
+            inherit (cfg) allowedIPs;
             endpoint = "${cfg.endpoint}:${toString cfg.endpointPort}";
             persistentKeepalive = 25;
           }

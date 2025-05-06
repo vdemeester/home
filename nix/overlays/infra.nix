@@ -1,4 +1,4 @@
-self: super:
+_self: super:
 
 {
   systemd-email = super.callPackage ../packages/systemd-email { };

@@ -1,20 +1,22 @@
-{ sources ? import ../../nix
-, lib ? sources.lib
-, pkgs ? sources.pkgs { }
-, ...
+{
+  sources ? import ../../nix,
+  lib ? sources.lib,
+  pkgs ? sources.pkgs { },
+  ...
 }:
 
 with lib;
 let
   hostname = "aomi";
   secretPath = ../../secrets/machines.nix;
-  secretCondition = (builtins.pathExists secretPath);
+  secretCondition = builtins.pathExists secretPath;
 
   ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
-  ips = lists.optionals secretCondition ([ "${ip}/24" ]);
+  ips = lists.optionals secretCondition [ "${ip}/24" ];
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
-  endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
+  endpointPublicKey = strings.optionalString secretCondition (import secretPath)
+  .wireguard.kerkouane.publicKey;
   metadata = importTOML ../../ops/hosts.toml;
 in
 {
@@ -40,7 +42,10 @@ in
     # device = "/dev/disk/by-uuid/6bedd234-3179-46f7-9a3f-feeffd880791";
     device = "/dev/mapper/root";
     fsType = "ext4";
-    options = [ "noatime" "discard" ];
+    options = [
+      "noatime"
+      "discard"
+    ];
   };
 
   fileSystems."/boot" = {
@@ -48,7 +53,7 @@ in
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/24da6a46-cd28-4bff-9220-6f449e3bd8b5"; }];
+  swapDevices = [ { device = "/dev/disk/by-uuid/24da6a46-cd28-4bff-9220-6f449e3bd8b5"; } ];
 
   networking = {
     hostName = hostname;
@@ -129,7 +134,10 @@ in
     editors.emacs.enable = true;
     editors.neovim.enable = true;
     hardware = {
-      yubikey = { enable = true; u2f = true; };
+      yubikey = {
+        enable = true;
+        u2f = true;
+      };
       laptop.enable = true;
       bluetooth.enable = true;
     };
@@ -156,12 +164,18 @@ in
         };
         image-mirroring = {
           enable = true;
-          targets = [ "quay.io/vdemeest" "ghcr.io/vdemeester" ];
+          targets = [
+            "quay.io/vdemeest"
+            "ghcr.io/vdemeester"
+          ];
           settings = {
             "docker.io" = {
               "images" = {
                 # sync latest and edge tags
-                "alpine" = [ "latest" "edge" ];
+                "alpine" = [
+                  "latest"
+                  "edge"
+                ];
               };
               "images-by-tag-regex" = {
                 # sync all "3.x" images"
@@ -183,7 +197,10 @@ in
         guiAddress = "${metadata.hosts.aomi.wireguard.addrs.v4}:8384";
       };
     };
-    virtualisation.libvirt = { enable = true; nested = true; };
+    virtualisation.libvirt = {
+      enable = true;
+      nested = true;
+    };
   };
 
   modules.profiles = {
@@ -231,7 +248,12 @@ in
     };
     dictd = {
       enable = true;
-      DBs = with pkgs.dictdDBs; [ wiktionary wordnet fra2eng eng2fra ];
+      DBs = with pkgs.dictdDBs; [
+        wiktionary
+        wordnet
+        fra2eng
+        eng2fra
+      ];
     };
     locate = {
       enable = true;
@@ -248,19 +270,26 @@ in
     prometheus.exporters.node = {
       enable = true;
       port = 9000;
-      enabledCollectors = [ "systemd" "processes" ];
-      extraFlags = [ "--collector.ethtool" "--collector.softirqs" "--collector.tcpstat" ];
+      enabledCollectors = [
+        "systemd"
+        "processes"
+      ];
+      extraFlags = [
+        "--collector.ethtool"
+        "--collector.softirqs"
+        "--collector.tcpstat"
+      ];
     };
     smartd = {
       enable = true;
-      devices = [{ device = "/dev/nvme0n1"; }];
+      devices = [ { device = "/dev/nvme0n1"; } ];
     };
     wireguard = {
       enable = true;
       ips = [ "${metadata.hosts.aomi.wireguard.addrs.v4}/24" ];
       endpoint = endpointIP;
-      endpointPort = endpointPort;
-      endpointPublicKey = endpointPublicKey;
+      inherit endpointPort;
+      inherit endpointPublicKey;
     };
     gitea-actions-runner = {
       instances = {
@@ -306,7 +335,11 @@ in
     extraGroups = [ ];
     openssh.authorizedKeys.keys = [ (builtins.readFile ../../secrets/builder.pub) ];
   };
-  nix.trustedUsers = [ "root" "vincent" "builder" ];
+  nix.trustedUsers = [
+    "root"
+    "vincent"
+    "builder"
+  ];
 
   security = {
     tpm2 = {

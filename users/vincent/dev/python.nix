@@ -12,5 +12,3 @@
     PYTHONSTARTUP = "${config.xdg.configHome}/python/pythonrc";
   };
 }
-
-

@@ -11,7 +11,11 @@
     ./python.nix
   ];
 
-  home.extraOutputsToInstall = [ "doc" "info" "devdoc" ];
+  home.extraOutputsToInstall = [
+    "doc"
+    "info"
+    "devdoc"
+  ];
 
   home.sessionVariables = {
     CARGO_HOME = "${config.xdg.dataHome}/cargo";

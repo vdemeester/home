@@ -1,6 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkIf mkEnableOption mkDefault mkOption types;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkDefault
+    mkOption
+    types
+    ;
   cfg = config.modules.desktop;
 in
 {
@@ -111,7 +122,7 @@ in
       plymouth = {
         enable = true;
         themePackages = [ cfg.plymouth.themePackage ];
-        theme = cfg.plymouth.theme;
+        inherit (cfg.plymouth) theme;
       };
     };
 
@@ -162,24 +173,25 @@ in
     # Enable NetkworManager by default
     networking.networkmanager = {
       enable = mkDefault true;
-      unmanaged = [
-        "interface-name:br-*"
-        "interface-name:ve-*" # FIXME are those docker's or libvirt's
-        "interface-name:veth-*" # FIXME are those docker's or libvirt's
-      ]
-      # Do not manager wireguard
-      ++ lib.optionals config.networking.wireguard.enable [ "interface-name:wg0" ]
-      # Do not manage docker interfaces
-      ++ lib.optionals config.virtualisation.docker.enable [ "interface-name:docker0" ]
-      # Do not manager libvirt interfaces
-      ++ lib.optionals config.virtualisation.libvirtd.enable [ "interface-name:virbr*" ];
+      unmanaged =
+        [
+          "interface-name:br-*"
+          "interface-name:ve-*" # FIXME are those docker's or libvirt's
+          "interface-name:veth-*" # FIXME are those docker's or libvirt's
+        ]
+        # Do not manager wireguard
+        ++ lib.optionals config.networking.wireguard.enable [ "interface-name:wg0" ]
+        # Do not manage docker interfaces
+        ++ lib.optionals config.virtualisation.docker.enable [ "interface-name:docker0" ]
+        # Do not manager libvirt interfaces
+        ++ lib.optionals config.virtualisation.libvirtd.enable [ "interface-name:virbr*" ];
       plugins = with pkgs; [ networkmanager-openvpn ];
       # dispatcherScripts = [{
       #   # https://askubuntu.com/questions/1271491/disable-wifi-if-lan-is-connected
       #   source = pkgs.writeText "wifi-wired-exclusive" ''
       #     #!${pkgs.bash}/bin/bash
       #     export LC_ALL=C
-      # 
+      #
       #     enable_disable_wifi ()
       #     {
       #         result=$(${pkgs.networkmanager}/bin/nmcli dev | ${pkgs.gnugrep}/bin/grep "ethernet" | ${pkgs.gnugrep}/bin/grep -w "connected")
@@ -189,11 +201,11 @@ in
       #             ${pkgs.networkmanager}/bin/nmcli radio wifi on
       #         fi
       #     }
-      # 
+      #
       #     if [ "$2" = "up" ]; then
       #         enable_disable_wifi
       #     fi
-      # 
+      #
       #     if [ "$2" = "down" ]; then
       #         enable_disable_wifi
       #     fi

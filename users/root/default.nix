@@ -1,7 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib) lists attrsets mkIf optionals versionOlder importTOML;
+  inherit (lib)
+    mkIf
+    optionals
+    versionOlder
+    importTOML
+    ;
   metadata = importTOML ../../ops/hosts.toml;
 in
 {
@@ -14,11 +24,16 @@ in
       (import ../vincent/core/zsh.nix)
       (import ../vincent/core/ssh.nix)
     ]
-    ++ optionals (versionOlder config.system.nixos.release "21.11") [{
-      # manpages are broken on 21.05 and home-manager (for some reason..)
-      manual.manpages.enable = false;
-    }] ++ [{
-      home.stateVersion = "22.05";
-    }]
+    ++ optionals (versionOlder config.system.nixos.release "21.11") [
+      {
+        # manpages are broken on 21.05 and home-manager (for some reason..)
+        manual.manpages.enable = false;
+      }
+    ]
+    ++ [
+      {
+        home.stateVersion = "22.05";
+      }
+    ]
   );
 }

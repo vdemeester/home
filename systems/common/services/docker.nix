@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   virtualisation = {
     docker = {
       enable = true;
@@ -8,8 +9,17 @@
         userland-proxy = false;
         experimental = true;
         bip = "172.26.0.1/16";
-        features = { buildkit = true; };
-        insecure-registries = [ "172.30.0.0/16" "192.168.1.0/16" "10.100.0.0/16" "shikoku.home:5000" "r.svc.home:5000" "r.svc.home" ];
+        features = {
+          buildkit = true;
+        };
+        insecure-registries = [
+          "172.30.0.0/16"
+          "192.168.1.0/16"
+          "10.100.0.0/16"
+          "shikoku.home:5000"
+          "r.svc.home:5000"
+          "r.svc.home"
+        ];
         # seccomp-profile = ./my-seccomp.json;
       };
     };

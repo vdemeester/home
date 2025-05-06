@@ -1,4 +1,4 @@
-{ stdenv, lib, buildGoModule, fetchFromGitHub }:
+{ buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   name = "gogo-protobuf-${version}";

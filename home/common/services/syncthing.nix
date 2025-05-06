@@ -1,62 +1,40 @@
-{ config
-, lib
-, pkgs
-, outputs
-, ...
-}:
+_:
 let
-  isCurrentHost = n: v: n != config.networking.hostName;
   # Folders list
   folders = [
-    { label = "sync"; id = "7dshg-r8zr6"; } # TODO maybe deprecate for documents
-    { label = "documents"; id = "oftdb-t5anv"; }
-    { label = "org"; id = "sjpsr-xfwdu"; }
-    { label = "screenshots"; id = "prpsz-azlz9"; }
-    { label = "wallpapers"; id = "wpiah-ydwwx"; }
-    { label = "photos"; id = "uetya-ypa3d"; }
-    { label = "music"; id = "kcyrf-mugzt"; }
+    {
+      label = "sync";
+      id = "7dshg-r8zr6";
+    } # TODO maybe deprecate for documents
+    {
+      label = "documents";
+      id = "oftdb-t5anv";
+    }
+    {
+      label = "org";
+      id = "sjpsr-xfwdu";
+    }
+    {
+      label = "screenshots";
+      id = "prpsz-azlz9";
+    }
+    {
+      label = "wallpapers";
+      id = "wpiah-ydwwx";
+    }
+    {
+      label = "photos";
+      id = "uetya-ypa3d";
+    }
+    {
+      label = "music";
+      id = "kcyrf-mugzt";
+    }
   ];
-  getSyncthingFolders = c:
-    if builtins.hasAttr "syncthingFolders" c._module.specialArgs
-    then
-      c._module.specialArgs.syncthingFolders
-    else
-      [ ];
-  deviceHasFolder = folder: n: v: lib.lists.any (s: s == folder) (getSyncthingFolders v);
-  devicesForFolder = folder: lib.attrsets.filterAttrs (deviceHasFolder folder) outputs.nixosConfigurations;
   # outputs.nixosConfigurations.$.syncthingFolders will contains the folders for a host
   # FIXME: we could use another file, and a "configuration" so that I don't import it ? or in the flake, but not in makeHost
 
   # non-nixos syncthing machines
-  extras = [
-    # NAS
-    {
-      name = "aion";
-      id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
-      addresses = [ "tcp://aion.home" "tcp://aion.vpn" "tcp://aion.sbr.pm" ];
-      folders = [ "org" "documents" "sync" "screenshots" "wallpapers" "photos" "videos" ];
-    }
-    # Macbook
-    {
-      name = "honshu";
-      id = "RGIR34D-3SH3GZK-CYPNNFI-5M5I2K4-HVTUS56-72GJTLH-SDMOY4I-I7AURQR";
-      addresses = [ "tcp://honshu.home" "tcp://honshu.sbr.pm" ];
-      folders = [ ];
-    }
-    # Windows Gaming machine
-    {
-      name = "okinawa";
-      id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
-      addresses = [ "tcp://okinawa.home" "tcp://okinawa.vpn" "tcp://okinawa.sbr.pm" ];
-      folder = [ ];
-    }
-    # iPhone
-    {
-      name = "hokkaido";
-      id = "XD4XYNZ-DT3PJEY-UJYBHWX-6OQPPUI-HTW752L-FYTX3TW-GVHDTKW-PT336QV";
-      folders = [ "org" "music" "documents" "sync" ];
-    }
-  ];
 in
 {
   services.syncthing = {
@@ -65,57 +43,105 @@ in
     # guiAddress = cfg.guiAddress;
     # TODO This is only for kyushu, will need to migrate this later
     settings = {
+      # FIXME this doesn't work, I wish it did.
+      # defaults = {
+      #   ignores = { lines = [ "(?d).DS_Store" "**" ]; };
+      # };
       devices = {
         aomi = {
           id = "XCR6WWB-OZUDGFB-LQPFW73-MV5SPJK-4IGOMA4-IAXON3I-C6OFETL-TPK5FQS";
-          addresses = [ "tcp://aomi.vpn" "tcp://aomi.light" "tcp://aomi.sbr.pm" ];
+          addresses = [
+            "tcp://aomi.vpn"
+            "tcp://aomi.light"
+            "tcp://aomi.sbr.pm"
+          ];
         };
         sakhalin = {
           id = "4TYYG7V-A67D5SN-HMEJCI7-POOZRLL-RNCIE4U-ZYVGTOB-JQ5DOSV-ZCGWUAL";
-          addresses = [ "tcp://sakhalin.light" "tcp://sakhalin.vpn" "tcp://sakhalin.sbr.pm" ];
+          addresses = [
+            "tcp://sakhalin.light"
+            "tcp://sakhalin.vpn"
+            "tcp://sakhalin.sbr.pm"
+          ];
         };
         shikoku = {
           id = "KZMMXRR-UINDQTS-H3TV2W7-EIGOUDI-3LW4ZDG-7PRKDFV-MJ5KUTJ-YG5Y5AI";
-          addresses = [ "tcp://shikoku.light" "tcp://shikoku.vpn" "tcp://shikoku.sbr.pm" ];
+          addresses = [
+            "tcp://shikoku.light"
+            "tcp://shikoku.vpn"
+            "tcp://shikoku.sbr.pm"
+          ];
         };
         kerkouane = {
           id = "IFVRRQ7-KMIOQXP-5YDJXQU-UJXUKHB-7THCSY6-B3NHRNA-ED7IRI7-2JPPKQY";
-          addresses = [ "tcp://10.100.0.1" "tcp://kerkouane.vpn" ];
+          addresses = [
+            "tcp://10.100.0.1"
+            "tcp://kerkouane.vpn"
+          ];
         };
         aion = {
           id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
-          addresses = [ "tcp://aion.light" "tcp://aion.vpn" "tcp://aion.sbr.pm" ];
+          addresses = [
+            "tcp://aion.light"
+            "tcp://aion.vpn"
+            "tcp://aion.sbr.pm"
+          ];
         };
       };
       folders = {
         "/home/vincent/sync" = {
           label = "sync";
           id = "7dshg-r8zr6";
-          devices = [ "aomi" "aion" "shikoku" "sakhalin" ];
+          devices = [
+            "aomi"
+            "aion"
+            "shikoku"
+            "sakhalin"
+          ];
           rescanIntervalS = 3600 * 6;
         };
         "/home/vincent/desktop/org" = {
           label = "org";
           id = "sjpsr-xfwdu";
-          devices = [ "aomi" "aion" "shikoku" "sakhalin" ];
+          devices = [
+            "aomi"
+            "aion"
+            "shikoku"
+            "sakhalin"
+          ];
           rescanIntervalS = 3600 * 6;
         };
         "/home/vincent/desktop/documents" = {
           label = "documents";
           id = "oftdb-t5anv";
-          devices = [ "aomi" "aion" "shikoku" "sakhalin" ];
+          devices = [
+            "aomi"
+            "aion"
+            "shikoku"
+            "sakhalin"
+          ];
           rescanIntervalS = 3600 * 6;
         };
         "/home/vincent/desktop/pictures/screenshots" = {
           label = "screenshots";
           id = "prpsz-azlz9";
-          devices = [ "aomi" "aion" "shikoku" "sakhalin" ];
+          devices = [
+            "aomi"
+            "aion"
+            "shikoku"
+            "sakhalin"
+          ];
           rescanIntervalS = 3600 * 6;
         };
         "/home/vincent/desktop/pictures/wallpapers" = {
           label = "wallpapers";
           id = "wpiah-ydwwx";
-          devices = [ "aomi" "aion" "shikoku" "sakhalin" ];
+          devices = [
+            "aomi"
+            "aion"
+            "shikoku"
+            "sakhalin"
+          ];
           rescanIntervalS = 3600 * 6;
         };
       };

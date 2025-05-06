@@ -29,7 +29,7 @@ _: {
       "shift+down" = "neighboring_window down";
     };
     themeFile = "Tango_Light";
-    # action_alias mkh kitten hints --alphabet asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM 
+    # action_alias mkh kitten hints --alphabet asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM
     # map kitty_mod+n    mkh --type=linenum emacsclient -c -nw +{line} {path}
   };
 }

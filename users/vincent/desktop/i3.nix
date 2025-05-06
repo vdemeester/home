@@ -1,4 +1,9 @@
-{ config, nixosConfig, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -26,7 +31,9 @@ in
     # ./dconf.nix
     ./xsession.nix
   ];
-  home.sessionVariables = { WEBKIT_DISABLE_COMPOSITING_MODE = 1; };
+  home.sessionVariables = {
+    WEBKIT_DISABLE_COMPOSITING_MODE = 1;
+  };
   home.packages = with pkgs; [
     alacritty
     kitty
@@ -112,7 +119,13 @@ in
   };
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi.override { plugins = [ pkgs.rofi-emoji pkgs.rofi-menugen pkgs.rofi-mpd ]; };
+    package = pkgs.rofi.override {
+      plugins = [
+        pkgs.rofi-emoji
+        pkgs.rofi-menugen
+        pkgs.rofi-mpd
+      ];
+    };
     font = "Ubuntu Mono 14";
     terminal = "${pkgs.kitty}/bin/kitty";
     theme = "slate";
@@ -212,9 +225,12 @@ in
       };
       keycodebindings = {
         "Mod4+Shift+24" = "kill";
-        "Mod4+33" = "exec \"rofi -show drun -modi 'drun,run,window,ssh' -kb-row-select 'Tab' -kb-row-tab '' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
-        "Mod4+Shift+33" = "exec \"rofi -show combi -modi 'drun,run,window,ssh,combi' -kb-row-select 'Tab' -kb-row-tab '' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
-        "Mod4+Control+33" = "exec \"rofi -show emoji -modi emoji -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'|pbcopy";
+        "Mod4+33" =
+          "exec \"rofi -show drun -modi 'drun,run,window,ssh' -kb-row-select 'Tab' -kb-row-tab '' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
+        "Mod4+Shift+33" =
+          "exec \"rofi -show combi -modi 'drun,run,window,ssh,combi' -kb-row-select 'Tab' -kb-row-tab '' -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'";
+        "Mod4+Control+33" =
+          "exec \"rofi -show emoji -modi emoji -location 2 -hide-scrollbar -separator-style solid -font 'Ubuntu Mono 14'|pbcopy";
         # "Mod4+space" = "";
         # focus window
         "Mod4+44" = "focus left";

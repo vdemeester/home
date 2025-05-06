@@ -1,4 +1,4 @@
-{ modulesPath, pkgs, lib, ... }:
+{ modulesPath, ... }:
 
 let
   hostname = "carthage";
@@ -24,4 +24,3 @@ in
   programs.mosh.enable = true;
 
 }
-

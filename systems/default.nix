@@ -1,24 +1,25 @@
-{ config
-, desktop
-, hostname
-, inputs
-, lib
-, modulesPath
-, outputs
-, stateVersion
-, ...
+{
+  config,
+  desktop,
+  hostname,
+  inputs,
+  lib,
+  outputs,
+  stateVersion,
+  ...
 }:
 {
 
-  imports = [
-    (./. + "/${hostname}/boot.nix")
-    (./. + "/${hostname}/hardware.nix")
+  imports =
+    [
+      (./. + "/${hostname}/boot.nix")
+      (./. + "/${hostname}/hardware.nix")
 
-    ./common/base
-    ./common/users
-  ]
-  ++ lib.optional (builtins.pathExists (./. + "/${hostname}/extra.nix")) ./${hostname}/extra.nix
-  ++ lib.optional (builtins.isString desktop) ./common/desktop;
+      ./common/base
+      ./common/users
+    ]
+    ++ lib.optional (builtins.pathExists (./. + "/${hostname}/extra.nix")) ./${hostname}/extra.nix
+    ++ lib.optional (builtins.isString desktop) ./common/desktop;
 
   nixpkgs = {
     overlays = [
@@ -59,7 +60,10 @@
 
     optimise = {
       automatic = true;
-      dates = [ "01:10" "12:10" ];
+      dates = [
+        "01:10"
+        "12:10"
+      ];
     };
 
     settings = {

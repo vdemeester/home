@@ -1,8 +1,10 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   home.file."${config.programs.zsh.dotDir}/completion.zsh".source = ./zsh/completion.zsh;
   home.file."${config.programs.zsh.dotDir}/prompt.zsh".source = ./zsh/prompt.zsh;
   home.file."${config.programs.zsh.dotDir}/functions/j".source = ./zsh/j;
-  home.file."${config.programs.zsh.dotDir}/auto-expanding-aliases.zsh".source = ./zsh/auto-expanding-aliases.zsh;
+  home.file."${config.programs.zsh.dotDir}/auto-expanding-aliases.zsh".source =
+    ./zsh/auto-expanding-aliases.zsh;
 
   home.packages = with pkgs; [
     nix-zsh-completions
@@ -96,7 +98,9 @@
         exec dbus-run-session sway
       fi
     '';
-    sessionVariables = { RPROMPT = ""; };
+    sessionVariables = {
+      RPROMPT = "";
+    };
 
     shellAliases = {
       mkdir = ''mkdir --parents --verbose'';

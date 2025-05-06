@@ -15,4 +15,3 @@
     # vscode-langservers-extracted
   ];
 }
-

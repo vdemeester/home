@@ -1,7 +1,4 @@
-{ hostname, pkgs, ... }:
-let
-  sync = (hostname == "aomi");
-in
+{ pkgs, ... }:
 {
   imports = [ ../../modules ];
   # profiles.mails = {

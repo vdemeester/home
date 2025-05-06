@@ -19,7 +19,10 @@
     dbus = {
       enable = true;
       implementation = "broker"; # trying this one out
-      packages = [ pkgs.dconf pkgs.gcr ];
+      packages = [
+        pkgs.dconf
+        pkgs.gcr
+      ];
     };
     greetd = {
       enable = true;

@@ -1,10 +1,12 @@
-{ sources ? import ../../nix
-, lib ? sources.lib
-, pkgs ? sources.nixpkgs { }
+{
+  sources ? import ../../nix,
+  pkgs ? sources.nixpkgs { },
 }:
 
 with pkgs;
-let avrlibc = pkgsCross.avr.libcCross; in
+let
+  avrlibc = pkgsCross.avr.libcCross;
+in
 rec {
   qmkSource = fetchgit {
     url = "https://github.com/qmk/qmk_firmware";

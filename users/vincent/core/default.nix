@@ -1,8 +1,5 @@
-{ lib, pkgs, nixosConfig, ... }:
+{ pkgs, ... }:
 
-let
-  inherit (lib) versionOlder;
-in
 {
   imports = [
     ./bash.nix

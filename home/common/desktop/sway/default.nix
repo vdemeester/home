@@ -108,7 +108,7 @@ in
       keybindings =
         let
           mod = config.wayland.windowManager.sway.config.modifier;
-          inherit (config.wayland.windowManager.sway.config) left down up right menu terminal;
+          inherit (config.wayland.windowManager.sway.config) terminal;
         in
         {
           "${mod}+Return" = "exec ${terminal}";
@@ -176,34 +176,52 @@ in
           };
         }
         {
-          criteria = { title = "Save File"; };
+          criteria = {
+            title = "Save File";
+          };
           command = "floating enable, resize set width 600px height 800px";
         }
         {
-          criteria = { class = "pwvucontrol"; };
+          criteria = {
+            class = "pwvucontrol";
+          };
           command = "floating enable";
         }
         {
-          criteria = { title = "(Sharing Indicator)"; };
+          criteria = {
+            title = "(Sharing Indicator)";
+          };
           command = "inhibit_idle visible, floating enable";
         }
         {
           # browser zoom|meet|bluejeans
-          criteria = { title = "(Blue Jeans)|(Meet)|(Zoom Meeting)"; };
+          criteria = {
+            title = "(Blue Jeans)|(Meet)|(Zoom Meeting)";
+          };
           command = "inhibit_idle visible";
         }
         # for_window [app_id="^chrome-.*"] shortcuts_inhibitor disable
         {
-          criteria = { app_id = "^chrome-.*"; };
+          criteria = {
+            app_id = "^chrome-.*";
+          };
           command = "shortcuts_inhibitor disable";
         }
       ];
       startup = [
-        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP"; } #workaround
+        {
+          command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS SWAYSOCK XDG_SESSION_TYPE XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP";
+        } # workaround
         # Make sure we update systemd service env variables with the current ones. This is required for dbus to work properly.
         { command = "dbus-update-activation-environment --systemd --all"; }
-        { command = "systemctl --user restart kanshi"; always = true; }
-        { command = "${pkgs.pa-notify}/bin/pa-notify -u0"; always = true; }
+        {
+          command = "systemctl --user restart kanshi";
+          always = true;
+        }
+        {
+          command = "${pkgs.pa-notify}/bin/pa-notify -u0";
+          always = true;
+        }
         # Probably put a condition here.
         { command = "emacs --fg-daemon"; }
         { command = "i3-back"; }
@@ -214,7 +232,7 @@ in
     extraConfig =
       let
         mod = config.wayland.windowManager.sway.config.modifier;
-        inherit (config.wayland.windowManager.sway.config) left down up right menu terminal;
+        inherit (config.wayland.windowManager.sway.config) menu;
       in
       ''
         bindcode ${mod}+33 exec "${menu}"

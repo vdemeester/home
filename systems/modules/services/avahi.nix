@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
   inherit (lib) mkEnableOption mkIf versionOlder;
@@ -12,10 +12,10 @@ in
     };
   };
 
-  config = mkIf cfg.enable
-    {
-      services = {
-        avahi = {
+  config = mkIf cfg.enable {
+    services = {
+      avahi =
+        {
           enable = true;
           ipv4 = true;
           ipv6 = true;
@@ -23,13 +23,18 @@ in
             enable = true;
             userServices = true;
           };
-	  openFirewall = true;
-        } // (if stable
-        then {
-          nssmdns = true;
-        } else {
-          nssmdns4 = true;
-        });
-      };
+          openFirewall = true;
+        }
+        // (
+          if stable then
+            {
+              nssmdns = true;
+            }
+          else
+            {
+              nssmdns4 = true;
+            }
+        );
     };
+  };
 }

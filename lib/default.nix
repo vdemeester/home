@@ -1,17 +1,18 @@
-{ self
-, inputs
-, outputs
-, stateVersion
-, ...
+{
+  self,
+  inputs,
+  outputs,
+  stateVersion,
+  ...
 }:
 {
   # Function for generating home-manage configs
   mkHome =
-    { hostname
-    , user
-    , desktop ? null
-    , system ? "x86_64-linux"
-    ,
+    {
+      hostname,
+      user,
+      desktop ? null,
+      system ? "x86_64-linux",
     }:
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
@@ -33,13 +34,13 @@
 
   # Function for generating host configs
   mkHost =
-    { hostname
-    , desktop ? null
-    , syncthingFolders ? [ ]
-    , system ? "x86_64-linux"
-    , pkgsInput ? inputs.nixpkgs
-    , homeInput ? inputs.home-manager
-    ,
+    {
+      hostname,
+      desktop ? null,
+      syncthingFolders ? [ ],
+      system ? "x86_64-linux",
+      pkgsInput ? inputs.nixpkgs,
+      homeInput ? inputs.home-manager,
     }:
     let
       specialArgs = {
@@ -57,7 +58,7 @@
     in
     pkgsInput.lib.nixosSystem {
       inherit specialArgs;
-      system = system;
+      inherit system;
       modules = [
         self.nixosModules.wireguard-client
         inputs.agenix.nixosModules.default
@@ -70,9 +71,8 @@
 
   # Function to create a system manager
   mkSystemManager =
-    { hostname
-    , system ? "x86_64-linux"
-    ,
+    {
+      system ? "x86_64-linux",
     }:
     inputs.system-manager.lib-makeSystemConfig {
       modules = [

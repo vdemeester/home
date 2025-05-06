@@ -1,6 +1,11 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkIf mkEnableOption mkDefault;
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.modules.desktop.xorg;
 in
 {

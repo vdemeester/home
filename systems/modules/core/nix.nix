@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -11,7 +16,11 @@ in
 {
   options = {
     core.nix = {
-      enable = mkOption { type = types.bool; default = true; description = "Enable core.nix"; };
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Enable core.nix";
+      };
       gcDates = mkOption {
         default = "daily";
         description = "Specification (in the format described by systemd.time(7)) of the time at which the garbage collector will run. ";
@@ -86,14 +95,20 @@ in
       ];
       optimise = {
         automatic = true;
-        dates = [ "01:10" "12:10" ];
+        dates = [
+          "01:10"
+          "12:10"
+        ];
       };
       nrBuildUsers = 32;
       #nrBuildUsers = config.nix.maxJobs * 2;
       settings = {
         sandbox = true;
         allowed-users = [ "@wheel" ];
-        trusted-users = [ "root" "@wheel" ];
+        trusted-users = [
+          "root"
+          "@wheel"
+        ];
         # See https://nixos.org/manual/nix/stable/command-ref/conf-file#conf-use-xdg-base-directories
         use-xdg-base-directories = true;
       };

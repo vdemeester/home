@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+_:
 
 {
   xdg.configFile."mr".source = ./mr/lib.mr;

@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib) mkEnableOption mkIf types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.modules.core.binfmt;
 in
 {

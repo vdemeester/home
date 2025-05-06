@@ -1,9 +1,10 @@
-{ pkgs ? import <nixpkgs> {
+{
+  pkgs ? import <nixpkgs> {
     overlays = [
-      (self: super: { })
+      (_self: _super: { })
     ];
-  }
-, ...
+  },
+  ...
 }:
 let
   go = pkgs.go_1_18;

@@ -1,29 +1,26 @@
-{ config
-, desktop
-, hostname
-, syncthingFolders
-, lib
-, pkgs
-, outputs
-, stateVersion
-, username
-, inputs
-, ...
+{
+  config,
+  desktop,
+  hostname,
+  syncthingFolders,
+  lib,
+  outputs,
+  stateVersion,
+  username,
+  inputs,
+  ...
 }:
 {
-  imports = [
-    ./common/shell
-  ]
-  ++ lib.optional (builtins.isString desktop) ./common/desktop
-  ++ lib.optional
-    (builtins.pathExists (
-      ./. + "/common/users/${username}"
-    )) ./common/users/${username}
-  ++ lib.optional
-    (builtins.pathExists (
+  imports =
+    [
+      ./common/shell
+    ]
+    ++ lib.optional (builtins.isString desktop) ./common/desktop
+    ++ lib.optional (builtins.pathExists (./. + "/common/users/${username}")) ./common/users/${username}
+    ++ lib.optional (builtins.pathExists (
       ../systems/. + "/${hostname}/home.nix"
     )) ../systems/${hostname}/home.nix
-  ++ lib.optional ((builtins.length syncthingFolders) > 0) ./common/services/syncthing.nix;
+    ++ lib.optional ((builtins.length syncthingFolders) > 0) ./common/services/syncthing.nix;
 
   home = {
     inherit username stateVersion;

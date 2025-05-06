@@ -1,6 +1,11 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkIf mkEnableOption mkDefault;
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.modules.desktop.wayland.sway;
 in
 {
@@ -44,8 +49,10 @@ in
     programs.dconf.enable = true;
     services.dbus = {
       enable = true;
-      packages = [ pkgs.dconf pkgs.gcr ];
+      packages = [
+        pkgs.dconf
+        pkgs.gcr
+      ];
     };
   };
 }
-

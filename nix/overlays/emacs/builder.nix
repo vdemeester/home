@@ -1,11 +1,12 @@
-{ stdenv
-, lib
-, emacs
-, name
-, src
-, buildInputs ? [ ]
-, patches ? [ ]
-, preBuild ? ""
+{
+  stdenv,
+  lib,
+  emacs,
+  name,
+  src,
+  buildInputs ? [ ],
+  patches ? [ ],
+  preBuild ? "",
 }:
 
 stdenv.mkDerivation {
@@ -28,7 +29,7 @@ stdenv.mkDerivation {
   '';
   meta = {
     description = "Emacs projects from the Internet that just compile .el files";
-    homepage = http://www.emacswiki.org;
+    homepage = "http://www.emacswiki.org";
     platforms = lib.platforms.all;
   };
 }

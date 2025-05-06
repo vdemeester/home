@@ -1,4 +1,8 @@
-{ stdenv, lib, buildGoModule, fetchFromGitHub }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+}:
 
 buildGoModule rec {
   name = "prm-${version}";
@@ -6,7 +10,8 @@ buildGoModule rec {
   rev = "v${version}";
 
   ldflags =
-    let t = "github.com/ldez/prm/v3/meta";
+    let
+      t = "github.com/ldez/prm/v3/meta";
     in
     [
       "-X ${t}.Version=${version}"
@@ -23,7 +28,7 @@ buildGoModule rec {
 
   meta = {
     description = "Pull Request Manager for Maintainers";
-    homepage = https://github.com/ldez/prm;
+    homepage = "https://github.com/ldez/prm";
     license = lib.licenses.asl20;
   };
 }

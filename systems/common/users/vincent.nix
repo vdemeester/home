@@ -1,13 +1,14 @@
-{ pkgs
-, lib
-, config
-, desktop
-, syncthingFolders
-, hostname
-, outputs
-, stateVersion
-, inputs
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  desktop,
+  syncthingFolders,
+  hostname,
+  outputs,
+  stateVersion,
+  inputs,
+  ...
 }:
 let
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
@@ -39,8 +40,18 @@ in
         "plugdev"
         "tss"
       ];
-    subUidRanges = [{ startUid = 100000; count = 65536; }];
-    subGidRanges = [{ startGid = 100000; count = 65536; }];
+    subUidRanges = [
+      {
+        startUid = 100000;
+        count = 65536;
+      }
+    ];
+    subGidRanges = [
+      {
+        startGid = 100000;
+        count = 65536;
+      }
+    ];
     initialPassword = "changeMe";
 
     # FIXME set this up
@@ -56,7 +67,12 @@ in
     pam = {
       # Nix will hit the stack limit when using `nixFlakes`.
       loginLimits = [
-        { domain = config.users.users.vincent.name; item = "stack"; type = "-"; value = "unlimited"; }
+        {
+          domain = config.users.users.vincent.name;
+          item = "stack";
+          type = "-";
+          value = "unlimited";
+        }
       ];
     };
   };
@@ -67,11 +83,20 @@ in
   # '';
 
   # Do I user home-manager nixosModule *or* home-manager on its own
-  home-manager.users.vincent =
-    (import ../../../home/default.nix {
-      inherit config pkgs lib hostname syncthingFolders desktop outputs inputs stateVersion;
-      username = "vincent";
-    });
+  home-manager.users.vincent = import ../../../home/default.nix {
+    inherit
+      config
+      pkgs
+      lib
+      hostname
+      syncthingFolders
+      desktop
+      outputs
+      inputs
+      stateVersion
+      ;
+    username = "vincent";
+  };
   # This is a workaround for not seemingly being able to set $EDITOR in home-manager
   environment.sessionVariables = {
     EDITOR = "emacs";

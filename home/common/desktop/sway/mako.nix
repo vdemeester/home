@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.mako = {
     enable = true;
     font = "JetBrains Mono 12";

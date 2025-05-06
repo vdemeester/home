@@ -1,8 +1,9 @@
-{ desktop
-, config
-, pkgs
-, lib
-, ...
+{
+  desktop,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 {
   imports = [
@@ -117,9 +118,9 @@
   };
 
   # Clear out user's download weekly
-  systemd.tmpfiles.rules = [ ] ++
-    (
-      let mkTmpDir = n: u: "d ${u.home}/desktop/downloads 0700 ${n} ${u.group} 7d";
-      in lib.mapAttrsToList mkTmpDir (lib.filterAttrs (_: u: u.isNormalUser) config.users.extraUsers)
-    );
+  systemd.tmpfiles.rules =
+    let
+      mkTmpDir = n: u: "d ${u.home}/desktop/downloads 0700 ${n} ${u.group} 7d";
+    in
+    lib.mapAttrsToList mkTmpDir (lib.filterAttrs (_: u: u.isNormalUser) config.users.extraUsers);
 }

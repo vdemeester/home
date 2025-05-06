@@ -1,6 +1,17 @@
-{ config, options, lib, pkgs, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
   cfg = config.services.wireguard;
 in
 {
@@ -61,12 +72,12 @@ in
     networking.wireguard.enable = true;
     networking.wireguard.interfaces = {
       wg0 = {
-        ips = cfg.ips;
+        inherit (cfg) ips;
         privateKeyFile = "/etc/wireguard/private.key";
         peers = [
           {
             publicKey = cfg.endpointPublicKey;
-            allowedIPs = cfg.allowedIPs;
+            inherit (cfg) allowedIPs;
             endpoint = "${cfg.endpoint}:${toString cfg.endpointPort}";
             persistentKeepalive = 25;
           }

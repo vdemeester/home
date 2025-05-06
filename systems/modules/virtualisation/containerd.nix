@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.virtualisation.mycontainerd;
 
@@ -33,18 +38,21 @@ in
 
     extraPackages = mkOption {
       type = types.listOf types.package;
-      default = [ pkgs.runc pkgs.cni pkgs.cni-plugins ];
+      default = [
+        pkgs.runc
+        pkgs.cni
+        pkgs.cni-plugins
+      ];
       description = "List of packages to be added to containerd service path";
     };
 
     extraOptions = mkOption {
       type = types.separatedString " ";
       default = "";
-      description =
-        ''
-          The extra command-line options to pass to
-          <command>containerd</command> daemon.
-        '';
+      description = ''
+        The extra command-line options to pass to
+        <command>containerd</command> daemon.
+      '';
     };
   };
 
@@ -66,7 +74,6 @@ in
       path = [ cfg.package ] ++ cfg.extraPackages;
     };
 
-
     systemd.sockets.containerd = {
       description = "Containerd Socket for the API";
       wantedBy = [ "sockets.target" ];
@@ -79,6 +86,5 @@ in
     };
 
   };
-
 
 }

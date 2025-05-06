@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.modules.hardware.server;
 in
 {

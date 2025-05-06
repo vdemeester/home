@@ -1,6 +1,4 @@
-{ ...
-}:
-{
+_: {
   console = {
     earlySetup = true;
     keyMap = "fr-bepo";

@@ -4,15 +4,14 @@ with lib;
 let
   hostname = "athena";
   secretPath = ../../secrets/machines.nix;
-  secretCondition = (builtins.pathExists secretPath);
+  secretCondition = builtins.pathExists secretPath;
 
   ip = strings.optionalString secretCondition (import secretPath).wireguard.ips."${hostname}";
-  ips = lists.optionals secretCondition ([ "${ip}/24" ]);
+  ips = lists.optionals secretCondition [ "${ip}/24" ];
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
-  endpointPublicKey = strings.optionalString secretCondition (import secretPath).wireguard.kerkouane.publicKey;
-
-  metadata = importTOML ../../ops/hosts.toml;
+  endpointPublicKey = strings.optionalString secretCondition (import secretPath)
+  .wireguard.kerkouane.publicKey;
 in
 {
   imports = [
@@ -22,7 +21,11 @@ in
 
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
-    initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "usbhid"
+      "usb_storage"
+    ];
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
@@ -51,7 +54,7 @@ in
   # boot.cleanTmpDir = lib.mkForce false;
   # boot.loader.systemd-boot.enable = lib.mkForce false;
   # profiles.base.systemd-boot = lib.mkForce true;
-  # 
+  #
   modules = {
     profiles.home = true;
     services = {
@@ -68,19 +71,29 @@ in
   services = {
     prometheus.exporters = {
       node = {
-	enable = true;
-	port = 9000;
-	enabledCollectors = [ "systemd" "processes" ];
-	extraFlags = ["--collector.ethtool" "--collector.softirqs" "--collector.tcpstat"];
+        enable = true;
+        port = 9000;
+        enabledCollectors = [
+          "systemd"
+          "processes"
+        ];
+        extraFlags = [
+          "--collector.ethtool"
+          "--collector.softirqs"
+          "--collector.tcpstat"
+        ];
       };
-      bind = { enable = true; port = 9009; };
+      bind = {
+        enable = true;
+        port = 9009;
+      };
     };
     wireguard = {
       enable = true;
-      ips = ips;
+      inherit ips;
       endpoint = endpointIP;
-      endpointPort = endpointPort;
-      endpointPublicKey = endpointPublicKey;
+      inherit endpointPort;
+      inherit endpointPublicKey;
     };
   };
   security.apparmor.enable = true;

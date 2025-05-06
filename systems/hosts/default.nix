@@ -16,7 +16,7 @@ let
     }
   ];
 
-  inherit (self.lib) nixosSystem makeOverridable;
+  inherit (self.lib) nixosSystem;
   # inherit (import "${self}/home/profiles" inputs) homeImports;
 in
 {

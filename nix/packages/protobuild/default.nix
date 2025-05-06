@@ -1,4 +1,8 @@
-{ stdenv, lib, buildGoModule, fetchFromGitHub }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+}:
 
 buildGoModule rec {
   name = "protobuild-unstable-${version}";
@@ -16,7 +20,7 @@ buildGoModule rec {
 
   meta = {
     description = "Build protobufs in Go, easily";
-    homepage = https://github.com/stevvooe/protobuild;
+    homepage = "https://github.com/stevvooe/protobuild";
     license = lib.licenses.asl20;
   };
 }

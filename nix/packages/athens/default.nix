@@ -1,4 +1,8 @@
-{ stdenv, lib, buildGoModule, fetchFromGitHub }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+}:
 
 buildGoModule rec {
   name = "athens-${version}";

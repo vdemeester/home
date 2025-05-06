@@ -11,7 +11,16 @@
       options snd_hda_intel power_save=1
     '';
     initrd = {
-      availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "sd_mod" "sdhci_pci" "aesni-intel" "cryptd" ];
+      availableKernelModules = [
+        "ehci_pci"
+        "ahci"
+        "xhci_pci"
+        "usb_storage"
+        "sd_mod"
+        "sdhci_pci"
+        "aesni-intel"
+        "cryptd"
+      ];
     };
     kernelModules = [ "kvm_intel" ];
     kernelParams = [
@@ -29,7 +38,13 @@
   hardware = {
     trackpoint.enable = false;
     cpu.intel.updateMicrocode = true;
-    opengl.extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau intel-ocl intel-media-driver ];
+    opengl.extraPackages = with pkgs; [
+      vaapiIntel
+      libvdpau-va-gl
+      vaapiVdpau
+      intel-ocl
+      intel-media-driver
+    ];
   };
   services = {
     acpid = {
@@ -37,16 +52,15 @@
     };
     xserver = {
       synaptics.enable = false;
-      config =
-        ''
-          Section "InputClass"
-            Identifier     "Enable libinput for TrackPoint"
-            MatchIsPointer "on"
-            Driver         "libinput"
-            Option         "ScrollMethod" "button"
-            Option         "ScrollButton" "8"
-          EndSection
-        '';
+      config = ''
+        Section "InputClass"
+          Identifier     "Enable libinput for TrackPoint"
+          MatchIsPointer "on"
+          Driver         "libinput"
+          Option         "ScrollMethod" "button"
+          Option         "ScrollButton" "8"
+        EndSection
+      '';
       inputClassSections = [
         ''
           Identifier "evdev touchpad off"

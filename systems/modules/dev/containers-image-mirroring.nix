@@ -1,7 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib) mkEnableOption mkOption mkIf types;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
   cfg = config.modules.dev.containers.image-mirroring;
   settingsFormat = pkgs.formats.yaml { };
   settingsFile = settingsFormat.generate "sync.yaml" cfg.settings;
@@ -13,18 +23,24 @@ in
       enable = mkEnableOption "Enable container image mirroring service";
       targets = mkOption {
         type = types.listOf types.str;
-        example = [ "quay.io/vdemeest" "ghcr.io/vdemeester" ];
+        example = [
+          "quay.io/vdemeest"
+          "ghcr.io/vdemeester"
+        ];
         description = lib.mdDoc ''
           A list of targets to sync images to. It will use the same
           sync configuration to push on all.
         '';
       };
       settings = mkOption {
-        type = settingsFormat.type;
+        inherit (settingsFormat) type;
         default = { };
         example = {
           "docker.io" = {
-            "vdemeester/foo" = [ "latest" "bar" ];
+            "vdemeester/foo" = [
+              "latest"
+              "bar"
+            ];
           };
           "quay.io" = {
             "buildah/stable" = [ "latest" ];

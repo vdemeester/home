@@ -1,9 +1,4 @@
 let
-  invert-suffix = ip:
-    let
-      elts = builtins.split "[\.]" ip;
-    in
-    "${builtins.elemAt elts 6}.${builtins.elemAt elts 4}";
   gpgRemoteForward = {
     bind.address = "/run/user/1000/gnupg/S.gpg-agent";
     host.address = "/run/user/1000/gnupg/S.gpg-agent.extra";
@@ -184,16 +179,32 @@ let
   };
 in
 {
-  home = home;
-  wireguard = wireguard;
+  inherit home;
+  inherit wireguard;
   wg = {
     allowedIPs = "10.100.0.0/24";
     listenPort = 51820;
     endpointIP = "167.99.17.238";
     persistentKeepalive = 25;
-    peers = [ wireguard.shikoku wireguard.wakasu wireguard.vincent wireguard.sakhalin wireguard.aomi wireguard.kyushu wireguard.ipad wireguard.hass wireguard.demeter wireguard.athena wireguard.aion wireguard.honshu wireguard.houbeb wireguard.houbeb-ipad wireguard.houbeb-iphone ]; # wireguard.hokkaido
+    peers = [
+      wireguard.shikoku
+      wireguard.wakasu
+      wireguard.vincent
+      wireguard.sakhalin
+      wireguard.aomi
+      wireguard.kyushu
+      wireguard.ipad
+      wireguard.hass
+      wireguard.demeter
+      wireguard.athena
+      wireguard.aion
+      wireguard.honshu
+      wireguard.houbeb
+      wireguard.houbeb-ipad
+      wireguard.houbeb-iphone
+    ]; # wireguard.hokkaido
   };
-  ssh = ssh;
+  inherit ssh;
   sshConfig = {
     "naruhodo.home" = {
       hostname = "${home.ips.naruhodo}";
@@ -203,74 +214,125 @@ in
     };
     "aomi.home" = {
       hostname = "${home.ips.aomi}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "aion.home" = {
       hostname = "${home.ips.aion}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "aion.vpn" = {
       hostname = "${wireguard.ips.aion}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "aomi.vpn" = {
       hostname = "${wireguard.ips.aomi}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "okinawa.home" = {
       hostname = "${home.ips.okinawa}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "okinawa.vpn" = {
       hostname = "${wireguard.ips.okinawa}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "sakhalin.home" = {
       hostname = "${home.ips.sakhalin}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "sakhalin.vpn" = {
       hostname = "${wireguard.ips.sakhalin}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "hokkaido.home" = {
       hostname = "${home.ips.hokkaido}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "hokkaido.vpn" = {
       hostname = "${wireguard.ips.hokkaido}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "wakasu.home" = {
       hostname = "${home.ips.wakasu}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "wakasu.vpn" = {
       hostname = "${wireguard.ips.wakasu}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "athena.home" = {
       hostname = "${home.ips.athena}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "athena.vpn" = {
       hostname = "${wireguard.ips.athena}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "demeter.home" = {
       hostname = "${home.ips.demeter}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "demeter.vpn" = {
       hostname = "${wireguard.ips.demeter}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
     "dev.home" = {
       hostname = "${home.ips.dev}";
     };
     "kerkouane.vpn" = {
       hostname = "${wireguard.ips.kerkouane}";
-      remoteForwards = [ gpgRemoteForward gpgSSHRemoteForward ];
+      remoteForwards = [
+        gpgRemoteForward
+        gpgSSHRemoteForward
+      ];
     };
   };
 }

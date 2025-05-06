@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.modules.shell.git;
@@ -13,8 +18,7 @@ in
       systemPackages = with pkgs; [
         git
         # gitAndTools.git-extras
-        (mkIf config.modules.shell.gnupg.enable
-          gitAndTools.git-crypt)
+        (mkIf config.modules.shell.gnupg.enable gitAndTools.git-crypt)
         lazygit
       ];
       # Default gitconfig

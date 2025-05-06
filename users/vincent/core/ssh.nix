@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   gpgRemoteForward = {
@@ -10,35 +15,40 @@ let
     host.address = "/run/user/1000/gnupg/S.gpg-agent.ssh";
   };
 
-  inherit (lib) optionalAttrs importTOML hasAttr attrsets mkIf;
+  inherit (lib)
+    importTOML
+    hasAttr
+    attrsets
+    mkIf
+    ;
   metadata = importTOML ../../../ops/hosts.toml;
 
-  hasWireguard = name: value: hasAttr "wireguard" value;
-  hasAddrs = name: value: hasAttr "addrs" value;
+  hasWireguard = _name: value: hasAttr "wireguard" value;
+  hasAddrs = _name: value: hasAttr "addrs" value;
   hasSShAndRemoteForward = v: (hasAttr "ssh" v) && (hasAttr "gpgRemoteForward" v.ssh);
-  hasCommand = v: hasAttr "command" v;
 
   hostWireguardIP = v: "${v.wireguard.addrs.v4}";
   hostIP = v: "${v.addrs.v4}";
-  hostRemoteCommand = v: "${v.command}";
 
   hostToSSHConfigItem = value: ipfn: {
     hostname = ipfn value;
-    remoteForwards = mkIf (hasSShAndRemoteForward value) [ gpgRemoteForward gpgSSHRemoteForward ];
+    remoteForwards = mkIf (hasSShAndRemoteForward value) [
+      gpgRemoteForward
+      gpgSSHRemoteForward
+    ];
     # FIXME: need support for RemoteCommand in home-manager
     # RemoteCommand = mkIf (hasCommand value) hostRemoteCommand value;
   };
-  hostToSSHConfig = suffix: ipfn:
-    name: value: attrsets.nameValuePair
-      (toString "${name}${suffix}")
-      (hostToSSHConfigItem value ipfn);
+  hostToSSHConfig =
+    suffix: ipfn: name: value:
+    attrsets.nameValuePair (toString "${name}${suffix}") (hostToSSHConfigItem value ipfn);
 
-  vpnConfig = attrsets.mapAttrs'
-    (hostToSSHConfig "\.vpn" hostWireguardIP)
-    (attrsets.filterAttrs hasWireguard metadata.hosts);
-  homeConfig = attrsets.mapAttrs'
-    (hostToSSHConfig "\.home" hostIP)
-    (attrsets.filterAttrs hasAddrs metadata.hosts);
+  vpnConfig = attrsets.mapAttrs' (hostToSSHConfig "\.vpn" hostWireguardIP) (
+    attrsets.filterAttrs hasWireguard metadata.hosts
+  );
+  homeConfig = attrsets.mapAttrs' (hostToSSHConfig "\.home" hostIP) (
+    attrsets.filterAttrs hasAddrs metadata.hosts
+  );
 in
 {
   home.packages = [
@@ -56,48 +66,51 @@ in
     controlMaster = "auto";
     controlPersist = "10m";
     controlPath = "${config.home.homeDirectory}/.ssh/sockets/%u-%l-%r@%h:%p";
-    matchBlocks = {
-      "github.com" = {
-        hostname = "github.com";
-        user = "git";
-        extraOptions = {
-          controlMaster = "auto";
-          controlPersist = "360";
+    matchBlocks =
+      {
+        "github.com" = {
+          hostname = "github.com";
+          user = "git";
+          extraOptions = {
+            controlMaster = "auto";
+            controlPersist = "360";
+          };
         };
-      };
-      "gitlab.com" = {
-        hostname = "gitlab.com";
-        user = "git";
-        extraOptions = {
-          controlMaster = "auto";
-          controlPersist = "360";
+        "gitlab.com" = {
+          hostname = "gitlab.com";
+          user = "git";
+          extraOptions = {
+            controlMaster = "auto";
+            controlPersist = "360";
+          };
         };
-      };
-      "git.sr.ht" = {
-        hostname = "git.sr.ht";
-        user = "git";
-        extraOptions = {
-          controlMaster = "auto";
-          controlPersist = "360";
+        "git.sr.ht" = {
+          hostname = "git.sr.ht";
+          user = "git";
+          extraOptions = {
+            controlMaster = "auto";
+            controlPersist = "360";
+          };
         };
-      };
-      "*.redhat.com" = {
-        user = "vdemeest";
-      };
-      "bootstrap.ospqa.com" = {
-        forwardAgent = true;
-      };
-      "192.168.1.*" = {
-        forwardAgent = true;
-        extraOptions = {
-          StrictHostKeyChecking = "no";
-          UserKnownHostsFile = "/dev/null";
+        "*.redhat.com" = {
+          user = "vdemeest";
         };
-      };
-      "10.100.0.*" = {
-        forwardAgent = true;
-      };
-    } // homeConfig // vpnConfig;
+        "bootstrap.ospqa.com" = {
+          forwardAgent = true;
+        };
+        "192.168.1.*" = {
+          forwardAgent = true;
+          extraOptions = {
+            StrictHostKeyChecking = "no";
+            UserKnownHostsFile = "/dev/null";
+          };
+        };
+        "10.100.0.*" = {
+          forwardAgent = true;
+        };
+      }
+      // homeConfig
+      // vpnConfig;
     extraConfig = ''
       GlobalKnownHostsFile ~/.config/ssh/ssh_known_hosts ~/.config/ssh/ssh_known_hosts.redhat ~/.config/ssh/ssh_known_hosts.mutable
       StrictHostKeyChecking yes

@@ -1,4 +1,8 @@
-{ stdenv, lib, fetchFromGitHub, tzdata }:
+{
+  stdenv,
+  fetchFromGitHub,
+  tzdata,
+}:
 
 stdenv.mkDerivation rec {
   pname = "batzconverter";

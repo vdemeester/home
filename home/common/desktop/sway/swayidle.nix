@@ -7,8 +7,14 @@
   services.swayidle = {
     enable = true;
     events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock --daemonize -i $HOME/desktop/pictures/lockscreen"; }
-      { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock --daemonize -i $HOME/desktop/pictures/lockscreen"; }
+      {
+        event = "before-sleep";
+        command = "${pkgs.swaylock}/bin/swaylock --daemonize -i $HOME/desktop/pictures/lockscreen";
+      }
+      {
+        event = "lock";
+        command = "${pkgs.swaylock}/bin/swaylock --daemonize -i $HOME/desktop/pictures/lockscreen";
+      }
     ];
     timeouts = [
       {

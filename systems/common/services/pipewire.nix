@@ -1,7 +1,9 @@
-{ pkgs
-, desktop
-, ...
-}: {
+{
+  pkgs,
+  desktop,
+  ...
+}:
+{
   # hardware.pulseaudio.enable = lib.mkForce false;
 
   services.pipewire = {
@@ -23,10 +25,14 @@
       ];
     };
   };
-  environment.systemPackages = with pkgs;
-    if (builtins.isString desktop) then [
-      pwvucontrol
-      apulse # allow alsa application to use pulse
-      # pavucontrol
-    ] else [ ];
+  environment.systemPackages =
+    with pkgs;
+    if (builtins.isString desktop) then
+      [
+        pwvucontrol
+        apulse # allow alsa application to use pulse
+        # pavucontrol
+      ]
+    else
+      [ ];
 }

@@ -1,6 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkIf mkEnableOption mkDefault mkForce versionOlder;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkForce
+    versionOlder
+    ;
   cfg = config.modules.desktop.wayland;
   stable = versionOlder config.system.nixos.release "24.05";
   swayRun = pkgs.writeShellScript "sway-run" ''
@@ -29,32 +39,39 @@ in
         enable = true;
       };
     };
-    services = {
-      greetd = {
-        enable = true;
-        settings = {
-          default_session = {
-            # command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway";
-            command = "${lib.makeBinPath [ pkgs.greetd.tuigreet ]}/tuigreet --time --cmd ${swayRun}";
-            users = "greeter";
+    services =
+      {
+        greetd = {
+          enable = true;
+          settings = {
+            default_session = {
+              # command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway";
+              command = "${lib.makeBinPath [ pkgs.greetd.tuigreet ]}/tuigreet --time --cmd ${swayRun}";
+              users = "greeter";
+            };
+            initial_session = {
+              command = "${swayRun}";
+              user = "vincent";
+            };
           };
-          initial_session = {
-            command = "${swayRun}";
-            user = "vincent";
-          };
+          # restart = false;
         };
-        # restart = false;
-      };
-    } // (if stable then { } else {
-      libinput = {
-        touchpad = {
-          disableWhileTyping = true;
-          additionalOptions = ''
-            							Option "Ignore" "on"
-            						'';
-        };
-      };
-    });
+      }
+      // (
+        if stable then
+          { }
+        else
+          {
+            libinput = {
+              touchpad = {
+                disableWhileTyping = true;
+                additionalOptions = ''
+                  							Option "Ignore" "on"
+                  						'';
+              };
+            };
+          }
+      );
     environment.systemPackages = with pkgs; [
       qogir-icon-theme
     ];

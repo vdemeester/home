@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     krb5
     (google-chrome.override {

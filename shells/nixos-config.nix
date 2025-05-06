@@ -1,7 +1,6 @@
 { pkgs, inputs }:
 
-pkgs.mkShell
-{
+pkgs.mkShell {
   name = "NixOS config";
   buildInputs = with pkgs; [
     cachix

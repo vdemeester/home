@@ -1,5 +1,9 @@
 # https://github.com/chmouel/chmouzies/tree/master/kubernetes
-{ stdenv, fetchFromGitHub, python310 }:
+{
+  stdenv,
+  fetchFromGitHub,
+  python310,
+}:
 
 stdenv.mkDerivation rec {
   name = "chmouzies.kubernetes";

@@ -4,13 +4,19 @@ _: {
   virtualisation.containers = {
     enable = true;
     registries = {
-      search = [ "registry.fedoraproject.org" "registry.access.redhat.com" "registry.centos.org" "docker.io" "quay.io" ];
+      search = [
+        "registry.fedoraproject.org"
+        "registry.access.redhat.com"
+        "registry.centos.org"
+        "docker.io"
+        "quay.io"
+      ];
     };
     policy = {
-      default = [{ type = "insecureAcceptAnything"; }];
+      default = [ { type = "insecureAcceptAnything"; } ];
       transports = {
         docker-daemon = {
-          "" = [{ type = "insecureAcceptAnything"; }];
+          "" = [ { type = "insecureAcceptAnything"; } ];
         };
       };
     };
@@ -18,14 +24,26 @@ _: {
       network = {
         default_subnet_pools = [
           # See https://github.com/kubernetes-sigs/kind/issues/2872 for this
-          { "base" = "11.0.0.0/24"; "size" = 24; }
+          {
+            "base" = "11.0.0.0/24";
+            "size" = 24;
+          }
           {
             "base" = "192.168.129.0/24";
             "size" = 24;
           }
-          { "base" = "192.168.130.0/24"; "size" = 24; }
-          { "base" = "192.168.131.0/24"; "size" = 24; }
-          { "base" = "192.168.132.0/24"; "size" = 24; }
+          {
+            "base" = "192.168.130.0/24";
+            "size" = 24;
+          }
+          {
+            "base" = "192.168.131.0/24";
+            "size" = 24;
+          }
+          {
+            "base" = "192.168.132.0/24";
+            "size" = 24;
+          }
         ];
       };
     };

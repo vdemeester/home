@@ -1,4 +1,8 @@
-{ stdenv, lib, buildGoModule, fetchFromGitHub }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+}:
 
 buildGoModule rec {
   name = "manifest-tool-${version}";
@@ -19,7 +23,7 @@ buildGoModule rec {
 
   meta = {
     description = "";
-    homepage = https://github.com/estesp/manifest-tool;
+    homepage = "https://github.com/estesp/manifest-tool";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ vdemeester ];
   };

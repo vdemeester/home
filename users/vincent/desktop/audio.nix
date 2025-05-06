@@ -1,4 +1,9 @@
-{ config, nixosConfig, lib, pkgs, ... }:
+{
+  nixosConfig,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   home.packages = with pkgs; [

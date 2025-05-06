@@ -19,8 +19,7 @@ pkgs.stdenv.mkDerivation rec {
     mkdir -p $out/share/plymouth/themes/
   '';
 
-  buildPhase = ''
-  '';
+  buildPhase = '''';
 
   installPhase = ''
     cp -r pack_1/cuts $out/share/plymouth/themes
