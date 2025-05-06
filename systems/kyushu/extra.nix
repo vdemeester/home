@@ -25,6 +25,9 @@
 
   environment.systemPackages = with pkgs; [
     go-org-readwise
+    # Keyboard
+    keymapp
+    kontroll
   ];
 
   # Make sure we don't start docker until required
