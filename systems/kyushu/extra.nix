@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, globals, ... }:
 {
 
   imports = [
@@ -18,9 +18,9 @@
   services.wireguard = {
     enable = true;
     # FIXME get this from some globals
-    ips = [ "10.100.0.19/24" ];
-    endpoint = "167.99.17.238";
-    endpointPublicKey = "+H3fxErP9HoFUrPgU19ra9+GDLQw+VwvLWx3lMct7QI=";
+    ips = globals.fn.wg-ips globals.machines.kyushu.net.vpn.ips;
+    endpoint = "${globals.net.vpn.endpoint}";
+    endpointPublicKey = "${globals.net.vpn.pubkey}";
   };
 
   environment.systemPackages = with pkgs; [

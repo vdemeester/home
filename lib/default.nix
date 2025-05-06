@@ -43,6 +43,7 @@
       homeInput ? inputs.home-manager,
     }:
     let
+      globals = import ../globals.nix;
       specialArgs = {
         inherit
           self
@@ -53,6 +54,7 @@
           desktop
           syncthingFolders
           system
+          globals
           ;
       };
     in
