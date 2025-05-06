@@ -1,5 +1,7 @@
 { desktop
 , pkgs
+, lib
+, config
 , ...
 }:
 {
@@ -113,4 +115,11 @@
       			RuntimeDirectorySize=20%
       		'';
   };
+
+  # Clear out user's download weekly
+  systemd.tmpfiles.rules = [ ] ++
+    (
+      let mkTmpDir = n: u: "d ${u.home}/desktop/downloads 0700 ${n} ${u.group} 7d";
+      in lib.mapAttrsToList mkTmpDir (lib.filterAttrs (_: u: u.isNormalUser) config.users.extraUsers)
+    );
 }
