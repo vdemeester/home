@@ -1,4 +1,5 @@
 ;;; config-editing.el --- -*- lexical-binding: t; -*-
+;; Time-stamp: <Last changed 2025-05-07 22:55:12 by vincent>
 ;;; Commentary:
 ;;; Editing configuration
 ;;; Code:
@@ -150,6 +151,14 @@ Else toggle the comment status of the line at point."
 	 :map
 	 reb-lisp-mode-map ("C-o" . casual-re-builder-tmenu))
   :after (re-builder))
+
+(use-package time-stamp
+  :custom
+  (time-stamp-active t)
+  (time-stamp-line-limit 10)     ; Check first 10 buffer lines for Time-stamp: <>
+  (time-stamp-format "Last changed %Y-%02m-%02d %02H:%02M:%02S by %u")
+  :hook
+  (before-save . time-stamp))
 
 (provide 'config-editing)
 ;;; config-editing.el ends here
