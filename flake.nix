@@ -16,12 +16,8 @@
           ;
       };
 
-      stableModules = [
-        inputs.home-manager-24_11.nixosModules.home-manager
-      ];
-      unstableModules = [
-        inputs.home-manager.nixosModules.home-manager
-      ];
+      stableModules = [ inputs.home-manager-24_11.nixosModules.home-manager ];
+      unstableModules = [ inputs.home-manager.nixosModules.home-manager ];
       commonModules = [
         {
           config.nixpkgs.overlays = [
@@ -31,7 +27,9 @@
             inputs.chapeau-rouge.overlays.openshift
             inputs.chick-group.overlays.default
             (_: prev: {
-              inherit (inputs.buildkit-tekton.packages.${prev.system}) tkn-local;
+              inherit (inputs.buildkit-tekton.packages.${prev.system})
+                tkn-local
+                ;
               inherit (inputs.dagger.packages.${prev.system}) dagger;
             })
           ];
@@ -82,6 +80,12 @@
           desktop = "sway";
         };
         # Work workstation (unstable)
+        # aomi = libx.mkhost {
+        # 	hostname = "aomi";
+        # };
+        # # Servers (unstable)
+        kobe = libx.mkhost { hostname = "kobe"; };
+        # shikoku = libx.mkhost { hostname = "shikoku"; };
         # FIXME migrate to libx.mkHost
         aomi = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -104,12 +108,7 @@
         # Servers (stable)
         shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {
           system = "x86_64-linux";
-          modules =
-            commonModules
-            ++ stableModules
-            ++ [
-              ./systems/hosts/shikoku.nix
-            ];
+          modules = commonModules ++ stableModules ++ [ ./systems/hosts/shikoku.nix ];
         };
         sakhalin = inputs.nixpkgs-24_11.lib.nixosSystem {
           system = "x86_64-linux";
@@ -141,22 +140,12 @@
         # athena
         athena = inputs.nixpkgs-24_11.lib.nixosSystem {
           system = "aarch64-linux";
-          modules =
-            commonModules
-            ++ stableModules
-            ++ [
-              ./systems/hosts/athena.nix
-            ];
+          modules = commonModules ++ stableModules ++ [ ./systems/hosts/athena.nix ];
         };
         # demeter
         demeter = inputs.nixpkgs-24_11.lib.nixosSystem {
           system = "aarch64-linux";
-          modules =
-            commonModules
-            ++ stableModules
-            ++ [
-              ./systems/hosts/demeter.nix
-            ];
+          modules = commonModules ++ stableModules ++ [ ./systems/hosts/demeter.nix ];
         };
       };
 
@@ -179,12 +168,7 @@
         carthage = inputs.nixos-generators.nixosGenerate rec {
           system = "aarch64-linux";
           format = "amazon";
-          modules =
-            commonModules
-            ++ stableModules
-            ++ [
-              ./systems/hosts/carthage.nix
-            ];
+          modules = commonModules ++ stableModules ++ [ ./systems/hosts/carthage.nix ];
         };
         # sdimages
         athena =
