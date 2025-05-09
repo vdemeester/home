@@ -19,8 +19,8 @@
 (use-package nixpkgs-fmt
   :if (executable-find "nix")
   :after nix-ts-mode
-  :custom
-  (nixpkgs-fmt-command = "nixfmt")
+  ;; :custom
+  ;; (nixpkgs-fmt-command "nixfmt")
   :config
   (add-hook 'nix-ts-mode-hook 'nixpkgs-fmt-on-save-mode))
 

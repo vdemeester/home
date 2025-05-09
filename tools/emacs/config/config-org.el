@@ -188,7 +188,7 @@
 	    (->>
 	     (directory-files org-notes-directory nil ".org$")
 	     (--remove (s-starts-with? "." it))
-	     (--map (format "%s/%s" org-note-sdirectory it))
+	     (--map (format "%s/%s" org-notes-directory it))
 	     (--map `(,it :maxlevel . 3)))
 	    (->>
 	     (directory-files-recursively org-people-dir ".org$")
