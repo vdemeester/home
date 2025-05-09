@@ -20,12 +20,14 @@
     ../redhat
   ];
 
-  services.wireguard = {
-    enable = true;
-    # FIXME get this from some globals
-    ips = globals.fn.wg-ips globals.machines.kyushu.net.vpn.ips;
-    endpoint = "${globals.net.vpn.endpoint}";
-    endpointPublicKey = "${globals.net.vpn.pubkey}";
+  services = {
+    wireguard = {
+      enable = true;
+      ips = globals.fn.wg-ips globals.machines.kyushu.net.vpn.ips;
+      endpoint = "${globals.net.vpn.endpoint}";
+      endpointPublicKey = "${globals.net.vpn.pubkey}";
+    };
+    hardware.bolt.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -40,5 +42,4 @@
   # Make sure we don't start lxd until required
   systemd.services.lxd.wantedBy = lib.mkForce [ ];
 
-  services.hardware.bolt.enable = true;
 }
