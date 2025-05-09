@@ -14,5 +14,6 @@
     deadnix
     nix-init
     nil
+    nixd
   ];
 }
