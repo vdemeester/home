@@ -39,7 +39,22 @@
   };
   # FIXME Maybe I should move this elsewhere, in ./lib maybe ?
   fn = {
+    /**
+         Return a list of wireguard ips from a list of ips.
+
+         Essentially, it will append /24 to the each element of the list.
+      *
+    */
     wg-ips = ips: builtins.map (x: "${x}/24") ips;
-    hasSyncthingFolders = host: (builtins.length (lib.attrsets.attrValues host.syncthing.folders)) > 0;
+
+    /**
+        Return true if the given host has a list of Syncthing folder configured.
+      *
+    */
+    hasSyncthingFolders =
+      host:
+      builtins.hasAttr "syncthing" host
+      && builtins.hasAttr "folders" host.syncthing
+      && (builtins.length (lib.attrsets.attrValues host.syncthing.folders)) > 0;
   };
 }
