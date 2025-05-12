@@ -20,8 +20,9 @@
     ++ lib.optional (builtins.pathExists (
       ../systems/. + "/${hostname}/home.nix"
     )) ../systems/${hostname}/home.nix
-    ++ lib.optional (globals.fn.hasSyncthingFolders
-      globals.machines."${hostname}"
+    ++ lib.optional (
+      builtins.hasAttr "${hostname}" globals.machines
+      && globals.fn.hasSyncthingFolders globals.machines."${hostname}"
     ) ./common/services/syncthing.nix;
 
   home = {
