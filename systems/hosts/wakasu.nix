@@ -8,8 +8,8 @@ let
 
   endpointIP = strings.optionalString secretCondition (import secretPath).wg.endpointIP;
   endpointPort = if secretCondition then (import secretPath).wg.listenPort else 0;
-  endpointPublicKey = strings.optionalString secretCondition
-    (import secretPath).wireguard.kerkouane.publicKey;
+  endpointPublicKey = strings.optionalString secretCondition (import secretPath)
+  .wireguard.kerkouane.publicKey;
   metadata = importTOML ../../ops/hosts.toml;
 
   # Scripts
@@ -44,7 +44,7 @@ in
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/ab056cfc-fb17-4db7-a393-f93726cc2987"; }];
+  swapDevices = [ { device = "/dev/disk/by-uuid/ab056cfc-fb17-4db7-a393-f93726cc2987"; } ];
 
   networking = {
     hostName = hostname;
