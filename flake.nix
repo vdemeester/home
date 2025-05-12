@@ -85,7 +85,13 @@
         # };
         # # Servers (unstable)
         kobe = libx.mkHost { hostname = "kobe"; };
-        # shikoku = libx.mkhost { hostname = "shikoku"; };
+
+        # athena = libx.mkHost {
+        #   hostname = "athena";
+        #   pkgsInput = inputs.nixpkgs-24_11;
+        #   homeInput = inputs.home-manager-24_11;
+        # };
+        # shikoku = libx.mkHost { hostname = "shikoku"; };
         # FIXME migrate to libx.mkHost
         aomi = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -98,12 +104,6 @@
               ./systems/hosts/aomi.nix
             ];
         };
-        # Work server (stable ?)
-        # kobe = libx.mkHost {
-        #   hostname = "sakhalin";
-        #   pkgsInput = inputs.nixpkgs-24_11;
-        #   homeInput = inputs.home-manager-24_11;
-        # };
 
         # Servers (stable)
         shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {

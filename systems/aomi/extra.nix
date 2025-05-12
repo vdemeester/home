@@ -11,7 +11,7 @@ _: {
     ../common/services/docker.nix
     ../common/services/lxd.nix
     # ../common/services/ollama.nix # TODO handle nvidia vs not ?
-    # ../common/services/prometheus-exporters
+    ../common/services/prometheus-exporters-node.nix
     # ../common/services/gitea-runner
 
     ../redhat
