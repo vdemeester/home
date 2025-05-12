@@ -84,7 +84,7 @@
         # 	hostname = "aomi";
         # };
         # # Servers (unstable)
-        kobe = libx.mkhost { hostname = "kobe"; };
+        kobe = libx.mkHost { hostname = "kobe"; };
         # shikoku = libx.mkhost { hostname = "shikoku"; };
         # FIXME migrate to libx.mkHost
         aomi = inputs.nixpkgs.lib.nixosSystem {
