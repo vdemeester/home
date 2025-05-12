@@ -297,8 +297,7 @@ in
           name = "aomi";
           enable = true;
           url = "https://codeberg.org";
-          # tokenFile = "/home/vincent/sync/codeberg.token";
-          token = "";
+          tokenFile = "/home/vincent/sync/codeberg.token";
           labels = [
             # "local:host"
             "nixos-${pkgs.system}:host"
