@@ -35,6 +35,7 @@ abbrev-alias tailf="tail -F"
 (( $+commands[mpv] )) && abbrev-alias mpva="mpv --no-video"
 
 # System init-related aliases
+# shellcheck disable=SC1072,SC1073
 () {
     local cmd
     local -a cmds
@@ -125,3 +126,7 @@ v() {
 }
 
 function clean() {}
+
+if [[ -d ${HOME}/src/github.com/chmouel/jayrah ]]; then
+    alias jayrah="uv --directory=${HOME}/src/github.com/chmouel/jayrah run jayrah"
+fi
