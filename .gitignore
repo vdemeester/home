@@ -19,3 +19,4 @@ hardware-configuration.nix
 /tools/emacs/nix-buffer/
 /tools/emacs/var/backup
 *.qcow2
+/.pre-commit-config.yaml
