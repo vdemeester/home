@@ -2,7 +2,9 @@
 ;;; Commentary:
 ;;; Files related configurations
 ;;; Code:
-
+(use-package ffap
+  :hook
+  (after-init . ffap-bindings))
 ;; (use-package autoinsert
 ;;   :init
 ;;   (setq-default auto-insert-query nil
