@@ -60,6 +60,9 @@ in
     '';
     checkConfig = false;
     config = {
+      window = {
+        titlebar = false;
+      };
       gaps = {
         inner = 2;
         outer = 2;
