@@ -266,6 +266,7 @@
     };
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
     # Home Manager
     home-manager = {
       type = "github";
