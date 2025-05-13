@@ -1,4 +1,4 @@
-{ lib, globals, ... }:
+{ globals, ... }:
 {
   # FIXME move the "networks" to globals
   services.bind = {
@@ -13,6 +13,6 @@
     cacheNetworks = [
       "127.0.0.0/8"
     ] ++ globals.net.dns.cacheNetworks;
-    zones = globals.net.dns.zones;
+    inherit (globals.net.dns) zones;
   };
 }

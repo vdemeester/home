@@ -1,4 +1,5 @@
-{ lib, config, ... }: {
+{ lib, config, ... }:
+{
   options = {
     prometheus-exporters-node.collectors = lib.mkOption {
       type = lib.types.listOf lib.types.str;
@@ -22,7 +23,7 @@
       enable = true;
       port = 9000;
       enabledCollectors = config.prometheus-exporters-node.collectors;
-      extraFlags = config.prometheus-exporters-node.extraFlags;
+      inherit (config.prometheus-exporters-node) extraFlags;
     };
   };
 }
