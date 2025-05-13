@@ -2,7 +2,10 @@
 {
   net = {
     dns = {
-      cacheNetworks = [ "192.168.1.0/24" "10.100.0.0/24" ];
+      cacheNetworks = [
+        "192.168.1.0/24"
+        "10.100.0.0/24"
+      ];
       zones = [
         {
           # sbr
@@ -53,6 +56,15 @@
         vpn = {
           pubkey = "RWqH7RdIXg+YE9U1nlsNiOC7jH8eWjWQmikqBVDGSXU=";
           ips = [ "10.100.0.83" ];
+        };
+      };
+    };
+    demeter = {
+      net = {
+        ips = [ "192.168.1.182" ];
+        vpn = {
+          pubkey = "/bBh4gvDty/AA2qIiHc7K0OHoOXWmj2SFFXdDq8nsUU=";
+          ips = [ "10.100.0.82" ];
         };
       };
     };
