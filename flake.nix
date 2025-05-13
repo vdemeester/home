@@ -16,6 +16,12 @@
           ;
       };
 
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
+
       stableModules = [ inputs.home-manager-24_11.nixosModules.home-manager ];
       unstableModules = [ inputs.home-manager.nixosModules.home-manager ];
       commonModules = [
@@ -187,25 +193,48 @@
 
       overlays = import ./nix/overlays { inherit inputs; };
 
-      devShells.x86_64-linux.default =
-        let
-          pkgs = import inputs.nixpkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
+      checks = forAllSystems (system: {
+        pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            # go
+            gofmt.enable = true;
+            golangci-lint.enable = true;
+            # nix
+            deadnix.enable = true;
+            nixfmt-rfc-style.enable = true;
+            # statix.enable = true;
+            # python
+            flake8.enable = true;
+            ruff.enable = true;
+            # shell
+            shellcheck.enable = true;
           };
-        in
-        pkgs.mkShell {
-          packages = [
-            pkgs.alejandra
-            pkgs.git
-            pkgs.nodePackages.prettier
-            pkgs.deadnix
-            pkgs.nixfmt-classic
-            inputs.agenix.packages.x86_64-linux.default
-          ];
-          name = "home";
-          DIRENV_LOG_FORMAT = "";
         };
+      });
+
+      devShells = forAllSystems (system: {
+        default =
+          let
+            pkgs = import inputs.nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+            };
+          in
+          inputs.nixpkgs.legacyPackages.${system}.mkShell {
+            inherit (self.checks.${system}.pre-commit-check) shellHook;
+            buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+            packages = [
+              pkgs.git
+              pkgs.nodePackages.prettier
+              pkgs.deadnix
+              pkgs.nixfmt-rfc-style
+              inputs.agenix.packages.${system}.default
+            ];
+            name = "home";
+            DIRENV_LOG_FORMAT = "";
+          };
+      });
     };
 
   inputs = {
@@ -236,6 +265,7 @@
       ref = "nixos-24.11";
     };
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     # Home Manager
     home-manager = {
       type = "github";
