@@ -85,12 +85,12 @@
         # };
         # # Servers (unstable)
         kobe = libx.mkHost { hostname = "kobe"; };
-
-        # athena = libx.mkHost {
-        #   hostname = "athena";
-        #   pkgsInput = inputs.nixpkgs-24_11;
-        #   homeInput = inputs.home-manager-24_11;
-        # };
+        athena = libx.mkHost {
+          hostname = "athena";
+          system = "aarch64-linux";
+          pkgsInput = inputs.nixpkgs-24_11;
+          homeInput = inputs.home-manager-24_11;
+        };
         # shikoku = libx.mkHost { hostname = "shikoku"; };
         # FIXME migrate to libx.mkHost
         aomi = inputs.nixpkgs.lib.nixosSystem {
@@ -138,10 +138,10 @@
         # };
         # Raspberry PI
         # athena
-        athena = inputs.nixpkgs-24_11.lib.nixosSystem {
-          system = "aarch64-linux";
-          modules = commonModules ++ stableModules ++ [ ./systems/hosts/athena.nix ];
-        };
+        # athena = inputs.nixpkgs-24_11.lib.nixosSystem {
+        #   system = "aarch64-linux";
+        #   modules = commonModules ++ stableModules ++ [ ./systems/hosts/athena.nix ];
+        # };
         # demeter
         demeter = inputs.nixpkgs-24_11.lib.nixosSystem {
           system = "aarch64-linux";

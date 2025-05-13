@@ -1,7 +1,7 @@
 { globals, ... }:
 {
   imports = [
-    # ../common/services/bind.nix
+    ../common/services/bind.nix
     ../common/services/prometheus-exporters-node.nix
     ../common/services/prometheus-exporters-bind.nix
   ];

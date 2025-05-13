@@ -1,5 +1,5 @@
 _: {
-  services.prometheus-exporters.bind = {
+  services.prometheus.exporters.bind = {
     enable = true;
     port = 9009;
   };
