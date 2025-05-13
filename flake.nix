@@ -92,6 +92,13 @@
           pkgsInput = inputs.nixpkgs-24_11;
           homeInput = inputs.home-manager-24_11;
         };
+        demeter = libx.mkHost {
+          hostname = "demeter";
+          system = "aarch64-linux";
+          hardwareType = "rpi4";
+          pkgsInput = inputs.nixpkgs-24_11;
+          homeInput = inputs.home-manager-24_11;
+        };
         # shikoku = libx.mkHost { hostname = "shikoku"; };
         # FIXME migrate to libx.mkHost
         aomi = inputs.nixpkgs.lib.nixosSystem {
@@ -137,17 +144,6 @@
         #     ./systems/hosts/carthage.nix
         #   ];
         # };
-        # Raspberry PI
-        # athena
-        # athena = inputs.nixpkgs-24_11.lib.nixosSystem {
-        #   system = "aarch64-linux";
-        #   modules = commonModules ++ stableModules ++ [ ./systems/hosts/athena.nix ];
-        # };
-        # demeter
-        demeter = inputs.nixpkgs-24_11.lib.nixosSystem {
-          system = "aarch64-linux";
-          modules = commonModules ++ stableModules ++ [ ./systems/hosts/demeter.nix ];
-        };
       };
 
       nixosModules = {
