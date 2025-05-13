@@ -7,5 +7,8 @@
     python312Packages.google-generativeai
     python313Packages.google-generativeai
     repomix
+    # editors
+    zed-editor
+    code-cursor
   ];
 }
