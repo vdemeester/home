@@ -41,6 +41,7 @@
     {
       hostname,
       desktop ? null,
+      hardwareType ? "",
       system ? "x86_64-linux",
       pkgsInput ? inputs.nixpkgs,
       homeInput ? inputs.home-manager,
@@ -55,6 +56,7 @@
           stateVersion
           hostname
           desktop
+          hardwareType
           system
           globals
           ;

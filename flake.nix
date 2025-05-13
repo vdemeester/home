@@ -88,6 +88,7 @@
         athena = libx.mkHost {
           hostname = "athena";
           system = "aarch64-linux";
+          hardwareType = "rpi4";
           pkgsInput = inputs.nixpkgs-24_11;
           homeInput = inputs.home-manager-24_11;
         };

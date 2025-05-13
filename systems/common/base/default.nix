@@ -12,6 +12,7 @@
     ./hardware.nix
     ./locale.nix
     ./nh.nix
+    ./tpm.nix
 
     # All my machine have this running
     ../services/avahi.nix
@@ -39,7 +40,6 @@
     pv
     ripgrep
     rsync
-    tpm2-tss
     traceroute
     tree
     usbutils
@@ -59,11 +59,6 @@
   security = {
     polkit.enable = true;
     rtkit.enable = true;
-    tpm2 = {
-      enable = true;
-      pkcs11.enable = true;
-      abrmd.enable = true;
-    };
   };
 
   # Clear out /tmp after a fortnight and give all normal users a ~/tmp

@@ -1,12 +1,15 @@
 {
+  config,
   pkgs,
   ...
 }:
 {
-  environment.systemPackages = with pkgs; [
-    age
-    age-plugin-tpm
-    agenix
-    passage
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+      age
+      agenix
+      passage
+    ]
+    ++ lib.optional config.security.tpm2.enable pkgs.age-plugin-tpm;
 }
