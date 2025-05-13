@@ -4,7 +4,6 @@
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
     initrd.systemd.enable = lib.mkForce false;
-    systemd-boot = lib.mkForce false;
     # initrd.systemd.enableTpm2 = false;
     initrd.availableKernelModules = [
       "xhci_pci"
