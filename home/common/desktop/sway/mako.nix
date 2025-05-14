@@ -1,11 +1,10 @@
 _: {
   services.mako = {
     enable = true;
-    font = "JetBrains Mono 12";
-    defaultTimeout = 8000; # 5s timeout
-    groupBy = "app-name,summary";
-    # FIXME: hide pulseaudio notifications (maybe they don't show up without pasystray)
     settings = {
+      default-timeout = 8000; # 5s timeout
+      group-by = "app-name,summary";
+      font = "JetBrains Mono 12";
       width = 400;
       on-button-left = "dismiss";
       on-button-middle = "invoke-default-action";
@@ -13,7 +12,7 @@ _: {
       border-radius = 6;
       border-size = 3;
       border-color = "#db7508";
-      format = "<b>%s</b>\n%b\n<i>%a</i>";
+      format = "<b>%s</b>\\n%b\\n<i>%a</i>";
       icon-path = "/run/current-system/sw/share/icons/Qogir-dark:/run/current-system/sw/share/icons/hicolor";
     };
     criteria = {
@@ -34,15 +33,15 @@ _: {
       };
       "category=\"build\"" = {
         anchor = "bottom-right";
-        format = "<b>%s</b>\n%b";
+        format = "<b>%s</b>\\n%b";
       };
       "category=\"recording\"" = {
         anchor = "bottom-right";
-        format = "<b>%s</b>\n%b";
+        format = "<b>%s</b>\\n%b";
       };
       "category=\"info\"" = {
         anchor = "center";
-        format = "<b>%s</b> %b";
+        format = "<b>%s</b>\\n%b";
       };
       "mode=do-not-disturb" = {
         invisible = 1;
