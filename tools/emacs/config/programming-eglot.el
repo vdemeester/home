@@ -36,9 +36,7 @@
   (js-mode . eglot-ensure)
   (js2-mode . eglot-ensure)
   (typescript-mode . eglot-ensure)
-  (typescript-ts-mode . eglot-ensure)
-  :custom
-  rustic-lsp-client 'eglot)
+  (typescript-ts-mode . eglot-ensure))
 
 (use-package eldoc-box
   :hook
