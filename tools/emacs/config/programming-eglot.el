@@ -12,6 +12,7 @@
   :config
   (add-to-list 'eglot-ignored-server-capabilities :documentHighlightProvider)
   (add-to-list 'eglot-server-programs `(json-mode  "vscode-json-language-server" "--stdio"))
+  (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
   (setq-default eglot-workspace-configuration
 		'(:gopls (:usePlaceholders t)))
   (setq-default
@@ -20,6 +21,8 @@
   :hook
   (before-save . gofmt-before-save)
   (before-save . eglot-format-buffer)
+  (nix-mode . eglot-ensure)
+  (nix-ts-mode . eglot-ensure)
   (rust-mode . eglot-ensure)
   (rust-ts-mode . eglot-ensure)
   (sh-script-mode . eglot-ensure)
