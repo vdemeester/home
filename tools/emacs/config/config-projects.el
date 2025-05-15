@@ -77,5 +77,15 @@
   :bind (("C-x p w" . project-x-window-state-save)
          ("C-x p j" . project-x-window-state-load)))
 
+(use-package jira
+  :commands (jira-issues)
+  :config
+  (setq jira-base-url "https://issues.redhat.com"
+	jira-username "vdemeest@redhat.com"
+	jira-token (passage-get "redhat/issues/token/myji")
+	jira-token-is-personal-access-token t
+	jira-api-version 2
+	jira-issues-max-results 500))
+
 (provide 'config-projects)
 ;;; config-projects.el ends here

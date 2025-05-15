@@ -84,6 +84,7 @@ let
       ibuffer-vc
       indent-bars
       jinx
+      jira
       json-mode
       kubed
       ligature

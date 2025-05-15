@@ -146,13 +146,11 @@ Here is the result of `git diff --cached`:")
   (aidermacs-setup-minor-mode))
 
 (use-package gptel
+  :commands (gptel gptel-mode)
+  :bind (("C-c a g" . gptel))
   :hook
   (gptel-mode . visual-line-mode)
   :bind
-  (:map gfm-mode-map
-        ("C-c C-k" . gptel-abort)
-        ("C-c C-m" . gptel-menu)
-        ("C-c C-c" . gptel-send))
   (:map gptel-mode-map
         ("C-c C-k" . gptel-abort)
         ("C-c C-m" . gptel-menu)
@@ -164,21 +162,23 @@ Here is the result of `git diff --cached`:")
   ;;   "o"   '(:ignore t :wk "GPTel")
   ;;   "o o" '(gptel :wk "Start GPTel")
   ;;   "o m" '(gptel-menu :wk "GPTel menu"))
+  (setq mcp-hub-servers
+	`(("jira" :command "/home/vincent/src/github.com/chmouel/jayrah/.venv/bin/jayrah" :args ("mcp"))
+	  ("github" :command "github-mcp-server" :args ("stdio")
+	   :env (:GITHUB_PERSONAL_ACCESS_TOKEN ,(passage-get "github/vdemeester/github-mcp-server")))))
   (require 'gptel-curl)
   (require 'gptel-gemini)
   (require 'gptel-ollama)
   (require 'gptel-transient)
+  (require 'gptel-integrations)
   (require 'gptel-rewrite)
   (require 'gptel-org)
   (require 'gptel-openai)
   (require 'gptel-openai-extras)
   (require 'gptel-autoloads)
+  (gptel-mcp-connect)
   (setq gptel-model 'gemini-2.0-pro-exp
 	gptel-backend (gptel-make-gemini "Gemini"
-			;; :models '("gemini-2.0-flash"
-			;; 	  "gemini-2.0-flash-lite-preview-02-05"
-			;; 	  "gemini:gemini-2.0-flash-thinking-exp"
-			;; 	  "gemini:gemini-2.0-pro-exp")
 			:key (passage-get "ai/gemini/api_key"))
 	)
 
