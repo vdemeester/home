@@ -4,6 +4,10 @@ let
     #!/usr/bin/env bash
     fd . -d 3 --type d ~/src | ${pkgs.wofi}/bin/wofi -dmenu | xargs -I {} zsh -i -c "cd {}; emacs ."
   '';
+  emacs-mini = pkgs.writeScript "emacs-mini" ''
+    #!/usr/bin/env bash
+    emacs --init-directory=$HOME/src/home/tools/emacs/mini
+  '';
   fontConf = {
     names = [ "JetBrains Mono" ];
     size = 12.0;
@@ -119,6 +123,7 @@ in
           "${mod}+Shift+Return" = "exec emacsclient -c";
           "${mod}+Control+Return" = "exec emacs";
           "${mod}+Control+Shift+Return" = "exec ${emacs-in-folder}";
+          "${mod}+Control+Alt+Return" = "exec ${emacs-mini}";
 
           "${mod}+Left" = "focus left";
           "${mod}+Down" = "focus down";

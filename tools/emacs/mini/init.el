@@ -294,4 +294,4 @@
   :config
   (add-to-list 'minions-prominent-modes 'flymake-mode))
 
-# TODO ORG mode configuration (BIG one)
+;; TODO ORG mode configuration (BIG one)
