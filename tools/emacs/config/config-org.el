@@ -195,7 +195,7 @@
 	     (--remove (s-starts-with? (format "%s/legacy" org-people-dir) it))
 	     (--map (format "%s" it))
 	     (--map `(,it :maxlevel . 3)))))
-  (setq org-agenda-files `(,org-inbox-file ,org-todos-file )
+  (setq org-agenda-files `(,org-inbox-file ,org-todos-file)
 	;; TODO: extract org-refile-targets into a function
 	org-refile-targets (vde/org-refile-targets))
   (setq org-agenda-custom-commands
