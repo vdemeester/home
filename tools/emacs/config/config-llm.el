@@ -177,7 +177,7 @@ Here is the result of `git diff --cached`:")
   (require 'gptel-openai-extras)
   (require 'gptel-autoloads)
   (gptel-mcp-connect)
-  (setq gptel-model 'gemini-2.0-pro-exp
+  (setq gptel-model 'gemini-2.0-flash
 	gptel-backend (gptel-make-gemini "Gemini"
 			:key (passage-get "ai/gemini/api_key"))
 	)
