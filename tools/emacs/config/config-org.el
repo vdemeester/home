@@ -82,15 +82,27 @@
   (org-pretty-entities t)
   (org-ellipsis "…")
   (org-return-follows-link t)
-  (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "IN-REVIEW(r)" "|" "DONE(d!)" "CANCELED(c@/!)")
-                       (sequence "WAITING(w@/!)" "SOMEDAY(s)" "|" "CANCELED(c@/!)")
-                       (sequence "IDEA(i)" "|" "CANCELED(c@/!)")))
-  (org-todo-state-tags-triggers '(("CANCELLED" ("CANCELLED" . t))
-                                  ("WAITING" ("WAITING" . t))
-                                  (done ("WAITING"))
-                                  ("TODO" ("WAITING") ("CANCELLED"))
-                                  ("NEXT" ("WAITING") ("CANCELLED"))
-                                  ("DONE" ("WAITING") ("CANCELLED"))))
+  
+  (org-todo-keywords '((sequence "STRT(s)" "NEXT(n)" "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANX(c)")))
+  (org-todo-state-tags-triggers '(("CANX" ("CANX" . t))
+                                  ("WAIT" ("WAIT" . t))
+                                  (done ("WAIT"))
+                                  ("TODO" ("WAIT") ("CANX"))
+                                  ("NEXT" ("WAIT") ("CANX"))
+                                  ("DONE" ("WAIT") ("CANX"))))
+  (org-tag-alist
+   '((:startgroup)
+     ("Handson" . ?o)
+     (:grouptags)
+     ("Write" . ?w) ("Code" . ?c)
+     (:endgroup)
+     
+     (:startgroup)
+     ("Handsoff" . ?f)
+     (:grouptags)
+     ("Read" . ?r) ("Watch" . ?W) ("Listen" . ?l)
+     (:endgroup)))
+
   (org-log-done 'time)
   (org-log-redeadline 'time)
   (org-log-reschedule 'time)
@@ -198,8 +210,37 @@
   (setq org-agenda-files `(,org-inbox-file ,org-todos-file)
 	;; TODO: extract org-refile-targets into a function
 	org-refile-targets (vde/org-refile-targets))
+  (setopt org-agenda-sorting-strategy
+	  '((agenda time-up deadline-up scheduled-up todo-state-up priority-down)
+	    (todo todo-state-up priority-down deadline-up)
+	    (tags todo-state-up priority-down deadline-up)
+	    (search todo-state-up priority-down deadline-up)))
   (setq org-agenda-custom-commands
-	'(("d" "Daily Agenda"
+	'(
+	  ;; Archive tasks
+   	  ("#" "To archive" todo "DONE|CANX")
+	  ;; TODO take inspiration from those
+	  ;; ("$" "Appointments" agenda* "Appointments")
+	  ;; ("b" "Week tasks" agenda "Scheduled tasks for this week"
+   	  ;;  ((org-agenda-category-filter-preset '("-RDV")) ; RDV for Rendez-vous
+   	  ;;   (org-agenda-use-time-grid nil)))
+   	  ;; 
+   	  ;; ;; Review started and next tasks
+   	  ;; ("j" "STRT/NEXT" tags-todo "TODO={STRT\\|NEXT}")
+   	  ;; 
+   	  ;; ;; Review other non-scheduled/deadlined to-do tasks
+   	  ;; ("k" "TODO" tags-todo "TODO={TODO}+DEADLINE=\"\"+SCHEDULED=\"\"")
+   	  ;; 
+   	  ;; ;; Review other non-scheduled/deadlined pending tasks
+   	  ;; ("l" "WAIT" tags-todo "TODO={WAIT}+DEADLINE=\"\"+SCHEDULED=\"\"")
+   	  ;; 
+   	  ;; ;; Review upcoming deadlines for the next 60 days
+   	  ;; ("!" "Deadlines all" agenda "Past/upcoming deadlines"
+   	  ;;  ((org-agenda-span 1)
+   	  ;;   (org-deadline-warning-days 60)
+   	  ;;   (org-agenda-entry-types '(:deadline))))
+
+	  ("d" "Daily Agenda"
 	   ((agenda ""
 		    ((org-agenda-span 'day)
 		     (org-deadline-warning-days 5)))
@@ -238,7 +279,7 @@
 		     (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
 		     (org-agenda-span 'week)))))
 	  ;; FIXME Should only take into account projects and areas ?
-	  ("R" "Review projects" tags-todo "-CANCELLED/"
+	  ("R" "Review projects" tags-todo "-CANX/"
            ((org-agenda-overriding-header "Reviews Scheduled")
             (org-agenda-skip-function 'org-review-agenda-skip)
             (org-agenda-cmp-user-defined 'org-review-compare)
@@ -593,8 +634,6 @@ Within those groups, sort by date and priority."
 (use-package org-ql-view
   :after org-ql)
 
-
-;; TODO NEXT STARTED IN-REVIEW DONE CANCELED WAITING SOMEDAY IDEA
 (defun my-org-todo-set-keyword-faces ()
   (setq org-todo-keyword-faces
         `(("TODO" . (:foreground ,(modus-themes-get-color-value 'red-faint) :weight bold))
@@ -602,20 +641,10 @@ Within those groups, sort by date and priority."
           ("STARTED" . (:foreground ,(modus-themes-get-color-value 'yellow-intense) :weight bold))
           ("IN-REVIEW" . (:foreground ,(modus-themes-get-color-value 'blue-faint) :weight bold))
           ("DONE" . (:foreground ,(modus-themes-get-color-value 'green-warmer) :weight bold))
-          ("CANCELED" . (:foreground ,(modus-themes-get-color-value 'comment) :weight bold))
-          ("WAITING" . (:foreground ,(modus-themes-get-color-value 'magenta-faint) :weight bold))
+          ("CANX" . (:foreground ,(modus-themes-get-color-value 'comment) :weight bold))
+          ("WAIT" . (:foreground ,(modus-themes-get-color-value 'magenta-faint) :weight bold))
           ("SOMEDAY" . (:foreground ,(modus-themes-get-color-value 'cyan-warmer) :weight bold))
           ("IDEA" . (:foreground ,(modus-themes-get-color-value 'magenta-cooler) :weight bold))))
-  (setq org-modern-todo-faces
-        `(("TODO" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'red-faint) :weight bold))
-          ("NEXT" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'yellow-warmer) :weight bold))
-          ("STARTED" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'yellow-intense) :weight bold))
-          ("IN-REVIEW" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'blue-faint) :weight bold))
-          ("DONE" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'green-warmer) :weight bold))
-          ("CANCELED" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'comment) :weight bold))
-          ("WAITING" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'magenta-faint) :weight bold))
-          ("SOMEDAY" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'cyan-warmer) :weight bold))
-          ("IDEA" . (:foreground ,(modus-themes-get-color-value 'fg-term-white-bright) :background ,(modus-themes-get-color-value 'magenta-cooler) :weight bold))))
   (when (derived-mode-p 'org-mode)
     (font-lock-fontify-buffer)))
 (my-org-todo-set-keyword-faces)
