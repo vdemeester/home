@@ -10,5 +10,7 @@
     # editors
     zed-editor
     code-cursor
+    # mcp-servers
+    github-mcp-server
   ];
 }
