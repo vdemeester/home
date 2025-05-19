@@ -24,7 +24,6 @@
 
   home.packages = with pkgs; [
     age
-    enchive
     mosh
     ripgrep
 
