@@ -73,7 +73,8 @@
   (set-fontset-font t 'symbol "Symbola" nil 'append)
 
   (require 'modus-themes)
-  (setopt modus-themes-to-rotate '(modus-operandi modus-vivendi)
+  (setopt modus-themes-common-palette-overrides modus-themes-preset-overrides-cooler
+	  modus-themes-to-rotate '(modus-operandi modus-vivendi)
 	  modus-themes-mixed-fonts t
 	  modus-themes-headings '((0 . (variable-pitch semilight 1.5))
 				  (1 . (regular 1.4))
@@ -99,20 +100,29 @@
 (eval-when-compile
   (require 'use-package))
 
+(add-to-list 'load-path (concat user-emacs-directory "site-lisp"))
+
 (use-package emacs
   :bind
   ("C-x m" . mark-defun)
+  ;; (:map completion-preview-active-mode-map
+  ;; ("M-n" . #'completion-preview-next-candidate)
+  ;; ("M-p" . #'completion-preview-prev-candidate))
   :custom
   (enable-local-variables :all)
   (select-enable-clipboard t)
   (select-enable-primary t)
   (comment-multi-line t)
   (make-backup-files nil)
+  (read-extended-command-predicate #'command-completion-default-include-p)
   :hook
   (after-init . global-hl-line-mode)
   (after-init . global-completion-preview-mode)
   :config
   (delete-selection-mode 1))
+
+(use-package passage
+  :commands (passage-get))
 
 (use-package ffap
   :hook
@@ -141,10 +151,19 @@
       (display-line-numbers-mode)))
   :bind ("<f7>" . vde/toggle-line-numbers))
 
+(use-package helpful
+  :unless noninteractive
+  :bind (("C-h f" . helpful-callable)
+         ("C-h F" . helpful-function)
+         ("C-h M" . helpful-macro)
+         ("C-c h S" . helpful-at-point)
+         ("C-h k" . helpful-key)
+         ("C-h v" . helpful-variable)
+         ("C-h C" . helpful-command)))
+
 (use-package flymake
   :hook
   (prog-mode . flymake-mode))
-
 
 (use-package aggressive-indent
   :commands (aggressive-indent-mode)
@@ -216,6 +235,32 @@
     "C-x t u"   "Undo tab close"
     "C-x t ^ f" "Detach tab window"))
 
+(use-package newcomment
+  :unless noninteractive
+  :custom
+  (comment-empty-lines t)
+  (comment-fill-column nil)
+  (comment-multi-line t)
+  (comment-style 'multi-line)
+  :config
+  (defun prot/comment-dwim (&optional arg)
+    "Alternative to `comment-dwim': offers a simple wrapper
+around `comment-line' and `comment-dwim'.
+
+If the region is active, then toggle the comment status of the
+region or, if the major mode defines as much, of all the lines
+implied by the region boundaries.
+
+Else toggle the comment status of the line at point."
+    (interactive "*P")
+    (if (use-region-p)
+        (comment-dwim arg)
+      (save-excursion
+        (comment-line arg))))
+  :bind (("C-;" . prot/comment-dwim)
+         ("C-:" . comment-kill)
+         ("M-;" . comment-indent)
+         ("C-x C-;" . comment-box)))
 
 (use-package dired
   :custom
@@ -250,6 +295,9 @@
         ("C-c e r" . eglot-reconnect)
         ("<f2>" . eglot-rename)
         ("C-c e ?" . eldoc-print-current-symbol-info))
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-confirm-server-initiated-edits nil)
   :config
   (add-to-list 'eglot-ignored-server-capabilities :documentHighlightProvider)
   (add-to-list 'eglot-server-programs `(json-mode  "vscode-json-language-server" "--stdio"))
@@ -289,9 +337,208 @@
          ("\\.go" . go-ts-mode)
          ("\\.go\\'" . go-ts-mode)))
 
+(use-package nix-ts-mode
+  :if (executable-find "nix")
+  :mode ("\\.nix\\'" "\\.nix.in\\'"))
+
+(use-package nix-drv-mode
+  :if (executable-find "nix")
+  :after nix-mode
+  :mode "\\.drv\\'")
+
+(use-package nix-shell
+  :if (executable-find "nix")
+  :after nix-mode
+  :commands (nix-shell-unpack nix-shell-configure nix-shell-build))
+
+(use-package nixpkgs-fmt
+  :if (executable-find "nix")
+  :after nix-ts-mode
+  :custom
+  (nixpkgs-fmt-command "nixfmt")
+  :config
+  (add-hook 'nix-ts-mode-hook 'nixpkgs-fmt-on-save-mode))
+
 (use-package minions
   :hook (after-init . minions-mode)
   :config
   (add-to-list 'minions-prominent-modes 'flymake-mode))
+
+(use-package vundo
+  :bind (("M-u"   . undo)
+         ("M-U"   . undo-redo)
+         ("C-x u" . vundo)))
+
+(use-package project
+  :commands (project-find-file project-find-regexp)
+  ;; :custom
+  ;; (project-switch-commands '(()))
+  )
+
+(use-package magit
+  :unless noninteractive
+  :commands (magit-status magit-clone magit-pull magit-blame magit-log-buffer-file magit-log)
+  :bind (("C-c v c" . magit-commit)
+         ("C-c v C" . magit-checkout)
+         ("C-c v b" . magit-branch)
+         ("C-c v d" . magit-dispatch)
+         ("C-c v f" . magit-fetch)
+         ("C-c v g" . magit-blame)
+         ("C-c v l" . magit-log-buffer-file)
+         ("C-c v L" . magit-log)
+         ("C-c v p" . magit-pull)
+         ("C-c v P" . magit-push)
+         ("C-c v r" . magit-rebase)
+	 ("C-c v s" . magit-stage)
+         ("C-c v v" . magit-status))
+  :custom
+  (magit-save-repository-buffers 'dontask)
+  (magit-refs-show-commit-count 'all)
+  (magit-branch-prefer-remote-upstream '("main"))
+  (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+  (magit-bury-buffer-function #'magit-restore-window-configuration)
+  (magit-refresh-status-buffer nil)
+  :config
+  ;; cargo-culted from https://github.com/magit/magit/issues/3717#issuecomment-734798341
+  ;; valid gitlab options are defined in https://docs.gitlab.com/ee/user/project/push_options.html
+  ;;
+  ;; the second argument to transient-append-suffix is where to append
+  ;; to, not sure what -u is, but this works
+  (transient-append-suffix 'magit-push "-u"
+    '(1 "=s" "Skip gitlab pipeline" "--push-option=ci.skip"))
+  (transient-append-suffix 'magit-push "=s"
+    '(1 "=m" "Create gitlab merge-request" "--push-option=merge_request.create"))
+  (transient-append-suffix 'magit-push "=m"
+    '(1 "=o" "Set push option" "--push-option="))  ;; Will prompt, can only set one extra
+  )
+
+(use-package gitconfig-mode
+  :commands (gitconfig-mode)
+  :mode (("/\\.gitconfig\\'"  . gitconfig-mode)
+         ("/\\.git/config\\'" . gitconfig-mode)
+         ("/git/config\\'"    . gitconfig-mode)
+         ("/\\.gitmodules\\'" . gitconfig-mode)))
+
+(use-package gitignore-mode
+  :commands (gitignore-mode)
+  :mode (("/\\.gitignore\\'"        . gitignore-mode)
+         ("/\\.git/info/exclude\\'" . gitignore-mode)
+         ("/git/ignore\\'"          . gitignore-mode)))
+
+(use-package gitattributes-mode
+  :commands (gitattributes-mode)
+  :mode (("/\\.gitattributes" . gitattributes-mode)))
+
+(use-package diff-hl
+  :hook (find-file . diff-hl-mode)
+  :hook (prog-mode . diff-hl-mode)
+  :hook (magit-post-refresh . diff-hl-magit-post-refresh)
+  :bind
+  (:map diff-hl-command-map
+	("n" . diff-hl-next-hunk)
+	("p" . diff-hl-previous-hunk)
+	("[" . nil)
+	("]" . nil)
+	("DEL"   . diff-hl-revert-hunk)
+	("<delete>" . diff-hl-revert-hunk)
+	("SPC" . diff-hl-mark-hunk)
+	:map vc-prefix-map
+	("n" . diff-hl-next-hunk)
+	("p" . diff-hl-previous-hunk)
+	("s" . diff-hl-stage-dwim)
+	("DEL"   . diff-hl-revert-hunk)
+	("<delete>" . diff-hl-revert-hunk)
+	("SPC" . diff-hl-mark-hunk))
+  :config
+  (put 'diff-hl-inline-popup-hide
+       'repeat-map 'diff-hl-command-map))
+
+(use-package diff-hl-inline-popup
+  :after (diff-hl))
+(use-package diff-hl-show-hunk
+  :after (diff-hl))
+
+(use-package diff-hl-dired
+  :after (diff-hl)
+  :hook (dired-mode . diff-hl-dired-mode))
+
+(use-package corfu
+  :custom
+  (corfu-auto 't)
+  :bind
+  (:map corfu-map
+        ("TAB" . corfu-next)
+	("C-c" . corfu-quit)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous))
+  :hook
+  (after-init . global-corfu-mode))
+
+(use-package corfu-history
+  :after (corfu)
+  :hook
+  (after-init . corfu-history-mode))
+
+(use-package corfu-popupinfo
+  :after corfu
+  :config
+  (corfu-popupinfo-mode 1))
+
+(use-package corfu-terminal
+  :unless (display-graphic-p)
+  :ensure t
+  :hook
+  (after-init . corfu-terminal-mode))
+
+(use-package cape
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
+
+;; Prefer ripgrep (rg) if present (instead of grep)
+(setq xref-search-program
+      (cond
+       ((or (executable-find "ripgrep")
+            (executable-find "rg"))
+        'ripgrep)
+       ((executable-find "ugrep")
+        'ugrep)
+       (t
+        'grep)))
+
+(use-package rg
+  :if (executable-find "rg")
+  :commands (rg rg-project rg-dwim)
+  :bind (("M-s r r" . rg)
+         ("M-s r p" . rg-project)
+         ("M-s r s" . rg-dwim))
+  :custom
+  (rg-group-result t)
+  (rg-hide-command t)
+  (rg-show-columns nil)
+  (rg-show-header t)
+  (rg-default-alias-fallback "all")
+  :config
+  (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
+  (cl-pushnew '("gotest" . "*_test.go") rg-custom-type-aliases)
+  (defun vde/rg-buffer-name ()
+    "Generate a rg buffer name from project if in one"
+    (let ((p (project-root (project-current))))
+      (if p
+	  (format "rg: %s" (abbreviate-file-name p))
+	"rg")))
+  (setq rg-buffer-name #'vde/rg-buffer-name))
+
+(use-package wgrep
+  :unless noninteractive
+  :commands (wgrep-change-to-wgrep-mode)
+  :custom
+  (wgrep-auto-save-buffer t)
+  (wgrep-change-readonly-file t)
+  :bind (:map grep-mode-map
+              ("e" . wgrep-change-to-wgrep-mode)
+              ("C-x C-q" . wgrep-change-to-wgrep-mode)))
 
 ;; TODO ORG mode configuration (BIG one)
