@@ -3,6 +3,8 @@
 
 set -eufo pipefail
 
+DEFAULT_PROJECTS="tektoncd/pipeline tektoncd/plumbing tektoncd/cli tektoncd/mcp-server"
+
 PROW=0
 MERGE=0
 FORCE=0
@@ -29,30 +31,36 @@ while getopts "hfpmc:" o; do
 	    ;;
 	*)
 	    echo "Invalid option"; help; exit 1;
-	    help
-	    exit 1
 	    ;;
     esac
 done
 shift $((OPTIND-1))
 
-TO_APPROVE=$(gh pr list --json "number,title" | jq -r '.[] | ((.number | tostring) + " " + (.title))' | fzf --multi --ansi --preview "gh pr checks {1} --json 'name,state' | jq -r 'map(.state + \": \" + .name) | .[]'" | awk 'OFS="\t" {print $1}')
+PROJECTS=${PROJECTS:=$DEFAULT_PROJECTS}
 
-for pr in $TO_APPROVE; do
-    if [[ $PROW -eq 1 ]]; then
-	# if prow, we just review
-	gh pr review $pr --approve --body "/lgtm \
+for project in $PROJECTS; do
+    TO_APPROVE=$(gh pr --repo="${project}" list --json "number,title" | jq -r '.[] | ((.number | tostring) + " " + (.title))' | fzf --header "${project}" --multi --ansi --preview "gh pr checks --repo=${project} {1} --json 'name,state' | jq -r 'map(.state + \": \" + .name) | .[]'" | awk 'OFS="\t" {print $1}')
+
+    for pr in $TO_APPROVE; do
+	if [[ $PROW -eq 1 ]]; then
+	    # if prow, we just review
+	    gh pr review --repo="${project}" "$pr" --approve --body "/lgtm \
 $COMMENT"
-    else
-	gh pr review $pr --approve --body "$COMMENT"
-    fi
-    if [[ $MERGE -eq 1 ]]; then
-	MERGE_ARGS="--rebase --delete-branch"
-	if [[ $FORCE -eq 1 ]]; then
-	    MERGE_ARGS="$MERGE_ARGS --admin"
 	else
-	    MERGE_ARGS="$MERGE_ARGS --auto"
+	    gh pr review --repo="${project}" "$pr" --approve --body "$COMMENT"
 	fi
-	gh pr merge $MERGE_ARGS --body "$COMMENT" $pr
-    fi
+	if [[ $MERGE -eq 1 ]]; then
+	    MERGE_ARGS="--rebase --delete-branch"
+	    if [[ $FORCE -eq 1 ]]; then
+		MERGE_ARGS="$MERGE_ARGS --admin"
+	    else
+		MERGE_ARGS="$MERGE_ARGS --auto"
+	    fi
+	    gh pr merge --repo="${project}" "$MERGE_ARGS" --body "$COMMENT" "$pr"
+	fi
+    done
 done
+
+function help() {
+    echo "HEEELLPPP"
+}
