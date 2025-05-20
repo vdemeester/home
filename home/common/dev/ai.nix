@@ -4,6 +4,8 @@
     aichat
     aider-chat
     goose-cli
+    llm
+    openai-whisper
     python312Packages.google-generativeai
     python313Packages.google-generativeai
     repomix
