@@ -1,3 +1,14 @@
+;;; init --- vdemeester's emacs configuration -*- lexical-binding: t -*-
+
+;; Copyright (C) 2025 Vincent Demeester
+;; Author: Vincent Demeester <vincent@sbr.pm>
+
+;; This file is NOT part of GNU Emacs.
+;;; Commentary:
+;; This is the "mini" version for now, but aims to become the default one.
+;;; Code:
+
+
 (defconst emacs-start-time (current-time))
 
 (let ((minver 29))
@@ -369,11 +380,25 @@ Else toggle the comment status of the line at point."
          ("M-U"   . undo-redo)
          ("C-x u" . vundo)))
 
+(use-package project-func
+  :commands (vde/project-magit-status vde/project-eat vde/project-vterm vde/project-run-in-vterm vde/project-try-local vde/open-readme))
+
 (use-package project
   :commands (project-find-file project-find-regexp)
-  ;; :custom
-  ;; (project-switch-commands '(()))
-  )
+  :custom ((project-switch-commands '((?f "File" project-find-file)
+				      (?g "Grep" project-find-regexp)
+				      (?d "Dired" project-dired)
+				      (?b "Buffer" project-switch-to-buffer)
+				      (?q "Query replace" project-query-replace-regexp)
+				      (?m "Magit" vde-project/magit-status)
+				      (?e "Eshell" project-eshell)
+				      (?E "Eat" vde/project-eat)
+				      (?s "Vterm" vde/project-vterm)
+				      (?R "README" vde/open-readme)
+				      (?g "Checkout GitHub PR" checkout-github-pr)))
+	   (project-mode-line t))
+  :bind
+  ("C-x p v" . vde-project/magit-status))
 
 (use-package magit
   :unless noninteractive
@@ -491,6 +516,13 @@ Else toggle the comment status of the line at point."
   :hook
   (after-init . corfu-terminal-mode))
 
+(use-package envrc
+  :defer 2
+  :if (executable-find "direnv")
+  :bind (:map envrc-mode-map
+              ("C-c e" . envrc-command-map))
+  :config (envrc-global-mode))
+
 (use-package cape
   :init
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
@@ -541,4 +573,32 @@ Else toggle the comment status of the line at point."
               ("e" . wgrep-change-to-wgrep-mode)
               ("C-x C-q" . wgrep-change-to-wgrep-mode)))
 
+(use-package tempel
+  :custom (tempel-path (expand-file-name "templates" user-emacs-directory))
+  :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
+         ("M-*" . tempel-insert)))
+
+(use-package embark
+  :unless noninteractive
+  :commands (embark-act embark-dwim embark-prefix-help-command)
+  :bind
+  ("C-." . embark-act)
+  ("M-." . embark-dwim)
+  ("C-h b" . embark-bindings)
+  ("C-h B" . embark-bindings-at-point)
+  ("C-h M" . embark-bindings-in-keymap)
+  (:map completion-list-mode-map
+        ("." . embark-act))
+  :custom
+  (embark-indicators '(embark-minimal-indicator
+                       embark-highlight-indicator
+                       embark-isearch-highlight-indicator))
+  (embark-cycle-key ".")
+  (embark-help-key "?"))
+
+;; TODO embark
+;; TODO window managementt
 ;; TODO ORG mode configuration (BIG one)
+
+(provide 'init)
+;;; init.el ends here
