@@ -126,16 +126,19 @@
 (use-package emacs
   :bind
   ("C-x m" . mark-defun)
+  ("C-x C-b" . bs-show)
   ;; (:map completion-preview-active-mode-map
   ;; ("M-n" . #'completion-preview-next-candidate)
   ;; ("M-p" . #'completion-preview-prev-candidate))
   :custom
+  (tab-always-indent 'complete)
   (enable-local-variables :all)
   (select-enable-clipboard t)
   (select-enable-primary t)
   (comment-multi-line t)
   (make-backup-files nil)
   (read-extended-command-predicate #'command-completion-default-include-p)
+  (mouse-autoselect 1)
   :hook
   (after-init . global-hl-line-mode)
   (after-init . global-completion-preview-mode)

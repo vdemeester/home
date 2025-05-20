@@ -20,3 +20,5 @@ hardware-configuration.nix
 /tools/emacs/var/backup
 *.qcow2
 /.pre-commit-config.yaml
+/tools/emacs/.chatgpt-shell.el
+/tools/emacs/mini/.chatgpt-shell.el
