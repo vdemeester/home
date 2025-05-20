@@ -111,8 +111,6 @@
 (eval-when-compile
   (require 'use-package))
 
-(add-to-list 'load-path (concat user-emacs-directory "site-lisp"))
-
 (use-package emacs
   :bind
   ("C-x m" . mark-defun)

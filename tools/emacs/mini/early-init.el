@@ -1,3 +1,5 @@
+(add-to-list 'load-path (locate-user-emacs-file "site-lisp"))
+
 ;; Do not initialize installed packages
 (setopt package-enable-at-startup nil
 	package-archives nil
