@@ -36,7 +36,7 @@
       export TLDR_CACHE_DIR="$XDG_CACHE_HOME"/tldr 
     '';
     # TODO Extract this to files.
-    initExtra = ''
+    initContent = ''
       # c.f. https://wiki.gnupg.org/AgentForwarding
       # gpgconf --create-socketdir &!
       path+="$HOME/${config.programs.zsh.dotDir}/functions"
