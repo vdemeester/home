@@ -4,6 +4,14 @@
 ~home~ is the monorepo containing my personal tools and infrastructure. Almost everything in
 here is built using [[https://nixos.org/nix][Nix]]. /This README needs some updates/.
 
+/Note: This repository is under relatively heavy refactoring, so this README might not always be up-to-date/.
+
+It contains my systems configuration — mainly NixOS, but also other
+systems — as well as some custom, very /personal/ tools and
+configurations (e.g. Emacs).
+
+The main entrypoint for this is the =flake.nix= file.
+
 - *I need to rewrite this part based on =flake.nix= and updates*.
 - Explore the =nixos-rebuild --build-host … --target-host … --flake .#host boot= as it might
   remove the need for =deploy-rs= altogether 😈
