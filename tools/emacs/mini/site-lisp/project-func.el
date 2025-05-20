@@ -19,17 +19,24 @@
 
 (defun fetch-github-prs ()
   "Fetch GitHub PRs synchronously."
-  (let* ((output (shell-command-to-string "gh pr list --limit=5000 --json number,title,author,url,baseRefName,labels"))
+  (let* ((output (shell-command-to-string "gh pr list --limit=5000 --json number,title,author,url,baseRefName,labels,isDraft"))
          (prs (json-read-from-string output)))
     prs))
+
+(defun format-pr-draft (isDraft)
+  "Return (draft) if `pr' is a draft, otherwise returns an empty string"
+  (cond ((eq isDraft :json-false) "")
+	(t "🚧 draft")))
 
 (defun format-pr-candidates (prs)
   "Format PR data into candidates for completion."
   (mapcar (lambda (pr)
             (let-alist pr
-              (cons (format "#%d %s (by @%s) on %s" .number .title .author.login .baseRefName)
+              (cons (format "#%d %s (by @%s) on %s %s" .number .title .author.login .baseRefName (format-pr-draft .isDraft))
                     .number)))
           prs))
+
+
 
 ;;;###autoload
 (defun checkout-github-pr ()
