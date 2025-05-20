@@ -14,8 +14,7 @@ _: {
       border-color = "#db7508";
       format = "<b>%s</b>\\n%b\\n<i>%a</i>";
       icon-path = "/run/current-system/sw/share/icons/Qogir-dark:/run/current-system/sw/share/icons/hicolor";
-    };
-    criteria = {
+      # Criteria sections
       "urgency=low" = {
         background-color = "#282c30";
         text-color = "#888888";
