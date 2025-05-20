@@ -194,6 +194,8 @@
          ("C-h C" . helpful-command)))
 
 (use-package flymake
+  :bind
+  ("C-c f b" . flymake-show-buffer-diagnostics)
   :hook
   (prog-mode . flymake-mode))
 
@@ -237,14 +239,18 @@
 (use-package which-key
   :custom
   (which-key-separator " → " )
+  (which-key-prefix-prefix "… ")
   (which-key-add-column-padding 1)
   (which-key-max-description-length 40)
+  (which-key-idle-delay 1)
+  (which-key-idle-secondary-delay 0.25)
   :hook
   (after-init . which-key-mode)
   :config
   
   ;; Define custom, concise descriptions for `tab-bar` commands under "C-x t"
   (which-key-add-key-based-replacements
+    "C-c !"     "flymake"
     "C-x t C-f" "Open file in new tab"
     "C-x t RET" "Switch tabs"
     "C-x t C-r" "Open file (read-only) in new tab"
@@ -265,7 +271,28 @@
     "C-x t r"   "Rename tab"
     "C-x t t"   "Switch to other tab"
     "C-x t u"   "Undo tab close"
-    "C-x t ^ f" "Detach tab window"))
+    "C-x t ^ f" "Detach tab window"
+    "C-x 8" "insert-special"
+    "C-x 8 ^" "superscript (⁰, ¹, ², …)"
+    "C-x 8 _" "subscript (₀, ₁, ₂, …)"
+    "C-x 8 a" "arrows & æ (←, →, ↔, æ)"
+    "C-x 8 e" "emojis (🫎, 🇧🇷, 🇮🇹, …)"
+    "C-x 8 *" "common symbols ( , ¡, €, …)"
+    "C-x 8 =" "macron (Ā, Ē, Ḡ, …)"
+    "C-x 8 N" "macron (№)"
+    "C-x 8 O" "macron (œ)"
+    "C-x 8 ~" "tilde (~, ã, …)"
+    "C-x 8 /" "stroke (÷, ≠, ø, …)"
+    "C-x 8 ." "dot (·, ż)"
+    "C-x 8 ," "cedilla (¸, ç, ą, …)"
+    "C-x 8 '" "acute (á, é, í, …)"
+    "C-x 8 `" "grave (à, è, ì, …)"
+    "C-x 8 \"" "quotation/dieresis (\", ë, ß, …)"
+    "C-x 8 1" "†, 1/…"
+    "C-x 8 2" "‡"
+    "C-x 8 3" "3/…"
+    "C-x 4" "other-window"
+    "C-x 5" "other-frame"))
 
 (use-package newcomment
   :unless noninteractive
@@ -306,6 +333,34 @@ Else toggle the comment status of the line at point."
   (dired-mode . dired-omit-mode)
   (dired-mode . dired-hide-details-mode)
   (dired-mode . dired-sort-toggle-or-edit))
+
+(use-package alert
+  :init
+  (defun alert-after-finish-in-background (buf str)
+    (when (or (not (get-buffer-window buf 'visible)) (not (frame-focus-state)))
+      (alert str :buffer buf)))
+  :config
+  (setq alert-default-style 'libnotify))
+
+(use-package elec-pair
+  :hook (after-init-hook . electric-pair-mode))
+
+
+(use-package uniquify
+  :custom
+  (uniquify-buffer-name-style 'forward)
+  (uniquify-strip-common-suffix t)
+  (uniquify-after-kill-buffer-p t))
+
+(use-package compile
+  :unless noninteractive
+  :commands (compile)
+  :custom
+  (compilation-always-kill t)
+  (compilation-scroll-output t)
+  (ansi-color-for-compilation-mode t)
+  :config
+  (add-hook 'compilation-finish-functions #'alert-after-finish-in-background))
 
 ;; Recentf
 (use-package recentf
@@ -406,24 +461,27 @@ Else toggle the comment status of the line at point."
 
 (use-package project
   :commands (project-find-file project-find-regexp)
-  :custom ((project-switch-commands '((?f "File" project-find-file)
-				      (?g "Grep" project-find-regexp)
-				      (?d "Dired" project-dired)
-				      (?b "Buffer" project-switch-to-buffer)
-				      (?q "Query replace" project-query-replace-regexp)
-				      (?m "Magit" vde/project-magit-status)
-				      (?e "Eshell" project-eshell)
-				      (?E "Eat" vde/project-eat)
-				      (?s "Vterm" vde/project-vterm)
-				      (?R "README" vde/open-readme)
-				      (?g "Checkout GitHub PR" checkout-github-pr)))
-	   (project-mode-line t))
+  :custom
+  (project-switch-commands '((?f "File" project-find-file)
+			     (?g "Grep" project-find-regexp)
+			     (?d "Dired" project-dired)
+			     (?b "Buffer" project-switch-to-buffer)
+			     (?q "Query replace" project-query-replace-regexp)
+			     (?m "Magit" vde/project-magit-status)
+			     (?e "Eshell" project-eshell)
+			     (?E "Eat" vde/project-eat)
+			     (?s "Vterm" vde/project-vterm)
+			     (?R "README" vde/open-readme)
+			     (?g "Checkout GitHub PR" checkout-github-pr)))
+  (project-mode-line t)
+  (project-compilation-buffer-name-function 'project-prefixed-buffer-name)
   :bind
   ("C-x p v" . vde/project-magit-status)
   ("C-x p s" . vde/project-vterm)
   ("C-x p X" . vde/project-run-in-vterm)
   ("C-x p E" . vde/project-eat)
-  ("C-x p G" . checkout-github-pr))
+  ("C-x p G" . checkout-github-pr)
+  ("C-x p F" . flymake-show-project-diagnostics))
 
 (use-package magit
   :unless noninteractive
@@ -636,8 +694,11 @@ Else toggle the comment status of the line at point."
   (chatgpt-shell-google-key (passage-get "ai/gemini/api_key"))
   (chatgpt-shell-openrouter-key (passage-get "ai/openroute/api_key"))
   (chatgpt-shell-deepseek-key (passage-get "ai/deepseek/api_key")))
-;; TODO window managementt
+
+;; TODO window management
+;; TODO dired configuration
 ;; TODO ORG mode configuration (BIG one)
+;; TODO gptel configuration (and *maybe* copilot)
 
 (provide 'init)
 ;;; init.el ends here
