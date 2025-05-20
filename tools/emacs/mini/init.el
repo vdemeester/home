@@ -127,10 +127,15 @@
   :bind
   ("C-x m" . mark-defun)
   ("C-x C-b" . bs-show)
+  ("M-o" . other-window)
+  ("M-j" . duplicate-dwim)
   ;; (:map completion-preview-active-mode-map
   ;; ("M-n" . #'completion-preview-next-candidate)
   ;; ("M-p" . #'completion-preview-prev-candidate))
   :custom
+  (create-lockfiles nil)   ; No backup files
+  (make-backup-files nil)  ; No backup files
+  (backup-inhibited t)     ; No backup files
   (tab-always-indent 'complete)
   (enable-local-variables :all)
   (select-enable-clipboard t)
@@ -139,10 +144,13 @@
   (make-backup-files nil)
   (read-extended-command-predicate #'command-completion-default-include-p)
   (mouse-autoselect 1)
+  (find-ls-option '("-exec ls -ldh {} +" . "-ldh"))  ; find-dired results with human readable sizes
   :hook
   (after-init . global-hl-line-mode)
   (after-init . global-completion-preview-mode)
   :config
+  (setenv "GIT_EDITOR" (format "emacs --init-dir=%s " (shell-quote-argument user-emacs-directory)))
+  (setenv "EDITOR" (format "emacs --init-dir=%s " (shell-quote-argument user-emacs-directory)))
   (delete-selection-mode 1))
 
 (use-package passage
