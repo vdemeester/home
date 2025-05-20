@@ -613,7 +613,21 @@ Else toggle the comment status of the line at point."
   (embark-cycle-key ".")
   (embark-help-key "?"))
 
-;; TODO embark
+(use-package eljira
+  :commands (eljira)
+  :ensure nil
+  :load-path "~/src/github.com/sawwheet/eljira/"
+  :custom
+  (eljira-token (passage-get "redhat/issues/token/myji"))
+  (eljira-username "vdemeest@redhat.com")
+  (eljira-url "https://issues.redhat.com"))
+
+(use-package chatgpt-shell
+  :commands (chatgpt-shell)
+  :custom
+  (chatgpt-shell-google-key (passage-get "ai/gemini/api_key"))
+  (chatgpt-shell-openrouter-key (passage-get "ai/openroute/api_key"))
+  (chatgpt-shell-deepseek-key (passage-get "ai/deepseek/api_key")))
 ;; TODO window managementt
 ;; TODO ORG mode configuration (BIG one)
 
