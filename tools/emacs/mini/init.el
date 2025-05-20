@@ -94,7 +94,10 @@
 				  (agenda-structure . (variable-pitch light 2.2))
 				  (agenda-date . (variable-pitch regular 1.3))
 				  (t . (regular 1.15))))
-  (load-theme 'modus-operandi :no-confirm))
+  ;; Default modus-operandi on GUI and modus-vivendi on CLI
+  (if (display-graphic-p)
+      (load-theme 'modus-operandi :no-confirm)
+    (load-theme 'modus-vivendi :no-confirm)))
 
 (setq load-prefer-newer t)              ; Always load newer compiled files
 (setq ad-redefinition-action 'accept)   ; Silence advice redefinition warnings
