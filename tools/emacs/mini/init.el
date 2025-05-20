@@ -403,7 +403,7 @@ Else toggle the comment status of the line at point."
 				      (?d "Dired" project-dired)
 				      (?b "Buffer" project-switch-to-buffer)
 				      (?q "Query replace" project-query-replace-regexp)
-				      (?m "Magit" vde-project/magit-status)
+				      (?m "Magit" vde/project-magit-status)
 				      (?e "Eshell" project-eshell)
 				      (?E "Eat" vde/project-eat)
 				      (?s "Vterm" vde/project-vterm)
@@ -411,7 +411,11 @@ Else toggle the comment status of the line at point."
 				      (?g "Checkout GitHub PR" checkout-github-pr)))
 	   (project-mode-line t))
   :bind
-  ("C-x p v" . vde-project/magit-status))
+  ("C-x p v" . vde/project-magit-status)
+  ("C-x p s" . vde/project-vterm)
+  ("C-x p X" . vde/project-run-in-vterm)
+  ("C-x p E" . vde/project-eat)
+  ("C-x p G" . checkout-github-pr))
 
 (use-package magit
   :unless noninteractive
