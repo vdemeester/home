@@ -31,7 +31,7 @@ let
       cape
       casual
       casual-avy
-      conner
+      chatgpt-shell
       consult
       consult-dir
       consult-denote
@@ -85,6 +85,7 @@ let
       indent-bars
       jinx
       jira
+      jiralib2
       json-mode
       kubed
       ligature
@@ -122,13 +123,14 @@ let
       orgit
       outline-indent
       ox-pandoc
+      ox-jira
       pandoc-mode
       # password-store
       # pkgs.bookmatrk-plus # Do I use it ?
+      popon
       popper
       project-rootfile
       rg
-      run-command # Try this out instead of conner, might be even better
       scopeline
       scratch
       shr-tag-pre-highlight
