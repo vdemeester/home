@@ -433,10 +433,14 @@
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
   (setq-default eglot-workspace-configuration
 		'(:gopls (:usePlaceholders t)))
-  
+  (defun eglot-format-buffer-on-save ()
+    (if (and (project-current) (eglot-managed-p))
+        (add-hook 'before-save-hook #'eglot-format-buffer nil 'local)
+      (remove-hook 'before-save-hook #'eglot-format-buffer 'local)))
+  (add-hook 'eglot-managed-mode-hook #'eglot-format-buffer-on-save)
   :hook
   ;; (before-save . gofmt-before-save)
-  (before-save . eglot-format-buffer)
+  ;; (before-save . eglot-format-buffer)
   (nix-mode . eglot-ensure)
   (nix-ts-mode . eglot-ensure)
   (rust-mode . eglot-ensure)
@@ -458,7 +462,7 @@
 (use-package markdown-mode
   :mode "\\.md\\'")
 
-(use-package yaml-mode
+(use-package yaml-ts-mode
   :mode "\\.yaml\\'")
 
 (use-package go-ts-mode
@@ -497,6 +501,9 @@
   :bind (("M-u"   . undo)
          ("M-U"   . undo-redo)
          ("C-x u" . vundo)))
+
+(use-package vde-vcs
+  :commands (vde/gh-get-current-repo))
 
 (use-package project-func
   :commands (vde/project-magit-status vde/project-eat vde/project-vterm vde/project-run-in-vterm vde/project-try-local vde/open-readme))
@@ -721,6 +728,31 @@
   (embark-cycle-key ".")
   (embark-help-key "?"))
 
+(use-package pr-review
+  :commands (pr-review pr-review-open pr-review-submit-review)
+  :custom
+  (pr-review-ghub-host "api.github.com")
+  (pr-review-notification-include-read nil)
+  (pr-review-notification-include-unsubscribed nil))
+
+(use-package pr-review-search
+  :commands (pr-review-search pr-review-search-open pr-review-current-repository pr-review-current-repository-search)
+  :config
+  (defun pr-review-current-repository-search (query)
+    "Run pr-review-search on the current repository."
+    (interactive "sSearch query: ")
+    (pr-review-search (format "is:pr archived:false is:open repo:%s %s" (vde/gh-get-current-repo) query)))
+  
+  (defun pr-review-current-repository ()
+    "Run pr-review-search on the current repository."
+    (interactive)
+    (pr-review-search (format "is:pr archived:false is:open repo:%s" (vde/gh-get-current-repo)))))
+
+(use-package jinx
+  :hook (emacs-startup . global-jinx-mode)
+  :bind (([remap ispell-word] . jinx-correct) ;; ("M-$" . jinx-correct)
+         ("C-M-$" . jinx-languages)))
+
 (use-package eljira
   :commands (eljira)
   :ensure nil
@@ -738,7 +770,6 @@
   (chatgpt-shell-deepseek-key (passage-get "ai/deepseek/api_key")))
 
 ;; TODO window management
-;; TODO dired configuration
 ;; TODO ORG mode configuration (BIG one)
 ;; TODO gptel configuration (and *maybe* copilot)
 
