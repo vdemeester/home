@@ -9,6 +9,7 @@
     # kubernetes
     crane
     kail
+    kind
     ko
     kubectl
     kubernetes-helm
