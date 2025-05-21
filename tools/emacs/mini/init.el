@@ -8,6 +8,30 @@
 ;; This is the "mini" version for now, but aims to become the default one.
 ;;; Code:
 
+;;; Some constants I am using across the configuration.
+(defconst org-directory "~/desktop/org/"
+  "`org-mode' directory, where most of the org-mode file lives.")
+(defconst org-notes-directory (expand-file-name "notes" org-directory)
+  "`org-mode' notes directory, for notes obviously, most likely managed by denote.")
+(defconst org-inbox-file (expand-file-name "inbox.org" org-directory)
+  "`org-mode' inbox file, where we collect entries to be triaged.")
+(defconst org-todos-file (expand-file-name "todos.org" org-directory)
+  "`org-mode' file for TODOs.  This is the main file for the org angenda entries.")
+(defconst org-archive-dir (expand-file-name "archive" org-directory)
+  "`org-mode' directory of archived files.")
+(defconst org-people-dir (expand-file-name "people" org-notes-directory)
+  "`org-mode' people files directory, most likely managed by denote.")
+
+;;; The configuration.
+
+;;; Quick access to certain key file using registers
+(set-register ?e `(file . ,(locate-user-emacs-file "init.el")))
+(set-register ?i `(file . ,org-inbox-file))
+(set-register ?t `(file . ,org-todos-file))
+(set-register ?o `(file . ,org-directory))
+(set-register ?P `(file . ,org-people-dir))
+
+;;; Some GC optimizations
 (defun my-minibuffer-setup-hook ()
   (setq gc-cons-threshold most-positive-fixnum))
 
