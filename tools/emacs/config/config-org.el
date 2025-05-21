@@ -367,13 +367,13 @@ file which do not already have one."
 	       `("m" "Email Workflow"))
   (add-to-list 'org-capture-templates
 	       `("mf" "Follow Up" entry
-		(function denote-journal-extras-new-or-existing-entry)
-		"* TODO Follow up with %:from on %a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i"
-		:immediate-finish t))
+		 (file ,org-inbox-file)
+		 "* TODO Follow up with %:from on %a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i"
+		 :immediate-finish t))
   (add-to-list 'org-capture-templates
 	       `("mr" "Read Later" entry
-		(function denote-journal-extras-new-or-existing-entry)
-		"* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i" :immediate-finish t))
+		 (file ,org-inbox-file)
+		 "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i" :immediate-finish t))
   ;; (add-to-list 'org-capture-templates
   ;;              `("m" "Meeting notes" entry
   ;;                (file+datetree ,org-meeting-notes-file)
