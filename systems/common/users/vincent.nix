@@ -54,8 +54,8 @@ in
     ];
     initialPassword = "changeMe";
 
-    # FIXME set this up
-    # openssh.authoizeKeys.keys = [ ];
+    # FIXME set this up better
+    openssh.authorizedKeys.keys = globals.ssh.vincent;
 
     # 🤔
     packages = [ pkgs.home-manager ];

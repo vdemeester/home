@@ -1,5 +1,13 @@
 { lib, ... }:
 {
+  ssh = {
+    vincent = [
+      # Yubikeys
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFT5Rx+4Wuvd8lMBkcHxb4oHdRhm/OTg+p5tvPzoIN9enSmgRw5Inm/SlS8ZzV87G1NESTgzDRi6hREvqDlKvxs="
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE="
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBFzxC16VqwTgWDQfw2YCiOw2JzpH3z9XgHtKoHhBdHi2i9m9XUc7fIUeEIIf7P8ARRNd8q5bjvl8JY7LtPkNCU="
+    ];
+  };
   net = {
     dns = {
       cacheNetworks = [
@@ -58,6 +66,10 @@
           ips = [ "10.100.0.83" ];
         };
       };
+      ssh = {
+        root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME root@aomi";
+        vincent = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJmTdMKYdgqpbQWBif58VBuwX+GqMGsMfB1ey1TKrM3 vincent@aomi";
+      };
     };
     demeter = {
       net = {
@@ -107,6 +119,12 @@
       *
     */
     wg-ips = ips: builtins.map (x: "${x}/24") ips;
+
+    # # keysFor = user: ;
+    # hasSSHAttr = _name: value: builtins.hasAttr "ssh" value;
+    # keysFor =
+    #   machines: user:
+    #   lib.attrsets.mapAttrsToList (_name: value: value) (lib.attrsets.filterAttrs hasSSHAttr machines);
 
     /**
         Return true if the given host has a list of Syncthing folder configured.
