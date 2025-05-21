@@ -132,8 +132,10 @@
       (load-theme 'modus-operandi :no-confirm)
     (load-theme 'modus-vivendi :no-confirm)))
 
-(setq load-prefer-newer t)              ; Always load newer compiled files
-(setq ad-redefinition-action 'accept)   ; Silence advice redefinition warnings
+(setopt load-prefer-newer t)              ; Always load newer compiled files
+(setopt ad-redefinition-action 'accept)   ; Silence advice redefinition warnings
+(setopt debug-on-error t)
+(setopt byte-compile-debug t)
 
 ;; Configure `use-package' prior to loading it.
 (eval-and-compile
@@ -168,11 +170,23 @@
   (make-backup-files nil)
   (read-extended-command-predicate #'command-completion-default-include-p)
   (mouse-autoselect 1)
+  (completion-cycle-threshold 2)
+  (completion-ignore-case t)
+  (completion-show-inline-help nil)
+  (completions-detailed t)
+  (enable-recursive-minibuffers t)
+  (read-buffer-completion-ignore-case t)
+  (read-file-name-completion-ignore-case t)
   (find-ls-option '("-exec ls -ldh {} +" . "-ldh"))  ; find-dired results with human readable sizes
   :hook
   (after-init . global-hl-line-mode)
   (after-init . global-completion-preview-mode)
+  (after-init . auto-insert-mode)
+  (after-init . pixel-scroll-mode)
   :config
+  (display-time-mode -1)
+  (tooltip-mode -1)
+  (blink-cursor-mode -1)
   (setenv "GIT_EDITOR" (format "emacs --init-dir=%s " (shell-quote-argument user-emacs-directory)))
   (setenv "EDITOR" (format "emacs --init-dir=%s " (shell-quote-argument user-emacs-directory)))
   (delete-selection-mode 1))
@@ -328,22 +342,22 @@
   :config
   (defun prot/comment-dwim (&optional arg)
     "Alternative to `comment-dwim': offers a simple wrapper
-around `comment-line' and `comment-dwim'.
+    around `comment-line' and `comment-dwim'.
 
-If the region is active, then toggle the comment status of the
-region or, if the major mode defines as much, of all the lines
-implied by the region boundaries.
+    If the region is active, then toggle the comment status of the
+    region or, if the major mode defines as much, of all the lines
+    implied by the region boundaries.
 
-Else toggle the comment status of the line at point."
+    Else toggle the comment status of the line at point."
     (interactive "*P")
     (if (use-region-p)
         (comment-dwim arg)
       (save-excursion
         (comment-line arg))))
   :bind (("C-;" . prot/comment-dwim)
-         ("C-:" . comment-kill)
-         ("M-;" . comment-indent)
-         ("C-x C-;" . comment-box)))
+    ("C-:" . comment-kill)
+    ("M-;" . comment-indent)
+    ("C-x C-;" . comment-box)))
 
 (use-package dired
   :custom
@@ -385,6 +399,10 @@ Else toggle the comment status of the line at point."
   (ansi-color-for-compilation-mode t)
   :config
   (add-hook 'compilation-finish-functions #'alert-after-finish-in-background))
+
+(use-package subword
+  :diminish
+  :hook (prog-mode-hook . subword-mode))
 
 ;; Recentf
 (use-package recentf
