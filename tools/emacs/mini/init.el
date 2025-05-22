@@ -661,6 +661,30 @@
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
+(use-package winner
+  :unless noninteractive
+  :hook
+  (after-init . winner-mode))
+
+(use-package windmove
+  :bind
+  ("S-<up>" . windmove-up)
+  ("S-<left>" . windmove-left)
+  ("S-<right>" . windmove-right)
+  ("S-<down>" . windmove-down)
+  ("M-S-<up>" . windmove-swap-states-up)
+  ("M-S-<left>" . windmove-swap-states-left)
+  ("M-S-<right>" . windmove-swap-states-right)
+  ("M-S-<down>" . windmove-swap-states-down))
+
+(use-package window
+  :unless noninteractive
+  :commands (shrink-window-horizontally shrink-window enlarge-window-horizontally enlarge-window)
+  :bind (("S-C-<left>" . shrink-window-horizontally)
+         ("S-C-<right>" . enlarge-window-horizontally)
+         ("S-C-<down>" . shrink-window)
+         ("S-C-<up>" . enlarge-window)))
+
 ;; Prefer ripgrep (rg) if present (instead of grep)
 (setq xref-search-program
       (cond
@@ -771,6 +795,21 @@
 
 ;; TODO window management
 ;; TODO ORG mode configuration (BIG one)
+(use-package org
+  :config
+  (unbind-key "S-<left>" org-mode-map)
+  (unbind-key "S-<right>" org-mode-map)
+  (unbind-key "S-<up>" org-mode-map)
+  (unbind-key "S-<down>" org-mode-map)
+  (unbind-key "M-S-<left>" org-mode-map)
+  (unbind-key "M-S-<right>" org-mode-map)
+  (unbind-key "M-S-<up>" org-mode-map)
+  (unbind-key "M-S-<down>" org-mode-map)
+  (unbind-key "C-S-<left>" org-mode-map)
+  (unbind-key "C-S-<right>" org-mode-map)
+  (unbind-key "C-S-<up>" org-mode-map)
+  (unbind-key "C-S-<down>" org-mode-map))
+
 ;; TODO gptel configuration (and *maybe* copilot)
 
 (provide 'init)
