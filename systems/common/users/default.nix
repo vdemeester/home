@@ -2,6 +2,7 @@
 {
   # Default users, to create everywhere
   imports = [
+    ./root.nix
     ./vincent.nix
   ];
   users.motd = with config; ''

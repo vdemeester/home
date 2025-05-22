@@ -109,6 +109,11 @@
         };
       };
     };
+    shikoku = {
+      ssh = {
+        vincent = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGxstR3xEf87leVVDS3GVPx8Ap9+eP+OfkSvM26V54XP vincent@shikoku";
+      };
+    };
   };
   # FIXME Maybe I should move this elsewhere, in ./lib maybe ?
   fn = {
