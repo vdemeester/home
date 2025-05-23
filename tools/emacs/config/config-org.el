@@ -83,7 +83,7 @@
   (org-ellipsis "…")
   (org-return-follows-link t)
   
-  (org-todo-keywords '((sequence "STRT(s)" "NEXT(n)" "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANX(c)")))
+  (org-todo-keywords '((sequence "STRT(s)" "NEXT(n)" "TODO(t)" "WAIT(w)" "|" "DONE(d!)" "CANX(c@/!)")))
   (org-todo-state-tags-triggers '(("CANX" ("CANX" . t))
                                   ("WAIT" ("WAIT" . t))
                                   (done ("WAIT"))
