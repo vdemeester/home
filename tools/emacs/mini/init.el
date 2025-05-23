@@ -432,7 +432,65 @@
   (add-to-list 'eglot-server-programs `(json-mode  "vscode-json-language-server" "--stdio"))
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
   (setq-default eglot-workspace-configuration
-		'(:gopls (:usePlaceholders t)))
+		'(
+		  :gopls (
+			  :usePlaceholders t
+			  ;; See https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
+			  :analyses (
+				     :QF1006 t
+				     :QF1007 t
+				     :S1002 t
+				     :S1005 t
+				     :S1006 t
+				     :S1008 t
+				     :S1025 t
+				     :SA1003 t
+				     :SA1014 t
+				     :SA1015 t
+				     :SA1023 t
+				     :SA1032 t
+				     :SA2002 t
+				     :SA4023 t
+				     :SA4031 t
+				     :SA5000 t
+				     :SA5010 t
+				     :SA5000 t
+				     :SA6000 t
+				     :SA6001 t
+				     :SA6002 t
+				     :SA6003 t
+				     :SA9003 t
+				     :SA9007 t
+				     :ST1000 t
+				     :ST1001 t
+				     :ST1005 t
+				     :ST1013 t
+				     :ST1015 t
+				     :ST1016 t
+				     :ST1017 t
+				     :ST1019 t
+				     :ST1020 t
+				     :ST1021 t
+				     :ST1022 t
+				     :ST1023 t
+				     :shadow t
+				     )
+			  ;; See https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
+			  :hints (:constantValues t :compositeLiteralTypes t :compositeLiteralFields t))
+		  :nil (
+			:formatting (:command ["nixfmt"])
+			:nix (
+			      :maxMemoryMB 2560
+			      :autoEvalInputs t
+			      :nixpkgsInputName "nixpkgs"
+			      )
+			)
+		  :pylsp (
+			  :configurationSources ["flake8"]
+			  :plugins (:pycodestyle (:enabled nil)
+						 :black (:enabled t)
+						 :mccabe (:enabled nil)
+						 :flake8 (:enabled t)))))
   (defun eglot-format-buffer-on-save ()
     (if (and (project-current) (eglot-managed-p))
         (add-hook 'before-save-hook #'eglot-format-buffer nil 'local)
@@ -446,18 +504,15 @@
   (rust-mode . eglot-ensure)
   (rust-ts-mode . eglot-ensure)
   (python-mode . eglot-ensure)
-  ;; (json-mode . eglot-ensure)
-  ;; (yaml-mode . eglot-ensure)
-  ;; (c-mode . eglot-ensure)
-  ;; (cc-mode . eglot-ensure)
+  (python-ts-mode . eglot-ensure)
   (go-mode . eglot-ensure)
   (go-ts-mode . eglot-ensure)
-  ;; (js-mode . eglot-ensure)
-  ;; (js2-mode . eglot-ensure)
-  ;; (typescript-mode . eglot-ensure)
-  ;; (typescript-ts-mode . eglot-ensure)
   (sh-mode . eglot-ensure)
   (sh-script-mode . eglot-ensure))
+
+(setq major-mode-remap-alist
+      '((python-mode . python-ts-mode)
+	(go-mode . go-ts-mode)))
 
 (use-package markdown-mode
   :mode "\\.md\\'")
