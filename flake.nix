@@ -105,6 +105,12 @@
           pkgsInput = inputs.nixpkgs-24_11;
           homeInput = inputs.home-manager-24_11;
         };
+        aix = libx.mkHost {
+          hostname = "aix";
+          hardwareType = "rpi4";
+          pkgsInput = inputs.nixpkgs-24_11;
+          homeInput = inputs.home-manager-24_11;
+        };
         # shikoku = libx.mkHost { hostname = "shikoku"; };
         # FIXME migrate to libx.mkHost
         aomi = inputs.nixpkgs.lib.nixosSystem {

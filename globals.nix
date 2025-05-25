@@ -80,6 +80,14 @@
         };
       };
     };
+    aix = {
+      net = {
+        vpn = {
+          pubkey = "D1HoBqrqBchHOOi8mjKpVg5vZtt+iFy8wj4o3kGYwkc=";
+          ips = [ "10.100.0.89" ];
+        };
+      };
+    };
     kyushu = {
       net = {
         ips = [

@@ -46,6 +46,7 @@ let
       hass = "10.100.0.81";
       demeter = "10.100.0.82";
       athena = "10.100.0.83";
+      aix = "10.100.0.89";
       aion = "10.100.0.49";
     };
     kerkouane = {
@@ -67,6 +68,10 @@ let
     demeter = {
       allowedIPs = [ "${wireguard.ips.demeter}/32" ];
       publicKey = "/bBh4gvDty/AA2qIiHc7K0OHoOXWmj2SFFXdDq8nsUU=";
+    };
+    aix = {
+      allowedIPs = [ "${wireguard.ips.aix}/32" ];
+      publicKey = "D1HoBqrqBchHOOi8mjKpVg5vZtt+iFy8wj4o3kGYwkc=";
     };
     aion = {
       allowedIPs = [ "${wireguard.ips.aion}/32" ];
@@ -197,6 +202,7 @@ in
       wireguard.hass
       wireguard.demeter
       wireguard.athena
+      wireguard.aix
       wireguard.aion
       wireguard.honshu
       wireguard.houbeb
