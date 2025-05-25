@@ -23,7 +23,6 @@
       forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
 
       stableModules = [ inputs.home-manager-24_11.nixosModules.home-manager ];
-      unstableModules = [ inputs.home-manager.nixosModules.home-manager ];
       commonModules = [
         {
           config.nixpkgs.overlays = [
@@ -86,9 +85,9 @@
           desktop = "sway";
         };
         # Work workstation (unstable)
-        # aomi = libx.mkhost {
-        # 	hostname = "aomi";
-        # };
+        aomi = libx.mkHost {
+          hostname = "aomi";
+        };
         # # Servers (unstable)
         kobe = libx.mkHost { hostname = "kobe"; };
         athena = libx.mkHost {
@@ -113,17 +112,17 @@
         };
         # shikoku = libx.mkHost { hostname = "shikoku"; };
         # FIXME migrate to libx.mkHost
-        aomi = inputs.nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules =
-            commonModules
-            ++ unstableModules
-            ++ [
-              inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
-              inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-              ./systems/hosts/aomi.nix
-            ];
-        };
+        # aomi = inputs.nixpkgs.lib.nixosSystem {
+        #   system = "x86_64-linux";
+        #   modules =
+        #     commonModules
+        #     ++ unstableModules
+        #     ++ [
+        #       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
+        #       inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+        #       ./systems/hosts/aomi.nix
+        #     ];
+        # };
 
         # Servers (stable)
         shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {

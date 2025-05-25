@@ -117,7 +117,23 @@
         };
       };
     };
+    aomi = {
+      net = {
+        ips = [ "192.168.1.23" ];
+        vpn = {
+          pubkey = "XT4D9YLeVHwMb9R4mhBLSWHYF8iBO/UOT86MQL1jnA4=";
+          ips = [ "10.100.0.17" ];
+        };
+      };
+    };
     shikoku = {
+      net = {
+        ips = [ "192.168.1.24" ];
+        vpn = {
+          pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
+          ips = [ "10.100.0.2" ];
+        };
+      };
       ssh = {
         vincent = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGxstR3xEf87leVVDS3GVPx8Ap9+eP+OfkSvM26V54XP vincent@shikoku";
       };

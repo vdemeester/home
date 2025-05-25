@@ -1,4 +1,8 @@
-_: {
+{
+  globals,
+  ...
+}:
+{
 
   imports = [
     ../common/hardware/laptop.nix
@@ -25,7 +29,7 @@ _: {
     '';
     wireguard = {
       enable = true;
-      ips = globals.fn.wg-ips globals.machines.kyushu.net.vpn.ips;
+      ips = globals.fn.wg-ips globals.machines.aomi.net.vpn.ips;
       endpoint = "${globals.net.vpn.endpoint}";
       endpointPublicKey = "${globals.net.vpn.pubkey}";
     };

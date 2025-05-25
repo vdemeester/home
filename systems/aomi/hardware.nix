@@ -1,12 +1,13 @@
 {
   inputs,
+  ...
 }:
 {
   imports = [
     # inputs.disko.nixosModules.diskop # Do this if re-install
     # (import ./disks.nix { inherit lib; })
 
-    inputs.nixos-hardware.nixosModules.lenovo-thinkap-p1-3th-gen
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
 
     ../common/hardware/acpid.nix
     # ../common/hardware/bluetooth.nix
@@ -24,7 +25,7 @@
       allowDiscards = true;
       keyFile = "/dev/disk/by-id/mmc-SD08G_0x704a5a38";
       keyFileSize = 4096;
-      fallbackToPassword = true;
+      # fallbackToPassword = true;
     };
   };
 
