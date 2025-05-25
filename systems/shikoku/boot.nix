@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -44,6 +45,7 @@ in
       "kvm_intel.nested=1"
       ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs)
     ];
-    boot.initrd.kernelModules = [ "nvidia" ];
+
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 }
