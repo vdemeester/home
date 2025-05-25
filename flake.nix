@@ -84,47 +84,38 @@
           hostname = "kyushu";
           desktop = "sway";
         };
-        # Work workstation (unstable)
+        # Servers (unstable)
         aomi = libx.mkHost {
           hostname = "aomi";
         };
-        # # Servers (unstable)
-        kobe = libx.mkHost { hostname = "kobe"; };
+        kobe = libx.mkHost {
+          hostname = "kobe";
+        };
+        # Servers (stable)
         athena = libx.mkHost {
           hostname = "athena";
           system = "aarch64-linux";
           hardwareType = "rpi4";
-          pkgsInput = inputs.nixpkgs-24_11;
-          homeInput = inputs.home-manager-24_11;
+          pkgsInput = inputs.nixpkgs-25_05;
+          homeInput = inputs.home-manager-25_05;
         };
         demeter = libx.mkHost {
           hostname = "demeter";
           system = "aarch64-linux";
           hardwareType = "rpi4";
-          pkgsInput = inputs.nixpkgs-24_11;
-          homeInput = inputs.home-manager-24_11;
+          pkgsInput = inputs.nixpkgs-25_05;
+          homeInput = inputs.home-manager-25_05;
         };
         aix = libx.mkHost {
           hostname = "aix";
           hardwareType = "rpi4";
-          pkgsInput = inputs.nixpkgs-24_11;
-          homeInput = inputs.home-manager-24_11;
+          pkgsInput = inputs.nixpkgs-25_05;
+          homeInput = inputs.home-manager-25_05;
         };
         # shikoku = libx.mkHost { hostname = "shikoku"; };
+        # sakhalin = libx.mkHost { hostname = "sakhalin"; };
+        # kerkouane = libx.mkHost { hostname = "kerkouane"; };
         # FIXME migrate to libx.mkHost
-        # aomi = inputs.nixpkgs.lib.nixosSystem {
-        #   system = "x86_64-linux";
-        #   modules =
-        #     commonModules
-        #     ++ unstableModules
-        #     ++ [
-        #       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
-        #       inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-        #       ./systems/hosts/aomi.nix
-        #     ];
-        # };
-
-        # Servers (stable)
         shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {
           system = "x86_64-linux";
           modules = commonModules ++ stableModules ++ [ ./systems/hosts/shikoku.nix ];
@@ -149,12 +140,6 @@
               ./systems/hosts/kerkouane.nix
             ];
         };
-        # carthage = inputs.nixpkgs-24_11.lib.nixosSystem {
-        #   system = "aarch64-linux";
-        #   modules = commonModules ++ stableModules ++ [
-        #     ./systems/hosts/carthage.nix
-        #   ];
-        # };
       };
 
       nixosModules = {
