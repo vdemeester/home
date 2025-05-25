@@ -108,6 +108,7 @@
         };
         aix = libx.mkHost {
           hostname = "aix";
+          system = "aarch64-linux";
           hardwareType = "rpi4";
           pkgsInput = inputs.nixpkgs-25_05;
           homeInput = inputs.home-manager-25_05;
