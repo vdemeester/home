@@ -264,6 +264,12 @@
       repo = "nixpkgs";
       ref = "nixos-unstable";
     };
+    nixpkgs-25_05 = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-25.05";
+    };
     nixpkgs-24_11 = {
       type = "github";
       owner = "NixOS";
@@ -279,6 +285,13 @@
       owner = "nix-community";
       repo = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager-25_05 = {
+      type = "github";
+      owner = "nix-community";
+      repo = "home-manager";
+      ref = "release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-25_05";
     };
     home-manager-24_11 = {
       type = "github";
@@ -338,6 +351,8 @@
     };
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix-25_05.url = "github:ryantm/agenix";
+    agenix-25_05.inputs.nixpkgs.follows = "nixpkgs-25_05";
     agenix-24_11.url = "github:ryantm/agenix";
     agenix-24_11.inputs.nixpkgs.follows = "nixpkgs-24_11";
 
