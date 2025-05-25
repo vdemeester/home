@@ -851,6 +851,168 @@
 ;; TODO window management
 ;; TODO ORG mode configuration (BIG one)
 (use-package org
+  :mode (("\\.org$" . org-mode)
+         ("\\.org.draft$" . org-mode))
+  :commands (org-agenda org-capture)
+  :bind (("C-c o l" . org-store-link)
+         ("C-c o r r" . org-refile)
+	 ;; ("C-c o r R" . vde/reload-org-refile-targets)
+         ("C-c o a a" . org-agenda)
+	 ;; ("C-c o a r" . vde/reload-org-agenda-files)
+	 ;; ("C-c C-x i" . vde/org-clock-in-any-heading)
+         ("C-c o s" . org-sort)
+	 ("C-c O" . org-open-at-point-global)
+         ("<f12>" . org-agenda))
+  :custom
+  (org-use-speed-commands t)
+  (org-special-ctrl-a/e t)
+  (org-special-ctrl-k t)
+  (org-hide-emphasis-markers t)
+  (org-pretty-entities t)
+  (org-ellipsis "…")
+  (org-return-follows-link t)
+  (org-todo-keywords '((sequence "STRT(s)" "NEXT(n)" "TODO(t)" "WAIT(w)" "|" "DONE(d!)" "CANX(c@/!)")))
+  (org-todo-state-tags-triggers '(("CANX" ("CANX" . t))
+                                  ("WAIT" ("WAIT" . t))
+                                  (done ("WAIT"))
+                                  ("TODO" ("WAIT") ("CANX"))
+                                  ("NEXT" ("WAIT") ("CANX"))
+                                  ("DONE" ("WAIT") ("CANX"))))
+  (org-tag-alist
+   '((:startgroup)
+     ("Handson" . ?o)
+     (:grouptags)
+     ("Write" . ?w) ("Code" . ?c)
+     (:endgroup)
+     
+     (:startgroup)
+     ("Handsoff" . ?f)
+     (:grouptags)
+     ("Read" . ?r) ("Watch" . ?W) ("Listen" . ?l)
+     (:endgroup)))
+  (org-log-done 'time)
+  (org-log-redeadline 'time)
+  (org-log-reschedule 'time)
+  (org-log-into-drawer t)
+  (org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
+  (org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$")
+  (org-agenda-files `(,org-inbox-file ,org-todos-file))
+  (org-agenda-remove-tags t)
+  (org-agenda-span 'day)
+  (org-agenda-start-on-weekday 1)
+  (org-agenda-window-setup 'current-window)
+  (org-agenda-sticky t)
+  (org-agenda-sorting-strategy
+   '((agenda time-up deadline-up scheduled-up todo-state-up priority-down)
+     (todo todo-state-up priority-down deadline-up)
+     (tags todo-state-up priority-down deadline-up)
+     (search todo-state-up priority-down deadline-up)))
+  (org-agenda-custom-commands
+   '(
+     ;; Archive tasks
+     ("#" "To archive" todo "DONE|CANX")
+     ;; TODO take inspiration from those
+     ;; ("$" "Appointments" agenda* "Appointments")
+     ;; ("b" "Week tasks" agenda "Scheduled tasks for this week"
+     ;;  ((org-agenda-category-filter-preset '("-RDV")) ; RDV for Rendez-vous
+     ;;   (org-agenda-use-time-grid nil)))
+     ;; 
+     ;; ;; Review started and next tasks
+     ;; ("j" "STRT/NEXT" tags-todo "TODO={STRT\\|NEXT}")
+     ;; 
+     ;; ;; Review other non-scheduled/deadlined to-do tasks
+     ;; ("k" "TODO" tags-todo "TODO={TODO}+DEADLINE=\"\"+SCHEDULED=\"\"")
+     ;; 
+     ;; ;; Review other non-scheduled/deadlined pending tasks
+     ;; ("l" "WAIT" tags-todo "TODO={WAIT}+DEADLINE=\"\"+SCHEDULED=\"\"")
+     ;; 
+     ;; ;; Review upcoming deadlines for the next 60 days
+     ;; ("!" "Deadlines all" agenda "Past/upcoming deadlines"
+     ;;  ((org-agenda-span 1)
+     ;;   (org-deadline-warning-days 60)
+     ;;   (org-agenda-entry-types '(:deadline))))
+
+     ("d" "Daily Agenda"
+      ((agenda ""
+	       ((org-agenda-span 'day)
+		(org-deadline-warning-days 5)))
+       (tags-todo "+PRIORITY=\"A\""
+		  ((org-agenda-overriding-header "High Priority Tasks")))
+       (todo "NEXT"
+	     ((org-agenda-overriding-header "Next Tasks")))))
+     ("D" "Daily Agenda (old)"
+      ((agenda ""
+	       ((org-agenda-files (vde/all-org-agenda-files))
+		(org-agenda-span 'day)
+		(org-deadline-warning-days 5)))
+       (tags-todo "+PRIORITY=\"A\""
+		  ((org-agenda-files (vde/all-org-agenda-files))
+		   (org-agenda-overriding-header "High Priority Tasks")))
+       (todo "NEXT"
+	     ((org-agenda-files (vde/all-org-agenda-files))
+	      (org-agenda-overriding-header "Next Tasks")))))
+     ("i" "Inbox (triage)"
+      ((tags-todo ".*"
+		  ((org-agenda-files `(,org-inbox-file)) ;; FIXME use constant here
+		   (org-agenda-overriding-header "Unprocessed Inbox Item")))))
+     ("A" "All (old)"
+      ((tags-todo ".*"
+		  ((org-agenda-files (vde/all-org-agenda-files))))))
+     ("u" "Untagged Tasks"
+      ((tags-todo "-{.*}"
+		  ((org-agenda-overriding-header "Untagged tasks")))))
+     ("w" "Weekly Review"
+      ((agenda ""
+	       ((org-agenda-overriding-header "Completed Tasks")
+		(org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
+		(org-agenda-span 'week)))
+       (agenda ""
+	       ((org-agenda-overriding-header "Unfinished Scheduled Tasks")
+		(org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+		(org-agenda-span 'week)))))
+     ;; FIXME Should only take into account projects and areas ?
+     ("R" "Review projects" tags-todo "-CANX/"
+      ((org-agenda-overriding-header "Reviews Scheduled")
+       (org-agenda-skip-function 'org-review-agenda-skip)
+       (org-agenda-cmp-user-defined 'org-review-compare)
+       (org-agenda-sorting-strategy '(user-defined-down))))))
+  ;; TODO cleanup this list a bit
+  (org-agenda-category-icon-alist `(("personal"  ,(list (propertize "🏡")))
+				    ("work"  ,(list (propertize "🏢")))
+				    ("appointments"  ,(list (propertize "📅")))
+				    ("health"  ,(list (propertize "⚕️")))
+				    ("systems"  ,(list (propertize "🖥️")))
+				    ("journal"  ,(list (propertize "📝")))
+				    ("project--" ,(list (propertize "💼" )))
+				    ("tekton", (list (propertize "😼")))
+				    ("openshift-pipelines", (list (propertize "🎩")))
+				    ("redhat", (list (propertize "🎩")))
+				    ("area--"  ,(list (propertize"🏢" )))
+				    ("area--home"  ,(list (propertize "🏡")))
+				    ("home"  ,(list (propertize "🏡")))
+				    ("home-services" ,(list (propertize "☕ ")))
+				    ("email"  ,(list (propertize"📨" )))
+				    ("people"  ,(list (propertize"👤" )))
+				    ("machine" ,(list (propertize "🖥️")))
+				    ("website" ,(list (propertize "🌍")))
+				    ("bike" ,(list (propertize "🚴‍♂️")))
+				    ("security" ,(list (propertize "🛡️")))
+				    ("i*" ,(list (propertize "📒")))))
+  (org-agenda-prefix-format '((agenda . " %i %?-12t% s")
+			      (todo . " %i")
+			      (tags . " %i")
+			      (search . " %i")))
+  (org-insert-heading-respect-content t)
+  (org-M-RET-may-split-line '((default . nil)))
+  (org-goto-interface 'outline-path-completion)
+  (org-outline-path-complete-in-steps nil)
+  (org-goto-max-level 2)
+  :bind
+  (:map org-mode-map
+	("C-<left>" . org-shiftleft)
+	("C-<right>" . org-shiftright)
+	("C-<up>" . org-shiftup)
+	("C-<down>" . org-shiftdown))
   :config
   (unbind-key "S-<left>" org-mode-map)
   (unbind-key "S-<right>" org-mode-map)
