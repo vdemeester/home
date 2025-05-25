@@ -29,6 +29,7 @@
   environment.systemPackages = with pkgs; [
     binutils
     curl
+    f2
     file
     htop
     iotop
