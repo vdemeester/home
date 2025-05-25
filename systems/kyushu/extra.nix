@@ -31,6 +31,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    nixos-rebuild-ng
     go-org-readwise
     # Keyboard
     keymapp
