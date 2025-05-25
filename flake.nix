@@ -173,13 +173,13 @@
       };
 
       images = {
-        # ami(s) (AWS)
-        carthage = inputs.nixos-generators.nixosGenerate rec {
-          system = "aarch64-linux";
-          format = "amazon";
-          modules = commonModules ++ stableModules ++ [ ./systems/hosts/carthage.nix ];
-        };
         # sdimages
+        aix =
+          (self.nixosConfigurations.aix.extendModules {
+            modules = [
+              "${inputs.nixpkgs-24_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            ];
+          }).config.system.build.sdImage;
         athena =
           (self.nixosConfigurations.athena.extendModules {
             modules = [
