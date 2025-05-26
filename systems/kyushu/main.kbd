@@ -1,0 +1,112 @@
+;; Variables for tap/hold timings
+(defvar
+  tap-time 300
+  hold-time 200)
+
+(defchords querty 50
+  (h      ) h
+  (  j    ) j
+  (    k  ) k
+  (      l) l
+;;  (   k  l) M-`
+;;  ( j    l) @backforth
+  ( j k   ) esc 
+  (h  k    ) @capsword
+)
+
+;; Aliases for custom key behaviors
+(defalias
+  chj	    (chord querty j)
+  chk	    (chord querty k)
+  chl	    (chord querty l)
+  chh	    (chord querty h)
+
+  hyper     (multi lctl lalt lsft lmet)
+  capsword  (caps-word 2000)
+  escctrl   (tap-hold 100 100 esc lctl)
+  a_met     (tap-hold 500 $hold-time a lmet)
+  s_alt     (tap-hold 500 $hold-time s lalt)
+  d_sft     (tap-hold 500 $hold-time d lsft)
+  f_ctl     (tap-hold 500 $hold-time f lctl)
+  j_ctl     (tap-hold 500 $hold-time @chj rctl)
+  k_sft     (tap-hold 500 $hold-time @chk rsft)
+  l_ralt    (tap-hold 500 $hold-time @chl ralt)
+  scln_met  (tap-hold 500 $hold-time scln rmet)
+  apos_hyp  (tap-hold 500 $hold-time apos @hyper)
+  s_met     (tap-hold 500 $hold-time s lmet) 
+  d_alt     (tap-hold 500 $hold-time d lalt)
+  f_sft     (tap-hold 500 $hold-time f lsft) 
+  p_rsft    (tap-hold $tap-time $hold-time p rsft)
+  i_ralt    (tap-hold $tap-time $hold-time i ralt)
+  o_rmet    (tap-hold $tap-time $hold-time o rmet)
+  ;; fnl       (one-shot 5000 (layer-while-held fn))
+  thyper    (tap-hold $tap-time $hold-time spc @hyper)
+  backforth (tap-hold 100 $hold-time M-tab rsft) 
+  ;; nav  	    (layer-toggle nav_layer)
+  ;; scln_nav  (tap-hold $tap-time $hold-time scln @nav)
+  )
+
+(defsrc
+  esc         f1   f2   f3   f4  f5   f6   f7   f8   f9   f10 f11 f12  home end ins del         ;;  Row 1
+  grv 1    2    3    4   5    6    7    8    9    0   -   =    bspc     ;;  Row 2
+  tab         q    w    e    r   t    y    u    i    o    p   [   ]    bksl     ;;  Row 3
+  caps        a    s    d    f   g    h    j    k    l    scln   '   ret           ;;  Row 4
+  lsft        z    x    c   v    b    n    m    ,    .   /   rsft       ;;  Row 5
+  lctl        lmet lalt           spc              ralt rctl pgup up pgdn ;;  Row 6
+                                                                  left down right
+)
+
+(deflayer base
+  esc         f1   f2   f3   f4  f5   f6   f7   f8   f9   f10 f11 f12  home end ins del         ;;  Row 1
+  grv 1    2    3    4   5    6    7    8    9    0   -   =    bspc     ;;  Row 2
+  tab         q    w    e    r   t    y    u    i    o    p   [   ]    bksl     ;;  Row 3
+  caps        @a_met @s_alt @d_sft @f_ctl   g    @chh @j_ctl @k_sft @l_ralt  @scln_met @apos_hyp   ret           ;;  Row 4
+  lsft        z    x    c   v    b    n    m    ,    .   /   rsft       ;;  Row 5
+  lctl        lmet lalt           spc              ralt rctl pgup up pgdn ;;  Row 6
+                                                                  left down right
+)
+
+;; (deflayer base
+;;   ;; Row 1
+;;   esc brdn brup vold volu _    _    prev pp   next mute vold volu
+;;   ;; Row 2
+;;  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+;;   ;; Row 3
+;;   tab      q    w    e    r    t    y    u    i   o   p  [    ]    bksl
+;;   ;; Row 4
+;;   @escctrl  a    @s_met @d_alt @f_sft g    @chh    @chj    @chk    @chl    @scln_nav '    ret
+;;   ;; Row 5
+;;   @backforth @nav z    x    c    v    b    n    m    ,    .    /    rsft up
+;;   ;; Row 6
+;;   lctl lalt lmet           @thyper        rmet ralt left down rght
+;; )
+
+;; (deflayer fn
+;;   ;; Row 1
+;;   _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+;;   ;; Row 2
+;;   _    _    _    _    _    _    _    _    _    _    _    _    _    del
+;;   ;; Row 3
+;;   _    _    _    _    _    _    _    _    _    _    _    _    _    _
+;;   ;; Row 4
+;;   _    _    _    _    _    _    _    _    _    _    _    _    _
+;;   ;; Row 5
+;;   _    _  _  _    _    _    _    _    _    _    _    _    _    pgup
+;;   ;; Row 6
+;;   _    _    _              _              _    _    home pgdn end
+;; )
+;; 
+;; (deflayer nav_layer
+;;   ;; Row 1
+;;   _    _    _    _    _    _    _    _    _    _    _    _    _
+;;   ;; Row 2
+;;   _    _    _    _    _    _    _    _    _    _    _    _    _    _
+;;   ;; Row 3
+;;   _    left    right       _    _    _    _        _     up  M-`    _    _    _    _
+;;   ;; Row 4
+;;   _    _        down    up    _    _    _       left down right  _    _    _
+;;   ;; Row 5
+;;   _    _        left       right   _    _    _       _       _    _ _    _    _    _
+;;   ;; Row 6
+;;   _  M-S-[    M-S-]                  _              M-S-[    M-S-]    _    _    _
+;; )

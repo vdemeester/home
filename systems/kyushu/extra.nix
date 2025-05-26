@@ -21,6 +21,21 @@
   ];
 
   services = {
+    # TODO probably migrate elsewhere
+    kanata = {
+      enable = true;
+      package = pkgs.kanata-with-cmd;
+      keyboards.x1 = {
+        devices = [ "/dev/input/event0" ]; # internal keyboard
+        config = builtins.readFile (./. + "/main.kbd");
+        extraDefCfg = ''
+          	danger-enable-cmd yes
+            process-unmapped-keys yes
+            override-release-on-activation yes
+            concurrent-tap-hold yes
+        '';
+      };
+    };
     wireguard = {
       enable = true;
       ips = globals.fn.wg-ips globals.machines.kyushu.net.vpn.ips;
@@ -31,6 +46,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    kanata
     nixos-rebuild-ng
     go-org-readwise
     # Keyboard
