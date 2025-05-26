@@ -22,6 +22,7 @@
     aspellDicts.en
     aspellDicts.fr
     ffmpeg-full
+    fractal
     hunspell
     hunspellDicts.en_GB-ize
     hunspellDicts.en_US-large
