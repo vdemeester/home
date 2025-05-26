@@ -3,7 +3,7 @@
   tap-time 300
   hold-time 200)
 
-(defchords querty 50
+(defchords querty 20
   (h      ) h
   (  j    ) j
   (    k  ) k
