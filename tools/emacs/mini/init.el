@@ -580,6 +580,7 @@
 			     (?g "Checkout GitHub PR" checkout-github-pr)))
   (project-mode-line t)
   (project-compilation-buffer-name-function 'project-prefixed-buffer-name)
+  (project-vc-extra-root-markers '(".project" "Cargo.toml" "pyproject.toml" "requirements.txt" "go.mod"))
   :bind
   ("C-x p v" . vde/project-magit-status)
   ("C-x p s" . vde/project-vterm)
