@@ -29,6 +29,7 @@
 (set-register ?i `(file . ,org-inbox-file))
 (set-register ?t `(file . ,org-todos-file))
 (set-register ?o `(file . ,org-directory))
+(set-register ?n `(file . ,org-notes-directory))
 (set-register ?P `(file . ,org-people-dir))
 
 ;;; Some GC optimizations
@@ -1026,6 +1027,142 @@
   (unbind-key "C-S-<right>" org-mode-map)
   (unbind-key "C-S-<up>" org-mode-map)
   (unbind-key "C-S-<down>" org-mode-map))
+
+;; Make sure we load org-protocol
+(use-package org-protocol
+  :after org)
+
+(use-package org-tempo
+  :after (org)
+  :custom
+  (org-structure-template-alist '(("a" . "aside")
+				  ("c" . "center")
+				  ("C" . "comment")
+				  ("e" . "example")
+				  ("E" . "export")
+				  ("Ea" . "export ascii")
+				  ("Eh" . "export html")
+				  ("El" . "export latex")
+				  ("q" . "quote")
+				  ("s" . "src")
+				  ("se" . "src emacs-lisp")
+				  ("sE" . "src emacs-lisp :results value code :lexical t")
+				  ("sg" . "src go")
+				  ("sr" . "src rust")
+				  ("sp" . "src python")
+				  ("v" . "verse"))))
+
+(use-package org-capture
+  :after org
+  :commands (org-capture)
+  :config
+
+  ;; TODO: refine this, create a function that reset this
+  (add-to-list 'org-capture-templates
+               `("l" "Link" entry
+                 (file ,org-inbox-file)
+                 "* %a\n%U\n%?\n%i"
+                 :empty-lines 1))
+  (add-to-list 'org-capture-templates
+	       `("d" "daily entry" entry
+		 (function denote-journal-extras-new-or-existing-entry)
+                 "* %a\n%U\n%?\n%i"
+                 :empty-lines 1))
+  (add-to-list 'org-capture-templates
+               `("t" "Tasks"))
+  (add-to-list 'org-capture-templates
+               `("tt" "New task" entry
+                 (file ,org-inbox-file)
+                 "* %?\n:PROPERTIES:\n:CREATED:\t%U\n:END:\n\n%i\n\nFrom: %a"
+                 :empty-lines 1))
+  ;; Refine this
+  (add-to-list 'org-capture-templates
+               `("tr" "PR Review" entry
+                 (file ,org-inbox-file)
+                 "* TODO review gh:%^{issue} :review:\n:PROPERTIES:\n:CREATED:%U\n:END:\n\n%i\n%?\nFrom: %a"
+                 :empty-lines 1))
+  ;; emails
+  (add-to-list 'org-capture-templates
+	       `("m" "Email Workflow"))
+  (add-to-list 'org-capture-templates
+	       `("mf" "Follow Up" entry
+		 (file ,org-inbox-file)
+		 "* TODO Follow up with %:from on %a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i"
+		 :immediate-finish t))
+  (add-to-list 'org-capture-templates
+	       `("mr" "Read Later" entry
+		 (file ,org-inbox-file)
+		 "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i" :immediate-finish t))
+  ;; (add-to-list 'org-capture-templates
+  ;;              `("m" "Meeting notes" entry
+  ;;                (file+datetree ,org-meeting-notes-file)
+  ;;                (file ,(concat user-emacs-directory "/etc/orgmode/meeting-notes.org"))))
+
+  (add-to-list 'org-capture-templates
+               `("w" "Writing"))
+  (add-hook 'org-capture-after-finalize-hook #'vde/window-delete-popup-frame)
+  :bind (("C-c o c" . org-capture)))
+
+(use-package denote
+  :commands (denote)
+  :bind (("C-c n c" . denote-region)
+	 ("C-c n i" . denote-link-or-create)
+	 ("C-c n b" . denote-backlinks)
+	 ("C-c n F f" . denote-find-link)
+	 ("C-c n F b" . denote-find-backlink))
+  :custom
+  (denote-directory org-notes-directory)
+  (denote-rename-buffer-format "📝 %t")
+  (denote-date-prompt-denote-date-prompt-use-org-read-date t)
+  (denote-prompts '(title keywords))
+  (denote-backlinks-display-buffer-action
+   '((display-buffer-reuse-window
+      display-buffer-in-side-window)
+     (side . bottom)
+     (slot . 99)
+     (window-width . 0.3)
+     (dedicated . t)
+     (preserve-size . (t . t))))
+  :hook (dired-mode . denote-dired-mode)
+  :config
+  (denote-rename-buffer-mode 1)
+  (defun my-denote-always-rename-on-save-based-on-front-matter ()
+    "Rename the current Denote file, if needed, upon saving the file.
+Rename the file based on its front matter, checking for changes in the
+title or keywords fields.
+
+Add this function to the `after-save-hook'."
+    (let ((denote-rename-confirmations nil)
+          (denote-save-buffers t)) ; to save again post-rename
+      (when (and buffer-file-name (denote-file-is-note-p buffer-file-name))
+	(ignore-errors (denote-rename-file-using-front-matter buffer-file-name))
+	(message "Buffer saved; Denote file renamed"))))
+
+  (add-hook 'after-save-hook #'my-denote-always-rename-on-save-based-on-front-matter)
+  
+  (defun vde/org-category-from-buffer ()
+    "Get the org category (#+category:) value from the buffer"
+    (cond
+     ((string-match "__journal.org$" (buffer-file-name))
+      "journal")
+     (t
+      (denote-sluggify (denote--retrieve-title-or-filename (buffer-file-name) 'org))))))
+
+(use-package denote-org
+  :after (denote org)
+  :defer 2)
+
+(use-package denote-journal
+  :commands (denote-journal-new-entry
+             denote-journal-new-or-existing-entry
+             denote-journal-link-or-create-entry)
+  :custom
+  (denote-journal-directory nil) ;; use denote-directory
+  (denote-journal-title-format 'day-date-month-year)
+  :hook (calendar-mode . denote-journal-calendar-mode)
+  :bind (("C-c n j j" . denote-journal-new-or-existing-entry)
+	 ("C-c n j i" . denote-journal-link-or-create-entry)
+	 ("C-c n j n" . denote-journal-new-entry)))
 
 ;; TODO gptel configuration (and *maybe* copilot)
 
