@@ -374,6 +374,7 @@
   (dired-mode . dired-sort-toggle-or-edit))
 
 (use-package alert
+  :defer 2
   :init
   (defun alert-after-finish-in-background (buf str)
     (when (or (not (get-buffer-window buf 'visible)) (not (frame-focus-state)))
@@ -383,7 +384,6 @@
 
 (use-package elec-pair
   :hook (after-init-hook . electric-pair-mode))
-
 
 (use-package uniquify
   :custom
