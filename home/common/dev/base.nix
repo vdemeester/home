@@ -46,6 +46,8 @@
     yq-go
     radicle-node
     vscode-fhs
+
+    bash-language-server
   ];
 
 }
