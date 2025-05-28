@@ -243,6 +243,7 @@ in
         inherit (config.wayland.windowManager.sway.config) menu;
       in
       ''
+        bindcode ${mod}+Control+Shift+Alt+41 exec ${emacs-mini}
         bindcode ${mod}+33 exec "${menu}"
         bindcode ${mod}+Shift+33 exec "raffi -I"
         bindcode ${mod}+Control+33 exec "${pkgs.wofi-emoji}/bin/wofi-emoji -G"
