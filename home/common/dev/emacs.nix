@@ -129,14 +129,10 @@ let
       # pkgs.bookmatrk-plus # Do I use it ?
       popon
       popper
-      project-rootfile
       rg
       scopeline
       scratch
       shr-tag-pre-highlight
-      sideline
-      sideline-eglot
-      sideline-flymake
       smartparens
       substitute
       surround
