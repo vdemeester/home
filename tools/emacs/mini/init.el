@@ -559,7 +559,8 @@
          ("C-x u" . vundo)))
 
 (use-package vde-vcs
-  :commands (vde/gh-get-current-repo))
+  :commands (vde/gh-get-current-repo vde/vc-browse-remote)
+  :bind (("C-x v B" . vde/vc-browse-remote)))
 
 (use-package project-func
   :commands (vde/project-magit-status vde/project-eat vde/project-vterm vde/project-run-in-vterm vde/project-try-local vde/open-readme))
@@ -625,6 +626,24 @@
   (transient-append-suffix 'magit-push "=m"
     '(1 "=o" "Set push option" "--push-option="))  ;; Will prompt, can only set one extra
   )
+
+(use-package ediff
+  :commands (ediff ediff-files ediff-merge ediff3 ediff-files3 ediff-merge3)
+  :custom
+  (ediff-window-setup-function 'ediff-setup-windows-plain)
+  (ediff-split-window-function 'split-window-horizontally)
+  (ediff-diff-options "-w")
+  :hook
+  (ediff-after-quit-hook-internal . winner-undo))
+
+(use-package diff
+  :custom
+  (diff-default-read-only nil)
+  (diff-advance-after-apply-hunk t)
+  (diff-update-on-the-fly t)
+  (diff-refine 'font-lock)
+  (diff-font-lock-prettify nil)
+  (diff-font-lock-syntax nil))
 
 (use-package gitconfig-mode
   :commands (gitconfig-mode)
