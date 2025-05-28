@@ -4,14 +4,17 @@
   hold-time 200)
 
 (defchords querty 20
-  (h      ) h
-  (  j    ) j
-  (    k  ) k
-  (      l) l
+  (h        ) h
+  (  j      ) j
+  (    k    ) k
+  (      l  ) l
+  (        ;) ;
+  ( o   ) o
+  (   p ) p
 ;;  (   k  l) M-`
 ;;  ( j    l) @backforth
-  ( j k   ) esc 
-  (h  k    ) @capsword
+  (      l ;) esc 
+  ( o p ) @capsword
 )
 
 ;; Aliases for custom key behaviors
@@ -20,6 +23,9 @@
   chk	    (chord querty k)
   chl	    (chord querty l)
   chh	    (chord querty h)
+  chscln    (chord querty ;)
+  cho       (chord querty o)
+  chp       (chord querty p)
 
   hyper     (multi lctl lalt lsft lmet)
   capsword  (caps-word 2000)
@@ -28,10 +34,12 @@
   s_alt     (tap-hold 500 $hold-time s lalt)
   d_sft     (tap-hold 500 $hold-time d lsft)
   f_ctl     (tap-hold 500 $hold-time f lctl)
+  g_hyp     (tap-hold 500 $hold-time g @hyper)
+  h_hyp     (tap-hold 500 $hold-time @chh @hyper)
   j_ctl     (tap-hold 500 $hold-time @chj rctl)
   k_sft     (tap-hold 500 $hold-time @chk rsft)
   l_ralt    (tap-hold 500 $hold-time @chl ralt)
-  scln_met  (tap-hold 500 $hold-time scln rmet)
+  scln_met  (tap-hold 500 $hold-time @chscln rmet)
   apos_hyp  (tap-hold 500 $hold-time apos @hyper)
   s_met     (tap-hold 500 $hold-time s lmet) 
   d_alt     (tap-hold 500 $hold-time d lalt)
@@ -59,8 +67,8 @@
 (deflayer base
   esc         f1   f2   f3   f4  f5   f6   f7   f8   f9   f10 f11 f12  home end ins del         ;;  Row 1
   grv 1    2    3    4   5    6    7    8    9    0   -   =    bspc     ;;  Row 2
-  tab         q    w    e    r   t    y    u    i    o    p   [   ]    bksl     ;;  Row 3
-  caps        @a_met @s_alt @d_sft @f_ctl   g    @chh @j_ctl @k_sft @l_ralt  @scln_met @apos_hyp   ret           ;;  Row 4
+  tab         q    w    e    r   t    y    u    i    @cho    @chp   [   ]    bksl     ;;  Row 3
+  caps        @a_met @s_alt @d_sft @f_ctl   @g_hyp    @h_hyp @j_ctl @k_sft @l_ralt  @scln_met apos   ret           ;;  Row 4
   lsft        z    x    c   v    b    n    m    ,    .   /   rsft       ;;  Row 5
   lctl        lmet lalt           spc              ralt rctl pgup up pgdn ;;  Row 6
                                                                   left down right
