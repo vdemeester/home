@@ -21,8 +21,8 @@ shikoku.sbr.pm. IN A 192.168.1.24
 *.shikoku.sbr.pm. IN A 192.168.1.24
 sakhalin.sbr.pm. IN A 192.168.1.70
 *.sakhalin.sbr.pm. IN A 192.168.1.70
-aomi.sbr.pm. IN A 192.168.1.23
-*.aomi.sbr.pm. IN A 192.168.1.23
+aix.sbr.pm. IN A 10.100.0.89
+*.aix.sbr.pm. IN A 10.100.0.89
 aion.sbr.pm. IN A 192.168.1.49
 *.aion.sbr.pm. IN A 192.168.1.49
 demeter.sbr.pm. IN A 192.168.1.182
