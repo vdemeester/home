@@ -66,7 +66,7 @@ jobs:
           # build the system
           # FIXME: move this away from this somehow
           BUILD_ARGS=""
-          if [[ "${{ matrix.name }}" == "demeter" || "${{ matrix.name }}" == "athena" ]]; then
+          if [[ "${{ matrix.name }}" == "demeter" || "${{ matrix.name }}" == "athena" || "${{ matrix.name }}" == "aix" ]]; then
             BUILD_ARGS="${BUILD_ARGS} --option system aarch64-linux"
           fi
           nix build ${BUILD_ARGS} -L ".#nixosConfigurations.${{ matrix.name }}.config.system.build.toplevel"
