@@ -11,7 +11,9 @@
     samba.settings."vincent" = {
       path = "/data/share";
       public = true;
-      browseable = true;
+      browseable = "yes";
+      "read only" = "no";
+      "guest ok" = "yes";
       writable = true;
       comment = "Vincent's share";
       "create mask" = "0644";
