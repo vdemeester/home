@@ -1124,6 +1124,12 @@
   (add-hook 'org-capture-after-finalize-hook #'vde/window-delete-popup-frame)
   :bind (("C-c o c" . org-capture)))
 
+(use-package org-habit
+  :after org
+  :custom
+  (org-habit-show-habits-only-for-today nil)
+  (org-habit-graph-column 80))
+
 (use-package denote
   :commands (denote)
   :bind (("C-c n c" . denote-region)
