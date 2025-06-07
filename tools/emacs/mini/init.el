@@ -179,6 +179,7 @@
   (read-buffer-completion-ignore-case t)
   (read-file-name-completion-ignore-case t)
   (find-ls-option '("-exec ls -ldh {} +" . "-ldh"))  ; find-dired results with human readable sizes
+  (switch-to-buffer-obey-display-actions t)
   :hook
   (after-init . global-hl-line-mode)
   (after-init . global-completion-preview-mode)
