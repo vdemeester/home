@@ -886,6 +886,7 @@ minibuffer, even without explicitly focusing it."
 ;; TODO window management
 ;; TODO ORG mode configuration (BIG one)
 (use-package org
+  :if (file-exists-p org-directory)
   :mode (("\\.org$" . org-mode)
          ("\\.org.draft$" . org-mode))
   :commands (org-agenda org-capture)
