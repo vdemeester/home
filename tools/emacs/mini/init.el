@@ -191,7 +191,20 @@
   (blink-cursor-mode -1)
   (setenv "GIT_EDITOR" (format "emacs --init-dir=%s " (shell-quote-argument user-emacs-directory)))
   (setenv "EDITOR" (format "emacs --init-dir=%s " (shell-quote-argument user-emacs-directory)))
-  (delete-selection-mode 1))
+  (delete-selection-mode 1)
+  (defun er-keyboard-quit ()
+    "Smater version of the built-in `keyboard-quit'.
+
+The generic `keyboard-quit' does not do the expected thing when
+the minibuffer is open.  Whereas we want it to close the
+minibuffer, even without explicitly focusing it."
+    (interactive)
+    (if (active-minibuffer-window)
+	(if (minibufferp)
+            (minibuffer-keyboard-quit)
+          (abort-recursive-edit))
+      (keyboard-quit)))
+  (global-set-key [remap keyboard-quit] #'er-keyboard-quit))
 
 (use-package passage
   :commands (passage-get))
@@ -1118,6 +1131,12 @@
   ;;              `("m" "Meeting notes" entry
   ;;                (file+datetree ,org-meeting-notes-file)
   ;;                (file ,(concat user-emacs-directory "/etc/orgmode/meeting-notes.org"))))
+  
+  (defun vde/window-delete-popup-frame (&rest _)
+    "Kill selected selected frame if it has parameter `prot-window-popup-frame'.
+Use this function via a hook."
+    (when (frame-parameter nil 'vde/window-popup-frame)
+      (delete-frame)))
 
   (add-to-list 'org-capture-templates
                `("w" "Writing"))
