@@ -14,12 +14,17 @@
     ../common/services/containers.nix
     ../common/services/docker.nix
     ../common/services/lxd.nix
+    ../common/desktop/binfmt.nix # TODO: move to something else than desktop
+    # ../common/services/buildkit.nix # maybe ?
+    # ../common/services/oci-image-mirroring.nixi
     # ../common/services/ollama.nix # TODO handle nvidia vs not ?
     ../common/services/prometheus-exporters-node.nix
     # ../common/services/gitea-runner
 
     ../redhat
   ];
+
+  # networking.firewall.enable = false;
 
   services = {
     logind.extraConfig = ''
