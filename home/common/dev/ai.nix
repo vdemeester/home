@@ -5,7 +5,8 @@
     aider-chat
     goose-cli
     llm
-    openai-whisper
+    # openai-whisper
+    whisper-cpp
     python312Packages.google-generativeai
     python313Packages.google-generativeai
     repomix
@@ -14,5 +15,6 @@
     code-cursor
     # mcp-servers
     github-mcp-server
+    amp
   ];
 }
