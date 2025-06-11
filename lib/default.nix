@@ -15,7 +15,10 @@
       system ? "x86_64-linux",
     }:
     let
-      globals = import ../globals.nix { inherit (inputs.nixpkgs) lib; };
+      globals = import ../globals.nix {
+        inherit (inputs.nixpkgs) lib;
+        inherit hostname;
+      };
     in
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
@@ -47,7 +50,10 @@
       homeInput ? inputs.home-manager,
     }:
     let
-      globals = import ../globals.nix { inherit (pkgsInput) lib; };
+      globals = import ../globals.nix {
+        inherit (pkgsInput) lib;
+        inherit hostname;
+      };
       specialArgs = {
         inherit
           self

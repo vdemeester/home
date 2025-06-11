@@ -1,42 +1,10 @@
-_:
-let
-  # Folders list
-  folders = [
-    {
-      label = "sync";
-      id = "7dshg-r8zr6";
-    } # TODO maybe deprecate for documents
-    {
-      label = "documents";
-      id = "oftdb-t5anv";
-    }
-    {
-      label = "org";
-      id = "sjpsr-xfwdu";
-    }
-    {
-      label = "screenshots";
-      id = "prpsz-azlz9";
-    }
-    {
-      label = "wallpapers";
-      id = "wpiah-ydwwx";
-    }
-    {
-      label = "photos";
-      id = "uetya-ypa3d";
-    }
-    {
-      label = "music";
-      id = "kcyrf-mugzt";
-    }
-  ];
-  # outputs.nixosConfigurations.$.syncthingFolders will contains the folders for a host
-  # FIXME: we could use another file, and a "configuration" so that I don't import it ? or in the flake, but not in makeHost
-
-  # non-nixos syncthing machines
-in
 {
+  globals,
+  hostname,
+  ...
+}:
+{
+  # warning = [ "${ttt}" ];
   services.syncthing = {
     enable = true;
     extraOptions = [ "--no-default-folder" ];
@@ -88,63 +56,66 @@ in
           ];
         };
       };
-      folders = {
-        "/home/vincent/sync" = {
-          label = "sync";
-          id = "7dshg-r8zr6";
-          devices = [
-            "aomi"
-            "aion"
-            "shikoku"
-            "sakhalin"
-          ];
-          rescanIntervalS = 3600 * 6;
-        };
-        "/home/vincent/desktop/org" = {
-          label = "org";
-          id = "sjpsr-xfwdu";
-          devices = [
-            "aomi"
-            "aion"
-            "shikoku"
-            "sakhalin"
-          ];
-          rescanIntervalS = 3600 * 6;
-        };
-        "/home/vincent/desktop/documents" = {
-          label = "documents";
-          id = "oftdb-t5anv";
-          devices = [
-            "aomi"
-            "aion"
-            "shikoku"
-            "sakhalin"
-          ];
-          rescanIntervalS = 3600 * 6;
-        };
-        "/home/vincent/desktop/pictures/screenshots" = {
-          label = "screenshots";
-          id = "prpsz-azlz9";
-          devices = [
-            "aomi"
-            "aion"
-            "shikoku"
-            "sakhalin"
-          ];
-          rescanIntervalS = 3600 * 6;
-        };
-        "/home/vincent/desktop/pictures/wallpapers" = {
-          label = "wallpapers";
-          id = "wpiah-ydwwx";
-          devices = [
-            "aomi"
-            "aion"
-            "shikoku"
-            "sakhalin"
-          ];
-          rescanIntervalS = 3600 * 6;
-        };
-      };
+      folders =
+        globals.fn.generateSyncthingFolders globals.machines."${hostname}" globals.machines
+          globals.syncthingFolders;
+      # folders = {
+      #   "/home/vincent/sync" = {
+      #     label = "sync";
+      #     id = "7dshg-r8zr6";
+      #     devices = [
+      #       "aomi"
+      #       "aion"
+      #       "shikoku"
+      #       "sakhalin"
+      #     ];
+      #     rescanIntervalS = 3600 * 6;
+      #   };
+      #   "/home/vincent/desktop/org" = {
+      #     label = "org";
+      #     id = "sjpsr-xfwdu";
+      #     devices = [
+      #       "aomi"
+      #       "aion"
+      #       "shikoku"
+      #       "sakhalin"
+      #     ];
+      #     rescanIntervalS = 3600 * 6;
+      #   };
+      #   "/home/vincent/desktop/documents" = {
+      #     label = "documents";
+      #     id = "oftdb-t5anv";
+      #     devices = [
+      #       "aomi"
+      #       "aion"
+      #       "shikoku"
+      #       "sakhalin"
+      #     ];
+      #     rescanIntervalS = 3600 * 6;
+      #   };
+      #   "/home/vincent/desktop/pictures/screenshots" = {
+      #     label = "screenshots";
+      #     id = "prpsz-azlz9";
+      #     devices = [
+      #       "aomi"
+      #       "aion"
+      #       "shikoku"
+      #       "sakhalin"
+      #     ];
+      #     rescanIntervalS = 3600 * 6;
+      #   };
+      #   "/home/vincent/desktop/pictures/wallpapers" = {
+      #     label = "wallpapers";
+      #     id = "wpiah-ydwwx";
+      #     devices = [
+      #       "aomi"
+      #       "aion"
+      #       "shikoku"
+      #       "sakhalin"
+      #     ];
+      #     rescanIntervalS = 3600 * 6;
+      #   };
+      # };
     };
   };
 }

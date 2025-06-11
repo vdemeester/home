@@ -1,4 +1,32 @@
-{ lib, ... }:
+{ hostname, lib, ... }:
+let
+
+  isCurrentHost = n: n == hostname;
+  /**
+      Return true if the given host has a list of Syncthing folder configured.
+    *
+  */
+  hasSyncthingFolders =
+    host:
+    builtins.hasAttr "syncthing" host
+    && builtins.hasAttr "folders" host.syncthing
+    && (builtins.length (lib.attrsets.attrValues host.syncthing.folders)) > 0;
+
+  # Get the path for the given folder, either using the host specified path or the default one
+  syncthingFolderPath =
+    name: folder: folders:
+    lib.attrsets.attrByPath [ "path" ] folders."${name}".path folder;
+
+  # Filter machine with the given syncthing folder
+  syncthingMachinesWithFolder =
+    folderName: machines:
+    lib.attrsets.filterAttrs (
+      name: value:
+      hasSyncthingFolders value
+      && !(isCurrentHost name)
+      && (builtins.hasAttr folderName value.syncthing.folders)
+    ) machines;
+in
 {
   ssh = {
     vincent = [
@@ -7,6 +35,36 @@
       "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE="
       "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBFzxC16VqwTgWDQfw2YCiOw2JzpH3z9XgHtKoHhBdHi2i9m9XUc7fIUeEIIf7P8ARRNd8q5bjvl8JY7LtPkNCU="
     ];
+  };
+  syncthingFolders = {
+    sync = {
+      id = "7dshg-r8zr6";
+      path = "/home/vincent/sync";
+    };
+    documents = {
+      id = "oftdb-t5anv";
+      path = "/home/vincent/desktop/documents";
+    };
+    org = {
+      id = "sjpsr-xfwdu";
+      path = "/home/vincent/desktop/org";
+    };
+    screenshots = {
+      id = "prpsz-azlz9";
+      path = "/home/vincent/desktop/pictures/screenshots";
+    };
+    wallpapers = {
+      id = "wpiah-ydwwx";
+      path = "/home/vincent/desktop/pictures/wallpapers";
+    };
+    photos = {
+      id = "uetya-ypa3d";
+      path = "/home/vincent/desktop/pictures/photos";
+    };
+    music = {
+      id = "kcyrf-mugzt";
+      path = "/home/vincent/desktop/music";
+    };
   };
   net = {
     dns = {
@@ -65,6 +123,11 @@
           pubkey = "RWqH7RdIXg+YE9U1nlsNiOC7jH8eWjWQmikqBVDGSXU=";
           ips = [ "10.100.0.83" ];
         };
+        names = [
+          "ahena.home"
+          "athena.vpn"
+          "athena.sbr.pm"
+        ];
       };
       ssh = {
         root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME root@aomi";
@@ -78,6 +141,11 @@
           pubkey = "/bBh4gvDty/AA2qIiHc7K0OHoOXWmj2SFFXdDq8nsUU=";
           ips = [ "10.100.0.82" ];
         };
+        names = [
+          "demeter.home"
+          "demeter.vpn"
+          "demeter.sbr.pm"
+        ];
       };
     };
     aix = {
@@ -87,6 +155,12 @@
           ips = [ "10.100.0.89" ];
         };
       };
+      # syncthing = {
+      # 	folders = {
+      # 		sync = {
+      #       type = "receiveonly";};
+      # 	};
+      # };
     };
     kyushu = {
       net = {
@@ -100,20 +174,22 @@
         };
       };
       syncthing = {
+        id = "SBLRZF4-NOMC7QO-S6UW7OH-VK7KHQS-LZCESY6-USBJ5Z5-RIVIRII-XS7DGQS";
         folders = {
           org = { };
           documents = { };
           sync = { };
           screenshots = { };
           wallpapers = { };
-          photos = {
-            type = "receiveonly";
-            paused = true; # TODO: implement this, start as paused
-          };
-          music = {
-            type = "receiveonly";
-            paused = true; # TODO: implement this, start as paused
-          };
+          # TODO: implement paused or filter theses
+          # photos = {
+          #   type = "receiveonly";
+          #   paused = true; # TODO: implement this, start as paused
+          # };
+          # music = {
+          #   type = "receiveonly";
+          #   paused = true; # TODO: implement this, start as paused
+          # };
         };
       };
     };
@@ -125,6 +201,20 @@
           ips = [ "10.100.0.17" ];
         };
       };
+      syncthing = {
+        id = "XCR6WWB-OZUDGFB-LQPFW73-MV5SPJK-4IGOMA4-IAXON3I-C6OFETL-TPK5FQS";
+        folders = {
+          org = { };
+          documents = { };
+          sync = { };
+          screenshots = { };
+          wallpapers = { };
+          photos = {
+            type = "receiveonly";
+            paused = true; # TODO: implement this, start as paused
+          };
+        };
+      };
     };
     shikoku = {
       net = {
@@ -134,13 +224,32 @@
           ips = [ "10.100.0.2" ];
         };
       };
+      syncthing = {
+        id = "";
+        folders = {
+          org = { };
+        };
+      };
       ssh = {
         vincent = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGxstR3xEf87leVVDS3GVPx8Ap9+eP+OfkSvM26V54XP vincent@shikoku";
+      };
+    };
+    kerkouane = {
+      net = { };
+      syncthing = {
+        id = "";
+      };
+    };
+    sakhalin = {
+      net = { };
+      syncthing = {
+        id = "";
       };
     };
   };
   # FIXME Maybe I should move this elsewhere, in ./lib maybe ?
   fn = {
+    inherit syncthingFolderPath hasSyncthingFolders syncthingMachinesWithFolder;
     /**
          Return a list of wireguard ips from a list of ips.
 
@@ -155,14 +264,18 @@
     #   machines: user:
     #   lib.attrsets.mapAttrsToList (_name: value: value) (lib.attrsets.filterAttrs hasSSHAttr machines);
 
-    /**
-        Return true if the given host has a list of Syncthing folder configured.
-      *
-    */
-    hasSyncthingFolders =
-      host:
-      builtins.hasAttr "syncthing" host
-      && builtins.hasAttr "folders" host.syncthing
-      && (builtins.length (lib.attrsets.attrValues host.syncthing.folders)) > 0;
+    # SYNCTHING
+
+    generateSyncthingFolders =
+      machine: machines: folders:
+      lib.attrsets.mapAttrs' (
+        name: value:
+        lib.attrsets.nameValuePair (syncthingFolderPath name value folders) {
+          inherit (folders."${name}") id;
+          label = name;
+          devices = lib.attrsets.mapAttrsToList (n: _v: n) (syncthingMachinesWithFolder name machines);
+          rescanIntervalS = 3600 * 6; # TODO: make it configurable
+        }
+      ) (lib.attrsets.attrByPath [ "syncthing" "folders" ] { } machine);
   };
 }
