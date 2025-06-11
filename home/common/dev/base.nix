@@ -44,7 +44,7 @@
     yamllint
     yamlfmt
     yq-go
-    radicle-node
+    # radicle-node
     vscode-fhs
 
     bash-language-server
