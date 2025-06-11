@@ -52,6 +52,8 @@
     # Keyboard
     keymapp
     kontroll
+    # backup
+    restic # TODO: will probably move this to it's own configuration some day
   ];
 
   # Make sure we don't start docker until required
