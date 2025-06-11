@@ -232,7 +232,7 @@ in
           always = true;
         }
         # Probably put a condition here.
-        { command = "emacs --fg-daemon"; }
+        { command = "emacs --init-directory=$HOME/src/home/tools/emacs/mini --fg-daemon"; }
         { command = "i3-back"; }
         { command = "firefox"; }
         { command = "${pkgs.kitty}/bin/kitty --title metask --class metask"; }
