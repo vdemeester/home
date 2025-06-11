@@ -31,6 +31,7 @@ in
 
     wf-recorder
     wl-clipboard
+    wl-kbptr
     wtype
 
     zenity
@@ -254,6 +255,34 @@ in
         bindcode ${mod}+26 layout toggle split
         bindcode ${mod}+Shift+54 reload
         bindcode ${mod}+Shift+26 exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'"
+
+        mode Mouse {
+          bindsym a mode default, exec 'wl-kbptr; swaymsg mode Mouse'
+          bindsym Shift+a mode default, exec 'wl-kbptr; swaymsg mode Mouse'
+
+          # Mouse move
+          bindsym h seat seat0 cursor move -15 0
+          bindsym j seat seat0 cursor move 0 15
+          bindsym k seat seat0 cursor move 0 -15
+          bindsym l seat seat0 cursor move 15 0
+
+          # Left button
+          bindsym s seat seat0 cursor press button1
+          bindsym --release s seat seat0 cursor release button1
+
+          # Middle button
+          bindsym d seat seat0 cursor press button2
+          bindsym --release d seat seat0 cursor release button2
+
+          # Right button
+          bindsym f seat seat0 cursor press button3
+          bindsym --release f seat seat0 cursor release button3
+
+          bindsym Escape mode default
+        }
+
+        bindcode ${mod}+42 exec wl-kbptr -o modes=floating','click -o mode_floating.source=detect
+        bindcode ${mod}+Shift+42 mode Mouse
 
         mode "resize" {
             bindsym Shift+Left resize grow width 5px
