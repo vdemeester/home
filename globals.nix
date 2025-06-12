@@ -26,6 +26,14 @@ let
       && !(isCurrentHost name)
       && (builtins.hasAttr folderName value.syncthing.folders)
     ) machines;
+
+  generateSyncthingAdresses =
+    machine:
+    builtins.map (x: "tcp://${x}") (
+      lib.attrsets.attrByPath [ "net" "ips" ] [ ] machine
+      ++ lib.attrsets.attrByPath [ "net" "vpn" "ips" ] [ ] machine
+      ++ lib.attrsets.attrByPath [ "net" "names" ] [ ] machine
+    );
 in
 {
   ssh = {
@@ -172,6 +180,11 @@ in
           pubkey = "KVRzoPUw8UTQblYtbs/NLYLIVmtQehrc4Hacbpf5Ugs=";
           ips = [ "10.100.0.19" ];
         };
+        names = [
+          "kyushu.home"
+          "kyushu.vpn"
+          "kyushu.sbr.pm"
+        ];
       };
       syncthing = {
         id = "SBLRZF4-NOMC7QO-S6UW7OH-VK7KHQS-LZCESY6-USBJ5Z5-RIVIRII-XS7DGQS";
@@ -200,6 +213,11 @@ in
           pubkey = "XT4D9YLeVHwMb9R4mhBLSWHYF8iBO/UOT86MQL1jnA4=";
           ips = [ "10.100.0.17" ];
         };
+        names = [
+          "aomi.home"
+          "aomi.vpn"
+          "aomi.sbr.pm"
+        ];
       };
       syncthing = {
         id = "XCR6WWB-OZUDGFB-LQPFW73-MV5SPJK-4IGOMA4-IAXON3I-C6OFETL-TPK5FQS";
@@ -209,10 +227,10 @@ in
           sync = { };
           screenshots = { };
           wallpapers = { };
-          photos = {
-            type = "receiveonly";
-            paused = true; # TODO: implement this, start as paused
-          };
+          # photos = {
+          #   type = "receiveonly";
+          #   paused = true; # TODO: implement this, start as paused
+          # };
         };
       };
     };
@@ -223,11 +241,20 @@ in
           pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
           ips = [ "10.100.0.2" ];
         };
+        names = [
+          "shikoku.home"
+          "shikoku.vpn"
+          "shikoku.sbr.pm"
+        ];
       };
       syncthing = {
-        id = "";
+        id = "KZMMXRR-UINDQTS-H3TV2W7-EIGOUDI-3LW4ZDG-7PRKDFV-MJ5KUTJ-YG5Y5AI";
         folders = {
           org = { };
+          documents = { };
+          sync = { };
+          screenshots = { };
+          wallpapers = { };
         };
       };
       ssh = {
@@ -235,21 +262,130 @@ in
       };
     };
     kerkouane = {
-      net = { };
+      net = {
+        vpn = {
+          # pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
+          ips = [ "10.100.0.1" ];
+        };
+        names = [
+          "kerkouame.home"
+          "kerkouane.vpn"
+          "kerkouane.sbr.pm"
+        ];
+      };
       syncthing = {
-        id = "";
+        id = "IFVRRQ7-KMIOQXP-5YDJXQU-UJXUKHB-7THCSY6-B3NHRNA-ED7IRI7-2JPPKQY";
+        folders = {
+          sync = { };
+          org = { };
+        };
       };
     };
     sakhalin = {
-      net = { };
+      net = {
+        ips = [ "192.168.1.70" ];
+        vpn = {
+          # pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
+          ips = [ "10.100.0.16" ];
+        };
+        names = [
+          "sakhalin.home"
+          "sakhalin.vpn"
+          "sakhalin.sbr.pm"
+        ];
+      };
       syncthing = {
-        id = "";
+        id = "4TYYG7V-A67D5SN-HMEJCI7-POOZRLL-RNCIE4U-ZYVGTOB-JQ5DOSV-ZCGWUAL";
+        folders = {
+          org = { };
+          documents = { };
+          sync = { };
+          screenshots = { };
+          wallpapers = { };
+          # photos = {
+          #   type = "receiveonly";
+          #   paused = true; # TODO: implement this, start as paused
+          # };
+        };
       };
     };
+    aion = {
+      net = {
+        ips = [ "192.168.1.49" ];
+        vpn = {
+          # pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
+          ips = [ "10.100.0.49" ];
+        };
+        names = [
+          "aion.home"
+          "aion.vpn"
+          "aion.sbr.pm"
+        ];
+      };
+      syncthing = {
+        id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
+        folders = {
+          org = { };
+          documents = { };
+          sync = { };
+          screenshots = { };
+          wallpapers = { };
+          # photos = {
+          #   paused = true; # TODO: implement this, start as paused
+          # };
+          # music = {
+          #   paused = true; # TODO: implement this, start as paused
+          # };
+        };
+      };
+    };
+    okinawa = {
+      net = {
+        ips = [ "192.168.1.19" ];
+        vpn = {
+          # pubkey = "";
+          ips = [ "10.100.0.14" ];
+        };
+      };
+      syncthing = {
+        id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
+        folders = {
+          sync = { };
+          org = { };
+        };
+      };
+    };
+    # iPhone
+    hokkaido = {
+      net = {
+        ips = [ "192.168.1.115" ];
+        vpn = {
+          pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
+          ips = [ "10.100.0.5" ];
+        };
+      };
+      syncthing = {
+        id = "XD4XYNZ-DT3PJEY-UJYBHWX-6OQPPUI-HTW752L-FYTX3TW-GVHDTKW-PT336QV";
+        folders = {
+          documents = { };
+          sync = { };
+          org = { };
+        };
+      };
+    };
+    # Light Phone
+    LIP = { };
+    Boox = { };
   };
   # FIXME Maybe I should move this elsewhere, in ./lib maybe ?
   fn = {
-    inherit syncthingFolderPath hasSyncthingFolders syncthingMachinesWithFolder;
+    inherit
+      syncthingFolderPath
+      hasSyncthingFolders
+      syncthingMachinesWithFolder
+      generateSyncthingAdresses
+      isCurrentHost
+      ;
     /**
          Return a list of wireguard ips from a list of ips.
 
@@ -265,7 +401,6 @@ in
     #   lib.attrsets.mapAttrsToList (_name: value: value) (lib.attrsets.filterAttrs hasSSHAttr machines);
 
     # SYNCTHING
-
     generateSyncthingFolders =
       machine: machines: folders:
       lib.attrsets.mapAttrs' (
@@ -277,5 +412,16 @@ in
           rescanIntervalS = 3600 * 6; # TODO: make it configurable
         }
       ) (lib.attrsets.attrByPath [ "syncthing" "folders" ] { } machine);
+
+    generateSyncthingDevices =
+      machines:
+      lib.attrsets.mapAttrs
+        (_name: value: {
+          inherit (value.syncthing) id;
+          addresses = generateSyncthingAdresses value;
+        })
+        (
+          lib.attrsets.filterAttrs (name: value: hasSyncthingFolders value && !(isCurrentHost name)) machines
+        );
   };
 }
