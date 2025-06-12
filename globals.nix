@@ -423,5 +423,9 @@ in
         (
           lib.attrsets.filterAttrs (name: value: hasSyncthingFolders value && !(isCurrentHost name)) machines
         );
+
+    syncthingGuiAddress =
+      machine:
+      (builtins.head (lib.attrsets.attrByPath [ "net" "vpn" "ips" ] [ "127.0.0.1" ] machine)) + ":8384";
   };
 }

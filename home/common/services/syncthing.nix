@@ -4,12 +4,11 @@
   ...
 }:
 {
-  # warning = [ "${ttt}" ];
   services.syncthing = {
     enable = true;
     extraOptions = [ "--no-default-folder" ];
-    # guiAddress = cfg.guiAddress;
-    # TODO This is only for kyushu, will need to migrate this later
+    overrideFolders = false; # Just in case, will probably set to true later
+    guiAddress = globals.fn.syncthingGuiAddress globals.machines."${hostname}";
     settings = {
       # FIXME this doesn't work, I wish it did.
       # defaults = {
