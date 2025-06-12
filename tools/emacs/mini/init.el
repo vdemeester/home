@@ -930,6 +930,11 @@ minibuffer, even without explicitly focusing it."
   (org-log-redeadline 'time)
   (org-log-reschedule 'time)
   (org-log-into-drawer t)
+  ;; https://jeffbradberry.com/posts/2025/05/orgmode-priority-cookies/
+  ;; 1 2 and 3 are high, 4 is default, 5 is "hide / whenever or maybe never"
+  (org-priority-highest 1)
+  (org-priority-lowest  5)
+  (org-priority-default 4)
   (org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
   (org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$")
   (org-agenda-files `(,org-inbox-file ,org-todos-file))
@@ -972,7 +977,7 @@ minibuffer, even without explicitly focusing it."
       ((agenda ""
 	       ((org-agenda-span 'day)
 		(org-deadline-warning-days 5)))
-       (tags-todo "+PRIORITY=\"A\""
+       (tags-todo "+PRIORITY=\"1\""
 		  ((org-agenda-overriding-header "High Priority Tasks")))
        (todo "NEXT"
 	     ((org-agenda-overriding-header "Next Tasks")))))
