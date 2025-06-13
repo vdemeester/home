@@ -27,8 +27,8 @@ in
           "${wireguard.ips.aomi}" = [ "aomi.vpn" ];
           "${home.ips.shikoku}" = [ "shikoku.home" ];
           "${wireguard.ips.shikoku}" = [ "shikoku.vpn" ];
-          "${home.ips.wakasu}" = [ "wakasu.home" ];
-          "${wireguard.ips.wakasu}" = [ "wakasu.vpn" ];
+          # "${home.ips.wakasu}" = [ "wakasu.home" ];
+          # "${wireguard.ips.wakasu}" = [ "wakasu.vpn" ];
           "${home.ips.hokkaido}" = [ "hokkaido.home" ];
           "${wireguard.ips.hokkaido}" = [ "hokkaido.vpn" ];
           # "${home.ips.sakhalin}" = [ "sakhalin.home" ];
