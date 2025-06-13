@@ -31,7 +31,6 @@ _: {
                   allowDiscards = true;
                   keyFile = "/dev/disk/by-id/mmc-SDC_0x00011fd6";
                   keyFileSize = 4096;
-                  fallbackToPassword = true;
                 };
                 content = {
                   type = "filesystem";
