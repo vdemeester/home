@@ -29,8 +29,6 @@ _: {
                 askPassword = true;
                 settings = {
                   allowDiscards = true;
-                  keyFile = "/dev/disk/by-id/mmc-SDC_0x00011fd6";
-                  keyFileSize = 4096;
                 };
                 content = {
                   type = "filesystem";
