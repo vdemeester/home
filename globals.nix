@@ -2,6 +2,8 @@
 let
 
   isCurrentHost = n: n == hostname;
+  hasVPNPublicKey = host: (lib.attrsets.attrByPath [ "net" "vpn" "pubkey" ] "" host) != "";
+  hasVPNips = host: (builtins.length (lib.attrsets.attrByPath [ "net" "vpn" "ips" ] [ ] host)) > 0;
   /**
       Return true if the given host has a list of Syncthing folder configured.
     *
@@ -120,7 +122,6 @@ in
     };
     vpn = {
       endpoint = "167.99.17.238";
-      pubkey = "+H3fxErP9HoFUrPgU19ra9+GDLQw+VwvLWx3lMct7QI=";
     };
   };
   machines = {
@@ -264,7 +265,7 @@ in
     kerkouane = {
       net = {
         vpn = {
-          # pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
+          pubkey = "+H3fxErP9HoFUrPgU19ra9+GDLQw+VwvLWx3lMct7QI=";
           ips = [ "10.100.0.1" ];
         };
         names = [
@@ -392,6 +393,7 @@ in
     Suzu = {
       net = {
         vpn = {
+          ips = [ "10.100.0.65" ];
           pubkey = "ufKLXzLkmYx1z7/VZJs9Ix6aXL3rYzP5B73QQP2WNx8=";
         };
       };
@@ -399,7 +401,10 @@ in
     # Boox tablet
     Osaka = {
       net = {
-        pubkey = "C12Ch3LasZ9Dvc1+X+IMSmKdip0l1n/aNNPvmQzzPFY=";
+        vpn = {
+          ips = [ "10.100.0.64" ];
+          pubkey = "C12Ch3LasZ9Dvc1+X+IMSmKdip0l1n/aNNPvmQzzPFY=";
+        };
       };
     };
   };
@@ -411,6 +416,8 @@ in
       syncthingMachinesWithFolder
       generateSyncthingAdresses
       isCurrentHost
+      hasVPNPublicKey
+      hasVPNips
       ;
     /**
          Return a list of wireguard ips from a list of ips.
@@ -425,6 +432,22 @@ in
     # keysFor =
     #   machines: user:
     #   lib.attrsets.mapAttrsToList (_name: value: value) (lib.attrsets.filterAttrs hasSSHAttr machines);
+
+    # WIREGUARD
+    generateWireguardPeers =
+      machines:
+      lib.attrsets.attrValues (
+        lib.attrsets.mapAttrs
+          (_name: value: {
+            allowedIPs = value.net.vpn.ips;
+            publicKey = value.net.vpn.pubkey;
+          })
+          (
+            lib.attrsets.filterAttrs (
+              name: value: name != "kerkouane" && (hasVPNPublicKey value) && (hasVPNips value)
+            ) machines
+          )
+      );
 
     # SYNCTHING
     generateSyncthingFolders =

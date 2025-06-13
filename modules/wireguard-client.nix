@@ -17,11 +17,11 @@ in
 {
   options = {
     services.wireguard = {
-      enable = mkEnableOption "Enable ";
+      enable = mkEnableOption "Enable a wireguard client";
       ips = mkOption {
         type = with types; listOf str;
         description = ''
-          The client IPs
+          The peer IPs
         '';
       };
       allowedIPs = mkOption {
