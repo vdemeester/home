@@ -15,7 +15,7 @@
   ];
 
   networking = {
-    hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
+    # hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName); # This was for ZFS
     # Bridge setup
     bridges.br1.interfaces = [ "enp0s31f6" ];
     useDHCP = false;

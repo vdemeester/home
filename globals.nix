@@ -309,6 +309,21 @@ in
         };
       };
     };
+    kobe = {
+      net = {
+        ips = [ "192.168.1.77" ];
+        vpn = {
+          pubkey = "B9jLGtXGZEfvBrgyEKrFRrsCsTsarfpFeyXqqq1NOWg=";
+          ips = [ "10.100.0.77" ];
+        };
+        names = [
+          "kobe.home"
+          "kobe.vpn"
+          "kobe.sbr.pm"
+        ];
+      };
+      # syncthing = {};
+    };
     aion = {
       net = {
         ips = [ "192.168.1.49" ];

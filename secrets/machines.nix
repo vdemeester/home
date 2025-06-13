@@ -19,7 +19,7 @@ let
       sakhalin = "192.168.1.70";
       shikoku = "192.168.1.24";
       synodine = "192.168.1.20";
-      wakasu = "192.168.1.77";
+      kobe = "192.168.1.77";
       hass = "192.168.1.181";
       demeter = "192.168.1.182";
       athena = "192.168.1.183";
@@ -48,6 +48,7 @@ let
       athena = "10.100.0.83";
       aix = "10.100.0.89";
       aion = "10.100.0.49";
+      kobe = "10.100.0.77";
     };
     kerkouane = {
       allowedIPs = [ "${wireguard.ips.kerkouane}/32" ];
@@ -112,6 +113,10 @@ let
     kyushu = {
       allowedIPs = [ "${wireguard.ips.kyushu}/32" ];
       publicKey = "KVRzoPUw8UTQblYtbs/NLYLIVmtQehrc4Hacbpf5Ugs=";
+    };
+    kobe = {
+      allowedIPs = [ "${wireguard.ips.kobe}/32" ];
+      publicKey = "B9jLGtXGZEfvBrgyEKrFRrsCsTsarfpFeyXqqq1NOWg=";
     };
     hass = {
       allowedIPs = [ "${wireguard.ips.hass}/32" ];
