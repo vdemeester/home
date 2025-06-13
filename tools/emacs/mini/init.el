@@ -1216,6 +1216,10 @@ Add this function to the `after-save-hook'."
 	 ("C-c n j i" . denote-journal-link-or-create-entry)
 	 ("C-c n j n" . denote-journal-new-entry)))
 
+;; (use-package whisper
+;;   :commands (whisper-run whisper-file)
+;;   :custom
+;;   (whisper-install-whispercpp nil))
 ;; TODO gptel configuration (and *maybe* copilot)
 
 (provide 'init)
