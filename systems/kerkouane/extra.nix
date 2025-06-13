@@ -11,6 +11,17 @@
     # ../common/services/govanityurl.nix
   ];
 
+  services.openssh = {
+    listenAddresses = [
+      {
+        addr = builtins.head globals.machines.kerkouane.net.vpn.ips;
+        port = 22;
+      }
+    ];
+    openFirewall = false;
+    passwordAuthentication = false;
+    permitRootLogin = "without-password";
+  };
   services.wireguard.server = {
     enable = true;
     inherit (globals.machines.kerkouane.net.vpn) ips;
