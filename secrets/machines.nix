@@ -213,6 +213,7 @@ in
       wireguard.houbeb
       wireguard.houbeb-ipad
       wireguard.houbeb-iphone
+      wireguard.kobe
     ]; # wireguard.hokkaido
   };
   inherit ssh;
