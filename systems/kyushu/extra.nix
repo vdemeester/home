@@ -40,7 +40,7 @@
       enable = true;
       ips = globals.fn.wg-ips globals.machines.kyushu.net.vpn.ips;
       endpoint = "${globals.net.vpn.endpoint}";
-      endpointPublicKey = "${globals.machines.kerkounae.net.vpn.pubkey}";
+      endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
     };
     hardware.bolt.enable = true;
   };
