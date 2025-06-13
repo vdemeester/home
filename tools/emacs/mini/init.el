@@ -1068,6 +1068,17 @@ minibuffer, even without explicitly focusing it."
   (unbind-key "C-S-<up>" org-mode-map)
   (unbind-key "C-S-<down>" org-mode-map))
 
+(use-package org-agenda
+  :after org
+  :commands (org-agenda)
+  :config
+  (unbind-key "S-<left>" org-agenda-mode-map)
+  (unbind-key "S-<right>" org-agenda-mode-map)
+  (unbind-key "S-<up>" org-agenda-mode-map)
+  (unbind-key "S-<down>" org-agenda-mode-map)
+  (unbind-key "C-S-<left>" org-agenda-mode-map)
+  (unbind-key "C-S-<right>" org-agenda-mode-map))
+
 ;; Make sure we load org-protocol
 (use-package org-protocol
   :after org)
