@@ -1,11 +1,23 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
 {
+  environment.systemPackages = with pkgs; [
+    sbctl
+  ];
   boot = {
-    loader.systemd-boot.netbootxyz.enable = true;
+    # Secure boot configuration
+    bootspec.enable = true;
+    # First boot systemd-boot has to be enabled, then switch to lanzaboote
+    loader.systemd-boot.enable = lib.mkForce false;
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
+    # loader.systemd-boot.netbootxyz.enable = true;
     # initrd = {
     #   luks.devices."cryptroot" = {
     #     keyFile = "/dev/disk/by-id/mmc-SD08G_0x704a5a38";
