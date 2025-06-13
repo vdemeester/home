@@ -18,23 +18,22 @@
   };
 
   security.pam.enableSSHAgentAuth = true;
-  # TODO: write a module for this.
-  # govanityurl = {
-  #   enable = true;
-  #   user = "nginx";
-  #   host = "go.sbr.pm";
-  #   config = ''
-  #     paths:
-  #       /lord:
-  #         repo: https://github.com/vdemeester/lord
-  #       /ape:
-  #         repo: https://git.sr.ht/~vdemeester/ape
-  #       /nr:
-  #         repo: https://git.sr.ht/~vdemeester/nr
-  #       /ram:
-  #         repo: https://git.sr.ht/~vdemeester/ram
-  #       /sec:
-  #         repo: https://git.sr.ht/~vdemeester/sec
-  #   '';
-  # };
+  services.govanityurl = {
+    enable = true;
+    user = "nginx";
+    host = "go.sbr.pm";
+    config = ''
+      paths:
+        /lord:
+          repo: https://github.com/vdemeester/lord
+        /ape:
+          repo: https://git.sr.ht/~vdemeester/ape
+        /nr:
+          repo: https://git.sr.ht/~vdemeester/nr
+        /ram:
+          repo: https://git.sr.ht/~vdemeester/ram
+        /sec:
+          repo: https://git.sr.ht/~vdemeester/sec
+    '';
+  };
 }

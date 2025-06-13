@@ -141,6 +141,7 @@
         # provided modules (to be upstreamed)
         wireguard-client = ./modules/wireguard-client.nix;
         wireguard-server = ./modules/wireguard-server.nix;
+        govanityurl = ./modules/govanityurl.nix;
       };
 
       # system-manager configurations
