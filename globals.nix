@@ -389,8 +389,19 @@ in
       };
     };
     # Light Phone
-    LIP = { };
-    Boox = { };
+    Suzu = {
+      net = {
+        vpn = {
+          pubkey = "ufKLXzLkmYx1z7/VZJs9Ix6aXL3rYzP5B73QQP2WNx8=";
+        };
+      };
+    };
+    # Boox tablet
+    Osaka = {
+      net = {
+        pubkey = "C12Ch3LasZ9Dvc1+X+IMSmKdip0l1n/aNNPvmQzzPFY=";
+      };
+    };
   };
   # FIXME Maybe I should move this elsewhere, in ./lib maybe ?
   fn = {
