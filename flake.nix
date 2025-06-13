@@ -115,7 +115,11 @@
         };
         # shikoku = libx.mkHost { hostname = "shikoku"; };
         # sakhalin = libx.mkHost { hostname = "sakhalin"; };
-        # kerkouane = libx.mkHost { hostname = "kerkouane"; };
+        kerkouane = libx.mkHost {
+          hostname = "kerkouane";
+          pkgsInput = inputs.nixpkgs-25_05;
+          homeInput = inputs.home-manager-25_05;
+        };
         # FIXME migrate to libx.mkHost
         shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {
           system = "x86_64-linux";
@@ -131,21 +135,12 @@
               ./systems/hosts/sakhalin.nix
             ];
         };
-        kerkouane = inputs.nixpkgs-24_11.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules =
-            commonModules
-            ++ stableModules
-            ++ [
-              ./systems/modules/services/govanityurl.nix
-              ./systems/hosts/kerkouane.nix
-            ];
-        };
       };
 
       nixosModules = {
         # provided modules (to be upstreamed)
         wireguard-client = ./modules/wireguard-client.nix;
+        wireguard-server = ./modules/wireguard-server.nix;
       };
 
       # system-manager configurations
