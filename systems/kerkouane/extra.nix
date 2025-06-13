@@ -17,6 +17,11 @@
     peers = globals.fn.generateWireguardPeers globals.machines;
   };
 
+  services.gosmee = {
+    enable = true;
+    public-url = "https://webhook.sbr.pm";
+  };
+
   security.pam.enableSSHAgentAuth = true;
   services.govanityurl = {
     enable = true;

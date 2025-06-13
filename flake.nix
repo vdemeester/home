@@ -142,6 +142,7 @@
         wireguard-client = ./modules/wireguard-client.nix;
         wireguard-server = ./modules/wireguard-server.nix;
         govanityurl = ./modules/govanityurl.nix;
+        gosmee = ./modules/gosmee.nix;
       };
 
       # system-manager configurations

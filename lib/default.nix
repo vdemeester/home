@@ -75,6 +75,7 @@
         self.nixosModules.wireguard-client
         self.nixosModules.wireguard-server
         self.nixosModules.govanityurl
+        self.nixosModules.gosmee
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager
