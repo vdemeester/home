@@ -1,5 +1,6 @@
 {
   globals,
+  lib,
   pkgs,
   ...
 }:
@@ -62,7 +63,7 @@ in
         port = 22;
       }
     ];
-    openFirewall = false;
+    openFirewall = lib.mkForce false;
     passwordAuthentication = false;
     permitRootLogin = "without-password";
   };
@@ -78,6 +79,12 @@ in
     public-url = "https://webhook.sbr.pm";
   };
 
+  # Should probably move to hardware.nix
+  networking.firewall.allowPing = true;
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
   services.nginx = {
     enable = true;
     statusPage = true;
@@ -177,8 +184,6 @@ in
     enable = true;
     port = 9001;
   };
-
-  security.pam.enableSSHAgentAuth = true;
   services.govanityurl = {
     enable = true;
     user = "nginx";
@@ -196,5 +201,10 @@ in
         /sec:
           repo: https://git.sr.ht/~vdemeester/sec
     '';
+  };
+  security.pam.enableSSHAgentAuth = true;
+  security.acme = {
+    acceptTerms = true;
+    email = "vincent@sbr.pm";
   };
 }
