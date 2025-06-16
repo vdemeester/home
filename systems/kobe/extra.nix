@@ -1,4 +1,4 @@
-{ globals, ... }:
+{ globals, lib, ... }:
 {
   imports = [
     ../common/services/prometheus-exporters-node.nix
@@ -35,5 +35,5 @@
   security.pam.enableSSHAgentAuth = true;
 
   security.apparmor.enable = true;
-  # security.tpm2.enable = lib.mkForce false;
+  security.tpm2.enable = lib.mkForce false;
 }

@@ -10,13 +10,13 @@
   ];
   boot = {
     # Secure boot configuration
-    bootspec.enable = true;
+    # bootspec.enable = true;
     # First boot systemd-boot has to be enabled, then switch to lanzaboote
-    loader.systemd-boot.enable = lib.mkForce false;
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/var/lib/sbctl";
-    };
+    # loader.systemd-boot.enable = lib.mkForce false;
+    # lanzaboote = {
+    # enable = true;
+    # pkiBundle = "/var/lib/sbctl";
+    # };
     initrd.availableKernelModules = [
       "nvme"
       "rtsx_pci_sdmmc"
