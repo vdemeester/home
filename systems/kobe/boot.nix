@@ -17,13 +17,17 @@
       enable = true;
       pkiBundle = "/var/lib/sbctl";
     };
+    initrd.availableKernelModules = [
+      "nvme"
+      "rtsx_pci_sdmmc"
+      "thunderbolt"
+      "dm-mod"
+    ];
     # loader.systemd-boot.netbootxyz.enable = true;
-    # initrd = {
-    #   luks.devices."cryptroot" = {
-    #     keyFile = "/dev/disk/by-id/mmc-SD08G_0x704a5a38";
-    #     keyFileSize = 4096;
-    #   };
-    # };
+    initrd.luks.devices."cryptroot" = {
+      keyFile = "/dev/disk/by-id/mmc-SD08G_0x704a5a38";
+      keyFileSize = 4096;
+    };
 
     blacklistedKernelModules = [
       "sierra_net" # sierra wireless modules
