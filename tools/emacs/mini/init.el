@@ -17,6 +17,8 @@
   "`org-mode' inbox file, where we collect entries to be triaged.")
 (defconst org-todos-file (expand-file-name "todos.org" org-directory)
   "`org-mode' file for TODOs.  This is the main file for the org angenda entries.")
+(defconst org-journal-file (expand-file-name "journal.org" org-directory)
+  "`org-mode' journal file, for journal-ling.")
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
   "`org-mode' directory of archived files.")
 (defconst org-people-dir (expand-file-name "people" org-notes-directory)
@@ -1108,17 +1110,22 @@ minibuffer, even without explicitly focusing it."
   :commands (org-capture)
   :config
 
+  (add-to-list 'org-capture-templates
+	       `("j" "Journal entry" iteme
+		 (file+datetree+prompt ,org-journal-file)
+		 "%U %?\n%i"))
+  
   ;; TODO: refine this, create a function that reset this
   (add-to-list 'org-capture-templates
                `("l" "Link" entry
                  (file ,org-inbox-file)
                  "* %a\n%U\n%?\n%i"
                  :empty-lines 1))
-  (add-to-list 'org-capture-templates
-	       `("d" "daily entry" entry
-		 (function denote-journal-extras-new-or-existing-entry)
-                 "* %a\n%U\n%?\n%i"
-                 :empty-lines 1))
+  ;; (add-to-list 'org-capture-templates
+  ;; 	       `("d" "daily entry" entry
+  ;; 		 (function denote-journal-extras-new-or-existing-entry)
+  ;;                "* %a\n%U\n%?\n%i"
+  ;;                :empty-lines 1))
   (add-to-list 'org-capture-templates
                `("t" "Tasks"))
   (add-to-list 'org-capture-templates
