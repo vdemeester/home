@@ -25,7 +25,7 @@
     ];
     # loader.systemd-boot.netbootxyz.enable = true;
     initrd.luks.devices."cryptroot" = {
-      keyFile = "/dev/disk/by-id/mmc-SD08G_0x704a5a38";
+      keyFile = "/dev/disk/by-id/mmc-SDC_0x00011fd6";
       keyFileSize = 4096;
     };
 
