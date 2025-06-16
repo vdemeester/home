@@ -14,7 +14,7 @@
 
   # networking.firewall.enable = false;
   nixpkgs.config.cudaSupport = true;
-  nixpkgs.config.rocmSupport = false;
+  nixpkgs.config.rocmSupport = lib.mkForce false;
 
   services = {
     logind.extraConfig = ''
@@ -30,7 +30,10 @@
     };
     ollama = {
       enable = true;
-      package = pkgs.ollama.override { config.cudaSupport = true; };
+      package = pkgs.ollama.override {
+        config.cudaSupport = true;
+        config.rocmSupport = false;
+      };
       acceleration = "cuda"; # no nivida :D
     };
     smartd = {
