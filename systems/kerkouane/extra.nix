@@ -53,7 +53,7 @@ in
 {
   imports = [
     ../common/services/prometheus-exporters-node.nix
-    ../common/services/syncthing.nix
+    # ../common/services/syncthing.nix
   ];
 
   services.openssh = {
@@ -70,7 +70,7 @@ in
 
   services.wireguard.server = {
     enable = true;
-    inherit (globals.machines.kerkouane.net.vpn) ips;
+    ips = globals.fn.wg-ips globals.machines.kerkouane.net.vpn.ips;
     peers = globals.fn.generateWireguardPeers globals.machines;
   };
 
