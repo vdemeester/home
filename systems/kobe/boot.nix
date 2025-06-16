@@ -28,6 +28,7 @@
       keyFile = "/dev/disk/by-id/mmc-SDC_0x00011fd6";
       keyFileSize = 4096;
     };
+    initrd.systemd.enableTpm2 = lib.mkForce false;
 
     blacklistedKernelModules = [
       "sierra_net" # sierra wireless modules
