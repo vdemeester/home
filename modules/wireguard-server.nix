@@ -44,7 +44,7 @@ in
     networking.wireguard.interfaces = {
       "wg0" = {
         inherit (cfg) ips peers;
-        listenPort = 12345;
+        listenPort = 51820;
         privateKeyFile = "/etc/wireguard/private.key";
       };
     };

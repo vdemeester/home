@@ -422,10 +422,10 @@ in
     /**
          Return a list of wireguard ips from a list of ips.
 
-         Essentially, it will append /24 to the each element of the list.
+         Essentially, it will append /32 to the each element of the list.
       *
     */
-    wg-ips = ips: builtins.map (x: "${x}/24") ips;
+    wg-ips = ips: builtins.map (x: "${x}/32") ips;
 
     # # keysFor = user: ;
     # hasSSHAttr = _name: value: builtins.hasAttr "ssh" value;
