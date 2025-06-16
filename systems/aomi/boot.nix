@@ -1,7 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   boot = {
     loader.systemd-boot.netbootxyz.enable = true;
+    initrd.systemd.enable = lib.mkForce false;
+    initrd.availableKernelModules = [
+      "nvme"
+      "rtsx_pci_sdmmc"
+      "thunderbolt"
+      "dm-mod"
+    ];
     # initrd = {
     #   luks.devices."cryptroot" = {
     #     crypttabExtraOpts = [ "fido2-device=auto" ];
