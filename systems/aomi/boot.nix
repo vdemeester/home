@@ -1,8 +1,8 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   boot = {
     loader.systemd-boot.netbootxyz.enable = true;
-    initrd.systemd.enable = lib.mkForce false;
+    # initrd.systemd.enable = lib.mkForce false;
     initrd.availableKernelModules = [
       "nvme"
       "rtsx_pci_sdmmc"
