@@ -1,4 +1,9 @@
-{ globals, lib, ... }:
+{
+  globals,
+  pkgs,
+  lib,
+  ...
+}:
 {
   imports = [
     ../common/services/prometheus-exporters-node.nix
@@ -8,6 +13,8 @@
   ];
 
   # networking.firewall.enable = false;
+  nixpkgs.config.cudaSupport = true;
+  nixpkgs.config.rocmSupport = false;
 
   services = {
     logind.extraConfig = ''
@@ -23,7 +30,8 @@
     };
     ollama = {
       enable = true;
-      # acceleration = "cuda"; # no nivida :D
+      package = pkgs.ollama.override { config.cudaSupport = true; };
+      acceleration = "cuda"; # no nivida :D
     };
     smartd = {
       enable = true;
