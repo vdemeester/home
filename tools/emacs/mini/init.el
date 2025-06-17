@@ -30,6 +30,7 @@
 (set-register ?e `(file . ,(locate-user-emacs-file "init.el")))
 (set-register ?i `(file . ,org-inbox-file))
 (set-register ?t `(file . ,org-todos-file))
+(set-register ?j `(file . ,org-journal-file))
 (set-register ?o `(file . ,org-directory))
 (set-register ?n `(file . ,org-notes-directory))
 (set-register ?P `(file . ,org-people-dir))
