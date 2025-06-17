@@ -91,6 +91,9 @@
         kobe = libx.mkHost {
           hostname = "kobe";
         };
+        shikoku = libx.mkHost {
+          hostname = "shikoku";
+        };
         # Servers (stable)
         athena = libx.mkHost {
           hostname = "athena";
@@ -113,7 +116,6 @@
           pkgsInput = inputs.nixpkgs-25_05;
           homeInput = inputs.home-manager-25_05;
         };
-        # shikoku = libx.mkHost { hostname = "shikoku"; };
         # sakhalin = libx.mkHost { hostname = "sakhalin"; };
         kerkouane = libx.mkHost {
           hostname = "kerkouane";
@@ -121,10 +123,6 @@
           homeInput = inputs.home-manager-25_05;
         };
         # FIXME migrate to libx.mkHost
-        shikoku = inputs.nixpkgs-24_11.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = commonModules ++ stableModules ++ [ ./systems/hosts/shikoku.nix ];
-        };
         sakhalin = inputs.nixpkgs-24_11.lib.nixosSystem {
           system = "x86_64-linux";
           modules =
