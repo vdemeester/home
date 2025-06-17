@@ -148,7 +148,7 @@
       # system-manager configurations
       # FIXME set this up
       systemConfigs = {
-        aion = libx.mkSystemmanager {
+        aion = libx.mkSystemManager {
           hostname = "aion";
           system = "aarch64-linux";
         };

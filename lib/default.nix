@@ -88,10 +88,34 @@
   mkSystemManager =
     {
       system ? "x86_64-linux",
+      hostname,
+      desktop ? null,
+      pkgsInput ? inputs.nixpkgs,
+      homeInput ? inputs.home-manager,
     }:
-    inputs.system-manager.lib-makeSystemConfig {
+    let
+      globals = import ../globals.nix {
+        inherit (pkgsInput) lib;
+        inherit hostname;
+      };
+      extraSpecialArgs = {
+        inherit
+          self
+          inputs
+          outputs
+          stateVersion
+          hostname
+          desktop
+          globals
+          ;
+      };
+    in
+    inputs.system-manager.lib.makeSystemConfig {
+      inherit extraSpecialArgs;
       modules = [
-        # ../modules ?
+        # self.nixosModules.wireguard-client
+        # inputs.agenix.nixosModules.default
+        homeInput.nixosModules.home-manager
         {
           config = {
             nixpkgs.hostPlatform = system;
