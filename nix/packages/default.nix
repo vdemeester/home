@@ -8,6 +8,7 @@ rec {
   vrsync = pkgs.callPackage ./my/vrsync { };
   vde-thinkpad = pkgs.callPackage ./my/vde-thinkpad { };
   bekind = pkgs.callPackage ../../tools/bekind { };
+  battery-monitor = pkgs.callPackage ../../tools/battery-monitor { };
   go-org-readwise = pkgs.callPackage ../../tools/go-org-readwise { };
 
   chmouzies.kubernetes = pkgs.callPackage ./chmouzies/kubernetes.nix { };

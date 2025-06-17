@@ -13,6 +13,7 @@ rec {
     inherit (self) stdenv;
   };
   bekind = super.callPackage ../../tools/bekind { };
+  battery-monitor = super.callPackage ../../tools/battery-monitor { };
   go-org-readwise = super.callPackage ../../tools/go-org-readwise { };
 
   my = import ../packages {

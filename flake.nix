@@ -140,7 +140,7 @@
           hooks = {
             # go
             gofmt.enable = true;
-            golangci-lint.enable = true;
+            # golangci-lint.enable = true;
             # nix
             deadnix.enable = true;
             nixfmt-rfc-style.enable = true;

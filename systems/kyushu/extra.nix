@@ -62,6 +62,7 @@
     kanata
     nixos-rebuild-ng
     go-org-readwise
+    battery-monitor
     # Keyboard
     keymapp
     kontroll
