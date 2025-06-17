@@ -323,7 +323,14 @@ in
           "kobe.sbr.pm"
         ];
       };
-      # syncthing = {};
+      syncthing = {
+        id = "";
+        folders = {
+          org = { };
+          documents = { };
+          sync = { };
+        };
+      };
     };
     aion = {
       net = {
