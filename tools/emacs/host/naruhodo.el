@@ -1,1 +1,0 @@
-../../sync/emacs/naruhodo.el

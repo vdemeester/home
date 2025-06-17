@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: implDefault
-# key: Default
-# --
-impl$2 Default for ${1:Type}$2 {
-    fn default() -> Self {
-        ${0:Self::new()}
-    }
-}

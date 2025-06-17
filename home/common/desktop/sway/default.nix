@@ -4,10 +4,6 @@ let
     #!/usr/bin/env bash
     fd . -d 3 --type d ~/src | ${pkgs.wofi}/bin/wofi -dmenu | xargs -I {} zsh -i -c "cd {}; emacs ."
   '';
-  emacs-mini = pkgs.writeScript "emacs-mini" ''
-    #!/usr/bin/env bash
-    emacs --init-directory=$HOME/src/home/tools/emacs/mini
-  '';
   fontConf = {
     names = [ "JetBrains Mono" ];
     size = 12.0;
@@ -124,7 +120,7 @@ in
           "${mod}+Shift+Return" = "exec emacsclient -c";
           "${mod}+Control+Return" = "exec emacs";
           "${mod}+Control+Shift+Return" = "exec ${emacs-in-folder}";
-          "${mod}+Control+Alt+Return" = "exec ${emacs-mini}";
+          "${mod}+Control+Alt+Return" = "exec emacs"; # TODO: remove this
 
           "${mod}+Left" = "focus left";
           "${mod}+Down" = "focus down";
@@ -232,7 +228,7 @@ in
           always = true;
         }
         # Probably put a condition here.
-        { command = "emacs --init-directory=$HOME/src/home/tools/emacs/mini --fg-daemon"; }
+        { command = "emacs --init-directory=$HOME/src/home/tools/emacs --fg-daemon"; }
         { command = "i3-back"; }
         { command = "firefox"; }
         { command = "${pkgs.kitty}/bin/kitty --title metask --class metask"; }
@@ -244,7 +240,7 @@ in
         inherit (config.wayland.windowManager.sway.config) menu;
       in
       ''
-        bindcode ${mod}+Control+Shift+Alt+41 exec ${emacs-mini}
+        bindcode ${mod}+Control+Shift+Alt+41 exec emacs
         bindcode ${mod}+33 exec "${menu}"
         bindcode ${mod}+Shift+33 exec "raffi -I"
         bindcode ${mod}+Control+33 exec "${pkgs.wofi-emoji}/bin/wofi-emoji -G"

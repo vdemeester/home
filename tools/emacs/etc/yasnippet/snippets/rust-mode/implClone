@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: implClone
-# key: Clone
-# --
-impl$2 Clone for ${1:Type}$2 {
-    fn clone(&self) -> Self {
-        $0
-    }
-}

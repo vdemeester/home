@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: fmt
-# key: fmt
-# --
-fmt(&self, f: &mut Formatter) -> Result<(), Error> {
-    $0
-}

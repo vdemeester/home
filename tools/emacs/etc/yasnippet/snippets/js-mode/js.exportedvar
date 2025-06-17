@@ -1,5 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: js.exportedvar
-# key: xv
-# --
-var $1 = module.exports.$1 = $0;
