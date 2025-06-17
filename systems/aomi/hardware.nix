@@ -25,7 +25,6 @@
       allowDiscards = true;
       keyFile = "/dev/disk/by-id/mmc-SD08G_0x704a5a38";
       keyFileSize = 4096;
-      fallbackToPassword = true;
     };
   };
 
