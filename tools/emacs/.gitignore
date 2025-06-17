@@ -33,3 +33,10 @@ sitemap.org
 
 # private
 eln-cache
+
+bookmarks
+mini/*
+multisession
+projects
+request
+url
