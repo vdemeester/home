@@ -1111,7 +1111,7 @@ minibuffer, even without explicitly focusing it."
   :config
 
   (add-to-list 'org-capture-templates
-	       `("j" "Journal entry" iteme
+	       `("j" "Journal entry" item
 		 (file+datetree+prompt ,org-journal-file)
 		 "%U %?\n%i"))
   
