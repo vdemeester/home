@@ -1122,11 +1122,6 @@ minibuffer, even without explicitly focusing it."
                  (file ,org-inbox-file)
                  "* %a\n%U\n%?\n%i"
                  :empty-lines 1))
-  ;; (add-to-list 'org-capture-templates
-  ;; 	       `("d" "daily entry" entry
-  ;; 		 (function denote-journal-extras-new-or-existing-entry)
-  ;;                "* %a\n%U\n%?\n%i"
-  ;;                :empty-lines 1))
   (add-to-list 'org-capture-templates
                `("t" "Tasks"))
   (add-to-list 'org-capture-templates
@@ -1222,18 +1217,6 @@ Add this function to the `after-save-hook'."
 (use-package denote-org
   :after (denote org)
   :defer 2)
-
-(use-package denote-journal
-  :commands (denote-journal-new-entry
-             denote-journal-new-or-existing-entry
-             denote-journal-link-or-create-entry)
-  :custom
-  (denote-journal-directory nil) ;; use denote-directory
-  (denote-journal-title-format 'day-date-month-year)
-  :hook (calendar-mode . denote-journal-calendar-mode)
-  :bind (("C-c n j j" . denote-journal-new-or-existing-entry)
-	 ("C-c n j i" . denote-journal-link-or-create-entry)
-	 ("C-c n j n" . denote-journal-new-entry)))
 
 ;; (use-package whisper
 ;;   :commands (whisper-run whisper-file)
