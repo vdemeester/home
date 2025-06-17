@@ -144,7 +144,7 @@ let
       treesit-fold
       treesit-grammars.with-all-grammars # see how much it weight
       typescript-mode
-      vc-jj
+      # vc-jj
       verb
       vertico
       visual-fill-column
