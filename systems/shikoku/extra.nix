@@ -9,7 +9,7 @@
     ../common/services/containers.nix
     ../common/services/docker.nix
     ../common/services/lxd.nix
-    # ../common/services/libvirt.nix
+    ../common/services/libvirt.nix
   ];
 
   age.secrets."aria2RPCSecret" = {

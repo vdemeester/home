@@ -10,6 +10,7 @@
     ../common/services/containers.nix
     ../common/services/docker.nix
     ../common/services/lxd.nix
+    ../common/services/libvirt.nix
   ];
 
   # networking.firewall.enable = false;
