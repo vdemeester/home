@@ -21,44 +21,6 @@
         "aarch64-linux"
       ];
       forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
-
-      stableModules = [ inputs.home-manager-24_11.nixosModules.home-manager ];
-      commonModules = [
-        {
-          config.nixpkgs.overlays = [
-            (import ./nix/overlays/tekton.nix)
-            (import ./nix/overlays/sbr.nix)
-            inputs.emacs-overlay.overlay
-            inputs.chapeau-rouge.overlays.openshift
-            inputs.chick-group.overlays.default
-            (_: prev: {
-              inherit (inputs.buildkit-tekton.packages.${prev.system})
-                tkn-local
-                ;
-              inherit (inputs.dagger.packages.${prev.system}) dagger;
-            })
-          ];
-        }
-        ./systems/modules/core/default.nix
-        ./systems/modules/shell/default.nix
-        ./systems/modules/desktop/default.nix
-        ./systems/modules/dev/default.nix
-        ./systems/modules/editors/default.nix
-        ./systems/modules/hardware/default.nix
-        ./systems/modules/profiles/default.nix
-        ./systems/modules/virtualisation/default.nix
-        ./systems/modules/virtualisation/buildkit.nix
-        ./systems/modules/services/default.nix
-        inputs.agenix.nixosModules.default
-        # inputs.envfs.nixosModules.envfs
-        {
-          # config.nix.generateRegistryFromInputs = true;
-          config.home-manager.useGlobalPkgs = true;
-          config.home-manager.useUserPackages = true;
-          # Import custom home-manager modules (NixOS)
-          config.home-manager.sharedModules = import ./users/modules/modules.nix;
-        }
-      ];
     in
     {
       # Standalone home configurations
@@ -116,22 +78,15 @@
           pkgsInput = inputs.nixpkgs-25_05;
           homeInput = inputs.home-manager-25_05;
         };
-        # sakhalin = libx.mkHost { hostname = "sakhalin"; };
+        sakhalin = libx.mkHost {
+          hostname = "sakhalin";
+          pkgsInput = inputs.nixpkgs-25_05;
+          homeInput = inputs.home-manager-25_05;
+        };
         kerkouane = libx.mkHost {
           hostname = "kerkouane";
           pkgsInput = inputs.nixpkgs-25_05;
           homeInput = inputs.home-manager-25_05;
-        };
-        # FIXME migrate to libx.mkHost
-        sakhalin = inputs.nixpkgs-24_11.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules =
-            commonModules
-            ++ stableModules
-            ++ [
-              inputs.nixos-hardware.nixosModules.common-pc-ssd
-              ./systems/hosts/sakhalin.nix
-            ];
         };
       };
 
@@ -157,19 +112,19 @@
         aix =
           (self.nixosConfigurations.aix.extendModules {
             modules = [
-              "${inputs.nixpkgs-24_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+              "${inputs.nixpkgs-25_05}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
             ];
           }).config.system.build.sdImage;
         athena =
           (self.nixosConfigurations.athena.extendModules {
             modules = [
-              "${inputs.nixpkgs-24_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+              "${inputs.nixpkgs-25_05}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
             ];
           }).config.system.build.sdImage;
         demeter =
           (self.nixosConfigurations.demeter.extendModules {
             modules = [
-              "${inputs.nixpkgs-24_11}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+              "${inputs.nixpkgs-25_05}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
             ];
           }).config.system.build.sdImage;
       };
@@ -250,12 +205,6 @@
       repo = "nixpkgs";
       ref = "nixos-25.05";
     };
-    nixpkgs-24_11 = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-24.11";
-    };
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
@@ -273,13 +222,6 @@
       ref = "release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-25_05";
     };
-    home-manager-24_11 = {
-      type = "github";
-      owner = "nix-community";
-      repo = "home-manager";
-      ref = "release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-24_11";
-    };
 
     # FIXME could still be useful for servers
     # impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
@@ -294,16 +236,9 @@
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-24_11";
+      inputs.nixpkgs-stable.follows = "nixpkgs-25_05";
     };
 
-    # WSL
-    nixos-wsl = {
-      type = "github";
-      owner = "nix-community";
-      repo = "NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixos-hardware = {
       type = "github";
       owner = "NixOS";
@@ -333,8 +268,6 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix-25_05.url = "github:ryantm/agenix";
     agenix-25_05.inputs.nixpkgs.follows = "nixpkgs-25_05";
-    agenix-24_11.url = "github:ryantm/agenix";
-    agenix-24_11.inputs.nixpkgs.follows = "nixpkgs-24_11";
 
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
