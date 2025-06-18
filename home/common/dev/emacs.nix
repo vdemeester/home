@@ -94,6 +94,7 @@ let
       magit-popup
       marginalia
       markdown-mode
+      mcp
       minions
       modus-themes
       multi-vterm

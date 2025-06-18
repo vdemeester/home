@@ -1343,5 +1343,97 @@ Add this function to the `after-save-hook'."
 ;;   (whisper-install-whispercpp nil))
 ;; TODO gptel configuration (and *maybe* copilot)
 
+(use-package goose
+  :commands (goose-transient goose-start-session)
+  :bind (("C-c a G" . goose-transient)))
+
+(use-package mcp
+  :commands (mcp-hub-start-all-server)
+  :after gptel
+  :custom (mcp-hub-servers
+	   `(("jira" :command "/home/vincent/src/github.com/chmouel/jayrah/.venv/bin/jayrah" :args ("mcp"))
+	     ("github" :command "github-mcp-server" :args ("stdio")
+	      :env (:GITHUB_PERSONAL_ACCESS_TOKEN ,(passage-get "github/vdemeester/github-mcp-server")))))
+  :config (require 'mcp-hub))
+
+(use-package gptel
+  :commands (gptel gptel-mode)
+  :bind (("C-c a g" . gptel))
+  :hook
+  (gptel-mode . visual-line-mode)
+  :bind
+  (:map gptel-mode-map
+        ("C-c C-k" . gptel-abort)
+        ("C-c C-m" . gptel-menu)
+        ("C-c C-c" . gptel-send))
+  :custom
+  (gptel-default-mode #'markdown-mode)
+  :config
+  (require 'gptel-curl)
+  (require 'gptel-gemini)
+  (require 'gptel-ollama)
+  (require 'gptel-transient)
+  (require 'gptel-integrations)
+  (require 'gptel-rewrite)
+  (require 'gptel-org)
+  (require 'gptel-openai)
+  (require 'gptel-openai-extras)
+  (require 'gptel-autoloads)
+  (gptel-mcp-connect)
+  
+  (setq gptel-model 'gemini-2.5-flash
+	gptel-backend (gptel-make-gemini "Gemini"
+			:key (passage-get "ai/gemini/api_key"))
+	)
+
+  (gptel-make-openai "MistralLeChat"
+    :host "api.mistral.ai/v1"
+    :endpoint "/chat/completions"
+    :protocol "https"
+    :key (passage-get "ai/mistralai/api_key")
+    :models '("mistral-small"))
+  
+  (gptel-make-openai "OpenRouter"
+    :host "openrouter.ai"
+    :endpoint "/api/v1/chat/completions"
+    :stream t
+    :key (passage-get "ai/openroute/api_key")
+    :models '(cognitivecomputations/dolphin3.0-mistral-24b:free
+	      cognitivecomputations/dolphin3.0-r1-mistral-24b:free
+	      deepseek/deepseek-r1-zero:free
+	      deepseek/deepseek-chat:free
+	      deepseek/deepseek-r1-distill-qwen-32b:free
+	      deepseek/deepseek-r1-distill-llama-70b:free
+	      google/gemini-2.0-flash-lite-preview-02-05:free
+	      google/gemini-2.0-pro-exp-02-05:free
+	      google/gemini-2.5-pro-exp-03-25
+	      google/gemini-2.5-pro-exp-03-25:free
+	      google/gemma-3-12b-it:free
+	      google/gemma-3-27b-it:free
+	      google/gemma-3-4b-it:free
+	      mistralai/mistral-small-3.1-24b-instruct:free
+	      open-r1/olympiccoder-32b:free
+	      qwen/qwen2.5-vl-3b-instruct:free
+	      qwen/qwen-2.5-coder-32b-instruct:free
+	      qwen/qwq-32b:free
+              codellama/codellama-70b-instruct
+              google/gemini-pro
+              google/palm-2-codechat-bison-32k
+              meta-llama/codellama-34b-instruct
+              mistralai/mixtral-8x7b-instruct
+	      openai/gpt-3.5-turbo))
+
+  ;; TODO: configure shikoku/kobe ollama instances here
+  ;; (gptel-make-ollama "Ollama"
+  ;;   :host "localhost:11434"
+  ;;   :stream t
+  ;;   :models '("smollm:latest"
+  ;; 	      "llama3.1:latest"
+  ;; 	      "deepseek-r1:latest"
+  ;; 	      "mistral-small:latest"
+  ;; 	      "deepseek-r1:7b"
+  ;; 	      "nomic-embed-text:latest"))
+  )
+
 (provide 'init)
 ;;; init.el ends here
