@@ -98,17 +98,11 @@ func main() {
 		}
 	}()
 
-	err = watcher.Add(capacityFilePath)
+	err = watcher.Add(*batteryPath)
 	if err != nil {
-		log.Fatalf("Error adding %s to watcher: %v", capacityFilePath, err)
+		log.Fatalf("Error adding %s to watcher: %v", *batteryPath, err)
 	}
-	log.Printf("Watching %s for changes...", capacityFilePath)
-
-	err = watcher.Add(statusFilePath)
-	if err != nil {
-		log.Fatalf("Error adding %s to watcher: %v", statusFilePath, err)
-	}
-	log.Printf("Watching %s for changes...", statusFilePath)
+	log.Printf("Watching %s for changes...", *batteryPath)
 
 	<-done // Keep the main goroutine alive
 }
