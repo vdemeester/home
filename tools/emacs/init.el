@@ -1052,6 +1052,8 @@ minibuffer, even without explicitly focusing it."
   (org-goto-interface 'outline-path-completion)
   (org-outline-path-complete-in-steps nil)
   (org-goto-max-level 2)
+  :hook
+  (org-mode . auto-fill-mode)
   :bind
   (:map org-mode-map
 	("C-<left>" . org-shiftleft)
