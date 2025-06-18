@@ -10,24 +10,26 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-
-	"github.com/fsnotify/fsnotify"
+	"time"
 )
 
 func main() {
 	// 1. Define command-line flags for configuration
 	batteryPath := flag.String("battery-path", "/sys/class/power_supply/BAT0", "Path to the battery status directory (e.g., /sys/class/power_supply/BAT0)")
+	acPath := flag.String("ac-path", "/sys/class/power_supply/AC", "Path to the AC adapter status directory (e.g., /sys/class/power_supply/AC)")
 	lowThreshold := flag.Int("low-threshold", 40, "Battery percentage threshold for power-saver profile when on battery")
-	onPowerProfile := flag.String("on-power-profile", "performance", "Power profile to set when on AC power")
+	onPowerProfile := flag.String("on-power-profile", "performance", "Power profile to set when on AC power (regardless of charging status)")
 	onBatteryBalancedProfile := flag.String("on-battery-balanced-profile", "balanced", "Power profile to set when on battery and above low threshold")
 	onBatteryLowProfile := flag.String("on-battery-low-profile", "power-saver", "Power profile to set when on battery and below low threshold")
 	enableNotifications := flag.Bool("enable-notifications", true, "Enable desktop notifications using notify-send")
 	notificationIcon := flag.String("notification-icon", "battery", "Icon name for desktop notifications (e.g., 'battery', 'dialog-information')")
+	interval := flag.Duration("interval", 10*time.Second, "Interval between battery checks (e.g., 10s, 1m)") // Reverted to polling interval
 
 	flag.Parse()
 
 	log.Printf("Starting battery monitor with settings:")
 	log.Printf("  Battery Path: %s", *batteryPath)
+	log.Printf("  AC Path: %s", *acPath)
 	log.Printf("  Low Threshold (on battery): %d%%", *lowThreshold)
 	log.Printf("  On AC Power Profile: %s", *onPowerProfile)
 	log.Printf("  On Battery Balanced Profile: %s", *onBatteryBalancedProfile)
@@ -36,126 +38,107 @@ func main() {
 	if *enableNotifications {
 		log.Printf("  Notification Icon: %s", *notificationIcon)
 	}
+	log.Printf("  Check Interval: %s", *interval)
 
 	// Determine the full paths to relevant files
-	capacityFilePath := filepath.Join(*batteryPath, "capacity")
-	statusFilePath := filepath.Join(*batteryPath, "status") // Typically "Charging" or "Discharging"
+	batteryCapacityFilePath := filepath.Join(*batteryPath, "capacity")
+	batteryStatusFilePath := filepath.Join(*batteryPath, "status") // e.g., "Charging", "Discharging", "Full"
+	acOnlineFilePath := filepath.Join(*acPath, "online")           // 0 or 1
 
-	// Ensure the battery paths exist
-	if _, err := os.Stat(capacityFilePath); os.IsNotExist(err) {
-		log.Fatalf("Error: Battery capacity file not found at %s. Please check --battery-path.", capacityFilePath)
+	// Ensure the necessary paths exist
+	if _, err := os.Stat(batteryCapacityFilePath); os.IsNotExist(err) {
+		log.Fatalf("Error: Battery capacity file not found at %s. Please check --battery-path.", batteryCapacityFilePath)
 	}
-	if _, err := os.Stat(statusFilePath); os.IsNotExist(err) {
-		log.Fatalf("Error: Battery status file not found at %s. Please check --battery-path.", statusFilePath)
+	if _, err := os.Stat(batteryStatusFilePath); os.IsNotExist(err) {
+		log.Fatalf("Error: Battery status file not found at %s. Please check --battery-path.", batteryStatusFilePath)
+	}
+	if _, err := os.Stat(acOnlineFilePath); os.IsNotExist(err) {
+		log.Fatalf("Error: AC online file not found at %s. Please check --ac-path.", acOnlineFilePath)
 	}
 
 	currentProfile := "" // To keep track of the currently set profile
 
-	// Initial check on startup
+	// Main monitoring loop using time.Ticker for polling
+	ticker := time.NewTicker(*interval)
+	defer ticker.Stop()
+
+	// Perform initial check immediately
 	log.Println("Performing initial battery status check...")
-	status, capacity, err := readBatteryStatusAndCapacity(statusFilePath, capacityFilePath)
+	acConnected, batteryStatus, batteryCapacity, err := readSystemStatus(acOnlineFilePath, batteryStatusFilePath, batteryCapacityFilePath)
 	if err != nil {
-		log.Printf("Initial check failed: %v. Retrying on file change.", err)
+		log.Printf("Initial check failed: %v. Will retry on next interval.", err)
 	} else {
-		// Pass notification settings to the apply function
-		currentProfile = applyPowerProfile(status, capacity, *lowThreshold, *onPowerProfile, *onBatteryBalancedProfile, *onBatteryLowProfile, currentProfile, *enableNotifications, *notificationIcon)
+		currentProfile = applyPowerProfile(acConnected, batteryStatus, batteryCapacity, *lowThreshold, *onPowerProfile, *onBatteryBalancedProfile, *onBatteryLowProfile, currentProfile, *enableNotifications, *notificationIcon)
 	}
 
-	// Create a new watcher.
-	watcher, err := fsnotify.NewWatcher()
-	if err != nil {
-		log.Fatal("Error creating watcher:", err)
-	}
-	defer watcher.Close()
-
-	done := make(chan bool)
-
-	go func() {
-		for {
-			select {
-			case event, ok := <-watcher.Events:
-				if !ok {
-					return
-				}
-				if event.Op&fsnotify.Write == fsnotify.Write {
-					log.Printf("File modified: %s - Event: %s", event.Name, event.Op.String())
-
-					// Read status and capacity on change
-					status, capacity, err := readBatteryStatusAndCapacity(statusFilePath, capacityFilePath)
-					if err != nil {
-						log.Printf("Error reading battery status/capacity: %v", err)
-						continue
-					}
-					// Pass notification settings to the apply function
-					currentProfile = applyPowerProfile(status, capacity, *lowThreshold, *onPowerProfile, *onBatteryBalancedProfile, *onBatteryLowProfile, currentProfile, *enableNotifications, *notificationIcon)
-				}
-			case err, ok := <-watcher.Errors:
-				if !ok {
-					return
-				}
-				log.Println("Error from watcher:", err)
-			}
+	for range ticker.C {
+		log.Println("Performing scheduled battery status check...")
+		acConnected, batteryStatus, batteryCapacity, err := readSystemStatus(acOnlineFilePath, batteryStatusFilePath, batteryCapacityFilePath)
+		if err != nil {
+			log.Printf("Error reading system status: %v", err)
+			continue
 		}
-	}()
-
-	err = watcher.Add(*batteryPath)
-	if err != nil {
-		log.Fatalf("Error adding %s to watcher: %v", *batteryPath, err)
+		currentProfile = applyPowerProfile(acConnected, batteryStatus, batteryCapacity, *lowThreshold, *onPowerProfile, *onBatteryBalancedProfile, *onBatteryLowProfile, currentProfile, *enableNotifications, *notificationIcon)
 	}
-	log.Printf("Watching %s for changes...", *batteryPath)
-
-	<-done // Keep the main goroutine alive
 }
 
-// readBatteryStatusAndCapacity reads the battery status (Charging/Discharging) and percentage.
-func readBatteryStatusAndCapacity(statusPath, capacityPath string) (string, int, error) {
-	// Read status
-	statusContent, err := ioutil.ReadFile(statusPath)
+// readSystemStatus reads the AC online status, battery status, and battery capacity.
+func readSystemStatus(acOnlinePath, batteryStatusPath, batteryCapacityPath string) (bool, string, int, error) {
+	// Read AC online status
+	acOnlineContent, err := ioutil.ReadFile(acOnlinePath)
 	if err != nil {
-		return "", 0, fmt.Errorf("failed to read battery status file %s: %w", statusPath, err)
+		return false, "", 0, fmt.Errorf("failed to read AC online file %s: %w", acOnlinePath, err)
 	}
-	status := strings.TrimSpace(string(statusContent))
+	acOnlineStr := strings.TrimSpace(string(acOnlineContent))
+	acOnline, err := strconv.Atoi(acOnlineStr)
+	if err != nil {
+		return false, "", 0, fmt.Errorf("failed to parse AC online status '%s': %w", acOnlineStr, err)
+	}
+	acConnected := acOnline == 1
 
-	// Read capacity
-	capacityContent, err := ioutil.ReadFile(capacityPath)
+	// Read battery status
+	batteryStatusContent, err := ioutil.ReadFile(batteryStatusPath)
 	if err != nil {
-		return "", 0, fmt.Errorf("failed to read battery capacity file %s: %w", capacityPath, err)
+		return false, "", 0, fmt.Errorf("failed to read battery status file %s: %w", batteryStatusPath, err)
 	}
-	capacityStr := strings.TrimSpace(string(capacityContent))
-	capacity, err := strconv.Atoi(capacityStr)
+	batteryStatus := strings.TrimSpace(string(batteryStatusContent))
+
+	// Read battery capacity
+	batteryCapacityContent, err := ioutil.ReadFile(batteryCapacityPath)
 	if err != nil {
-		return "", 0, fmt.Errorf("failed to parse battery capacity '%s': %w", capacityStr, err)
+		return false, "", 0, fmt.Errorf("failed to read battery capacity file %s: %w", batteryCapacityPath, err)
 	}
-	return status, capacity, nil
+	batteryCapacityStr := strings.TrimSpace(string(batteryCapacityContent))
+	batteryCapacity, err := strconv.Atoi(batteryCapacityStr)
+	if err != nil {
+		return false, "", 0, fmt.Errorf("failed to parse battery capacity '%s': %w", batteryCapacityStr, err)
+	}
+	return acConnected, batteryStatus, batteryCapacity, nil
 }
 
 // applyPowerProfile determines and sets the correct power profile and sends a notification.
 // It returns the profile that was actually set (or determined to be set).
-func applyPowerProfile(status string, capacity int, lowThreshold int, onPowerProfile, onBatteryBalancedProfile, onBatteryLowProfile, currentProfile string, enableNotifications bool, notificationIcon string) string {
+func applyPowerProfile(acConnected bool, batteryStatus string, batteryCapacity int, lowThreshold int, onPowerProfile, onBatteryBalancedProfile, onBatteryLowProfile, currentProfile string, enableNotifications bool, notificationIcon string) string {
 	var newProfile string
 	var notificationMessage string
 
-	log.Printf("Current Status: %s, Capacity: %d%%", status, capacity)
+	log.Printf("Current AC Connected: %t, Battery Status: %s, Capacity: %d%%", acConnected, batteryStatus, batteryCapacity)
 
-	if status == "Charging" || status == "Full" {
+	if acConnected {
 		newProfile = onPowerProfile
-		notificationMessage = fmt.Sprintf("Power connected. Switching to %s profile.", newProfile)
-	} else if status == "Discharging" {
-		if capacity <= lowThreshold {
+		notificationMessage = fmt.Sprintf("Power connected. Switching to %s profile. Battery: %d%% (%s)", newProfile, batteryCapacity, batteryStatus)
+	} else { // On battery
+		if batteryCapacity <= lowThreshold {
 			newProfile = onBatteryLowProfile
-			notificationMessage = fmt.Sprintf("Battery low (%d%%). Switching to %s profile.", capacity, newProfile)
+			notificationMessage = fmt.Sprintf("Battery low (%d%%). Switching to %s profile.", batteryCapacity, newProfile)
 		} else {
 			newProfile = onBatteryBalancedProfile
-			notificationMessage = fmt.Sprintf("Battery on power (%d%%). Switching to %s profile.", capacity, newProfile)
+			notificationMessage = fmt.Sprintf("Running on battery (%d%%). Switching to %s profile.", batteryCapacity, newProfile)
 		}
-	} else {
-		log.Printf("Unknown battery status: %s. Defaulting to balanced profile.", status)
-		newProfile = onBatteryBalancedProfile // Fallback
-		notificationMessage = fmt.Sprintf("Unknown battery status '%s'. Defaulting to %s profile.", status, newProfile)
 	}
 
 	if newProfile != currentProfile {
-		log.Printf("Calculated new profile: %s (Current Status: %s, Capacity: %d%%). Attempting to set.", newProfile, status, capacity)
+		log.Printf("Calculated new profile: %s. Attempting to set.", newProfile)
 		err := setPowerProfile(newProfile)
 		if err != nil {
 			log.Printf("Error setting power profile to %s: %v", newProfile, err)
