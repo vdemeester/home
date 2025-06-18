@@ -52,8 +52,8 @@ in
     userEmail = "vincent@sbr.pm";
 
     includes = lib.lists.forEach redhat_folders (x: {
-      condition = "gitdir:${config.home.homeDirectory}/${x}/**";
-      contents.users.email = "vdemeest@redhat.com";
+      condition = "gitdir:${config.home.homeDirectory}/${x}/";
+      contents.user.email = "vdemeest@redhat.com";
     });
 
     signing = {
