@@ -224,6 +224,9 @@ in
           always = true;
         }
         {
+          command = "${pkgs.battery-monitor}/bin/battery-monitor";
+        }
+        {
           command = "${pkgs.pa-notify}/bin/pa-notify -u0";
           always = true;
         }
