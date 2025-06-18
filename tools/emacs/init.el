@@ -138,7 +138,7 @@
 
 (setopt load-prefer-newer t)              ; Always load newer compiled files
 (setopt ad-redefinition-action 'accept)   ; Silence advice redefinition warnings
-(setopt debug-on-error t)
+;; (setopt debug-on-error t)
 (setopt byte-compile-debug t)
 
 ;; Configure `use-package' prior to loading it.
