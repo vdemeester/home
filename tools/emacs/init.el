@@ -1114,6 +1114,10 @@ minibuffer, even without explicitly focusing it."
 
   (add-to-list 'org-capture-templates
 	       `("j" "Journal entry" item
+		 (file+datetree ,org-journal-file)
+		 "%U %?\n%i"))
+  (add-to-list 'org-capture-templates
+	       `("J" "Journal (antidated) entry" item
 		 (file+datetree+prompt ,org-journal-file)
 		 "%U %?\n%i"))
   
