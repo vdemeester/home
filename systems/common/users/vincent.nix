@@ -39,6 +39,7 @@ in
         "nginx"
         "plugdev"
         "tss"
+        "messagebus"
       ];
     subUidRanges = [
       {
