@@ -388,7 +388,8 @@ minibuffer, even without explicitly focusing it."
   :hook
   (dired-mode . dired-omit-mode)
   (dired-mode . dired-hide-details-mode)
-  (dired-mode . dired-sort-toggle-or-edit))
+  ;; (dired-mode . dired-sort-toggle-or-edit) ; I don't like the "default by date" behavior
+  )
 
 (use-package alert
   :defer 2
