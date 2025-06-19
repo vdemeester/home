@@ -4,5 +4,5 @@ buildGoModule rec {
   name = "battery-monitor";
   src = ./.;
   # vendorHash = null;
-  vendorHash = "sha256-qWQM+DlW/9/JlAv9M7QBUch3wSeOQFVgGxmkIm29yAM=";
+  vendorHash = "sha256-K9lqUdIR2EpLEQMTrlv6bGj3IpwK/yaFCqY7S7nuXg4=";
 }
