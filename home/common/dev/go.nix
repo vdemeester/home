@@ -20,7 +20,7 @@
     gofumpt
     # misc
     protobuf
-    my.ram
+    ram
     # not really go but still
     gosmee
     # cue

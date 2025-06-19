@@ -369,8 +369,8 @@ in
         # bindsym --whole-window button6 workspace next_on_output
         # bindsym --whole-window button7 workspace prev_on_output
 
-        bindsym ${mod}+F10 exec ${pkgs.my.scripts}/bin/shot %d
-        bindsym ${mod}+Shift+F10 exec ${pkgs.my.scripts}/bin/shotf %d
+        bindsym ${mod}+F10 exec ${pkgs.scripts}/bin/shot %d
+        bindsym ${mod}+Shift+F10 exec ${pkgs.scripts}/bin/shotf %d
 
         bindsym ${mod}+F9 exec ${pkgs.mako}/bin/makoctl mode -s do-not-disturb
         bindsym ${mod}+Shift+F9 exec ${pkgs.mako}/bin/makoctl mode -s default

@@ -17,7 +17,7 @@ in
       '';
       package = mkOption {
         type = types.package;
-        default = pkgs.my.govanityurl;
+        default = pkgs.govanityurl;
         description = ''
           govanityurl package to use.
         '';
