@@ -11,8 +11,8 @@ pkgs.mkShell {
     go
     ko
     oc
-    my.tkn
-    my.operator-tool
+    tektoncd-cli
+    operator-tool
     google-cloud-sdk
     gron
     yamllint

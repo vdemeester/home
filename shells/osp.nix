@@ -22,7 +22,7 @@ pkgs.mkShell {
     kustomize
     oc
     operator-sdk
-    my.operator-tool
+    operator-tool
     tektoncd-cli
     opm
     python39Packages.pyaml
