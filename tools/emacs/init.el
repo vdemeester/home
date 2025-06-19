@@ -945,6 +945,9 @@ minibuffer, even without explicitly focusing it."
   (org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
   (org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$")
   (org-agenda-files `(,org-inbox-file ,org-todos-file))
+  (org-refile-targets '((org-agenda-files :maxlevel . 3)))
+  (org-refile-use-outline-path 'file)
+  (org-refile-allow-creating-parent-nodes 'confirm)
   (org-agenda-remove-tags t)
   (org-agenda-span 'day)
   (org-agenda-start-on-weekday 1)
@@ -1075,7 +1078,24 @@ minibuffer, even without explicitly focusing it."
   (unbind-key "C-S-<left>" org-mode-map)
   (unbind-key "C-S-<right>" org-mode-map)
   (unbind-key "C-S-<up>" org-mode-map)
-  (unbind-key "C-S-<down>" org-mode-map))
+  (unbind-key "C-S-<down>" org-mode-map)
+
+  (require 'dash)
+  (require 's)
+  (defun vde/org-refile-targets ()
+    (append '((org-inbox-file :level . 0)
+	      (org-todos-file :maxlevel . 3))
+	    (->>
+	     (directory-files org-notes-directory nil ".org$")
+	     (--remove (s-starts-with? "." it))
+	     (--remove (s-contains? "==readwise=" it))
+	     (--map (format "%s/%s" org-notes-directory it))
+	     (--map `(,it :maxlevel . 3)))
+	    (->>
+	     (directory-files org-people-dir ".org$")
+	     (--remove (s-starts-with? (format "%s/legacy" org-people-dir) it))
+	     (--map (format "%s" it))
+	     (--map `(,it :maxlevel . 3))))))
 
 (use-package org-agenda
   :after org
