@@ -40,10 +40,6 @@
 
   nixpkgs = {
     overlays = [
-
-      # FIXME remove those
-      # (import ./nix/overlays).tekton
-      (import ../nix/overlays/sbr.nix)
       # Our own flake exports (from overlays and pkgs dir)
       outputs.overlays.additions
       outputs.overlays.modifications
