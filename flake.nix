@@ -23,6 +23,9 @@
       forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
     in
     {
+      githubActions = inputs.nix-github-actions.lib.mkGithubMatrix {
+        checks = inputs.nixpkgs.lib.getAttrs [ "x86_64-linux" ] self.packages;
+      };
       # Standalone home configurations
       # FIXME set this up
       homeConfigurations = {
@@ -295,6 +298,9 @@
 
     system-manager.url = "github:numtide/system-manager";
     system-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-github-actions.url = "github:nix-community/nix-github-actions";
+    nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
 
     # nix-system-graphics.url = "github:soupglasses/nix-system-graphics";
     # nix-system-graphics.inputs.nixpkgs.follows = "nixpkgs";
