@@ -1,3 +1,0 @@
-#+TITLE: Packages
-
-My personal /maintained/ packages, that can be used as NUR repository.

@@ -128,11 +128,29 @@
             ];
           }).config.system.build.sdImage;
       };
-      # TODO: expose some packages ?
-      # This is probably not gonna happen, instead I should move any internal package here outside, in their
-      # own repository and flake. If they are useful upstream.
 
-      overlays = import ./nix/overlays { inherit inputs; };
+      overlays = import ./overlays { inherit inputs; };
+
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            config.allowAliases = false;
+            overlays = [
+              self.overlays.additions
+            ];
+          };
+          skipDarwinPackages =
+            system: n:
+            if lib.strings.hasSuffix "darwin" system then !(lib.strings.hasPrefix "koff" n) else true;
+          inherit (inputs.nixpkgs) lib;
+          drvAttrs = builtins.filter (n: lib.isDerivation pkgs.${n} && skipDarwinPackages system n) (
+            builtins.attrNames (self.overlays.additions pkgs pkgs)
+          );
+        in
+        lib.listToAttrs (map (n: lib.nameValuePair n pkgs.${n}) drvAttrs)
+      );
 
       checks = forAllSystems (system: {
         pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
