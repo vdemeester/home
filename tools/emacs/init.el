@@ -121,7 +121,10 @@
   (set-fontset-font t 'symbol "Symbola" nil 'append)
 
   (require 'modus-themes)
-  (setopt modus-themes-common-palette-overrides modus-themes-preset-overrides-cooler
+  (setopt modus-themes-common-palette-overrides
+	  `((border-mode-line-active unspecified)
+            (border-mode-line-inactive unspecified)
+	    ,@modus-themes-preset-overrides-cooler)
 	  modus-themes-to-rotate '(modus-operandi modus-vivendi)
 	  modus-themes-mixed-fonts t
 	  modus-themes-headings '((0 . (variable-pitch semilight 1.5))
