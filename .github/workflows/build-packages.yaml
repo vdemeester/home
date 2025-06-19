@@ -1,4 +1,4 @@
-name: Nix flake build packages
+name: packages
 
 permissions:
   contents: read
