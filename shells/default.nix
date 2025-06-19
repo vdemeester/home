@@ -1,1 +1,0 @@
-import ./nixos-config.nix
