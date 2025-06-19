@@ -56,6 +56,20 @@
       endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
     };
     hardware.bolt.enable = true;
+    printing = {
+      enable = true;
+      drivers = with pkgs; [
+        cnijfilter2
+        gutenprint
+        gutenprintBin
+      ];
+    };
+  };
+
+  services.udev.packages = [ pkgs.sane-airscan ];
+  hardware.sane = {
+    enable = true;
+    extraBackends = [ pkgs.sane-airscan ];
   };
 
   environment.systemPackages = with pkgs; [

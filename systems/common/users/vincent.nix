@@ -40,6 +40,8 @@ in
         "plugdev"
         "tss"
         "messagebus"
+        "lp"
+        "scanner"
       ];
     subUidRanges = [
       {
