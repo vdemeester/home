@@ -1,4 +1,4 @@
-name: Nix Flake actions
+name: systems
 
 permissions:
   contents: read
