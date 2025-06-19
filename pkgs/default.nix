@@ -14,7 +14,7 @@ in
   vrsync = pkgs.callPackage ./my/vrsync { };
   vde-thinkpad = pkgs.callPackage ./my/vde-thinkpad { };
   bekind = pkgs.callPackage ../tools/bekind { };
-  battery-monitory = pkgs.callPackage ../tools/battery-monitor { };
+  battery-monitor = pkgs.callPackage ../tools/battery-monitor { };
   go-org-readwise = pkgs.callPackage ../tools/go-org-readwise { };
   ape = pkgs.callPackage ./ape { };
   ram = pkgs.callPackage ./ram { };
