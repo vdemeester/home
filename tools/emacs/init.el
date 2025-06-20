@@ -255,6 +255,9 @@ minibuffer, even without explicitly focusing it."
 (use-package flymake
   :bind
   ("C-c f b" . flymake-show-buffer-diagnostics)
+  (:map flymake-mode-map
+        ("M-n" . flymake-goto-next-error)
+        ("M-p" . flymake-goto-prev-error))
   :hook
   (prog-mode . flymake-mode))
 
