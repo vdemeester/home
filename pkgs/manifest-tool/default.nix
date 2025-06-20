@@ -8,7 +8,6 @@ buildGoModule rec {
   name = "manifest-tool-${version}";
   version = "2.0.0";
   rev = "v${version}";
-  # rev = "bae5531170d45955c2d72d1b29d77ce1b0c9dedb";
 
   subPackages = [ "cmd/manifest-tool" ];
   modRoot = "./v2";

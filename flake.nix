@@ -302,7 +302,5 @@
     nix-github-actions.url = "github:nix-community/nix-github-actions";
     nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
 
-    # nix-system-graphics.url = "github:soupglasses/nix-system-graphics";
-    # nix-system-graphics.inputs.nixpkgs.follows = "nixpkgs";
   };
 }
