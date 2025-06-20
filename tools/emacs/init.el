@@ -17,7 +17,7 @@
   "`org-mode' inbox file, where we collect entries to be triaged.")
 (defconst org-todos-file (expand-file-name "todos.org" org-directory)
   "`org-mode' file for TODOs.  This is the main file for the org angenda entries.")
-(defconst org-journal-file (expand-file-name "journal.org" org-directory)
+(defconst org-journal-file (expand-file-name "20250620T144103--journal__journal.org" org-notes-directory)
   "`org-mode' journal file, for journal-ling.")
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
   "`org-mode' directory of archived files.")
