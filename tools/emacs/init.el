@@ -537,10 +537,28 @@ minibuffer, even without explicitly focusing it."
 	(go-mode . go-ts-mode)))
 
 (use-package markdown-mode
-  :mode "\\.md\\'")
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :hook ((markdown-mode . visual-line-mode)
+	 (gfm-mode . visual-line-mode)))
 
 (use-package yaml-ts-mode
-  :mode "\\.yaml\\'")
+  :mode "\\.ya?ml\\'"
+  :hook ((yaml-ts-mode . display-line-numbers-mode)
+	 (yaml-ts-mode . outline-minor-mode)
+	 (yaml-ts-mode . electric-pair-local-mode))
+  :config
+  (setq-local outline-regexp "^ *\\([A-Za-z0-9_-]*: *[>|]?$\\|-\\b\\)")
+  (font-lock-add-keywords
+   'yaml-ts-mode
+   '(("\\($(\\(workspaces\\|context\\|params\\)\.[^)]+)\\)" 1 'font-lock-constant-face prepend)
+     ("kind:\s*\\(.*\\)\n" 1 'font-lock-keyword-face prepend))))
+
+(use-package orgalist
+  :commands (orgalist-mode)
+  :hook ((markdown-mode . orgalist-mode)
+	 (gfm-mode . orgalist-mode)))
 
 (use-package go-ts-mode
   :mode (("\\.go$" . go-ts-mode)
