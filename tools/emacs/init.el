@@ -1460,5 +1460,61 @@ Add this function to the `after-save-hook'."
   ;; 	      "nomic-embed-text:latest"))
   )
 
+(use-package devdocs
+  :commands (devdocs-lookup devdocs-install vde/install-devdocs)
+  :bind (("C-h D" . devdocs-lookup))
+  :config
+  (defun vde/install-devdocs ()
+    "Install the devdocs I am using the most."
+    (interactive)
+    (dolist (docset '("bash"
+		      "c"
+		      "click"
+		      "cpp"
+		      "css"
+		      "elisp"
+		      "flask"
+		      "git"
+		      "gnu_make"
+		      "go"
+		      "html"
+		      "htmx"
+		      "http"
+		      "javascript"
+		      "jq"
+		      "jquery"
+		      "kubectl"
+		      "kubernetes"
+		      "lua~5.4"
+		      "nix"
+		      "python~3.13"
+		      "python~3.12"
+		      "requests"
+		      "sqlite"
+		      "terraform"
+		      "werkzeug"
+		      "zig"))
+      (devdocs-install docset))))
+
+(defvar highlight-codetags-keywords
+  '(("\\<\\(TODO\\|FIXME\\|BUG\\|XXX\\)\\>" 1 font-lock-warning-face prepend)
+    ("\\<\\(NOTE\\|HACK\\)\\>" 1 font-lock-doc-face prepend)))
+
+(define-minor-mode highlight-codetags-local-mode
+  "Highlight codetags like TODO, FIXME..."
+  :global nil
+  (if highlight-codetags-local-mode
+      (font-lock-add-keywords nil highlight-codetags-keywords)
+    (font-lock-remove-keywords nil highlight-codetags-keywords))
+
+  ;; Fontify the current buffer
+  (when (bound-and-true-p font-lock-mode)
+    (if (fboundp 'font-lock-flush)
+        (font-lock-flush)
+      (with-no-warnings (font-lock-fontify-buffer)))))
+
+(add-hook 'prog-mode-hook #'highlight-codetags-local-mode)
+
+
 (provide 'init)
 ;;; init.el ends here
