@@ -239,7 +239,7 @@ in
       net = {
         ips = [ "192.168.1.24" ];
         vpn = {
-          pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
+          pubkey = "KVRzoPUw8UTQblYtbs/NLYLIVmtQehrc4Hacbpf5Ugs=";
           ips = [ "10.100.0.2" ];
         };
         names = [
@@ -336,7 +336,7 @@ in
       net = {
         ips = [ "192.168.1.49" ];
         vpn = {
-          # pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
+          pubkey = "T8qfsBiOcZNxUeRHFg+2FPdGj4AuGloJ4b+0uI2jM2w=";
           ips = [ "10.100.0.49" ];
         };
         names = [
@@ -383,7 +383,8 @@ in
       net = {
         ips = [ "192.168.1.115" ];
         vpn = {
-          pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
+          # pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
+          pubkey = "";
           ips = [ "10.100.0.5" ];
         };
       };

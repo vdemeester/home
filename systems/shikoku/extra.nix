@@ -26,7 +26,7 @@
   services = {
     wireguard = {
       enable = true;
-      ips = globals.fn.wg-ips globals.machines.kobe.net.vpn.ips;
+      ips = globals.fn.wg-ips globals.machines.shikoku.net.vpn.ips;
       endpoint = "${globals.net.vpn.endpoint}";
       endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
     };
