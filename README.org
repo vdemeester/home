@@ -1,179 +1,292 @@
 #+TITLE: =home= monorepo
 #+FILETAGS: #home infra configuration dotfiles monorepo
 
-~home~ is the monorepo containing my personal tools and infrastructure. Almost everything in
-here is built using [[https://nixos.org/nix][Nix]]. /This README needs some updates/.
+A comprehensive monorepo containing personal infrastructure, system configurations, and tools, primarily built using [[https://nixos.org/nix][Nix]].
 
-/Note: This repository is under relatively heavy refactoring, so this README might not always be up-to-date/.
+* Overview
 
-It contains my systems configuration — mainly NixOS, but also other
-systems — as well as some custom, very /personal/ tools and
-configurations (e.g. Emacs).
+This repository serves as a centralized location for:
+- NixOS system configurations for multiple machines
+- Home-manager configurations
+- Custom tools and personal configurations
+- Infrastructure management
 
-The main entrypoint for this is the =flake.nix= file.
-
-- *I need to rewrite this part based on =flake.nix= and updates*.
-- Explore the =nixos-rebuild --build-host … --target-host … --flake .#host boot= as it might
-  remove the need for =deploy-rs= altogether 😈
-- I need to make a *big* overall on the docs.
-
-* Highlights
-
-It is meant to be fully reproducible (using [[https://github.com/nmattia/niv][niv]] for now) and position-independent, meaning
-there is no moving around of ~configuration.nix~. For the configurations' entry points see
-the individual [[file:systems][systems]], as well as [[file:default.nix][default.nix]].
-
-This will be a all-time work-in-progress, so please beware that things might change
-dramatically or even not working anymore 😛.
+* Repository Structure
 
 ** =/systems=
+Contains NixOS system configurations organized as follows:
+- Individual host configurations (aix, aomi, athena, demeter, etc.)
+- Common configurations shared across systems:
+  + Base system setup
+  + Desktop environments (Sway)
+  + Hardware-specific configurations
+  + Program configurations
+  + Service configurations
+  + User management
 
-This holds the configuration of my different systems. It is meant to be
-position-independent, meaning there is no moving around of ~configuration.nix~. For the
-configurations' entry points see the individual [[file:systems][systems]], as well as [[file:default.nix][default.nix]].
-
-*** =/hosts=
-
-This is the configuration for each hosts. It should be as simple as enabling some profiles
-and some ad-hoc very specific configuration.
-
-*** =/modules=
-
-This is where all configuration that can be used across different system would lend. These
-are not system dependent and should be configurable. This contains the following
-"modules", a bit like how nixpkgs is organized
-
-- hardware
-- profiles
-- programs
-- services
-- virtualisation
-
-** =/ops=
-
-Network and =morph= configuration of my infrastructure.
-
-** =/users=
-
-Users configuration, for [[https://nixos.org][NixOS]] or not and using home-manager.
-
-*** =/modules=
-
-This is a list of modules that can be used by all users.
-
-*** =/{users}/default.nix=
-
-Contains NixOS user specific configuration. It gets imported if the user is listed in a
-given configuration. It will contains the user creation information (groups, …) and can
-refer to a given home-manager configuration.
-
-*** =/{users}/home.nix=
-
-Contains home-manager configuration.
-/Note/: In order to get information from Nixos, use =nixosConfig=. This should be useful to
-configure some modules depending on the host configuration.
-
-** =/nix=
-
-Nix configurations, packages definitions, overlays.
+** =/home=
+Home-manager configurations for different users and environments:
+- Common configurations for desktop environments
+- Development tools and settings
+- Shell configurations (zsh, tmux, etc.)
+- Service configurations
 
 ** =/tools=
+Custom tools and utilities:
+- Battery monitor
+- Bekind (Kubernetes tooling)
+- Emacs configuration
+- Ergodox keyboard configuration
+- Various Go-based utilities
 
-Those are tools I have written for my personal usage.
+** =/pkgs=
+Custom Nix packages and overlays.
 
-** =/www=
+** =/modules=
+NixOS modules providing additional functionality:
+- Wireguard client/server configurations
+- Go vanity URL service
+- Gosmee service
 
-Website sources and builders/deployers.
+* Usage
+
+The main entry point is =flake.nix=, which provides:
+
+- NixOS configurations for various hosts
+- Home-manager configurations
+- System-manager configurations
+- Custom packages and overlays
+- Development shells
+
+** Building a System
+
+To build and activate a system configuration:
+
+#+begin_src bash
+nixos-rebuild switch --flake .#<hostname>
+#+end_src
+
+** Installing a New System
+
+For new systems that already have a configuration in this repository, you can use the =install.sh= script which uses =disko= for disk partitioning and installation:
+
+#+begin_src bash
+./install.sh <hostname> [additional-disko-options]
+#+end_src
+
+This will:
+1. Use the disko-install tool to partition and format disks
+2. Install the system configuration for the specified hostname
+
+** Available Make Targets
+
+The repository includes several useful make targets for common operations:
+
+*** System Management
+- =make boot= - Build and boot the current system configuration
+- =make switch= - Build and switch to the new system configuration
+- =make build= - Build the system configuration without activating
+- =make dry-build= - Test build the configuration without making changes
+
+*** Remote Host Management
+- =make host/<hostname>/build= - Build configuration for a specific host
+- =make host/<hostname>/boot= - Build and boot configuration on a remote host
+- =make host/<hostname>/switch= - Build and switch configuration on a remote host
+
+*** Development
+- =make fmt= - Format Nix files using nixpkgs-fmt
+- =make install-hooks= - Install git hooks
+- =make pre-commit= - Run pre-commit checks
+
+*** Maintenance
+- =make clean= - Clean up old system generations and results
+- =make clean-system= - Remove system generations older than 15 days
+- =make clean-results= - Remove symlinks to build results
+- =make update= - Update nix channels
+
+** Updating Home Configuration
+
+To update home-manager configuration:
+
+#+begin_src bash
+home-manager switch --flake .#<username>@<hostname>
+#+end_src
+
+** Building and Installing Packages
+
+The repository provides various custom packages that can be built and installed directly from the flake:
+
+*** Building a Single Package
+To build a specific package:
+
+#+begin_src bash
+nix build .#<package-name>
+#+end_src
+
+*** Installing a Package
+To install a package in your profile:
+
+#+begin_src bash
+nix profile install .#<package-name>
+#+end_src
+
+*** Available Packages
+All packages are defined in the =/pkgs= directory and are available for both =x86_64-linux= and =aarch64-linux= systems. Notable packages include:
+
+**** Development Tools
+- =bekind= - CLI tool for managing kind (Kubernetes in Docker) clusters with profile support
+- =battery-monitor= - System battery monitoring utility
+- =go-org-readwise= - Integration between Org mode and Readwise
+- =govanityurl= - Go vanity URL service
+- =manifest-tool= - Container manifest tool
+
+**** System Utilities
+- =vrsync= - Custom rsync utility
+- =vde-thinkpad= - ThinkPad-specific utilities
+- =systemd-email= - Email notifications for systemd
+- =nixfmt-plus= - Enhanced Nix formatter
+
+**** Custom Scripts
+- =scripts= - Collection of utility scripts for various tasks
+- =ape= - Custom utility package
+- =ram= - Custom utility package
+- =batzconverter= - Custom conversion utility
+
+**** Emacs Packages
+- =bookmark-plus= - Enhanced bookmarking for Emacs
+
+To list all available packages:
+
+#+begin_src bash
+nix flake show
+#+end_src
+
+** Using SystemManager Configurations
+
+SystemManager provides a way to manage system configurations. Current configurations include:
+
+*** Available Configurations
+- =aion= (aarch64-linux)
+
+*** Applying SystemManager Configuration
+To use a SystemManager configuration:
+
+#+begin_src bash
+system-manager switch .#<hostname>
+#+end_src
+
+* Development
+
+A development shell is provided with necessary tools:
+- Git
+- Prettier
+- Deadnix
+- nixfmt-rfc-style
+- agenix
+
+To enter the development environment:
+
+#+begin_src bash
+nix develop
+#+end_src
+
+Pre-commit hooks are configured for:
+- Go formatting
+- Nix formatting and linting
+- Python linting
+- Shell script checking
+
+* Supported Systems
+
+- x86_64-linux
+- aarch64-linux
 
 * References
 
-Repositories
-- [[https://github.com/jordanisaacs/dotfiles][https://github.com/jordanisaacs/dotfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/jordanisaacs.dotfiles/][src]]
-- [[https://github.com/chvp/nixos-config][https://github.com/chvp/nixos-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/chvp.nixos-config/][src]]
-- [[https://github.com/gytis-ivaskevicius/nixfiles][https://github.com/gytis-ivaskevicius/nixfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/gytis-ivaskevicius.nixfiles/][src]]
-- [[https://github.com/davidtwco/veritas]] — [[file:/net/sakhalin.home/export/gaia/src/configs/davidtwco.veritas/][src]]
-- [[https://github.com/buckley310/nixos-config][https://github.com/buckley310/nixos-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/buckley310.nixos-config/][src]]
-- [[https://github.com/eadwu/nixos-configuration][https://github.com/eadwu/nixos-configuration]] — [[file:/net/sakhalin.home/export/gaia/src/configs/eadwu.nixos-configuration/][src]]
-- [[https://github.com/berbiche/dotfiles][https://github.com/berbiche/dotfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/berbiche.dotfiles/][src]]
-- https://github.com/hlissner/dotfiles/ — [[file:/net/sakhalin.home/export/gaia/src/configs/hlissner.dotfiles/][src]]
-- [[https://github.com/Mic92/dotfiles][https://github.com/Mic92/dotfiles]] — [[file:/net/sakhalin.home/export/gaia/src/configs/Mic92.dotfiles/][src]]
+Repositories that inspired or contributed to this configuration:
+
+** Active References
+- [[https://github.com/jordanisaacs/dotfiles][https://github.com/jordanisaacs/dotfiles]]
+- [[https://github.com/chvp/nixos-config][https://github.com/chvp/nixos-config]]
+- [[https://github.com/gytis-ivaskevicius/nixfiles][https://github.com/gytis-ivaskevicius/nixfiles]]
+- [[https://github.com/davidtwco/veritas][https://github.com/davidtwco/veritas]]
+- [[https://github.com/buckley310/nixos-config][https://github.com/buckley310/nixos-config]]
+- [[https://github.com/eadwu/nixos-configuration][https://github.com/eadwu/nixos-configuration]]
+- [[https://github.com/berbiche/dotfiles][https://github.com/berbiche/dotfiles]]
+- [[https://github.com/hlissner/dotfiles][https://github.com/hlissner/dotfiles]]
+- [[https://github.com/Mic92/dotfiles][https://github.com/Mic92/dotfiles]]
 - [[https://github.com/lovesegfault/nix-config][https://github.com/lovesegfault/nix-config]]
 - [[https://github.com/bqv/nixrc][https://github.com/bqv/nixrc]]
-- [[https://github.com/leotaku/nixos-config]]
-- [[https://github.com/rasendubi/dotfiles]]
-- [[https://git.tazj.in/about/]]
-- [[https://github.com/danieldk/nix-home]]
-- https://github.com/terlar/nix-config
-  + https://github.com/terlar/emacs-config
-- https://github.com/foo-dogsquared/nixos-config
-  + https://foo-dogsquared.github.io/nixos-config/05-using-parts-of-my-configuration/
-- https://github.com/barrucadu/nixfiles/tree/master
-- https://github.com/EmergentMind/nix-config
-- https://github.com/shahinism/45r4r/
-- https://github.com/wimpysworld/nix-config
-  This one is very interesting in how it is shaped (the mixins, …)
-- https://github.com/Hoverbear-Consulting/flake
-- https://github.com/jnsgruk/nixos-config
-- https://gitlab.com/ahoneybun/nix-configs
-- https://github.com/akirak/homelab
-  + [[https://git.sr.ht/~akirak/nix-config][https://git.sr.ht/~akirak/nix-config]] — [[file:/net/sakhalin.home/export/gaia/src/configs/akirak.nix-config/][src]]
-  + [[https://github.com/akirak/nix-desktop][https://github.com/akirak/nix-desktop]]
-- https://git.rossabaker.com/ross/cromulent
-- https://github.com/thiagokokada/nix-configs
-- https://github.com/jnsgruk/nixos-config
-- https://github.com/JRMurr/NixOsConfig
-- https://github.com/dzervas/dotfiles
+- [[https://github.com/leotaku/nixos-config][https://github.com/leotaku/nixos-config]]
+- [[https://github.com/rasendubi/dotfiles][https://github.com/rasendubi/dotfiles]]
+- [[https://git.tazj.in/about/][https://git.tazj.in/about/]]
+- [[https://github.com/danieldk/nix-home][https://github.com/danieldk/nix-home]]
+- [[https://github.com/terlar/nix-config][https://github.com/terlar/nix-config]]
+  + [[https://github.com/terlar/emacs-config][https://github.com/terlar/emacs-config]]
+- [[https://github.com/foo-dogsquared/nixos-config][https://github.com/foo-dogsquared/nixos-config]]
+- [[https://github.com/barrucadu/nixfiles][https://github.com/barrucadu/nixfiles]]
+- [[https://github.com/EmergentMind/nix-config][https://github.com/EmergentMind/nix-config]]
+- [[https://github.com/shahinism/45r4r][https://github.com/shahinism/45r4r]]
+- [[https://github.com/wimpysworld/nix-config][https://github.com/wimpysworld/nix-config]]
+- [[https://github.com/Hoverbear-Consulting/flake][https://github.com/Hoverbear-Consulting/flake]]
+- [[https://github.com/jnsgruk/nixos-config][https://github.com/jnsgruk/nixos-config]]
+- [[https://gitlab.com/ahoneybun/nix-configs][https://gitlab.com/ahoneybun/nix-configs]]
+- [[https://github.com/akirak/homelab][https://github.com/akirak/homelab]]
+- [[https://git.sr.ht/~akirak/nix-config][https://git.sr.ht/~akirak/nix-config]]
+- [[https://github.com/akirak/nix-desktop][https://github.com/akirak/nix-desktop]]
+- [[https://git.rossabaker.com/ross/cromulent][https://git.rossabaker.com/ross/cromulent]]
+- [[https://github.com/thiagokokada/nix-configs][https://github.com/thiagokokada/nix-configs]]
+- [[https://github.com/JRMurr/NixOsConfig][https://github.com/JRMurr/NixOsConfig]]
+- [[https://github.com/dzervas/dotfiles][https://github.com/dzervas/dotfiles]]
 
-Old
-- [[https://gitlab.com/samueldr/nixos-configuration]]
+** Historical References
+- [[https://gitlab.com/samueldr/nixos-configuration][https://gitlab.com/samueldr/nixos-configuration]]
 - [[https://github.com/yurrriq/dotfiles][https://github.com/yurrriq/dotfiles]]
-- [[https://github.com/akirak/nixos-config]]
-- [[https://github.com/akirak/home.nix]]
-- [[https://github.com/cstrahan/nixos-config]]
-- [[https://github.com/jwiegley/nix-config]]
-- [[https://github.com/arianvp/nixos-stuff]]
-- [[https://github.com/romatthe/ronix]]
-- [[https://github.com/rummik/nixos-config]]
-- [[https://github.com/a-schaefers/nix-config.old]]
-- [[https://github.com/auntieNeo/nixrc]]
-  + [[https://github.com/glines/nixrc]]
-- [[https://github.com/therealpxc/pxc.nix.d]]
-- [[https://github.com/tycho01/nix-config]]
-- [[https://github.com/ghuntley/dotfiles-nixos]]
-- [[https://github.com/budevg/nix-conf]]
-- [[https://github.com/cleverca22/nixos-configs]]
-- [[https://github.com/coreyoconnor/nix_configs]]
-- [[https://github.com/dejanr/dotfiles]]
-- [[https://github.com/Ericson2314/nixos-configuration]]
-- [[https://gitlab.com/garry-cairns/nixos-config]]
-- [[https://github.com/grahamc/nixos-config]]
-- [[https://github.com/HugoReeves/nix-home]]
-- [[https://github.com/kampfschlaefer/nixconfig]]
-- [[https://github.com/lambdael/nixosconf]]
-- [[https://github.com/puffnfresh/nix-files]]
-- [[https://github.com/talyz/nixos-config]]
-- [[https://github.com/uwap/nixos-configs]]
-- [[https://github.com/yacinehmito/yarn-nix]]
-- [[https://github.com/yrashk/nix-home]]
-- [[https://github.com/pSub/configs]]
-- [[https://github.com/periklis/nix-config]]
-- [[https://github.com/peel/dotfiles]]
-- [[https://github.com/bennofs/etc-nixos]]
-- [[https://github.com/Baughn/machine-config]]
-- https://github.com/gvolpe/nix-config
-
-- https://github.com/myme/dotfiles
-- https://github.com/jedimahdi/.dotfiles/
-- https://github.com/moni-dz/nix-config
-- https://github.com/Aylur/dotfiles/
-- https://gitlab.com/Zaney/zaneyos
-- https://github.com/spikespaz/dotfiles
-- https://github.com/fufexan/dotfiles
-- https://github.com/hlissner/dotfiles
-- https://github.com/librephoenix/nixos-config
-- https://github.com/AntonHakansson/nixos-config
+- [[https://github.com/akirak/nixos-config][https://github.com/akirak/nixos-config]]
+- [[https://github.com/akirak/home.nix][https://github.com/akirak/home.nix]]
+- [[https://github.com/cstrahan/nixos-config][https://github.com/cstrahan/nixos-config]]
+- [[https://github.com/jwiegley/nix-config][https://github.com/jwiegley/nix-config]]
+- [[https://github.com/arianvp/nixos-stuff][https://github.com/arianvp/nixos-stuff]]
+- [[https://github.com/romatthe/ronix][https://github.com/romatthe/ronix]]
+- [[https://github.com/rummik/nixos-config][https://github.com/rummik/nixos-config]]
+- [[https://github.com/a-schaefers/nix-config.old][https://github.com/a-schaefers/nix-config.old]]
+- [[https://github.com/auntieNeo/nixrc][https://github.com/auntieNeo/nixrc]]
+- [[https://github.com/glines/nixrc][https://github.com/glines/nixrc]]
+- [[https://github.com/therealpxc/pxc.nix.d][https://github.com/therealpxc/pxc.nix.d]]
+- [[https://github.com/tycho01/nix-config][https://github.com/tycho01/nix-config]]
+- [[https://github.com/ghuntley/dotfiles-nixos][https://github.com/ghuntley/dotfiles-nixos]]
+- [[https://github.com/budevg/nix-conf][https://github.com/budevg/nix-conf]]
+- [[https://github.com/cleverca22/nixos-configs][https://github.com/cleverca22/nixos-configs]]
+- [[https://github.com/coreyoconnor/nix_configs][https://github.com/coreyoconnor/nix_configs]]
+- [[https://github.com/dejanr/dotfiles][https://github.com/dejanr/dotfiles]]
+- [[https://github.com/Ericson2314/nixos-configuration][https://github.com/Ericson2314/nixos-configuration]]
+- [[https://gitlab.com/garry-cairns/nixos-config][https://gitlab.com/garry-cairns/nixos-config]]
+- [[https://github.com/grahamc/nixos-config][https://github.com/grahamc/nixos-config]]
+- [[https://github.com/HugoReeves/nix-home][https://github.com/HugoReeves/nix-home]]
+- [[https://github.com/kampfschlaefer/nixconfig][https://github.com/kampfschlaefer/nixconfig]]
+- [[https://github.com/lambdael/nixosconf][https://github.com/lambdael/nixosconf]]
+- [[https://github.com/puffnfresh/nix-files][https://github.com/puffnfresh/nix-files]]
+- [[https://github.com/talyz/nixos-config][https://github.com/talyz/nixos-config]]
+- [[https://github.com/uwap/nixos-configs][https://github.com/uwap/nixos-configs]]
+- [[https://github.com/yacinehmito/yarn-nix][https://github.com/yacinehmito/yarn-nix]]
+- [[https://github.com/yrashk/nix-home][https://github.com/yrashk/nix-home]]
+- [[https://github.com/pSub/configs][https://github.com/pSub/configs]]
+- [[https://github.com/periklis/nix-config][https://github.com/periklis/nix-config]]
+- [[https://github.com/peel/dotfiles][https://github.com/peel/dotfiles]]
+- [[https://github.com/bennofs/etc-nixos][https://github.com/bennofs/etc-nixos]]
+- [[https://github.com/Baughn/machine-config][https://github.com/Baughn/machine-config]]
+- [[https://github.com/gvolpe/nix-config][https://github.com/gvolpe/nix-config]]
+- [[https://github.com/myme/dotfiles][https://github.com/myme/dotfiles]]
+- [[https://github.com/jedimahdi/.dotfiles][https://github.com/jedimahdi/.dotfiles]]
+- [[https://github.com/moni-dz/nix-config][https://github.com/moni-dz/nix-config]]
+- [[https://github.com/Aylur/dotfiles][https://github.com/Aylur/dotfiles]]
+- [[https://gitlab.com/Zaney/zaneyos][https://gitlab.com/Zaney/zaneyos]]
+- [[https://github.com/spikespaz/dotfiles][https://github.com/spikespaz/dotfiles]]
+- [[https://github.com/fufexan/dotfiles][https://github.com/fufexan/dotfiles]]
+- [[https://github.com/hlissner/dotfiles][https://github.com/hlissner/dotfiles]]
+- [[https://github.com/librephoenix/nixos-config][https://github.com/librephoenix/nixos-config]]
+- [[https://github.com/AntonHakansson/nixos-config][https://github.com/AntonHakansson/nixos-config]]
 
 * Licensing
 
-Unless otherwise stated in a subdirectory, all code is licensed under the GNU GPL v3. See
-[[file:COPYING][COPYING]] for details.
+Unless otherwise stated in a subdirectory, all code is licensed under the GNU GPL v3. See [[file:COPYING][COPYING]] for details.
