@@ -65,6 +65,8 @@
     };
   };
 
+  hardware.keyboard.qmk.enable = true;
+
   services.udev.packages = [ pkgs.sane-airscan ];
   hardware.sane = {
     enable = true;
