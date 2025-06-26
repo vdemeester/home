@@ -48,6 +48,21 @@ NixOS modules providing additional functionality:
 - Go vanity URL service
 - Gosmee service
 
+** =/keyboards=
+Hardware keyboard configurations:
+
+*** Corne Keyboard (Eyelash Corne)
+Located in =/keyboards/keyboards/eyelash_corne=:
+- ZMK-based configuration for the Corne keyboard
+
+*** Moonlander
+Located in =/keyboards/keyboards/zsa/moonlander=:
+- QMK-based configuration for the ZSA Moonlander keyboard
+
+*** Kanata (software)
+Located in =systems/kyushu/main.kbd=:
+- Software keyboard remapper configuration, to mimic the mechanic keyboards
+
 * Usage
 
 The main entry point is =flake.nix=, which provides:
