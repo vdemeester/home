@@ -88,6 +88,8 @@
     monolith # TODO: move into =desktop= ?
     virt-manager
     simple-scan
+
+    spotify
   ];
 
   # Make sure we don't start docker until required
