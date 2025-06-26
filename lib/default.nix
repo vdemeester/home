@@ -78,6 +78,7 @@
         self.nixosModules.gosmee
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
+        inputs.vscode-server.nixosModules.default
         homeInput.nixosModules.home-manager
         { home-manager.extraSpecialArgs = specialArgs; }
         ../systems

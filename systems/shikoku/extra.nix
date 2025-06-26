@@ -24,6 +24,7 @@
   ];
 
   services = {
+    vscode-server.enable = true;
     wireguard = {
       enable = true;
       ips = globals.fn.wg-ips globals.machines.shikoku.net.vpn.ips;

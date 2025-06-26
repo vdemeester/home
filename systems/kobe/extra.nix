@@ -18,6 +18,7 @@
   nixpkgs.config.rocmSupport = lib.mkForce false;
 
   services = {
+    vscode-server.enable = true;
     logind.extraConfig = ''
       HandleLidSwitch=ignore
       HandleLidSwitchExternalPower=ignore
