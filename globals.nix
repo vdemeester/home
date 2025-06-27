@@ -384,7 +384,7 @@ in
       net = {
         ips = [ "192.168.1.115" ];
         vpn = {
-          pubkey = "1wzFG60hlrAoSYcRKApsH+ZK3Zyz8ljdLglb/8JbuW0=";
+          pubkey = "1wzFG60hlrAoSYcRKApsH+WK3Zyz8ljdLglb/8JbuW0=";
           ips = [ "10.100.0.5" ];
         };
       };
