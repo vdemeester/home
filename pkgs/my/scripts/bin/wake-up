@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# wake-up.sh - A simple Wake-on-LAN script using the 'wol' command
+
+# --- Configuration: Machine Names and MAC Addresses ---
+# IMPORTANT: Replace these with your actual machine names and MAC addresses.
+# For Bash 4.0+ (most modern Linux systems)
+declare -A MACHINES=(
+	["shikoku"]="2c:4d:54:4c:a0:85"
+	["kobe"]="e8:6a:64:0f:98:06"
+	["sakhalin"]="b4:2e:99:b1:f2:cb"
+)
+
+# --- End Configuration ---
+
+# Check if a machine name was provided as an argument
+if [ -z "$1" ]; then
+	echo "Usage: $0 <machine_name>"
+	echo "Example: $0 shikoku"
+	echo ""
+	echo "Available machines:"
+	for machine in "${!MACHINES[@]}"; do
+		echo "- $machine"
+	done
+	exit 1
+fi
+
+MACHINE_NAME="$1"
+MAC_ADDRESS="${MACHINES[$MACHINE_NAME]}"
+
+# Check if the machine name exists in our configuration
+if [ -z "$MAC_ADDRESS" ]; then
+	echo "Error: Machine '$MACHINE_NAME' not found in configuration."
+	echo "Available machines:"
+	for machine in "${!MACHINES[@]}"; do
+		echo "- $machine"
+	done
+	exit 1
+fi
+
+echo "Attempting to wake up '$MACHINE_NAME' with MAC address '$MAC_ADDRESS'..."
+
+# Execute the wol command
+# -p 9: Specifies port 9 (a common WOL port, though 7 or 0 might also work for some devices)
+# -v: Verbose output from the wol command (optional, can be removed)
+wol -p 9 -v "$MAC_ADDRESS"
+
+if [ $? -eq 0 ]; then
+	echo "Wake-on-LAN magic packet sent successfully to '$MACHINE_NAME'."
+else
+	echo "Error: Failed to send Wake-on-LAN magic packet to '$MACHINE_NAME'."
+	echo "Please ensure 'wol' command is installed and you have network connectivity."
+fi

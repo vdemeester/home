@@ -28,5 +28,7 @@
     ripgrep
 
     # ugrep
+    scripts
+    wol
   ];
 }

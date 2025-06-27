@@ -6,7 +6,6 @@
       commandLineArgs = "--auth-negotiate-delegate-whitelist='*.redhat.com' --auth-server-whitelist=.redhat.com --enable-features=UseOzonePlatform --enable-gpu --ozone-platform=wayland";
     })
     # FIXME split this into real things
-    scripts
     oath-toolkit
   ];
   # Kerberos
