@@ -12,6 +12,15 @@
 
   programs.zsh = {
     enable = true;
+    # zprof.enable = true;
+    # See https://gist.github.com/ctechols/ca1035271ad134841284
+    completionInit = ''
+      autoload -Uz compinit
+      for dump in ${config.programs.zsh.dotDir}/.zcompdump(N.mh+24); do
+        compinit
+      done
+      compinit -C
+    '';
     enableCompletion = true;
     autosuggestion.enable = true;
     autocd = true;
