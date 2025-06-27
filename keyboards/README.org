@@ -1,0 +1,13 @@
+#+title: My Keyboard setup
+
+This folder contains my keyboard setup, and everything required to
+build and flash them.
+
+Today, there is 2 keyboards:
+- ZSA Moonlander, using QMK
+- Eyelash Corne (wireless), using zmk (with some updates)
+
+* Notes
+
+- Clone =zmk=: https://github.com/zmkfirmware/zmk
+- Clone =new_corne=: https://github.com/krisalcordo/zmk-new_corne 
