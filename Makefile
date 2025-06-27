@@ -12,12 +12,13 @@ host/%/boot: FORCE
 host/%/switch: FORCE
 	nixos-rebuild --target-host root@$*.sbr.pm --flake .#$* switch
 
-host/carthage/boot:
-	nixos-rebuild --target-host root@13.38.218.220 --flake .#carthage boot
-host/shikoku/boot:
-	nixos-rebuild --target-host root@shikoku.sbr.pm --flake .#shikoku boot
-host/shikoku/switch:
-	nixos-rebuild --target-host root@shikoku.sbr.pm --flake .#shikoku switch
+# TEMPORARY
+host/kobe/boot:
+	nixos-rebuild --target-host root@192.168.1.77 --flake .#carthage boot
+host/aix/boot:
+	nixos-rebuild --target-host root@10.100.0.89 --flake .#carthage boot
+
+# Private :D
 host/kerkouane/boot:
 	nixos-rebuild --target-host root@kerkouane.vpn --flake .#kerkouane boot
 host/kerkouane/switch:
