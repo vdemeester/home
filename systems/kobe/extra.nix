@@ -44,9 +44,6 @@
     };
   };
 
-  # TODO: could be enable by default for all ?
-  security.pam.enableSSHAgentAuth = true;
-
   security.apparmor.enable = true;
   security.tpm2.enable = lib.mkForce false;
 }

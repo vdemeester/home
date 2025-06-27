@@ -14,4 +14,5 @@ _: {
     };
     sshguard.enable = true;
   };
+  security.pam.enableSSHAgentAuth = true;
 }
