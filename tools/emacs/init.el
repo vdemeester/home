@@ -1178,7 +1178,7 @@ minibuffer, even without explicitly focusing it."
   (add-to-list 'org-capture-templates
                `("tt" "New task" entry
                  (file ,org-inbox-file)
-                 "* %?\n:PROPERTIES:\n:CREATED:\t%U\n:END:\n\n%i\n\nFrom: %a"
+                 "* TODO %?\n:PROPERTIES:\n:CREATED:\t%U\n:END:\n\n%i\n\nFrom: %a"
                  :empty-lines 1))
   ;; Refine this
   (add-to-list 'org-capture-templates
