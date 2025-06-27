@@ -46,6 +46,7 @@
     usbutils
     vim
     wget
+    yq
   ];
 
   programs = {
