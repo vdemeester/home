@@ -14,9 +14,9 @@ host/%/switch: FORCE
 
 # TEMPORARY
 host/kobe/boot:
-	nixos-rebuild --target-host root@192.168.1.77 --flake .#carthage boot
+	nixos-rebuild --target-host root@192.168.1.77 --flake .#kobe boot
 host/aix/boot:
-	nixos-rebuild --target-host root@10.100.0.89 --flake .#carthage boot
+	nixos-rebuild --target-host root@10.100.0.89 --flake .#aix boot
 
 # Private :D
 host/kerkouane/boot:
