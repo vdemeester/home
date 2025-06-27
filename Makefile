@@ -1,7 +1,6 @@
 # Makefile for home
 HOSTS          = $(shell nix flake show --json | yq '.nixosConfigurations.[] | key')
 HOSTS_BUILD    = $(addprefix host/, $(addsuffix /build,$(HOSTS)))
-BUILDER_HOST   = vincent@shikoku.sbr.pm
 
 hosts: ${HOSTS_BUILD}
 	echo ${HOSTS_BUILD} ${HOSTS}
@@ -9,20 +8,20 @@ hosts: ${HOSTS_BUILD}
 host/%/build: FORCE
 	nix build .#nixosConfigurations.$*.config.system.build.toplevel --no-link
 host/%/boot: FORCE
-	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.sbr.pm --flake .#$* boot
+	nixos-rebuild --target-host root@$*.sbr.pm --flake .#$* boot
 host/%/switch: FORCE
-	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@$*.sbr.pm --flake .#$* switch
+	nixos-rebuild --target-host root@$*.sbr.pm --flake .#$* switch
 
 host/carthage/boot:
 	nixos-rebuild --target-host root@13.38.218.220 --flake .#carthage boot
 host/shikoku/boot:
-	nixos-rebuild --build-host root@shikoku.sbr.pm --target-host root@shikoku.sbr.pm --flake .#shikoku boot
+	nixos-rebuild --target-host root@shikoku.sbr.pm --flake .#shikoku boot
 host/shikoku/switch:
-	nixos-rebuild --build-host root@shikoku.sbr.pm --target-host root@shikoku.sbr.pm --flake .#shikoku switch
+	nixos-rebuild --target-host root@shikoku.sbr.pm --flake .#shikoku switch
 host/kerkouane/boot:
-	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@kerkouane.vpn --flake .#kerkouane boot
+	nixos-rebuild --target-host root@kerkouane.vpn --flake .#kerkouane boot
 host/kerkouane/switch:
-	nixos-rebuild --build-host ${BUILDER_HOST} --target-host root@kerkouane.vpn --flake .#kerkouane switch
+	nixos-rebuild --target-host root@kerkouane.vpn --flake .#kerkouane switch
 
 boot:
 	sudo nixos-rebuild --flake .# boot
