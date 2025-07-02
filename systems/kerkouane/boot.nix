@@ -1,5 +1,6 @@
 { lib, ... }:
 {
+  console.keyMap = lib.mkForce "us";
   boot.loader.grub.device = "/dev/vda";
   boot.loader.grub.enable = lib.mkForce true;
   boot.loader.systemd-boot.enable = lib.mkForce false;

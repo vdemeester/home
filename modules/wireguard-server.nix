@@ -35,7 +35,7 @@ in
     environment.systemPackages = [ pkgs.wireguard-tools ];
     boot.kernel.sysctl."net.ipv4.ip_forward" = lib.mkForce 1; # FIXME should probably be mkDefault
     networking.firewall.extraCommands = ''
-      iptables -t nat -A POSTROUTING -s10.100.0.0/24 -j MASQUERADE
+      iptables -t nat -A POSTROUTING -s10.100.0.0/32 -j MASQUERADE
       iptables -A FORWARD -i wg+ -j ACCEPT
     '';
     networking.firewall.allowedUDPPorts = [ 51820 ];
