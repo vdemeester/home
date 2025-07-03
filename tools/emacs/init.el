@@ -185,7 +185,14 @@
   (read-buffer-completion-ignore-case t)
   (read-file-name-completion-ignore-case t)
   (find-ls-option '("-exec ls -ldh {} +" . "-ldh"))  ; find-dired results with human readable sizes
-  (switch-to-buffer-obey-display-actions t)
+  (global-auto-revert-non-file-buffers t "Auto revert non-file buffers")
+  (switch-to-buffer-obey-display-actions t "Don't distuingish automatic and manual window switching")
+  (window-combination-resize t "Resize window proportionally")
+  (isearch-lazy-count t "Show size of search results")
+  (lazy-count-prefix-format "(%s/%s) " "Format of search results")
+  (lazy-highlight-initial-delay 0 "No delay before highlight search matches")
+  (isearch-allow-scroll t "Allow scrolling while searching")
+  (isearch-allow-motion t "Allow movement commands while searching")
   :hook
   (after-init . global-hl-line-mode)
   (after-init . global-completion-preview-mode)
