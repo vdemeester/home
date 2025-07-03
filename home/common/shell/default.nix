@@ -6,6 +6,7 @@
     ./fzf.nix
     ./git.nix
     ./htop.nix
+    ./openssh.nix
     ./tmux.nix
     ./xdg.nix
     ./zsh.nix

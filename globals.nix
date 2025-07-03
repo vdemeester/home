@@ -14,6 +14,8 @@ let
     && builtins.hasAttr "folders" host.syncthing
     && (builtins.length (lib.attrsets.attrValues host.syncthing.folders)) > 0;
 
+  hasSSHHostKeys = host: builtins.hasAttr "ssh" host && builtins.hasAttr "hostKey" host.ssh;
+
   # Get the path for the given folder, either using the host specified path or the default one
   syncthingFolderPath =
     name: folder: folders:
@@ -36,6 +38,35 @@ let
       ++ lib.attrsets.attrByPath [ "net" "vpn" "ips" ] [ ] machine
       ++ lib.attrsets.attrByPath [ "net" "names" ] [ ] machine
     );
+
+  sshHostIdentifier =
+    machine:
+    lib.attrsets.attrByPath [ "net" "names" ] [ ] machine
+    ++ lib.attrsets.attrByPath [ "net" "ips" ] [ ] machine
+    ++ lib.attrsets.attrByPath [ "net" "vpn" "ips" ] [ ] machine;
+
+  sshConfig =
+    machine:
+    builtins.listToAttrs (
+      map
+        (x: {
+          name = x;
+          value = {
+            hostname =
+              if (lib.strings.hasSuffix ".vpn" x) then
+                builtins.head machine.net.vpn.ips
+              else if (lib.strings.hasSuffix ".home" x) then
+                builtins.head machine.net.ips
+              else
+                x;
+          };
+        })
+        (
+          builtins.filter (x: (lib.strings.hasSuffix ".home" x) || (lib.strings.hasSuffix ".vpn" x)) (
+            sshHostIdentifier machine
+          )
+        )
+    );
 in
 {
   ssh = {
@@ -44,6 +75,7 @@ in
       "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFT5Rx+4Wuvd8lMBkcHxb4oHdRhm/OTg+p5tvPzoIN9enSmgRw5Inm/SlS8ZzV87G1NESTgzDRi6hREvqDlKvxs="
       "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE="
       "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBFzxC16VqwTgWDQfw2YCiOw2JzpH3z9XgHtKoHhBdHi2i9m9XUc7fIUeEIIf7P8ARRNd8q5bjvl8JY7LtPkNCU="
+      # AOMI (only "trusted" one)
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJmTdMKYdgqpbQWBif58VBuwX+GqMGsMfB1ey1TKrM3 vincent@aomi"
     ];
   };
@@ -134,15 +166,21 @@ in
           ips = [ "10.100.0.83" ];
         };
         names = [
-          "ahena.home"
+          "athena.home"
           "athena.vpn"
           "athena.sbr.pm"
         ];
       };
       ssh = {
-        root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME root@aomi";
-        vincent = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJmTdMKYdgqpbQWBif58VBuwX+GqMGsMfB1ey1TKrM3 vincent@aomi";
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4KRP1rzOwyA2zP1Nf1WlLRHqAGutLtOHYWfH732xh";
+        # root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME root@aomi";
+        # vincent = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJmTdMKYdgqpbQWBif58VBuwX+GqMGsMfB1ey1TKrM3 vincent@aomi";
       };
+      # syncthing = {
+      #   folders = {
+      #     org = { };
+      #   };
+      # };
     };
     demeter = {
       net = {
@@ -157,6 +195,16 @@ in
           "demeter.sbr.pm"
         ];
       };
+      ssh = {
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqQfEyHyjIGglayB9FtCqL7bnYfNSQlBXks2IuyCPmd";
+      };
+      # syncthing = {
+      #   folders = {
+      #     org = {
+      #       type = "receiveonly";
+      #     };
+      #   };
+      # };
     };
     aix = {
       net = {
@@ -171,6 +219,9 @@ in
       #       type = "receiveonly";};
       # 	};
       # };
+      ssh = {
+        # hostKey = "";
+      };
     };
     kyushu = {
       net = {
@@ -187,6 +238,9 @@ in
           "kyushu.vpn"
           "kyushu.sbr.pm"
         ];
+      };
+      ssh = {
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINd795m+P54GlGJdMaGci9pQ9N942VUz8ri2F14+LWxg";
       };
       syncthing = {
         id = "SBLRZF4-NOMC7QO-S6UW7OH-VK7KHQS-LZCESY6-USBJ5Z5-RIVIRII-XS7DGQS";
@@ -221,6 +275,9 @@ in
           "aomi.sbr.pm"
         ];
       };
+      ssh = {
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME";
+      };
       syncthing = {
         id = "XCR6WWB-OZUDGFB-LQPFW73-MV5SPJK-4IGOMA4-IAXON3I-C6OFETL-TPK5FQS";
         folders = {
@@ -249,6 +306,9 @@ in
           "shikoku.sbr.pm"
         ];
       };
+      ssh = {
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm";
+      };
       syncthing = {
         id = "KZMMXRR-UINDQTS-H3TV2W7-EIGOUDI-3LW4ZDG-7PRKDFV-MJ5KUTJ-YG5Y5AI";
         folders = {
@@ -270,10 +330,12 @@ in
           ips = [ "10.100.0.1" ];
         };
         names = [
-          "kerkouame.home"
           "kerkouane.vpn"
           "kerkouane.sbr.pm"
         ];
+      };
+      ssh = {
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJguVoQYObRLyNxELFc3ai2yDJ25+naiM3tKrBGuxwwA";
       };
       syncthing = {
         id = "IFVRRQ7-KMIOQXP-5YDJXQU-UJXUKHB-7THCSY6-B3NHRNA-ED7IRI7-2JPPKQY";
@@ -295,6 +357,9 @@ in
           "sakhalin.vpn"
           "sakhalin.sbr.pm"
         ];
+      };
+      ssh = {
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/PMBThi4DhgZR8VywbRDzzMVh2Qp3T6NJAcPubfXz6";
       };
       syncthing = {
         id = "4TYYG7V-A67D5SN-HMEJCI7-POOZRLL-RNCIE4U-ZYVGTOB-JQ5DOSV-ZCGWUAL";
@@ -324,6 +389,9 @@ in
           "kobe.sbr.pm"
         ];
       };
+      ssh = {
+        # hostKey = "";
+      };
       syncthing = {
         id = "";
         folders = {
@@ -346,6 +414,9 @@ in
           "aion.sbr.pm"
         ];
       };
+      ssh = {
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMs2o62unBFN/LHRg3q2N4QyZW0+DC/gjw3yzRbWdzx5";
+      };
       syncthing = {
         id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
         folders = {
@@ -363,6 +434,18 @@ in
         };
       };
     };
+    synodine = {
+      net = {
+        ips = [ "192.168.1.20" ];
+        names = [
+          "synodine.home"
+          "synodine.sbr.pm"
+        ];
+      };
+      ssh = {
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWdnPJg0Y4kd4lHPAGE4xgMAK2qvMg3oBxh0t+xO+7O";
+      };
+    };
     okinawa = {
       net = {
         ips = [ "192.168.1.19" ];
@@ -370,6 +453,11 @@ in
           # pubkey = "";
           ips = [ "10.100.0.14" ];
         };
+        names = [
+          "okinawa.home"
+          "okinawa.vpn"
+          "okinawa.sbr.pm"
+        ];
       };
       syncthing = {
         id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
@@ -387,6 +475,11 @@ in
           pubkey = "1wzFG60hlrAoSYcRKApsH+WK3Zyz8ljdLglb/8JbuW0=";
           ips = [ "10.100.0.5" ];
         };
+        names = [
+          "hokkaido.home"
+          "hokkaido.vpn"
+          "hokkaido.sbr.pm"
+        ];
       };
       syncthing = {
         id = "XD4XYNZ-DT3PJEY-UJYBHWX-6OQPPUI-HTW752L-FYTX3TW-GVHDTKW-PT336QV";
@@ -398,24 +491,35 @@ in
       };
     };
     # Light Phone
-    Suzu = {
+    suzu = {
       net = {
         vpn = {
           ips = [ "10.100.0.65" ];
           pubkey = "ufKLXzLkmYx1z7/VZJs9Ix6aXL3rYzP5B73QQP2WNx8=";
         };
+        names = [
+          # "suzu.home"
+          "suzu.vpn"
+          "suzu.sbr.pm"
+        ];
       };
     };
     # Boox tablet
-    Osaka = {
+    osaka = {
       net = {
         vpn = {
           ips = [ "10.100.0.64" ];
           pubkey = "C12Ch3LasZ9Dvc1+X+IMSmKdip0l1n/aNNPvmQzzPFY=";
         };
+        names = [
+          # "oksaka.home"
+          "osaka.vpn"
+          "osaka.sbr.pm"
+        ];
       };
     };
   };
+
   # FIXME Maybe I should move this elsewhere, in ./lib maybe ?
   fn = {
     inherit
@@ -426,6 +530,9 @@ in
       isCurrentHost
       hasVPNPublicKey
       hasVPNips
+      hasSSHHostKeys
+      sshHostIdentifier
+      sshConfig
       ;
     /**
          Return a list of wireguard ips from a list of ips.
@@ -434,12 +541,6 @@ in
       *
     */
     wg-ips = ips: builtins.map (x: "${x}/32") ips;
-
-    # # keysFor = user: ;
-    # hasSSHAttr = _name: value: builtins.hasAttr "ssh" value;
-    # keysFor =
-    #   machines: user:
-    #   lib.attrsets.mapAttrsToList (_name: value: value) (lib.attrsets.filterAttrs hasSSHAttr machines);
 
     # WIREGUARD
     generateWireguardPeers =
@@ -484,5 +585,23 @@ in
     syncthingGuiAddress =
       machine:
       (builtins.head (lib.attrsets.attrByPath [ "net" "vpn" "ips" ] [ "127.0.0.1" ] machine)) + ":8384";
+
+    # SSH
+
+    sshKnownHosts =
+      machines:
+      lib.strings.concatStringsSep "\n" (
+        lib.attrsets.mapAttrsToList (
+          _name: value: "${lib.strings.concatStringsSep "," (sshHostIdentifier value)} ${value.ssh.hostKey}"
+        ) (lib.attrsets.filterAttrs (_name: hasSSHHostKeys) machines)
+      );
+
+    sshConfigs =
+      machines:
+      lib.attrsets.mergeAttrsList (
+        lib.attrsets.mapAttrsToList (_name: sshConfig) (
+          lib.attrsets.filterAttrs (_name: _value: true) machines
+        )
+      );
   };
 }
