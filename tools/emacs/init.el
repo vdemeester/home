@@ -199,6 +199,8 @@
   (after-init . auto-insert-mode)
   (after-init . pixel-scroll-mode)
   :config
+  (with-current-buffer "*Messages*" (emacs-lock-mode 'kill))
+  (with-current-buffer "*scratch*" (emacs-lock-mode 'kill))
   (display-time-mode -1)
   (tooltip-mode -1)
   (blink-cursor-mode -1)
