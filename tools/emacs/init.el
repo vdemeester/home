@@ -1163,50 +1163,57 @@ minibuffer, even without explicitly focusing it."
 				  ("v" . "verse"))))
 
 (use-package org-capture
-  :after org
   :commands (org-capture)
+  :bind (("C-c o c" . org-capture))
   :config
-
   (add-to-list 'org-capture-templates
-	       `("j" "Journal entry" item
+	       `("j" "🗞 Journal entry" item
 		 (file+datetree ,org-journal-file)
-		 "%U %?\n%i"))
+		 "%U %?\n%i")
+	       t)
   (add-to-list 'org-capture-templates
-	       `("J" "Journal (antidated) entry" item
-		 (file+datetree+prompt ,org-journal-file)
-		 "%U %?\n%i"))
-  
-  ;; TODO: refine this, create a function that reset this
+	       `("t" "📥 Tasks")
+	       t)
   (add-to-list 'org-capture-templates
-               `("l" "Link" entry
-                 (file ,org-inbox-file)
-                 "* %a\n%U\n%?\n%i"
-                 :empty-lines 1))
-  (add-to-list 'org-capture-templates
-               `("t" "Tasks"))
-  (add-to-list 'org-capture-templates
-               `("tt" "New task" entry
-                 (file ,org-inbox-file)
-                 "* TODO %?\n:PROPERTIES:\n:CREATED:\t%U\n:END:\n\n%i\n\nFrom: %a"
-                 :empty-lines 1))
+	       `("tt" " New task" entry
+		 (file ,org-inbox-file)
+		 "* TODO %?\n:PROPERTIES:\n:CREATED:\t%U\n:END:\n\n%i\n\nFrom: %a"
+		 :empty-lines 1)
+	       t)
   ;; Refine this
   (add-to-list 'org-capture-templates
-               `("tr" "PR Review" entry
-                 (file ,org-inbox-file)
-                 "* TODO review gh:%^{issue} :review:\n:PROPERTIES:\n:CREATED:%U\n:END:\n\n%i\n%?\nFrom: %a"
-                 :empty-lines 1))
-  ;; emails
+	       `("tr" " PR Review" entry
+		 (file ,org-inbox-file)
+		 "* TODO review gh:%^{issue} :review:\n:PROPERTIES:\n:CREATED:%U\n:END:\n\n%i\n%?\nFrom: %a"
+		 :empty-lines 1)
+	       t)
   (add-to-list 'org-capture-templates
-	       `("m" "Email Workflow"))
+	       `("l" "🔗 Link" entry
+		 (file ,org-inbox-file)
+		 "* %a\n%U\n%?\n%i"
+		 :empty-lines 1)
+	       t)
+  (add-to-list 'org-capture-templates
+	       `("m" "✉ Email Workflow")
+	       t)
   (add-to-list 'org-capture-templates
 	       `("mf" "Follow Up" entry
 		 (file ,org-inbox-file)
 		 "* TODO Follow up with %:from on %a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i"
-		 :immediate-finish t))
+		 :immediate-finish t)
+	       t)
   (add-to-list 'org-capture-templates
 	       `("mr" "Read Later" entry
 		 (file ,org-inbox-file)
-		 "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i" :immediate-finish t))
+		 "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i" :immediate-finish t)	       
+	       t)
+  (add-to-list 'org-capture-templates
+	       `("J" "🗞 Journal (antidated) entry" item
+		 (file+datetree+prompt ,org-journal-file)
+		 "%U %?\n%i")
+	       t)
+  ;; TODO: refine this, create a function that reset this
+  ;; emails
   ;; (add-to-list 'org-capture-templates
   ;;              `("m" "Meeting notes" entry
   ;;                (file+datetree ,org-meeting-notes-file)
@@ -1218,10 +1225,9 @@ Use this function via a hook."
     (when (frame-parameter nil 'vde/window-popup-frame)
       (delete-frame)))
 
-  (add-to-list 'org-capture-templates
-               `("w" "Writing"))
-  (add-hook 'org-capture-after-finalize-hook #'vde/window-delete-popup-frame)
-  :bind (("C-c o c" . org-capture)))
+  ;; (add-to-list 'org-capture-templates
+  ;; `("w" "Writing"))
+  (add-hook 'org-capture-after-finalize-hook #'vde/window-delete-popup-frame))
 
 (use-package org-habit
   :after org
