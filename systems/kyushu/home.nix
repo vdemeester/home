@@ -4,6 +4,10 @@
     ../../home/common/dev/containers.nix
   ];
 
+  home.file.".gmailctl/config.jsonnet".source = ./config.jsonnet;
+  home.file.".gmailctl/gmailctl.libsonnet".source = ./gmailctl.libsonnet;
+  home.packages = with pkgs; [ gmailctl ];
+
   # systemd.user.services.battery-monitor = {
   #   Unit = {
   #     Description = "battery monitory service";

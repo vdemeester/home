@@ -103,16 +103,16 @@ local google_groups(name, label = '', archive = true) =
   // Note: labels management is optional. If you prefer to use the
   // GMail interface to add and remove labels, you can safely remove
   // this section of the config.
-  rules: rh_mailing_list('announce-list', 'announce') +
-    rh_mailing_list('aos-announce') +
+  rules: rh_mailing_list('announce-list', 'announce', false) +
+    rh_mailing_list('aos-announce', 'announce', false) +
     rh_mailing_list('aos-devel') +
     rh_mailing_list('aos-int-services') +
     rh_mailing_list('aos-logging') +
     rh_mailing_list('cloud-strategy', 'area/cloud-strategy') +
-    rh_mailing_list('france-list', 'local/france') +
-    rh_mailing_list('france-associates', 'local/france') +
-    rh_mailing_list('cdg', 'local/fance/cdg') +
-    rh_mailing_list('emea-announce', 'announce/emea') +
+    rh_mailing_list('france-list', '02-france', false) +
+    rh_mailing_list('france-associates', '02-france', false) +
+    rh_mailing_list('cdg', '02-france', false) +
+    rh_mailing_list('emea-announce', 'announce', false) +
     rh_mailing_list('eng-common-logging', 'aos/eng-common-logging') +
     rh_mailing_list('insights-dev') +
     rh_mailing_list('insights-platform') +
@@ -124,8 +124,8 @@ local google_groups(name, label = '', archive = true) =
     rh_mailing_list('openshift-sme', 'aos/openshift-sme') +
     rh_mailing_list('pnt-managers', 'managers/pnt-managers') +
     rh_mailing_list('prod-dept', 'pnt/prod-dept') +
-    rh_mailing_list('remote-announce', 'announce/remote') +
-    rh_mailing_list('remotees-list', 'local/remotees') +
+    rh_mailing_list('remote-announce', '02-remote', false) +
+    rh_mailing_list('remotees-list', '02-remote', false) +
     rh_mailing_list('rh-openstack-announce', 'pnt/rh-openstack-announce') +
     rh_mailing_list('summitdemo2019', 'pnt/summitdemo2019') +
     rh_mailing_list('tech-talk-announce', 'announce/tech-talk') +
@@ -147,19 +147,18 @@ local google_groups(name, label = '', archive = true) =
     google_groups('knative-users', 'knative/users') +
     google_groups('istio-dev', 'istio/dev') +
     google_groups('istio-users', 'istio/users') +
-    rh_mailing_list('pipelines-interests', 'pipelines/interests') +
-    rh_mailing_list('pipelines-dev', 'pipelines/dev', false) +
-    rh_mailing_list('pipelines-extcomm', 'pipelines/dev', true) +
-    rh_mailing_list('pipelines-extcomm', 'pipelines/ext', true) +
-    rh_mailing_list('pipelines-bots', 'pipelines/bots', true) +
-    rh_mailing_list('konflux', 'konflux', false) +
-    rh_mailing_list('konflux-announce', 'konflux', false) +
-    google_groups('konflux', 'konflux', false) +
-    google_groups('tekton-dev', 'tekton/dev', false) +
-    google_groups('tekton-users', 'tekton/users', false) +
-    google_groups('tekton-governance', 'tekton/governance', false) +
-    google_groups('tekton-vmt', 'tekton/vmt', false) +
-    google_groups('tekton-code-of-conduct', 'tekton/code-of-conduct', false) +
+    rh_mailing_list('pipelines-interests', '00-pipelines/interests') +
+    rh_mailing_list('pipelines-dev', '00-pipelines/dev', false) +
+    rh_mailing_list('pipelines-extcomm', '00-pipelines/dev', false) +
+    rh_mailing_list('pipelines-bots', '00-pipelines/bots', true) +
+    rh_mailing_list('konflux', '01-konflux', false) +
+    rh_mailing_list('konflux-announce', '01-konflux', false) +
+    google_groups('konflux', '01-konflux', false) +
+    google_groups('tekton-dev', '00-tekton/dev', false) +
+    google_groups('tekton-users', '00-tekton/users', false) +
+    google_groups('tekton-governance', '00-tekton/governance', false) +
+    google_groups('tekton-vmt', '00-tekton/vmt', false) +
+    google_groups('tekton-code-of-conduct', '00-tekton', false) +
     rh_mailing_list('engineering-advocate', 'engineering-advocate') +
     rh_mailing_list('engineering-advocate-nomination', 'engineering-advocate') +
     google_groups('kubernetes-sig-cli', 'kubernetes/sig/cli') +
@@ -168,12 +167,12 @@ local google_groups(name, label = '', archive = true) =
     rh_mailing_list('cpaas-ops', '_tracker/cpaas') +
     label_archive({from: 'do-not-reply@trello.com'}, '_tracker/trello') +
     label_archive({from: 'help-ops@redhat.com'}, '_tracker/rh_service_now') +
-    label_archive({from: 'hss-jira@redhat.com'}, '_tracker/jira') +
-    label_archive({from: 'issues@jboss.org'}, '_tracker/jira') +
-    label_archive({from: 'jira@jira.prod.coreos.systems'}, '_tracker/jira') +
+    # label_archive({from: 'hss-jira@redhat.com'}, '_tracker/jira') +
+    # label_archive({from: 'issues@jboss.org'}, '_tracker/jira') +
+    # label_archive({from: 'jira@jira.prod.coreos.systems'}, '_tracker/jira') +
     label_archive({from: 'kundenservice@egencia.de'}, '_tracker/egencia') +
-    label_archive({from: 'people-helpdesk@redhat.com'}, '_tracker/rh_service_now') +
-    label_archive({from: 'redhat@service-now.com'}, '_tracker/rh_service_now') +
+    # label_archive({from: 'people-helpdesk@redhat.com'}, '_tracker/rh_service_now') +
+    # label_archive({from: 'redhat@service-now.com'}, '_tracker/rh_service_now') +
     label_archive({from: 'workflow@redhat.com'}, '_tracker/ebs_workflow') +
     label_archive({from: 'orangehrmlive.com'}, '_tracker/orange') +
     label_archive({from: 'concursolutions.com'}, '_tracker/concur') +
