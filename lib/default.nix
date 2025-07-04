@@ -123,6 +123,7 @@
             system-manager.allowAnyDistro = true;
           };
         }
+        ../systems/system-manager.nix
       ];
     };
 }
