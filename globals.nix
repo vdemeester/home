@@ -220,7 +220,7 @@ in
       # 	};
       # };
       ssh = {
-        # hostKey = "";
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoUicDySCGETPAgmI0P3UrgZEXXw3zNsyCIylUP0bML";
       };
     };
     kyushu = {
