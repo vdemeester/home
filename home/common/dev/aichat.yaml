@@ -1,0 +1,51 @@
+model: gemini:gemini-2.5-flash-preview-04-17
+wrap: 150
+save_session: true
+clients:
+  - type: gemini
+    name: gemini
+    api_base: https://generativelanguage.googleapis.com/v1beta
+    api_key: "passage::ai/gemini/api_key"
+    patch:
+      chat_completions:
+        ".*":
+          body:
+            safetySettings:
+              - category: HARM_CATEGORY_HARASSMENT
+                threshold: BLOCK_NONE
+              - category: HARM_CATEGORY_HATE_SPEECH
+                threshold: BLOCK_NONE
+              - category: HARM_CATEGORY_SEXUALLY_EXPLICIT
+                threshold: BLOCK_NONE
+              - category: HARM_CATEGORY_DANGEROUS_CONTENT
+                threshold: BLOCK_NONE
+
+  - type: openai-compatible
+    name: ollama
+    api_base: http://127.0.0.1:11434/v1
+    api_key: null
+
+  - type: openai-compatible
+    name: groq
+    api_base: https://api.groq.com/openai/v1
+    api_key: "passage::ai/groq/api_key"
+
+  # See https://platform.deepseek.com/api-docs/
+  - type: openai-compatible
+    name: deepseek
+    api_base: https://api.deepseek.com
+    api_key: "passage::ai/deepseek/api_key"
+
+  - type: openai-compatible
+    name: openrouter
+    api_base: https://openrouter.ai/api/v1
+    api_key: "passage::ai/openroute/api_key"
+
+  # - type: openai-compatible
+  #   name: redhat-maas-deepseek
+  #   api_base: https://deepseek-r1-distill-qwen-14b-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com/v1
+  #   api_key: "passage::ai/gemini/api_key"
+  #   models:
+  #     - name: deepseek-r1-distill-qwen-14b
+  #       description: DeepSeek R1 Distill Qwen 14B
+

@@ -1,21 +1,5 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
-  programs.aichat = {
-    # enable = true;
-    settings = {
-      model = "gemini:gemini-2.5-flash-preview-04-17";
-      wrap = 150;
-      save_session = true;
-      clients = [
-        {
-          type = "gemini";
-          name = "gemini";
-          api_base = "";
-          # api_key = "passage:ai/gemini/api_key";
-        }
-      ];
-    };
-  };
   home.packages = with pkgs; [
     aichat
     aider-chat
@@ -33,4 +17,16 @@
     github-mcp-server
     amp
   ];
+
+  xdg.configFile."aichat/config.yaml.in".source = ./aichat.yaml;
+  xdg.configFile."aichat/update-config" = {
+    source = ./aichat-update-config;
+    executable = true;
+  };
+  home.activation = {
+    # linkGeneration writeBoundary
+    aichat-configuration = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      /home/vincent/.config/aichat/update-config
+    '';
+  };
 }

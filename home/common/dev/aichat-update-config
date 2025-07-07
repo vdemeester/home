@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# Script to update the aichat configuration from a .yaml.in
+export PATH=$PATH:/run/current-system/sw/bin
+export PASSAGE_DIR=/home/vincent/.local/share/passage
+export PASSAGE_IDENTITIES_FILE=/home/vincent/.local/share/passage/identities
+
+# Define the input and output file names
+INPUT_FILE="${HOME}/.config/aichat/config.yaml.in"
+OUTPUT_FILE="${HOME}/.config/aichat/config.yaml"
+
+# Check if the input file exists
+if [ ! -f "$INPUT_FILE" ]; then
+	echo "Error: Input file '$INPUT_FILE' not found."
+	exit 1
+fi
+
+# Create an empty output file
+>"$OUTPUT_FILE"
+
+# Read the input file line by line
+while IFS= read -r line; do
+	# Regex to find "passage::" followed by characters that are NOT a double quote or whitespace,
+	# until a double quote or whitespace is encountered.
+	# This specifically targets the content *inside* the quotes if the passage:: is quoted.
+	if [[ "$line" =~ passage::([^\"]+) ]]; then # Changed regex to capture everything after passage:: until a quote
+		# BASH_REMATCH[0] will be the entire matched string, e.g., "passage::ai/gemini/api_key"
+		# BASH_REMATCH[1] will be the captured group, e.g., "ai/gemini/api_key"
+
+		# The full string that needs to be replaced in the line (including "passage::")
+		passage_full_string="passage::${BASH_REMATCH[1]}"
+
+		# The string to pass to the 'passage show' command (without "passage::" or quotes)
+		# We need to trim any potential trailing quote from BASH_REMATCH[1] if the regex was greedy.
+		passage_string_for_command=$(echo "${BASH_REMATCH[1]}" | sed 's/"$//' | xargs)
+
+		echo "Found passage key in line: $passage_full_string"
+		echo "Executing command: passage show \"$passage_string_for_command\"" # Echoing with quotes for clarity
+
+		# Execute the passage command and capture its output
+		# Trim newlines and other whitespace from the actual command output
+		passage_output=$(passage show "$passage_string_for_command" 2>/dev/null | tr -d '\n\r' | xargs)
+
+		# Check if the passage command was successful and returned output
+		if [ $? -eq 0 ] && [ -n "$passage_output" ]; then
+			# Escape special characters in the actual output for sed
+			escaped_passage_output=$(printf %s "$passage_output" | sed -e 's/[\/&]/\\&/g')
+
+			# Escape special characters in the passage_full_string for sed pattern
+			escaped_passage_full_string=$(printf %s "$passage_full_string" | sed -e 's/[\/&]/\\&/g')
+
+			# Replace the original passage string with the command output.
+			# We are replacing the "passage::value" with the actual "value"
+			# It's crucial that the replacement happens within the existing quotes in the YAML.
+			# So, if line is `api_key: "passage::val"`, we want `api_key: "ACTUAL_VAL"`
+			# The sed should replace `passage::val` with `ACTUAL_VAL`.
+			modified_line=$(echo "$line" | sed "s/${escaped_passage_full_string}/${escaped_passage_output}/")
+
+			echo "Modified line: $modified_line"
+			echo "$modified_line" >>"$OUTPUT_FILE"
+		else
+			echo "Warning: 'passage show $passage_string_for_command' failed or returned empty. Keeping original line."
+			echo "$line" >>"$OUTPUT_FILE"
+		fi
+	else
+		# If no "passage::" found, write the original line
+		echo "$line" >>"$OUTPUT_FILE"
+	fi
+done <"$INPUT_FILE"
+
+echo "Processing complete. Modified content written to '$OUTPUT_FILE'."
+echo "You can now inspect '$OUTPUT_FILE' and if satisfied, replace '$INPUT_FILE' with it."
