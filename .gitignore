@@ -22,3 +22,4 @@ hardware-configuration.nix
 /.pre-commit-config.yaml
 .chatgpt-shell.el
 .chatgpt-shell.el
+/keyboards/firmwares/
