@@ -59,6 +59,7 @@ let
                 builtins.head machine.net.ips
               else
                 x;
+            forwardAgent = true;
           };
         })
         (
