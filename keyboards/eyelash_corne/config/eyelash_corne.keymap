@@ -59,6 +59,32 @@
 #define TAPPING_TERM_MS 200
 #define IDLE_MS 125
 
+// Layers "alias"
+#define L_QWT 0
+#define L_NUM 1
+#define L_SYM 2
+#define L_NAV 3
+#define L_MED 4
+// L_FUN (F1, …)
+
+// Hyper functions
+#define LEFT_HYPER LS(LA(LC(LGUI)))
+#define RIGHT_HYPER RS(RA(RC(RGUI)))
+#define LH(keycode)            LS(LA(LC(LG(keycode))))
+#define RH(keycode)            RS(RA(RC(RG(keycode))))
+
+// Bépo key
+#define BP1 LS(N1)
+#define BP2 LS(N2)
+#define BP3 LS(N3)
+#define BP4 LS(N4)
+#define BP5 LS(N5)
+#define BP6 LS(N6)
+#define BP7 LS(N7)
+#define BP8 LS(N8)
+#define BP9 LS(N9)
+#define BP0 LS(N0)
+
 / {
     behaviors {
         td0: td0 {
@@ -140,8 +166,8 @@
         lower_layer {
             display-name = "NUMBER";
             bindings = <
-&trans  &kp N1           &kp N2          &kp N3        &kp N4        &kp N5                                         &mmv MOVE_UP                     &kp N6           &kp N7           &kp N8           &kp N9           &kp N0    &kp BSPC
-&trans  &trans   &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3                   &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &kp HOME  &kp PG_UP
+	      &trans  &kp BP1           &kp BP2          &kp BP3        &kp BP4        &kp BP5                                         &mmv MOVE_UP                     &kp N6           &kp N7           &kp N8           &kp N9           &kp N0    &kp BSPC
+	      &trans  &kp BP6   &kp BP7    &kp BP8  &kp BP9  &kp BP0                   &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &kp HOME  &kp PG_UP
 &trans  &rgb_ug RGB_OFF  &rgb_ug RGB_ON  &trans        &trans        &rgb_ug RGB_EFF  &kp C_MUTE                    &mmv MOVE_DOWN                   &rgb_ug RGB_EFR  &rgb_ug RGB_SPI  &rgb_ug RGB_BRI  &rgb_ug RGB_BRD  &kp END   &kp PG_DN
                                          &trans        &trans        &trans                                                                          &kp INS          &kp DEL          &trans
             >;
@@ -174,3 +200,5 @@
         };
     };
 };
+
+// 	      &trans  &kb BP6   &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3                   &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &kp HOME  &kp PG_UP
