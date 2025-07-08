@@ -21,7 +21,7 @@ FROM builder AS builder_left
 RUN west build -s zmk/app \
     -b eyelash_corne_left -d /tmp/left -- \
     -DZMK_CONFIG=/workspace/zmk-config/config \
-    -DSHIELD=nice_view \
+    -DSHIELD=nice_view_gem \
     -DZMK_EXTRA_MODULES=/workspace/zmk-new_corne
 
 FROM builder AS builder_right
@@ -30,7 +30,7 @@ FROM builder AS builder_right
 RUN west build -s zmk/app \
     -b eyelash_corne_right -d /tmp/right -- \
     -DZMK_CONFIG=/workspace/zmk-config/config \
-    -DSHIELD=nice_view \
+    -DSHIELD=nice_view_gem \
     -DZMK_EXTRA_MODULES=/workspace/zmk-new_corne
 
 FROM scratch AS output_collector

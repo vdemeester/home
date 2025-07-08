@@ -1,0 +1,17 @@
+#undef COMBO_TERM
+#define COMBO_TERM 40
+
+// All Layers
+ZMK_COMBO(esc, &kp ESC, RM3 RM4)
+
+// Ergo-L -> QWERTY - Inner thumbs, active on Ergo-L
+ZMK_COMBO(ergol_qwerty, &to QWE, LH0 RH0, ERG)
+
+// QWERTY -> Ergo-L - Outer thumbs, active on QWERTY
+ZMK_COMBO(qwerty_ergol, &to ERG, LH1 RH1, QWE)
+  
+/*
+Local Variables:
+mode: c
+End:
+*/
