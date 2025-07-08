@@ -97,6 +97,4 @@
     "vincent"
     "builder"
   ];
-
-  security.pam.sshAgentAuth.enable = true;
 }
