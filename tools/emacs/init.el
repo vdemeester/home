@@ -330,9 +330,9 @@ minibuffer, even without explicitly focusing it."
       (save-excursion
         (comment-line arg))))
   :bind (("C-;" . prot/comment-dwim)
-    ("C-:" . comment-kill)
-    ("M-;" . comment-indent)
-    ("C-x C-;" . comment-box)))
+	 ("C-:" . comment-kill)
+	 ("M-;" . comment-indent)
+	 ("C-x C-;" . comment-box)))
 
 (use-package dired
   :custom
