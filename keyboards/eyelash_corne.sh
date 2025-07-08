@@ -5,7 +5,7 @@ cPWD="$(dirname $(readlink -f $0))"
 source ${cPWD}/lib/functions.sh
 
 function build() {
-	docker build --target output_collector --output type=local,dest="firmwares" -f keyboards/eyelash_corne.Dockerfile keyboards/eyelash_corne
+	docker build --target output_collector --output type=local,dest="firmwares" -f eyelash_corne/Dockerfile eyelash_corne
 }
 
 function flash() {
@@ -27,7 +27,7 @@ function flash() {
 
 build
 
-# flash left usb-Adafruit_nRF_UF2_6863BEB9EE8668EC-0:0
+flash left usb-Adafruit_nRF_UF2_6863BEB9EE8668EC-0:0
 echo "$(echo_green ) Left side is completed.."
 sleep 2
 
