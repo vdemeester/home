@@ -2,6 +2,8 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+      # url-base: https://github.com/darknao
+      # revision: rgb-layer-25.04
       # Additional modules containing boards/shields/custom code can be listed here as well.
       # See:
       # - https://zmk.dev/docs/features/modules
@@ -13,6 +15,7 @@ manifest:
     - name: zmk
       remote: zmkfirmware
       revision: main
+      # revision: rgb-layer-25.04
       import: app/west.yml
   self:
     path: config
