@@ -16,6 +16,7 @@
     controlMaster = "auto";
     controlPersist = "10m";
     controlPath = "${config.home.homeDirectory}/.ssh/master-%C";
+    addKeysToAgent = "confirm";
     matchBlocks = {
       "github.com" = {
         hostname = "github.com";
