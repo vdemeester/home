@@ -307,64 +307,6 @@ minibuffer, even without explicitly focusing it."
 				   last-kbd-macro
 				   shell-command-history)))
 
-(use-package which-key
-  :custom
-  (which-key-separator " → " )
-  (which-key-prefix-prefix "… ")
-  (which-key-add-column-padding 1)
-  (which-key-max-description-length 40)
-  (which-key-idle-delay 1)
-  (which-key-idle-secondary-delay 0.25)
-  :hook
-  (after-init . which-key-mode)
-  :config
-  
-  ;; Define custom, concise descriptions for `tab-bar` commands under "C-x t"
-  (which-key-add-key-based-replacements
-    "C-c !"     "flymake"
-    "C-x t C-f" "Open file in new tab"
-    "C-x t RET" "Switch tabs"
-    "C-x t C-r" "Open file (read-only) in new tab"
-    "C-x t 0"   "Close current tab"
-    "C-x t 1"   "Close other tabs"
-    "C-x t 2"   "New empty tab"
-    "C-x t G"   "Group tabs"
-    "C-x t M"   "Move tab to position"
-    "C-x t N"   "New tab and switch to it"
-    "C-x t O"   "Previous tab"
-    "C-x t b"   "Switch buffer in new tab"
-    "C-x t d"   "Dired in new tab"
-    "C-x t f"   "Open file in new tab"
-    "C-x t m"   "Move tab left/right"
-    "C-x t n"   "Duplicate tab"
-    "C-x t o"   "Next tab"
-    "C-x t p"   "Project in new tab"
-    "C-x t r"   "Rename tab"
-    "C-x t t"   "Switch to other tab"
-    "C-x t u"   "Undo tab close"
-    "C-x t ^ f" "Detach tab window"
-    "C-x 8" "insert-special"
-    "C-x 8 ^" "superscript (⁰, ¹, ², …)"
-    "C-x 8 _" "subscript (₀, ₁, ₂, …)"
-    "C-x 8 a" "arrows & æ (←, →, ↔, æ)"
-    "C-x 8 e" "emojis (🫎, 🇧🇷, 🇮🇹, …)"
-    "C-x 8 *" "common symbols ( , ¡, €, …)"
-    "C-x 8 =" "macron (Ā, Ē, Ḡ, …)"
-    "C-x 8 N" "macron (№)"
-    "C-x 8 O" "macron (œ)"
-    "C-x 8 ~" "tilde (~, ã, …)"
-    "C-x 8 /" "stroke (÷, ≠, ø, …)"
-    "C-x 8 ." "dot (·, ż)"
-    "C-x 8 ," "cedilla (¸, ç, ą, …)"
-    "C-x 8 '" "acute (á, é, í, …)"
-    "C-x 8 `" "grave (à, è, ì, …)"
-    "C-x 8 \"" "quotation/dieresis (\", ë, ß, …)"
-    "C-x 8 1" "†, 1/…"
-    "C-x 8 2" "‡"
-    "C-x 8 3" "3/…"
-    "C-x 4" "other-window"
-    "C-x 5" "other-frame"))
-
 (use-package newcomment
   :unless noninteractive
   :custom
@@ -873,6 +815,7 @@ minibuffer, even without explicitly focusing it."
   (:map completion-list-mode-map
         ("." . embark-act))
   :custom
+  (prefix-help-command #'embark-prefix-help-command)
   (embark-indicators '(embark-minimal-indicator
                        embark-highlight-indicator
                        embark-isearch-highlight-indicator))
