@@ -4,11 +4,15 @@
 // All Layers
 ZMK_COMBO(esc, &kp ESC, RM3 RM4)
 
-// Ergo-L -> QWERTY - Inner thumbs, active on Ergo-L
-ZMK_COMBO(ergol_qwerty, &to QWE, LH0 RH0, ERG)
+// (Bépo,Qwerty) -> Ergo-L - Mid thumbs, active on Bépo and Qwerty
+ZMK_COMBO(to_ergol, &to ERG, LH1 RH1, BEP QWE)
 
-// QWERTY -> Ergo-L - Outer thumbs, active on QWERTY
-ZMK_COMBO(qwerty_ergol, &to ERG, LH1 RH1, QWE)
+// (Ergo-L/Qwerty) -> Bépo - Inner thumbs, active on Ergo-L and Qwerty
+ZMK_COMBO(to_bepo, &to BEP, LH0 RH0, ERG QWE)
+  
+// (Bépo/Ergo-L) -> Qwerty - Outer thumbs, active on Bépo and Ergo-L
+ZMK_COMBO(to_qwerty, &to QWE, LH2 RH2, BEP ERG)
+
   
 /*
 Local Variables:

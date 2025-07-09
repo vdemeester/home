@@ -5,14 +5,16 @@
 #define XXX &none
 
 // Layers
-#define QWE 0
-// #define QAC 1
-#define ERG 1
-#define EAC 2
-#define SYM 3
-#define NAV 4
-#define NUM 5
-#define MOU 6
+#define BEP 0
+#define BAC 1
+#define ERG 2
+#define EAC 3
+#define QWE 4
+#define QAC 5
+#define SYM 6
+#define NAV 7
+#define NUM 8
+#define MOU 9
 
 // Modifier keys
 #define GL LGUI
@@ -32,5 +34,7 @@
 // Hyper Key and Functions
 #define LEFT_HYPER LS(LA(LC(LGUI)))
 #define RIGHT_HYPER RS(RA(RC(RGUI)))
+#define HL LEFT_HYPER
+#define HR RIGHT_HYPER
 #define LH(keycode)            LS(LA(LC(LG(keycode))))
 #define RH(keycode)            RS(RA(RC(RG(keycode))))
