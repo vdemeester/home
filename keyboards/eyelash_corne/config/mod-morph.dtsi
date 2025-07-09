@@ -1,9 +1,13 @@
 #define SAPOS  LS(COMMA)        // '
 #define DAPOS  LS(DOT)          // "
 
-#define EACUT  &fr_e_acute      // é/É
-#define EGRAV  &fr_e_grave      // è/È
-#define AGRAV  &fr_a_grave      // à/À
+#define EACUT  RA(E)      // é/É
+
+ZMK_MACRO_ONE_PARAM(AGRA, bindings =
+    <&kp GRAVE>,
+    <&macro_param_1to1>,
+    <&macro_tap &kp MACRO_PLACEHOLDER>;
+)
 
 #define ACC_CI LBKT             // ^
 
