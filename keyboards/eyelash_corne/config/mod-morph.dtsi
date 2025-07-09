@@ -2,16 +2,45 @@
 #define DAPOS  LS(DOT)          // "
 
 #define EACUT  RA(E)      // é/É
+#define EURO   RA(N5)     // €
 
+#define ACC_AC RC(SEMI)         // ´
+#define ACC_AI RA(SLASH)        // ´
+#define ACC_CI LBKT             // ^
+#define ACC_GR RA(LBKT)         // `
+#define ACC_TI RC(RBKT)         // ~
+#define ACC_TR LS(LBKT)         // ¨
+
+// ` to input
 ZMK_MACRO_ONE_PARAM(AGRA, bindings =
     <&kp GRAVE>,
     <&macro_param_1to1>,
     <&macro_tap &kp MACRO_PLACEHOLDER>;
 )
 
-#define ACC_CI LBKT             // ^
+// ´ to input
+ZMK_MACRO_TWO_PARAM(AIGU, bindings =
+    <&kp ACC_AI>,
+    <&macro_param_1to1>,
+    <&macro_tap &kp MACRO_PLACEHOLDER>,
+    <&macro_param_2to1>,
+    <&to MACRO_PLACEHOLDER>;
+)
 
-ZMK_UNICODE_SINGLE(three_dot, N2, N0, N2, N6) // … U+2026
+// ¨ to input
+ZMK_MACRO_ONE_PARAM(TREM, bindings =
+    <&kp ACC_TR>,
+    <&macro_param_1to1>,
+    <&macro_tap &kp MACRO_PLACEHOLDER>;
+)
+
+// ^ to input
+ZMK_MACRO_ONE_PARAM(CIRC, bindings =
+    <&kp ACC_CI>,
+    <&macro_param_1to1>,
+    <&macro_tap &kp MACRO_PLACEHOLDER>;
+)
+#define ACC_CI LBKT             // ^
 
 // tap: minus | shift + tap: question mark
 ZMK_MOD_MORPH(min_qma,
@@ -35,7 +64,7 @@ ZMK_MOD_MORPH(dot_col,
 
 // tap: quote (') | shift + tab: question mark
 ZMK_MOD_MORPH(sqt_qma,
-    bindings = <&kp SQT>, <&kp QMARK>;
+    bindings = <&kp APOS>, <&kp QMARK>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
@@ -50,13 +79,41 @@ ZMK_MOD_MORPH(sqt_qma,
  *     keep-mods = <MOD_RALT>;
  * ) */
 
-// tap: ACC_CI (^) | shift + tap: EXCLAMATION (!)
+// tap: Caret (^) | shift + tap: EXCLAMATION (!)
 ZMK_MOD_MORPH(car_excl,
     bindings = <&kp CARET>, <&kp EXCLAMATION>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
+// tap: B | right_alt + tap : pipe (|)
+ZMK_MOD_MORPH(b_pipe,
+    bindings = <&kp B>, <&kp PIPE>;
+    mods = <(MOD_RALT)>;
+)
 
+// tap: P | right_alt + tap : ampersand (&)
+ZMK_MOD_MORPH(p_amp,
+    bindings = <&kp P>, <&kp AMPERSAND>;
+    mods = <(MOD_RALT)>;
+)
+
+// hold: symbols layer | tap: SPACE | right_alt + tap : undercore (_)
+ZMK_MOD_MORPH(sym_spc_und,
+    bindings = <&lt SYM SPACE>, <&kp UNDERSCORE>;
+    mods = <(MOD_RALT)>;
+)
+
+// hold: left control | tap: E | right_alt + tap: EURO (€)
+ZMK_MOD_MORPH(cl_e_euro,
+    bindings = <&hml CL E>, <&kp EURO>;
+    mods = <(MOD_RALT)>;
+)
+
+// hold: right_hype | tap: comma | shift + tab: semicolon
+ZMK_MOD_MORPH(hyp_com_smc,
+    bindings = <&hml HL COMMA>, <&kp SEMICOLON>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
 
 /*
 Local Variables:

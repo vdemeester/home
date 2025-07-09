@@ -15,6 +15,7 @@
 #define NAV 7
 #define NUM 8
 #define MOU 9
+// #define SYS 10
 
 // Modifier keys
 #define GL LGUI
@@ -33,8 +34,5 @@
 
 // Hyper Key and Functions
 #define LEFT_HYPER LS(LA(LC(LGUI)))
-#define RIGHT_HYPER RS(RA(RC(RGUI)))
 #define HL LEFT_HYPER
-#define HR RIGHT_HYPER
 #define LH(keycode)            LS(LA(LC(LG(keycode))))
-#define RH(keycode)            RS(RA(RC(RG(keycode))))
