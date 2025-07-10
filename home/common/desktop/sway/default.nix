@@ -101,6 +101,19 @@ in
           xkb_variant = "bepo,ergol,";
           xkb_options = "grp:menu_toggle,grp_led:caps,compose:caps";
         };
+        # Eyelash corne
+        # - Wired
+        "7504:24926:ZMK_Project_Eyelash_Corne_Keyboard" = {
+          xkb_layout = "us";
+          xkb_variant = "intl";
+          # xkb_options = "grp:menu_toggle,grp_led:caps,compose:caps";
+        };
+        # - Bluetooth
+        "7504:24926:Eyelash_Corne_Keyboard" = {
+          xkb_layout = "us";
+          xkb_variant = "intl";
+          # xkb_options = "grp:menu_toggle,grp_led:caps,compose:caps";
+        };
       };
       output = {
         "*" = {
