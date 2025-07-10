@@ -38,23 +38,10 @@ ZMK_LAYER(Bepo,
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
      &kp GRAVE   &AGRA A     &kp Y       &kp X       &dot_col     &kp K         XXX       &kp DOWN              &sqt_qma    &kp Q         &kp G         &kp H        &kp F        &kp W
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
-                                         &kp DEL    &sym_spc_und &lt NAV BSPC                                  &kp SL      &lt NUM RET   &kp AR
+                                         &kp DEL    &sym_spc_und &lt NAV BSPC                                   &kp SL      &lt NUM RET   &kp AR
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )
-
-// 1: Bépo accents TODO
-ZMK_LAYER(BepoAcc,
-// ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-     &kp TAB     &kp Q       &kp C       &kp O       &kp P        &kp  W                  &kp UP                &kp J       &kp M         &kp D         &to EAC      &kp Y        &kp LBKT
-// ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp EQUAL   &hml GL A   &hml AL S   &hml SL E   &hml CL N    &kp F         &kp LEFT  &kp RET  &kp RIGHT    &kp L       &hmr CR R     &hmr SR T     &hmr AR I    &hmr GL U    &kp SQT
-// ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE   &kp Z       &kp X       &min_qma    &kp V        &kp B         XXX       &kp DOWN              &dot_col    &kp H         &kp G         &com_smc     &kp K        &kp RBKT
-// ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
-                                         ___         ___          ___                                           ___         ___           ___
-//                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
-	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DONW)
 
 // 2: ErgoL
 // This is an "adaptation" of the ergol layout (https://ergol.org/claviers/compacts/#kbd_3x6)
@@ -116,11 +103,11 @@ ZMK_LAYER(QwertyAcc,
 // 6: SYMBOLS TODO
 ZMK_LAYER(Symbols,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-     &kp TAB     &kp Q       &kp W       &kp E       &kp R        &kp T                   &kp UP                &kp Y       &kp U         &kp I         &kp O        &kp P        &kp LBKT
+     ___         &kp GRAVE   &kp LT      &kp GT      &kp MINUS    &kp PIPE                &kp UP                &kp CARET   &kp LBRC      &kp RBRC      &kp DLLR     &CIRC SPACE  ___
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp EQUAL   &hml GL A   &hml AL S   &hml SL D   &hml CL F    &kp G         &kp LEFT  &kp RET  &kp RIGHT    &kp H       &hmr CR J     &hmr SR K     &hmr AR L   &hmr GL SEMI  &kp SQT
+     ___         &kp EXCL &hml AL STAR &hml SL FSLH &hml CL EQUAL &kp AMPS   &kp LEFT  &kp RET  &kp RIGHT    &kp HASH   &hmr CR LPAR  &hmr SR RPAR  &hmr AR SEMI     &TREM SPACE  ___
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE   &kp Z       &kp X       &kp C       &kp V        &kp B         XXX       &kp DOWN              &kp N       &kp M         &kp COMMA     &kp DOT      &kp FSLH     &kp RBKT
+     ___         &kp TILDE   &kp PLUS    &kp LBKT    &kp RBKT     &kp PRCNT     XXX       &kp DOWN              &kp AT      &kp COLON     &kp COMMA     &kp DOT      &AIGU SPACE  ___
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
                                          ___         ___          ___                                           ___         ___           ___
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯

@@ -1,6 +1,3 @@
-#define SAPOS  LS(COMMA)        // '
-#define DAPOS  LS(DOT)          // "
-
 #define EACUT  RA(E)      // é/É
 #define EURO   RA(N5)     // €
 
@@ -19,28 +16,25 @@ ZMK_MACRO_ONE_PARAM(AGRA, bindings =
 )
 
 // ´ to input
-ZMK_MACRO_TWO_PARAM(AIGU, bindings =
-    <&kp ACC_AI>,
+ZMK_MACRO_ONE_PARAM(AIGU, bindings =
+    <&kp SQT>,
     <&macro_param_1to1>,
-    <&macro_tap &kp MACRO_PLACEHOLDER>,
-    <&macro_param_2to1>,
-    <&to MACRO_PLACEHOLDER>;
+    <&macro_tap &kp MACRO_PLACEHOLDER>;
 )
 
 // ¨ to input
 ZMK_MACRO_ONE_PARAM(TREM, bindings =
-    <&kp ACC_TR>,
+    <&kp DQT>,
     <&macro_param_1to1>,
     <&macro_tap &kp MACRO_PLACEHOLDER>;
 )
 
 // ^ to input
 ZMK_MACRO_ONE_PARAM(CIRC, bindings =
-    <&kp ACC_CI>,
+    <&kp CARET>,
     <&macro_param_1to1>,
     <&macro_tap &kp MACRO_PLACEHOLDER>;
 )
-#define ACC_CI LBKT             // ^
 
 // tap: minus | shift + tap: question mark
 ZMK_MOD_MORPH(min_qma,
@@ -64,20 +58,9 @@ ZMK_MOD_MORPH(dot_col,
 
 // tap: quote (') | shift + tab: question mark
 ZMK_MOD_MORPH(sqt_qma,
-    bindings = <&kp APOS>, <&kp QMARK>;
+    bindings = <&AIGU SPACE>, <&kp QMARK>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
-
-// tap: period | shift + tap : colon | right_alt + tap: …
-/* ZMK_MOD_MORPH(col_3p,
- *     bindings = <&kp COL>, <three_dot>;
- *     mods = <MOD_RALT>;
- * )
- * ZMK_MOD_MORPH(dot_col_p,
- *     bindings = <&kp DOT>, <&col_3p>;
- *     mods = <(MOD_LSFT|MOD_RSFT|MOD_RALT)>;
- *     keep-mods = <MOD_RALT>;
- * ) */
 
 // tap: Caret (^) | shift + tap: EXCLAMATION (!)
 ZMK_MOD_MORPH(car_excl,
