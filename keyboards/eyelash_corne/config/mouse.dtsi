@@ -1,0 +1,39 @@
+&mmv {
+    acceleration-exponent=<0>;
+    delay-ms=<60>;
+    time-to-max-speed-ms = <200>;
+};
+
+&msc {
+    acceleration-exponent=<1>;
+    delay-ms=<70>;
+    time-to-max-speed-ms = <200>;
+};
+
+// Move cursor
+#define mmv_lf mmv MOVE_LEFT
+#define mmv_rg mmv MOVE_RIGHT
+#define mmv_up mmv MOVE_UP
+#define mmv_dn mmv MOVE_DOWN
+
+// Mouse buttons
+#define mkp_lf mkp LCLK
+#define mkp_md mkp MCLK
+#define mkp_rg mkp RCLK
+
+// Scroll wheel
+#define mwh_lf msc SCRL_LEFT
+#define mwh_rg msc SCRL_RIGHT
+#define mwh_up msc SCRL_UP
+#define mwh_dn msc SCRL_DOWN
+
+#define MWL SCRL_LEFT
+#define MWR SCRL_RIGHT
+#define MWU SCRL_UP
+#define MWD SCRL_DOWN
+
+/*
+Local Variables:
+mode: c
+End:
+*/

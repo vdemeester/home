@@ -17,6 +17,7 @@
 #include "combos.dtsi"
 #include "hold-tap.dtsi"
 #include "mod-morph.dtsi"
+#include "mouse.dtsi"
 
 #define ZMK_MOUSE_DEFAULT_MOVE_VAL 1200  // 600
 #define ZMK_MOUSE_DEFAULT_SCRL_VAL 20    // 10
@@ -100,12 +101,12 @@ ZMK_LAYER(QwertyAcc,
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )
 
-// 6: SYMBOLS TODO
+// 6: SYMBOLS
 ZMK_LAYER(Symbols,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
      ___         &kp GRAVE   &kp LT      &kp GT      &kp MINUS    &kp PIPE                &kp UP                &kp CARET   &kp LBRC      &kp RBRC      &kp DLLR     &CIRC SPACE  ___
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     ___         &kp EXCL &hml AL STAR &hml SL FSLH &hml CL EQUAL &kp AMPS   &kp LEFT  &kp RET  &kp RIGHT    &kp HASH   &hmr CR LPAR  &hmr SR RPAR  &hmr AR SEMI     &TREM SPACE  ___
+     ___         &kp EXCL &hml AL STAR &hml SL FSLH &hml CL EQUAL &kp AMPS      &kp LEFT  &kp RET  &kp RIGHT    &kp HASH   &hmr CR LPAR  &hmr SR RPAR  &hmr AR SEMI  &TREM SPACE  ___
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
      ___         &kp TILDE   &kp PLUS    &kp LBKT    &kp RBKT     &kp PRCNT     XXX       &kp DOWN              &kp AT      &kp COLON     &kp COMMA     &kp DOT      &AIGU SPACE  ___
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
@@ -114,44 +115,44 @@ ZMK_LAYER(Symbols,
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )
 
-// 7: Navigation TODO
+// 7: Navigation
 ZMK_LAYER(Nav,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-    &out OUT_TOG XXX         XXX         XXX         XXX          &bt BT_CLR              &kp UP                &kp Y       &kp U         &kp I         &kp O        &kp P        &kp LBKT
+    &out OUT_TOG XXX         XXX         XXX         XXX          &bt BT_CLR              &kp UP               &kp C_VOL_UP &kp HOME      &kp UP        &kp END      &kp PG_UP    XXX
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp EQUAL   &hml GL A   &hml AL S   &hml SL D   &hml CL F    &kp G         &kp LEFT  &kp RET  &kp RIGHT    &kp H       &hmr CR J     &hmr SR K     &hmr AR L   &hmr GL SEMI  &kp SQT
+     XXX         XXX         &kp C_PREV  &kp C_PP    &kp C_NEXT   XXX          &kp LEFT  &kp RET  &kp RIGHT    &kp C_VOL_DN &kp LEFT      &kp DOWN      &kp RIGHT    &kp PG_DN    XXX
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE  &bt BT_PRV  &bt BT_NXT   &kp C       &kp V        &kp B         XXX       &kp DOWN              &kp N       &kp M         &kp COMMA     &kp DOT      &kp FSLH     &kp RBKT
+     XXX         &bt BT_PRV  &bt BT_NXT  XXX         XXX          XXX           XXX       &kp DOWN             &kp C_MUTE   XXX           XXX           XXX          XXX          XXX
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
                                          ___         ___          ___                                           ___         ___           ___
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
-	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
+	  , &inc_dec_kp C_BRI_INC C_BRI_DEC
 )
 
-// 8: Numbers TODO
+// 8: Numbers
 ZMK_LAYER(Numbers,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-     &kp TAB     &kp Q       &kp W       &kp E       &kp R        &kp T                   &kp UP                &kp Y       &kp U         &kp I         &kp O        &kp P        &kp LBKT
+     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5       &kp MATH_PM             &kp UP               &kp MATH_1_4 &kp N7        &kp N8       &kp N9        &kp STAR     &kp SLASH
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp EQUAL   &hml GL A   &hml AL S   &hml SL D   &hml CL F    &kp G         &kp LEFT  &kp RET  &kp RIGHT    &kp H       &hmr CR J     &hmr SR K     &hmr AR L   &hmr GL SEMI  &kp SQT
+     &kp F6      &kp F7      &kp F8      &kp F9      &kp F10      &kp MATH_DEG  &kp LEFT  &kp RET  &kp RIGHT   &kp MATH_1_2 &kp N4        &kp N5       &kp N6        &kp MINUS    &kp PLUS
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE   &kp Z       &kp X       &kp C       &kp V        &kp B         XXX       &kp DOWN              &kp N       &kp M         &kp COMMA     &kp DOT      &kp FSLH     &kp RBKT
+     &kp F11     &kp F12     &kp F13     &kp F14     &kp F15      &kp EQUAL     XXX       &kp DOWN             &kp MATH_3_4 &kp N1        &kp N2       &kp N3        &kp COMMA    &kp DOT
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
-                                         ___         ___          ___                                           ___         ___           ___
+                                         ___         ___          ___                                           ___         ___           &kp N0
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )
 
-// 9: Mouse TODO
+// 9: Mouse
 ZMK_LAYER(Mouse,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-     &kp TAB     &kp Q       &kp W       &kp E       &kp R        &kp T                   &kp UP                &kp Y       &kp U         &kp I         &kp O        &kp P        &kp LBKT
+     XXX         XXX         XXX         XXX         XXX          XXX                     &kp UP                XXX         XXX           &mmv_up       XXX          XXX          XXX
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp EQUAL   &hml GL A   &hml AL S   &hml SL D   &hml CL F    &kp G         &kp LEFT  &kp RET  &kp RIGHT    &kp H       &hmr CR J     &hmr SR K     &hmr AR L   &hmr GL SEMI  &kp SQT
+     XXX         &mwh_lf     &mwh_up     &mwh_dn     &mwh_rg      XXX           &kp LEFT  &kp RET  &kp RIGHT    XXX         &mmv_lf       &mmv_dn       &mmv_rg      XXX         XXX
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE   &kp Z       &kp X       &kp C       &kp V        &kp B         XXX       &kp DOWN              &kp N       &kp M         &kp COMMA     &kp DOT      &kp FSLH     &kp RBKT
+     XXX         XXX         XXX         XXX         XXX          XXX           XXX       &kp DOWN              XXX         XXX           XXX           XXX          XXX          XXX
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
-                                         ___         ___          ___                                           ___         ___           ___
+                                         XXX         &mkp_lf      &mkp_md                                       &mkp_md     &mkp_rg       XXX
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )

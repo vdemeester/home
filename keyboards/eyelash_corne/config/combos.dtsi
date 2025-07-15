@@ -23,6 +23,8 @@ ZMK_COMBO(to_bepo, &to BEP, LH0 RH0, ERG QWE)
 // (Bépo/Ergo-L) -> Qwerty - Outer thumbs, active on Bépo and Ergo-L
 ZMK_COMBO(to_qwerty, &to QWE, LH2 RH2, BEP ERG)
 
+// Switch mouse layer
+ZMK_COMBO(toggle_mouse, &tog MOU, LT1 LT4, BEP ERG QWE MOU)
   
 /*
 Local Variables:

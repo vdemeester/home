@@ -36,3 +36,11 @@
 #define LEFT_HYPER LS(LA(LC(LGUI)))
 #define HL LEFT_HYPER
 #define LH(keycode)            LS(LA(LC(LG(keycode))))
+
+#define MATH_1_4 RA(N6) // ¼
+#define MATH_1_2 RA(N7) // ½
+#define MATH_3_4 RA(N8) // ¾
+
+#define MATH_PM    RA(N1)   // 
+#define MATH_DEG   RA(SEMI) // °
+#define MATH_MICRO RA(M)    // µ
