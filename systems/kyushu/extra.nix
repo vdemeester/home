@@ -91,6 +91,8 @@
 
     chromium
     spotify
+
+    keybase
   ];
 
   # Make sure we don't start docker until required
