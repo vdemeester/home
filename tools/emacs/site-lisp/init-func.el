@@ -2,6 +2,16 @@
 ;;
 
 ;;;###autoload
+(defmacro vde/run-and-delete-frame (name &rest body)
+  "Define a function NAME that executes BODY and then closes the current frame.
+   Intended for use with emacsclient -c -e."
+  `(defun ,name ()
+     ,(format "Performs a task and then closes the current frame for %S." name)
+     (interactive)
+     ,@body
+     (delete-frame)))
+
+;;;###autoload
 (defun vde/el-load-dir (dir)
   "Load el files from the given folder `DIR'."
   (let ((files (directory-files dir nil "\.el$")))
