@@ -65,6 +65,23 @@
     };
   };
 
+  hardware.printers = {
+    ensurePrinters = [
+      {
+        name = "Canon_MX530_series";
+        location = "Home";
+        deviceUri = "dnssd://Canon%20MX530%20series._ipp._tcp.local/?uuid=00000000-0000-1000-8000-D8492F0F31CC";
+        model = "gutenprint.5.3://bjc-MX530-series/expert Canon MX530 series - CUPS+Gutenprint v5.3.4";
+        # deviceUri = "http://192.168.178.2:631/printers/Dell_1250c";
+        # model = "drv:///sample.drv/generic.ppd";
+        ppdOptions = {
+          PageSize = "A4";
+        };
+      }
+    ];
+    ensureDefaultPrinter = "Canon_MX530_series";
+  };
+
   hardware.keyboard.qmk.enable = true;
 
   services.udev.packages = [ pkgs.sane-airscan ];
