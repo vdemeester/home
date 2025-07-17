@@ -78,7 +78,62 @@
         self.nixosModules.gosmee
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
-        inputs.vscode-server.nixosModules.default
+        homeInput.nixosModules.home-manager
+        { home-manager.extraSpecialArgs = specialArgs; }
+        ../systems
+      ];
+    };
+
+  # Function for generating host configs
+  mkRPIHost =
+    {
+      hostname,
+      desktop ? null,
+      hardwareType ? "",
+      pkgsInput ? inputs.nixpkgs-25_05,
+      homeInput ? inputs.home-manager-25_05,
+      nixos-raspberrypi ? inputs.nixos-raspberrypi,
+    }:
+    let
+      system = "aarch64-linux";
+      globals = import ../globals.nix {
+        inherit (pkgsInput) lib;
+        inherit hostname;
+      };
+      specialArgs = {
+        inherit
+          self
+          inputs
+          outputs
+          stateVersion
+          hostname
+          desktop
+          hardwareType
+          system
+          globals
+          nixos-raspberrypi
+          ;
+      };
+    in
+    inputs.nixos-raspberrypi.lib.nixosSystemFull {
+      inherit specialArgs;
+      inherit system;
+      modules = [
+        (
+          { ... }:
+          {
+            imports = with inputs.nixos-raspberrypi.nixosModules; [
+              raspberry-pi-5.base
+              raspberry-pi-5.bluetooth
+            ];
+          }
+        )
+        self.nixosModules.wireguard-client
+        self.nixosModules.wireguard-server
+        self.nixosModules.govanityurl
+        self.nixosModules.gosmee
+        inputs.agenix.nixosModules.default
+        inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager
         { home-manager.extraSpecialArgs = specialArgs; }
         ../systems

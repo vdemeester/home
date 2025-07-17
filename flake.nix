@@ -1,6 +1,15 @@
 {
   description = "System Config";
 
+  nixConfig = {
+    extra-substituters = [
+      "https://nixos-raspberrypi.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+    ];
+  };
+
   outputs =
     { self, ... }@inputs:
     let
@@ -80,6 +89,10 @@
           hardwareType = "rpi4";
           pkgsInput = inputs.nixpkgs-25_05;
           homeInput = inputs.home-manager-25_05;
+        };
+        nagoya = libx.mkRPIHost {
+          hostname = "nagoya";
+          # hardwareType = "rpi4";
         };
         sakhalin = libx.mkHost {
           hostname = "sakhalin";
@@ -303,5 +316,6 @@
     nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
   };
 }

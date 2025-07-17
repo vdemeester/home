@@ -88,6 +88,7 @@
         "https://shortbrain.cachix.org"
         "https://vdemeester.cachix.org"
         "https://chapeau-rouge.cachix.org"
+        "https://nixos-raspberrypi.cachix.org"
       ];
       trusted-public-keys = [
         "r-ryantm.cachix.org-1:gkUbLkouDAyvBdpBX0JOdIiD2/DP1ldF3Z3Y6Gqcc4c="
@@ -95,6 +96,7 @@
         "mic92.cachix.org-1:gi8IhgiT3CYZnJsaW7fxznzTkMUOn1RY4GmXdT/nXYQ="
         "chapeau-rouge.cachix.org-1:r34IG766Ez4Eeanr7Zx+egzXLE2Zgvc+XRspYZPDAn8="
         "vdemeester.cachix.org-1:eZWNOrLR9A9szeMahn9ENaoT9DB3WgOos8va+d2CU44="
+        "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
       ];
     };
 
