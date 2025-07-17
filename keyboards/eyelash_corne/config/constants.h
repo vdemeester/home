@@ -6,16 +6,13 @@
 
 // Layers
 #define BEP 0
-/* #define BAC 1 */
 #define ERG 1
-#define EAC 2
-#define QWE 3
-#define QAC 4
-#define SYM 5
-#define NAV 6
-#define NUM 7
-#define MOU 8
-// #define SYS 10
+#define QWE 2
+#define ACC 3
+#define SYM 4
+#define NAV 5
+#define NUM 6
+#define MOU 7
 
 // Modifier keys
 #define GL LGUI

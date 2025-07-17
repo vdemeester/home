@@ -39,16 +39,16 @@ ZMK_LAYER(Bepo,
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
      &kp GRAVE   &AGRA A     &kp Y       &kp X       &dot_col     &kp K         XXX       &kp DOWN              &sqt_qma    &kp Q         &kp G         &kp H        &kp F        &kp W
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
-                                         &kp DEL    &sym_spc_und &lt NAV BSPC                                   &kp SL      &lt NUM RET   &kp AR
+                                        &lt ACC DEL  &sym_spc_und &lt NAV BSPC                                   &kp SL      &lt NUM RET   &kp AR
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )
 
-// 2: ErgoL
+// 1: ErgoL
 // This is an "adaptation" of the ergol layout (https://ergol.org/claviers/compacts/#kbd_3x6)
 ZMK_LAYER(ErgoL,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-     &kp TAB     &kp Q       &kp C       &kp O       &kp P        &kp  W                  &kp UP                &kp J       &kp M         &kp D         &to EAC      &kp Y        &kp LBKT
+     &kp TAB     &kp Q       &kp C       &kp O       &kp P        &kp  W                  &kp UP                &kp J       &kp M         &kp D         &kp EXCL     &kp Y        &kp LBKT
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
      &kp EQUAL   &hml GL A   &hml AL S   &hml SL E   &hml CL N    &kp F         &kp LEFT  &kp RET  &kp RIGHT    &kp L       &hmr CR R     &hmr SR T     &hmr AR I    &hmr GL U    &kp SQT
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
@@ -59,21 +59,7 @@ ZMK_LAYER(ErgoL,
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )
 
-// 3: ErgoL Accent TODO
-ZMK_LAYER(ErgoAcc,
-// ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-     &kp TAB     &kp Q       &kp C       &kp O       &kp P        &kp  W                  &kp UP                &kp J       &kp M         &kp D         &to EAC      &kp Y        &kp LBKT
-// ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp EQUAL   &hml GL A   &hml AL S   &hml SL E   &hml CL N    &kp F         &kp LEFT  &kp RET  &kp RIGHT    &kp L       &hmr CR R     &hmr SR T     &hmr AR I    &hmr GL U    &kp SQT
-// ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE   &kp Z       &kp X       &min_qma    &kp V        &kp B         XXX       &kp DOWN              &dot_col    &kp H         &kp G         &com_smc     &kp K        &kp RBKT
-// ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
-                                         ___         ___          ___                                           ___         ___           ___
-//                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
-	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
-)
-
-// 4: Qwerty
+// 2: Qwerty
 ZMK_LAYER(Qwerty,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
      &kp TAB     &kp Q       &kp W       &kp E       &kp R        &kp T                   &kp UP                &kp Y       &kp U         &kp I         &kp O        &kp P        &kp LBKT
@@ -87,21 +73,22 @@ ZMK_LAYER(Qwerty,
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )
 
-// 5: Qwerty Accents TODO
-ZMK_LAYER(QwertyAcc,
+// 3: Accents
+//  Â À Ê É È Ê Î Ê Ô Ê Û Ù Ê Æ Ç
+ZMK_LAYER(Accents,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-     &kp TAB     &kp Q       &kp W       &kp E       &kp R        &kp T                   &kp UP                &kp Y       &kp U         &kp I         &kp O        &kp P        &kp LBKT
+     XXX         &kp AE      &AIGU I     &AGRA I     &CIRC I      &TREM I                 &kp UP                &TREM O     &CIRC O       &AGRA O       &AIGU O      XXX          &kp DQT
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp EQUAL   &hml GL A   &hml AL S   &hml SL D   &hml CL F    &kp G         &kp LEFT  &kp RET  &kp RIGHT    &kp H       &hmr CR J     &hmr SR K     &hmr AR L   &hmr GL SEMI  &kp SQT
+     &kp GRAVE   &kp OE      &AIGU E     &AGRA E     &CIRC E      &TREM E       &kp LEFT  &kp RET  &kp RIGHT    &TREM A     &CIRC A       &AGRA A       &AIGU A      &kp NTIL     &kp SQT
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE   &kp Z       &kp X       &kp C       &kp V        &kp B         XXX       &kp DOWN              &kp N       &kp M         &kp COMMA     &kp DOT      &kp FSLH     &kp RBKT
+     XXX         XXX         XXX         XXX         XXX          XXX           XXX       &kp DOWN              &TREM U     &CIRC U       &AGRA U       &AIGU U      &kp CDIL     &kp CARET
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
                                          ___         ___          ___                                           ___         ___           ___
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )
 
-// 6: SYMBOLS
+// 4: SYMBOLS
 ZMK_LAYER(Symbols,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
      ___        &AGRA SPACE  &kp LT      &kp GT      &kp MINUS    &kp PIPE                &kp UP                &kp CARET   &kp LBRC      &kp RBRC      &kp DLLR     &CIRC SPACE  ___
@@ -115,7 +102,7 @@ ZMK_LAYER(Symbols,
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )
 
-// 7: Navigation
+// 5: Navigation
 ZMK_LAYER(Nav,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
     &out OUT_TOG XXX         XXX         XXX         XXX          &bt BT_CLR              &kp UP               &kp C_VOL_UP &kp HOME      &kp UP        &kp END      &kp PG_UP    XXX
@@ -129,7 +116,7 @@ ZMK_LAYER(Nav,
 	  , &inc_dec_kp C_BRI_INC C_BRI_DEC
 )
 
-// 8: Numbers
+// 6: Numbers
 ZMK_LAYER(Numbers,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
      &kp F1      &kp F2      &kp F3      &kp F4      &kp F5       &kp MATH_PM             &kp UP               &kp MATH_1_4 &kp N7        &kp N8       &kp N9        &kp STAR     &kp SLASH
@@ -143,7 +130,7 @@ ZMK_LAYER(Numbers,
 	  , &inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN
 )
 
-// 9: Mouse
+// 7: Mouse
 ZMK_LAYER(Mouse,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
      XXX         XXX         XXX         XXX         XXX          XXX                     &kp UP                XXX         XXX           &mmv_up       XXX          XXX          XXX

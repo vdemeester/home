@@ -1,5 +1,9 @@
 #define EACUT  RA(E)      // é/É
 #define EURO   RA(N5)     // €
+#define AE     RA(Z)      // æ/Æ
+#define OE     RA(K)       // œ/Œ
+#define CDIL   RA(COMMA)  // ç/Ç
+#define NTIL   RA(N)      // ñ/Ñ
 
 #define ACC_AC RC(SEMI)         // ´
 #define ACC_AI RA(SLASH)        // ´
