@@ -5,6 +5,7 @@
   ...
 }:
 {
+  console.keyMap = lib.mkForce "us";
   boot = {
     loader = {
       systemd-boot.enable = lib.mkForce false;

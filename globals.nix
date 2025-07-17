@@ -207,6 +207,29 @@ in
       #   };
       # };
     };
+    nagoya = {
+      net = {
+        ips = [ "192.168.1.80" ];
+        vpn = {
+          pubkey = "u2K7SAZpeBACUMkoscyyNFjJdDnJcpbW9YHr3HewFhM=";
+          ips = [ "10.100.0.80" ];
+        };
+        names = [
+          "nagoya.home"
+          "nagoya.vpn"
+          "nagoya.sbr.pm"
+        ];
+      };
+      ssh = {
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHeP9q2U/eS/GijfUtqLRENHSRPFSo1tN1iorIj1b0+O";
+      };
+      # syncthing = {
+      # 	folders = {
+      # 		sync = {
+      #       type = "receiveonly";};
+      # 	};
+      # };
+    };
     aix = {
       net = {
         vpn = {
