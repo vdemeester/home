@@ -1,21 +1,23 @@
 # https://github.com/chmouel/chmouzies/tree/master/kubernetes
 {
   stdenv,
-  fetchFromGitHub,
-  python310,
+  fetchFromGitLab,
+  python313,
+  installShellFiles,
 }:
 
 stdenv.mkDerivation rec {
   name = "chmouzies.kubernetes";
 
-  src = fetchFromGitHub {
+  src = fetchFromGitLab {
     owner = "chmouel";
     repo = "chmouzies";
-    rev = "27bda8604ae51d3a4846f382475999f301c33285";
-    sha256 = "sha256-atMxidonT5gjIo9Lt79G/MaA0ixi/i94Ehuw+kOC34E=";
+    rev = "67191c029cb0d68e0cc2f384fabe6c62a0189e27";
+    sha256 = "sha256-XJOms+r86Y2Y9UiWEP0IG9TqMsI6TgiNZrkDinHxOhc=";
   };
 
-  propagatedBuildInputs = [ python310 ];
+  propagatedBuildInputs = [ python313 ];
+  nativeBuildInputs = [ installShellFiles ];
 
   builder = ./builder.kubernetes.sh;
 }

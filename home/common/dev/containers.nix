@@ -23,7 +23,7 @@
     operator-sdk
     snazy
     kubelogin-oidc
-    chmouzies.kubernetes # FIXME update this
+    chmouzies-kubernetes # FIXME update this
     tektoncd-cli
     # knd
     # build
