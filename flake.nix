@@ -92,7 +92,7 @@
         };
         nagoya = libx.mkRPIHost {
           hostname = "nagoya";
-          # hardwareType = "rpi4";
+          hardwareType = "rpi4"; # to disable tpm2 TODO find a better way
         };
         sakhalin = libx.mkHost {
           hostname = "sakhalin";

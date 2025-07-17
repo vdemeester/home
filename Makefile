@@ -13,6 +13,8 @@ host/%/switch: FORCE
 	nixos-rebuild --target-host root@$*.sbr.pm --flake .#$* switch
 
 # TEMPORARY
+host/nagoya/boot:
+	nixos-rebuild --target-host root@192.168.1.80 --flake .#nagoya boot
 host/kobe/boot:
 	nixos-rebuild --target-host root@192.168.1.77 --flake .#kobe boot
 host/aix/boot:
