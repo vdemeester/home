@@ -29,7 +29,6 @@
   # networking.firewall.enable = false;
 
   services = {
-    vscode-server.enable = true;
     logind.extraConfig = ''
       HandleLidSwitch=ignore
       HandleLidSwitchExternalPower=ignore

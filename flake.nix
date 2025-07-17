@@ -315,7 +315,6 @@
     nix-github-actions.url = "github:nix-community/nix-github-actions";
     nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
 
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
   };
 }
