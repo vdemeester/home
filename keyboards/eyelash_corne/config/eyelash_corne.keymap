@@ -104,7 +104,7 @@ ZMK_LAYER(QwertyAcc,
 // 6: SYMBOLS
 ZMK_LAYER(Symbols,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-     ___         &kp GRAVE   &kp LT      &kp GT      &kp MINUS    &kp PIPE                &kp UP                &kp CARET   &kp LBRC      &kp RBRC      &kp DLLR     &CIRC SPACE  ___
+     ___        &AGRA SPACE  &kp LT      &kp GT      &kp MINUS    &kp PIPE                &kp UP                &kp CARET   &kp LBRC      &kp RBRC      &kp DLLR     &CIRC SPACE  ___
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
      ___         &kp EXCL &hml AL STAR &hml SL FSLH &hml CL EQUAL &kp AMPS      &kp LEFT  &kp RET  &kp RIGHT    &kp HASH   &hmr CR LPAR  &hmr SR RPAR  &hmr AR SEMI  &TREM SPACE  ___
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
