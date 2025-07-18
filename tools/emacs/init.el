@@ -827,7 +827,11 @@ minibuffer, even without explicitly focusing it."
                        embark-highlight-indicator
                        embark-isearch-highlight-indicator))
   (embark-cycle-key ".")
-  (embark-help-key "?"))
+  (embark-help-key "?")
+  :config
+  (keymap-set embark-symbol-map "S i" #'symbol-overlay-put)
+  (keymap-set embark-symbol-map "S c" #'symbol-overlay-remove-all)
+  (keymap-set embark-symbol-map "S r" #'symbol-overlay-rename)
 
 (use-package pr-review
   :commands (pr-review pr-review-open pr-review-submit-review)
