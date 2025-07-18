@@ -1,0 +1,375 @@
+layout: {zmk_keyboard: eyelash_corne}
+layers:
+  Bepo:
+  - $$material:keyboard_tab$$
+  - {t: B, s: '|'}
+  - AltGr+E
+  - {t: P, s: '&'}
+  - O
+  - '&AGRA E'
+  - $$tabler:arrow-big-up$$
+  - {t: ^, s: '!'}
+  - V
+  - D
+  - L
+  - J
+  - Z
+  - '='
+  - {t: A, h: GUI}
+  - {t: U, h: ALT}
+  - {t: I, h: SHIFT}
+  - {t: E, h: CTRL, s: AltGr+5}
+  - {t: ',', h: Meh+GUI, s: ;}
+  - $$tabler:arrow-big-left$$
+  - $$material:keyboard_return$$
+  - $$tabler:arrow-big-right$$
+  - {t: C, h: Meh+GUI}
+  - {t: T, h: RCTRL}
+  - {t: S, h: RSHFT}
+  - {t: R, h: RALT}
+  - {t: N, h: GUI}
+  - M
+  - '`'
+  - '&AGRA A'
+  - Y
+  - X
+  - {t: ., s: ':'}
+  - K
+  - ''
+  - $$tabler:arrow-big-down$$
+  - {t: '&AIGU SPACE', s: '?'}
+  - Q
+  - G
+  - H
+  - F
+  - W
+  - {t: $$delete$$, h: Accents}
+  - {t: '$$tabler:space$$', h: Symbols, s: _}
+  - {t: '$$material:backspace$$', h: Nav}
+  - SHIFT
+  - {t: '$$material:keyboard_return$$', h: Numbers}
+  - RALT
+  ErgoL:
+  - $$material:keyboard_tab$$
+  - Q
+  - C
+  - O
+  - P
+  - W
+  - $$tabler:arrow-big-up$$
+  - J
+  - M
+  - D
+  - '!'
+  - Y
+  - '['
+  - '='
+  - {t: A, h: GUI}
+  - {t: S, h: ALT}
+  - {t: E, h: SHIFT}
+  - {t: N, h: CTRL}
+  - F
+  - $$tabler:arrow-big-left$$
+  - $$material:keyboard_return$$
+  - $$tabler:arrow-big-right$$
+  - L
+  - {t: R, h: RCTRL}
+  - {t: T, h: RSHFT}
+  - {t: I, h: RALT}
+  - {t: U, h: GUI}
+  - ''''
+  - '`'
+  - Z
+  - X
+  - {t: '-', s: '?'}
+  - V
+  - B
+  - ''
+  - $$tabler:arrow-big-down$$
+  - {t: ., s: ':'}
+  - H
+  - G
+  - {t: ',', s: ;}
+  - K
+  - ']'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  Qwerty:
+  - $$material:keyboard_tab$$
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - $$tabler:arrow-big-up$$
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - '['
+  - '='
+  - {t: A, h: GUI}
+  - {t: S, h: ALT}
+  - {t: D, h: SHIFT}
+  - {t: F, h: CTRL}
+  - G
+  - $$tabler:arrow-big-left$$
+  - $$material:keyboard_return$$
+  - $$tabler:arrow-big-right$$
+  - H
+  - {t: J, h: RCTRL}
+  - {t: K, h: RSHFT}
+  - {t: L, h: RALT}
+  - {t: ;, h: GUI}
+  - ''''
+  - '`'
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - ''
+  - $$tabler:arrow-big-down$$
+  - N
+  - M
+  - ','
+  - .
+  - /
+  - ']'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  Accents:
+  - ''
+  - AltGr+Z
+  - '&AIGU I'
+  - '&AGRA I'
+  - '&CIRC I'
+  - '&TREM I'
+  - $$tabler:arrow-big-up$$
+  - '&TREM O'
+  - '&CIRC O'
+  - '&AGRA O'
+  - '&AIGU O'
+  - ''
+  - '"'
+  - '`'
+  - AltGr+K
+  - '&AIGU E'
+  - '&AGRA E'
+  - '&CIRC E'
+  - '&TREM E'
+  - $$tabler:arrow-big-left$$
+  - $$material:keyboard_return$$
+  - $$tabler:arrow-big-right$$
+  - '&TREM A'
+  - '&CIRC A'
+  - '&AGRA A'
+  - '&AIGU A'
+  - AltGr+N
+  - ''''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - $$tabler:arrow-big-down$$
+  - '&TREM U'
+  - '&CIRC U'
+  - '&AGRA U'
+  - '&AIGU U'
+  - <
+  - ^
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  Symbols:
+  - {t: ▽, type: trans}
+  - '&AGRA SPACE'
+  - <
+  - '>'
+  - '-'
+  - '|'
+  - $$tabler:arrow-big-up$$
+  - ^
+  - '{'
+  - '}'
+  - $
+  - '&CIRC SPACE'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - '!'
+  - {t: '*', h: ALT}
+  - {t: /, h: SHIFT}
+  - {t: '=', h: CTRL}
+  - '&'
+  - $$tabler:arrow-big-left$$
+  - $$material:keyboard_return$$
+  - $$tabler:arrow-big-right$$
+  - '#'
+  - {t: (, h: RCTRL}
+  - {t: ), h: RSHFT}
+  - {t: ;, h: RALT}
+  - '&TREM SPACE'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - '~'
+  - +
+  - '['
+  - ']'
+  - '%'
+  - ''
+  - $$tabler:arrow-big-down$$
+  - '@'
+  - ':'
+  - ','
+  - .
+  - '&AIGU SPACE'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  Nav:
+  - $$output-toggle$$
+  - ''
+  - ''
+  - ''
+  - ''
+  - $$bt-clear$$
+  - $$tabler:arrow-big-up$$
+  - $$tabler:volume$$
+  - HOME
+  - $$tabler:arrow-big-up$$
+  - END
+  - PAGE UP
+  - ''
+  - ''
+  - ''
+  - $$tabler:player-track-prev$$
+  - $$play-pause$$
+  - $$tabler:player-track-next$$
+  - ''
+  - $$tabler:arrow-big-left$$
+  - $$material:keyboard_return$$
+  - $$tabler:arrow-big-right$$
+  - $$tabler:volume-2$$
+  - $$tabler:arrow-big-left$$
+  - $$tabler:arrow-big-down$$
+  - $$tabler:arrow-big-right$$
+  - PAGE DOWN
+  - ''
+  - ''
+  - $$bt-prev$$
+  - $$bt-next$$
+  - ''
+  - ''
+  - ''
+  - ''
+  - $$tabler:arrow-big-down$$
+  - MUTE
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  Numbers:
+  - F1
+  - F2
+  - F3
+  - F4
+  - F5
+  - ±
+  - $$tabler:arrow-big-up$$
+  - ¼
+  - '7'
+  - '8'
+  - '9'
+  - '*'
+  - /
+  - F6
+  - F7
+  - F8
+  - F9
+  - F10
+  - AltGr+;
+  - $$tabler:arrow-big-left$$
+  - $$material:keyboard_return$$
+  - $$tabler:arrow-big-right$$
+  - ½
+  - '4'
+  - '5'
+  - '6'
+  - '-'
+  - +
+  - F11
+  - F12
+  - F13
+  - F14
+  - F15
+  - '='
+  - ''
+  - $$tabler:arrow-big-down$$
+  - ¾
+  - '1'
+  - '2'
+  - '3'
+  - ','
+  - .
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - '0'
+  Mouse: ['', '', '', '', '', '', '$$tabler:arrow-big-up$$', '', '', $$cursor-up$$, '', '', '', '', $$scroll-left$$, $$scroll-up$$, $$scroll-down$$, $$scroll-right$$,
+    '', '$$tabler:arrow-big-left$$', '$$material:keyboard_return$$', '$$tabler:arrow-big-right$$', '', $$cursor-left$$, $$cursor-down$$, $$cursor-right$$, '', '',
+    '', '', '', '', '', '', '', '$$tabler:arrow-big-down$$', '', '', '', '', '', '', '', '$$material:left_click$$', $$click-middle$$, $$click-middle$$, '$$material:right_click$$',
+    '']
+combos:
+- p: [25, 26]
+  k: ESC
+- p: [43, 46]
+  k: {t: ErgoL, h: toggle}
+  l: [Bepo, Qwerty]
+- p: [44, 45]
+  k: {t: Bepo, h: toggle}
+  l: [ErgoL, Qwerty]
+- p: [42, 47]
+  k: {t: Qwerty, h: toggle}
+  l: [Bepo, ErgoL]
+- p: [4, 1]
+  k: {t: Mouse, h: toggle}
+  l: [Bepo, ErgoL, Qwerty, Mouse]
+  draw_separate: true
+- p: [32, 37]
+  k: _
+  l: [Bepo, ErgoL, Qwerty]
+- p: [4, 8]
+  k: '-'
+  l: [Bepo, ErgoL, Qwerty]
+- p: [29, 40]
+  k: CAPS WORD
+  l: [Bepo, ErgoL, Qwerty]
+  draw_separate: true

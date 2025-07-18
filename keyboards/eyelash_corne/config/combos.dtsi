@@ -25,6 +25,13 @@ ZMK_COMBO(to_qwerty, &to QWE, LH2 RH2, BEP ERG)
 
 // Switch mouse layer
 ZMK_COMBO(toggle_mouse, &tog MOU, LT1 LT4, BEP ERG QWE MOU)
+
+// underscore
+ZMK_COMBO(underscore, &kp UNDER, LB1 RB1, BEP ERG QWE)
+
+ZMK_COMBO(minus, &kp KP_MINUS, LT1 RT1, BEP ERG QWE)
+
+ZMK_COMBO(capsword, &caps_word, LB4 RB4, BEP ERG QWE)
   
 /*
 Local Variables:
