@@ -23,6 +23,9 @@
     "aspnetcore-runtime-6.0.36"
   ];
 
+  # TODO make it an option ? (otherwise I'll add it for all)
+  users.users.vincent.linger = true;
+
   services = {
     wireguard = {
       enable = true;

@@ -13,6 +13,9 @@
     ../common/services/libvirt.nix
   ];
 
+  # TODO make it an option ? (otherwise I'll add it for all)
+  users.users.vincent.linger = true;
+
   # networking.firewall.enable = false;
   nixpkgs.config.cudaSupport = true;
   nixpkgs.config.rocmSupport = lib.mkForce false;

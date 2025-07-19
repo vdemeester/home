@@ -12,6 +12,10 @@
     ../common/desktop/binfmt.nix # TODO: move to something else than desktop
     ../common/services/prometheus-exporters-node.nix
   ];
+
+  # TODO make it an option ? (otherwise I'll add it for all)
+  users.users.vincent.linger = true;
+
   services = {
     atuin = {
       enable = true;

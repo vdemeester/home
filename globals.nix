@@ -45,6 +45,26 @@ let
     ++ lib.attrsets.attrByPath [ "net" "ips" ] [ ] machine
     ++ lib.attrsets.attrByPath [ "net" "vpn" "ips" ] [ ] machine;
 
+  hostConfig =
+    machine:
+    builtins.listToAttrs (
+      map
+        (x: {
+          name = x;
+          value =
+            if (lib.strings.hasPrefix "10.100" x) then
+              builtins.filter (n: lib.strings.hasSuffix ".vpn" n) machine.net.names
+            else if (lib.strings.hasPrefix "192.168" x) then
+              builtins.filter (n: lib.strings.hasSuffix ".home" n) machine.net.names
+            else
+              [ ];
+        })
+        (
+          lib.attrsets.attrByPath [ "net" "ips" ] [ ] machine
+          ++ lib.attrsets.attrByPath [ "net" "vpn" "ips" ] [ ] machine
+        )
+    );
+
   sshConfig =
     machine:
     builtins.listToAttrs (
@@ -575,6 +595,7 @@ in
       hasSSHHostKeys
       sshHostIdentifier
       sshConfig
+      hostConfig
       ;
     /**
          Return a list of wireguard ips from a list of ips.
@@ -637,6 +658,9 @@ in
           _name: value: "${lib.strings.concatStringsSep "," (sshHostIdentifier value)} ${value.ssh.hostKey}"
         ) (lib.attrsets.filterAttrs (_name: hasSSHHostKeys) machines)
       );
+
+    hostConfigs =
+      machines: lib.attrsets.mergeAttrsList (lib.attrsets.mapAttrsToList (_name: hostConfig) (machines));
 
     sshConfigs =
       machines:

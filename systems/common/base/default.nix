@@ -12,6 +12,7 @@
     ./hardware.nix
     ./locale.nix
     ./nh.nix
+    ./network.nix
     ./tpm.nix
 
     # All my machine have this running

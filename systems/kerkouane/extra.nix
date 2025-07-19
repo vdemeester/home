@@ -56,6 +56,8 @@ in
     # ../common/services/syncthing.nix
   ];
 
+  # TODO make it an option ? (otherwise I'll add it for all)
+  users.users.vincent.linger = true;
   services.openssh = {
     listenAddresses = [
       {

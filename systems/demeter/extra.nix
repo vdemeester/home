@@ -8,6 +8,8 @@
 
   networking.firewall.enable = false;
 
+  # TODO make it an option ? (otherwise I'll add it for all)
+  users.users.vincent.linger = true;
   services = {
     wireguard = {
       enable = true;
@@ -19,6 +21,4 @@
 
   # TODO: could be enable by default for all ?
   security.pam.enableSSHAgentAuth = true;
-
-  security.apparmor.enable = true;
 }
