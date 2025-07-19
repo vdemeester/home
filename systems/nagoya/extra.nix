@@ -33,6 +33,15 @@
         })
       ) (lib.attrsets.filterAttrs (name: value: (globals.fn.hasVPNips value)) globals.machines);
     };
+    virtualHosts."nagoya.vpn" = {
+      locations = lib.attrsets.mapAttrs' (
+        name: value:
+        lib.attrsets.nameValuePair ("/syncthing/${name}/") ({
+          proxyPass = "http://${builtins.head value.net.vpn.ips}:8384/";
+          recommendedProxySettings = true;
+        })
+      ) (lib.attrsets.filterAttrs (name: value: (globals.fn.hasVPNips value)) globals.machines);
+    };
   };
 
   environment.systemPackages = with pkgs; [
