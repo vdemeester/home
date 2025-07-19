@@ -31,5 +31,7 @@ athena.sbr.pm. IN A 192.168.1.183
 *.athena.sbr.pm. IN A 192.168.1.183
 honshu.sbr.pm. IN A 192.168.1.15
 *.honshu.sbr.pm. IN A 192.168.1.15
+nagoya.sbr.pm. IN A 192.168.1.80
+*.nagoya.sbr.pm. IN A 192.168.1.80
 kerkouane.sbr.pm IN A 10.100.0.1    
 *.kerkouane.sbr.pm IN A 10.100.0.1    
