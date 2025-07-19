@@ -359,7 +359,7 @@ in
       net = {
         ips = [ "192.168.1.24" ];
         vpn = {
-          pubkey = "KVRzoPUw8UTQblYtbs/NLYLIVmtQehrc4Hacbpf5Ugs=";
+          pubkey = "foUoAvJXGyFV4pfEE6ISwivAgXpmYmHwpGq6X+HN+yA=";
           ips = [ "10.100.0.2" ];
         };
         names = [
@@ -372,7 +372,7 @@ in
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm";
       };
       syncthing = {
-        id = "KZMMXRR-UINDQTS-H3TV2W7-EIGOUDI-3LW4ZDG-7PRKDFV-MJ5KUTJ-YG5Y5AI";
+        id = "ZKUNKBI-N2K2LTG-AWLDAEX-NE6NALQ-DLFO6YV-FU4A7IE-KCF5ZCD-IEYSKAH";
         folders = {
           org = { };
           documents = { };
