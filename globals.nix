@@ -177,11 +177,17 @@ in
         # root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME root@aomi";
         # vincent = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJmTdMKYdgqpbQWBif58VBuwX+GqMGsMfB1ey1TKrM3 vincent@aomi";
       };
-      # syncthing = {
-      #   folders = {
-      #     org = { };
-      #   };
-      # };
+      syncthing = {
+        id = "N3AMUVI-FM2BAOD-U3OMZDJ-UHMQE6J-ACMM5B7-S7BTK6P-PSM36NR-DVZHLQF";
+        folders = {
+          org = {
+            type = "receiveonly";
+          };
+          sync = {
+            type = "receiveonly";
+          };
+        };
+      };
     };
     demeter = {
       net = {
@@ -199,13 +205,17 @@ in
       ssh = {
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqQfEyHyjIGglayB9FtCqL7bnYfNSQlBXks2IuyCPmd";
       };
-      # syncthing = {
-      #   folders = {
-      #     org = {
-      #       type = "receiveonly";
-      #     };
-      #   };
-      # };
+      syncthing = {
+        id = "TXCV3TS-TUEOTH6-ETB3LBV-KCIHT4L-RCCOIE3-VPBCNJB-VHQEAYI-WOXK5A5";
+        folders = {
+          org = {
+            type = "receiveonly";
+          };
+          sync = {
+            type = "receiveonly";
+          };
+        };
+      };
     };
     nagoya = {
       net = {
@@ -223,12 +233,14 @@ in
       ssh = {
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHeP9q2U/eS/GijfUtqLRENHSRPFSo1tN1iorIj1b0+O";
       };
-      # syncthing = {
-      # 	folders = {
-      # 		sync = {
-      #       type = "receiveonly";};
-      # 	};
-      # };
+      syncthing = {
+        id = "7BGILOF-DUA47DF-7S5732W-X22RNOD-UNOLDX2-NTCKNR4-LR64Q5A-Y5LWMA6";
+        folders = {
+          sync = {
+            type = "receiveonly";
+          };
+        };
+      };
     };
     aix = {
       net = {
@@ -241,12 +253,14 @@ in
           "aix.sbr.pm"
         ];
       };
-      # syncthing = {
-      # 	folders = {
-      # 		sync = {
-      #       type = "receiveonly";};
-      # 	};
-      # };
+      syncthing = {
+        id = "GHE6XF4-YCKEMZS-JEZYXA6-ETJI3SS-BQFFOCS-ZJAWN4D-Q33IQ46-OYL7BQM";
+        folders = {
+          sync = {
+            type = "receiveonly";
+          };
+        };
+      };
       ssh = {
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoUicDySCGETPAgmI0P3UrgZEXXw3zNsyCIylUP0bML";
       };
@@ -307,7 +321,7 @@ in
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME";
       };
       syncthing = {
-        id = "XCR6WWB-OZUDGFB-LQPFW73-MV5SPJK-4IGOMA4-IAXON3I-C6OFETL-TPK5FQS";
+        id = "CN5P3MV-EJ65J4I-OHB7OBI-LD7JBWT-7SZCZD3-Z6NAASI-UCMKOAU-X2TNNAP";
         folders = {
           org = { };
           documents = { };
@@ -366,7 +380,7 @@ in
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJguVoQYObRLyNxELFc3ai2yDJ25+naiM3tKrBGuxwwA";
       };
       syncthing = {
-        id = "IFVRRQ7-KMIOQXP-5YDJXQU-UJXUKHB-7THCSY6-B3NHRNA-ED7IRI7-2JPPKQY";
+        id = "QGD6ICB-EPSGCEN-IQWKN77-BCRWE67-56HX5IA-E4IDBCI-WE46DK3-EC63DQ7";
         folders = {
           sync = { };
           org = { };
@@ -390,7 +404,7 @@ in
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/PMBThi4DhgZR8VywbRDzzMVh2Qp3T6NJAcPubfXz6";
       };
       syncthing = {
-        id = "4TYYG7V-A67D5SN-HMEJCI7-POOZRLL-RNCIE4U-ZYVGTOB-JQ5DOSV-ZCGWUAL";
+        id = "3L2KCXM-D75XCVU-5JLMV6V-FKQID2K-LJA6GFB-R2G77LD-5WXFHJT-BB4B7Q5";
         folders = {
           org = { };
           documents = { };
