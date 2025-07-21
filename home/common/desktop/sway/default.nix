@@ -29,6 +29,7 @@ in
     wl-clipboard
     wl-kbptr
     wtype
+    wlprop
 
     zenity
     wofi
@@ -133,7 +134,7 @@ in
           "${mod}+Shift+Return" = "exec emacsclient -c";
           "${mod}+Control+Return" = "exec emacs";
           "${mod}+Control+Shift+Return" = "exec ${emacs-in-folder}";
-          "${mod}+Control+Alt+Return" = "exec emacs"; # TODO: remove this
+          "${mod}+Control+Alt+Return" = "exec emacsclient --eval '(vde/type)'";
 
           "${mod}+Left" = "focus left";
           "${mod}+Down" = "focus down";
@@ -172,13 +173,20 @@ in
           criteria.app_id = "firefox";
         }
         {
+          command = "floating enable";
+          criteria = {
+            app_id = "emacs";
+            title = "^emacs-float$";
+          };
+        }
+        {
           command = "inhibit_idle fullscreen";
           criteria.app_id = "mpv";
         }
         {
           # spotify doesn't set its WM_CLASS until it has mapped, so the assign is not reliable
           command = "move to workspace 10";
-          criteria.class = "Spotify";
+          criteria.app_id = "spotify";
         }
         {
           command = "move to scratchpad, scratchpad show";
@@ -201,7 +209,7 @@ in
         }
         {
           criteria = {
-            class = "pwvucontrol";
+            class = "com.saivert.pwvucontrol";
           };
           command = "floating enable";
         }
