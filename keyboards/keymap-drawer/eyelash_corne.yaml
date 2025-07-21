@@ -3,10 +3,10 @@ layers:
   Bepo:
   - $$material:keyboard_tab$$
   - {t: B, s: '|'}
-  - AltGr+E
+  - É
   - {t: P, s: '&'}
   - O
-  - '&AGRA E'
+  - È
   - $$tabler:arrow-big-up$$
   - {t: ^, s: '!'}
   - V
@@ -18,7 +18,7 @@ layers:
   - {t: A, h: GUI}
   - {t: U, h: ALT}
   - {t: I, h: SHIFT}
-  - {t: E, h: CTRL, s: AltGr+5}
+  - {t: E, h: CTRL, s: €}
   - {t: ',', h: Meh+GUI, s: ;}
   - $$tabler:arrow-big-left$$
   - $$material:keyboard_return$$
@@ -30,14 +30,14 @@ layers:
   - {t: N, h: GUI}
   - M
   - '`'
-  - '&AGRA A'
+  - À
   - Y
   - X
   - {t: ., s: ':'}
   - K
   - ''
   - $$tabler:arrow-big-down$$
-  - {t: '&AIGU SPACE', s: '?'}
+  - {t: '''', s: '?'}
   - Q
   - G
   - H
@@ -149,7 +149,7 @@ layers:
   - {t: ▽, type: trans}
   Accents:
   - ''
-  - AltGr+Z
+  - Æ
   - '&AIGU I'
   - '&AGRA I'
   - '&CIRC I'
@@ -162,9 +162,9 @@ layers:
   - ''
   - '"'
   - '`'
-  - AltGr+K
+  - Œ
   - '&AIGU E'
-  - '&AGRA E'
+  - È
   - '&CIRC E'
   - '&TREM E'
   - $$tabler:arrow-big-left$$
@@ -172,7 +172,7 @@ layers:
   - $$tabler:arrow-big-right$$
   - '&TREM A'
   - '&CIRC A'
-  - '&AGRA A'
+  - À
   - '&AIGU A'
   - AltGr+N
   - ''''
@@ -237,7 +237,7 @@ layers:
   - ':'
   - ','
   - .
-  - '&AIGU SPACE'
+  - ''''
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {type: held}
@@ -295,12 +295,12 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   Numbers:
+  - ''
   - F1
   - F2
   - F3
   - F4
   - F5
-  - ±
   - $$tabler:arrow-big-up$$
   - ¼
   - '7'
@@ -308,12 +308,12 @@ layers:
   - '9'
   - '*'
   - /
+  - ''
   - F6
   - F7
   - F8
   - F9
   - F10
-  - AltGr+;
   - $$tabler:arrow-big-left$$
   - $$material:keyboard_return$$
   - $$tabler:arrow-big-right$$
@@ -323,20 +323,20 @@ layers:
   - '6'
   - '-'
   - +
+  - ''
   - F11
   - F12
   - F13
   - F14
   - F15
-  - '='
   - ''
   - $$tabler:arrow-big-down$$
   - ¾
   - '1'
   - '2'
   - '3'
-  - ','
   - .
+  - ','
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -353,12 +353,15 @@ combos:
 - p: [43, 46]
   k: {t: ErgoL, h: toggle}
   l: [Bepo, Qwerty]
+  draw_separate: true
 - p: [44, 45]
   k: {t: Bepo, h: toggle}
   l: [ErgoL, Qwerty]
+  draw_separate: true
 - p: [42, 47]
   k: {t: Qwerty, h: toggle}
   l: [Bepo, ErgoL]
+  draw_separate: true
 - p: [4, 1]
   k: {t: Mouse, h: toggle}
   l: [Bepo, ErgoL, Qwerty, Mouse]
@@ -366,9 +369,13 @@ combos:
 - p: [32, 37]
   k: _
   l: [Bepo, ErgoL, Qwerty]
+  a: bottom
+  o: 2.0
 - p: [4, 8]
   k: '-'
   l: [Bepo, ErgoL, Qwerty]
+  a: top
+  o: 1.0
 - p: [29, 40]
   k: CAPS WORD
   l: [Bepo, ErgoL, Qwerty]

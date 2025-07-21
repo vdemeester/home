@@ -514,6 +514,13 @@ parse_config:
     "&kp DAPOS": '"'
     "&soft_off": "$$mdi:power-standby$$"
     "&tog NAV": "NAV"
+    "&AGRA A": "À"
+    "&AGRA E": "È"
+    "&kp EACUT": "É"
+    "&kp EURO": "€"
+    "&AIGU SPACE": "'"
+    "&kp AE": "Æ"
+    "&kp OE": "Œ"
   sticky_label: sticky
   toggle_label: toggle
   trans_legend:
@@ -619,51 +626,18 @@ parse_config:
       draw_separate: true
     combo_capslock:
       draw_separate: true
-    combo_tmux:
+    combo_to_ergol:
       draw_separate: true
-    combo_tmux_session:
+    combo_to_bepo:
       draw_separate: true
-    combo_tmux_cmd:
+    combo_to_qwerty:
       draw_separate: true
     combo_toggle_mouse:
       draw_separate: true
-    combo_toggle_game:
-      draw_separate: true
-    combo_qwerty:
-      draw_separate: true
-    combo_qwerty_34:
-      draw_separate: true
-    combo_ergol:
-      draw_separate: true
-    combo_ergol_34:
-      draw_separate: true
-    combo_ergol_qwerty_34:
+    combo_minus:
       align: "top"
-      offset: 0.1
-    combo_qwerty_ergol_34:
-      align: "top"
-      offset: 0.1
-    combo_tab:
+      offset: 1
+    combo_underscore:
       align: "bottom"
-      offset: 0.3
-    combo_tab_34:
-      align: "bottom"
-      offset: 0.3
-    combo_nav_toggle:
-      align: "bottom"
-      offset: 0.3
-    combo_nav_toggle_34:
-      align: "bottom"
-      offset: 0.3
-    combo_rightclick:
-      align: "top"
-      offset: -0.7
-      dendron: false
-    combo_printscreen:
-      align: "top"
-      offset: -0.7
-      dendron: false
-    combo_cut:
-      align: "bottom"
-      offset: -0.7
-      dendron: false
+      offset: 2
+
