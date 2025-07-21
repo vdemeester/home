@@ -132,6 +132,9 @@ in
   };
   net = {
     dns = {
+      # TODO: https://discourse.nixos.org/t/dynamic-dns-on-bind/21361
+      # TODO: https://github.com/nix-community/dns.nix
+      # Maybe switch to nsd
       cacheNetworks = [
         "192.168.1.0/24"
         "10.100.0.0/24"
@@ -660,7 +663,7 @@ in
       );
 
     hostConfigs =
-      machines: lib.attrsets.mergeAttrsList (lib.attrsets.mapAttrsToList (_name: hostConfig) (machines));
+      machines: lib.attrsets.mergeAttrsList (lib.attrsets.mapAttrsToList (_name: hostConfig) machines);
 
     sshConfigs =
       machines:
