@@ -15,8 +15,8 @@ _: {
       fsType = "ext4";
       options = [ "noatime" ];
     };
-    "/data/" = {
-      device = "e769fd8d-1fed-4a59-a987-e21f35294d5f";
+    "/data" = {
+      device = "/dev/disk/by-uuid/e769fd8d-1fed-4a59-a987-e21f35294d5f";
       fsType = "ext4";
       options = [ "noatime" ];
     };
