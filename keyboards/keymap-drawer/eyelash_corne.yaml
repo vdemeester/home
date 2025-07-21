@@ -150,31 +150,31 @@ layers:
   Accents:
   - ''
   - Æ
-  - '&AIGU I'
-  - '&AGRA I'
-  - '&CIRC I'
-  - '&TREM I'
+  - Í
+  - Ì
+  - Î
+  - Ï
   - $$tabler:arrow-big-up$$
-  - '&TREM O'
-  - '&CIRC O'
-  - '&AGRA O'
-  - '&AIGU O'
+  - Ö
+  - Ô
+  - Ò
+  - Ó
   - ''
   - '"'
   - '`'
   - Œ
-  - '&AIGU E'
+  - É
   - È
-  - '&CIRC E'
-  - '&TREM E'
+  - Ê
+  - Ë
   - $$tabler:arrow-big-left$$
   - $$material:keyboard_return$$
   - $$tabler:arrow-big-right$$
-  - '&TREM A'
-  - '&CIRC A'
+  - Ä
+  - Â
   - À
-  - '&AIGU A'
-  - AltGr+N
+  - Á
+  - Ñ
   - ''''
   - ''
   - ''
@@ -184,10 +184,10 @@ layers:
   - ''
   - ''
   - $$tabler:arrow-big-down$$
-  - '&TREM U'
-  - '&CIRC U'
-  - '&AGRA U'
-  - '&AIGU U'
+  - Ü
+  - Û
+  - Ù
+  - Ú
   - <
   - ^
   - {type: held}
@@ -197,8 +197,8 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   Symbols:
-  - {t: ▽, type: trans}
-  - '&AGRA SPACE'
+  - \
+  - '`'
   - <
   - '>'
   - '-'
@@ -208,9 +208,9 @@ layers:
   - '{'
   - '}'
   - $
-  - '&CIRC SPACE'
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - ^
+  - ''
+  - ''
   - '!'
   - {t: '*', h: ALT}
   - {t: /, h: SHIFT}
@@ -223,9 +223,9 @@ layers:
   - {t: (, h: RCTRL}
   - {t: ), h: RSHFT}
   - {t: ;, h: RALT}
-  - '&TREM SPACE'
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - '"'
+  - ''
+  - ''
   - '~'
   - +
   - '['
@@ -238,7 +238,7 @@ layers:
   - ','
   - .
   - ''''
-  - {t: ▽, type: trans}
+  - ''
   - {t: ▽, type: trans}
   - {type: held}
   - {t: ▽, type: trans}

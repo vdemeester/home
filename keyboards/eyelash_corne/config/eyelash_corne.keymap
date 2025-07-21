@@ -91,11 +91,11 @@ ZMK_LAYER(Accents,
 // 4: SYMBOLS
 ZMK_LAYER(Symbols,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-     ___        &AGRA SPACE  &kp LT      &kp GT      &kp MINUS    &kp PIPE                &kp UP                &kp CARET   &kp LBRC      &kp RBRC      &kp DLLR     &CIRC SPACE  ___
+     &kp BSLH    &AGRA SPACE  &kp LT      &kp GT      &kp MINUS    &kp PIPE                &kp UP                &kp CARET   &kp LBRC      &kp RBRC      &kp DLLR     &CIRC SPACE  XXX
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     ___         &kp EXCL &hml AL STAR &hml SL FSLH &hml CL EQUAL &kp AMPS      &kp LEFT  &kp RET  &kp RIGHT    &kp HASH   &hmr CR LPAR  &hmr SR RPAR  &hmr AR SEMI  &TREM SPACE  ___
+     XXX         &kp EXCL &hml AL STAR &hml SL FSLH &hml CL EQUAL &kp AMPS      &kp LEFT  &kp RET  &kp RIGHT    &kp HASH   &hmr CR LPAR  &hmr SR RPAR  &hmr AR SEMI  &TREM SPACE  XXX
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     ___         &kp TILDE   &kp PLUS    &kp LBKT    &kp RBKT     &kp PRCNT     XXX       &kp DOWN              &kp AT      &kp COLON     &kp COMMA     &kp DOT      &AIGU SPACE  ___
+     XXX         &kp TILDE   &kp PLUS    &kp LBKT    &kp RBKT     &kp PRCNT     XXX       &kp DOWN              &kp AT      &kp COLON     &kp COMMA     &kp DOT      &AIGU SPACE  XXX
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
                                          ___         ___          ___                                           ___         ___           ___
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
