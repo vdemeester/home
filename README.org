@@ -253,6 +253,7 @@ Repositories that inspired or contributed to this configuration:
 - [[https://github.com/thiagokokada/nix-configs][https://github.com/thiagokokada/nix-configs]]
 - [[https://github.com/JRMurr/NixOsConfig][https://github.com/JRMurr/NixOsConfig]]
 - [[https://github.com/dzervas/dotfiles][https://github.com/dzervas/dotfiles]]
+- https://github.com/mirdaki/computer-config
 
 ** Historical References
 - [[https://gitlab.com/samueldr/nixos-configuration][https://gitlab.com/samueldr/nixos-configuration]]
