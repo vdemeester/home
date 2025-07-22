@@ -228,6 +228,36 @@ minibuffer, even without explicitly focusing it."
       (keyboard-quit)))
   (global-set-key [remap keyboard-quit] #'er-keyboard-quit))
 
+(use-package tramp
+  :custom
+  ;; Tramp
+  (remote-file-name-inhibit-locks t "No lock files on remote files")
+  (tramp-use-scp-direct-remote-copying t "Use direct copying between two remote hosts")
+  (remote-file-name-inhibit-auto-save-visited t "Do not auto-save remote files")
+  (tramp-copy-size-limit (* 1024 1024)) ;; 1MB
+  (tramp-verbose 2)
+  :config
+  (connection-local-set-profile-variables
+   'remote-direct-async-process
+   '((tramp-direct-async-process . t)))
+
+  (connection-local-set-profiles
+   '(:application tramp :protocol "scp")
+   'remote-direct-async-process)
+
+  (setq magit-tramp-pipe-stty-settings 'pty)
+  (with-eval-after-load 'tramp
+    (with-eval-after-load 'compile
+      (remove-hook 'compilation-mode-hook #'tramp-compile-disable-ssh-controlmaster-options)))
+  
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+  (add-to-list 'tramp-remote-path "/home/vincent/.local/state/nix/profile/bin/")
+  (add-to-list 'tramp-remote-path "~/bin/")
+  (add-to-list 'tramp-connection-properties
+	       (list (regexp-quote "/ssh:aomi.home:")
+		     "remote-shell" "/home/vincent/.local/state/nix/profile/bin/zsh"))
+  )
+
 (use-package passage
   :commands (passage-get))
 
@@ -620,7 +650,9 @@ minibuffer, even without explicitly focusing it."
   (magit-branch-prefer-remote-upstream '("main"))
   (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
   (magit-bury-buffer-function #'magit-restore-window-configuration)
-  (magit-refresh-status-buffer nil)
+  (magit-refresh-status-buffer nil "don't automatically refresh the status buffer after running a git command")
+  (magit-commit-show-diff nil "don't show the diff by default in the commit buffer. Use `C-c C-d' to display it")
+  (magit-branch-direct-configure nil "don't show git variables in magit branch")
   :config
   ;; cargo-culted from https://github.com/magit/magit/issues/3717#issuecomment-734798341
   ;; valid gitlab options are defined in https://docs.gitlab.com/ee/user/project/push_options.html
@@ -840,6 +872,10 @@ minibuffer, even without explicitly focusing it."
   (keymap-set embark-symbol-map "S i" #'symbol-overlay-put)
   (keymap-set embark-symbol-map "S c" #'symbol-overlay-remove-all)
   (keymap-set embark-symbol-map "S r" #'symbol-overlay-rename)
+  (defun vde/short-github-link ()
+    "Target a link at point of the for github:owner/repo#number"
+    )
+  )
 
 (use-package pr-review
   :commands (pr-review pr-review-open pr-review-submit-review)
@@ -1581,6 +1617,43 @@ Add this function to the `after-save-hook'."
       ;; Make the frame more temporary-like
       (set-frame-parameter frame 'delete-before-kill-buffer t)
       (set-window-dedicated-p (selected-window) t))))
+
+(defun memoize-remote (key cache orig-fn &rest args)
+  "Memoize a value if the key is a remote path."
+  (if (and key
+           (file-remote-p key))
+      (if-let ((current (assoc key (symbol-value cache))))
+          (cdr current)
+        (let ((current (apply orig-fn args)))
+          (set cache (cons (cons key current) (symbol-value cache)))
+          current))
+    (apply orig-fn args)))
+;; Memoize current project
+(defvar project-current-cache nil)
+(defun memoize-project-current (orig &optional prompt directory)
+  (memoize-remote (or directory
+                      project-current-directory-override
+                      default-directory)
+                  'project-current-cache orig prompt directory))
+
+(advice-add 'project-current :around #'memoize-project-current)
+
+;; Memoize magit top level
+(defvar magit-toplevel-cache nil)
+(defun memoize-magit-toplevel (orig &optional directory)
+  (memoize-remote (or directory default-directory)
+                  'magit-toplevel-cache orig directory))
+(advice-add 'magit-toplevel :around #'memoize-magit-toplevel)
+
+;; memoize vc-git-root
+(defvar vc-git-root-cache nil)
+(defun memoize-vc-git-root (orig file)
+  (let ((value (memoize-remote (file-name-directory file) 'vc-git-root-cache orig file)))
+    ;; sometimes vc-git-root returns nil even when there is a root there
+    (when (null (cdr (car vc-git-root-cache)))
+      (setq vc-git-root-cache (cdr vc-git-root-cache)))
+    value))
+(advice-add 'vc-git-root :around #'memoize-vc-git-root)
 
 (provide 'init)
 ;;; init.el ends here
