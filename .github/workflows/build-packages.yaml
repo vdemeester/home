@@ -11,7 +11,7 @@ on:
       - main
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-packages
   cancel-in-progress: true
 
 jobs:
