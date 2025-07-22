@@ -414,6 +414,12 @@ minibuffer, even without explicitly focusing it."
   (add-to-list 'eglot-ignored-server-capabilities :documentHighlightProvider)
   (add-to-list 'eglot-server-programs `(json-mode  "vscode-json-language-server" "--stdio"))
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
+  (add-to-list 'eglot-server-programs
+	       '(text-mode . ("harper-ls" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '(org-mode . ("harper-ls" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '(markdown-mode . ("harper-ls" "--stdio")))
   (setq-default eglot-workspace-configuration
 		'(
 		  :gopls (
@@ -491,7 +497,9 @@ minibuffer, even without explicitly focusing it."
   (go-mode . eglot-ensure)
   (go-ts-mode . eglot-ensure)
   (sh-mode . eglot-ensure)
-  (sh-script-mode . eglot-ensure))
+  (sh-script-mode . eglot-ensure)
+  (org-mode . eglot-ensure)
+  (markdown-mode . eglot-ensure))
 
 (setq major-mode-remap-alist
       '((python-mode . python-ts-mode)

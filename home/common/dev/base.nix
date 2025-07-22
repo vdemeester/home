@@ -46,6 +46,7 @@
     yq-go
     # radicle-node
     vscode-fhs
+    harper
 
     bash-language-server
   ];
