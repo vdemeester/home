@@ -445,9 +445,11 @@ minibuffer, even without explicitly focusing it."
   (add-to-list 'eglot-server-programs `(json-mode  "vscode-json-language-server" "--stdio"))
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
   (add-to-list 'eglot-server-programs
-	       '(text-mode . ("harper-ls" "--stdio")))
+	       '(go-mode . ("harper-ls" "--stdio")))
   (add-to-list 'eglot-server-programs
-               '(org-mode . ("harper-ls" "--stdio")))
+	       '(text-mode . ("harper-ls" "--stdio")))
+  ;; (add-to-list 'eglot-server-programs
+  ;;              '(org-mode . ("harper-ls" "--stdio")))
   (add-to-list 'eglot-server-programs
                '(markdown-mode . ("harper-ls" "--stdio")))
   (setq-default eglot-workspace-configuration
@@ -769,6 +771,8 @@ minibuffer, even without explicitly focusing it."
   :if (executable-find "direnv")
   :bind (:map envrc-mode-map
               ("C-c e" . envrc-command-map))
+  :custom
+  (envrc-remote t)
   :config (envrc-global-mode))
 
 (use-package cape
