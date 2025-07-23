@@ -106,9 +106,6 @@
     virt-manager
     simple-scan
 
-    chromium
-    spotify
-
     keybase
   ];
 
