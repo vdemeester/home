@@ -84,9 +84,9 @@ ZMK_MOD_MORPH(p_amp,
     mods = <(MOD_RALT)>;
 )
 
-// hold: symbols layer | tap: SPACE | right_alt + tap : undercore (_)
-ZMK_MOD_MORPH(sym_spc_und,
-    bindings = <&lt SYM SPACE>, <&kp UNDERSCORE>;
+// hold: numbers layer | tap: SPACE | right_alt + tap : undercore (_)
+ZMK_MOD_MORPH(num_spc_und,
+    bindings = <&lt NUM SPACE>, <&kp UNDERSCORE>;
     mods = <(MOD_RALT)>;
 )
 

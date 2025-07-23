@@ -44,10 +44,10 @@ layers:
   - F
   - W
   - {t: $$delete$$, h: Accents}
-  - {t: '$$tabler:space$$', h: Symbols, s: _}
+  - {t: '$$tabler:space$$', h: Numbers, s: _}
   - {t: '$$material:backspace$$', h: Nav}
   - SHIFT
-  - {t: '$$material:keyboard_return$$', h: Numbers}
+  - {t: '$$material:keyboard_return$$', h: Symbols}
   - RALT
   ErgoL:
   - $$material:keyboard_tab$$
@@ -240,10 +240,10 @@ layers:
   - ''''
   - ''
   - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - {type: held}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   Nav:
   - $$output-toggle$$
@@ -338,10 +338,10 @@ layers:
   - .
   - ','
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
   - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - '0'
   Mouse: ['', '', '', '', '', '', '$$tabler:arrow-big-up$$', '', '', $$cursor-up$$, '', '', '', '', $$scroll-left$$, $$scroll-up$$, $$scroll-down$$, $$scroll-right$$,
     '', '$$tabler:arrow-big-left$$', '$$material:keyboard_return$$', '$$tabler:arrow-big-right$$', '', $$cursor-left$$, $$cursor-down$$, $$cursor-right$$, '', '',
