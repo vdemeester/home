@@ -80,7 +80,8 @@ let
               else
                 x;
             forwardAgent = true;
-            identityFile = [ "~/.ssh/kyushu" ];
+            identityFile = "~/.ssh/kyushu";
+            identityAgent = "\$SSH_AUTH_SOCK";
           };
         })
         (
@@ -199,7 +200,7 @@ in
       };
       ssh = {
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4KRP1rzOwyA2zP1Nf1WlLRHqAGutLtOHYWfH732xh";
-        # root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME root@aomi";
+        # root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQVlSrUKU0xlM9E+sJ8qgdgqCW6ePctEBD2Yf+OnyME root@aomiy";
         # vincent = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJmTdMKYdgqpbQWBif58VBuwX+GqMGsMfB1ey1TKrM3 vincent@aomi";
       };
       syncthing = {

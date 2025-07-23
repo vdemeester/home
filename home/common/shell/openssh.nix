@@ -8,6 +8,7 @@
   home.packages = with pkgs; [
     sshfs
   ];
+  services.ssh-agent.enable = true;
   programs.ssh = {
     enable = true;
     serverAliveInterval = 60;
@@ -53,13 +54,18 @@
         extraOptions = {
           StrictHostKeyChecking = "no";
           UserKnownHostsFile = "/dev/null";
+          identityFile = "~/.ssh/kyushu";
+          identityAgent = "\$SSH_AUTH_SOCK";
         };
       };
       "10.100.0.*" = {
         forwardAgent = true;
+        identityFile = "~/.ssh/kyushu";
+        identityAgent = "\$SSH_AUTH_SOCK";
       };
     } // globals.fn.sshConfigs globals.machines;
     extraConfig = ''
+      IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
       GlobalKnownHostsFile ~/.ssh/ssh_known_hosts ~/.ssh/ssh_known_hosts.redhat ~/.ssh/ssh_known_hosts.mutable
       StrictHostKeyChecking yes
       PreferredAuthentications gssapi-with-mic,publickey,password

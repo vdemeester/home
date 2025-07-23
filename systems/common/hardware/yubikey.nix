@@ -12,6 +12,7 @@
       yubico-piv-tool
       yubikey-personalization
       yubikey-manager
+      yubikey-agent
     ]
     ++ lib.optionals (builtins.isString desktop) [
       yubioath-flutter # Maybe not necessary
@@ -47,5 +48,41 @@
   };
 
   programs.gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
-  services.yubikey-agent.enable = true;
+  # services.yubikey-agent.enable = true;
+  systemd.packages = [ pkgs.yubikey-agent ];
+
+  # systemd.user.services.yubikey-agent = {
+  #   Unit = {
+  #     Description = "Seamless ssh-agent for YubiKeys";
+  #     Documentation = "https://github.com/FiloSottile/yubikey-agent";
+  #     Requires = "yubikey-agent.socket";
+  #     After = "yubikey-agent.socket";
+  #     RefuseManualStart = true;
+  #   };
+  #
+  #   Service = {
+  #     ExecStart = "${pkgs.yubikey-agent}/bin/yubikey-agent -l %t/yubikey-agent/yubikey-agent.sock";
+  #     Type = "simple";
+  #     # /run/user/$UID for the socket
+  #     ReadWritePaths = [ "%t" ];
+  #   };
+  # };
+  #
+  # systemd.user.sockets.yubikey-agent = {
+  #   Unit = {
+  #     Description = "Unix domain socket for Yubikey SSH agent";
+  #     Documentation = "https://github.com/FiloSottile/yubikey-agent";
+  #   };
+  #
+  #   Socket = {
+  #     ListenStream = "%t/yubikey-agent/yubikey-agent.sock";
+  #     RuntimeDirectory = "yubikey-agent";
+  #     SocketMode = "0600";
+  #     DirectoryMode = "0700";
+  #   };
+  #
+  #   Install = {
+  #     WantedBy = [ "sockets.target" ];
+  #   };
+  # };
 }
