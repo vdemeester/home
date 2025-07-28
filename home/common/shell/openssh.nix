@@ -8,7 +8,7 @@
   home.packages = with pkgs; [
     sshfs
   ];
-  services.ssh-agent.enable = true;
+  # services.ssh-agent.enable = true;
   programs.ssh = {
     enable = true;
     serverAliveInterval = 60;
@@ -55,22 +55,21 @@
           StrictHostKeyChecking = "no";
           UserKnownHostsFile = "/dev/null";
           identityFile = "~/.ssh/kyushu";
-          identityAgent = "\$SSH_AUTH_SOCK";
+          # identityAgent = "empty";
         };
       };
       "10.100.0.*" = {
         forwardAgent = true;
         identityFile = "~/.ssh/kyushu";
-        identityAgent = "\$SSH_AUTH_SOCK";
+        # identityAgent = "empty";
       };
-    } // globals.fn.sshConfigs globals.machines;
+    }
+    // globals.fn.sshConfigs globals.machines;
     extraConfig = ''
-      IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
+      # IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
       GlobalKnownHostsFile ~/.ssh/ssh_known_hosts ~/.ssh/ssh_known_hosts.redhat ~/.ssh/ssh_known_hosts.mutable
       StrictHostKeyChecking yes
-      PreferredAuthentications gssapi-with-mic,publickey,password
-      GSSAPIAuthentication yes
-      GSSAPIDelegateCredentials yes
+      PreferredAuthentications publickey,password
       StreamLocalBindUnlink yes
       IdentityFile ~/.ssh/keys/%h
       IdentityFile ~/.ssh/id_ed25519

@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   desktop,
   ...
 }:
@@ -48,41 +49,15 @@
   };
 
   programs.gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
-  # services.yubikey-agent.enable = true;
-  systemd.packages = [ pkgs.yubikey-agent ];
+  services.yubikey-agent.enable = true;
+  # systemd.packages = [ pkgs.yubikey-agent ];
 
-  # systemd.user.services.yubikey-agent = {
-  #   Unit = {
-  #     Description = "Seamless ssh-agent for YubiKeys";
-  #     Documentation = "https://github.com/FiloSottile/yubikey-agent";
-  #     Requires = "yubikey-agent.socket";
-  #     After = "yubikey-agent.socket";
-  #     RefuseManualStart = true;
-  #   };
-  #
-  #   Service = {
-  #     ExecStart = "${pkgs.yubikey-agent}/bin/yubikey-agent -l %t/yubikey-agent/yubikey-agent.sock";
-  #     Type = "simple";
-  #     # /run/user/$UID for the socket
-  #     ReadWritePaths = [ "%t" ];
-  #   };
-  # };
-  #
-  # systemd.user.sockets.yubikey-agent = {
-  #   Unit = {
-  #     Description = "Unix domain socket for Yubikey SSH agent";
-  #     Documentation = "https://github.com/FiloSottile/yubikey-agent";
-  #   };
-  #
-  #   Socket = {
-  #     ListenStream = "%t/yubikey-agent/yubikey-agent.sock";
-  #     RuntimeDirectory = "yubikey-agent";
-  #     SocketMode = "0600";
-  #     DirectoryMode = "0700";
-  #   };
-  #
-  #   Install = {
-  #     WantedBy = [ "sockets.target" ];
-  #   };
-  # };
+  # This overrides the systemd user unit shipped with the
+  # yubikey-agent package
+  # systemd.user.services.yubikey-agent =
+  #   lib.mkIf (config.programs.gnupg.agent.pinentryPackage != null)
+  #     {t
+  #       path = [ config.programs.gnupg.agent.pinentryPackage ];
+  #       wantedBy = [ "default.target" ];
+  #     };
 }

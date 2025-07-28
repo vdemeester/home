@@ -81,7 +81,7 @@ let
                 x;
             forwardAgent = true;
             identityFile = "~/.ssh/kyushu";
-            identityAgent = "\$SSH_AUTH_SOCK";
+            identityAgent = "empty";
           };
         })
         (
