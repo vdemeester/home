@@ -38,7 +38,7 @@ let
       consult-project-extra
       consult-vc-modified-files
       copilot
-      copilot-chat
+      # copilot-chat
       corfu
       corfu-candidate-overlay
       dape

@@ -13,7 +13,7 @@
     ))
     uv
     ruff
-    black
+    # black
   ];
   home.sessionVariables = {
     PYTHONSTARTUP = "${config.xdg.configHome}/python/pythonrc";
