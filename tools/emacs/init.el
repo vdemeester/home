@@ -1185,6 +1185,12 @@ minibuffer, even without explicitly focusing it."
 		 :empty-lines 1)
 	       t)
   (add-to-list 'org-capture-templates
+	       `("tl" " New task (from capture)" entry
+		 (file ,org-inbox-file)
+		 "* TODO %a\n:PROPERTIES:\n:CREATED:\t%U\n:END:\n\n%i\n\nFrom: %a"
+		 :empty-lines 1)
+	       t)
+  (add-to-list 'org-capture-templates
 	       `("td" "✅ Done" entry
 		 (file ,org-inbox-file)
 		 "* DONE %?\n:PROPERTIES:\n:CREATED:\t%U\n:END:\n\n%i\n\nFrom: %a"
