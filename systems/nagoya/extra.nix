@@ -19,19 +19,31 @@
     };
   };
 
+  services.n8n = {
+    enable = true;
+    webhookUrl = "http://nagoya.sbr.pm/n8n";
+  };
+
   services.nginx = {
     enable = true;
     recommendedGzipSettings = true;
     recommendedTlsSettings = true;
     recommendedOptimisation = true;
     virtualHosts."nagoya.sbr.pm" = {
-      locations = lib.attrsets.mapAttrs' (
-        name: value:
-        lib.attrsets.nameValuePair "/syncthing/${name}/" {
-          proxyPass = "http://${builtins.head value.net.vpn.ips}:8384/";
-          recommendedProxySettings = true;
-        }
-      ) (lib.attrsets.filterAttrs (_name: value: (globals.fn.hasVPNips value)) globals.machines);
+      locations =
+        lib.attrsets.mapAttrs' (
+          name: value:
+          lib.attrsets.nameValuePair "/syncthing/${name}/" {
+            proxyPass = "http://${builtins.head value.net.vpn.ips}:8384/";
+            recommendedProxySettings = true;
+          }
+        ) (lib.attrsets.filterAttrs (_name: value: (globals.fn.hasVPNips value)) globals.machines)
+        // {
+          "/n8n/" = {
+            proxyPass = "http://127.0.0.1:5678/";
+            recommendedProxySettings = true;
+          };
+        };
     };
     virtualHosts."nagoya.vpn" = {
       locations = lib.attrsets.mapAttrs' (
