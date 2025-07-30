@@ -1630,6 +1630,16 @@ Add this function to the `after-save-hook'."
       (set-frame-parameter frame 'delete-before-kill-buffer t)
       (set-window-dedicated-p (selected-window) t))))
 
+(defun vde/agenda ()
+  "Launch a frame with the org-agenda and the `org-todos-file' buffer."
+  (interactive)
+  (let ((frame (make-frame '((name . "emacs-org-agenda")))))
+    (select-frame frame)
+    (org-agenda nil "d")
+    (split-window-horizontally)
+    (other-window 1)
+    (find-file org-todos-file)))
+
 (defun memoize-remote (key cache orig-fn &rest args)
   "Memoize a value if the key is a remote path."
   (if (and key

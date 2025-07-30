@@ -180,6 +180,13 @@ in
           };
         }
         {
+          criteria = {
+            app_id = "emacs";
+            title = "^emacs-org-agenda$";
+          };
+          command = "move to workspace 9";
+        }
+        {
           command = "inhibit_idle fullscreen";
           criteria.app_id = "mpv";
         }
@@ -255,6 +262,7 @@ in
         { command = "emacs --init-directory=$HOME/src/home/tools/emacs --fg-daemon"; }
         { command = "i3-back"; }
         { command = "firefox"; }
+        { command = "emacsclient --eval '(vde/agenda)'"; }
         { command = "${pkgs.kitty}/bin/kitty --title metask --class metask"; }
       ];
     };
