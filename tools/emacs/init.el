@@ -255,9 +255,9 @@ minibuffer, even without explicitly focusing it."
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
   (add-to-list 'tramp-remote-path "/home/vincent/.local/state/nix/profile/bin/")
   (add-to-list 'tramp-remote-path "~/bin/")
-  (add-to-list 'tramp-connection-properties
-	       (list (regexp-quote "/ssh:aomi.home:")
-		     "remote-shell" "/home/vincent/.local/state/nix/profile/bin/zsh"))
+  ;; (add-to-list 'tramp-connection-properties
+  ;; 	       (list (regexp-quote "/ssh:aomi.home:")
+  ;; 		     "remote-shell" "/home/vincent/.local/state/nix/profile/bin/zsh"))
   )
 
 (use-package passage
@@ -448,8 +448,8 @@ minibuffer, even without explicitly focusing it."
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
   (add-to-list 'eglot-server-programs
 	       '(go-mode . ("harper-ls" "--stdio")))
-  (add-to-list 'eglot-server-programs
-	       '(text-mode . ("harper-ls" "--stdio")))
+  ;; (add-to-list 'eglot-server-programs
+  ;; 	       '(text-mode . ("harper-ls" "--stdio")))
   ;; (add-to-list 'eglot-server-programs
   ;;              '(org-mode . ("harper-ls" "--stdio")))
   (add-to-list 'eglot-server-programs
