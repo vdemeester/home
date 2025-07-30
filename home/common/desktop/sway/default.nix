@@ -167,9 +167,15 @@ in
           "Shift+XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 1%+";
           "Shift+XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 1%-";
         };
+      keycodebindings = { };
       window.commands = [
+        # firefox
         {
           command = "inhibit_idle fullscreen";
+          criteria.app_id = "firefox";
+        }
+        {
+          command = "move to workspace 1";
           criteria.app_id = "firefox";
         }
         {
