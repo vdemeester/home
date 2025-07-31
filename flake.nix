@@ -57,38 +57,33 @@
         kyushu = libx.mkHost {
           hostname = "kyushu";
           desktop = "sway";
+          systemType = "laptop";
         };
         # Servers (unstable)
         aomi = libx.mkHost {
           hostname = "aomi";
+          systemType = "server";
         };
         kobe = libx.mkHost {
           hostname = "kobe";
+          systemType = "server";
         };
         shikoku = libx.mkHost {
           hostname = "shikoku";
+          systemType = "server";
         };
-        # Servers (stable)
+        # Servers (stable) - using RPi4 system type
         athena = libx.mkHost {
           hostname = "athena";
-          system = "aarch64-linux";
-          hardwareType = "rpi4";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          systemType = "rpi4";
         };
         demeter = libx.mkHost {
           hostname = "demeter";
-          system = "aarch64-linux";
-          hardwareType = "rpi4";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          systemType = "rpi4";
         };
         aix = libx.mkHost {
           hostname = "aix";
-          system = "aarch64-linux";
-          hardwareType = "rpi4";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          systemType = "rpi4";
         };
         nagoya = libx.mkRPIHost {
           hostname = "nagoya";
@@ -96,13 +91,11 @@
         };
         sakhalin = libx.mkHost {
           hostname = "sakhalin";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          systemType = "server-stable";
         };
         kerkouane = libx.mkHost {
           hostname = "kerkouane";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          systemType = "server-stable";
         };
       };
 

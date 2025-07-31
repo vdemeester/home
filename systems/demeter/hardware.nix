@@ -1,9 +1,6 @@
-_: {
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
-      fsType = "ext4";
-      options = [ "noatime" ];
-    };
-  };
+{ ... }:
+{
+  imports = [
+    ../common/hardware/rpi4-simple-fs.nix
+  ];
 }
