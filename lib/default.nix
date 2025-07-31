@@ -5,7 +5,13 @@
   stateVersion,
   ...
 }:
+let
+  # Import the extracted functions
+  functions = import ./functions.nix { inherit (inputs.nixpkgs) lib; };
+in
 {
+  # Expose the extracted functions
+  inherit functions;
   # Function for generating home-manage configs
   mkHome =
     {
