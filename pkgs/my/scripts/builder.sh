@@ -1,4 +1,5 @@
-source $stdenv/setup
+source ../common/builder-functions.sh
 
-mkdir -p $out/bin
-cp $src/bin/* $out/bin/
+nixpkgs_builder_setup
+
+copy_all_binaries "$src/bin"

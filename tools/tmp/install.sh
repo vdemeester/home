@@ -1,5 +1,7 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash -p git
+# LEGACY: This script is deprecated and should be replaced with the modern
+# disko-based installation script at /install.sh
 # This scripts tries to automate the NixOS installation
 # as much as possible.
 # curl https://gitlab.com/vdemeester/home/-/raw/master/install.sh | sh

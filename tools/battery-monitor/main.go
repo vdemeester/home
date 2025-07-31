@@ -3,14 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"time"
+
+	"github.com/vdemeester/home/tools/battery-monitor/internal/fileutil"
 )
 
 func main() {
@@ -85,35 +85,25 @@ func main() {
 // readSystemStatus reads the AC online status, battery status, and battery capacity.
 func readSystemStatus(acOnlinePath, batteryStatusPath, batteryCapacityPath string) (bool, string, int, error) {
 	// Read AC online status
-	acOnlineContent, err := ioutil.ReadFile(acOnlinePath)
+	acOnlineStr, err := fileutil.ReadFileContentTrimmed(acOnlinePath)
 	if err != nil {
-		return false, "", 0, fmt.Errorf("failed to read AC online file %s: %w", acOnlinePath, err)
+		return false, "", 0, err
 	}
-	acOnlineStr := strings.TrimSpace(string(acOnlineContent))
-	acOnline, err := strconv.Atoi(acOnlineStr)
-	if err != nil {
-		return false, "", 0, fmt.Errorf("failed to parse AC online status '%s': %w", acOnlineStr, err)
-	}
-	acConnected := acOnline == 1
+	acOnline := acOnlineStr == "1"
 
 	// Read battery status
-	batteryStatusContent, err := ioutil.ReadFile(batteryStatusPath)
+	batteryStatus, err := fileutil.ReadFileContentTrimmed(batteryStatusPath)
 	if err != nil {
-		return false, "", 0, fmt.Errorf("failed to read battery status file %s: %w", batteryStatusPath, err)
+		return false, "", 0, err
 	}
-	batteryStatus := strings.TrimSpace(string(batteryStatusContent))
 
 	// Read battery capacity
-	batteryCapacityContent, err := ioutil.ReadFile(batteryCapacityPath)
+	batteryCapacity, err := fileutil.ReadIntFromFile(batteryCapacityPath)
 	if err != nil {
-		return false, "", 0, fmt.Errorf("failed to read battery capacity file %s: %w", batteryCapacityPath, err)
+		return false, "", 0, err
 	}
-	batteryCapacityStr := strings.TrimSpace(string(batteryCapacityContent))
-	batteryCapacity, err := strconv.Atoi(batteryCapacityStr)
-	if err != nil {
-		return false, "", 0, fmt.Errorf("failed to parse battery capacity '%s': %w", batteryCapacityStr, err)
-	}
-	return acConnected, batteryStatus, batteryCapacity, nil
+	
+	return acOnline, batteryStatus, batteryCapacity, nil
 }
 
 // applyPowerProfile determines and sets the correct power profile and sends a notification.

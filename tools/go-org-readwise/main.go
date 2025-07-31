@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/vdemeester/home/tools/go-org-readwise/internal/fileutil"
 	"github.com/vdemeester/home/tools/go-org-readwise/internal/org"
 	"github.com/vdemeester/home/tools/go-org-readwise/internal/readwise"
 )
@@ -21,11 +22,10 @@ func main() {
 		log.Fatal("-targetFolder is a required flag")
 	}
 
-	apiKeyData, err := os.ReadFile(*apiKeyFile)
-	if err != nil && !os.IsNotExist(err) {
+	apikey, err := getAPIKey(*apiKeyFile)
+	if err != nil {
 		log.Fatalf("Error reading apiKeyFile %s: %v", *apiKeyFile, err)
 	}
-	apikey := string(apiKeyData)
 	if apikey == "" {
 		apikey = os.Getenv("READWISE_KEY")
 	}
@@ -46,16 +46,23 @@ func main() {
 	}
 }
 
+func getAPIKey(apiKeyFile string) (string, error) {
+	if apiKeyFile == "" {
+		return "", nil
+	}
+	return fileutil.ReadFileContentTrimmedOptional(apiKeyFile)
+}
+
 func getUpdateAfterFromFile(stateFile string) (*time.Time, error) {
-	data, err := os.ReadFile(stateFile)
-	if err != nil && !os.IsNotExist(err) {
+	data, err := fileutil.ReadFileContentTrimmedOptional(stateFile)
+	if err != nil {
 		return nil, err
 	}
-	// If the file doesn't exists, do not fail
-	if os.IsNotExist(err) {
+	// If the file doesn't exist or is empty, do not fail
+	if data == "" {
 		return nil, nil
 	}
-	t, err := time.Parse(readwise.FormatUpdatedAfter, string(data))
+	t, err := time.Parse(readwise.FormatUpdatedAfter, data)
 	if err != nil {
 		return nil, err
 	}

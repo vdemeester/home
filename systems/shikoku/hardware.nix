@@ -3,6 +3,15 @@
   ...
 }:
 {
+  imports = [
+    ../common/hardware/nvidia.nix
+    ../common/hardware/bridge.nix
+  ];
+
+  # Enable common configurations
+  hardware.nvidia-common.enable = true;
+  networking.bridge-common.enable = true;
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/73fd8864-f6af-4fdd-b826-0dfdeacd3c19";
     fsType = "ext4";
@@ -53,23 +62,5 @@
 
   networking = {
     hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
-    # Bridge setup
-    bridges.br1.interfaces = [ "enp0s31f6" ];
-    useDHCP = false;
-    interfaces.br1 = {
-      useDHCP = true;
-    };
-    # FIXME probably change this
-    firewall.enable = false; # we are in safe territory :D
   };
-  hardware.nvidia = {
-    modesetting.enable = true;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-  hardware.graphics = {
-    enable = true;
-  };
-  nixpkgs.config.allowUnfree = true;
 }
