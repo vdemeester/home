@@ -4,7 +4,12 @@
 {
   imports = [
     ../common/hardware/acpid.nix
+    ../common/hardware/bridge.nix
   ];
+
+  # Enable common bridge configuration
+  networking.bridge-common.enable = true;
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/92ce650d-873e-41c1-a44e-71c2b9191b9d";
     fsType = "ext4";
@@ -46,13 +51,4 @@
   };
 
   swapDevices = [ { device = "/dev/disk/by-uuid/9eb067d1-b329-4fbb-ae27-38abfbe7c108"; } ];
-
-  networking = {
-    firewall.enable = false; # we are in safe territory :D
-    bridges.br1.interfaces = [ "enp0s31f6" ];
-    useDHCP = false;
-    interfaces.br1 = {
-      useDHCP = true;
-    };
-  };
 }

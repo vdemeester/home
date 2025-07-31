@@ -1,15 +1,15 @@
-source $stdenv/setup
+source ../common/builder-functions.sh
+
+nixpkgs_builder_setup
 ls $stdenv
 
 BINARIES="ocla kcl kdd kdp kselect kubectl-get-secret"
 
-mkdir -p $out/bin
-for b in ${BINARIES}; do
-	cp $src/kubernetes/${b} $out/bin/
-done
+copy_binaries_to_bin "$src/kubernetes" $BINARIES
 
-installShellCompletion --cmd kcl --zsh $src/kubernetes/_kcl
-installShellCompletion --cmd kdd --zsh $src/kubernetes/_kdd
-installShellCompletion --cmd kdp --zsh $src/kubernetes/_kdp
-installShellCompletion --cmd kselect --zsh $src/kubernetes/_kselect
-installShellCompletion --cmd ocla --zsh $src/kubernetes/_ocla
+install_shell_completions "$src/kubernetes" \
+    kcl _kcl \
+    kdd _kdd \
+    kdp _kdp \
+    kselect _kselect \
+    ocla _ocla
