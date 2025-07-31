@@ -72,6 +72,12 @@ let
       homeInput = inputs.home-manager;
     };
     
+    server-stable = {
+      system = "x86_64-linux";
+      pkgsInput = inputs.nixpkgs-25_05;
+      homeInput = inputs.home-manager-25_05;
+    };
+    
     laptop = {
       system = "x86_64-linux";
       pkgsInput = inputs.nixpkgs;

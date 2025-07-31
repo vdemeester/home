@@ -91,13 +91,11 @@
         };
         sakhalin = libx.mkHost {
           hostname = "sakhalin";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          systemType = "server-stable";
         };
         kerkouane = libx.mkHost {
           hostname = "kerkouane";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          systemType = "server-stable";
         };
       };
 
