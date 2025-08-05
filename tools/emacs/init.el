@@ -230,6 +230,56 @@ minibuffer, even without explicitly focusing it."
       (keyboard-quit)))
   (global-set-key [remap keyboard-quit] #'er-keyboard-quit))
 
+(use-package view
+  :commands (view-mode)
+  :custom
+  (view-read-only t "Enable view-mode when entering read-only")
+  :bind (("C-<escape>" . view-mode)
+	 :map view-mode-map
+	 ;; Navigation
+	 ("n" . next-line)
+	 ("p" . previous-line)
+	 ("f" . forward-char)
+	 ("b" . backward-char)
+
+	 ;; Beginning/end of line
+	 ("a" . beginning-of-line)
+	 ("e" . end-of-line)
+
+	 ;; Quick exit to edit mode
+	 ("i" . View-exit)
+	 ("j" . next-line)
+	 ("k" . previous-line)
+	 ("h" . backward-char)
+	 ("l" . forward-char)
+
+	 ;; Page movement
+	 ("u" . (lambda()
+		  (interactive)
+		  (View-scroll-page-backward 3)))
+	 ("d" . (lambda()
+		  (interactive)
+		  (View-scroll-page-forward 3)))
+
+	 ;; Beginning/end of line (Vim style)
+	 ("0" . beginning-of-line)
+	 ("$" . end-of-line)
+
+	 ;; Beginning/end of buffers
+	 ("g" . beginning-of-buffer)
+	 ("G" . end-of-buffer)
+
+	 ;; Other bespoke bindings
+	 (";" . other-window)
+
+	 ("SPC" . nil))
+  :hook
+  ;; Visual feedback - box cursor in view mode, bar when editing
+  (view-mode . view-mode-hookee+)
+  :config
+  (defun view-mode-hookee+ ()
+    (setq cursor-type (if view-mode 'box 'bar))))
+
 (use-package tramp
   :custom
   ;; Tramp
@@ -446,8 +496,8 @@ minibuffer, even without explicitly focusing it."
   (add-to-list 'eglot-ignored-server-capabilities :documentHighlightProvider)
   (add-to-list 'eglot-server-programs `(json-mode  "vscode-json-language-server" "--stdio"))
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
-  (add-to-list 'eglot-server-programs
-	       '(go-mode . ("harper-ls" "--stdio")))
+  ;; (add-to-list 'eglot-server-programs
+  ;; '(go-mode . ("harper-ls" "--stdio")))
   ;; (add-to-list 'eglot-server-programs
   ;; 	       '(text-mode . ("harper-ls" "--stdio")))
   ;; (add-to-list 'eglot-server-programs
