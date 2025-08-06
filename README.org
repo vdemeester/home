@@ -254,6 +254,8 @@ Repositories that inspired or contributed to this configuration:
 - [[https://github.com/JRMurr/NixOsConfig][https://github.com/JRMurr/NixOsConfig]]
 - [[https://github.com/dzervas/dotfiles][https://github.com/dzervas/dotfiles]]
 - https://github.com/mirdaki/computer-config
+- https://github.com/Suya1671/commafiles
+- https://github.com/caelestia-dots/shell
 
 ** Historical References
 - [[https://gitlab.com/samueldr/nixos-configuration][https://gitlab.com/samueldr/nixos-configuration]]
