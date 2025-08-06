@@ -9,6 +9,7 @@
   home.packages = with pkgs; [
     chromium
     spotify
+    easyeffects
 
     gmailctl
 
