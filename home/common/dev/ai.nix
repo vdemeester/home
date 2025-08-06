@@ -3,7 +3,8 @@
   home.packages = with pkgs; [
     aichat
     aider-chat
-    # goose-cli
+    goose-cli
+    gemini-cli
     llm
     # openai-whisper
     whisper-cpp
