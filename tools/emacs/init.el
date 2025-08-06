@@ -1301,6 +1301,13 @@ Use this function via a hook."
   (org-habit-show-habits-only-for-today nil)
   (org-habit-graph-column 80))
 
+(use-package xeft
+  :commands (xeft)
+  :custom
+  (xeft-directory org-notes-directory)
+  (xeft-recursive 'follow-symlinks)
+  (xeft-extensions '("md" "org")))
+
 (use-package denote
   :commands (denote)
   :bind (("C-c n c" . denote-region)

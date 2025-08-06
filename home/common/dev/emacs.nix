@@ -84,15 +84,15 @@ let
       ibuffer-vc
       indent-bars
       jinx
-      jira
-      jiralib2
+      # jira
+      # jiralib2
       json-mode
       kubed
-      ligature
+      # ligature
       macrostep
       magit
       magit-popup
-      marginalia
+      # marginalia
       markdown-mode
       mcp
       minions
@@ -140,14 +140,14 @@ let
       symbol-overlay
       tempel
       tempel-collection
-      topsy
+      # topsy
       trashed
       treesit-fold
       treesit-grammars.with-all-grammars # see how much it weight
       typescript-mode
       # vc-jj
       verb
-      vertico
+      # vertico
       visual-fill-column
       visual-regexp
       vterm
@@ -155,6 +155,7 @@ let
       web-mode
       wgrep
       with-editor
+      xeft
       xterm-color
     ];
 in
