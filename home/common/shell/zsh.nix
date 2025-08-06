@@ -48,10 +48,10 @@
     initExtra = ''
       # c.f. https://wiki.gnupg.org/AgentForwarding
       # gpgconf --create-socketdir &!
-      path+="$HOME/${config.programs.zsh.dotDir}/functions"
+      path+="${config.programs.zsh.dotDir}/functions"
       fpath+="$HOME/.local/state/nix/profile/share/zsh/site-functions"
-      fpath+="$HOME/${config.programs.zsh.dotDir}/functions"
-      for func ($HOME/${config.programs.zsh.dotDir}/functions) autoload -U $func/*(x:t)
+      fpath+="${config.programs.zsh.dotDir}/functions"
+      for func (${config.programs.zsh.dotDir}/functions) autoload -U $func/*(x:t)
       autoload -Uz select-word-style; select-word-style bash
       #if [ -n "$INSIDE_EMACS" ]; then
       #  chpwd() { print -P "\033AnSiTc %d" }
@@ -72,16 +72,16 @@
       # eval "$(${config.programs.atuin.package}/bin/atuin init zsh)"
       # make sure navigation using emacs keybindings works on all non-alphanumerics
       # syntax highlighting
-      source $HOME/${config.programs.zsh.dotDir}/plugins/zsh-nix-shell/nix-shell.plugin.zsh
+      source ${config.programs.zsh.dotDir}/plugins/zsh-nix-shell/nix-shell.plugin.zsh
       source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
       ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
       ZSH_HIGHLIGHT_PATTERNS+=('rm -fR *' 'fg=white,bold,bg=red')
       ZSH_HIGHLIGHT_PATTERNS+=('rm -fr *' 'fg=white,bold,bg=red')
-      source $HOME/${config.programs.zsh.dotDir}/completion.zsh
-      source $HOME/${config.programs.zsh.dotDir}/plugins/powerlevel10k/powerlevel10k.zsh-theme
-      source $HOME/${config.programs.zsh.dotDir}/prompt.zsh
-      source $HOME/${config.programs.zsh.dotDir}/plugins/kubectl-config-switcher/kubectl-config-switcher.plugin.zsh
-      source $HOME/${config.programs.zsh.dotDir}/auto-expanding-aliases.zsh
+      source ${config.programs.zsh.dotDir}/completion.zsh
+      source ${config.programs.zsh.dotDir}/plugins/powerlevel10k/powerlevel10k.zsh-theme
+      source ${config.programs.zsh.dotDir}/prompt.zsh
+      source ${config.programs.zsh.dotDir}/plugins/kubectl-config-switcher/kubectl-config-switcher.plugin.zsh
+      source ${config.programs.zsh.dotDir}/auto-expanding-aliases.zsh
       setopt HIST_IGNORE_SPACE
       alias -g L="|less"
       alias -g EEL=' 2>&1 | less'
