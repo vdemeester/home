@@ -28,6 +28,7 @@
     mosh
     ripgrep
 
+    shpool
     # ugrep
     scripts
     wol
