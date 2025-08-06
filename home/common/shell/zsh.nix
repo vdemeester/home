@@ -24,7 +24,7 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     autocd = true;
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
     defaultKeymap = "emacs";
     history = {
       expireDuplicatesFirst = true;
