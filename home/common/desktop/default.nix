@@ -21,8 +21,8 @@
     aspell
     aspellDicts.en
     aspellDicts.fr
+    dino
     ffmpeg-full
-    fractal
     hunspell
     hunspellDicts.en_GB-ize
     hunspellDicts.en_US-large
