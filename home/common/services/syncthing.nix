@@ -4,6 +4,7 @@
   ...
 }:
 {
+  warnings = [ "Home syncthing for ${hostname}" ];
   services.syncthing = {
     enable = true;
     extraOptions = [ "--no-default-folder" ];
