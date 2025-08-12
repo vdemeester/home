@@ -10,6 +10,8 @@
     chromium
     spotify
     easyeffects
+    thunderbird
+    nautilus
 
     gmailctl
 
