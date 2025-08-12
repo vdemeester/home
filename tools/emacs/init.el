@@ -1181,6 +1181,9 @@ minibuffer, even without explicitly focusing it."
 	     (--map (format "%s" it))
 	     (--map `(,it :maxlevel . 3))))))
 
+(use-package org-appear
+  :hook (org-mode . org-appear-mode))
+
 (use-package org-agenda
   :after org
   :commands (org-agenda)

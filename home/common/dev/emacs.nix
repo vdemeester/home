@@ -111,6 +111,7 @@ let
       ob-http
       orderless # TODO configure this
       org
+      org-appear
       org-contrib
       org-download
       org-modern
