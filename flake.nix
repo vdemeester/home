@@ -143,6 +143,12 @@
               "${inputs.nixpkgs-25_05}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
             ];
           }).config.system.build.sdImage;
+        nagoya =
+          (self.nixosConfigurations.nagoya.extendModules {
+            modules = [
+              "${inputs.nixpkgs-25_05}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            ];
+          }).config.system.build.sdImage;
       };
 
       overlays = import ./overlays { inherit inputs; };
