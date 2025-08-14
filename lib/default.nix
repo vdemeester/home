@@ -5,7 +5,6 @@
   stateVersion,
   ...
 }:
-in
 {
   libx = import ./functions.nix { inherit (inputs.nixpkgs) lib; };
   # Function for generating home-manage configs
