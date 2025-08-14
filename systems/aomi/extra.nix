@@ -1,5 +1,6 @@
 {
   globals,
+  libx,
   pkgs,
   ...
 }:
@@ -39,7 +40,7 @@
     '';
     wireguard = {
       enable = true;
-      ips = globals.fn.wg-ips globals.machines.aomi.net.vpn.ips;
+      ips = libx.wg-ips globals.machines.aomi.net.vpn.ips;
       endpoint = "${globals.net.vpn.endpoint}";
       endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
     };
