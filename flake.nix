@@ -94,13 +94,13 @@
         #   hostname = "nagoya";
         #   hardwareType = "rpi4"; # to disable tpm2 TODO find a better way
         # };
-        nagoya = nixos-raspberrypi.lib.nixosSystem {
+        nagoya = inputs.nixos-raspberrypi.lib.nixosSystem {
           specialArgs = inputs;
           modules = [
             (
               { ... }:
               {
-                imports = with nixos-raspberrypi.nixosModules; [
+                imports = with inputs.nixos-raspberrypi.nixosModules; [
                   raspberry-pi-5.base
                   raspberry-pi-5.bluetooth
                 ];
