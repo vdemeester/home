@@ -1,6 +1,7 @@
 {
   globals,
   lib,
+  libx,
   pkgs,
   ...
 }:
@@ -13,7 +14,7 @@
   services = {
     wireguard = {
       enable = true;
-      ips = globals.fn.wg-ips globals.machines.nagoya.net.vpn.ips;
+      ips = libx.wg-ips globals.machines.nagoya.net.vpn.ips;
       endpoint = "${globals.net.vpn.endpoint}";
       endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
     };
@@ -36,7 +37,7 @@
           proxyPass = "http://${builtins.head value.net.vpn.ips}:8384/";
           recommendedProxySettings = true;
         }
-      ) (lib.attrsets.filterAttrs (_name: value: (globals.fn.hasVPNips value)) globals.machines);
+      ) (lib.attrsets.filterAttrs (_name: value: (libx.hasVPNips value)) globals.machines);
       # // {
       #   "/n8n/" = {
       #     proxyPass = "http://127.0.0.1:5678/";
@@ -51,7 +52,7 @@
           proxyPass = "http://${builtins.head value.net.vpn.ips}:8384/";
           recommendedProxySettings = true;
         }
-      ) (lib.attrsets.filterAttrs (_name: value: (globals.fn.hasVPNips value)) globals.machines);
+      ) (lib.attrsets.filterAttrs (_name: value: (libx.hasVPNips value)) globals.machines);
     };
   };
 

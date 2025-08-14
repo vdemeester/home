@@ -1,6 +1,7 @@
 {
   globals,
   hostname,
+  libx,
   ...
 }:
 {
@@ -9,15 +10,15 @@
     enable = true;
     extraOptions = [ "--no-default-folder" ];
     overrideFolders = false; # Just in case, will probably set to true later
-    guiAddress = globals.fn.syncthingGuiAddress globals.machines."${hostname}";
+    guiAddress = libx.syncthingGuiAddress globals.machines."${hostname}";
     settings = {
       # FIXME this doesn't work, I wish it did.
       # defaults = {
       #   ignores = { lines = [ "(?d).DS_Store" "**" ]; };
       # };
-      devices = globals.fn.generateSyncthingDevices globals.machines;
+      devices = libx.generateSyncthingDevices hostname globals.machines;
       folders =
-        globals.fn.generateSyncthingFolders globals.machines."${hostname}" globals.machines
+        libx.generateSyncthingFolders hostname globals.machines."${hostname}" globals.machines
           globals.syncthingFolders;
     };
   };

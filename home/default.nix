@@ -8,6 +8,7 @@
   username,
   inputs,
   globals,
+  libx,
   ...
 }:
 {
@@ -19,7 +20,7 @@
     ++ lib.optional (builtins.pathExists (./. + "/common/users/${username}")) ./common/users/${username}
     ++ lib.optional (
       builtins.hasAttr "${hostname}" globals.machines
-      && globals.fn.hasSyncthingFolders globals.machines."${hostname}"
+      && libx.hasSyncthingFolders globals.machines."${hostname}"
     ) ./common/services/syncthing.nix
     ++ lib.optional (builtins.pathExists (
       ../systems/. + "/${hostname}/home.nix"
