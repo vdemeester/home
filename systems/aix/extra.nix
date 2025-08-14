@@ -1,4 +1,5 @@
-{ globals, ... }:
+{
+  libx, globals, ... }:
 {
   imports = [
     ../common/services/samba.nix
@@ -26,7 +27,7 @@
     };
     wireguard = {
       enable = true;
-      ips = globals.fn.wg-ips globals.machines.aix.net.vpn.ips;
+      ips = libx.wg-ips globals.machines.aix.net.vpn.ips;
       endpoint = "${globals.net.vpn.endpoint}";
       endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
     };

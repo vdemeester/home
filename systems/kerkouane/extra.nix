@@ -1,6 +1,7 @@
 {
   globals,
   lib,
+  libx,
   pkgs,
   ...
 }:
@@ -72,8 +73,8 @@ in
 
   services.wireguard.server = {
     enable = true;
-    ips = globals.fn.wg-ips globals.machines.kerkouane.net.vpn.ips;
-    peers = globals.fn.generateWireguardPeers globals.machines;
+    ips = libx.wg-ips globals.machines.kerkouane.net.vpn.ips;
+    peers = libx.generateWireguardPeers globals.machines;
   };
 
   services.gosmee = {
