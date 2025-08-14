@@ -109,7 +109,7 @@
             (
               { ... }:
               {
-                networking.hostName = "yourHostName";
+                networking.hostName = "nagoya";
                 users.users.yourUserName = {
                   initialPassword = "yourInitialPassword";
                   isNormalUser = true;
