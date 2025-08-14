@@ -1,5 +1,6 @@
 {
   globals,
+  libx,
   pkgs,
   ...
 }:
@@ -29,7 +30,7 @@
   services = {
     wireguard = {
       enable = true;
-      ips = globals.fn.wg-ips globals.machines.shikoku.net.vpn.ips;
+      ips = libx.wg-ips globals.machines.shikoku.net.vpn.ips;
       endpoint = "${globals.net.vpn.endpoint}";
       endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
     };

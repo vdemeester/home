@@ -5,7 +5,9 @@
   stateVersion,
   ...
 }:
+in
 {
+  libx = import ./functions.nix { inherit (inputs.nixpkgs) lib; };
   # Function for generating home-manage configs
   mkHome =
     {
@@ -33,6 +35,7 @@
           globals
           ;
         username = user;
+        libx = import ./functions.nix { inherit (inputs.nixpkgs) lib; };
       };
       modules = [
         ../home
@@ -66,6 +69,7 @@
           system
           globals
           ;
+        libx = import ./functions.nix { inherit (pkgsInput) lib; };
       };
     in
     pkgsInput.lib.nixosSystem {
@@ -113,6 +117,7 @@
           globals
           nixos-raspberrypi
           ;
+        libx = import ./functions.nix { inherit (pkgsInput) lib; };
       };
     in
     inputs.nixos-raspberrypi.lib.nixosSystemFull {
@@ -164,6 +169,7 @@
           desktop
           globals
           ;
+        libx = import ./functions.nix { inherit (pkgsInput) lib; };
       };
     in
     inputs.system-manager.lib.makeSystemConfig {
