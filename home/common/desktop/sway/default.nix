@@ -66,8 +66,9 @@ in
         titlebar = false;
       };
       gaps = {
-        inner = 2;
-        outer = 2;
+        inner = 0;
+        outer = 0;
+        smartBorders = "on";
       };
       colors = {
         focused = {
@@ -268,7 +269,7 @@ in
         { command = "emacs --init-directory=$HOME/src/home/tools/emacs --fg-daemon"; }
         { command = "i3-back"; }
         { command = "firefox"; }
-        { command = "emacsclient --eval '(vde/agenda)'"; }
+        { command = "sleep 20; emacsclient --eval '(vde/agenda)'"; }
         { command = "${pkgs.kitty}/bin/kitty --title metask --class metask"; }
       ];
     };
