@@ -8,6 +8,7 @@
   stateVersion,
   inputs,
   globals,
+  libx,
   ...
 }:
 let
@@ -97,6 +98,7 @@ in
       outputs
       inputs
       stateVersion
+      libx
       ;
     username = "vincent";
   };
