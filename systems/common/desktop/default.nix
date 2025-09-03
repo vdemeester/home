@@ -111,10 +111,10 @@
     upower.enable = true;
     udisks2.enable = true;
 
-    # Make `/run/user/X` larger
-    logind.extraConfig = ''
-      			RuntimeDirectorySize=20%
-      		'';
+    # Make `/run/user/X` larger0
+    logind.settings.Login = {
+      RuntimeDirectorySize = "20%";
+    };
   };
 
   # Clear out user's download weekly
