@@ -32,7 +32,11 @@ ZMK_COMBO(underscore, &kp UNDER, LB1 RB1, BEP ERG QWE)
 ZMK_COMBO(minus, &kp KP_MINUS, LT1 RT1, BEP ERG QWE)
 
 ZMK_COMBO(capsword, &caps_word, LB4 RB4, BEP ERG QWE)
-  
+
+// Experiments
+ZMK_COMBO(exclamation, &kp EXCL, LT4 LT3, BEP ERG QWE)
+ZMK_COMBO(arobase, &kp AT, LT3 LT2, BEP ERG QWE)
+
 /*
 Local Variables:
 mode: c
