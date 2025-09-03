@@ -58,6 +58,11 @@
           hostname = "kyushu";
           desktop = "sway";
         };
+        # Test VM, name is..
+        foobar = libx.mkHost {
+          hostname = "foobar";
+          desktop = "niri";
+        };
         # Servers (unstable)
         aomi = libx.mkHost {
           hostname = "aomi";
