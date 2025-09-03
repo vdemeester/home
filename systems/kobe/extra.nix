@@ -22,11 +22,11 @@
   nixpkgs.config.rocmSupport = lib.mkForce false;
 
   services = {
-    logind.extraConfig = ''
-      HandleLidSwitch=ignore
-      HandleLidSwitchExternalPower=ignore
-      HandleLidSwitchDocked=ignore
-    '';
+    logind.settings.Login = {
+      HandleLidSwitch = "ignore";
+      HandleLidSwitchExternalPower = "ignore";
+      HandleLidSwitchDocked = "ignore";
+    };
     wireguard = {
       enable = true;
       ips = libx.wg-ips globals.machines.kobe.net.vpn.ips;

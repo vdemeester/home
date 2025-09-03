@@ -20,10 +20,10 @@
 
   services = {
     # When a laptop is docked or on external power, ignore the lid state (if the laptop is opened or closed)
-    logind.extraConfig = ''
-      HandleLidSwitchExternalPower=ignore
-      HandleLidSwitchDocked=ignore
-    '';
+    logind.settings.Login = {
+      HandleLidSwitchExternalPower = "ignore";
+      HandleLidSwitchDocked = "ignore";
+    };
     power-profiles-daemon.enable = true;
   };
 

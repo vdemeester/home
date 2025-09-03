@@ -33,11 +33,11 @@
   users.users.vincent.linger = true;
 
   services = {
-    logind.extraConfig = ''
-      HandleLidSwitch=ignore
-      HandleLidSwitchExternalPower=ignore
-      HandleLidSwitchDocked=ignore
-    '';
+    logind.settings.Login = {
+      HandleLidSwitch = "ignore";
+      HandleLidSwitchExternalPower = "ignore";
+      HandleLidSwitchDocked = "ignore";
+    };
     wireguard = {
       enable = true;
       ips = libx.wg-ips globals.machines.aomi.net.vpn.ips;
