@@ -56,7 +56,8 @@
         # Work laptop (unstable)
         kyushu = libx.mkHost {
           hostname = "kyushu";
-          desktop = "sway";
+          # desktop = "sway";
+          desktop = "niri";
         };
         # Test VM, name is..
         foobar = libx.mkHost {
@@ -320,8 +321,13 @@
       inputs.nixpkgs.follows = "nixpkgs-25_05";
     };
 
-    # FIXME could still be useful for servers
-    # impermanence = { type = "github"; owner = "nix-community"; repo = "impermanence"; };
+    niri = {
+      type = "github";
+      owner = "sodiboo";
+      repo = "niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-25_05";
+    };
 
     dagger = {
       type = "github";

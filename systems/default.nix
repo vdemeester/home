@@ -10,16 +10,15 @@
 }:
 {
 
-  imports =
-    [
-      (./. + "/${hostname}/boot.nix")
-      (./. + "/${hostname}/hardware.nix")
+  imports = [
+    (./. + "/${hostname}/boot.nix")
+    (./. + "/${hostname}/hardware.nix")
 
-      ./common/base
-      ./common/users
-    ]
-    ++ lib.optional (builtins.pathExists (./. + "/${hostname}/extra.nix")) ./${hostname}/extra.nix
-    ++ lib.optional (builtins.isString desktop) ./common/desktop;
+    ./common/base
+    ./common/users
+  ]
+  ++ lib.optional (builtins.pathExists (./. + "/${hostname}/extra.nix")) ./${hostname}/extra.nix
+  ++ lib.optional (builtins.isString desktop) ./common/desktop;
 
   nixpkgs = {
     overlays = [
@@ -30,6 +29,7 @@
 
       # And from other flakes
       inputs.emacs-overlay.overlay
+      inputs.niri.overlays.niri
       inputs.chapeau-rouge.overlays.openshift
       inputs.chick-group.overlays.default
       inputs.agenix.overlays.default
