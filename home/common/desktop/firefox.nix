@@ -18,6 +18,13 @@
           Pocket = false;
           # Snippets = false;
         };
+        Preferences = { };
+        WebsiteFilter = {
+          Block = [
+            "*://*.googleadservices.com/*"
+            "*://*.google.com/aclk*"
+          ];
+        };
         UserMessaging = {
           ExtensionRecommendations = false;
           SkipOnboarding = true;
