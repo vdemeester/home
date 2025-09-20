@@ -5,7 +5,7 @@
   ...
 }:
 let
-  capture = pkgs.writeScriptBin "capture" ''
+  org-capture = pkgs.writeScriptBin "org-capture" ''
     #!${pkgs.stdenv.shell}
     emacsclient -n -c -F '((name . "capture") (width . 150) (height . 90) (vde/window-popup-frame . t))' -e '(org-capture)'
   '';
@@ -175,7 +175,7 @@ in
     zip
     ugrep
     # See if I can hide this under an option
-    capture
+    org-capture
     # github-copilot-cli # for copilot.el
     nodejs
     ec
