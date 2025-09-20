@@ -21,6 +21,10 @@
   ];
 
   services = {
+    getty = {
+      autologinOnce = true;
+      autologinUser = "vincent";
+    };
     # TODO probably migrate elsewhere
     kanata = {
       enable = true;
