@@ -1,9 +1,13 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  desktop,
+  ...
+}:
 {
   imports = [
     # FIXME why the infinite recusion
-    # (./. + "/${desktop}")
-    ./sway
+    (./. + "/${desktop}/default.nix")
 
     ./firefox.nix
     ./gtk.nix

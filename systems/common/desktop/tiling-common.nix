@@ -24,10 +24,10 @@
         pkgs.gcr
       ];
     };
-    greetd = {
-      enable = true;
-      restart = false;
-    };
+    # greetd = {
+    #   enable = true;
+    #   restart = false;
+    # };
     gvfs.enable = true; # trying this one out
 
     libinput = {

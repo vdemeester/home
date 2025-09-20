@@ -103,9 +103,10 @@
         source "$EAT_SHELL_INTEGRATION_DIR/zsh"
     '';
     loginExtra = ''
-      if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then
-        exec dbus-run-session sway
-      fi
+            # if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then
+            #   # exec dbus-run-session sway
+      			# 	exec dbus-run-session niri-session
+            # fi
     '';
     sessionVariables = {
       RPROMPT = "";
