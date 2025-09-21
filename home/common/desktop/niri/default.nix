@@ -16,6 +16,7 @@
 
     zenity
     wofi
+    rofimoji
     swaybg
   ];
 
