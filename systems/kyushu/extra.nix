@@ -20,6 +20,16 @@
     ../redhat
   ];
 
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-backgroundremoval
+      obs-pipewire-audio-capture
+      input-overlay
+    ];
+  };
+
   services = {
     getty = {
       autologinOnce = true;
@@ -110,7 +120,6 @@
     monolith # TODO: move into =desktop= ?
     virt-manager
     simple-scan
-
     keybase
   ];
 
