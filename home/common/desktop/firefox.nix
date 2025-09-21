@@ -13,12 +13,32 @@
         DisableFirefoxStudies = true;
         DisablePocket = true;
         DisableTelemetry = true;
+        PrivacySandboxAdMeasurementEnabled = false;
+        PrivacySandboxAdTopicsEnabled = false;
+        PrivacySandboxPromptEnabled = false;
+        PrivacySandboxSiteEnabledAdsEnabled = false;
         # DisableFirefoxAccounts = true;
         FirefoxHome = {
           Pocket = false;
           # Snippets = false;
         };
-        Preferences = { };
+        Preferences = {
+          "dom.private-attribution.submission.enabled" = {
+            "Status" = "locked";
+            "Type" = "boolean";
+            "Value" = false;
+          };
+          "browser.urlbar.suggest.quicksuggest.sponsored" = {
+            "Status" = "locked";
+            "Type" = "boolean";
+            "Value" = false;
+          };
+          "browser.shell.checkDefaultBrowser" = {
+            "Status" = "locked";
+            "Type" = "boolean";
+            "Value" = false;
+          };
+        };
         WebsiteFilter = {
           Block = [
             "*://*.googleadservices.com/*"
