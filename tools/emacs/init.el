@@ -158,7 +158,8 @@
 (eval-when-compile
   (require 'use-package))
 
-(require 'init-func)
+(require 'info) ;; XXX ensure the var exists even before loading `info.el'.
+(use-package init-func)
 ;; TODO: do useful stuff with the macro instead
 (vde/run-and-delete-frame my-greet-and-close ()
 			  "Displays a greeting and closes the frame after a short delay."
@@ -681,6 +682,26 @@ minibuffer, even without explicitly focusing it."
   ("C-x p E" . vde/project-eat)
   ("C-x p G" . checkout-github-pr)
   ("C-x p F" . flymake-show-project-diagnostics))
+
+;; TODO adapt this to my needs
+;; (defun tkj/vc-git-grep-current-line ()
+;;   "Search Git project for the current line."
+;;   (interactive)
+;;   (let ((current-line (string-trim (thing-at-point 'line t))))
+;;     (if (string-empty-p current-line)
+;;         (message "No line in sight")
+;;       (vc-git-grep current-line "*" (vc-git-root default-directory)))))
+;; (global-set-key (kbd "C-c p l") 'tkj/vc-git-grep-current-line)
+;; 
+;; (defun tkj/vc-git-grep-symbol ()
+;;   "Search Git project for the symbol at point. This could be any word or
+;; programming symbol, like a function or variable."
+;;   (interactive)
+;;   (let ((symbol (string-trim (thing-at-point 'symbol t))))
+;;     (if (string-empty-p symbol)
+;;         (message "You point at nothing")
+;;       (vc-git-grep symbol "*" (vc-git-root default-directory)))))
+;; (global-set-key (kbd "C-c p s") 'tkj/vc-git-grep-symbol)
 
 (use-package magit
   :unless noninteractive
