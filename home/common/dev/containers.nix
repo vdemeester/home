@@ -20,7 +20,7 @@
     omc
     opm
     openshift-install
-    operator-sdk
+    # operator-sdk
     snazy
     kubelogin-oidc
     chmouzies-kubernetes # FIXME update this
