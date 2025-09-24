@@ -318,6 +318,9 @@ minibuffer, even without explicitly focusing it."
   :hook
   (after-init . ffap-bindings))
 
+(use-package find-file
+  :bind ("C-x C-g" . ff-find-other-file))
+
 (use-package icomplete
   :unless noninteractive
   :hook
@@ -617,7 +620,15 @@ minibuffer, even without explicitly focusing it."
 (use-package go-ts-mode
   :mode (("\\.go$" . go-ts-mode)
          ("\\.go" . go-ts-mode)
-         ("\\.go\\'" . go-ts-mode)))
+         ("\\.go\\'" . go-ts-mode))
+  :hook ((go-ts-mode . vde/go-mode-setup))
+  :config
+  (defun vde/go-mode-setup ()
+    "Setup for go-mode."
+    (setq-local ff-other-file-alist
+		'(("_test\\.go\\'" (".go"))
+		  ("\\.go\\'" ("_test.go"))
+		  ))))
 
 (use-package nix-ts-mode
   :if (executable-find "nix")
