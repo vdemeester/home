@@ -15,7 +15,6 @@
     # ../common/services/fprint.nix # With yubikey I don't really need this to be honest
     ../common/services/containers.nix
     ../common/services/docker.nix
-    ../common/services/lxd.nix
     ../common/services/libvirt.nix
     ../common/desktop/binfmt.nix # TODO: move to something else than desktop
     # ../common/services/buildkit.nix # maybe ?

@@ -9,7 +9,6 @@
     ../common/services/prometheus-exporters-node.nix
     ../common/services/containers.nix
     ../common/services/docker.nix
-    ../common/services/lxd.nix
     ../common/services/libvirt.nix
   ];
 

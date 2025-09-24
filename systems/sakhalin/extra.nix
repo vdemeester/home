@@ -9,7 +9,6 @@
   imports = [
     ../common/services/containers.nix
     ../common/services/docker.nix
-    ../common/services/lxd.nix
     ../common/desktop/binfmt.nix # TODO: move to something else than desktop
     ../common/services/prometheus-exporters-node.nix
   ];

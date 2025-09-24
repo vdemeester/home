@@ -21,29 +21,27 @@ in
     uid = 1000;
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups =
-      [
-        "users"
-        "wheel"
-      ]
-      ++ lib.optionals (builtins.isString desktop) [
-        "networkmanager"
-        "audio"
-        "video"
-      ]
-      ++ ifExists [
-        "buildkit"
-        "docker"
-        "libvirt"
-        "libvirtd"
-        "lxd"
-        "nginx"
-        "plugdev"
-        "tss"
-        "messagebus"
-        "lp"
-        "scanner"
-      ];
+    extraGroups = [
+      "users"
+      "wheel"
+    ]
+    ++ lib.optionals (builtins.isString desktop) [
+      "networkmanager"
+      "audio"
+      "video"
+    ]
+    ++ ifExists [
+      "buildkit"
+      "docker"
+      "libvirt"
+      "libvirtd"
+      "nginx"
+      "plugdev"
+      "tss"
+      "messagebus"
+      "lp"
+      "scanner"
+    ];
     subUidRanges = [
       {
         startUid = 100000;
