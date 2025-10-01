@@ -8,7 +8,6 @@
   warnings = [ "Home syncthing for ${hostname}" ];
   services.syncthing = {
     enable = true;
-    extraOptions = [ "--no-default-folder" ];
     overrideFolders = false; # Just in case, will probably set to true later
     guiAddress = libx.syncthingGuiAddress globals.machines."${hostname}";
     settings = {
