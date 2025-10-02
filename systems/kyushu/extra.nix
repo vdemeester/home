@@ -15,6 +15,7 @@
     ../common/services/networkmanager.nix
     ../common/services/containers.nix
     ../common/services/docker.nix
+    ../common/services/libvirt.nix
 
     ../redhat
   ];
