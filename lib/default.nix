@@ -83,7 +83,11 @@
         inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager
         # inputs.niri.nixosModules.niri
-        { home-manager.extraSpecialArgs = specialArgs; }
+        {
+          home-manager.extraSpecialArgs = specialArgs;
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+        }
         ../systems
       ];
     };
