@@ -385,5 +385,11 @@
     nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+
+    code-cursor-nix.url = "github:jacopone/code-cursor-nix";
+    code-cursor-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    claude-code.url = "github:sadjow/claude-code-nix";
+    claude-code.inputs.nixpkgs.follows = "nixpkgs";
   };
 }

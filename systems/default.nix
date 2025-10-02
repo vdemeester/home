@@ -33,6 +33,7 @@
       inputs.chapeau-rouge.overlays.openshift
       inputs.chick-group.overlays.default
       inputs.agenix.overlays.default
+      inputs.claude-code.overlays.default
 
       # Migrate to "modifications"
       (_: prev: {

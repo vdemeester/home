@@ -1,10 +1,16 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   home.packages = with pkgs; [
     aichat
     aider-chat
     goose-cli
     gemini-cli
+    claude-code
     llm
     # openai-whisper
     whisper-cpp
@@ -14,6 +20,8 @@
     # editors
     zed-editor
     code-cursor
+    cursor-cli
+    # inputs.code-cursor-nix.packages.x86_64-linux.cursor
     # mcp-servers
     github-mcp-server
     amp
