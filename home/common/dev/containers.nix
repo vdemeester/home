@@ -25,6 +25,7 @@
     kubelogin-oidc
     chmouzies-kubernetes # FIXME update this
     tektoncd-cli
+    tektoncd-cli-pac
     # knd
     # build
     dagger
@@ -38,5 +39,7 @@
         terraform-tools
       ]
     ))
+    # upstream oracle cloud
+    oci-cli
   ];
 }
