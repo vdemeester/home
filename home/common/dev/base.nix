@@ -27,6 +27,7 @@
     # try
     jujutsu
     jj-fzf
+    devenv
 
     # old
     cmake
