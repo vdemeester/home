@@ -6,14 +6,14 @@
 
 stdenv.mkDerivation rec {
   pname = "batzconverter";
-  version = "2.1.0";
+  version = "2.8.0";
   name = "${pname}-${version}";
 
   src = fetchFromGitHub {
     owner = "chmouel";
     repo = "batzconverter";
     rev = "${version}";
-    sha256 = "sha256-BhkceUNdNq/NVxriYjM36wnO7PiPnE+FhYNnyFQjn9E=";
+    sha256 = "sha256-9tN0fr1FcAxBRDpV5l7N6iAQ+1WOb6gEbpcmahfta5o=";
   };
 
   installPhase = ''
