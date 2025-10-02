@@ -28,6 +28,7 @@
     jujutsu
     jj-fzf
     devenv
+    chmouzies-git
 
     # old
     cmake

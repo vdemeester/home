@@ -22,6 +22,8 @@ in
   batzconverter = pkgs.callPackage ./batzconverter { };
   manifest-tool = pkgs.callPackage ./manifest-tool { };
 
+  chmouzies-ai = pkgs.callPackage ./chmouzies/ai.nix { };
+  chmouzies-git = pkgs.callPackage ./chmouzies/git.nix { };
   chmouzies-kubernetes = pkgs.callPackage ./chmouzies/kubernetes.nix { };
 
   systemd-email = pkgs.callPackage ./systemd-email { };

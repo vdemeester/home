@@ -7,8 +7,8 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "chmouzies-kubernetes";
-  pname = "chmouzies-kubernetes";
+  name = "chmouzies-git";
+  pname = "chmouzies-git";
 
   version = "0-unstable-2025-09-30";
 
@@ -22,5 +22,5 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [ python313 ];
   nativeBuildInputs = [ installShellFiles ];
 
-  builder = ./builder.kubernetes.sh;
+  builder = ./builder.git.sh;
 }

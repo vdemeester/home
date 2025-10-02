@@ -5,6 +5,7 @@
 }:
 {
   home.packages = with pkgs; [
+    chmouzies-ai
     aichat
     aider-chat
     goose-cli
