@@ -1,5 +1,4 @@
-{ hostname, lib, ... }:
-{
+_: {
   ssh = {
     vincent = [
       # Yubikeys

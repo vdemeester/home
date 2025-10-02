@@ -1,9 +1,7 @@
 {
-  config,
   desktop,
   hostname,
   lib,
-  outputs,
   stateVersion,
   username,
   inputs,

@@ -1,4 +1,4 @@
-{ stdenv, lib }:
+{ stdenv }:
 
 stdenv.mkDerivation rec {
   name = "systemd-email";

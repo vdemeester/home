@@ -1,5 +1,8 @@
 {
-  libx, globals, ... }:
+  libx,
+  globals,
+  ...
+}:
 {
   imports = [
     ../common/services/bind.nix

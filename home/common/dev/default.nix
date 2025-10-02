@@ -6,5 +6,6 @@
 {
   imports = [
     ./base.nix
-  ] ++ lib.optional (builtins.isString desktop) ./desktop.nix;
+  ]
+  ++ lib.optional (builtins.isString desktop) ./desktop.nix;
 }

@@ -12,7 +12,8 @@
     '';
     cacheNetworks = [
       "127.0.0.0/8"
-    ] ++ globals.net.dns.cacheNetworks;
+    ]
+    ++ globals.net.dns.cacheNetworks;
     inherit (globals.net.dns) zones;
   };
 }

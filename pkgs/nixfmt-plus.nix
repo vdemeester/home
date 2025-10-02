@@ -4,7 +4,7 @@ pkgs.writeShellApplication {
   name = "nixfmt-plus";
   runtimeInputs = with pkgs; [
     deadnix
-    nixfmt
+    nixfmt-rfc-style
     statix
   ];
   text = ''
