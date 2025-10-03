@@ -121,6 +121,7 @@
     virt-manager
     simple-scan
     keybase
+    batzconverter
   ];
 
   # Make sure we don't start docker until required
