@@ -115,6 +115,8 @@
     # Keyboard
     keymapp
     kontroll
+    qmk
+    qmk_hid
     # backup
     restic # TODO: will probably move this to it's own configuration some day
     monolith # TODO: move into =desktop= ?
