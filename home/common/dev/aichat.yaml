@@ -1,11 +1,11 @@
-model: gemini:gemini-2.5-flash-preview-04-17
+model: gemini:gemini-2.5-flash-lite-preview-09-2025
 wrap: 150
 save_session: true
 clients:
   - type: gemini
     name: gemini
     api_base: https://generativelanguage.googleapis.com/v1beta
-    api_key: "passage::ai/gemini/api_key"
+    api_key: "passage::redhat/google/osp/vdeemest-api-key"
     patch:
       chat_completions:
         ".*":
@@ -28,7 +28,7 @@ clients:
   - type: openai-compatible
     name: groq
     api_base: https://api.groq.com/openai/v1
-    api_key: "passage::ai/groq/api_key"
+    api_key: "passage::ai/groq/wakasu"
 
   # See https://platform.deepseek.com/api-docs/
   - type: openai-compatible
@@ -41,11 +41,11 @@ clients:
     api_base: https://openrouter.ai/api/v1
     api_key: "passage::ai/openroute/api_key"
 
-  # - type: openai-compatible
-  #   name: redhat-maas-deepseek
-  #   api_base: https://deepseek-r1-distill-qwen-14b-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com/v1
-  #   api_key: "passage::ai/gemini/api_key"
-  #   models:
-  #     - name: deepseek-r1-distill-qwen-14b
-  #       description: DeepSeek R1 Distill Qwen 14B
+  - type: openai-compatible
+    name: redhat-maas-deepseek
+    api_base: https://deepseek-r1-distill-qwen-14b-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com/v1
+    api_key: "passage::redhat/maas.deepseek.distill.api.key"
+    models:
+      - name: deepseek-r1-distill-qwen-14b
+        description: DeepSeek R1 Distill Qwen 14B
 

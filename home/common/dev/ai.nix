@@ -28,14 +28,19 @@
   ];
 
   xdg.configFile."aichat/config.yaml.in".source = ./aichat.yaml;
-  xdg.configFile."aichat/update-config" = {
-    source = ./aichat-update-config;
+  xdg.configFile."aichat/models-override.yaml".source = ./aichat-models-override.yaml;
+  xdg.configFile."aichat/genconf.py" = {
+    source = ./genconf.py;
     executable = true;
   };
-  home.activation = {
-    # linkGeneration writeBoundary
-    aichat-configuration = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      /home/vincent/.config/aichat/update-config
-    '';
-  };
+  # xdg.configFile."aichat/update-config" = {
+  #   source = ./aichat-update-config;
+  #   executable = true;
+  # };
+  # home.activation = {
+  #   # linkGeneration writeBoundary
+  #   aichat-configuration = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  #     /home/vincent/.config/aichat/genconf.py
+  #   '';
+  # };
 }
