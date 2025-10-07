@@ -1008,6 +1008,31 @@ minibuffer, even without explicitly focusing it."
 
 ;; TODO window management
 ;; TODO ORG mode configuration (BIG one)
+(defun ar/org-insert-link-dwim ()
+  "Like `org-insert-link' but with personal dwim preferences."
+  (interactive)
+  (let* ((point-in-link (org-in-regexp org-link-any-re 1))
+         (clipboard-url (when (string-match-p "^http" (current-kill 0))
+                          (current-kill 0)))
+         (region-content (when (region-active-p)
+                           (buffer-substring-no-properties (region-beginning)
+                                                           (region-end)))))
+    (cond ((and region-content clipboard-url (not point-in-link))
+           (delete-region (region-beginning) (region-end))
+           (insert (org-make-link-string clipboard-url region-content)))
+          ((and clipboard-url (not point-in-link))
+           (insert (org-make-link-string
+                    clipboard-url
+                    (read-string "title: "
+                                 (with-current-buffer (url-retrieve-synchronously clipboard-url)
+                                   (dom-text (car
+                                              (dom-by-tag (libxml-parse-html-region
+                                                           (point-min)
+                                                           (point-max))
+                                                          'title))))))))
+          (t
+           (call-interactively 'org-insert-link)))))
+
 (use-package org
   :if (file-exists-p org-directory)
   :mode (("\\.org$" . org-mode)
@@ -1021,7 +1046,9 @@ minibuffer, even without explicitly focusing it."
 	 ;; ("C-c C-x i" . vde/org-clock-in-any-heading)
          ("C-c o s" . org-sort)
 	 ("C-c O" . org-open-at-point-global)
-         ("<f12>" . org-agenda))
+         ("<f12>" . org-agenda)
+	 :map org-mode-map
+	 ("C-c C-l" . ar/org-insert-link-dwim))
   :custom
   (org-use-speed-commands t)
   (org-special-ctrl-a/e t)
@@ -1768,6 +1795,20 @@ Add this function to the `after-save-hook'."
       (setq vc-git-root-cache (cdr vc-git-root-cache)))
     value))
 (advice-add 'vc-git-root :around #'memoize-vc-git-root)
+
+;; BIND this
+(defun mu-date-at-point (date)
+  "Insert current DATE at point via `completing-read'."
+  (interactive
+   (let* ((formats '("%Y%m%d" "%F" "%Y%m%d%H%M" "%Y-%m-%dT%T"))
+          (vals (mapcar #'format-time-string formats))
+          (opts
+           (lambda (string pred action)
+             (if (eq action 'metadata)
+                 '(metadata (display-sort-function . identity))
+               (complete-with-action action vals string pred)))))
+     (list (completing-read "Insert date: " opts nil t))))
+  (insert date))
 
 (provide 'init)
 ;;; init.el ends here
