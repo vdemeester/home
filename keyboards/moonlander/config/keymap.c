@@ -130,3 +130,166 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+
+extern rgb_config_t rgb_matrix_config;
+
+
+// Line 2 home-row (7 12 17 22 [27] and [63] 58 53 48 43)
+void my_set_rgb_matrix_color_homerow(uint8_t red, uint8_t green, uint8_t blue) {
+    rgb_matrix_set_color(7, red, green, blue);
+    rgb_matrix_set_color(12, red, green, blue);
+    rgb_matrix_set_color(17, red, green, blue);
+    rgb_matrix_set_color(22, red, green, blue);
+    
+    rgb_matrix_set_color(58, red, green, blue);
+    rgb_matrix_set_color(53, red, green, blue);
+    rgb_matrix_set_color(48, red, green, blue);
+    rgb_matrix_set_color(43, red, green, blue);
+}
+
+void my_set_rgb_matrix_color_line(int line,  uint8_t red, uint8_t green, uint8_t blue) {
+  if (line == 0 || line == 1 || line == 2) {
+    // Left
+    rgb_matrix_set_color(line, red, green, blue);
+    rgb_matrix_set_color(line+5, red, green, blue);
+    rgb_matrix_set_color(line+10, red, green, blue);
+    rgb_matrix_set_color(line+15, red, green, blue);
+    rgb_matrix_set_color(line+20, red, green, blue);
+    rgb_matrix_set_color(line+25, red, green, blue);
+    /* rgb_matrix_set_color(line+29, red, green, blue); */
+    // Right
+    /* rgb_matrix_set_color(line+65, red, green, blue); */
+    rgb_matrix_set_color(line+61, red, green, blue);
+    rgb_matrix_set_color(line+56, red, green, blue);
+    rgb_matrix_set_color(line+51, red, green, blue);
+    rgb_matrix_set_color(line+46, red, green, blue);
+    rgb_matrix_set_color(line+41, red, green, blue);
+    rgb_matrix_set_color(line+36, red, green, blue);
+  } else if (line == 3) {
+    // Left
+    rgb_matrix_set_color(3, red, green, blue);
+    rgb_matrix_set_color(8, red, green, blue);
+    rgb_matrix_set_color(13, red, green, blue);
+    rgb_matrix_set_color(18, red, green, blue);
+    rgb_matrix_set_color(23, red, green, blue);
+    rgb_matrix_set_color(28, red, green, blue);
+    // Right
+    rgb_matrix_set_color(64, red, green, blue);
+    rgb_matrix_set_color(59, red, green, blue);
+    rgb_matrix_set_color(54, red, green, blue);
+    rgb_matrix_set_color(49, red, green, blue);
+    rgb_matrix_set_color(44, red, green, blue);
+    rgb_matrix_set_color(39, red, green, blue);
+  } else if (line == 4) {
+    // Left
+    /* rgb_matrix_set_color(4, red, green, blue); */
+    /* rgb_matrix_set_color(9, red, green, blue); */
+    /* rgb_matrix_set_color(14, red, green, blue); */
+    /* rgb_matrix_set_color(19, red, green, blue); */
+    rgb_matrix_set_color(24, red, green, blue);
+    rgb_matrix_set_color(32, red, green, blue);
+    rgb_matrix_set_color(33, red, green, blue);
+    /* rgb_matrix_set_color(34, red, green, blue); */
+    rgb_matrix_set_color(35, red, green, blue);
+    // Right
+    rgb_matrix_set_color(60, red, green, blue);
+    /* rgb_matrix_set_color(55, red, green, blue); */
+    /* rgb_matrix_set_color(50, red, green, blue); */
+    /* rgb_matrix_set_color(45, red, green, blue); */
+    /* rgb_matrix_set_color(40, red, green, blue); */
+    rgb_matrix_set_color(68, red, green, blue);
+    rgb_matrix_set_color(69, red, green, blue);
+    /* rgb_matrix_set_color(70, red, green, blue); */
+    rgb_matrix_set_color(71, red, green, blue);
+  }
+}
+
+
+// matrix, to set key with. maybe there is a better way but used ascii generator so i can easily set those visually
+//    ┌────┬────┬────┬────┬────┬────┬────┐             ┌────┬────┬────┬────┬────┬────┬────┐
+//    │ 0  │ 5  │ 10 │ 15 │ 20 │ 25 │ 29 │             │ 65 │ 61 │ 56 │ 51 │ 46 │ 41 │ 36 │
+//    ├────┼────┼────┼────┼────┼────┼────┤             ├────┼────┼────┼────┼────┼────┼────┤
+//    │ 1  │ 6  │ 11 │ 16 │ 21 │ 26 │ 30 │             │ 66 │ 62 │ 57 │ 52 │ 47 │ 42 │ 37 │
+//    ├────┼────┼────┼────┼────┼────┼────┤             ├────┼────┼────┼────┼────┼────┼────┤
+//    │ 2  │ 7  │ 12 │ 17 │[22]│ 27 │ 31 │             │ 67 │ 63 │[58]│ 53 │ 48 │ 43 │ 38 │
+//    ├────┼────┼────┼────┼────┼────┼────┘             └────┼────┼────┼────┼────┼────┼────┤
+//    │ 3  │ 8  │ 13 │ 18 │ 23 │ 28 │                       │ 64 │ 59 │ 54 │ 49 │ 44 │ 39 │
+//    ├────┼────┼────┼────┼────┼────┼─────────┐   ┌─────────┼────┼────┼────┼────┼────┼────┤
+//    │ 4  │ 9  │ 14 │ 19 │ 24 │    │   35    │   │   71    │    │ 60 │ 55 │ 50 │ 45 │ 40 │
+//    └────┴────┴────┴────┴────┼────┼────┬────┤   ├────┬────┼────┼────┴────┴────┴────┴────┘
+//                             │ 32 │ 33 │ 34 │   │ 68 │ 69 │ 70 │
+//                             └────┴────┴────┘   └────┴────┴────┘
+// Runs constantly in the background, in a loop.
+bool rgb_matrix_indicators_user(void) {
+  if (rgb_matrix_get_flags() & (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER)) {
+    switch (get_highest_layer(layer_state)) {
+    case QWER:
+      rgb_matrix_set_color_all(RGB_OFF);
+      // Line 1
+      my_set_rgb_matrix_color_line(1,213,144,0);
+      // Line 2
+      my_set_rgb_matrix_color_line(2,27,213,0);
+      my_set_rgb_matrix_color_homerow(206,255,206);
+      // Line 3
+      my_set_rgb_matrix_color_line(3,0,255,167);
+      // Line 4
+      my_set_rgb_matrix_color_line(4,0,113,255);
+      break;
+    case NUMB:
+      rgb_matrix_set_color_all(RGB_OFF);
+      
+      rgb_matrix_set_color(0, RGB_RED);
+
+      rgb_matrix_set_color(6, 0, 55, 255); // FX
+      rgb_matrix_set_color(11, 0, 55, 255); // FX
+      rgb_matrix_set_color(16, 0, 55, 255); // FX
+      rgb_matrix_set_color(21, 0, 55, 255); // FX
+      rgb_matrix_set_color(26, 0, 55, 255); // FX
+      rgb_matrix_set_color(7, 0, 55, 255); // FX
+      rgb_matrix_set_color(12, 0, 55, 255); // FX
+      rgb_matrix_set_color(17, 0, 55, 255); // FX
+      rgb_matrix_set_color(22, 0, 55, 255); // FX
+      rgb_matrix_set_color(27, 0, 55, 255); // FX
+      rgb_matrix_set_color(8, 0, 55, 255); // FX
+      rgb_matrix_set_color(13, 0, 55, 255); // FX
+
+    
+      rgb_matrix_set_color(18, 0, 183, 255); // FX
+      rgb_matrix_set_color(23, 0, 183, 255); // FX
+      rgb_matrix_set_color(28, 0, 183, 255); // FX
+      
+      rgb_matrix_set_color(60, 255, 255, 255); // 0
+      rgb_matrix_set_color(47, 255, 199, 0);     // number
+      rgb_matrix_set_color(48, 255, 199, 0);     // number
+      rgb_matrix_set_color(49, 255, 199, 0);     // number
+      rgb_matrix_set_color(52, 255, 199, 0);     // number
+      rgb_matrix_set_color(53, 255, 199, 0);     // number
+      rgb_matrix_set_color(54, 255, 199, 0);     // number
+      rgb_matrix_set_color(57, 255, 199, 0);     // number
+      rgb_matrix_set_color(58, 255, 199, 0);     // number
+      rgb_matrix_set_color(59, 255, 199, 0);     // number
+
+      rgb_matrix_set_color(42, 183, 255, 0);     // calc
+      rgb_matrix_set_color(43, 183, 255, 0);     // calc
+      rgb_matrix_set_color(44, 183, 255, 0);     // calc
+      rgb_matrix_set_color(37, 183, 255, 0);     // calc
+      rgb_matrix_set_color(38, 183, 255, 0);     // calc
+      rgb_matrix_set_color(39, 183, 255, 0);     // calc
+      break;
+    case SYMB:
+      break;
+    case NAVI:
+      rgb_matrix_set_color_all(RGB_OFF);
+
+      rgb_matrix_set_color(0, RGB_RED);
+      rgb_matrix_set_color(36, RGB_RED);
+      break;
+    case MOUS:
+      break;
+    default:
+      rgb_matrix_set_color_all(RGB_OFF);
+      break;
+    }
+  }
+  return false;
+}
