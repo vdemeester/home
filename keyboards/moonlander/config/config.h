@@ -30,10 +30,10 @@
 #define ALT_S LALT_T(KC_S)
 #define SFT_D LSFT_T(KC_D)
 #define CTL_F LCTL_T(KC_F)
-#define HYP_G HYPR(KC_G)
+#define HYP_G HYPR_T(KC_G)
 
 // Right-hand home row mods
-#define HYP_H HYPR(KC_H)
+#define HYP_H HYPR_T(KC_H)
 #define CTL_J RCTL_T(KC_J)
 #define SFT_K RSFT_T(KC_K)
 #define ALT_L LALT_T(KC_L)
