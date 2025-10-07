@@ -19,3 +19,23 @@
 #pragma once
 
 #define ORYX_CONFIGURATOR
+
+#define SFTLLCK LSFT_T(KC_0)
+
+#define TAPPING_TERM 280
+#define QUICK_TAP_TERM 0 // 175
+
+// Left-hand home row mods
+#define GUI_A LGUI_T(KC_A)
+#define ALT_S LALT_T(KC_S)
+#define SFT_D LSFT_T(KC_D)
+#define CTL_F LCTL_T(KC_F)
+#define HYP_G HYPR(KC_G)
+
+// Right-hand home row mods
+#define HYP_H HYPR(KC_H)
+#define CTL_J RCTL_T(KC_J)
+#define SFT_K RSFT_T(KC_K)
+#define ALT_L LALT_T(KC_L)
+#define GUI_SCLN RGUI_T(KC_SCLN)
+
