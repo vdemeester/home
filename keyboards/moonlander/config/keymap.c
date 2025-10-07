@@ -96,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         VRSN,    _______,   _______,   _______,   _______,   _______,   _______,           _______, _______,  _______,  _______,  _______, _______,  QK_BOOT,
         _______, _______, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,  _______,           _______, KC_PSCR,   KC_HOME,    KC_UP,    KC_END,    KC_PGUP, _______,
         _______, KC_HASH, KC_MPRV, KC_MPLY, KC_MNXT, _______,  _______,           _______, _______, KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_PGDN, _______,
-        _______, _______, _______, _______, _______, _______,                              _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                              KC_MUTE, _______, _______, _______, _______, _______,
         EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
                                             _______, _______, _______,           _______, _______, _______
     ),
@@ -204,7 +204,6 @@ void my_set_rgb_matrix_color_line(int line,  uint8_t red, uint8_t green, uint8_t
   }
 }
 
-
 // matrix, to set key with. maybe there is a better way but used ascii generator so i can easily set those visually
 //    ┌────┬────┬────┬────┬────┬────┬────┐             ┌────┬────┬────┬────┬────┬────┬────┐
 //    │ 0  │ 5  │ 10 │ 15 │ 20 │ 25 │ 29 │             │ 65 │ 61 │ 56 │ 51 │ 46 │ 41 │ 36 │
@@ -277,12 +276,62 @@ bool rgb_matrix_indicators_user(void) {
       rgb_matrix_set_color(39, 183, 255, 0);     // calc
       break;
     case SYMB:
+      rgb_matrix_set_color_all(RGB_OFF);
+      // () {} [] <>
+      rgb_matrix_set_color(11, 255, 199, 0);
+      rgb_matrix_set_color(16, 255, 199, 0);
+      rgb_matrix_set_color(18, 255, 199, 0);
+      rgb_matrix_set_color(23, 255, 199, 0);
+      rgb_matrix_set_color(57, 255, 199, 0);
+      rgb_matrix_set_color(58, 255, 199, 0);
+      rgb_matrix_set_color(52, 255, 199, 0);
+      rgb_matrix_set_color(53, 255, 199, 0);
+
+      // +-=/*
+      // 29 204 67
+
+      // `!~|&%^#
+      // 213, 144, 0
+
+      // "'
+      // 204, 202, 29
+
+      // :;,.
+      // 29, 120, 204
+
+      // @
+      // 174, 29, 204
+      
       break;
     case NAVI:
       rgb_matrix_set_color_all(RGB_OFF);
 
       rgb_matrix_set_color(0, RGB_RED);
       rgb_matrix_set_color(36, RGB_RED);
+
+      // Arrows
+      rgb_matrix_set_color(52, 0, 113, 255);
+      rgb_matrix_set_color(53, 0, 113, 255);
+      rgb_matrix_set_color(58, 0, 113, 255);
+      rgb_matrix_set_color(48, 0, 113, 255);
+      // Home, End, PgUp, PgDown 
+      rgb_matrix_set_color(57, 13, 0, 255);
+      rgb_matrix_set_color(47, 13, 0, 255);
+      rgb_matrix_set_color(42, 13, 0, 255);
+      rgb_matrix_set_color(43, 13, 0, 255);
+
+      // Media
+      rgb_matrix_set_color(12, 27, 213, 0);
+      rgb_matrix_set_color(17, 27, 213, 0);
+      rgb_matrix_set_color(22, 27, 213, 0);
+
+      // Volume
+      rgb_matrix_set_color(35, 170, 0, 255);
+      rgb_matrix_set_color(71, 170, 0, 255);
+      rgb_matrix_set_color(64, 170, 0, 255);
+
+      // PrintScreen
+      rgb_matrix_set_color(62, 255, 255, 255);
       break;
     case MOUS:
       break;
