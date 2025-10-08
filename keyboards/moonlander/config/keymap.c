@@ -24,9 +24,9 @@
 #include "keymap_bepo.h"
 
 enum layers {
-    QWER,
     BEPO,
     ERGL,
+    QWER,
     SYMB,
     NUMB,
     NAVI,
@@ -40,7 +40,30 @@ enum custom_keycodes {
 const key_override_t *key_overrides[] = {
 };
 
+#define COMBO_REF_DEFAULT QWER
+
+uint8_t combo_ref_from_layer(uint8_t layer){
+    switch (get_highest_layer(layer_state)){
+        case BEPO: return QWER;
+        default: return QWER;
+    }
+    return layer;  // important if default is not in case.
+}
+
+const uint16_t PROGMEM combo_to_bepo[] = {LT(NAVI,KC_BSPC), SFTLLCK, COMBO_END};
+const uint16_t PROGMEM combo_to_ergol[] = {LT(NUMB,KC_SPC), LT(SYMB, KC_ENT), COMBO_END};
+const uint16_t PROGMEM combo_to_qwerty[] = {KC_DEL, KC_RALT, COMBO_END};
+const uint16_t PROGMEM combo_qwe_escape[] = {ALT_L, GUI_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_toggle_mouse[] = {KC_Q, KC_R, COMBO_END};
+
 combo_t key_combos[] = {
+  // Layers
+  COMBO(combo_to_bepo, TO(BEPO)),
+  COMBO(combo_to_ergol, TO(ERGL)),
+  COMBO(combo_to_qwerty, TO(QWER)),
+  COMBO(combo_toggle_mouse, TG(MOUS)),
+  // Others
+  COMBO(combo_qwe_escape, KC_ESC),
 };
 
 tap_dance_action_t tap_dance_actions[] = {
@@ -48,19 +71,11 @@ tap_dance_action_t tap_dance_actions[] = {
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [QWER] = LAYOUT(
-        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
-        KC_EQL,  GUI_A,    ALT_S,    SFT_D,    CTL_F,    HYP_G,    XXXXXXX,           XXXXXXX, HYP_H,    CTL_J,    SFT_K,    ALT_L,    GUI_SCLN, KC_QUOT,
-        KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
-        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  _______,               _______,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
-	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  SFTLLCK,  LT(SYMB, KC_ENT)
-    ),
     [BEPO] = LAYOUT(
         KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
         // KC_TAB,  KC_B,    KC_É,    KC_P,    KC_O,    KC_È,    XXXXXXX,           XXXXXXX, caret,    KC_V,    KC_D,    KC_L,    KC_J,    KC_Z,
-        KC_EQL,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    XXXXXXX,           XXXXXXX,  KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+        KC_EQL,  GUI_A,    ALT_S,    SFT_D,    CTL_F,    HYP_G,    XXXXXXX,           XXXXXXX, HYP_H,    CTL_J,    SFT_K,    ALT_L,    GUI_SCLN, KC_QUOT,
         // KC_EQL,  KC_A,    KC_U,    KC_I,    KC_E,    KC_COM,  XXXXXXX,           XXXXXXX,  KC_H,    KC_J,    KC_K,    KC_L,    LT(NAVI, KC_SCLN), LGUI_T(KC_QUOT),
         KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
         //KC_GRV, LCTL_T(KC_Z),KC_X,KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  RCTL_T(KC_SLSH), KC_RSFT,
@@ -69,9 +84,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [ERGL] = LAYOUT(
         KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-        KC_DEL,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
-        KC_BSPC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    XXXXXXX,           XXXXXXX,  KC_H,    KC_J,    KC_K,    KC_L,    LT(NAVI, KC_SCLN), LGUI_T(KC_QUOT),
-        KC_LSFT, LCTL_T(KC_Z),KC_X,KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  RCTL_T(KC_SLSH), KC_RSFT,
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
+        KC_EQL,  GUI_A,    ALT_S,    SFT_D,    CTL_F,    HYP_G,    XXXXXXX,           XXXXXXX, HYP_H,    CTL_J,    SFT_K,    ALT_L,    GUI_SCLN, KC_QUOT,
+        KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
+        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  _______,               _______,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  SFTLLCK,  LT(SYMB, KC_ENT)
+    ),
+    [QWER] = LAYOUT(
+        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
+        KC_EQL,  GUI_A,    ALT_S,    SFT_D,    CTL_F,    HYP_G,    XXXXXXX,           XXXXXXX, HYP_H,    CTL_J,    SFT_K,    ALT_L,    GUI_SCLN, KC_QUOT,
+        KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
         XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  _______,               _______,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
 	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  SFTLLCK,  LT(SYMB, KC_ENT)
     ),
@@ -216,14 +239,44 @@ void my_set_rgb_matrix_color_line(int line,  uint8_t red, uint8_t green, uint8_t
 //    ├────┼────┼────┼────┼────┼────┼─────────┐   ┌─────────┼────┼────┼────┼────┼────┼────┤
 //    │ 4  │ 9  │ 14 │ 19 │ 24 │    │   35    │   │   71    │    │ 60 │ 55 │ 50 │ 45 │ 40 │
 //    └────┴────┴────┴────┴────┼────┼────┬────┤   ├────┬────┼────┼────┴────┴────┴────┴────┘
-//                             │ 32 │ 33 │ 34 │   │ 68 │ 69 │ 70 │
+//                             │ 32 │ 33 │ 34 │   │ 70 │ 69 │ 68 │
 //                             └────┴────┴────┘   └────┴────┴────┘
 // Runs constantly in the background, in a loop.
 bool rgb_matrix_indicators_user(void) {
   if (rgb_matrix_get_flags() & (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER)) {
     switch (get_highest_layer(layer_state)) {
+    case BEPO:
+      rgb_matrix_set_color_all(RGB_OFF);
+      // Line 1
+      my_set_rgb_matrix_color_line(1,213,144,0);
+      // Line 2
+      my_set_rgb_matrix_color_line(2,27,213,0);
+      my_set_rgb_matrix_color_homerow(206,255,206);
+      // Line 3
+      my_set_rgb_matrix_color_line(3,0,255,167);
+      // Line 4
+      my_set_rgb_matrix_color_line(4,0,113,255);
+      break;
+    case ERGL:
+      rgb_matrix_set_color_all(RGB_OFF);
+      // ERGOL layer
+      rgb_matrix_set_color(34, 0, 113, 255);
+      rgb_matrix_set_color(70, 0, 113, 255);
+      // Line 1
+      my_set_rgb_matrix_color_line(1,213,144,0);
+      // Line 2
+      my_set_rgb_matrix_color_line(2,27,213,0);
+      my_set_rgb_matrix_color_homerow(206,255,206);
+      // Line 3
+      my_set_rgb_matrix_color_line(3,0,255,167);
+      // Line 4
+      my_set_rgb_matrix_color_line(4,0,113,255);
+      break;
     case QWER:
       rgb_matrix_set_color_all(RGB_OFF);
+      // QWERTY layer
+      rgb_matrix_set_color(34, 27,213,0);
+      rgb_matrix_set_color(70, 27,213,0);
       // Line 1
       my_set_rgb_matrix_color_line(1,213,144,0);
       // Line 2

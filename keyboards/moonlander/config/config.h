@@ -24,6 +24,7 @@
 
 #define TAPPING_TERM 280
 #define QUICK_TAP_TERM 0 // 175
+#define COMBO_TERM 40
 
 // Left-hand home row mods
 #define GUI_A LGUI_T(KC_A)
