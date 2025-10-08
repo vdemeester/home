@@ -6,7 +6,6 @@
   '';
   virtualisation.libvirtd = {
     enable = true;
-    qemu.ovmf.enable = true;
     allowedBridges = [ "br1" ]; # Could be different dependinng on the host ?
     extraConfig = ''
       listen_tls = 0
