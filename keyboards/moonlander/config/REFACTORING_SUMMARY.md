@@ -102,13 +102,13 @@ case NUMB:
 
 ### Code Reduction
 - **Before:** 345 lines total
-- **After:** 260 lines total
-- **Reduction:** 85 lines (24.6% smaller)
+- **After:** 255 lines total
+- **Reduction:** 90 lines (26% smaller)
 
 ### Specific Changes
-- **Deleted:** 173 lines
-- **Added:** 89 lines
-- **Net change:** -84 lines
+- **Deleted:** 173 lines (old implementation)
+- **Added:** 83 lines (new implementation with LED_LAYOUT macro)
+- **Net change:** -90 lines
 
 ### Function Call Reduction
 - **Before:** 100+ individual `rgb_matrix_set_color()` calls
@@ -118,34 +118,70 @@ case NUMB:
 
 ## Maintainability Improvements
 
-### 1. Named Color Constants
-Instead of:
+### 1. Visual Layout Macro
+
+Instead of array indices, use a visual layout macro:
 ```c
-rgb_matrix_set_color(47, 255, 199, 0);
+#define LED_LAYOUT( \
+    k00, k05, k10, k15, k20, k25, k29,    k65, k61, k56, k51, k46, k41, k36, \
+    k01, k06, k11, k16, k21, k26, k30,    k66, k62, k57, k52, k47, k42, k37, \
+    // ... matches physical keyboard layout
+) { k00, k01, k02, ... k71 }
 ```
 
-You can now use:
+Then use it with `___` shorthand for off keys:
 ```c
-[47] = {RGB_YELLOW}
+[QWER] = LED_LAYOUT(
+    ___,             {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, ...
+    {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, ...
+    // Visual representation of the keyboard!
+)
 ```
 
-### 2. Visual Organization
-Keys are now organized by functional groups with comments:
-```c
-// F keys - blue
-[6] = {RGB_BLUE}, [11] = {RGB_BLUE}, ...
+### 2. Visual Organization with `___` Shorthand
 
-// Numbers - yellow
-[47] = {RGB_YELLOW}, [48] = {RGB_YELLOW}, ...
+Keys are organized visually matching the physical layout:
+```c
+// Use ___ for off keys - much cleaner than {RGB_OFF}
+[NUMB] = LED_LAYOUT(
+    {RGB_RED},  ___,  ___,  ___,  ___,  ___,  ___,    // Row 0
+    ___,  {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, ...      // Row 1
+    // Can immediately see which keys are lit and which aren't
+)
 ```
 
-### 3. Easier Modifications
-To change all number keys from yellow to green:
-- **Before:** Find and replace 9+ individual lines
-- **After:** Change one constant or update 9 values in one visual block
+### 3. Easier Modifications with Visual Layout
 
-### 4. Consistency
-The new approach matches the pattern used in `keymap.voyagevoyage.c`, making it easier to understand and maintain both files.
+To change a key's color:
+- **Before:** Find the LED index number, then update the specific line
+- **After:** Look at the visual layout, find the key position, update that spot
+
+Example - changing top-left key to red:
+```c
+[LAYER] = LED_LAYOUT(
+    {RGB_RED},  ___,  ___,  ...  // Just change the first position!
+)
+```
+
+### 4. Consistency with Keymap Layout
+
+The new approach uses the same visual structure as the keymap's LAYOUT macro:
+
+**Keymap:**
+```c
+[QWER] = LAYOUT(
+    KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,    ...
+)
+```
+
+**LED Map (now matches!):**
+```c
+[QWER] = LED_LAYOUT(
+    ___,     {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, ...
+)
+```
+
+Same visual structure = easier to coordinate keymaps and LED colors!
 
 ---
 

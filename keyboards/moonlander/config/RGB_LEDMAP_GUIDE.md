@@ -2,7 +2,7 @@
 
 ## Overview
 
-The keymap now uses a more maintainable array-based approach for defining RGB LED colors per key. This makes it much easier to visualize and modify the LED configuration.
+The keymap uses a visual layout-based approach for defining RGB LED colors per key, using the `LED_LAYOUT` macro that matches the keyboard's physical layout. This makes it extremely easy to visualize and modify the LED configuration.
 
 ## How to Define Colors
 
@@ -28,13 +28,28 @@ RGB_GREEN_MEDIA   // 27, 213, 0
 RGB_PURPLE_VOL    // 170, 0, 255
 ```
 
-### 2. LED Map Structure
+There's also a shorthand: `___` which expands to `{RGB_OFF}` for cleaner code.
 
-The LED map is a 3D array: `ledmap[layer][led_index][rgb]`
+### 2. LED_LAYOUT Macro
 
-- **layer**: The keyboard layer (QWER, NUMB, SYMB, NAVI, etc.)
-- **led_index**: The LED number (0-71)
-- **rgb**: RGB color values [r, g, b]
+The LED map uses the `LED_LAYOUT` macro that matches the visual representation of the keyboard, just like the `LAYOUT` macro for keymaps. This provides an intuitive, visual way to see which keys have which colors.
+
+**Structure:**
+```c
+[LAYER] = LED_LAYOUT(
+    // Row 0 - top row
+    k00, k05, k10, k15, k20, k25, k29,    k65, k61, k56, k51, k46, k41, k36,
+    // Row 1
+    k01, k06, k11, k16, k21, k26, k30,    k66, k62, k57, k52, k47, k42, k37,
+    // Row 2 - home row
+    k02, k07, k12, k17, k22, k27, k31,    k67, k63, k58, k53, k48, k43, k38,
+    // Row 3
+    k03, k08, k13, k18, k23, k28,              k64, k59, k54, k49, k44, k39,
+    // Row 4 - bottom row
+    k04, k09, k14, k19, k24,      k35,    k71,      k60, k55, k50, k45, k40,
+    // Thumb cluster
+                        k32, k33, k34,    k68, k69, k70
+)
 
 ### 3. LED Matrix Layout
 
@@ -58,37 +73,41 @@ The LED map is a 3D array: `ledmap[layer][led_index][rgb]`
 
 ### Example 1: Simple Layer Configuration
 
+Using the visual LED_LAYOUT macro, you can easily see which keys have which colors:
+
 ```c
-[MY_LAYER] = {
-    // Set specific keys to colors
-    [0] = {RGB_RED},      // Top-left key red
-    [36] = {RGB_BLUE},    // Top-right key blue
-    [7] = {RGB_GREEN},    // Home row left
-    [43] = {RGB_GREEN},   // Home row right
-},
+[MY_LAYER] = LED_LAYOUT(
+    {RGB_RED},  ___,  ___,  ___,  ___,  ___,  ___,    ___,  ___,  ___,  ___,  ___,  ___,  {RGB_BLUE},
+    ___,        ___,  ___,  ___,  ___,  ___,  ___,    ___,  ___,  ___,  ___,  ___,  ___,  ___,
+    ___,        {RGB_GREEN}, ___,  ___,  ___,  ___,  ___,    ___,  ___,  ___,  ___,  ___,  {RGB_GREEN}, ___,
+    ___,        ___,  ___,  ___,  ___,  ___,              ___,  ___,  ___,  ___,  ___,  ___,
+    ___,        ___,  ___,  ___,  ___,        ___,    ___,        ___,  ___,  ___,  ___,  ___,
+                                  ___,  ___,  ___,    ___,  ___,  ___
+),
 ```
 
 ### Example 2: Full Row Configuration
 
 ```c
-[MY_LAYER] = {
-    // Row 1: All yellow
-    [1] = {RGB_YELLOW}, [6] = {RGB_YELLOW}, [11] = {RGB_YELLOW}, 
-    [16] = {RGB_YELLOW}, [21] = {RGB_YELLOW}, [26] = {RGB_YELLOW},
-    [62] = {RGB_YELLOW}, [57] = {RGB_YELLOW}, [52] = {RGB_YELLOW}, 
-    [47] = {RGB_YELLOW}, [42] = {RGB_YELLOW}, [37] = {RGB_YELLOW},
-},
+[MY_LAYER] = LED_LAYOUT(
+    ___,            ___,            ___,            ___,            ___,            ___,            ___,                           ___,            ___,            ___,            ___,            ___,            ___,            ___,
+    {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   ___,                           ___,            {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},
+    ___,            ___,            ___,            ___,            ___,            ___,            ___,                           ___,            ___,            ___,            ___,            ___,            ___,            ___,
+    ___,            ___,            ___,            ___,            ___,            ___,                                                           ___,            ___,            ___,            ___,            ___,            ___,
+    ___,            ___,            ___,            ___,            ___,                            ___,                           ___,                            ___,            ___,            ___,            ___,            ___,
+                                                                    ___,            ___,            ___,                           ___,            ___,            ___
+),
 ```
 
 ### Example 3: Custom RGB Values
 
-If you need a color not in the constants:
+If you need a color not in the constants, you can still use direct RGB values:
 
 ```c
-[MY_LAYER] = {
-    [0] = {128, 64, 200},  // Custom purple color
-    [5] = {255, 128, 0},   // Custom orange color
-},
+[MY_LAYER] = LED_LAYOUT(
+    {128, 64, 200}, ___,  ___,  ___,  ___,  {255, 128, 0}, ___,    ___,  ___,  ___,  ___,  ___,  ___,  ___,
+    // ... rest of the layout
+),
 ```
 
 ## Adding a New Color Constant
@@ -99,17 +118,27 @@ To add a new color constant, add it near the top of keymap.c:
 #define RGB_MY_COLOR 123, 45, 67
 ```
 
+Then use it in LED_LAYOUT:
+
+```c
+[LAYER] = LED_LAYOUT(
+    {RGB_MY_COLOR}, ___,  ___,  // ...
+)
+```
+
 ## Tips
 
-1. **Unspecified LEDs default to {0, 0, 0} (off)** - You only need to define the keys you want to light up
-2. **Use comments** - Group related keys with comments for better readability
-3. **Test incrementally** - Add a few keys at a time and test to ensure they work as expected
-4. **Refer to the matrix diagram** - Keep the ASCII diagram handy when mapping LED numbers
+1. **Use `___` for off keys** - Much cleaner than writing `{RGB_OFF}` repeatedly
+2. **Visual alignment** - The LED_LAYOUT matches the physical keyboard layout, making it easy to see which key is which
+3. **Shorthand is your friend** - `___` saves typing and makes the layout more readable
+4. **Test incrementally** - Add a few keys at a time and test to ensure they work as expected
+5. **Match the keymap** - The LED_LAYOUT uses the same visual structure as the keymap's LAYOUT macro
 
 ## Benefits of This Approach
 
-- ✅ **Visual clarity**: See all layer colors in one place
-- ✅ **Easy modifications**: Change a color by editing one line
+- ✅ **Visual clarity**: See the keyboard layout directly in the code - matches the physical keyboard
+- ✅ **Easy modifications**: Change a color by editing one position in the visual layout
 - ✅ **Named colors**: Use descriptive names instead of RGB values
-- ✅ **Less repetition**: No more copy-pasting `rgb_matrix_set_color()` calls
-- ✅ **Consistency**: Same approach as voyagevoyage.c
+- ✅ **Less repetition**: `___` shorthand for off keys
+- ✅ **Consistency**: Same visual structure as the keymap's LAYOUT macro
+- ✅ **Intuitive**: No need to remember LED index numbers - just position in the layout

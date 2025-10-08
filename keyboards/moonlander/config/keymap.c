@@ -149,68 +149,63 @@ extern rgb_config_t rgb_matrix_config;
 #define RGB_GREEN_MEDIA 27, 213, 0
 #define RGB_PURPLE_VOL 170, 0, 255
 
-// LED map for each layer: [layer][led_index] = {r, g, b}
-// 72 LEDs total (0-71) as shown in the matrix diagram below
+// Shorthand for RGB values - _ means RGB_OFF
+#define ___ {RGB_OFF}
+
+// LED_LAYOUT macro - matches the visual representation of the keyboard LAYOUT
+// This makes it easy to see which keys have which colors
+#define LED_LAYOUT( \
+    k00, k05, k10, k15, k20, k25, k29,           k65, k61, k56, k51, k46, k41, k36, \
+    k01, k06, k11, k16, k21, k26, k30,           k66, k62, k57, k52, k47, k42, k37, \
+    k02, k07, k12, k17, k22, k27, k31,           k67, k63, k58, k53, k48, k43, k38, \
+    k03, k08, k13, k18, k23, k28,                     k64, k59, k54, k49, k44, k39, \
+    k04, k09, k14, k19, k24,      k35,           k71,      k60, k55, k50, k45, k40, \
+                        k32, k33, k34,           k68, k69, k70 \
+) { \
+    k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
+    k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, \
+    k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, \
+    k30, k31, k32, k33, k34, k35, k36, k37, k38, k39, \
+    k40, k41, k42, k43, k44, k45, k46, k47, k48, k49, \
+    k50, k51, k52, k53, k54, k55, k56, k57, k58, k59, \
+    k60, k61, k62, k63, k64, k65, k66, k67, k68, k69, \
+    k70, k71 \
+}
+
+// LED map for each layer - using LED_LAYOUT for easy visualization
 const uint8_t PROGMEM ledmap[][72][3] = {
-    // QWER layer
-    [QWER] = {
-        // Row 0: 0, 5, 10, 15, 20, 25, 29 | 65, 61, 56, 51, 46, 41, 36
-        [0] = {RGB_OFF}, [5] = {RGB_ORANGE_YELLOW}, [10] = {RGB_ORANGE_YELLOW}, [15] = {RGB_ORANGE_YELLOW}, [20] = {RGB_ORANGE_YELLOW}, [25] = {RGB_ORANGE_YELLOW}, [29] = {RGB_OFF},
-        [65] = {RGB_OFF}, [61] = {RGB_ORANGE_YELLOW}, [56] = {RGB_ORANGE_YELLOW}, [51] = {RGB_ORANGE_YELLOW}, [46] = {RGB_ORANGE_YELLOW}, [41] = {RGB_ORANGE_YELLOW}, [36] = {RGB_ORANGE_YELLOW},
-        // Row 1: 1, 6, 11, 16, 21, 26, 30 | 66, 62, 57, 52, 47, 42, 37
-        [1] = {RGB_ORANGE_YELLOW}, [6] = {RGB_ORANGE_YELLOW}, [11] = {RGB_ORANGE_YELLOW}, [16] = {RGB_ORANGE_YELLOW}, [21] = {RGB_ORANGE_YELLOW}, [26] = {RGB_ORANGE_YELLOW}, [30] = {RGB_OFF},
-        [66] = {RGB_OFF}, [62] = {RGB_ORANGE_YELLOW}, [57] = {RGB_ORANGE_YELLOW}, [52] = {RGB_ORANGE_YELLOW}, [47] = {RGB_ORANGE_YELLOW}, [42] = {RGB_ORANGE_YELLOW}, [37] = {RGB_ORANGE_YELLOW},
-        // Row 2: 2, 7, 12, 17, 22, 27, 31 | 67, 63, 58, 53, 48, 43, 38 (home row)
-        [2] = {RGB_GREEN}, [7] = {RGB_GREEN_LIGHT}, [12] = {RGB_GREEN_LIGHT}, [17] = {RGB_GREEN_LIGHT}, [22] = {RGB_GREEN_LIGHT}, [27] = {RGB_GREEN}, [31] = {RGB_OFF},
-        [67] = {RGB_OFF}, [63] = {RGB_GREEN}, [58] = {RGB_GREEN_LIGHT}, [53] = {RGB_GREEN_LIGHT}, [48] = {RGB_GREEN_LIGHT}, [43] = {RGB_GREEN_LIGHT}, [38] = {RGB_GREEN},
-        // Row 3: 3, 8, 13, 18, 23, 28 | 64, 59, 54, 49, 44, 39
-        [3] = {RGB_CYAN}, [8] = {RGB_CYAN}, [13] = {RGB_CYAN}, [18] = {RGB_CYAN}, [23] = {RGB_CYAN}, [28] = {RGB_CYAN},
-        [64] = {RGB_CYAN}, [59] = {RGB_CYAN}, [54] = {RGB_CYAN}, [49] = {RGB_CYAN}, [44] = {RGB_CYAN}, [39] = {RGB_CYAN},
-        // Row 4: 4, 9, 14, 19, 24, 32, 33, 34, 35 | 60, 55, 50, 45, 40, 68, 69, 70, 71
-        [4] = {RGB_OFF}, [9] = {RGB_OFF}, [14] = {RGB_OFF}, [19] = {RGB_OFF}, [24] = {RGB_BLUE_LIGHT},
-        [32] = {RGB_BLUE_LIGHT}, [33] = {RGB_BLUE_LIGHT}, [34] = {RGB_OFF}, [35] = {RGB_BLUE_LIGHT},
-        [60] = {RGB_BLUE_LIGHT}, [55] = {RGB_OFF}, [50] = {RGB_OFF}, [45] = {RGB_OFF}, [40] = {RGB_OFF},
-        [68] = {RGB_BLUE_LIGHT}, [69] = {RGB_BLUE_LIGHT}, [70] = {RGB_OFF}, [71] = {RGB_BLUE_LIGHT},
-    },
-    // NUMB layer
-    [NUMB] = {
-        // Reset all keys
-        [0] = {RGB_RED},
-        // F keys - blue
-        [6] = {RGB_BLUE}, [11] = {RGB_BLUE}, [16] = {RGB_BLUE}, [21] = {RGB_BLUE}, [26] = {RGB_BLUE},
-        [7] = {RGB_BLUE}, [12] = {RGB_BLUE}, [17] = {RGB_BLUE}, [22] = {RGB_BLUE}, [27] = {RGB_BLUE},
-        [8] = {RGB_BLUE}, [13] = {RGB_BLUE},
-        // More F keys - bright blue
-        [18] = {RGB_BLUE_BRIGHT}, [23] = {RGB_BLUE_BRIGHT}, [28] = {RGB_BLUE_BRIGHT},
-        // Numbers - yellow
-        [47] = {RGB_YELLOW}, [48] = {RGB_YELLOW}, [49] = {RGB_YELLOW},
-        [52] = {RGB_YELLOW}, [53] = {RGB_YELLOW}, [54] = {RGB_YELLOW},
-        [57] = {RGB_YELLOW}, [58] = {RGB_YELLOW}, [59] = {RGB_YELLOW},
-        [60] = {RGB_WHITE}, // 0
-        // Calc operators - yellow-green
-        [42] = {RGB_YELLOW_GREEN}, [43] = {RGB_YELLOW_GREEN}, [44] = {RGB_YELLOW_GREEN},
-        [37] = {RGB_YELLOW_GREEN}, [38] = {RGB_YELLOW_GREEN}, [39] = {RGB_YELLOW_GREEN},
-    },
-    // SYMB layer
-    [SYMB] = {
-        // Brackets - yellow
-        [11] = {RGB_YELLOW}, [16] = {RGB_YELLOW}, [18] = {RGB_YELLOW}, [23] = {RGB_YELLOW},
-        [57] = {RGB_YELLOW}, [58] = {RGB_YELLOW}, [52] = {RGB_YELLOW}, [53] = {RGB_YELLOW},
-    },
-    // NAVI layer
-    [NAVI] = {
-        [0] = {RGB_RED}, [36] = {RGB_RED},
-        // Arrows - blue light
-        [52] = {RGB_BLUE_LIGHT}, [53] = {RGB_BLUE_LIGHT}, [58] = {RGB_BLUE_LIGHT}, [48] = {RGB_BLUE_LIGHT},
-        // Home, End, PgUp, PgDown - purple
-        [57] = {RGB_PURPLE}, [47] = {RGB_PURPLE}, [42] = {RGB_PURPLE}, [43] = {RGB_PURPLE},
-        // Media - green
-        [12] = {RGB_GREEN_MEDIA}, [17] = {RGB_GREEN_MEDIA}, [22] = {RGB_GREEN_MEDIA},
-        // Volume - purple
-        [35] = {RGB_PURPLE_VOL}, [71] = {RGB_PURPLE_VOL}, [64] = {RGB_PURPLE_VOL},
-        // PrintScreen - white
-        [62] = {RGB_WHITE},
-    },
+    [QWER] = LED_LAYOUT(
+        ___,             {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, ___,                           ___,             {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW},
+        {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, ___,                           ___,             {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW},
+        {RGB_GREEN},     {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN},         ___,                           ___,             {RGB_GREEN},         {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN},
+        {RGB_CYAN},      {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},                                                          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},
+        ___,             ___,                 ___,                 ___,                 {RGB_BLUE_LIGHT},                         {RGB_BLUE_LIGHT},              {RGB_BLUE_LIGHT},                     {RGB_BLUE_LIGHT},    ___,                 ___,                 ___,                 ___,
+                                                                   {RGB_BLUE_LIGHT},    {RGB_BLUE_LIGHT},    ___,                           ___,             {RGB_BLUE_LIGHT},    {RGB_BLUE_LIGHT}
+    ),
+    [NUMB] = LED_LAYOUT(
+        {RGB_RED},       ___,        ___,        ___,        ___,        ___,        ___,                           ___,        ___,        ___,        ___,        ___,        ___,        ___,
+        ___,             {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, ___,                           ___,        ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW_GREEN},
+        ___,             {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, ___,                           ___,        ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW_GREEN},
+        ___,             {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE_BRIGHT}, {RGB_BLUE_BRIGHT}, {RGB_BLUE_BRIGHT},                                   ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW_GREEN},
+        ___,             ___,        ___,        ___,        ___,                    ___,                           ___,                    {RGB_WHITE}, ___,        ___,        ___,        ___,
+                                                 ___,        ___,        ___,                           ___,        ___,        ___
+    ),
+    [SYMB] = LED_LAYOUT(
+        ___,        ___,        ___,        ___,        ___,        ___,        ___,                           ___,        ___,        ___,        ___,        ___,        ___,        ___,
+        ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, ___,      ___,        ___,                           ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, ___,        ___,        ___,
+        ___,        ___,        ___,        ___,        ___,        ___,        ___,                           ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, ___,        ___,        ___,
+        ___,        ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, ___,                                               ___,        ___,        ___,        ___,        ___,        ___,
+        ___,        ___,        ___,        ___,        ___,                    ___,                           ___,                    ___,        ___,        ___,        ___,        ___,
+                                            ___,        ___,        ___,                           ___,        ___,        ___
+    ),
+    [NAVI] = LED_LAYOUT(
+        {RGB_RED},      ___,        ___,        ___,        ___,        ___,        ___,                           ___,        ___,        ___,        ___,        ___,        ___,        {RGB_RED},
+        ___,            ___,        ___,        ___,        ___,        ___,        ___,                           ___,        {RGB_WHITE}, ___,        {RGB_BLUE_LIGHT}, {RGB_PURPLE}, {RGB_PURPLE}, ___,
+        ___,            ___,        {RGB_GREEN_MEDIA}, ___,  ___,        ___,        ___,                           ___,        ___,        ___,        {RGB_BLUE_LIGHT}, {RGB_BLUE_LIGHT}, {RGB_PURPLE}, ___,
+        ___,            ___,        ___,        {RGB_GREEN_MEDIA}, {RGB_GREEN_MEDIA}, ___,                                   {RGB_PURPLE_VOL}, ___,     ___,        {RGB_BLUE_LIGHT}, ___,        ___,
+        ___,            ___,        ___,        ___,        ___,                    {RGB_PURPLE_VOL},              {RGB_PURPLE_VOL},        ___,        ___,        ___,        ___,        ___,
+                                                ___,        ___,        ___,                           ___,        ___,        ___
+    ),
 };
 
 void set_layer_color(int layer) {
