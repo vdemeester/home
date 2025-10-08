@@ -133,75 +133,88 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 extern rgb_config_t rgb_matrix_config;
 
+// Define common colors as RGB values
+#define RGB_OFF 0, 0, 0
+#define RGB_ORANGE_YELLOW 213, 144, 0
+#define RGB_GREEN 27, 213, 0
+#define RGB_GREEN_LIGHT 206, 255, 206
+#define RGB_CYAN 0, 255, 167
+#define RGB_BLUE_LIGHT 0, 113, 255
+#define RGB_BLUE 0, 55, 255
+#define RGB_BLUE_BRIGHT 0, 183, 255
+#define RGB_WHITE 255, 255, 255
+#define RGB_YELLOW 255, 199, 0
+#define RGB_YELLOW_GREEN 183, 255, 0
+#define RGB_PURPLE 13, 0, 255
+#define RGB_GREEN_MEDIA 27, 213, 0
+#define RGB_PURPLE_VOL 170, 0, 255
 
-// Line 2 home-row (7 12 17 22 [27] and [63] 58 53 48 43)
-void my_set_rgb_matrix_color_homerow(uint8_t red, uint8_t green, uint8_t blue) {
-    rgb_matrix_set_color(7, red, green, blue);
-    rgb_matrix_set_color(12, red, green, blue);
-    rgb_matrix_set_color(17, red, green, blue);
-    rgb_matrix_set_color(22, red, green, blue);
-    
-    rgb_matrix_set_color(58, red, green, blue);
-    rgb_matrix_set_color(53, red, green, blue);
-    rgb_matrix_set_color(48, red, green, blue);
-    rgb_matrix_set_color(43, red, green, blue);
+// Shorthand for RGB values - _ means RGB_OFF
+#define ___ {RGB_OFF}
+
+// LED_LAYOUT macro - matches the visual representation of the keyboard LAYOUT
+// This makes it easy to see which keys have which colors
+#define LED_LAYOUT( \
+    k00, k05, k10, k15, k20, k25, k29,           k65, k61, k56, k51, k46, k41, k36, \
+    k01, k06, k11, k16, k21, k26, k30,           k66, k62, k57, k52, k47, k42, k37, \
+    k02, k07, k12, k17, k22, k27, k31,           k67, k63, k58, k53, k48, k43, k38, \
+    k03, k08, k13, k18, k23, k28,                     k64, k59, k54, k49, k44, k39, \
+    k04, k09, k14, k19, k24,      k35,           k71,      k60, k55, k50, k45, k40, \
+                        k32, k33, k34,           k68, k69, k70 \
+) { \
+    k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
+    k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, \
+    k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, \
+    k30, k31, k32, k33, k34, k35, k36, k37, k38, k39, \
+    k40, k41, k42, k43, k44, k45, k46, k47, k48, k49, \
+    k50, k51, k52, k53, k54, k55, k56, k57, k58, k59, \
+    k60, k61, k62, k63, k64, k65, k66, k67, k68, k69, \
+    k70, k71 \
 }
 
-void my_set_rgb_matrix_color_line(int line,  uint8_t red, uint8_t green, uint8_t blue) {
-  if (line == 0 || line == 1 || line == 2) {
-    // Left
-    rgb_matrix_set_color(line, red, green, blue);
-    rgb_matrix_set_color(line+5, red, green, blue);
-    rgb_matrix_set_color(line+10, red, green, blue);
-    rgb_matrix_set_color(line+15, red, green, blue);
-    rgb_matrix_set_color(line+20, red, green, blue);
-    rgb_matrix_set_color(line+25, red, green, blue);
-    /* rgb_matrix_set_color(line+29, red, green, blue); */
-    // Right
-    /* rgb_matrix_set_color(line+65, red, green, blue); */
-    rgb_matrix_set_color(line+61, red, green, blue);
-    rgb_matrix_set_color(line+56, red, green, blue);
-    rgb_matrix_set_color(line+51, red, green, blue);
-    rgb_matrix_set_color(line+46, red, green, blue);
-    rgb_matrix_set_color(line+41, red, green, blue);
-    rgb_matrix_set_color(line+36, red, green, blue);
-  } else if (line == 3) {
-    // Left
-    rgb_matrix_set_color(3, red, green, blue);
-    rgb_matrix_set_color(8, red, green, blue);
-    rgb_matrix_set_color(13, red, green, blue);
-    rgb_matrix_set_color(18, red, green, blue);
-    rgb_matrix_set_color(23, red, green, blue);
-    rgb_matrix_set_color(28, red, green, blue);
-    // Right
-    rgb_matrix_set_color(64, red, green, blue);
-    rgb_matrix_set_color(59, red, green, blue);
-    rgb_matrix_set_color(54, red, green, blue);
-    rgb_matrix_set_color(49, red, green, blue);
-    rgb_matrix_set_color(44, red, green, blue);
-    rgb_matrix_set_color(39, red, green, blue);
-  } else if (line == 4) {
-    // Left
-    /* rgb_matrix_set_color(4, red, green, blue); */
-    /* rgb_matrix_set_color(9, red, green, blue); */
-    /* rgb_matrix_set_color(14, red, green, blue); */
-    /* rgb_matrix_set_color(19, red, green, blue); */
-    rgb_matrix_set_color(24, red, green, blue);
-    rgb_matrix_set_color(32, red, green, blue);
-    rgb_matrix_set_color(33, red, green, blue);
-    /* rgb_matrix_set_color(34, red, green, blue); */
-    rgb_matrix_set_color(35, red, green, blue);
-    // Right
-    rgb_matrix_set_color(60, red, green, blue);
-    /* rgb_matrix_set_color(55, red, green, blue); */
-    /* rgb_matrix_set_color(50, red, green, blue); */
-    /* rgb_matrix_set_color(45, red, green, blue); */
-    /* rgb_matrix_set_color(40, red, green, blue); */
-    rgb_matrix_set_color(68, red, green, blue);
-    rgb_matrix_set_color(69, red, green, blue);
-    /* rgb_matrix_set_color(70, red, green, blue); */
-    rgb_matrix_set_color(71, red, green, blue);
-  }
+// LED map for each layer - using LED_LAYOUT for easy visualization
+const uint8_t PROGMEM ledmap[][72][3] = {
+    [QWER] = LED_LAYOUT(
+        ___,             {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, ___,                           ___,             {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW},
+        {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, ___,                           ___,             {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW}, {RGB_ORANGE_YELLOW},
+        {RGB_GREEN},     {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN},         ___,                           ___,             {RGB_GREEN},         {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN_LIGHT},   {RGB_GREEN},
+        {RGB_CYAN},      {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},                                                          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},          {RGB_CYAN},
+        ___,             ___,                 ___,                 ___,                 {RGB_BLUE_LIGHT},                         {RGB_BLUE_LIGHT},              {RGB_BLUE_LIGHT},                     {RGB_BLUE_LIGHT},    ___,                 ___,                 ___,                 ___,
+                                                                   {RGB_BLUE_LIGHT},    {RGB_BLUE_LIGHT},    ___,                           ___,             {RGB_BLUE_LIGHT},    {RGB_BLUE_LIGHT}
+    ),
+    [NUMB] = LED_LAYOUT(
+        {RGB_RED},       ___,        ___,        ___,        ___,        ___,        ___,                           ___,        ___,        ___,        ___,        ___,        ___,        ___,
+        ___,             {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, ___,                           ___,        ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW_GREEN},
+        ___,             {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE}, ___,                           ___,        ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW_GREEN},
+        ___,             {RGB_BLUE}, {RGB_BLUE}, {RGB_BLUE_BRIGHT}, {RGB_BLUE_BRIGHT}, {RGB_BLUE_BRIGHT},                                   ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW}, {RGB_YELLOW_GREEN},
+        ___,             ___,        ___,        ___,        ___,                    ___,                           ___,                    {RGB_WHITE}, ___,        ___,        ___,        ___,
+                                                 ___,        ___,        ___,                           ___,        ___,        ___
+    ),
+    [SYMB] = LED_LAYOUT(
+        ___,        ___,        ___,        ___,        ___,        ___,        ___,                           ___,        ___,        ___,        ___,        ___,        ___,        ___,
+        ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, ___,      ___,        ___,                           ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, ___,        ___,        ___,
+        ___,        ___,        ___,        ___,        ___,        ___,        ___,                           ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, ___,        ___,        ___,
+        ___,        ___,        ___,        {RGB_YELLOW}, {RGB_YELLOW}, ___,                                               ___,        ___,        ___,        ___,        ___,        ___,
+        ___,        ___,        ___,        ___,        ___,                    ___,                           ___,                    ___,        ___,        ___,        ___,        ___,
+                                            ___,        ___,        ___,                           ___,        ___,        ___
+    ),
+    [NAVI] = LED_LAYOUT(
+        {RGB_RED},      ___,        ___,        ___,        ___,        ___,        ___,                           ___,        ___,        ___,        ___,        ___,        ___,        {RGB_RED},
+        ___,            ___,        ___,        ___,        ___,        ___,        ___,                           ___,        {RGB_WHITE}, ___,        {RGB_BLUE_LIGHT}, {RGB_PURPLE}, {RGB_PURPLE}, ___,
+        ___,            ___,        {RGB_GREEN_MEDIA}, ___,  ___,        ___,        ___,                           ___,        ___,        ___,        {RGB_BLUE_LIGHT}, {RGB_BLUE_LIGHT}, {RGB_PURPLE}, ___,
+        ___,            ___,        ___,        {RGB_GREEN_MEDIA}, {RGB_GREEN_MEDIA}, ___,                                   {RGB_PURPLE_VOL}, ___,     ___,        {RGB_BLUE_LIGHT}, ___,        ___,
+        ___,            ___,        ___,        ___,        ___,                    {RGB_PURPLE_VOL},              {RGB_PURPLE_VOL},        ___,        ___,        ___,        ___,        ___,
+                                                ___,        ___,        ___,                           ___,        ___,        ___
+    ),
+};
+
+void set_layer_color(int layer) {
+    for (int i = 0; i < 72; i++) {
+        uint8_t r = pgm_read_byte(&ledmap[layer][i][0]);
+        uint8_t g = pgm_read_byte(&ledmap[layer][i][1]);
+        uint8_t b = pgm_read_byte(&ledmap[layer][i][2]);
+        rgb_matrix_set_color(i, r, g, b);
+    }
 }
 
 // matrix, to set key with. maybe there is a better way but used ascii generator so i can easily set those visually
@@ -221,119 +234,17 @@ void my_set_rgb_matrix_color_line(int line,  uint8_t red, uint8_t green, uint8_t
 // Runs constantly in the background, in a loop.
 bool rgb_matrix_indicators_user(void) {
   if (rgb_matrix_get_flags() & (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER)) {
-    switch (get_highest_layer(layer_state)) {
+    uint8_t layer = get_highest_layer(layer_state);
+    switch (layer) {
     case QWER:
-      rgb_matrix_set_color_all(RGB_OFF);
-      // Line 1
-      my_set_rgb_matrix_color_line(1,213,144,0);
-      // Line 2
-      my_set_rgb_matrix_color_line(2,27,213,0);
-      my_set_rgb_matrix_color_homerow(206,255,206);
-      // Line 3
-      my_set_rgb_matrix_color_line(3,0,255,167);
-      // Line 4
-      my_set_rgb_matrix_color_line(4,0,113,255);
-      break;
     case NUMB:
-      rgb_matrix_set_color_all(RGB_OFF);
-      
-      rgb_matrix_set_color(0, RGB_RED);
-
-      rgb_matrix_set_color(6, 0, 55, 255); // FX
-      rgb_matrix_set_color(11, 0, 55, 255); // FX
-      rgb_matrix_set_color(16, 0, 55, 255); // FX
-      rgb_matrix_set_color(21, 0, 55, 255); // FX
-      rgb_matrix_set_color(26, 0, 55, 255); // FX
-      rgb_matrix_set_color(7, 0, 55, 255); // FX
-      rgb_matrix_set_color(12, 0, 55, 255); // FX
-      rgb_matrix_set_color(17, 0, 55, 255); // FX
-      rgb_matrix_set_color(22, 0, 55, 255); // FX
-      rgb_matrix_set_color(27, 0, 55, 255); // FX
-      rgb_matrix_set_color(8, 0, 55, 255); // FX
-      rgb_matrix_set_color(13, 0, 55, 255); // FX
-
-    
-      rgb_matrix_set_color(18, 0, 183, 255); // FX
-      rgb_matrix_set_color(23, 0, 183, 255); // FX
-      rgb_matrix_set_color(28, 0, 183, 255); // FX
-      
-      rgb_matrix_set_color(60, 255, 255, 255); // 0
-      rgb_matrix_set_color(47, 255, 199, 0);     // number
-      rgb_matrix_set_color(48, 255, 199, 0);     // number
-      rgb_matrix_set_color(49, 255, 199, 0);     // number
-      rgb_matrix_set_color(52, 255, 199, 0);     // number
-      rgb_matrix_set_color(53, 255, 199, 0);     // number
-      rgb_matrix_set_color(54, 255, 199, 0);     // number
-      rgb_matrix_set_color(57, 255, 199, 0);     // number
-      rgb_matrix_set_color(58, 255, 199, 0);     // number
-      rgb_matrix_set_color(59, 255, 199, 0);     // number
-
-      rgb_matrix_set_color(42, 183, 255, 0);     // calc
-      rgb_matrix_set_color(43, 183, 255, 0);     // calc
-      rgb_matrix_set_color(44, 183, 255, 0);     // calc
-      rgb_matrix_set_color(37, 183, 255, 0);     // calc
-      rgb_matrix_set_color(38, 183, 255, 0);     // calc
-      rgb_matrix_set_color(39, 183, 255, 0);     // calc
-      break;
     case SYMB:
-      rgb_matrix_set_color_all(RGB_OFF);
-      // () {} [] <>
-      rgb_matrix_set_color(11, 255, 199, 0);
-      rgb_matrix_set_color(16, 255, 199, 0);
-      rgb_matrix_set_color(18, 255, 199, 0);
-      rgb_matrix_set_color(23, 255, 199, 0);
-      rgb_matrix_set_color(57, 255, 199, 0);
-      rgb_matrix_set_color(58, 255, 199, 0);
-      rgb_matrix_set_color(52, 255, 199, 0);
-      rgb_matrix_set_color(53, 255, 199, 0);
-
-      // +-=/*
-      // 29 204 67
-
-      // `!~|&%^#
-      // 213, 144, 0
-
-      // "'
-      // 204, 202, 29
-
-      // :;,.
-      // 29, 120, 204
-
-      // @
-      // 174, 29, 204
-      
-      break;
     case NAVI:
       rgb_matrix_set_color_all(RGB_OFF);
-
-      rgb_matrix_set_color(0, RGB_RED);
-      rgb_matrix_set_color(36, RGB_RED);
-
-      // Arrows
-      rgb_matrix_set_color(52, 0, 113, 255);
-      rgb_matrix_set_color(53, 0, 113, 255);
-      rgb_matrix_set_color(58, 0, 113, 255);
-      rgb_matrix_set_color(48, 0, 113, 255);
-      // Home, End, PgUp, PgDown 
-      rgb_matrix_set_color(57, 13, 0, 255);
-      rgb_matrix_set_color(47, 13, 0, 255);
-      rgb_matrix_set_color(42, 13, 0, 255);
-      rgb_matrix_set_color(43, 13, 0, 255);
-
-      // Media
-      rgb_matrix_set_color(12, 27, 213, 0);
-      rgb_matrix_set_color(17, 27, 213, 0);
-      rgb_matrix_set_color(22, 27, 213, 0);
-
-      // Volume
-      rgb_matrix_set_color(35, 170, 0, 255);
-      rgb_matrix_set_color(71, 170, 0, 255);
-      rgb_matrix_set_color(64, 170, 0, 255);
-
-      // PrintScreen
-      rgb_matrix_set_color(62, 255, 255, 255);
+      set_layer_color(layer);
       break;
     case MOUS:
+      // MOUS layer has no custom LED configuration
       break;
     default:
       rgb_matrix_set_color_all(RGB_OFF);
