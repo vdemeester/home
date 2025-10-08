@@ -181,8 +181,8 @@
   (backup-inhibited t)     ; No backup files
   (tab-always-indent 'complete)
   (enable-local-variables :all)
-  (select-enable-clipboard t)
-  (select-enable-primary t)
+  ;; (select-enable-clipboard t)
+  ;; (select-enable-primary t)
   (comment-multi-line t)
   (make-backup-files nil)
   (read-extended-command-predicate #'command-completion-default-include-p)
