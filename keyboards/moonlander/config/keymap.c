@@ -35,9 +35,20 @@ enum layers {
 
 enum custom_keycodes {
     VRSN = SAFE_RANGE,
+    FR_QUOT,
+    FR_E_AIGU,
+    FR_E_GRAVE,
+    FR_A_GRAVE,
 };
 
+const key_override_t circ_exclamation_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_CIRC, KC_EXLM, 1 << BEPO);
+const key_override_t dot_colon_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, KC_COLN, 1 << BEPO);
+const key_override_t quote_question_override = ko_make_with_layers(MOD_MASK_SHIFT, FR_QUOT, KC_QUES, 1 << BEPO);
+
 const key_override_t *key_overrides[] = {
+  &circ_exclamation_override,
+  &dot_colon_override,
+  &quote_question_override,
 };
 
 #define COMBO_REF_DEFAULT QWER
@@ -50,21 +61,46 @@ uint8_t combo_ref_from_layer(uint8_t layer){
     return layer;  // important if default is not in case.
 }
 
+enum combos {
+  TO_BEPO, TO_ERGOL, TO_QWERTY,
+  TOGGLE_MOUSE,
+  BEPO_ESC, QWERTY_ESC,
+};
+
 const uint16_t PROGMEM combo_to_bepo[] = {LT(NAVI,KC_BSPC), SFTLLCK, COMBO_END};
 const uint16_t PROGMEM combo_to_ergol[] = {LT(NUMB,KC_SPC), LT(SYMB, KC_ENT), COMBO_END};
 const uint16_t PROGMEM combo_to_qwerty[] = {KC_DEL, KC_RALT, COMBO_END};
-const uint16_t PROGMEM combo_qwe_escape[] = {ALT_L, GUI_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_toggle_mouse[] = {KC_Q, KC_R, COMBO_END};
+
+const uint16_t PROGMEM combo_bepo_escape[] = {HM_ALT_R, HM_GUI_N, COMBO_END};
+const uint16_t PROGMEM combo_qwe_escape[] = {HM_ALT_L, HM_GUI_SCLN, COMBO_END};
 
 combo_t key_combos[] = {
   // Layers
-  COMBO(combo_to_bepo, TO(BEPO)),
-  COMBO(combo_to_ergol, TO(ERGL)),
-  COMBO(combo_to_qwerty, TO(QWER)),
-  COMBO(combo_toggle_mouse, TG(MOUS)),
+  [TO_BEPO] = COMBO(combo_to_bepo, TO(BEPO)),
+  [TO_ERGOL] = COMBO(combo_to_ergol, TO(ERGL)),
+  [TO_QWERTY] = COMBO(combo_to_qwerty, TO(QWER)),
+  [TOGGLE_MOUSE] = COMBO(combo_toggle_mouse, TG(MOUS)),
   // Others
-  COMBO(combo_qwe_escape, KC_ESC),
+  [QWERTY_ESC] = COMBO(combo_qwe_escape, KC_ESC),
+  [BEPO_ESC] = COMBO(combo_bepo_escape, KC_ESC),
 };
+
+bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
+    switch (combo_index) {
+        case BEPO_ESC:
+            if (layer_state_is(BEPO)) {
+                return true;
+            }
+	    return false;
+        case QWERTY_ESC:
+            if (layer_state_is(QWER)) {
+                return true;
+            }
+	    return false;
+    }
+    return true;
+}
 
 tap_dance_action_t tap_dance_actions[] = {
 };
@@ -73,30 +109,27 @@ tap_dance_action_t tap_dance_actions[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BEPO] = LAYOUT(
         KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
-        // KC_TAB,  KC_B,    KC_É,    KC_P,    KC_O,    KC_È,    XXXXXXX,           XXXXXXX, caret,    KC_V,    KC_D,    KC_L,    KC_J,    KC_Z,
-        KC_EQL,  GUI_A,    ALT_S,    SFT_D,    CTL_F,    HYP_G,    XXXXXXX,           XXXXXXX, HYP_H,    CTL_J,    SFT_K,    ALT_L,    GUI_SCLN, KC_QUOT,
-        // KC_EQL,  KC_A,    KC_U,    KC_I,    KC_E,    KC_COM,  XXXXXXX,           XXXXXXX,  KC_H,    KC_J,    KC_K,    KC_L,    LT(NAVI, KC_SCLN), LGUI_T(KC_QUOT),
-        KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
-        //KC_GRV, LCTL_T(KC_Z),KC_X,KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  RCTL_T(KC_SLSH), KC_RSFT,
-        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  _______,               _______,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
-	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  SFTLLCK,  LT(SYMB, KC_ENT)
+        KC_TAB,  KC_B,    FR_E_AIGU,    KC_P,    KC_O,    FR_E_GRAVE,    XXXXXXX,           XXXXXXX, KC_CIRC,    KC_V,    KC_D,    KC_L,    KC_J,    KC_Z,
+        KC_EQL,  HM_GUI_A,    HM_ALT_U,    HM_SFT_I,    HM_CTL_E,    HM_HYP_SCLN,    XXXXXXX,           XXXXXXX, HM_HYP_C,    HM_CTL_T,    HM_SFT_S,    HM_ALT_R,    HM_GUI_N, KC_M,
+        KC_GRV,  FR_A_GRAVE,    KC_Y,    KC_X,    KC_DOT,    KC_K,                                FR_QUOT,    KC_Q,    KC_G, KC_H,  KC_F, KC_W,
+        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  KC_LSFT,  LT(SYMB, KC_ENT)
     ),
     [ERGL] = LAYOUT(
         KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
-        KC_EQL,  GUI_A,    ALT_S,    SFT_D,    CTL_F,    HYP_G,    XXXXXXX,           XXXXXXX, HYP_H,    CTL_J,    SFT_K,    ALT_L,    GUI_SCLN, KC_QUOT,
+        KC_EQL,  HM_GUI_A,    HM_ALT_S,    HM_SFT_D,    HM_CTL_F,    HM_HYP_G,    XXXXXXX,           XXXXXXX, HM_HYP_H,    HM_CTL_J,    HM_SFT_K,    HM_ALT_L,    HM_GUI_SCLN, KC_QUOT,
         KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
-        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  _______,               _______,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
-	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  SFTLLCK,  LT(SYMB, KC_ENT)
+        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  KC_LSFT,  LT(SYMB, KC_ENT)
     ),
     [QWER] = LAYOUT(
         KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
-        KC_EQL,  GUI_A,    ALT_S,    SFT_D,    CTL_F,    HYP_G,    XXXXXXX,           XXXXXXX, HYP_H,    CTL_J,    SFT_K,    ALT_L,    GUI_SCLN, KC_QUOT,
+        KC_EQL,  HM_GUI_A,    HM_ALT_S,    HM_SFT_D,    HM_CTL_F,    HM_HYP_G,    XXXXXXX,           XXXXXXX, HM_HYP_H,    HM_CTL_J,    HM_SFT_K,    HM_ALT_L,    HM_GUI_SCLN, KC_QUOT,
         KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
-        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  _______,               _______,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
-	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  SFTLLCK,  LT(SYMB, KC_ENT)
+        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  KC_LSFT,  LT(SYMB, KC_ENT)
     ),
 
     [SYMB] = LAYOUT(
@@ -149,13 +182,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
 	    break;
+	case FR_QUOT:
+	  if (record->event.pressed) {
+	    SEND_STRING(FR_QUOT_M);
+	  }
+	  break;
+	case FR_E_AIGU:
+	  if (record->event.pressed) {
+	    SEND_STRING(FR_E_AIGU_M);
+	  }
+	  break;
+	case FR_E_GRAVE:
+	  if (record->event.pressed) {
+	    SEND_STRING(FR_E_GRAVE_M);
+	  }
+	  break;
+	case FR_A_GRAVE:
+	  if (record->event.pressed) {
+	    SEND_STRING(FR_A_GRAVE_M);
+	  }
+	  break;
 	}
     }
     return true;
 }
 
 extern rgb_config_t rgb_matrix_config;
-
 
 // Line 2 home-row (7 12 17 22 [27] and [63] 58 53 48 43)
 void my_set_rgb_matrix_color_homerow(uint8_t red, uint8_t green, uint8_t blue) {
@@ -394,4 +446,12 @@ bool rgb_matrix_indicators_user(void) {
     }
   }
   return false;
+}
+
+void caps_word_set_user(bool active) {
+    if (active) {
+      rgb_matrix_set_color(40, 255, 255, 255);
+    } else {
+      rgb_matrix_set_color(40, RGB_OFF);
+    }
 }
