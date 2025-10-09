@@ -37,8 +37,11 @@ enum custom_keycodes {
     VRSN = SAFE_RANGE,
     FR_QUOT,
     FR_E_AIGU,
+    FR_E_AIGU_CAPS,
     FR_E_GRAVE,
+    FR_E_GRAVE_CAPS,
     FR_A_GRAVE,
+    FR_A_GRAVE_CAPS,
 };
 
 const key_override_t circ_exclamation_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_CIRC, KC_EXLM, 1 << BEPO);
@@ -191,17 +194,54 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	  break;
 	case FR_E_AIGU:
 	  if (record->event.pressed) {
-	    SEND_STRING(FR_E_AIGU_M);
+	    if (get_mods() & MOD_MASK_SHIFT) {
+	      // É
+	      del_mods(MOD_MASK_SHIFT);
+	      SEND_STRING(FR_E_AIGU_CAPS_M);
+	    } else {
+	      // é
+	      SEND_STRING(FR_E_AIGU_M);
+	    }
+	  }
+	  break;
+	case FR_E_AIGU_CAPS:
+	  if (record->event.pressed) {
+	    SEND_STRING(FR_E_AIGU_CAPS_M);
 	  }
 	  break;
 	case FR_E_GRAVE:
 	  if (record->event.pressed) {
-	    SEND_STRING(FR_E_GRAVE_M);
+	    if (get_mods() & MOD_MASK_SHIFT) {
+	      // 
+	      del_mods(MOD_MASK_SHIFT);
+	      SEND_STRING(FR_E_GRAVE_CAPS_M); 
+	    } else {
+	      // è
+	      SEND_STRING(FR_E_GRAVE_M); 
+	    }
+	  }
+	  break;
+	case FR_E_GRAVE_CAPS:
+	  if (record->event.pressed) {
+	    SEND_STRING(FR_E_GRAVE_CAPS_M);
 	  }
 	  break;
 	case FR_A_GRAVE:
 	  if (record->event.pressed) {
-	    SEND_STRING(FR_A_GRAVE_M);
+	    
+	    if (get_mods() & MOD_MASK_SHIFT) {
+	      // 
+	      del_mods(MOD_MASK_SHIFT);
+	      SEND_STRING(FR_A_GRAVE_CAPS_M);
+	    } else {
+	      // à
+	      SEND_STRING(FR_A_GRAVE_M); 
+	    }
+	  }
+	  break;
+	case FR_A_GRAVE_CAPS:
+	  if (record->event.pressed) {
+	    SEND_STRING(FR_A_GRAVE_CAPS_M);
 	  }
 	  break;
 	}
