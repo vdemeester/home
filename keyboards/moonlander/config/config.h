@@ -38,7 +38,7 @@
 #define HM_CTL_F LCTL_T(KC_F) // Qwerty
 #define HM_CTL_E LCTL_T(KC_E) // Bépo
 #define HM_HYP_G HYPR_T(KC_G) // Qwerty
-#define HM_HYP_SCLN HYPR_T(KC_SCLN) // Bépo
+#define HM_HYP_COMM HYPR_T(KC_COMM) // Bépo
 
 // Right-hand home row mods
 #define HM_HYP_H HYPR_T(KC_H) // Qwerty
