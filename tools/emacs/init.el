@@ -938,6 +938,20 @@ minibuffer, even without explicitly focusing it."
   :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
          ("M-*" . tempel-insert)))
 
+(use-package consult
+  :bind
+  ("M-g M-g" . consult-goto-line)
+  ("M-K" . consult-keep-lines)
+  ("M-s M-b" . consult-buffer)
+  ("M-s M-f" . consult-find)
+  ("M-s M-g" . consult-grep)
+  ("M-s M-r" . consult-ripgrep)
+  ("M-s M-h" . consult-history)
+  ("M-s M-l" . consult-line)
+  ("M-s M-m" . consult-mark)
+  ("M-s M-y" . consult-yank-pop)
+  ("M-s M-s" . consult-outline))
+
 (use-package embark
   :unless noninteractive
   :commands (embark-act embark-dwim embark-prefix-help-command)
@@ -964,6 +978,12 @@ minibuffer, even without explicitly focusing it."
     "Target a link at point of the for github:owner/repo#number"
     )
   )
+
+(use-package embark-consult
+  :after (embark consult)
+  :unless noninteractive
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package pr-review
   :commands (pr-review pr-review-open pr-review-submit-review)
