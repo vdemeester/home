@@ -21,7 +21,7 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
 #include "keymap_us.h"
-#include "keymap_bepo.h"
+#include "keymap_us_international_linux.h"
 
 enum layers {
     BEPO,
@@ -49,11 +49,17 @@ const key_override_t dot_colon_override = ko_make_with_layers(MOD_MASK_SHIFT, KC
 const key_override_t quote_question_override = ko_make_with_layers(MOD_MASK_SHIFT, FR_QUOT, KC_QUES, 1 << BEPO);
 const key_override_t comma_semicolon_override = ko_make_with_layers(MOD_MASK_SHIFT, HM_HYP_COMM, KC_SCLN, 1 << BEPO);
 
+const key_override_t b_pipe_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_B, KC_PIPE, 1 << BEPO, MOD_MASK_SHIFT);
+const key_override_t b_brkp_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_B, US_BRKP, 1 << BEPO);
+
 const key_override_t *key_overrides[] = {
   &circ_exclamation_override,
   &dot_colon_override,
   &quote_question_override,
   &comma_semicolon_override,
+
+  &b_pipe_override,
+  &b_brkp_override,
 };
 
 #define COMBO_REF_DEFAULT QWER
@@ -113,7 +119,11 @@ tap_dance_action_t tap_dance_actions[] = {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BEPO] = LAYOUT(
-        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+	// $  " « » ( ) @ + - / * = %
+	// shift: # 1 2 3 4 5 6 7 8 9 0 ° `
+	// ralt : – — < > [ ] ^ ± − ÷ × ≠ ‰
+	// shift+ralt : ¶ „ “ ” ≤ ≥ _ ¬ ¼ ½ ¾ ′ ″
+        KC_DLR,  KC_1,    US_LDAQ,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
         KC_TAB,  KC_B,    FR_E_AIGU,    KC_P,    KC_O,    FR_E_GRAVE,    XXXXXXX,           XXXXXXX, KC_CIRC,    KC_V,    KC_D,    KC_L,    KC_J,    KC_Z,
         KC_EQL,  HM_GUI_A,    HM_ALT_U,    HM_SFT_I,    HM_CTL_E,    HM_HYP_COMM,    XXXXXXX,           XXXXXXX, HM_HYP_C,    HM_CTL_T,    HM_SFT_S,    HM_ALT_R,    HM_GUI_N, KC_M,
         KC_GRV,  FR_A_GRAVE,    KC_Y,    KC_X,    KC_DOT,    KC_K,                                FR_QUOT,    KC_Q,    KC_G, KC_H,  KC_F, KC_W,
