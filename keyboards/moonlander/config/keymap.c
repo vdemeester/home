@@ -52,6 +52,21 @@ const key_override_t dot_colon_override = ko_make_with_layers(MOD_MASK_SHIFT, KC
 const key_override_t quote_question_override = ko_make_with_layers(MOD_MASK_SHIFT, FR_QUOT, KC_QUES, 1 << BEPO);
 const key_override_t comma_semicolon_override = ko_make_with_layers(MOD_MASK_SHIFT, HM_HYP_COMM, KC_SCLN, 1 << BEPO);
 
+// bépo layer
+// row 0:
+// FIXME: probably convert to macro as it acts weird for some of those, at least 1 (prefix  ̈)
+const key_override_t dquo_one_override = ko_make_with_layers(MOD_MASK_SHIFT, FR_DQUO, KC_1, 1 << BEPO);
+const key_override_t ldaq_two_override = ko_make_with_layers(MOD_MASK_SHIFT, US_LDAQ, KC_2, 1 << BEPO);
+const key_override_t rdaq_three_override = ko_make_with_layers(MOD_MASK_SHIFT, US_RDAQ, KC_3, 1 << BEPO);
+const key_override_t lprn_four_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_LPRN, KC_4, 1 << BEPO);
+const key_override_t rprn_five_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_RPRN, KC_5, 1 << BEPO);
+const key_override_t at_six_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_AT, KC_6, 1 << BEPO);
+const key_override_t plus_seven_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_PLUS, KC_7, 1 << BEPO);
+const key_override_t minus_eight_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_PMNS, KC_8, 1 << BEPO);
+const key_override_t slash_nine_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_PSLS, KC_9, 1 << BEPO);
+const key_override_t star_zero_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_PAST, KC_0, 1 << BEPO);
+
+// row 1
 const key_override_t b_pipe_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_B, KC_PIPE, 1 << BEPO, MOD_MASK_SHIFT);
 const key_override_t b_brkp_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_B, US_BRKP, 1 << BEPO);
 
@@ -61,6 +76,18 @@ const key_override_t *key_overrides[] = {
   &quote_question_override,
   &comma_semicolon_override,
 
+  // bépo
+  // &dollar_ndsh_override,
+  &dquo_one_override,
+  &ldaq_two_override,
+  &rdaq_three_override,
+  &lprn_four_override,
+  &rprn_five_override,
+  &at_six_override,
+  &plus_seven_override,
+  &minus_eight_override,
+  &slash_nine_override,
+  &star_zero_override,
   &b_pipe_override,
   &b_brkp_override,
 };
@@ -126,7 +153,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// shift: # 1 2 3 4 5 6 7 8 9 0 ° `
 	// ralt : – — < > [ ] ^ ± − ÷ × ≠ ‰
 	// shift+ralt : ¶ „ “ ” ≤ ≥ _ ¬ ¼ ½ ¾ ′ ″
-        KC_DLR,  KC_1,    US_LDAQ,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+	// FIXME: should I invert ?
+        KC_DLR,  FR_DQUO,    US_LDAQ,    US_RDAQ,  KC_LPRN,    KC_RPRN,    XXXXXXX,           XXXXXXX, KC_AT,    KC_PLUS,    KC_PMNS,    KC_PSLS,    KC_PAST,    KC_PERC,
         KC_TAB,  KC_B,    FR_E_AIGU,    KC_P,    KC_O,    FR_E_GRAVE,    XXXXXXX,           XXXXXXX, KC_CIRC,    KC_V,    KC_D,    KC_L,    KC_J,    KC_Z,
         KC_EQL,  HM_GUI_A,    HM_ALT_U,    HM_SFT_I,    HM_CTL_E,    HM_HYP_COMM,    XXXXXXX,           XXXXXXX, HM_HYP_C,    HM_CTL_T,    HM_SFT_S,    HM_ALT_R,    HM_GUI_N, KC_M,
         KC_GRV,  FR_A_GRAVE,    KC_Y,    KC_X,    KC_DOT,    KC_K,                                FR_QUOT,    KC_Q,    KC_G, KC_H,  KC_F, KC_W,
@@ -169,7 +197,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [NAVI] = LAYOUT(
         VRSN,    _______,   _______,   _______,   _______,   _______,   _______,           _______, _______,  _______,  _______,  _______, _______,  QK_BOOT,
         _______, _______, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,  _______,           _______, KC_PSCR,   KC_HOME,    KC_UP,    KC_END,    KC_PGUP, _______,
-        _______, KC_HASH, KC_MPRV, KC_MPLY, KC_MNXT, _______,  _______,           _______, _______, KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_PGDN, _______,
+        _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,  _______,           _______, _______, KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_PGDN, _______,
         _______, _______, _______, _______, _______, _______,                              KC_MUTE, _______, _______, _______, _______, _______,
         EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
                                             _______, _______, _______,           _______, _______, _______
