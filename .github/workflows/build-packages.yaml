@@ -6,9 +6,19 @@ permissions:
 on:
   workflow_dispatch: {}
   pull_request:
+    paths:
+      - 'pkgs/**'
+      - 'flake.nix'
+      - 'flake.lock'
+      - '.github/workflows/build-packages.yaml'
   push:
     branches:
       - main
+    paths:
+      - 'pkgs/**'
+      - 'flake.nix'
+      - 'flake.lock'
+      - '.github/workflows/build-packages.yaml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-packages

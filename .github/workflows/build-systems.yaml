@@ -6,9 +6,27 @@ permissions:
 on:
   workflow_dispatch: {}
   pull_request:
+    paths:
+      - 'home/**'
+      - 'systems/**'
+      - 'lib/**'
+      - 'modules/**'
+      - 'tools/**'
+      - 'flake.nix'
+      - 'flake.lock'
+      - '.github/workflows/build-systems.yaml'
   push:
     branches:
       - main
+    paths:
+      - 'home/**'
+      - 'systems/**'
+      - 'lib/**'
+      - 'modules/**'
+      - 'tools/**'
+      - 'flake.nix'
+      - 'flake.lock'
+      - '.github/workflows/build-systems.yaml'
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-systems
   cancel-in-progress: true
