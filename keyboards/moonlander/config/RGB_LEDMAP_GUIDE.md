@@ -26,6 +26,10 @@ RGB_YELLOW_GREEN  // 183, 255, 0
 RGB_PURPLE        // 13, 0, 255
 RGB_GREEN_MEDIA   // 27, 213, 0
 RGB_PURPLE_VOL    // 170, 0, 255
+RGB_MATH_OPS      // 29, 204, 67
+RGB_QUOTES        // 204, 202, 29
+RGB_PUNCTUATION   // 29, 120, 204
+RGB_SPECIAL       // 174, 29, 204
 ```
 
 There's also a shorthand: `___` which expands to `{RGB_OFF}` for cleaner code.
@@ -48,25 +52,8 @@ The LED map uses the `LED_LAYOUT` macro that matches the visual representation o
     // Row 4 - bottom row
     k04, k09, k14, k19, k24,      k35,    k71,      k60, k55, k50, k45, k40,
     // Thumb cluster
-                        k32, k33, k34,    k68, k69, k70
+                        k32, k33, k34,    k70, k69, k68
 )
-
-### 3. LED Matrix Layout
-
-```
-   ┌────┬────┬────┬────┬────┬────┬────┐             ┌────┬────┬────┬────┬────┬────┬────┐
-   │ 0  │ 5  │ 10 │ 15 │ 20 │ 25 │ 29 │             │ 65 │ 61 │ 56 │ 51 │ 46 │ 41 │ 36 │
-   ├────┼────┼────┼────┼────┼────┼────┤             ├────┼────┼────┼────┼────┼────┼────┤
-   │ 1  │ 6  │ 11 │ 16 │ 21 │ 26 │ 30 │             │ 66 │ 62 │ 57 │ 52 │ 47 │ 42 │ 37 │
-   ├────┼────┼────┼────┼────┼────┼────┤             ├────┼────┼────┼────┼────┼────┼────┤
-   │ 2  │ 7  │ 12 │ 17 │ 22 │ 27 │ 31 │             │ 67 │ 63 │ 58 │ 53 │ 48 │ 43 │ 38 │
-   ├────┼────┼────┼────┼────┼────┼────┘             └────┼────┼────┼────┼────┼────┼────┤
-   │ 3  │ 8  │ 13 │ 18 │ 23 │ 28 │                       │ 64 │ 59 │ 54 │ 49 │ 44 │ 39 │
-   ├────┼────┼────┼────┼────┼────┼─────────┐   ┌─────────┼────┼────┼────┼────┼────┼────┤
-   │ 4  │ 9  │ 14 │ 19 │ 24 │    │   35    │   │   71    │    │ 60 │ 55 │ 50 │ 45 │ 40 │
-   └────┴────┴────┴────┴────┼────┼────┬────┤   ├────┬────┼────┼────┴────┴────┴────┴────┘
-                            │ 32 │ 33 │ 34 │   │ 68 │ 69 │ 70 │
-                            └────┴────┴────┘   └────┴────┴────┘
 ```
 
 ## Example: Adding Colors to a Layer
@@ -86,20 +73,7 @@ Using the visual LED_LAYOUT macro, you can easily see which keys have which colo
 ),
 ```
 
-### Example 2: Full Row Configuration
-
-```c
-[MY_LAYER] = LED_LAYOUT(
-    ___,            ___,            ___,            ___,            ___,            ___,            ___,                           ___,            ___,            ___,            ___,            ___,            ___,            ___,
-    {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   ___,                           ___,            {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},   {RGB_YELLOW},
-    ___,            ___,            ___,            ___,            ___,            ___,            ___,                           ___,            ___,            ___,            ___,            ___,            ___,            ___,
-    ___,            ___,            ___,            ___,            ___,            ___,                                                           ___,            ___,            ___,            ___,            ___,            ___,
-    ___,            ___,            ___,            ___,            ___,                            ___,                           ___,                            ___,            ___,            ___,            ___,            ___,
-                                                                    ___,            ___,            ___,                           ___,            ___,            ___
-),
-```
-
-### Example 3: Custom RGB Values
+### Example 2: Custom RGB Values
 
 If you need a color not in the constants, you can still use direct RGB values:
 
@@ -128,11 +102,10 @@ Then use it in LED_LAYOUT:
 
 ## Tips
 
-1. **Use `___` for off keys** - Much cleaner than writing `{RGB_OFF}` repeatedly
+1. **Use `___` shorthand** - Much cleaner than `{RGB_OFF}` everywhere
 2. **Visual alignment** - The LED_LAYOUT matches the physical keyboard layout, making it easy to see which key is which
-3. **Shorthand is your friend** - `___` saves typing and makes the layout more readable
-4. **Test incrementally** - Add a few keys at a time and test to ensure they work as expected
-5. **Match the keymap** - The LED_LAYOUT uses the same visual structure as the keymap's LAYOUT macro
+3. **Test incrementally** - Add a few keys at a time and test to ensure they work as expected
+4. **Match the keymap** - The LED_LAYOUT uses the same visual structure as the keymap's LAYOUT macro
 
 ## Benefits of This Approach
 
@@ -142,3 +115,21 @@ Then use it in LED_LAYOUT:
 - ✅ **Less repetition**: `___` shorthand for off keys
 - ✅ **Consistency**: Same visual structure as the keymap's LAYOUT macro
 - ✅ **Intuitive**: No need to remember LED index numbers - just position in the layout
+
+## LED Matrix Diagram
+
+```
+   ┌────┬────┬────┬────┬────┬────┬────┐             ┌────┬────┬────┬────┬────┬────┬────┐
+   │ 0  │ 5  │ 10 │ 15 │ 20 │ 25 │ 29 │             │ 65 │ 61 │ 56 │ 51 │ 46 │ 41 │ 36 │
+   ├────┼────┼────┼────┼────┼────┼────┤             ├────┼────┼────┼────┼────┼────┼────┤
+   │ 1  │ 6  │ 11 │ 16 │ 21 │ 26 │ 30 │             │ 66 │ 62 │ 57 │ 52 │ 47 │ 42 │ 37 │
+   ├────┼────┼────┼────┼────┼────┼────┤             ├────┼────┼────┼────┼────┼────┼────┤
+   │ 2  │ 7  │ 12 │ 17 │ 22 │ 27 │ 31 │             │ 67 │ 63 │ 58 │ 53 │ 48 │ 43 │ 38 │
+   ├────┼────┼────┼────┼────┼────┼────┘             └────┼────┼────┼────┼────┼────┼────┤
+   │ 3  │ 8  │ 13 │ 18 │ 23 │ 28 │                       │ 64 │ 59 │ 54 │ 49 │ 44 │ 39 │
+   ├────┼────┼────┼────┼────┼────┼─────────┐   ┌─────────┼────┼────┼────┼────┼────┼────┤
+   │ 4  │ 9  │ 14 │ 19 │ 24 │    │   35    │   │   71    │    │ 60 │ 55 │ 50 │ 45 │ 40 │
+   └────┴────┴────┴────┴────┼────┼────┬────┤   ├────┬────┼────┼────┴────┴────┴────┴────┘
+                            │ 32 │ 33 │ 34 │   │ 70 │ 69 │ 68 │
+                            └────┴────┴────┘   └────┴────┴────┘
+```
