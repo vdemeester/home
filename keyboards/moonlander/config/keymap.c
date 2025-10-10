@@ -35,7 +35,10 @@ enum layers {
 
 enum custom_keycodes {
     VRSN = SAFE_RANGE,
+    FR_DQUO,
     FR_QUOT,
+    FR_GRAVE,
+    FR_CIRC,
     FR_E_AIGU,
     FR_E_AIGU_CAPS,
     FR_E_GRAVE,
@@ -148,11 +151,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [SYMB] = LAYOUT(
-        VRSN,    _______,   _______,   _______,   _______,   _______,   _______,           _______, _______,  _______,  _______,  _______, _______,  _______,
-        KC_BSLS, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE, _______,           _______, KC_UP,   KC_7,    KC_8,    KC_9,    KC_ASTR, KC_F12,
-        _______, KC_EXLM, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,  _______,           _______, KC_DOWN, KC_4,    KC_5,    KC_6,    KC_PLUS, _______,
-        _______, KC_TILD, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD,                             KC_AMPR, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
-        EE_CLR,  _______, _______, _______, _______,          RM_VALU,           RM_TOGG,          _______, KC_DOT,  KC_0,    KC_EQL,  _______,
+        VRSN,    _______,   _______,   _______,   _______,   _______,   XXXXXXX,           XXXXXXX, _______,  _______,  _______,  _______, _______,  _______,
+        KC_BSLS, FR_GRAVE, KC_LABK, KC_RABK, KC_PMNS, KC_PIPE,  XXXXXXX,           XXXXXXX, KC_CIRC, KC_LCBR, KC_RCBR, KC_DLR,  FR_CIRC, XXXXXXX,
+        XXXXXXX, KC_EXLM,  KC_PAST, KC_PSLS, KC_EQL,  KC_AMPR,  XXXXXXX,           XXXXXXX, KC_HASH, KC_LPRN, KC_RPRN, KC_SCLN, FR_DQUO, XXXXXXX,
+        XXXXXXX, KC_TILD,  KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT,   KC_COLN, KC_COMM, KC_DOT,  FR_QUOT, XXXXXXX,
+        XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, _______,           RM_VALU,           RM_TOGG,          _______, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
                                             RM_HUED, RM_VALD, RM_HUEU, TOGGLE_LAYER_COLOR,_______, _______
     ),
     [NUMB] = LAYOUT(
@@ -197,9 +200,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
 	    break;
+	case FR_DQUO:
+	  if (record->event.pressed) {
+	    SEND_STRING(FR_DQUO_M);
+	  }
+	  break;
 	case FR_QUOT:
 	  if (record->event.pressed) {
 	    SEND_STRING(FR_QUOT_M);
+	  }
+	  break;
+	case FR_GRAVE:
+	  if (record->event.pressed) {
+	    SEND_STRING(FR_GRAVE_M);
+	  }
+	  break;
+	case FR_CIRC:
+	  if (record->event.pressed) {
+	    SEND_STRING(FR_CIRC_M);
 	  }
 	  break;
 	case FR_E_AIGU:
