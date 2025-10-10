@@ -1,0 +1,42 @@
+name: keyboard-moonlander
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - 'keyboards/moonlander/**'
+      - 'keyboards/lib/**'
+      - '.github/workflows/build-keyboard-moonlander.yaml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'keyboards/moonlander/**'
+      - 'keyboards/lib/**'
+      - '.github/workflows/build-keyboard-moonlander.yaml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-keyboard-moonlander
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: cachix/install-nix-action@3715ab1a11cac9e991980d7b4a28d80c7ebdd8f9 # v27
+      - name: Build moonlander firmware
+        run: |
+          cd keyboards/moonlander
+          ./go.sh checkout
+          ./go.sh update
+          ./go.sh build
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: moonlander-firmware
+          path: keyboards/moonlander/build/zsa_moonlander_vincent.bin
+          if-no-files-found: error
