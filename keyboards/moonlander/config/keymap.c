@@ -24,27 +24,27 @@
 #include "keymap_us_international_linux.h"
 
 enum layers {
-    BEPO,
-    ERGL,
-    QWER,
-    SYMB,
-    NUMB,
-    NAVI,
-    MOUS,
+  BEPO,
+  ERGL,
+  QWER,
+  SYMB,
+  NUMB,
+  NAVI,
+  MOUS,
 };
 
 enum custom_keycodes {
-    VRSN = SAFE_RANGE,
-    FR_DQUO,
-    FR_QUOT,
-    FR_GRAVE,
-    FR_CIRC,
-    FR_E_AIGU,
-    FR_E_AIGU_CAPS,
-    FR_E_GRAVE,
-    FR_E_GRAVE_CAPS,
-    FR_A_GRAVE,
-    FR_A_GRAVE_CAPS,
+  VRSN = SAFE_RANGE,
+  FR_DQUO,
+  FR_QUOT,
+  FR_GRAVE,
+  FR_CIRC,
+  FR_E_AIGU,
+  FR_E_AIGU_CAPS,
+  FR_E_GRAVE,
+  FR_E_GRAVE_CAPS,
+  FR_A_GRAVE,
+  FR_A_GRAVE_CAPS,
 };
 
 const key_override_t circ_exclamation_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_CIRC, KC_EXLM, 1 << BEPO);
@@ -95,11 +95,11 @@ const key_override_t *key_overrides[] = {
 #define COMBO_REF_DEFAULT QWER
 
 uint8_t combo_ref_from_layer(uint8_t layer){
-    switch (get_highest_layer(layer_state)){
-        case BEPO: return QWER;
-        default: return QWER;
-    }
-    return layer;  // important if default is not in case.
+  switch (get_highest_layer(layer_state)){
+  case BEPO: return QWER;
+  default: return QWER;
+  }
+  return layer;  // important if default is not in case.
 }
 
 enum combos {
@@ -128,19 +128,19 @@ combo_t key_combos[] = {
 };
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
-    switch (combo_index) {
-        case BEPO_ESC:
-            if (layer_state_is(BEPO)) {
-                return true;
-            }
-	    return false;
-        case QWERTY_ESC:
-            if (layer_state_is(QWER)) {
-                return true;
-            }
-	    return false;
+  switch (combo_index) {
+  case BEPO_ESC:
+    if (layer_state_is(BEPO)) {
+      return true;
     }
-    return true;
+    return false;
+  case QWERTY_ESC:
+    if (layer_state_is(QWER)) {
+      return true;
+    }
+    return false;
+  }
+  return true;
 }
 
 tap_dance_action_t tap_dance_actions[] = {
@@ -148,176 +148,176 @@ tap_dance_action_t tap_dance_actions[] = {
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [BEPO] = LAYOUT(
-	// $  " « » ( ) @ + - / * = %
-	// shift: # 1 2 3 4 5 6 7 8 9 0 ° `
-	// ralt : – — < > [ ] ^ ± − ÷ × ≠ ‰
-	// shift+ralt : ¶ „ “ ” ≤ ≥ _ ¬ ¼ ½ ¾ ′ ″
-	// FIXME: should I invert ?
-        KC_DLR,  FR_DQUO,    US_LDAQ,    US_RDAQ,  KC_LPRN,    KC_RPRN,    XXXXXXX,           XXXXXXX, KC_AT,    KC_PLUS,    KC_PMNS,    KC_PSLS,    KC_PAST,    KC_PERC,
-        KC_TAB,  KC_B,    FR_E_AIGU,    KC_P,    KC_O,    FR_E_GRAVE,    XXXXXXX,           XXXXXXX, KC_CIRC,    KC_V,    KC_D,    KC_L,    KC_J,    KC_Z,
-        KC_EQL,  HM_GUI_A,    HM_ALT_U,    HM_SFT_I,    HM_CTL_E,    HM_HYP_COMM,    XXXXXXX,           XXXXXXX, HM_HYP_C,    HM_CTL_T,    HM_SFT_S,    HM_ALT_R,    HM_GUI_N, KC_M,
-        KC_GRV,  FR_A_GRAVE,    KC_Y,    KC_X,    KC_DOT,    KC_K,                                FR_QUOT,    KC_Q,    KC_G, KC_H,  KC_F, KC_W,
-        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
-	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  KC_LSFT,  LT(SYMB, KC_ENT)
-    ),
-    [ERGL] = LAYOUT(
-        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
-        KC_EQL,  HM_GUI_A,    HM_ALT_S,    HM_SFT_D,    HM_CTL_F,    HM_HYP_G,    XXXXXXX,           XXXXXXX, HM_HYP_H,    HM_CTL_J,    HM_SFT_K,    HM_ALT_L,    HM_GUI_SCLN, KC_QUOT,
-        KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
-        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
-	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  KC_LSFT,  LT(SYMB, KC_ENT)
-    ),
-    [QWER] = LAYOUT(
-        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
-        KC_EQL,  HM_GUI_A,    HM_ALT_S,    HM_SFT_D,    HM_CTL_F,    HM_HYP_G,    XXXXXXX,           XXXXXXX, HM_HYP_H,    HM_CTL_J,    HM_SFT_K,    HM_ALT_L,    HM_GUI_SCLN, KC_QUOT,
-        KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
-        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
-	LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  KC_LSFT,  LT(SYMB, KC_ENT)
-    ),
+  [BEPO] = LAYOUT(
+		  // $  " « » ( ) @ + - / * = %
+		  // shift: # 1 2 3 4 5 6 7 8 9 0 ° `
+		  // ralt : – — < > [ ] ^ ± − ÷ × ≠ ‰
+		  // shift+ralt : ¶ „ “ ” ≤ ≥ _ ¬ ¼ ½ ¾ ′ ″
+		  // FIXME: should I invert ?
+		  KC_DLR,  FR_DQUO,    US_LDAQ,    US_RDAQ,  KC_LPRN,    KC_RPRN,    XXXXXXX,           XXXXXXX, KC_AT,    KC_PLUS,    KC_PMNS,    KC_PSLS,    KC_PAST,    KC_PERC,
+		  KC_TAB,  KC_B,    FR_E_AIGU,    KC_P,    KC_O,    FR_E_GRAVE,    XXXXXXX,           XXXXXXX, KC_CIRC,    KC_V,    KC_D,    KC_L,    KC_J,    KC_Z,
+		  KC_EQL,  HM_GUI_A,    HM_ALT_U,    HM_SFT_I,    HM_CTL_E,    HM_HYP_COMM,    XXXXXXX,           XXXXXXX, HM_HYP_C,    HM_CTL_T,    HM_SFT_S,    HM_ALT_R,    HM_GUI_N, KC_M,
+		  KC_GRV,  FR_A_GRAVE,    KC_Y,    KC_X,    KC_DOT,    KC_K,                                FR_QUOT,    KC_Q,    KC_G, KC_H,  KC_F, KC_W,
+		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+		  LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  KC_LSFT,  LT(SYMB, KC_ENT)
+		  ),
+  [ERGL] = LAYOUT(
+		  KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+		  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
+		  KC_EQL,  HM_GUI_A,    HM_ALT_S,    HM_SFT_D,    HM_CTL_F,    HM_HYP_G,    XXXXXXX,           XXXXXXX, HM_HYP_H,    HM_CTL_J,    HM_SFT_K,    HM_ALT_L,    HM_GUI_SCLN, KC_QUOT,
+		  KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
+		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+		  LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  KC_LSFT,  LT(SYMB, KC_ENT)
+		  ),
+  [QWER] = LAYOUT(
+		  KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,           XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+		  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
+		  KC_EQL,  HM_GUI_A,    HM_ALT_S,    HM_SFT_D,    HM_CTL_F,    HM_HYP_G,    XXXXXXX,           XXXXXXX, HM_HYP_H,    HM_CTL_J,    HM_SFT_K,    HM_ALT_L,    HM_GUI_SCLN, KC_QUOT,
+		  KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
+		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+		  LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  KC_LSFT,  LT(SYMB, KC_ENT)
+		  ),
 
-    [SYMB] = LAYOUT(
-        VRSN,    _______,   _______,   _______,   _______,   _______,   XXXXXXX,           XXXXXXX, _______,  _______,  _______,  _______, _______,  _______,
-        KC_BSLS, FR_GRAVE, KC_LABK, KC_RABK, KC_PMNS, KC_PIPE,  XXXXXXX,           XXXXXXX, KC_CIRC, KC_LCBR, KC_RCBR, KC_DLR,  FR_CIRC, XXXXXXX,
-        XXXXXXX, KC_EXLM,  KC_PAST, KC_PSLS, KC_EQL,  KC_AMPR,  XXXXXXX,           XXXXXXX, KC_HASH, KC_LPRN, KC_RPRN, KC_SCLN, FR_DQUO, XXXXXXX,
-        XXXXXXX, KC_TILD,  KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT,   KC_COLN, KC_COMM, KC_DOT,  FR_QUOT, XXXXXXX,
-        XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, _______,           RM_VALU,           RM_TOGG,          _______, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
-                                            RM_HUED, RM_VALD, RM_HUEU, TOGGLE_LAYER_COLOR,_______, _______
-    ),
-    [NUMB] = LAYOUT(
-        VRSN,    _______,   _______,   _______,   _______,   _______,   _______,           _______, _______,  _______,  _______,  _______, _______,  _______,
-        _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,           _______, _______, KC_7,    KC_8,    KC_9,    KC_PAST, KC_PSLS,
-        _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,           _______, _______, KC_4,    KC_5,    KC_6,    KC_PMNS, KC_PPLS,
-        _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,                              _______, KC_1,    KC_2,    KC_3,    KC_PDOT, KC_PCMM,
-        EE_CLR,  _______, _______, _______, _______,          _______,           _______,          KC_0, _______, _______,    _______, _______,
-                                            _______, _______, _______,           _______, _______, _______
-    ),
-    [NAVI] = LAYOUT(
-        VRSN,    _______,   _______,   _______,   _______,   _______,   _______,           _______, _______,  _______,  _______,  _______, _______,  QK_BOOT,
-        _______, _______, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,  _______,           _______, KC_PSCR,   KC_HOME,    KC_UP,    KC_END,    KC_PGUP, _______,
-        _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,  _______,           _______, _______, KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_PGDN, _______,
-        _______, _______, _______, _______, _______, _______,                              KC_MUTE, _______, _______, _______, _______, _______,
-        EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
-                                            _______, _______, _______,           _______, _______, _______
-    ),
+  [SYMB] = LAYOUT(
+		  VRSN,    _______,   _______,   _______,   _______,   _______,   XXXXXXX,           XXXXXXX, _______,  _______,  _______,  _______, _______,  _______,
+		  KC_BSLS, FR_GRAVE, KC_LABK, KC_RABK, KC_PMNS, KC_PIPE,  XXXXXXX,           XXXXXXX, KC_CIRC, KC_LCBR, KC_RCBR, KC_DLR,  FR_CIRC, XXXXXXX,
+		  XXXXXXX, KC_EXLM,  KC_PAST, KC_PSLS, KC_EQL,  KC_AMPR,  XXXXXXX,           XXXXXXX, KC_HASH, KC_LPRN, KC_RPRN, KC_SCLN, FR_DQUO, XXXXXXX,
+		  XXXXXXX, KC_TILD,  KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT,   KC_COLN, KC_COMM, KC_DOT,  FR_QUOT, XXXXXXX,
+		  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, _______,           RM_VALU,           RM_TOGG,          _______, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
+		  RM_HUED, RM_VALD, RM_HUEU, TOGGLE_LAYER_COLOR,_______, _______
+		  ),
+  [NUMB] = LAYOUT(
+		  VRSN,    _______,   _______,   _______,   _______,   _______,   _______,           _______, _______,  _______,  _______,  _______, _______,  _______,
+		  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,           _______, _______, KC_7,    KC_8,    KC_9,    KC_PAST, KC_PSLS,
+		  _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,           _______, _______, KC_4,    KC_5,    KC_6,    KC_PMNS, KC_PPLS,
+		  _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,                              _______, KC_1,    KC_2,    KC_3,    KC_PDOT, KC_PCMM,
+		  EE_CLR,  _______, _______, _______, _______,          _______,           _______,          KC_0, _______, _______,    _______, _______,
+		  _______, _______, _______,           _______, _______, _______
+		  ),
+  [NAVI] = LAYOUT(
+		  VRSN,    _______,   _______,   _______,   _______,   _______,   _______,           _______, _______,  _______,  _______,  _______, _______,  QK_BOOT,
+		  _______, _______, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,  _______,           _______, KC_PSCR,   KC_HOME,    KC_UP,    KC_END,    KC_PGUP, _______,
+		  _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,  _______,           _______, _______, KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_PGDN, _______,
+		  _______, _______, _______, _______, _______, _______,                              KC_MUTE, _______, _______, _______, _______, _______,
+		  EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
+		  _______, _______, _______,           _______, _______, _______
+		  ),
 
-    [MOUS] = LAYOUT(
-        LED_LEVEL,_______,_______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, QK_BOOT,
-        _______, _______, _______, _______,   _______, _______, _______,           _______, _______, _______, MS_UP, _______, _______, _______,
-        _______, MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, _______, _______,           _______, _______, MS_LEFT, MS_DOWN, MS_RGHT, _______, _______,
-        _______, _______, _______, _______, _______, _______,                              _______, _______, _______, _______, _______, _______,
-        EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
-                                            MS_BTN1, MS_BTN3, _______,           _______, MS_BTN3, MS_BTN2
-    ),
+  [MOUS] = LAYOUT(
+		  LED_LEVEL,_______,_______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, QK_BOOT,
+		  _______, _______, _______, _______,   _______, _______, _______,           _______, _______, _______, MS_UP, _______, _______, _______,
+		  _______, MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, _______, _______,           _______, _______, MS_LEFT, MS_DOWN, MS_RGHT, _______, _______,
+		  _______, _______, _______, _______, _______, _______,                              _______, _______, _______, _______, _______, _______,
+		  EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
+		  MS_BTN1, MS_BTN3, _______,           _______, MS_BTN3, MS_BTN2
+		  ),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-        switch (keycode) {
-        case VRSN:
-            SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-            return false;
-        case SFTLLCK:
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    // Toggle the lock on the highest layer.
-                    layer_lock_invert(get_highest_layer(layer_state));
-                }
-                return false;
-            }
-	    break;
-	case FR_DQUO:
-	  if (record->event.pressed) {
-	    SEND_STRING(FR_DQUO_M);
-	  }
-	  break;
-	case FR_QUOT:
-	  if (record->event.pressed) {
-	    SEND_STRING(FR_QUOT_M);
-	  }
-	  break;
-	case FR_GRAVE:
-	  if (record->event.pressed) {
-	    SEND_STRING(FR_GRAVE_M);
-	  }
-	  break;
-	case FR_CIRC:
-	  if (record->event.pressed) {
-	    SEND_STRING(FR_CIRC_M);
-	  }
-	  break;
-	case FR_E_AIGU:
-	  if (record->event.pressed) {
-	    if (get_mods() & MOD_MASK_SHIFT) {
-	      // É
-	      del_mods(MOD_MASK_SHIFT);
-	      SEND_STRING(FR_E_AIGU_CAPS_M);
-	    } else {
-	      // é
-	      SEND_STRING(FR_E_AIGU_M);
-	    }
-	  }
-	  break;
-	case FR_E_AIGU_CAPS:
-	  if (record->event.pressed) {
-	    SEND_STRING(FR_E_AIGU_CAPS_M);
-	  }
-	  break;
-	case FR_E_GRAVE:
-	  if (record->event.pressed) {
-	    if (get_mods() & MOD_MASK_SHIFT) {
-	      // 
-	      del_mods(MOD_MASK_SHIFT);
-	      SEND_STRING(FR_E_GRAVE_CAPS_M); 
-	    } else {
-	      // è
-	      SEND_STRING(FR_E_GRAVE_M); 
-	    }
-	  }
-	  break;
-	case FR_E_GRAVE_CAPS:
-	  if (record->event.pressed) {
-	    SEND_STRING(FR_E_GRAVE_CAPS_M);
-	  }
-	  break;
-	case FR_A_GRAVE:
-	  if (record->event.pressed) {
-	    
-	    if (get_mods() & MOD_MASK_SHIFT) {
-	      // 
-	      del_mods(MOD_MASK_SHIFT);
-	      SEND_STRING(FR_A_GRAVE_CAPS_M);
-	    } else {
-	      // à
-	      SEND_STRING(FR_A_GRAVE_M); 
-	    }
-	  }
-	  break;
-	case FR_A_GRAVE_CAPS:
-	  if (record->event.pressed) {
-	    SEND_STRING(FR_A_GRAVE_CAPS_M);
-	  }
-	  break;
+  if (record->event.pressed) {
+    switch (keycode) {
+    case VRSN:
+      SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+      return false;
+    case SFTLLCK:
+      if (record->tap.count) {
+	if (record->event.pressed) {
+	  // Toggle the lock on the highest layer.
+	  layer_lock_invert(get_highest_layer(layer_state));
 	}
+	return false;
+      }
+      break;
+    case FR_DQUO:
+      if (record->event.pressed) {
+	SEND_STRING(FR_DQUO_M);
+      }
+      break;
+    case FR_QUOT:
+      if (record->event.pressed) {
+	SEND_STRING(FR_QUOT_M);
+      }
+      break;
+    case FR_GRAVE:
+      if (record->event.pressed) {
+	SEND_STRING(FR_GRAVE_M);
+      }
+      break;
+    case FR_CIRC:
+      if (record->event.pressed) {
+	SEND_STRING(FR_CIRC_M);
+      }
+      break;
+    case FR_E_AIGU:
+      if (record->event.pressed) {
+	if (get_mods() & MOD_MASK_SHIFT) {
+	  // É
+	  del_mods(MOD_MASK_SHIFT);
+	  SEND_STRING(FR_E_AIGU_CAPS_M);
+	} else {
+	  // é
+	  SEND_STRING(FR_E_AIGU_M);
+	}
+      }
+      break;
+    case FR_E_AIGU_CAPS:
+      if (record->event.pressed) {
+	SEND_STRING(FR_E_AIGU_CAPS_M);
+      }
+      break;
+    case FR_E_GRAVE:
+      if (record->event.pressed) {
+	if (get_mods() & MOD_MASK_SHIFT) {
+	  // 
+	  del_mods(MOD_MASK_SHIFT);
+	  SEND_STRING(FR_E_GRAVE_CAPS_M); 
+	} else {
+	  // è
+	  SEND_STRING(FR_E_GRAVE_M); 
+	}
+      }
+      break;
+    case FR_E_GRAVE_CAPS:
+      if (record->event.pressed) {
+	SEND_STRING(FR_E_GRAVE_CAPS_M);
+      }
+      break;
+    case FR_A_GRAVE:
+      if (record->event.pressed) {
+	    
+	if (get_mods() & MOD_MASK_SHIFT) {
+	  // 
+	  del_mods(MOD_MASK_SHIFT);
+	  SEND_STRING(FR_A_GRAVE_CAPS_M);
+	} else {
+	  // à
+	  SEND_STRING(FR_A_GRAVE_M); 
+	}
+      }
+      break;
+    case FR_A_GRAVE_CAPS:
+      if (record->event.pressed) {
+	SEND_STRING(FR_A_GRAVE_CAPS_M);
+      }
+      break;
     }
-    return true;
+  }
+  return true;
 }
 
 extern rgb_config_t rgb_matrix_config;
 
 // Line 2 home-row (7 12 17 22 [27] and [63] 58 53 48 43)
 void my_set_rgb_matrix_color_homerow(uint8_t red, uint8_t green, uint8_t blue) {
-    rgb_matrix_set_color(7, red, green, blue);
-    rgb_matrix_set_color(12, red, green, blue);
-    rgb_matrix_set_color(17, red, green, blue);
-    rgb_matrix_set_color(22, red, green, blue);
+  rgb_matrix_set_color(7, red, green, blue);
+  rgb_matrix_set_color(12, red, green, blue);
+  rgb_matrix_set_color(17, red, green, blue);
+  rgb_matrix_set_color(22, red, green, blue);
     
-    rgb_matrix_set_color(58, red, green, blue);
-    rgb_matrix_set_color(53, red, green, blue);
-    rgb_matrix_set_color(48, red, green, blue);
-    rgb_matrix_set_color(43, red, green, blue);
+  rgb_matrix_set_color(58, red, green, blue);
+  rgb_matrix_set_color(53, red, green, blue);
+  rgb_matrix_set_color(48, red, green, blue);
+  rgb_matrix_set_color(43, red, green, blue);
 }
 
 void my_set_rgb_matrix_color_line(int line,  uint8_t red, uint8_t green, uint8_t blue) {
@@ -582,9 +582,9 @@ bool rgb_matrix_indicators_user(void) {
 }
 
 void caps_word_set_user(bool active) {
-    if (active) {
-      rgb_matrix_set_color(40, 255, 255, 255);
-    } else {
-      rgb_matrix_set_color(40, RGB_OFF);
-    }
+  if (active) {
+    rgb_matrix_set_color(40, 255, 255, 255);
+  } else {
+    rgb_matrix_set_color(40, RGB_OFF);
+  }
 }
