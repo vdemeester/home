@@ -163,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,           _______, _______, KC_7,    KC_8,    KC_9,    KC_PAST, KC_PSLS,
         _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,           _______, _______, KC_4,    KC_5,    KC_6,    KC_PMNS, KC_PPLS,
         _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,                              _______, KC_1,    KC_2,    KC_3,    KC_PDOT, KC_PCMM,
-        EE_CLR,  _______, _______, _______, _______,          _______,           _______,          _______, _______, _______, KC_0,    _______,
+        EE_CLR,  _______, _______, _______, _______,          _______,           _______,          KC_0, _______, _______,    _______, _______,
                                             _______, _______, _______,           _______, _______, _______
     ),
     [NAVI] = LAYOUT(
@@ -181,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, _______, _______,           _______, _______, MS_LEFT, MS_DOWN, MS_RGHT, _______, _______,
         _______, _______, _______, _______, _______, _______,                              _______, _______, _______, _______, _______, _______,
         EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
-                                            _______, MS_BTN1, MS_BTN3,           MS_BTN3, MS_BTN2, _______
+                                            MS_BTN1, MS_BTN3, _______,           _______, MS_BTN3, MS_BTN2
     ),
 };
 
@@ -453,29 +453,47 @@ bool rgb_matrix_indicators_user(void) {
     case SYMB:
       rgb_matrix_set_color_all(RGB_OFF);
       // () {} [] <>
-      rgb_matrix_set_color(11, 255, 199, 0);
-      rgb_matrix_set_color(16, 255, 199, 0);
-      rgb_matrix_set_color(18, 255, 199, 0);
-      rgb_matrix_set_color(23, 255, 199, 0);
-      rgb_matrix_set_color(57, 255, 199, 0);
-      rgb_matrix_set_color(58, 255, 199, 0);
-      rgb_matrix_set_color(52, 255, 199, 0);
-      rgb_matrix_set_color(53, 255, 199, 0);
+      rgb_matrix_set_color(11, 27, 213, 0);
+      rgb_matrix_set_color(16, 27, 213, 0);
+      rgb_matrix_set_color(18, 27, 213, 0);
+      rgb_matrix_set_color(23, 27, 213, 0);
+      rgb_matrix_set_color(57, 27, 213, 0);
+      rgb_matrix_set_color(58, 27, 213, 0);
+      rgb_matrix_set_color(52, 27, 213, 0);
+      rgb_matrix_set_color(53, 27, 213, 0);
 
       // +-=/*
-      // 29 204 67
+      rgb_matrix_set_color(13, 29, 204, 67);
+      rgb_matrix_set_color(12, 29, 204, 67);
+      rgb_matrix_set_color(17, 29, 204, 67);
+      rgb_matrix_set_color(22, 29, 204, 67);
+      rgb_matrix_set_color(21, 29, 204, 67);
+      rgb_matrix_set_color(1, 29, 204, 67); // anti-slash
 
       // `!~|&%^#
-      // 213, 144, 0
-
+      rgb_matrix_set_color(6, 255, 199, 0);
+      rgb_matrix_set_color(7, 255, 199, 0);
+      rgb_matrix_set_color(8, 255, 199, 0);
+      rgb_matrix_set_color(26, 255, 199, 0);
+      rgb_matrix_set_color(27, 255, 199, 0);
+      rgb_matrix_set_color(28, 255, 199, 0);
+      rgb_matrix_set_color(62, 255, 199, 0);
+      rgb_matrix_set_color(42, 255, 199, 0);
+      rgb_matrix_set_color(63, 255, 199, 0);
+      
       // "'
-      // 204, 202, 29
+      rgb_matrix_set_color(43, 204, 202, 29);
+      rgb_matrix_set_color(44, 204, 202, 29);
 
       // :;,.
-      // 29, 120, 204
+      rgb_matrix_set_color(59, 29, 120, 204);
+      rgb_matrix_set_color(54, 29, 120, 204);
+      rgb_matrix_set_color(48, 29, 120, 204);
+      rgb_matrix_set_color(49, 29, 120, 204);
 
-      // @
-      // 174, 29, 204
+      // @ $
+      rgb_matrix_set_color(47, 174, 29, 204);
+      rgb_matrix_set_color(64, 174, 29, 204);
       
       break;
     case NAVI:
@@ -509,6 +527,23 @@ bool rgb_matrix_indicators_user(void) {
       rgb_matrix_set_color(62, 255, 255, 255);
       break;
     case MOUS:
+      rgb_matrix_set_color_all(RGB_OFF);
+      // mouse movements
+      rgb_matrix_set_color(52, 0, 113, 255);
+      rgb_matrix_set_color(53, 0, 113, 255);
+      rgb_matrix_set_color(58, 0, 113, 255);
+      rgb_matrix_set_color(48, 0, 113, 255);
+      // wheel
+
+      rgb_matrix_set_color(7, 13, 0, 255);
+      rgb_matrix_set_color(12, 13, 0, 255);
+      rgb_matrix_set_color(17, 13, 0, 255);
+      rgb_matrix_set_color(22, 13, 0, 255);
+      // clicks
+      rgb_matrix_set_color(32, 170, 0, 255);
+      rgb_matrix_set_color(33, 170, 0, 255);
+      rgb_matrix_set_color(68, 170, 0, 255);
+      rgb_matrix_set_color(69, 170, 0, 255);
       break;
     default:
       rgb_matrix_set_color_all(RGB_OFF);
