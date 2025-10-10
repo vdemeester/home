@@ -49,13 +49,11 @@ enum custom_keycodes {
 
 const key_override_t circ_exclamation_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_CIRC, KC_EXLM, 1 << BEPO);
 const key_override_t dot_colon_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, KC_COLN, 1 << BEPO);
-const key_override_t quote_question_override = ko_make_with_layers(MOD_MASK_SHIFT, FR_QUOT, KC_QUES, 1 << BEPO);
 const key_override_t comma_semicolon_override = ko_make_with_layers(MOD_MASK_SHIFT, HM_HYP_COMM, KC_SCLN, 1 << BEPO);
 
 // bépo layer
 // row 0:
-// FIXME: probably convert to macro as it acts weird for some of those, at least 1 (prefix  ̈)
-const key_override_t dquo_one_override = ko_make_with_layers(MOD_MASK_SHIFT, FR_DQUO, KC_1, 1 << BEPO);
+// const key_override_t dquo_one_override = ko_make_with_layers(MOD_MASK_SHIFT, FR_DQUO, KC_1, 1 << BEPO); XXX: managed by a macro
 const key_override_t ldaq_two_override = ko_make_with_layers(MOD_MASK_SHIFT, US_LDAQ, KC_2, 1 << BEPO);
 const key_override_t rdaq_three_override = ko_make_with_layers(MOD_MASK_SHIFT, US_RDAQ, KC_3, 1 << BEPO);
 const key_override_t lprn_four_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_LPRN, KC_4, 1 << BEPO);
@@ -73,12 +71,10 @@ const key_override_t b_brkp_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_
 const key_override_t *key_overrides[] = {
   &circ_exclamation_override,
   &dot_colon_override,
-  &quote_question_override,
+  // &quote_question_override,
   &comma_semicolon_override,
 
   // bépo
-  // &dollar_ndsh_override,
-  &dquo_one_override,
   &ldaq_two_override,
   &rdaq_three_override,
   &lprn_four_override,
@@ -214,8 +210,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  uint8_t current_layer = get_highest_layer(layer_state);
+  uint8_t mod_state = get_mods();
   if (record->event.pressed) {
     switch (keycode) {
+      // FR_DQUO on bépo layout
     case VRSN:
       SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
       return false;
@@ -230,11 +229,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case FR_DQUO:
       if (record->event.pressed) {
-	SEND_STRING(FR_DQUO_M);
+	// if layer is bepo, and shift is on, send ?
+	if (IS_LAYER_ON_STATE(current_layer, BEPO) && (get_mods() & MOD_MASK_SHIFT)) {
+	  del_mods(MOD_MASK_SHIFT);
+	  SEND_STRING(SS_TAP(X_1));
+	  set_mods(mod_state);
+	} else {
+	  SEND_STRING(FR_DQUO_M);
+	}
       }
       break;
     case FR_QUOT:
-      if (record->event.pressed) {
+      // if layer is bepo, and shift is on, send ?
+      if (IS_LAYER_ON_STATE(current_layer, BEPO) && (get_mods() & MOD_MASK_SHIFT)) {
+	del_mods(MOD_MASK_SHIFT);
+	SEND_STRING(SS_LSFT(SS_TAP(X_SLASH)));
+	set_mods(mod_state);
+      } else {
 	SEND_STRING(FR_QUOT_M);
       }
       break;
@@ -254,6 +265,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	  // É
 	  del_mods(MOD_MASK_SHIFT);
 	  SEND_STRING(FR_E_AIGU_CAPS_M);
+	  set_mods(mod_state);
 	} else {
 	  // é
 	  SEND_STRING(FR_E_AIGU_M);
@@ -270,7 +282,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	if (get_mods() & MOD_MASK_SHIFT) {
 	  // 
 	  del_mods(MOD_MASK_SHIFT);
-	  SEND_STRING(FR_E_GRAVE_CAPS_M); 
+	  SEND_STRING(FR_E_GRAVE_CAPS_M);
+	  set_mods(mod_state);
 	} else {
 	  // è
 	  SEND_STRING(FR_E_GRAVE_M); 
@@ -284,11 +297,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case FR_A_GRAVE:
       if (record->event.pressed) {
-	    
 	if (get_mods() & MOD_MASK_SHIFT) {
-	  // 
 	  del_mods(MOD_MASK_SHIFT);
 	  SEND_STRING(FR_A_GRAVE_CAPS_M);
+	  set_mods(mod_state);
 	} else {
 	  // à
 	  SEND_STRING(FR_A_GRAVE_M); 
