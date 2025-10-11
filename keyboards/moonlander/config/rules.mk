@@ -10,3 +10,9 @@ SPACE_CADET_ENABLE = no
 TAP_DANCE_ENABLE = yes
 LAYER_LOCK_ENABLE = yes
 
+# Additional source files
+SRC += key_overrides.c
+SRC += combos.c
+SRC += macros.c
+SRC += rgb_lighting.c
+
