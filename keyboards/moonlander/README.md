@@ -83,6 +83,53 @@ You can customize the configuration by:
 3. Adding or removing aliases in the `defalias` section
 4. Changing the key mappings to match your preferences
 
+### QMK to Kanata Key Mapping Reference
+
+Common QMK keycodes and their Kanata equivalents:
+
+| QMK | Kanata | Description |
+|-----|--------|-------------|
+| `KC_A` ... `KC_Z` | `a` ... `z` | Letter keys |
+| `KC_1` ... `KC_0` | `1` ... `0` | Number keys |
+| `KC_SPC` | `spc` | Space |
+| `KC_BSPC` | `bspc` | Backspace |
+| `KC_ENT` / `KC_ENTER` | `ret` | Enter/Return |
+| `KC_TAB` | `tab` | Tab |
+| `KC_ESC` | `esc` | Escape |
+| `KC_DEL` | `del` | Delete |
+| `KC_LSFT` / `KC_RSFT` | `lsft` / `rsft` | Shift |
+| `KC_LCTL` / `KC_RCTL` | `lctl` / `rctl` | Control |
+| `KC_LALT` / `KC_RALT` | `lalt` / `ralt` | Alt |
+| `KC_LGUI` / `KC_RGUI` | `lmet` / `rmet` | Meta/Windows/Command |
+| `KC_GRV` | `grv` | Grave/Backtick |
+| `KC_MINS` | `min` | Minus/Hyphen |
+| `KC_EQL` | `eql` | Equal |
+| `KC_LBRC` | `[` | Left bracket |
+| `KC_RBRC` | `]` | Right bracket |
+| `KC_BSLS` | `bksl` | Backslash |
+| `KC_SCLN` | `scln` | Semicolon |
+| `KC_QUOT` | `'` | Quote |
+| `KC_COMM` | `,` | Comma |
+| `KC_DOT` | `.` | Period |
+| `KC_SLSH` | `/` | Slash |
+| `KC_LEFT` ... `KC_RGHT` | `left` ... `rght` | Arrow keys |
+| `KC_HOME` / `KC_END` | `home` / `end` | Home/End |
+| `KC_PGUP` / `KC_PGDN` | `pgup` / `pgdn` | Page Up/Down |
+| `KC_F1` ... `KC_F12` | `f1` ... `f12` | Function keys |
+| `KC_MUTE` | `mute` | Mute |
+| `KC_VOLU` / `KC_VOLD` | `volu` / `vold` | Volume up/down |
+| `KC_MPRV` / `KC_MNXT` | `prev` / `next` | Media previous/next |
+| `KC_MPLY` | `pp` | Play/Pause |
+| `KC_PSCR` | `prnt` | Print Screen |
+| `XXXXXXX` | `XX` | No operation/Unmapped |
+| `_______` | `_` | Transparent (pass through) |
+| `LT(layer, key)` | `(tap-hold ... key (layer-while-held layer))` | Layer-tap |
+| `LSFT_T(key)` | `(tap-hold ... key lsft)` | Shift when held |
+| `LCTL_T(key)` | `(tap-hold ... key lctl)` | Control when held |
+| `LALT_T(key)` | `(tap-hold ... key lalt)` | Alt when held |
+| `LGUI_T(key)` | `(tap-hold ... key lmet)` | Meta when held |
+| `HYPR_T(key)` | `(tap-hold ... key @hyper)` | Hyper when held |
+
 ### Note on Layout Approximation
 
 The Moonlander has a unique 72-key layout that doesn't directly map to a standard keyboard. The `defsrc` section uses a standard keyboard layout as an approximation. When using Kanata with the actual Moonlander hardware, you may need to adjust the key positions based on your specific use case.
