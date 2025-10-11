@@ -19,6 +19,7 @@
 #include QMK_KEYBOARD_H
 #include "keymap_us.h"
 #include "keymap_us_international_linux.h"
+#include "layers.h"
 
 const key_override_t circ_exclamation_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_CIRC, KC_EXLM, 1 << BEPO);
 const key_override_t dot_colon_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, KC_COLN, 1 << BEPO);

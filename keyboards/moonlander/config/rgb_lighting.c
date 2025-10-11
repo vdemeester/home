@@ -17,6 +17,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "layers.h"
 #include "rgb_lighting.h"
 
 extern rgb_config_t rgb_matrix_config;

@@ -17,6 +17,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "layers.h"
 #include "combos.h"
 
 uint8_t combo_ref_from_layer(uint8_t layer){

@@ -22,30 +22,7 @@
 #include "version.h"
 #include "keymap_us.h"
 #include "keymap_us_international_linux.h"
-
-enum layers {
-  BEPO,
-  ERGL,
-  QWER,
-  SYMB,
-  NUMB,
-  NAVI,
-  MOUS,
-};
-
-enum custom_keycodes {
-  VRSN = SAFE_RANGE,
-  FR_DQUO,
-  FR_QUOT,
-  FR_GRAVE,
-  FR_CIRC,
-  FR_E_AIGU,
-  FR_E_AIGU_CAPS,
-  FR_E_GRAVE,
-  FR_E_GRAVE_CAPS,
-  FR_A_GRAVE,
-  FR_A_GRAVE_CAPS,
-};
+#include "layers.h"
 
 #include "key_overrides.h"
 #include "combos.h"
