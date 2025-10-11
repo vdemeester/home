@@ -1,0 +1,164 @@
+;; Kanata configuration for Moonlander keyboard
+;; Generated from keyboards/moonlander/config/keymap.c
+;;
+;; This configuration replicates the QMK keymap with the following layers:
+;; - qwer: QWERTY layout (default/base)
+;; - bepo: French Bépo layout
+;; - ergl: Ergol layout  
+;; - symb: Symbols layer
+;; - numb: Numbers and function keys layer
+;; - navi: Navigation layer
+;; - mous: Mouse layer
+;;
+;; Note: The Moonlander has 72 keys in a specific layout. This configuration
+;; uses a standard keyboard mapping approximation for compatibility.
+
+(defcfg
+  process-unmapped-keys yes
+)
+
+;; Variables for timing (matching QMK TAPPING_TERM = 280)
+(defvar
+  tap-time 280
+  hold-time 280
+)
+
+;; Aliases for modifiers and special keys
+(defalias
+  ;; Hyper key (Ctrl+Alt+Shift+Meta)
+  hyper (multi lctl lalt lsft lmet)
+  
+  ;; Left-hand home row mods (QWERTY/ERGOL)
+  hm_gui_a (tap-hold $tap-time $hold-time a lmet)
+  hm_alt_s (tap-hold $tap-time $hold-time s lalt)
+  hm_sft_d (tap-hold $tap-time $hold-time d lsft)
+  hm_ctl_f (tap-hold $tap-time $hold-time f lctl)
+  hm_hyp_g (tap-hold $tap-time $hold-time g @hyper)
+  
+  ;; Right-hand home row mods (QWERTY/ERGOL)
+  hm_hyp_h (tap-hold $tap-time $hold-time h @hyper)
+  hm_ctl_j (tap-hold $tap-time $hold-time j rctl)
+  hm_sft_k (tap-hold $tap-time $hold-time k rsft)
+  hm_alt_l (tap-hold $tap-time $hold-time l lalt)
+  hm_gui_scln (tap-hold $tap-time $hold-time scln rmet)
+  
+  ;; Left-hand home row mods (BEPO)
+  hm_alt_u (tap-hold $tap-time $hold-time u lalt)
+  hm_sft_i (tap-hold $tap-time $hold-time i lsft)
+  hm_ctl_e (tap-hold $tap-time $hold-time e lctl)
+  hm_hyp_comm (tap-hold $tap-time $hold-time comm @hyper)
+  
+  ;; Right-hand home row mods (BEPO)
+  hm_hyp_c (tap-hold $tap-time $hold-time c @hyper)
+  hm_ctl_t (tap-hold $tap-time $hold-time t rctl)
+  hm_sft_s (tap-hold $tap-time $hold-time s rsft)
+  hm_alt_r (tap-hold $tap-time $hold-time r lalt)
+  hm_gui_n (tap-hold $tap-time $hold-time n rmet)
+  
+  ;; Layer-tap keys (space, backspace, enter)
+  lt_numb_spc (tap-hold $tap-time $hold-time spc (layer-while-held numb))
+  lt_navi_bspc (tap-hold $tap-time $hold-time bspc (layer-while-held navi))
+  lt_symb_ent (tap-hold $tap-time $hold-time ret (layer-while-held symb))
+  
+  ;; French accents (using macro sequences with compose key/ralt)
+  ;; Note: These assume US International keyboard layout
+  fr_dquo (macro ralt S-' 50 spc)
+  fr_quot (macro ralt ' 50 spc)
+  fr_grave (macro ralt grv 50 spc)
+  fr_circ (macro ralt S-6 50 spc)
+  fr_e_aigu (macro ralt ' 50 e)
+  fr_e_grave (macro ralt grv 50 e)
+  fr_a_grave (macro ralt grv 50 a)
+  
+  ;; Special symbols for BEPO layer
+  us_ldaq <    ;; Left angle quote
+  us_rdaq >    ;; Right angle quote
+  
+  ;; Layer switches
+  to_bepo (layer-switch bepo)
+  to_ergl (layer-switch ergl)
+  to_qwer (layer-switch qwer)
+  tg_mous (layer-toggle mous)
+)
+
+;; Source definition for Moonlander layout
+;; Moonlander has 72 keys, here mapped to a standard layout
+(defsrc
+  grv  1    2    3    4    5    lctl           rctl 6    7    8    9    0    min
+  tab  q    w    e    r    t    home           end  y    u    i    o    p    [
+  caps a    s    d    f    g    pgup           pgdn h    j    k    l    scln '
+  lsft z    x    c    v    b                        n    m    ,    .    /    rsft
+  esc  left rght up   down      del            ins       left up   down rght bksl
+                      spc  bspc esc            esc  lsft ret
+)
+
+;; QWERTY layer (base layer - QWER from QMK)
+(deflayer qwer
+  eql  1    2    3    4    5    XX             XX   6    7    8    9    0    min
+  tab  q    w    e    r    t    XX             XX   y    u    i    o    p    [
+  eql  @hm_gui_a @hm_alt_s @hm_sft_d @hm_ctl_f @hm_hyp_g XX  XX @hm_hyp_h @hm_ctl_j @hm_sft_k @hm_alt_l @hm_gui_scln '
+  grv  z    x    c    v    b                        n    m    ,    .    /    ]
+  XX   XX   XX   XX   del       XX             XX        ralt XX   XX   XX   XX
+                      @lt_numb_spc @lt_navi_bspc XX  XX lsft @lt_symb_ent
+)
+
+;; BEPO layer
+(deflayer bepo
+  S-4  @fr_dquo @us_ldaq @us_rdaq S-9 S-0 XX      XX   S-2  +    min  /    S-8  S-5
+  tab  b    @fr_e_aigu p    o    @fr_e_grave XX  XX   S-6  v    d    l    j    z
+  eql  @hm_gui_a @hm_alt_u @hm_sft_i @hm_ctl_e @hm_hyp_comm XX  XX @hm_hyp_c @hm_ctl_t @hm_sft_s @hm_alt_r @hm_gui_n m
+  grv  @fr_a_grave y    x    .    k                   @fr_quot q    g    h    f    w
+  XX   XX   XX   XX   del       XX             XX        ralt XX   XX   XX   XX
+                      @lt_numb_spc @lt_navi_bspc XX  XX lsft @lt_symb_ent
+)
+
+;; ERGOL layer (same as QWERTY for now)
+(deflayer ergl
+  eql  1    2    3    4    5    XX             XX   6    7    8    9    0    min
+  tab  q    w    e    r    t    XX             XX   y    u    i    o    p    [
+  eql  @hm_gui_a @hm_alt_s @hm_sft_d @hm_ctl_f @hm_hyp_g XX  XX @hm_hyp_h @hm_ctl_j @hm_sft_k @hm_alt_l @hm_gui_scln '
+  grv  z    x    c    v    b                        n    m    ,    .    /    ]
+  XX   XX   XX   XX   del       XX             XX        ralt XX   XX   XX   XX
+                      @lt_numb_spc @lt_navi_bspc XX  XX lsft @lt_symb_ent
+)
+
+;; SYMB layer (symbols)
+(deflayer symb
+  _    _    _    _    _    _    XX             XX   _    _    _    _    _    _
+  bksl @fr_grave S-, S-. min  S-bksl XX      XX   S-6  S-[ S-] S-4  @fr_circ XX
+  XX   S-1 S-8  /    eql  S-7  XX             XX   S-3  S-9 S-0  scln @fr_dquo XX
+  XX   S-grv S-= [    ]    S-5                     S-2  S-; ,    .    @fr_quot XX
+  XX   XX   XX   XX   _         _              _        _    XX   XX   XX   XX
+                      _    _    _              _    _    _
+)
+
+;; NUMB layer (numbers and function keys)
+(deflayer numb
+  _    _    _    _    _    _    _              _    _    _    _    _    _    _
+  _    f1   f2   f3   f4   f5   _              _    _    7    8    9    S-8  /
+  _    f6   f7   f8   f9   f10  _              _    _    4    5    6    min  S-=
+  _    f11  f12  f13  f14  f15                      _    1    2    3    .    ,
+  XX   _    _    _    _         _              _         0    _    _    _    _
+                      _    _    _              _    _    _
+)
+
+;; NAVI layer (navigation)
+(deflayer navi
+  _    _    _    _    _    _    _              _    _    _    _    _    _    XX
+  _    _    S-2  S-[ S-] S-bksl _             _    prnt home up   end  pgup _
+  _    _    prev pp   next _    _              _    _    left down rght pgdn _
+  _    _    _    _    _    _                        mute _    _    _    _    _
+  XX   _    _    _    _         vold           volu      _    _    _    _    _
+                      _    _    _              _    _    _
+)
+
+;; MOUS layer (mouse controls)
+;; Note: Mouse functionality requires additional Kanata configuration
+(deflayer mous
+  _    _    _    _    _    _    _              _    _    _    _    _    _    XX
+  _    _    _    _    _    _    _              _    _    _    _    _    _    _
+  _    _    _    _    _    _    _              _    _    _    _    _    _    _
+  _    _    _    _    _    _                        _    _    _    _    _    _
+  XX   _    _    _    _         vold           volu      _    _    _    _    _
+                      _    _    _              _    _    _
+)
