@@ -178,7 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		  VRSN,    _______,   _______,   _______,   _______,   _______,   XXXXXXX,           XXXXXXX, _______,  _______,  _______,  _______, _______,  _______,
 		  KC_BSLS, FR_GRAVE, KC_LABK, KC_RABK, KC_PMNS, KC_PIPE,  XXXXXXX,           XXXXXXX, KC_CIRC, KC_LCBR, KC_RCBR, KC_DLR,  FR_CIRC, XXXXXXX,
 		  XXXXXXX, KC_EXLM,  KC_PAST, KC_PSLS, KC_EQL,  KC_AMPR,  XXXXXXX,           XXXXXXX, KC_HASH, KC_LPRN, KC_RPRN, KC_SCLN, FR_DQUO, XXXXXXX,
-		  XXXXXXX, KC_TILD,  KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT,   KC_COLN, KC_COMM, KC_DOT,  FR_QUOT, XXXXXXX,
+		  XXXXXXX, KC_TILD,  KC_LBRC, KC_RBRC, KC_PLUS, KC_PERC,                              KC_AT,   KC_COLN, KC_COMM, KC_DOT,  FR_QUOT, XXXXXXX,
 		  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, _______,           RM_VALU,           RM_TOGG,          _______, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
 		  RM_HUED, RM_VALD, RM_HUEU, TOGGLE_LAYER_COLOR,_______, _______
 		  ),
@@ -495,15 +495,15 @@ bool rgb_matrix_indicators_user(void) {
       // () {} [] <>
       rgb_matrix_set_color(11, 27, 213, 0);
       rgb_matrix_set_color(16, 27, 213, 0);
+      rgb_matrix_set_color(13, 27, 213, 0);
       rgb_matrix_set_color(18, 27, 213, 0);
-      rgb_matrix_set_color(23, 27, 213, 0);
       rgb_matrix_set_color(57, 27, 213, 0);
       rgb_matrix_set_color(58, 27, 213, 0);
       rgb_matrix_set_color(52, 27, 213, 0);
       rgb_matrix_set_color(53, 27, 213, 0);
 
       // +-=/*
-      rgb_matrix_set_color(13, 29, 204, 67);
+      rgb_matrix_set_color(23, 29, 204, 67);
       rgb_matrix_set_color(12, 29, 204, 67);
       rgb_matrix_set_color(17, 29, 204, 67);
       rgb_matrix_set_color(22, 29, 204, 67);
