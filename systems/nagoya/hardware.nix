@@ -10,12 +10,12 @@ _: {
         "x-systemd.idle-timeout=1min"
       ];
     };
+    # "/" = {
+    #   device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
+    #   fsType = "ext4";
+    #   options = [ "noatime" ];
+    # };
     "/" = {
-      device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
-      fsType = "ext4";
-      options = [ "noatime" ];
-    };
-    "/data" = {
       device = "/dev/disk/by-uuid/e769fd8d-1fed-4a59-a987-e21f35294d5f";
       fsType = "ext4";
       options = [ "noatime" ];
