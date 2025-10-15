@@ -617,6 +617,12 @@ minibuffer, even without explicitly focusing it."
   :hook ((markdown-mode . orgalist-mode)
 	 (gfm-mode . orgalist-mode)))
 
+(use-package dockerfile-ts-mode
+  :mode (("Dockerfile\\'" . dockerfile-ts-mode)
+	 ("\\.Dockerfile\\'" . dockerfile-ts-mode-map)
+	 ("Containerfile\\'" . dockerfile-ts-mode)
+	 ("\\.Containerfile\\'" . dockerfile-ts-mode-map)))
+
 (use-package go-ts-mode
   :mode (("\\.go$" . go-ts-mode)
          ("\\.go" . go-ts-mode)
