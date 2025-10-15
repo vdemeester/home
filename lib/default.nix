@@ -144,7 +144,11 @@
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager
-        { home-manager.extraSpecialArgs = specialArgs; }
+        {
+          home-manager.extraSpecialArgs = specialArgs;
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+        }
         ../systems
       ];
     };
