@@ -33,3 +33,6 @@ extern const key_override_t slash_nine_override;
 extern const key_override_t star_zero_override;
 extern const key_override_t b_pipe_override;
 extern const key_override_t b_brkp_override;
+
+// Export the key_overrides array for QMK introspection
+extern const key_override_t *key_overrides[];
