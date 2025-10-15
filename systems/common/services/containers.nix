@@ -1,6 +1,20 @@
-_: {
+{
+  pkgs,
+  ...
+}:
+{
   networking.firewall.checkReversePath = false;
-  virtualisation.podman.enable = true;
+  virtualisation.podman = {
+    enable = true;
+    extraPackages = with pkgs; [
+      podman-bootc
+      virtiofsd
+    ];
+  };
+  environment.systemPackages = with pkgs; [
+    podman-bootc
+    bootc
+  ];
   virtualisation.containers = {
     enable = true;
     registries = {
