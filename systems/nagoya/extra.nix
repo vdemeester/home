@@ -58,10 +58,10 @@
       locations = lib.attrsets.mapAttrs' (
         name: value:
         lib.attrsets.nameValuePair "/syncthing/${name}/" {
-          proxyPass = "http://${builtins.head value.net.vpn.ips}:8384/";
+          proxyPass = "http://${builtins.head value.net.ips}:8384/";
           recommendedProxySettings = true;
         }
-      ) (lib.attrsets.filterAttrs (_name: value: (libx.hasVPNips value)) globals.machines);
+      ) (lib.attrsets.filterAttrs (_name: value: (libx.hasIps value)) globals.machines);
     };
   };
 

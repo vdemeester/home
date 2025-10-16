@@ -26,6 +26,14 @@ let
   hasVPNips = host: (builtins.length (lib.attrsets.attrByPath [ "net" "vpn" "ips" ] [ ] host)) > 0;
 
   /**
+    Check if a host has network IP addresses configured.
+
+    @param host The host configuration to check
+    @return true if host has at least one VPN IP address, false otherwise
+  */
+  hasIps = host: (builtins.length (lib.attrsets.attrByPath [ "net" "ips" ] [ ] host)) > 0;
+
+  /**
     Return true if the given host has a list of Syncthing folder configured.
 
     @param host The host configuration to check
