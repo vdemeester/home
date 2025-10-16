@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ inputs, lib, ... }:
 let
   firmwarePartition = lib.recursiveUpdate {
     # label = "FIRMWARE";
@@ -47,6 +47,9 @@ let
   };
 in
 {
+  imports = [
+    inputs.disko.nixosModules.disko
+  ];
   disko.devices = {
     disk.nvme0 = {
       type = "disk";
