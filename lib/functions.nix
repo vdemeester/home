@@ -296,6 +296,7 @@ in
     isCurrentHost
     hasVPNPublicKey
     hasVPNips
+    hasIps
     hasSSHHostKeys
     sshHostIdentifier
     sshConfig
