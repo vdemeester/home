@@ -52,7 +52,7 @@ in
     ./config.txt.nix
   ];
   disko.devices = {
-    disk.nvme0n1 = {
+    disk.root = {
       type = "disk";
       device = "/dev/nvme0n1";
       content = {
