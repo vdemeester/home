@@ -154,7 +154,7 @@ _: {
       net = {
         ips = [ "192.168.1.80" ];
         vpn = {
-          pubkey = "u2K7SAZpeBACUMkoscyyNFjJdDnJcpbW9YHr3HewFhM=";
+          pubkey = "NCj5pwShre/xyRCK800ybjso1zIYUZ08YvFA2qGzhAI=";
           ips = [ "10.100.0.80" ];
         };
         names = [
@@ -164,10 +164,10 @@ _: {
         ];
       };
       ssh = {
-        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHeP9q2U/eS/GijfUtqLRENHSRPFSo1tN1iorIj1b0+O";
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINn8dm9AXW/VZUCBmcbHPkPWwcdggGE9bSmX8Z2lwioZ";
       };
       syncthing = {
-        id = "7BGILOF-DUA47DF-7S5732W-X22RNOD-UNOLDX2-NTCKNR4-LR64Q5A-Y5LWMA6";
+        id = "6FP4V5F-C7RH67S-RBPVAP5-VB7RRYB-CTPYU6G-WUJQU7V-WO5YILH-F6DYOQJ";
         folders = {
           sync = {
             type = "receiveonly";
