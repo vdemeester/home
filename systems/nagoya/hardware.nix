@@ -49,6 +49,7 @@ in
 {
   imports = [
     inputs.disko.nixosModules.disko
+    ./config.txt.nix
   ];
   disko.devices = {
     disk.nvme0 = {
@@ -69,14 +70,17 @@ in
           };
 
           root = {
-            type = "filesystem";
-            format = "ext4";
-            mountpoint = "/";
-            mountOptions = [
-              "noatime"
-              "nodiratime"
-              "discard"
-            ];
+            size = "100%";
+            content = {
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/";
+              mountOptions = [
+                "noatime"
+                "nodiratime"
+                "discard"
+              ];
+            };
           };
         };
 
