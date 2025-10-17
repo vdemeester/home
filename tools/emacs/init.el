@@ -1618,47 +1618,47 @@ Add this function to the `after-save-hook'."
   
   (setq gptel-model 'gemini-2.5-flash
 	gptel-backend (gptel-make-gemini "Gemini"
-			:key (passage-get "ai/gemini/api_key"))
+					 :key (passage-get "ai/gemini/api_key"))
 	)
 
   (gptel-make-gemini "Gemini Red Hat"
-    :key (passage-get "redhat/google/osp/vdeemest-api-key"))
+		     :key (passage-get "redhat/google/osp/vdeemest-api-key"))
   
   (gptel-make-openai "MistralLeChat"
-    :host "api.mistral.ai/v1"
-    :endpoint "/chat/completions"
-    :protocol "https"
-    :key (passage-get "ai/mistralai/api_key")
-    :models '("mistral-small"))
+		     :host "api.mistral.ai/v1"
+		     :endpoint "/chat/completions"
+		     :protocol "https"
+		     :key (passage-get "ai/mistralai/api_key")
+		     :models '("mistral-small"))
   
   (gptel-make-openai "OpenRouter"
-    :host "openrouter.ai"
-    :endpoint "/api/v1/chat/completions"
-    :stream t
-    :key (passage-get "ai/openroute/api_key")
-    :models '(cognittivecomputations/dolphin3.0-mistral-24b:free
-	      cognitivecomputations/dolphin3.0-r1-mistral-24b:free
-	      deepseek/deepseek-r1-zero:free
-	      deepseek/deepseek-chat:free
-	      deepseek/deepseek-r1-distill-qwen-32b:free
-	      deepseek/deepseek-r1-distill-llama-70b:free
-	      google/gemini-2.0-flash-lite-preview-02-05:free
-	      google/gemini-2.0-pro-exp-02-05:free
-	      google/gemini-2.5-pro-exp-03-25:free
-	      google/gemma-3-12b-it:free
-	      google/gemma-3-27b-it:free
-	      google/gemma-3-4b-it:free
-	      mistralai/mistral-small-3.1-24b-instruct:free
-	      open-r1/olympiccoder-32b:free
-	      qwen/qwen2.5-vl-3b-instruct:free
-	      qwen/qwen-2.5-coder-32b-instruct:free
-	      qwen/qwq-32b:free
-	      codellama/codellama-70b-instruct
-	      google/gemini-pro
-	      google/palm-2-codechat-bison-32k
-	      meta-llama/codellama-34b-instruct
-	      mistralai/mixtral-8x7b-instruct
-	      openai/gpt-3.5-turbo))
+		     :host "openrouter.ai"
+		     :endpoint "/api/v1/chat/completions"
+		     :stream t
+		     :key (passage-get "ai/openroute/api_key")
+		     :models '(cognittivecomputations/dolphin3.0-mistral-24b:free
+			       cognitivecomputations/dolphin3.0-r1-mistral-24b:free
+			       deepseek/deepseek-r1-zero:free
+			       deepseek/deepseek-chat:free
+			       deepseek/deepseek-r1-distill-qwen-32b:free
+			       deepseek/deepseek-r1-distill-llama-70b:free
+			       google/gemini-2.0-flash-lite-preview-02-05:free
+			       google/gemini-2.0-pro-exp-02-05:free
+			       google/gemini-2.5-pro-exp-03-25:free
+			       google/gemma-3-12b-it:free
+			       google/gemma-3-27b-it:free
+			       google/gemma-3-4b-it:free
+			       mistralai/mistral-small-3.1-24b-instruct:free
+			       open-r1/olympiccoder-32b:free
+			       qwen/qwen2.5-vl-3b-instruct:free
+			       qwen/qwen-2.5-coder-32b-instruct:free
+			       qwen/qwq-32b:free
+			       codellama/codellama-70b-instruct
+			       google/gemini-pro
+			       google/palm-2-codechat-bison-32k
+			       meta-llama/codellama-34b-instruct
+			       mistralai/mixtral-8x7b-instruct
+			       openai/gpt-3.5-turbo))
 
   ;; TODO: configure shikoku/kobe ollama instances here
   ;; (gptel-make-ollama "Ollama"
@@ -1671,6 +1671,12 @@ Add this function to the `after-save-hook'."
   ;; 	      "deepseek-r1:7b"
   ;; 	      "nomic-embed-text:latest"))
   )
+
+(use-package acp
+  :load-path "/home/vincent/src/github.com/xenodium/acp.el/")
+
+(use-package agent-shell
+  :load-path "/home/vincent/src/github.com/xenodium/agent-shell/")
 
 (use-package devdocs
   :commands (devdocs-lookup devdocs-install vde/install-devdocs)
