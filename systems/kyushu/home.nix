@@ -15,6 +15,7 @@
     nautilus
 
     gmailctl
+    gcalcli
 
     # lisp
     roswell
