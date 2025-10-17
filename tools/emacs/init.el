@@ -1676,7 +1676,11 @@ Add this function to the `after-save-hook'."
   :load-path "/home/vincent/src/github.com/xenodium/acp.el/")
 
 (use-package agent-shell
-  :load-path "/home/vincent/src/github.com/xenodium/agent-shell/")
+  :commands (agent-shell agent-shell-toggle)
+  :load-path "/home/vincent/src/github.com/xenodium/agent-shell/"
+  :config
+  (setq agent-shell-google-authentication
+	(agent-shell-google-make-authentication :api-key (passage-get "redhat/google/osp/vdeemest-api-key"))))
 
 (use-package devdocs
   :commands (devdocs-lookup devdocs-install vde/install-devdocs)
