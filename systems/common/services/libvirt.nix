@@ -1,5 +1,6 @@
 { lib, pkgs, ... }:
 {
+  system.nixos.tags = [ "libvirt" ];
   boot.kernelParams = [ "kvm_intel.nested=1" ];
   environment.etc."modprobe.d/kvm.conf".text = ''
     options kvm_intel nested=1

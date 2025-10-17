@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  system.nixos.tags = [ "docker" ];
   virtualisation = {
     docker = {
       enable = true;
