@@ -1114,7 +1114,8 @@ minibuffer, even without explicitly focusing it."
   (org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
   (org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$")
   (org-agenda-files `(,org-inbox-file ,org-todos-file ,org-habits-file))
-  (org-refile-targets '((org-agenda-files :maxlevel . 3)))
+  ;; (org-refile-targets '((org-agenda-files :maxlevel . 3)))
+  (org-refile-targets (vde/org-refile-targets))
   (org-refile-use-outline-path 'file)
   (org-refile-allow-creating-parent-nodes 'confirm)
   (org-agenda-remove-tags t)
@@ -1218,10 +1219,12 @@ minibuffer, even without explicitly focusing it."
 				    ("bike" ,(list (propertize "🚴‍♂️")))
 				    ("security" ,(list (propertize "🛡️")))
 				    ("i*" ,(list (propertize "📒")))))
-  (org-agenda-prefix-format '((agenda . " %i %?-12t% s")
+  (org-agenda-prefix-format '((agenda . " %i %-12:c%?-12t%s%(my/org-agenda-repeater)") ;;  " %i %?-12t% s")
 			      (todo . " %i")
 			      (tags . " %i")
 			      (search . " %i")))
+  (org-agenda-scheduled-leaders '("Sched." "S.%2dx"))
+  (org-agenda-deadline-leaders '("Deadl." "In%2dd" "D.%2dx"))
   (org-insert-heading-respect-content t)
   (org-M-RET-may-split-line '((default . nil)))
   (org-goto-interface 'outline-path-completion)
@@ -1249,22 +1252,25 @@ minibuffer, even without explicitly focusing it."
   (unbind-key "C-S-<up>" org-mode-map)
   (unbind-key "C-S-<down>" org-mode-map)
 
+  (defun my/org-agenda-repeater ()
+    "Return the repeater string for the current agenda entry."
+    (if (org-before-first-heading-p)
+	"-------"  ; Align with the time grid
+      (format "%5s: " (or (org-get-repeat) ""))))
+
   (require 'dash)
   (require 's)
   (defun vde/org-refile-targets ()
     (append '((org-inbox-file :level . 0)
-	      (org-todos-file :maxlevel . 3))
+	      (org-todos-file :maxlevel . 3)
+	      (org-habits-file :maxlevel . 3))
 	    (->>
 	     (directory-files org-notes-directory nil ".org$")
 	     (--remove (s-starts-with? "." it))
 	     (--remove (s-contains? "==readwise=" it))
 	     (--map (format "%s/%s" org-notes-directory it))
 	     (--map `(,it :maxlevel . 3)))
-	    (->>
-	     (directory-files org-people-dir ".org$")
-	     (--remove (s-starts-with? (format "%s/legacy" org-people-dir) it))
-	     (--map (format "%s" it))
-	     (--map `(,it :maxlevel . 3))))))
+	    )))
 
 (use-package org-appear
   :hook (org-mode . org-appear-mode))
