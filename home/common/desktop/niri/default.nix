@@ -4,6 +4,7 @@
     ../sway/mako.nix
     ../sway/swayidle.nix
     ../sway/rofi.nix
+    ./waybar.nix
   ];
 
   home.packages = with pkgs; [
