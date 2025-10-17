@@ -17,6 +17,8 @@
     gmailctl
     gcalcli
 
+    ntfy-sh
+
     # lisp
     roswell
     sbcl

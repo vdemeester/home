@@ -82,6 +82,18 @@ in
     public-url = "https://webhook.sbr.pm";
   };
 
+  services.ntfy-sh = {
+    enable = true;
+    settings = {
+      base-url = "https://ntfy.sbr.pm";
+      upstream-base-url = "https://ntfy.sh";
+      listen-http = "localhost:8111";
+      behind-proxy = true;
+      enable-login = true;
+      auth-default-access = "deny-all";
+    };
+  };
+
   # Should probably move to hardware.nix
   networking.firewall.allowPing = true;
   networking.firewall.allowedTCPPorts = [
@@ -97,6 +109,16 @@ in
     recommendedOptimisation = true;
     virtualHosts."dl.sbr.pm" = filesWWW;
     virtualHosts."files.sbr.pm" = filesWWW;
+    virtualHosts."ntfy.sbr.pm" = {
+      enableACME = true;
+      forceSSL = true;
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8111";
+        proxyWebsockets = true;
+        # basicAuthFile = config.secrets.ntfy_password.decrypted;
+      };
+    };
     virtualHosts."paste.sbr.pm" = {
       enableACME = true;
       forceSSL = true;
