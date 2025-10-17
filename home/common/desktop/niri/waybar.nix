@@ -9,7 +9,7 @@
         "modules-left" = [
           "tray"
           "custom/separator"
-          "niri/workspaces"
+          # "niri/workspaces"
           # "custom/agenda"
         ];
         "modules-center" = [
