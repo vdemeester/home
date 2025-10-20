@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   ...
 }:
@@ -23,6 +24,7 @@
     # inputs.code-cursor-nix.packages.x86_64-linux.cursor
     # mcp-servers
     github-mcp-server
+    inputs.copilot-cli.packages.x86_64-linux.default
     amp
   ];
 

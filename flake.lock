@@ -171,6 +171,26 @@
         "type": "github"
       }
     },
+    "copilot-cli": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1760656494,
+        "narHash": "sha256-dV2GENO7EWyWVZM/AUN1Oz2c3DAZIbhtTYx1FJULS18=",
+        "owner": "scarisey",
+        "repo": "copilot-cli-flake",
+        "rev": "3d32161c912b1c926508d955b03575d45811e869",
+        "type": "github"
+      },
+      "original": {
+        "owner": "scarisey",
+        "repo": "copilot-cli-flake",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1754269165,
@@ -1088,6 +1108,7 @@
         "chick-group": "chick-group",
         "claude-code": "claude-code",
         "code-cursor-nix": "code-cursor-nix",
+        "copilot-cli": "copilot-cli",
         "dagger": "dagger",
         "disko": "disko",
         "emacs-overlay": "emacs-overlay",

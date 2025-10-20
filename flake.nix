@@ -100,52 +100,6 @@
           hostname = "nagoya";
           hardwareType = "rpi4"; # to disable tpm2 TODO find a better way
         };
-        # nagoya = inputs.nixos-raspberrypi.lib.nixosSystem {
-        #   specialArgs = inputs;
-        #   modules = [
-        #     (
-        #       { ... }:
-        #       {
-        #         imports = with inputs.nixos-raspberrypi.nixosModules; [
-        #           raspberry-pi-5.base
-        #           raspberry-pi-5.bluetooth
-        #         ];
-        #       }
-        #     )
-        #     (_: {
-        #       networking.hostName = "nagoya";
-        #       users.users.yourUserName = {
-        #         initialPassword = "yourInitialPassword";
-        #         isNormalUser = true;
-        #         extraGroups = [
-        #           "wheel"
-        #         ];
-        #       };
-        #
-        #       services.openssh.enable = true;
-        #     })
-        #
-        #     (_: {
-        #       fileSystems = {
-        #         "/boot/firmware" = {
-        #           device = "/dev/disk/by-uuid/2175-794E";
-        #           fsType = "vfat";
-        #           options = [
-        #             "noatime"
-        #             "noauto"
-        #             "x-systemd.automount"
-        #             "x-systemd.idle-timeout=1min"
-        #           ];
-        #         };
-        #         "/" = {
-        #           device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
-        #           fsType = "ext4";
-        #           options = [ "noatime" ];
-        #         };
-        #       };
-        #     })
-        #   ];
-        # };
         sakhalin = libx.mkHost {
           hostname = "sakhalin";
           pkgsInput = inputs.nixpkgs-25_05;
@@ -385,5 +339,8 @@
 
     claude-code.url = "github:sadjow/claude-code-nix";
     claude-code.inputs.nixpkgs.follows = "nixpkgs";
+
+    copilot-cli.url = "github:scarisey/copilot-cli-flake";
+    copilot-cli.inputs.nixpkgs.follows = "nixpkgs";
   };
 }
