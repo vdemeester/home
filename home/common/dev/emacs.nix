@@ -87,6 +87,7 @@ let
       # jiralib2
       json-mode
       kubed
+      kkp
       # ligature
       macrostep
       magit

@@ -344,6 +344,10 @@ minibuffer, even without explicitly focusing it."
       (display-line-numbers-mode)))
   :bind ("<f7>" . vde/toggle-line-numbers))
 
+(use-package kkp
+  :if (not (display-graphic-p))
+  :hook (after-init . global-kkp-mode))
+
 (use-package helpful
   :unless noninteractive
   :bind (("C-h f" . helpful-callable)
