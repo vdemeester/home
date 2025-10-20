@@ -102,6 +102,9 @@ enum combos {
   TO_BEPO, TO_ERGOL, TO_QWERTY,
   TOGGLE_MOUSE,
   BEPO_ESC, QWERTY_ESC,
+  // Experiments
+  AROBASE, EXCLAMATION, HASH, DOLLAR, SLASH,
+  LPRN, RPRN, LCBR, RCBR, LBRC, RBRC, LABK, RABK,
 };
 
 const uint16_t PROGMEM combo_to_bepo[] = {LT(NAVI,KC_BSPC), KC_LSFT, COMBO_END};
@@ -112,6 +115,22 @@ const uint16_t PROGMEM combo_toggle_mouse[] = {KC_Q, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_bepo_escape[] = {HM_ALT_R, HM_GUI_N, COMBO_END};
 const uint16_t PROGMEM combo_qwe_escape[] = {HM_ALT_L, HM_GUI_SCLN, COMBO_END};
 
+const uint16_t PROGMEM combo_qwe_exclamation[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM combo_qwe_arobase[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_qwe_hash[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM combo_qwe_dollar[] = {KC_R, KC_T, COMBO_END};
+const uint16_t PROGMEM combo_qwe_slash[] = {KC_E, HM_SFT_D, COMBO_END};
+
+const uint16_t PROGMEM combo_qwe_lprn[] = {HM_CTL_J, HM_SFT_K, COMBO_END};
+const uint16_t PROGMEM combo_qwe_rprn[] = {HM_SFT_K, HM_ALT_L, COMBO_END};
+const uint16_t PROGMEM combo_qwe_lcbr[] = {KC_I, HM_SFT_K, COMBO_END};
+const uint16_t PROGMEM combo_qwe_rcbr[] = {HM_SFT_K, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_qwe_lbrc[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_qwe_rbrc[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_qwe_labk[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_qwe_rabk[] = {KC_COMM, KC_DOT, COMBO_END};
+
+
 combo_t key_combos[] = {
   // Layers
   [TO_BEPO] = COMBO(combo_to_bepo, TO(BEPO)),
@@ -121,6 +140,21 @@ combo_t key_combos[] = {
   // Others
   [QWERTY_ESC] = COMBO(combo_qwe_escape, KC_ESC),
   [BEPO_ESC] = COMBO(combo_bepo_escape, KC_ESC),
+  // Experiments
+  [EXCLAMATION] = COMBO(combo_qwe_exclamation, KC_EXLM),
+  [AROBASE] = COMBO(combo_qwe_arobase, KC_AT),
+  [HASH] = COMBO(combo_qwe_hash, KC_HASH),
+  [DOLLAR] = COMBO(combo_qwe_dollar, KC_DLR),
+  [SLASH] = COMBO(combo_qwe_slash, KC_SLSH),
+  
+  [LPRN] = COMBO(combo_qwe_lprn, KC_LPRN),
+  [RPRN] = COMBO(combo_qwe_rprn, KC_RPRN),
+  [LCBR] = COMBO(combo_qwe_lcbr, KC_LCBR),
+  [RCBR] = COMBO(combo_qwe_rcbr, KC_RCBR),
+  [LBRC] = COMBO(combo_qwe_lbrc, KC_LBRC),
+  [RBRC] = COMBO(combo_qwe_rbrc, KC_RBRC),
+  [LABK] = COMBO(combo_qwe_labk, KC_LABK),
+  [RABK] = COMBO(combo_qwe_rabk, KC_RABK),
 };
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
