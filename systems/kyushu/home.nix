@@ -19,6 +19,7 @@
 
     ntfy-sh
 
+    did
     # lisp
     roswell
     sbcl
