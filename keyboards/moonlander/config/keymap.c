@@ -88,6 +88,16 @@ const key_override_t *key_overrides[] = {
   &b_brkp_override,
 };
 
+void leader_start_user(void) {
+}
+
+void leader_end_user(void) {
+    if (leader_sequence_one_key(KC_F)) {
+        // Leader, f => Types the below string
+        SEND_STRING("QMK is awesome.");
+    }
+}
+
 #define COMBO_REF_DEFAULT QWER
 
 uint8_t combo_ref_from_layer(uint8_t layer){
@@ -103,7 +113,8 @@ enum combos {
   TOGGLE_MOUSE,
   BEPO_ESC, QWERTY_ESC,
   // Experiments
-  AROBASE, EXCLAMATION, HASH, DOLLAR, SLASH,
+  PIPE, AROBASE, HASH, DOLLAR, SLASH, BSLASH, AMPR,
+  LEADER,
   LPRN, RPRN, LCBR, RCBR, LBRC, RBRC, LABK, RABK,
 };
 
@@ -115,11 +126,15 @@ const uint16_t PROGMEM combo_toggle_mouse[] = {KC_Q, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_bepo_escape[] = {HM_ALT_R, HM_GUI_N, COMBO_END};
 const uint16_t PROGMEM combo_qwe_escape[] = {HM_ALT_L, HM_GUI_SCLN, COMBO_END};
 
-const uint16_t PROGMEM combo_qwe_exclamation[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM combo_qwe_pipe[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM combo_qwe_arobase[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM combo_qwe_hash[] = {KC_E, KC_R, COMBO_END};
-const uint16_t PROGMEM combo_qwe_dollar[] = {KC_R, KC_T, COMBO_END};
+const uint16_t PROGMEM combo_qwe_ampr[] = {KC_R, KC_T, COMBO_END};
+const uint16_t PROGMEM combo_qwe_dollar[] = {KC_R, HM_CTL_F, COMBO_END};
 const uint16_t PROGMEM combo_qwe_slash[] = {KC_E, HM_SFT_D, COMBO_END};
+const uint16_t PROGMEM combo_qwe_bslash[] = {HM_SFT_D, KC_C, COMBO_END};
+
+const uint16_t PROGMEM combo_qwe_leader[] = {HM_SFT_D, HM_CTL_F, COMBO_END};
 
 const uint16_t PROGMEM combo_qwe_lprn[] = {HM_CTL_J, HM_SFT_K, COMBO_END};
 const uint16_t PROGMEM combo_qwe_rprn[] = {HM_SFT_K, HM_ALT_L, COMBO_END};
@@ -129,7 +144,6 @@ const uint16_t PROGMEM combo_qwe_lbrc[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_qwe_rbrc[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM combo_qwe_labk[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM combo_qwe_rabk[] = {KC_COMM, KC_DOT, COMBO_END};
-
 
 combo_t key_combos[] = {
   // Layers
@@ -141,11 +155,15 @@ combo_t key_combos[] = {
   [QWERTY_ESC] = COMBO(combo_qwe_escape, KC_ESC),
   [BEPO_ESC] = COMBO(combo_bepo_escape, KC_ESC),
   // Experiments
-  [EXCLAMATION] = COMBO(combo_qwe_exclamation, KC_EXLM),
+  [PIPE] = COMBO(combo_qwe_pipe, KC_PIPE),
   [AROBASE] = COMBO(combo_qwe_arobase, KC_AT),
   [HASH] = COMBO(combo_qwe_hash, KC_HASH),
   [DOLLAR] = COMBO(combo_qwe_dollar, KC_DLR),
   [SLASH] = COMBO(combo_qwe_slash, KC_SLSH),
+  [BSLASH] = COMBO(combo_qwe_bslash, KC_BSLS),
+  [AMPR] = COMBO(combo_qwe_ampr, KC_AMPR),
+
+  [LEADER] = COMBO(combo_qwe_leader, QK_LEAD),
   
   [LPRN] = COMBO(combo_qwe_lprn, KC_LPRN),
   [RPRN] = COMBO(combo_qwe_rprn, KC_RPRN),
