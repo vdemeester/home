@@ -1455,6 +1455,30 @@ Add this function to the `after-save-hook'."
   :after (denote org)
   :defer 2)
 
+(use-package popper
+  :commands (popper-mode)
+  :bind (("C-#"   . popper-toggle)
+	 ;; ("C-~"   . popper-kill-latest-popup)
+         ("M-#"   . popper-cycle)
+	 ;; alt keybind for mac mode, possibly disposable? TODO: should bind only on mac?
+	 ("C-`"   . popper-toggle-latest)
+         ("C-M-#" . popper-toggle-type))
+  :custom
+  (popper-reference-buffers
+   '("\\*Messages\\*"
+     "Output\\*$"
+     "\\*Async Shell Command\\*"
+     help-mode
+     compilation-mode))
+  (popper-window-height 0.3)
+  :config
+  (popper-mode))
+
+(use-package popper-echo
+  :commands (popper-echo-mode popper-tab-line-mode)
+  :init
+  (popper-tab-line-mode))
+
 (use-package mu4e
   :commands (mu4e)
   :custom
