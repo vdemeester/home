@@ -68,9 +68,9 @@
         aomi = libx.mkHost {
           hostname = "aomi";
         };
-        kobe = libx.mkHost {
-          hostname = "kobe";
-        };
+        # kobe = libx.mkHost {
+        #   hostname = "kobe";
+        # };
         shikoku = libx.mkHost {
           hostname = "shikoku";
         };
