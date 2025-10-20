@@ -68,6 +68,9 @@
         aomi = libx.mkHost {
           hostname = "aomi";
         };
+        sakhalin = libx.mkHost {
+          hostname = "sakhalin";
+        };
         # kobe = libx.mkHost {
         #   hostname = "kobe";
         # };
@@ -99,11 +102,6 @@
         nagoya = libx.mkRPIHost {
           hostname = "nagoya";
           hardwareType = "rpi4"; # to disable tpm2 TODO find a better way
-        };
-        sakhalin = libx.mkHost {
-          hostname = "sakhalin";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
         };
         kerkouane = libx.mkHost {
           hostname = "kerkouane";
