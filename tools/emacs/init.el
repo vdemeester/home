@@ -159,6 +159,7 @@
   (require 'use-package))
 
 (require 'info) ;; XXX ensure the var exists even before loading `info.el'.
+
 (use-package init-func)
 ;; TODO: do useful stuff with the macro instead
 (vde/run-and-delete-frame my-greet-and-close ()
@@ -971,8 +972,8 @@ minibuffer, even without explicitly focusing it."
   :unless noninteractive
   :commands (embark-act embark-dwim embark-prefix-help-command)
   :bind
-  ("C-." . embark-act)
-  ("M-." . embark-dwim)
+  ("C-=" . embark-act)
+  ("M-=" . embark-dwim)
   ("C-h b" . embark-bindings)
   ("C-h B" . embark-bindings-at-point)
   ("C-h M" . embark-bindings-in-keymap)
