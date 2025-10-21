@@ -19,7 +19,25 @@
 
     ntfy-sh
 
+    monolith # TODO: move into =desktop= ?
+
     did
+
+    # Keyboard
+    qmk
+    qmk_hid
+
+    beancount
+    beancount-language-server
+    beanquery
+    beanhub-cli
+    fava
+
+    batzconverter
+
+    simple-scan
+    keybase
+
     # lisp
     roswell
     sbcl

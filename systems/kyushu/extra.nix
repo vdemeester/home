@@ -112,18 +112,9 @@
     nixos-rebuild-ng
     go-org-readwise
     battery-monitor
-    # Keyboard
-    keymapp
-    kontroll
-    qmk
-    qmk_hid
     # backup
     restic # TODO: will probably move this to it's own configuration some day
-    monolith # TODO: move into =desktop= ?
     virt-manager
-    simple-scan
-    keybase
-    batzconverter
   ];
 
   # Make sure we don't start docker until required
