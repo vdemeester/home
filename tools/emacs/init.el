@@ -962,6 +962,11 @@ minibuffer, even without explicitly focusing it."
   ("M-s M-y" . consult-yank-pop)
   ("M-s M-s" . consult-outline))
 
+(use-package consult-vc-modified-files
+  :bind
+  ("M-s ." . consult-vc-log-select-files)
+  ("M-s m" . consult-vc-modified-files))
+
 (use-package embark
   :unless noninteractive
   :commands (embark-act embark-dwim embark-prefix-help-command)
@@ -994,6 +999,28 @@ minibuffer, even without explicitly focusing it."
   :unless noninteractive
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package consult-gh
+  :after (consult)
+  :custom
+  (consult-gh-show-preview t)
+  (consult-gh-preview-key "C-o")
+  (consult-gh-large-file-warning-threshold 2500000)
+  (consult-gh-default-interactive-command #'consult-gh-transient)
+  (consult-gh-prioritize-local-folder nil)
+  (consult-gh-group-dashboard-by :reason)
+  ;;;; Optional
+  (consult-gh-repo-preview-major-mode nil) ; show readmes in their original format
+  (consult-gh-preview-major-mode 'org-mode) ; use 'org-mode for editing comments, commit messages, ...
+  :config
+  ;; Remember visited orgs and repos across sessions
+  (add-to-list 'savehist-additional-variables 'consult-gh--known-orgs-list)
+  (add-to-list 'savehist-additional-variables 'consult-gh--known-repos-list))
+
+(use-package consult-gh-embark
+  :after (embark consult)
+  :config
+  (consult-gh-embark-mode +1))
 
 (use-package pr-review
   :commands (pr-review pr-review-open pr-review-submit-review)

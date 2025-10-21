@@ -36,6 +36,9 @@ let
       consult-denote
       consult-project-extra
       consult-vc-modified-files
+      consult-gh
+      consult-gh-embark
+      consult-gh-with-pr-review
       copilot
       # copilot-chat
       corfu
