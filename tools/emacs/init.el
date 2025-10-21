@@ -1493,6 +1493,7 @@ Add this function to the `after-save-hook'."
   :custom
   (popper-reference-buffers
    '("\\*Messages\\*"
+     "\\*Warnings\\*"
      "Output\\*$"
      "\\*Async Shell Command\\*"
      help-mode
