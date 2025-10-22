@@ -85,4 +85,4 @@ jobs:
           sudo mkdir -p /home/vincent/src/home/tools/emacs /home/vincent/desktop/documents
           sudo touch /home/vincent/desktop/documents/.oath
           # build the system
-          nix build -L ".#nixosConfigurations.${{ matrix.name }}.config.system.build.toplevel"
+          nix build --accept-flake-config -L ".#nixosConfigurations.${{ matrix.name }}.config.system.build.toplevel"
