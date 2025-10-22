@@ -14,6 +14,8 @@
     thunderbird
     nautilus
 
+    slack
+
     gmailctl
     gcalcli
 
