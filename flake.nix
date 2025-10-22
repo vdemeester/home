@@ -35,6 +35,12 @@
       githubActions = inputs.nix-github-actions.lib.mkGithubMatrix {
         checks = inputs.nixpkgs.lib.getAttrs [ "x86_64-linux" ] self.packages;
       };
+      githubActionsMatrix = builtins.toJSON (
+        inputs.nixpkgs.lib.mapAttrsToList (name: value: {
+          name = name;
+          arch = value.config.nixpkgs.system;
+        }) self.nixosConfigurations
+      );
       # Standalone home configurations
       # FIXME set this up
       homeConfigurations = {

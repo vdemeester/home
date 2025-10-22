@@ -13,7 +13,6 @@ on:
       - 'modules/**'
       - 'tools/battery-monitor/**'
       - 'tools/bekind/**'
-      - 'tools/ergodox/**'
       - 'tools/go-org-readwise/**'
       - 'tools/k8s.infra/**'
       - 'flake.nix'
@@ -29,12 +28,12 @@ on:
       - 'modules/**'
       - 'tools/battery-monitor/**'
       - 'tools/bekind/**'
-      - 'tools/ergodox/**'
       - 'tools/go-org-readwise/**'
       - 'tools/k8s.infra/**'
       - 'flake.nix'
       - 'flake.lock'
       - '.github/workflows/build-systems.yaml'
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-systems
   cancel-in-progress: true
@@ -51,13 +50,12 @@ jobs:
         name: Generate Nix Matrix
         run: |
           set -Eeu
-          nix flake show --json | jq '.nixosConfigurations | to_entries | map({"name": .key})'
-          echo matrix="{\"include\": " $(nix flake show --json | jq '.nixosConfigurations | to_entries | map({"name": .key})') >> "$GITHUB_OUTPUT" "}"
+          echo "matrix={\"include\": $(nix eval .#githubActionsMatrix --raw)}" >> "$GITHUB_OUTPUT"
           cat $GITHUB_OUTPUT
 
   nix-build:
     needs: nix-matrix
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.arch == 'aarch64-linux' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
     strategy:
       fail-fast: false # Keep running if one leg fails.
       matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
@@ -80,9 +78,6 @@ jobs:
           name: vdemeester
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           skipPush: ${{ github.event_name == 'pull_request' }}
-      - uses: dbhi/qus/action@main
-        with:
-          targets: aarch64
       - name: build
         run: |
           # FIXME temporary hack to make system build successfully
@@ -90,9 +85,4 @@ jobs:
           sudo mkdir -p /home/vincent/src/home/tools/emacs /home/vincent/desktop/documents
           sudo touch /home/vincent/desktop/documents/.oath
           # build the system
-          # FIXME: move this away from this somehow
-          BUILD_ARGS=""
-          if [[ "${{ matrix.name }}" == "demeter" || "${{ matrix.name }}" == "athena" || "${{ matrix.name }}" == "aix" || "${{ matrix.name }}" == "nagoya" ]]; then
-            BUILD_ARGS="${BUILD_ARGS} --option system aarch64-linux"
-          fi
-          nix build ${BUILD_ARGS} -L ".#nixosConfigurations.${{ matrix.name }}.config.system.build.toplevel"
+          nix build -L ".#nixosConfigurations.${{ matrix.name }}.config.system.build.toplevel"
