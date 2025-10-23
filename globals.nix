@@ -164,10 +164,10 @@ _: {
         ];
       };
       ssh = {
-        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINn8dm9AXW/VZUCBmcbHPkPWwcdggGE9bSmX8Z2lwioZ";
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICalBmkoiDUTpAgBc/M/p5Ogo0L6e06jxwHebsq1V8pM";
       };
       syncthing = {
-        id = "6FP4V5F-C7RH67S-RBPVAP5-VB7RRYB-CTPYU6G-WUJQU7V-WO5YILH-F6DYOQJ";
+        id = "HZDLS5A-LKCEIYQ-DDMDYDF-DBTSRYH-HUNQSII-TVCDACT-DIYIO7V-G4K2EQV";
         folders = {
           sync = {
             type = "receiveonly";
