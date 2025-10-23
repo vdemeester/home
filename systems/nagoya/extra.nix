@@ -7,6 +7,10 @@
   ...
 }:
 {
+  imports = [
+    ../common/services/containers.nix
+    ../common/services/docker.nix
+  ];
   system.nixos.tags =
     let
       cfg = config.boot.loader.raspberryPi;
@@ -50,6 +54,7 @@
       recommendedGzipSettings = true;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
+      # TODO: should probably switch to sync.sbr.pm or something maybe ?
       virtualHosts."nagoya.sbr.pm" = {
         locations = lib.attrsets.mapAttrs' (
           name: value:
