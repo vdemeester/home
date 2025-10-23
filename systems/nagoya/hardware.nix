@@ -59,7 +59,7 @@ in
   ];
   boot = {
     loader.raspberryPi.firmwarePackage = kernelBundle.raspberrypifw;
-    loader.raspberryPi.bootloader = "kernel";
+    loader.raspberryPi.bootloader = "kernelboot";
     kernelPackages = kernelBundle.linuxPackages_rpi5;
   };
 
