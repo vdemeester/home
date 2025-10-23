@@ -8,7 +8,7 @@
 }:
 {
   imports = [
-    ../common/services/containers.nix
+    # ../common/services/containers.nix
     ../common/services/docker.nix
   ];
   system.nixos.tags =
