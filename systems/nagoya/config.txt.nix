@@ -34,6 +34,7 @@
       dt-overlays = {
         # needs to be false otherwise it hangs at boot time
         vc-kms-v3d.enable = lib.mkForce false;
+        vc4-kms-v3d.enable = lib.mkForce false;
       };
     };
   };
