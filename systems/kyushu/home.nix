@@ -2,6 +2,7 @@
 {
   imports = [
     ../../home/common/dev/containers.nix
+    ../../home/common/dev/tektoncd.nix
   ];
   nixpkgs.config.allowUnfree = true;
 

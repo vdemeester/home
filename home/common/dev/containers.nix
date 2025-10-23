@@ -24,8 +24,6 @@
     snazy
     kubelogin-oidc
     chmouzies-kubernetes
-    tektoncd-cli
-    tektoncd-cli-pac
     # knd
     # build
     dagger

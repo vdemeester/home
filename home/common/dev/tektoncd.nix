@@ -1,10 +1,7 @@
 { pkgs, ... }:
 {
-  imports = [
-    ./emacs.nix
-  ];
-
   home.packages = with pkgs; [
-    vscode-fhs
+    tektoncd-cli
+    tektoncd-cli-pac
   ];
 }

@@ -17,7 +17,7 @@
     ./passage.nix
     ./xdg.nix
 
-    ../dev/base.nix
+    ../dev/default.nix
     ../dev/desktop.nix
   ];
 
