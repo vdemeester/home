@@ -336,7 +336,7 @@
     nix-github-actions.url = "github:nix-community/nix-github-actions";
     nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/develop";
 
     code-cursor-nix.url = "github:jacopone/code-cursor-nix";
     code-cursor-nix.inputs.nixpkgs.follows = "nixpkgs";
