@@ -164,7 +164,7 @@ _: {
         ];
       };
       ssh = {
-        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICalBmkoiDUTpAgBc/M/p5Ogo0L6e06jxwHebsq1V8pM";
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIfep1SkMsAPHggXFLfEJNzZb7eoihtkqDeQruG+TbhF";
       };
       syncthing = {
         id = "HZDLS5A-LKCEIYQ-DDMDYDF-DBTSRYH-HUNQSII-TVCDACT-DIYIO7V-G4K2EQV";
