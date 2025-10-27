@@ -40,8 +40,6 @@
     pwvucontrol
     trash-cli
     yt-dlp
-
-    unstable.signal-desktop
   ];
 
   home.pointerCursor = {

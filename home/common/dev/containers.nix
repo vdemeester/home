@@ -20,6 +20,7 @@
     omc
     opm
     openshift-install
+    gosmee
     # operator-sdk
     snazy
     kubelogin-oidc

@@ -19,10 +19,9 @@
     gotestsum
     gofumpt
     # misc
-    protobuf
-    ram
+    # protobuf
+    # ram
     # not really go but still
-    gosmee
     # cue
     deptree
   ];

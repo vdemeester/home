@@ -11,21 +11,20 @@
     goose-cli
     gemini-cli
     claude-code
-    llm
+    # llm
     # openai-whisper
-    whisper-cpp
-    python312Packages.google-generativeai
-    python313Packages.google-generativeai
+    # whisper-cpp
+    # python312Packages.google-generativeai
+    # python313Packages.google-generativeai
     repomix
     # editors
-    zed-editor
     code-cursor
     cursor-cli
     # inputs.code-cursor-nix.packages.x86_64-linux.cursor
     # mcp-servers
     github-mcp-server
     inputs.copilot-cli.packages.x86_64-linux.default
-    amp
+    # amp-cli
   ];
 
   xdg.configFile."aichat/config.yaml.in".source = ./aichat.yaml;

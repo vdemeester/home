@@ -19,22 +19,21 @@
 
     # try
     jujutsu
-    jj-fzf
+    # jj-fzf
     devenv
     chmouzies-git
 
     # old
     cmake
     codespell
-    # devenv
     difftastic
     fswatch
     gum
     markdownlint-cli
     minica
     pre-commit
-    tldr
-    tmate
+    # tldr
+    # tmate
     vale
     yamllint
     yamlfmt

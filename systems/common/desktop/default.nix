@@ -47,27 +47,27 @@
     fontDir.enable = true;
     enableGhostscriptFonts = true;
     packages = with pkgs; [
-      cascadia-code
+      # cascadia-code
       corefonts
       dejavu_fonts
       # emojione
       feh
-      fira
-      fira-code
-      fira-code-symbols
-      fira-mono
+      # fira
+      # fira-code
+      # fira-code-symbols
+      # fira-mono
       font-awesome
       go-font
       hack-font
-      inconsolata
+      # inconsolata
       jetbrains-mono
       liberation_ttf
       nerd-fonts.jetbrains-mono
-      nerd-fonts.inconsolata
-      nerd-fonts.fira-code
-      nerd-fonts.fira-mono
-      nerd-fonts.caskaydia-cove
-      nerd-fonts.caskaydia-mono
+      # nerd-fonts.inconsolata
+      # nerd-fonts.fira-code
+      # nerd-fonts.fira-mono
+      # nerd-fonts.caskaydia-cove
+      # nerd-fonts.caskaydia-mono
       nerd-fonts.overpass
       nerd-fonts.ubuntu
       nerd-fonts.ubuntu-mono
