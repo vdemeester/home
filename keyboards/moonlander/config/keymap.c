@@ -31,6 +31,7 @@ enum layers {
   NUMB,
   NAVI,
   MOUS,
+  MODS,
 };
 
 enum custom_keycodes {
@@ -215,7 +216,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		  KC_TAB,  KC_B,    FR_E_AIGU,    KC_P,    KC_O,    FR_E_GRAVE,    XXXXXXX,           XXXXXXX, KC_CIRC,    KC_V,    KC_D,    KC_L,    KC_J,    KC_Z,
 		  LT(NUMB, KC_EQL),  HM_GUI_A,    HM_ALT_U,    HM_SFT_I,    HM_CTL_E,    HM_HYP_COMM,    XXXXXXX,           XXXXXXX, HM_HYP_C,    HM_CTL_T,    HM_SFT_S,    HM_ALT_R,    HM_GUI_N, LT(SYMB,KC_M),
 		  KC_GRV,  FR_A_GRAVE,    KC_Y,    KC_X,    KC_DOT,    KC_K,                                FR_QUOT,    KC_Q,    KC_G, KC_H,  KC_F, KC_W,
-		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, LT(MODS, KC_DEL),  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
 		  LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  OS_LSFT,  LT(SYMB, KC_ENT)
 		  ),
   [ERGL] = LAYOUT(
@@ -259,11 +260,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		  EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
 		  _______, _______, _______,           _______, _______, _______
 		  ),
-
+  
   [MOUS] = LAYOUT(
 		  LED_LEVEL,_______,_______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, QK_BOOT,
 		  _______, _______, _______, _______,   _______, _______, _______,           _______, _______, _______, MS_UP, _______, _______, _______,
 		  _______, MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, _______, _______,           _______, _______, MS_LEFT, MS_DOWN, MS_RGHT, _______, _______,
+		  _______, _______, _______, _______, _______, _______,                              _______, _______, _______, _______, _______, _______,
+		  EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
+		  MS_BTN1, MS_BTN3, _______,           _______, MS_BTN3, MS_BTN2
+		  ),
+  [MODS] = LAYOUT(
+		  LED_LEVEL,_______,_______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, QK_BOOT,
+		  _______, _______, _______, _______,   _______, _______, _______,           _______, _______, _______, MS_UP, _______, _______, _______,
+		  _______, OS_LGUI,  OS_LALT,  OS_LSFT, OS_LCTL, OS_HYPR, _______,           _______, _______, OS_LCTL, OS_LSFT, OS_LALT, OS_LGUI, _______,
 		  _______, _______, _______, _______, _______, _______,                              _______, _______, _______, _______, _______, _______,
 		  EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
 		  MS_BTN1, MS_BTN3, _______,           _______, MS_BTN3, MS_BTN2
