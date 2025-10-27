@@ -440,6 +440,8 @@ minibuffer, even without explicitly focusing it."
   (:map dired-mode-map
 	("E"   . wdired-change-to-wdired-mode)
 	("l"   . dired-find-file))
+  :custom
+  (dired-vc-rename-file t)
   :hook
   (dired-mode . dired-omit-mode)
   (dired-mode . dired-hide-details-mode)
