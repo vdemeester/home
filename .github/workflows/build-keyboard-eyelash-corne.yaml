@@ -34,7 +34,7 @@ jobs:
           cd keyboards
           make eyelash_corne
       - name: Upload firmware artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: eyelash_corne-firmware
           path: keyboards/firmwares/eyelash_corne_*.uf2

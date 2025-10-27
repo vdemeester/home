@@ -37,7 +37,7 @@ jobs:
           ./go.sh update
           ./go.sh build
       - name: Upload firmware artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: moonlander-firmware
           path: keyboards/moonlander/build/zsa_moonlander_vincent.bin
