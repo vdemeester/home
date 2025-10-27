@@ -64,7 +64,7 @@ in
   };
 
   nixpkgs.overlays = lib.mkAfter [
-    (self: super: {
+    (_self: _super: {
       # This is used in (modulesPath + "/hardware/all-firmware.nix") when at least
       # enableRedistributableFirmware is enabled
       # I know no easier way to override this package

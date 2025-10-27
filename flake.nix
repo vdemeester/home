@@ -37,7 +37,7 @@
       };
       githubActionsMatrix = builtins.toJSON (
         inputs.nixpkgs.lib.mapAttrsToList (name: value: {
-          name = name;
+          inherit name;
           arch = value.config.nixpkgs.system;
         }) self.nixosConfigurations
       );
@@ -126,7 +126,6 @@
               {
                 config,
                 pkgs,
-                lib,
                 ...
               }:
               {
