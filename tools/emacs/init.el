@@ -757,7 +757,8 @@ minibuffer, even without explicitly focusing it."
          ("C-c v P" . magit-push)
          ("C-c v r" . magit-rebase)
 	 ("C-c v s" . magit-stage)
-         ("C-c v v" . magit-status))
+         ("C-c v v" . magit-status)
+	 )
   :custom
   (magit-save-repository-buffers 'dontask)
   (magit-refs-show-commit-count 'all)
@@ -780,6 +781,10 @@ minibuffer, even without explicitly focusing it."
   (transient-append-suffix 'magit-push "=m"
     '(1 "=o" "Set push option" "--push-option="))  ;; Will prompt, can only set one extra
   )
+
+(use-package git-commit
+  :bind (:map git-commit-mode-map
+	      ("C-c C-h" . git-commit-co-authored)))
 
 (use-package ediff
   :commands (ediff ediff-files ediff-merge ediff3 ediff-files3 ediff-merge3)
@@ -1037,6 +1042,9 @@ minibuffer, even without explicitly focusing it."
   ;; Remember visited orgs and repos across sessions
   (add-to-list 'savehist-additional-variables 'consult-gh--known-orgs-list)
   (add-to-list 'savehist-additional-variables 'consult-gh--known-repos-list))
+
+;; (consult-gh-issue-list "tektoncd/pipeline -- --assignee \"@me\"" t)
+;; (consult-gh-pr-list "tektoncd/pipeline -- --assignee \"@me\"" t)
 
 (use-package consult-gh-embark
   :after (embark consult)
