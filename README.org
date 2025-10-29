@@ -151,7 +151,6 @@ All packages are defined in the =/pkgs= directory and are available for both =x8
 **** Development Tools
 - =bekind= - CLI tool for managing kind (Kubernetes in Docker) clusters with profile support
 - =battery-monitor= - System battery monitoring utility
-- =go-org-readwise= - Integration between Org mode and Readwise
 - =govanityurl= - Go vanity URL service
 - =manifest-tool= - Container manifest tool
 

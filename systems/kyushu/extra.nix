@@ -111,7 +111,7 @@
   environment.systemPackages = with pkgs; [
     kanata
     nixos-rebuild-ng
-    go-org-readwise
+    # go-org-readwise # FIXME: will add it back from its new place.
     battery-monitor
     # backup
     restic # TODO: will probably move this to it's own configuration some day

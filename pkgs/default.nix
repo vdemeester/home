@@ -15,7 +15,6 @@ in
   vde-thinkpad = pkgs.callPackage ./my/vde-thinkpad { };
   bekind = pkgs.callPackage ../tools/bekind { };
   battery-monitor = pkgs.callPackage ../tools/battery-monitor { };
-  go-org-readwise = pkgs.callPackage ../tools/go-org-readwise { };
   ape = pkgs.callPackage ./ape { };
   ram = pkgs.callPackage ./ram { };
   govanityurl = pkgs.callPackage ./govanityurl { };
