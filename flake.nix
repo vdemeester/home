@@ -36,10 +36,16 @@
         checks = inputs.nixpkgs.lib.getAttrs [ "x86_64-linux" ] self.packages;
       };
       githubActionsMatrix = builtins.toJSON (
-        inputs.nixpkgs.lib.mapAttrsToList (name: value: {
-          inherit name;
-          arch = value.config.nixpkgs.system;
-        }) self.nixosConfigurations
+        inputs.nixpkgs.lib.mapAttrsToList
+          (name: value: {
+            inherit name;
+            arch = value._module.specialArgs.system;
+          })
+          (
+            inputs.nixpkgs.lib.attrsets.filterAttrs (
+              _: config: builtins.hasAttr "system" config._module.specialArgs
+            ) self.nixosConfigurations
+          )
       );
       # Standalone home configurations
       # FIXME set this up
