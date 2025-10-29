@@ -968,8 +968,8 @@ minibuffer, even without explicitly focusing it."
 
 (use-package consult-vc-modified-files
   :bind
-  ("M-s ." . consult-vc-log-select-files)
-  ("M-s m" . consult-vc-modified-files))
+  ("C-c v ." . consult-vc-log-select-files)
+  ("C-c v m" . consult-vc-modified-files))
 
 (use-package embark
   :unless noninteractive
