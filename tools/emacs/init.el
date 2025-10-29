@@ -373,6 +373,15 @@ minibuffer, even without explicitly focusing it."
   :hook
   (prog-mode . flymake-mode))
 
+(use-package treesit-fold
+  :hook
+  (after-init . global-treesit-fold-mode)
+  :config
+  (setq treesit-fold-line-count-show t)  ; Show line count in folded regions
+  (setq treesit-fold-line-count-format " <%d lines> ")
+  (global-set-key (kbd "C-c f f") 'treesit-fold-close)
+  (global-set-key (kbd "C-c f o") 'treesit-fold-open))
+
 (use-package aggressive-indent
   :commands (aggressive-indent-mode)
   :hook
