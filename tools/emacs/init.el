@@ -18,7 +18,11 @@
 (defconst org-todos-file (expand-file-name "todos.org" org-directory)
   "`org-mode' file for TODOs.  This is the main file for the org angenda entries.")
 (defconst org-habits-file (expand-file-name "habits.org" org-directory)
-  "`org-mode' file for habits.  This is the file for habits that I need to share elsewhere, with Flat habits on iOS for example.")
+  "`org-mode' file for habits.  This is the file for habits that I need to
+share elsewhere, with Flat habits on iOS for example.")
+(defconst org-reading-list-file (expand-file-name "reading-list.org" org-directory)
+  "`org-mode' file for list of things to read.
+Most likely these needs to be added to readwise reader or ditch.")
 (defconst org-journal-file (expand-file-name "20250620T144103--journal__journal.org" org-notes-directory)
   "`org-mode' journal file, for journal-ling.")
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
@@ -180,7 +184,8 @@
   (create-lockfiles nil)   ; No backup files
   (make-backup-files nil)  ; No backup files
   (backup-inhibited t)     ; No backup files
-  (tab-always-indent 'complete)
+  ;; (tab-always-indent 'complete)
+  ;; (tab-first-completion 'word-or-paren-or-punct)
   (enable-local-variables :all)
   ;; (select-enable-clipboard t)
   ;; (select-enable-primary t)
@@ -1148,7 +1153,7 @@ minibuffer, even without explicitly focusing it."
   (org-priority-default 4)
   (org-list-demote-modify-bullet '(("+" . "-") ("-" . "+")))
   (org-agenda-file-regexp "^[a-zA-Z0-9-_]+.org$")
-  (org-agenda-files `(,org-inbox-file ,org-todos-file ,org-habits-file))
+  (org-agenda-files `(,org-inbox-file ,org-todos-file ,org-habits-file ,org-reading-list-file))
   ;; (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (org-refile-targets (vde/org-refile-targets))
   (org-refile-use-outline-path 'file)
