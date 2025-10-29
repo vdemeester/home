@@ -436,6 +436,7 @@ minibuffer, even without explicitly focusing it."
   :custom
   (dired-hide-details-hide-information-lines 'nil)
   (dired-kill-when-opening-new-dired-buffer 't)
+  (dired-dwim-target t)
   :bind
   (:map dired-mode-map
 	("E"   . wdired-change-to-wdired-mode)
