@@ -117,6 +117,7 @@ let
       org-appear
       org-contrib
       org-download
+      org-gcal
       org-modern
       org-nix-shell
       org-ql
