@@ -986,7 +986,7 @@ minibuffer, even without explicitly focusing it."
   ("C-h B" . embark-bindings-at-point)
   ("C-h M" . embark-bindings-in-keymap)
   (:map completion-list-mode-map
-        ("." . embark-act))
+        ("=" . embark-act))
   :custom
   (prefix-help-command #'embark-prefix-help-command)
   (embark-indicators '(embark-minimal-indicator
