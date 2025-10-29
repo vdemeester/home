@@ -137,14 +137,14 @@ const uint16_t PROGMEM combo_qwe_bslash[] = {HM_SFT_D, KC_C, COMBO_END};
 
 const uint16_t PROGMEM combo_qwe_leader[] = {HM_SFT_D, HM_CTL_F, COMBO_END};
 
-const uint16_t PROGMEM combo_qwe_lprn[] = {HM_CTL_J, HM_SFT_K, COMBO_END};
-const uint16_t PROGMEM combo_qwe_rprn[] = {HM_SFT_K, HM_ALT_L, COMBO_END};
-const uint16_t PROGMEM combo_qwe_lcbr[] = {KC_I, HM_SFT_K, COMBO_END};
-const uint16_t PROGMEM combo_qwe_rcbr[] = {HM_SFT_K, KC_COMM, COMBO_END};
-const uint16_t PROGMEM combo_qwe_lbrc[] = {KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM combo_qwe_rbrc[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM combo_qwe_labk[] = {KC_M, KC_COMM, COMBO_END};
-const uint16_t PROGMEM combo_qwe_rabk[] = {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM combo_qwe_lprn[] = {KC_I, HM_SFT_K, COMBO_END};
+const uint16_t PROGMEM combo_qwe_rprn[] = {HM_SFT_K, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_qwe_lcbr[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_qwe_rcbr[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_qwe_lbrc[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_qwe_rbrc[] = {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM combo_qwe_labk[] = {KC_U, HM_CTL_J, COMBO_END};
+const uint16_t PROGMEM combo_qwe_rabk[] = {KC_O, HM_ALT_L, COMBO_END};
 
 combo_t key_combos[] = {
   // Layers
