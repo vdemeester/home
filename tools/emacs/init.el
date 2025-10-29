@@ -843,6 +843,9 @@ minibuffer, even without explicitly focusing it."
 (use-package corfu
   :custom
   (corfu-auto 't)
+  (corfu-auto-delay 1)
+  (corfu-cycle 't)
+  (corfu-preselect 'prompt)
   :bind
   (:map corfu-map
         ("TAB" . corfu-next)
