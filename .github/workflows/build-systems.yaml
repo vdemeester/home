@@ -50,6 +50,7 @@ jobs:
         name: Generate Nix Matrix
         run: |
           set -Eeu
+          set -o pipefail
           echo "matrix={\"include\": $(nix eval .#githubActionsMatrix --raw)}" >> "$GITHUB_OUTPUT"
           cat $GITHUB_OUTPUT
 

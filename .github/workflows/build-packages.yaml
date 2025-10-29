@@ -36,6 +36,7 @@ jobs:
         name: Generate Nix Matrix
         run: |
           set -Eeu
+          set -o pipefail
           echo "matrix=$(nix eval --json '.#githubActions.matrix')" >> "$GITHUB_OUTPUT"
 
   nix-build:
