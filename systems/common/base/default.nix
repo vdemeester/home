@@ -46,7 +46,6 @@
     tree
     usbutils
     vim
-    helix
     wget
     yq-go
   ];
