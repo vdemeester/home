@@ -126,6 +126,7 @@
       map = ''xargs -n1'';
       k = ''kubectl'';
       wget = ''wget -c --hsts-file=${config.xdg.dataHome}/wget-hsts'';
+      cr = ''env CLAUDE_CODE_USE_VERTEX=1 CLOUD_ML_REGION=us-east5 ANTHROPIC_VERTEX_PROJECT_ID=itpc-gcp-pnd-pe-eng-claude claude'';
     };
 
     plugins = [
