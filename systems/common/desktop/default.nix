@@ -74,12 +74,11 @@
       nerd-fonts.ubuntu-sans
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
-      noto-fonts-extra
+      noto-fonts-color-emoji
       overpass
       symbola
       twemoji-color-font
-      ubuntu_font_family
+      ubuntu-classic
       unifont
       recursive
     ];

@@ -77,14 +77,14 @@
       enable = true;
       devices = [ { device = "/dev/nvme0n1"; } ];
     };
-    ollama = {
-      enable = true;
-      package = pkgs.ollama.override {
-        config.cudaSupport = true;
-        config.rocmSupport = false;
-      };
-      acceleration = "cuda"; # no nivida :D
-    };
+    # ollama = {
+    #   enable = true;
+    #   package = pkgs.ollama.override {
+    #     # config.cudaSupport = true;
+    #     config.rocmSupport = false;
+    #   };
+    #   acceleration = "cuda"; # no nivida :D
+    # };
   };
 
   # Move this to a "builder" role, or maybe I don't need this anymore ?
