@@ -1,8 +1,14 @@
 {
+  inputs,
+  lib,
   config,
   ...
 }:
 {
+  imports = [
+    inputs.disko.nixosModules.disko
+    (import ./disks.nix { inherit lib; })
+  ];
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/73fd8864-f6af-4fdd-b826-0dfdeacd3c19";
     fsType = "ext4";
