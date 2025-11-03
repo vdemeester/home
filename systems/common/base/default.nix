@@ -76,4 +76,5 @@
     lib.mapAttrsToList mkTmpDir (lib.filterAttrs (_: u: u.isNormalUser) config.users.extraUsers)
   );
 
+  services.fwupd.enable = true;
 }
