@@ -86,9 +86,9 @@
         # kobe = libx.mkHost {
         #   hostname = "kobe";
         # };
-        shikoku = libx.mkHost {
-          hostname = "shikoku";
-        };
+        # shikoku = libx.mkHost {
+        #   hostname = "shikoku";
+        # };
         # Servers (stable)
         athena = libx.mkHost {
           hostname = "athena";
