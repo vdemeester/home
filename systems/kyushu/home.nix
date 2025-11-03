@@ -36,6 +36,8 @@
     beanhub-cli
     fava
 
+    startpaac
+
     batzconverter
 
     simple-scan
