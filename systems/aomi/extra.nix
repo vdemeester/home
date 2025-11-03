@@ -26,7 +26,7 @@
     ../redhat
   ];
 
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # TODO make it an option ? (otherwise I'll add it for all)
   users.users.vincent.linger = true;
