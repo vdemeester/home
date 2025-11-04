@@ -2,11 +2,26 @@
 {
   # FIXME: migrate to pkgs and overlays on root
   additions = final: _prev: import ../pkgs { pkgs = final; };
-  modifications = _final: _prev: {
+  modifications = final: prev: {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
     # custom-caddy = import ./custom-caddy.nix { pkgs = prev; };
+    go_1_25_3 = prev.go_1_25.overrideAttrs (finalAttrs: {
+      version = "1.25.3";
+      src = final.fetchurl {
+        url = "https://go.dev/dl/go1.25.3.src.tar.gz";
+        hash = "sha256-qBpLpZPQAV4QxR4mfeP/B8eskU38oDfZUX0ClRcJd5U=";
+      };
+    });
+
+    buildGo1253Module = prev.buildGoModule.override {
+      go = final.go_1_25_3;
+    };
+
+    cosign = prev.cosign.override {
+      buildGoModule = final.buildGo1253Module;
+    };
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
