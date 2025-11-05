@@ -82,7 +82,6 @@
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager
-        # inputs.niri.nixosModules.niri
         {
           home-manager.extraSpecialArgs = specialArgs;
           home-manager.useGlobalPkgs = true;

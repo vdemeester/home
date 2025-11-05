@@ -8,6 +8,7 @@
         "usbhid"
       ];
       kernelModules = [ ];
+      systemd.enable = lib.mkForce false;
     };
     kernelModules = [ ];
     extraModulePackages = [ ];
