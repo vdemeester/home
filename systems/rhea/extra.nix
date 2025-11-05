@@ -1,5 +1,7 @@
 { lib, pkgs, ... }:
 {
+  users.users.vincent.linger = true;
+
   services.openssh.enable = true;
   services.openssh.settings = {
     PermitRootLogin = "yes";
