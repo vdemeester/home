@@ -7,7 +7,7 @@
   home.packages = with pkgs; [
     chmouzies-ai
     aichat
-    aider-chat
+    # aider-chat
     goose-cli
     gemini-cli
     claude-code
