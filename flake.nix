@@ -111,12 +111,12 @@
           pkgsInput = inputs.nixpkgs-25_05;
           homeInput = inputs.home-manager-25_05;
         };
-				rhea = libx.mkHost {
-					hostname = "rhea";
+        rhea = libx.mkHost {
+          hostname = "rhea";
           system = "aarch64-linux";
           pkgsInput = inputs.nixpkgs-25_05;
           homeInput = inputs.home-manager-25_05;
-				}
+        };
         # nagoya = libx.mkRPIHost {
         #   hostname = "nagoya";
         #   hardwareType = "rpi4"; # to disable tpm2 TODO find a better way
