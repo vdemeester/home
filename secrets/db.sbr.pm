@@ -23,6 +23,8 @@ sakhalin.sbr.pm. IN A 192.168.1.70
 *.sakhalin.sbr.pm. IN A 192.168.1.70
 aix.sbr.pm. IN A 10.100.0.89
 *.aix.sbr.pm. IN A 10.100.0.89
+rhea.sbr.pm. IN A 192.168.1.50
+*.rhea.sbr.pm. IN A 192.168.1.50
 aion.sbr.pm. IN A 192.168.1.49
 *.aion.sbr.pm. IN A 192.168.1.49
 demeter.sbr.pm. IN A 192.168.1.182
