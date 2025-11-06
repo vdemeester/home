@@ -52,41 +52,41 @@
       devices = [ { device = "/dev/nvme0n1"; } ];
     };
     hardware.bolt.enable = true;
-    gitea-actions-runner = {
-      instances = {
-        "aomi-codeberg" = {
-          name = "aomi";
-          enable = true;
-          url = "https://codeberg.org";
-          # tokenFile = "/home/vincent/sync/codeberg.token";
-          tokenFile = "/etc/codeberg.token";
-          labels = [
-            # "local:host"
-            "nixos-${pkgs.system}:host"
-            "native:host"
-            "docker:docker://gitea/runner-images:ubuntu-latest"
-            "ubuntu-latest:docker://gitea/runner-images:ubuntu-latest"
-            "ubuntu-24.04:docker://gitea/runner-images:ubuntu-24.04"
-            "ubuntu-22.04:docker://gitea/runner-images:ubuntu-22.04"
-            "ubuntu-20.04:docker://gitea/runner-images:ubuntu-20.04"
-            # "nix:docker://localhost:5921/nix-runner"
-          ];
-          hostPackages = with pkgs; [
-            bash
-            direnv
-            coreutils
-            curl
-            gawk
-            nixVersions.stable
-            gitFull
-            gnused
-            docker
-            openssh
-            wget
-          ];
-        };
-      };
-    };
+    # gitea-actions-runner = {
+    #   instances = {
+    #     "aomi-codeberg" = {
+    #       name = "aomi";
+    #       enable = true;
+    #       url = "https://codeberg.org";
+    #       # tokenFile = "/home/vincent/sync/codeberg.token";
+    #       tokenFile = "/etc/codeberg.token";
+    #       labels = [
+    #         # "local:host"
+    #         "nixos-${pkgs.system}:host"
+    #         "native:host"
+    #         "docker:docker://gitea/runner-images:ubuntu-latest"
+    #         "ubuntu-latest:docker://gitea/runner-images:ubuntu-latest"
+    #         "ubuntu-24.04:docker://gitea/runner-images:ubuntu-24.04"
+    #         "ubuntu-22.04:docker://gitea/runner-images:ubuntu-22.04"
+    #         "ubuntu-20.04:docker://gitea/runner-images:ubuntu-20.04"
+    #         # "nix:docker://localhost:5921/nix-runner"
+    #       ];
+    #       hostPackages = with pkgs; [
+    #         bash
+    #         direnv
+    #         coreutils
+    #         curl
+    #         gawk
+    #         nixVersions.stable
+    #         gitFull
+    #         gnused
+    #         docker
+    #         openssh
+    #         wget
+    #       ];
+    #     };
+    #   };
+    # };
   };
 
 }
