@@ -20,11 +20,7 @@
   networking.useDHCP = lib.mkDefault true;
 
   environment.systemPackages = with pkgs; [
-    vim
-    git
-    htop
-    helix
-    # Add any additional packages you need.
+    lm_sensors
   ];
 
 }
