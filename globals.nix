@@ -376,6 +376,39 @@ _: {
         };
       };
     };
+    rhea = {
+      net = {
+        ips = [ "192.168.1.50" ];
+        vpn = {
+          pubkey = "QBGdlPgtaLIh+WDLbuIWPL+Nr08mtfIqs6RwgVDAGjA=";
+          ips = [ "10.100.0.50" ];
+        };
+        names = [
+          "rhea.home"
+          "rhea.vpn"
+          "rhea.sbr.pm"
+        ];
+      };
+      ssh = {
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFH3Lk4bRgNyFRK/Hzg1PvVbL/dpyI1SmLJFkb6VQDw";
+      };
+      # syncthing = {
+      #   id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
+      #   folders = {
+      #     org = { };
+      #     documents = { };
+      #     sync = { };
+      #     screenshots = { };
+      #     wallpapers = { };
+      #     # photos = {
+      #     #   paused = true; # TODO: implement this, start as paused
+      #     # };
+      #     # music = {
+      #     #   paused = true; # TODO: implement this, start as paused
+      #     # };
+      #   };
+      # };
+    };
     aion = {
       net = {
         ips = [ "192.168.1.49" ];
