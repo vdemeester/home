@@ -1,6 +1,7 @@
 {
   libx,
   globals,
+  lib,
   pkgs,
   ...
 }:
@@ -16,6 +17,11 @@
   # TODO make it an option ? (otherwise I'll add it for all)
   users.users.vincent.linger = true;
 
+  systemd.services.n8n.environment = {
+    N8N_SECURE_COOKIE = "false";
+    PATH = lib.mkForce "/run/current-system/sw/bin";
+  };
+
   services = {
     atuin = {
       enable = true;
@@ -23,6 +29,15 @@
       openRegistration = false;
     };
 
+    n8n = {
+      enable = true;
+      openFirewall = true;
+      # webhookUrl = "";
+    };
+    paperless = {
+      enable = true;
+      address = "${builtins.head globals.machines.sakhalin.net.vpn.ips}";
+    };
     # services.postgresql.enable = true;
     # services.postgresql.package = pkgs.postgresql_15;
     # services.postgresql.dataDir = "/var/lib/postgresql/15";
