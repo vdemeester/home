@@ -16,7 +16,7 @@
     hashKnownHosts = true;
     userKnownHostsFile = "${config.home.homeDirectory}/.ssh/known_hosts";
     controlMaster = "auto";
-    controlPersist = "10m";
+    # controlPersist = "10m"; # FIXME: issue with OpenSSH 10p1, can re-enable in a few weeks.
     controlPath = "${config.home.homeDirectory}/.ssh/master-%C";
     addKeysToAgent = "confirm";
     matchBlocks = {
