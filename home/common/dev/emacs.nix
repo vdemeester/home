@@ -136,6 +136,7 @@ let
       popon
       popper
       rg
+      ready-player
       scopeline
       scratch
       shr-tag-pre-highlight
