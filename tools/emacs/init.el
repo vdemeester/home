@@ -382,6 +382,11 @@ minibuffer, even without explicitly focusing it."
   (global-set-key (kbd "C-c f f") 'treesit-fold-close)
   (global-set-key (kbd "C-c f o") 'treesit-fold-open))
 
+(use-package scopeline
+  :hook prog-mode
+  :custom-face
+  (scopeline-face ((t (:height 0.8 :inherit shadow)))))
+
 (use-package aggressive-indent
   :commands (aggressive-indent-mode)
   :hook

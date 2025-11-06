@@ -21,6 +21,7 @@ let
       ace-window
       adoc-mode
       age
+      agent-shell
       aggressive-indent
       aidermacs
       alert
@@ -39,7 +40,7 @@ let
       consult-gh
       consult-gh-embark
       consult-gh-with-pr-review
-      copilot
+      # copilot
       # copilot-chat
       corfu
       corfu-candidate-overlay
@@ -47,8 +48,8 @@ let
       dash
       denote
       denote-org
-      denote-journal
-      denote-sequence # maybe ?
+      # denote-journal
+      # denote-sequence # maybe ?
       denote-menu
       devdocs
       diff-hl
@@ -57,7 +58,8 @@ let
       dired-rsync
       diredfl
       dockerfile-mode
-      doom-modeline
+      # doom-modeline
+      dwim-shell-command
       easy-kill
       eat
       edit-indirect
@@ -66,12 +68,12 @@ let
       pr-review
       embark
       embark-consult
-      emms
+      # emms
       envrc
       eshell-atuin
-      eshell-prompt-extras
+      # eshell-prompt-extras
       esup
-      flimenu
+      # flimenu
       flymake-yamllint
       git-modes
       go-mode
@@ -83,7 +85,7 @@ let
       highlight
       highlight-indentation
       htmlize
-      ibuffer-vc
+      # ibuffer-vc
       indent-bars
       jinx
       # jira
@@ -107,12 +109,12 @@ let
       nix-ts-mode
       nixpkgs-fmt
       no-littering
-      noether
+      # noether
       # notmuch
       ob-async
       ob-go
       ob-http
-      orderless # TODO configure this
+      orderless
       org
       org-appear
       org-contrib
@@ -131,8 +133,6 @@ let
       ox-pandoc
       ox-jira
       pandoc-mode
-      # password-store
-      # pkgs.bookmatrk-plus # Do I use it ?
       popon
       popper
       rg
@@ -145,6 +145,7 @@ let
       symbol-overlay
       tempel
       tempel-collection
+      time-zones
       # topsy
       trashed
       treesit-fold
@@ -160,7 +161,7 @@ let
       web-mode
       wgrep
       with-editor
-      xeft
+      # xeft
       xterm-color
     ];
 in
