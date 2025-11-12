@@ -21,7 +21,7 @@
     path = "/etc/NetworkManager/system-connections/RHVPN.ovpn";
     mode = "600";
   };
-  age.secrets."redhat/AMS2.ovpn" = {
+  age.secrets."AMS2.ovpn" = {
     file = ../../secrets/redhat/AMS2.ovpn.age;
     path = "/etc/NetworkManager/system-connections/AMS2.ovpn";
     mode = "600";
