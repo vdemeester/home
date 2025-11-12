@@ -47,11 +47,6 @@
     path = "/etc/pki/tls/certs/2022-RH-IT-Root-CA.pem";
     mode = "444";
   };
-  age.secrets."2015-RH-IT-Root-CA.pem" = {
-    file = ../../secrets/redhat/2015-RH-IT-Root-CA.pem.age;
-    path = "/etc/pki/tls/certs/2015-RH-IT-Root-CA.pem";
-    mode = "444";
-  };
 
   # security.pki.certificates =[];
   security.pki.certificateFiles = [

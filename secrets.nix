@@ -62,10 +62,6 @@ in
     aomi
     kyushu
   ];
-  "secrets/redhat/2015-RH-IT-Root-CA.pem.age".publicKeys = users ++ [
-    aomi
-    kyushu
-  ];
   "secrets/redhat/Eng-CA.crt.age".publicKeys = users ++ [
     aomi
     kyushu
