@@ -341,7 +341,7 @@
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.inputs.flake-compat.follows = "flake-compat";
-    lanzaboote.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+    lanzaboote.inputs.pre-commit-hooks-nix.follows = "pre-commit-hooks";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
