@@ -328,11 +328,6 @@
       repo = "chapeau-rouge";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Used to generate NixOS images for other platforms
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix-25_05.url = "github:ryantm/agenix";
@@ -351,9 +346,6 @@
     nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/develop";
-
-    code-cursor-nix.url = "github:jacopone/code-cursor-nix";
-    code-cursor-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     claude-code.url = "github:sadjow/claude-code-nix";
     claude-code.inputs.nixpkgs.follows = "nixpkgs";
