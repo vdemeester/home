@@ -272,6 +272,7 @@
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
+    pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
     # Home Manager
     home-manager = {
       type = "github";
@@ -320,6 +321,7 @@
       owner = "vdemeester";
       repo = "chick-group";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
     };
     # Red Hat
     chapeau-rouge = {
@@ -327,14 +329,19 @@
       owner = "vdemeester";
       repo = "chapeau-rouge";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
     };
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.home-manager.follows = "home-manager";
     agenix-25_05.url = "github:ryantm/agenix";
     agenix-25_05.inputs.nixpkgs.follows = "nixpkgs-25_05";
+    agenix-25_05.inputs.home-manager.follows = "home-manager-25_05";
 
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+    lanzaboote.inputs.flake-compat.follows = "flake-compat";
+    lanzaboote.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -346,6 +353,7 @@
     nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/develop";
+    nixos-raspberrypi.inputs.flake-compat.follows = "flake-compat";
 
     claude-code.url = "github:sadjow/claude-code-nix";
     claude-code.inputs.nixpkgs.follows = "nixpkgs";
