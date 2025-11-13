@@ -320,10 +320,6 @@ minibuffer, even without explicitly focusing it."
 (use-package passage
   :commands (passage-get))
 
-(use-package ffap
-  :hook
-  (after-init . ffap-bindings))
-
 (use-package find-file
   :bind ("C-x C-g" . ff-find-other-file))
 
