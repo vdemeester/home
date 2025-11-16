@@ -43,6 +43,8 @@
     simple-scan
     keybase
 
+    transmission_4-gtk
+
     # lisp
     roswell
     sbcl
