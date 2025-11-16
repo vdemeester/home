@@ -81,6 +81,12 @@
       ubuntu-classic
       unifont
       recursive
+      # Maple Mono (Ligature TTF unhinted)
+      maple-mono.truetype
+      # Maple Mono NF (Ligature unhinted)
+      maple-mono.NF-unhinted
+      # Maple Mono NF CN (Ligature unhinted)
+      maple-mono.NF-CN-unhinted
     ];
 
     # Use fonts specified by user rather than default ones
