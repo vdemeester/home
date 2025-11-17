@@ -454,6 +454,18 @@ _: {
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWdnPJg0Y4kd4lHPAGE4xgMAK2qvMg3oBxh0t+xO+7O";
       };
     };
+    wakasu = {
+      syncthing = {
+        id = "WM23THJ-ECXRLXA-HE5TIKO-VPLSMRY-Y2EWZI7-Q7JMLPX-5Q5UNEN-QMB7ZQJ";
+        folders = {
+          org = { };
+          documents = { };
+          sync = { };
+          screenshots = { };
+          wallpapers = { };
+        };
+      };
+    };
     okinawa = {
       net = {
         ips = [ "192.168.1.19" ];
