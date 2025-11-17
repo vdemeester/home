@@ -973,6 +973,43 @@ minibuffer, even without explicitly focusing it."
               ("e" . wgrep-change-to-wgrep-mode)
               ("C-x C-q" . wgrep-change-to-wgrep-mode)))
 
+(use-package abbrev
+  :ensure nil
+  :custom
+  (save-abbrevs nil)
+  :config
+  (define-abbrev-table 'global-abbrev-table
+    '(;; Arrows
+      ("ra" "→")
+      ("la" "←")
+      ("ua" "↑")
+      ("da" "↓")
+
+      ;; Emojis for context markers
+      ;; ("todo"  "👷 TODO:")
+      ;; ("fixme" "🔥 FIXME:")
+      ;; ("note"  "📎 NOTE:")
+      ;; ("hack"  "👾 HACK:")
+      ("smile"  "😄")
+      ("party" "🎉")
+      ("up"  "☝️")
+      ("applause" "👏")
+      ("manyapplauses" "👏👏👏👏👏👏👏👏")
+      ("heart" "❤️")
+
+      ;; NerdFonts
+      ("nerdfolder" " ")
+      ("nerdgit" "")
+      ("nerdemacs" "")
+
+      ;; Markdown
+      ("cb" "```@\n\n```"
+       (lambda () (search-backward "@") (delete-char 1)))
+
+      ;; ORG
+      ("ocb" "#+BEGIN_SRC @\n\n#+END_SRC"
+       (lambda () (search-backward "@") (delete-char 1))))))
+
 (use-package tempel
   :custom (tempel-path (expand-file-name "templates" user-emacs-directory))
   :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
