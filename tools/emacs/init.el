@@ -23,6 +23,9 @@ share elsewhere, with Flat habits on iOS for example.")
 (defconst org-reading-list-file (expand-file-name "reading-list.org" org-directory)
   "`org-mode' file for list of things to read.
 Most likely these needs to be added to readwise reader or ditch.")
+(defconst org-journelly-file (expand-file-name "Journelly.org" org-directory)
+  "`org-mode' file for journalling.
+It is shared with iOS and replace the deprecated `org-journal-file' below.")
 (defconst org-journal-file (expand-file-name "20250620T144103--journal__journal.org" org-notes-directory)
   "`org-mode' journal file, for journal-ling.")
 (defconst org-archive-dir (expand-file-name "archive" org-directory)
@@ -1376,10 +1379,15 @@ minibuffer, even without explicitly focusing it."
   :bind (("C-c o c" . org-capture))
   :config
   (add-to-list 'org-capture-templates
-	       `("j" "🗞 Journal entry" item
+	       `("J" "🗞 Journal entry" item
 		 (file+datetree ,org-journal-file)
 		 "%U %?\n%i")
 	       t)
+  (add-to-list 'org-capture-templates
+	       `("j" "🗞  Journelly" entry
+		 (file ,org-journelly-file)
+		 "* %U @ %^{Hostname}\n%?" :prepend t)
+	       t) ;; FIXME: 
   (add-to-list 'org-capture-templates
 	       `("t" "📥 Tasks")
 	       t)
