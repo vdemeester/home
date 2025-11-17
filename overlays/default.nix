@@ -7,7 +7,7 @@
     # ...
     # });
     # custom-caddy = import ./custom-caddy.nix { pkgs = prev; };
-    go_1_25_3 = prev.go_1_25.overrideAttrs (finalAttrs: {
+    go_1_25_3 = prev.go_1_25.overrideAttrs (_finalAttrs: {
       version = "1.25.3";
       src = final.fetchurl {
         url = "https://go.dev/dl/go1.25.3.src.tar.gz";

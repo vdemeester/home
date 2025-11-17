@@ -1,7 +1,6 @@
 {
   globals,
   libx,
-  pkgs,
   ...
 }:
 {
