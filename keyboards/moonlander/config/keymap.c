@@ -69,6 +69,8 @@ const key_override_t star_zero_override = ko_make_with_layers(MOD_MASK_SHIFT, KC
 const key_override_t b_pipe_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_B, KC_PIPE, 1 << BEPO, MOD_MASK_SHIFT);
 const key_override_t b_brkp_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_B, US_BRKP, 1 << BEPO);
 
+const key_override_t space_underscore_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, LT(NUMB, KC_SPC), KC_UNDS, 1 << BEPO, MOD_MASK_SHIFT);
+
 const key_override_t *key_overrides[] = {
   &circ_exclamation_override,
   &dot_colon_override,
@@ -85,8 +87,10 @@ const key_override_t *key_overrides[] = {
   &minus_eight_override,
   &slash_nine_override,
   &star_zero_override,
+  
   &b_pipe_override,
   &b_brkp_override,
+  &space_underscore_override,
 };
 
 void leader_start_user(void) {
