@@ -111,8 +111,8 @@
       openPorts = true;
       settings = {
         max-concurrent-downloads = 20;
+        dir = "/neo/downloads";
       };
-      downloadDir = "/link/downloads";
       rpcSecretFile = "${pkgs.writeText "aria" "aria2rpc\n"}"; # FIXME: use secrets for this somehow
     };
     transmission = {
