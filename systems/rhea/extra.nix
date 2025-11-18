@@ -47,6 +47,19 @@
           "force user" = "vincent";
           "force group" = "users";
         };
+        "downloads" = {
+          path = "/neo/downloads";
+          public = true;
+          browseable = "yes";
+          "read only" = "no";
+          "guest ok" = "yes";
+          writable = true;
+          comment = "downloads";
+          "create mask" = "0644";
+          "directory mask" = "0755";
+          "force user" = "vincent";
+          "force group" = "users";
+        };
         "music" = {
           path = "/neo/music";
           public = true;
@@ -94,6 +107,7 @@
                 /neo                      192.168.1.0/24(rw,fsid=0,no_subtree_check) 10.100.0.0/24(rw,fsid=0,no_subtree_check)
                 /neo/backup               192.168.1.0/24(rw,fsid=1,no_subtree_check) 10.100.0.0/24(rw,fsid=1,no_subtree_check)
                 /neo/documents            192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
+                /neo/downloads            192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
                 /neo/music                192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
                 /neo/pictures             192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
                 /neo/videos               192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
