@@ -2,92 +2,84 @@
 HOSTS          = $(shell nix flake show --json | yq '.nixosConfigurations.[] | key')
 HOSTS_BUILD    = $(addprefix host/, $(addsuffix /build,$(HOSTS)))
 
+.PHONY: all
+all: dry-build
+
+# Host operations
+.PHONY: hosts
 hosts: ${HOSTS_BUILD}
 	echo ${HOSTS_BUILD} ${HOSTS}
 
 host/%/build: FORCE
 	nix build .#nixosConfigurations.$*.config.system.build.toplevel --no-link
+
 host/%/boot: FORCE
 	nixos-rebuild --target-host root@$*.sbr.pm --flake .#$* boot
+
 host/%/switch: FORCE
 	nixos-rebuild --target-host root@$*.sbr.pm --flake .#$* switch
 
-# TEMPORARY
+# Host-specific overrides (non-standard DNS/network)
+.PHONY: host/nagoya/boot
 host/nagoya/boot:
 	nixos-rebuild --target-host root@192.168.1.80 --flake .#nagoya boot
+
+.PHONY: host/kobe/boot
 host/kobe/boot:
 	nixos-rebuild --target-host root@192.168.1.77 --flake .#kobe boot
+
+.PHONY: host/aix/boot
 host/aix/boot:
 	nixos-rebuild --target-host root@10.100.0.89 --flake .#aix boot
 
-# Private :D
+.PHONY: host/kerkouane/boot
 host/kerkouane/boot:
 	nixos-rebuild --target-host root@kerkouane.vpn --flake .#kerkouane boot
+
+.PHONY: host/kerkouane/switch
 host/kerkouane/switch:
 	nixos-rebuild --target-host root@kerkouane.vpn --flake .#kerkouane switch
 
+# Local system operations
+.PHONY: boot
 boot:
 	sudo nixos-rebuild --flake .# boot
+
+.PHONY: switch
 switch:
 	sudo nixos-rebuild --flake .# switch
+
+.PHONY: dry-build
 dry-build:
 	nixos-rebuild --flake .# dry-build
+
+.PHONY: build
 build:
 	nixos-rebuild --flake .# build
 
-FORCE:
-
-# Old – to be removed
-# Variables
-EMACS =
-ifndef EMACS
-EMACS = "emacs"
-endif
-
-DOTEMACS = ~/.config/emacs
-DOTGNUS = ~/.config/gnus
-ETCNIXOS = /etc/nixos
-
-# Targets
-.PHONY: all
-all: switch
-
+# Development
 .PHONY: pre-commit
-pre-commit: README.md fmt
+pre-commit: fmt
 
 .PHONY: fmt
 fmt:
-	-nixpkgs-fmt *.nix nix lib overlays pkgs systems tools users
+	nixfmt-plus
 
-# Cleaning
+# Maintenance
 .PHONY: clean
 clean: clean-system clean-results
 
 .PHONY: clean-system
 clean-system:
-	nix-env --profile /nix/var/nix/profiles/system --delete-generations 15d
+	sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations 15d
 
 .PHONY: clean-results
 clean-results:
-	unlink results
+	rm -f result result-*
 
-# FIXME: port to dots folder
-# Setup and doctor
-.PHONY: doctor
-doctor:
-	@echo "Validate the environment"
-	@readlink $(DOTEMACS) || $(error $(DOTEMACS) is not correctly linked, you may need to run setup)
-	@readlink $(DOTNIXPKGS) || $(error $(DOTNIXPKGS) is not correctly linked, you may need to run setup)
+# Update flake inputs
+.PHONY: update
+update:
+	nix flake update
 
-.PHONY: setup
-setup: $(DOTEMACS) $(DOTGNUS)
-
-$(DOTEMACS):
-	@echo "Link $(DOTEMACS) to $(CURDIR)/tools/emacs"
-	@ln -s $(CURDIR)/tools/emacs $(DOTEMACS)
-
-$(DOTGNUS):
-	@echo "Link $(DOTGNUs) to $(CURDIR)/tools/gnus"
-	@ln -s $(CURDIR)/tools/gnus $(DOTGNUS)
-
-
+FORCE:
