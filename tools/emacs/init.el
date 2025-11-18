@@ -187,6 +187,7 @@ It is shared with iOS and replace the deprecated `org-journal-file' below.")
   (create-lockfiles nil)   ; No backup files
   (make-backup-files nil)  ; No backup files
   (backup-inhibited t)     ; No backup files
+  (use-short-answers t "Use short answer y/n")
   ;; (tab-always-indent 'complete)
   ;; (tab-first-completion 'word-or-paren-or-punct)
   (enable-local-variables :all)
@@ -1848,6 +1849,10 @@ Add this function to the `after-save-hook'."
 		      "werkzeug"
 		      "zig"))
       (devdocs-install docset))))
+
+(use-package ready-player
+  :config
+  (ready-player-mode +1))
 
 (defvar highlight-codetags-keywords
   '(("\\<\\(TODO\\|FIXME\\|BUG\\|XXX\\)\\>" 1 font-lock-warning-face prepend)
