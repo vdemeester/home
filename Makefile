@@ -52,14 +52,6 @@ ETCNIXOS = /etc/nixos
 .PHONY: all
 all: switch
 
-.PHONY: update
-update:
-	nix-channel --update
-
-.PHONY: install-hooks
-install-hooks:
-	if [ -e .git ]; then nix-shell -p git --run 'git config core.hooksPath .githooks'; fi
-
 .PHONY: pre-commit
 pre-commit: README.md fmt
 
@@ -79,29 +71,7 @@ clean-system:
 clean-results:
 	unlink results
 
-.PHONY: clean-www
-clean-www:
-	-rm -rvf *.elc
-	-rm -rv ~/.org-timestamps/*
-
-.PHONY: www
-www:
-	(cd www; make)
-
-# Documentation build and publishing
-.PHONY: update-docs
-update-docs:
-	@echo "Updating docs references…"
-	$(EMACS) --batch --directory $(DOTEMACS)/lisp/ \
-		--load lib/lisp/docs.el \
-		--funcall update-docs
-
-README.md: README.org
-	@echo "Updating README.md…"
-	$(EMACS) --batch --directory $(DOTEMACS)/lisp/ \
-		--load lib/lisp/docs.el \
-		--funcall update-readme-md
-
+# FIXME: port to dots folder
 # Setup and doctor
 .PHONY: doctor
 doctor:
@@ -119,3 +89,5 @@ $(DOTEMACS):
 $(DOTGNUS):
 	@echo "Link $(DOTGNUs) to $(CURDIR)/tools/gnus"
 	@ln -s $(CURDIR)/tools/gnus $(DOTGNUS)
+
+
