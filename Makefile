@@ -1,5 +1,5 @@
 # Makefile for home
-HOSTS          = $(shell nix flake show --json | yq '.nixosConfigurations.[] | key')
+HOSTS          = $(shell nix flake show --json --all-systems 2>/dev/null | yq '.nixosConfigurations.[] | key')
 HOSTS_BUILD    = $(addprefix host/, $(addsuffix /build,$(HOSTS)))
 
 .PHONY: all
@@ -64,6 +64,11 @@ pre-commit: fmt
 .PHONY: fmt
 fmt:
 	nixfmt-plus
+
+# Dotfiles
+.PHONY: dots
+dots:
+	@$(MAKE) -C dots
 
 # Maintenance
 .PHONY: clean

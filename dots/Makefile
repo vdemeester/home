@@ -14,7 +14,6 @@ endef
 
 rule.define = $(eval $(call rule.template,$(1),$(2)))
 
-
 $(call rule.define,~,$(~))
 
 all += niri
