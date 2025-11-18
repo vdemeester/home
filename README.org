@@ -1,7 +1,8 @@
 #+TITLE: =home= monorepo
 #+FILETAGS: #home infra configuration dotfiles monorepo
 
-A comprehensive monorepo containing personal infrastructure, system configurations, and tools, primarily built using [[https://nixos.org/nix][Nix]].
+A comprehensive monorepo containing personal infrastructure, system
+configurations, and tools, primarily built using [[https://nixos.org/nix][Nix]].
 
 * Overview
 
@@ -11,14 +12,16 @@ This repository serves as a centralized location for:
 - Custom tools and personal configurations
 - Infrastructure management
 
+See [[file:CLAUDE.md][CLAUDE.md]] for Claude Code-specific guidance on working with this repository.
+
 * Repository Structure
 
 ** =/systems=
 Contains NixOS system configurations organized as follows:
-- Individual host configurations (aix, aomi, athena, demeter, etc.)
+- Individual host configurations (aix, aomi, athena, demeter, kyushu, sakhalin, rhea, kerkouane, etc.)
 - Common configurations shared across systems:
   + Base system setup
-  + Desktop environments (Sway)
+  + Desktop environments (Sway, Niri)
   + Hardware-specific configurations
   + Program configurations
   + Service configurations
@@ -27,26 +30,57 @@ Contains NixOS system configurations organized as follows:
 ** =/home=
 Home-manager configurations for different users and environments:
 - Common configurations for desktop environments
-- Development tools and settings
+- Development tools and settings:
+  + AI tooling configuration (aichat, AI prompts/roles)
+  + Go, Python, Nix development environments
+  + Emacs configuration
+  + Container tooling
 - Shell configurations (zsh, tmux, etc.)
-- Service configurations
+- Service configurations (syncthing, etc.)
+
+** =/dots=
+Traditional dotfiles managed outside of home-manager:
+- Niri window manager configuration
+- Makefile-based dotfile installation system
+- Additional application-specific configurations
 
 ** =/tools=
 Custom tools and utilities:
 - Battery monitor
 - Bekind (Kubernetes tooling)
 - Emacs configuration
-- Ergodox keyboard configuration
 - Various Go-based utilities
 
 ** =/pkgs=
-Custom Nix packages and overlays.
+Custom Nix packages and overlays including:
+- Development tools (bekind, govanityurl, manifest-tool)
+- System utilities (battery-monitor, systemd-email, vrsync)
+- Custom scripts and utilities (ape, ram, batzconverter)
+- Emacs packages
 
 ** =/modules=
 NixOS modules providing additional functionality:
 - Wireguard client/server configurations
 - Go vanity URL service
 - Gosmee service
+
+** =/lib=
+Core library functions for flake configuration:
+- =mkHost= - Generate NixOS configurations
+- =mkHome= - Generate home-manager configurations
+- =mkSystemManager= - Generate system-manager configurations
+- Helper functions for configuration building
+
+** =/overlays=
+Nix overlays for:
+- Custom package additions
+- Package modifications
+- Unstable package access
+
+** =/shells=
+Project-specific development shells:
+- OpenStack development environment
+- Tekton development environment
 
 ** =/keyboards=
 Hardware keyboard configurations:
@@ -83,7 +117,9 @@ nixos-rebuild switch --flake .#<hostname>
 
 ** Installing a New System
 
-For new systems that already have a configuration in this repository, you can use the =install.sh= script which uses =disko= for disk partitioning and installation:
+For new systems that already have a configuration in this repository,
+you can use the =install.sh= script which uses =disko= for disk
+partitioning and installation:
 
 #+begin_src bash
 ./install.sh <hostname> [additional-disko-options]
@@ -110,14 +146,13 @@ The repository includes several useful make targets for common operations:
 
 *** Development
 - =make fmt= - Format Nix files using nixpkgs-fmt
-- =make install-hooks= - Install git hooks
 - =make pre-commit= - Run pre-commit checks
 
 *** Maintenance
 - =make clean= - Clean up old system generations and results
 - =make clean-system= - Remove system generations older than 15 days
 - =make clean-results= - Remove symlinks to build results
-- =make update= - Update nix channels
+- =nix flake update= - Update flake inputs (nixpkgs, home-manager, etc.)
 
 ** Updating Home Configuration
 
@@ -125,6 +160,17 @@ To update home-manager configuration:
 
 #+begin_src bash
 home-manager switch --flake .#<username>@<hostname>
+#+end_src
+
+** Managing Dotfiles
+
+For configurations not managed by home-manager, the =/dots= directory
+provides a Makefile-based installation system:
+
+#+begin_src bash
+cd dots
+make all  # Install all dotfiles
+make niri # Install only niri configuration
 #+end_src
 
 ** Building and Installing Packages
@@ -154,6 +200,11 @@ All packages are defined in the =/pkgs= directory and are available for both =x8
 - =govanityurl= - Go vanity URL service
 - =manifest-tool= - Container manifest tool
 
+**** Chmouzies (Helper Scripts)
+- =chmouzies-ai= - AI-related helper scripts
+- =chmouzies-git= - Git workflow helpers
+- =chmouzies-kubernetes= - Kubernetes utilities
+
 **** System Utilities
 - =vrsync= - Custom rsync utility
 - =vde-thinkpad= - ThinkPad-specific utilities
@@ -175,20 +226,6 @@ To list all available packages:
 nix flake show
 #+end_src
 
-** Using SystemManager Configurations
-
-SystemManager provides a way to manage system configurations. Current configurations include:
-
-*** Available Configurations
-- =aion= (aarch64-linux)
-
-*** Applying SystemManager Configuration
-To use a SystemManager configuration:
-
-#+begin_src bash
-system-manager switch .#<hostname>
-#+end_src
-
 * Development
 
 A development shell is provided with necessary tools:
@@ -205,15 +242,41 @@ nix develop
 #+end_src
 
 Pre-commit hooks are configured for:
-- Go formatting
-- Nix formatting and linting
-- Python linting
-- Shell script checking
+- Go formatting (gofmt)
+- Nix formatting (nixfmt-rfc-style) and linting (deadnix)
+- Python linting (flake8, ruff)
+- Shell script checking (shellcheck)
+
+** Continuous Integration
+
+GitHub Actions workflows automatically:
+- Build all NixOS system configurations
+- Build all custom packages
+- Build keyboard firmware (Corne, Moonlander)
+- Run automated flake updates via Dependabot
 
 * Supported Systems
 
-- x86_64-linux
-- aarch64-linux
+- =x86_64-linux=
+- =aarch64-linux=
+
+** Current Hosts
+
+*** Desktop Systems (unstable)
+- =kyushu= - Work laptop (Niri desktop)
+- =foobar= - Test VM (Niri desktop)
+
+*** Servers (unstable)
+- =aomi= - Server
+- =sakhalin= - Server
+
+*** Servers (stable, NixOS 25.05)
+- =athena= - Raspberry Pi 4
+- =demeter= - Raspberry Pi 4
+- =aix= - Raspberry Pi 4
+- =aion= - aarch64 server
+- =rhea= - aarch64 server
+- =kerkouane= - =x86_64= server
 
 * References
 
