@@ -99,12 +99,12 @@
                 /neo/videos               192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
         			'';
     };
-    immich = {
-      enable = true;
-      user = "vincent";
-      group = "users";
-      mediaLocation = "/neo/pictures/photos";
-    };
+    # immich = {
+    #   enable = true;
+    #   user = "vincent";
+    #   group = "users";
+    #   mediaLocation = "/neo/pictures/photos";
+    # };
     aria2 = {
       # FIXME: make sure aria2 runs as user vincent
       enable = true;
