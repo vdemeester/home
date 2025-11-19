@@ -32,7 +32,6 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
       - name: Build moonlander firmware
         run: |
-          cd keyboards/moonlander
           make moonlander/update moonlander/build
       - name: Upload firmware artifacts
         uses: actions/upload-artifact@v5
