@@ -41,6 +41,8 @@ void process_num_word_activation(uint8_t layer, const keyrecord_t *record) {
 }
 
 // Returns true if numword should remain active after pressing this key
+// Note: F-keys (F1-F15) are intentionally NOT in this list, so they will
+// send from the NUMB layer and then automatically disable numword
 static bool is_num_word_key(uint16_t keycode) {
     switch (keycode) {
         // Numbers
@@ -86,13 +88,18 @@ bool process_num_word(uint16_t keycode, const keyrecord_t *record) {
         return true;
     }
 
-    if (!record->event.pressed) {
-        return true;
-    }
-
-    // Check if this key should keep numword active
-    if (!is_num_word_key(keycode)) {
-        disable_num_word(_num_word_layer);
+    // Only check on key press to determine if we should disable
+    if (record->event.pressed) {
+        // Check if this key should keep numword active
+        // If not, we'll disable on the RELEASE so the key sends from the layer first
+        if (!is_num_word_key(keycode)) {
+            // Mark for disable, but don't disable yet - let the key send first
+        }
+    } else {
+        // On key release, check if we should disable numword
+        if (!is_num_word_key(keycode)) {
+            disable_num_word(_num_word_layer);
+        }
     }
 
     return true;
