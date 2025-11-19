@@ -28,7 +28,7 @@ moonlander/flash:
 	cd moonlander && ./go.sh flash
 
 moonlander/update:
-	cd moonlander && ./go.sh update
+	cd moonlander && ./go.sh checkout && ./go.sh update
 
 moonlander/clean:
 	cd moonlander && ./go.sh clean
