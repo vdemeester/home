@@ -15,6 +15,7 @@
 #include "zmk-helpers/unicode-chars/currency.dtsi"
 #include "zmk-helpers/unicode-chars/french.dtsi"
 #include "combos.dtsi"
+#include "numword.dtsi"
 #include "hold-tap.dtsi"
 #include "mod-morph.dtsi"
 #include "mouse.dtsi"
@@ -35,7 +36,7 @@ ZMK_LAYER(Bepo,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
      &kp TAB     &b_pipe     &kp EACUT   &p_amp      &kp O        &AGRA E                 &kp UP                &car_excl   &kp V         &kp D         &kp L        &kp J        &kp Z
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp EQUAL   &hml GL A   &hml AL U   &hml SL I   &cl_e_euro   &hyp_com_smc  &kp LEFT  &kp RET  &kp RIGHT    &hmr HL C   &hmr CR T     &hmr SR S     &hmr AR R    &hmr GL N    &kp M
+     &smart_num NUM NUM   &hml GL A   &hml AL U   &hml SL I   &cl_e_euro   &hyp_com_smc  &kp LEFT  &kp RET  &kp RIGHT    &hmr HL C   &hmr CR T     &hmr SR S     &hmr AR R    &hmr GL N    &kp M
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
      &kp GRAVE   &AGRA A     &kp Y       &kp X       &dot_col     &kp K        &kp C_MUTE &kp DOWN              &sqt_qma    &kp Q         &kp G         &kp H        &kp F        &kp W
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯

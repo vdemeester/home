@@ -26,6 +26,9 @@ manifest:
     - name: zmk-helpers
       remote: urob
       revision: main
+    - name: zmk-auto-layer
+      remote: urob
+      revision: next
     - name: nice-view-gem #new entry
       remote: m165437 #new entry
       revision: main #new entry

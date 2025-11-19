@@ -56,6 +56,15 @@ ZMK_HOLD_TAP(hmr,
  *     global-quick-tap;
  *     bindings = <&kp>, <&E_CI_E>;
  * ) */
+
+// Smart number: hold for NUM layer, tap for numword
+ZMK_HOLD_TAP(smart_num,
+    flavor = "balanced";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <175>;
+    bindings = <&mo>, <&num_word>;
+)
+
 /*
 Local Variables:
 mode: c

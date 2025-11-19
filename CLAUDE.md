@@ -160,11 +160,11 @@ go test ./...
 ### Keyboard Firmware
 
 ```bash
-# Build Moonlander QMK firmware
-cd keyboards/moonlander && ./go.sh build
+# Build Moonlander QMK firmware in folder keyboards/moonlander of the git repository
+./go.sh build
 
-# Build eyelash_corne ZMK firmware
-cd keyboards && ./eyelash_corne.sh build
+# Build eyelash_corne ZMK firmware in folder keyboards of the git repository
+./eyelash_corne.sh build
 ```
 
 ## Special Notes
