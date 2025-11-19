@@ -36,5 +36,5 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: eyelash_corne-firmware
-          path: keyboards/firmwares/eyelash_corne_*.uf2
+          path: keyboards/eyelash_corne/firmwares/eyelash_corne_*.uf2
           if-no-files-found: error
