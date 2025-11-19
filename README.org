@@ -106,6 +106,18 @@ Located in =systems/kyushu/main.kbd=:
 - Software keyboard remapper configuration to mimic mechanical keyboards
 - System-level key remapping for non-keyboard hardware
 
+** =/imperative=
+Idempotent configuration scripts for systems not managed by NixOS, organized by hostname:
+- Each host has its own directory (e.g., =/imperative/nagoya/=)
+- Scripts are designed to be run repeatedly to maintain system state
+- Primary script in each host directory is typically =apply.sh=
+- Used for bootstrapping and ongoing configuration management of non-NixOS systems (Debian, Arch, Windows, etc.)
+
+Examples of hosts that may have imperative configurations:
+- =nagoya= - Debian-based system (server)
+- =wakasu= - Fedora-based system (desktop)
+- Additional systems running operating systems other than NixOS
+
 * Usage
 
 The main entry point is =flake.nix=, which provides:

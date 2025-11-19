@@ -21,6 +21,7 @@ The repository follows a modular architecture centered around `flake.nix`:
 - **`/modules`**: Custom NixOS modules (wireguard-client, wireguard-server, govanityurl, gosmee)
 - **`/overlays`**: Nix overlays for additions, modifications, and unstable packages
 - **`/keyboards`**: Hardware keyboard configurations (ZMK for Corne, QMK for Moonlander, Kanata software remapper)
+- **`/imperative`**: Idempotent configuration scripts for non-NixOS managed systems, organized by hostname (e.g., `/imperative/nagoya/apply.sh`). These scripts are meant to be run repeatedly to maintain system state on hosts that cannot use NixOS.
 
 ### Host Configuration Pattern
 

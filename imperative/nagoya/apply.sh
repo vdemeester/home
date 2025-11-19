@@ -48,6 +48,7 @@ setup.docker() {
 	sudo chmod a+r /etc/apt/keyrings/docker.asc
 
 	# Add the repository to Apt sources:
+	# shellcheck disable=SC1091
 	sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
 Types: deb
 URIs: https://download.docker.com/linux/debian
@@ -62,7 +63,7 @@ EOF
 
 setup.kind() {
 	log_info "Install kind..."
-	[ $(uname -m) = aarch64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.30.0/kind-linux-arm64
+	[ "$(uname -m)" = aarch64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.30.0/kind-linux-arm64
 	chmod +x ./kind
 	sudo mv ./kind /usr/local/bin/kind
 }
