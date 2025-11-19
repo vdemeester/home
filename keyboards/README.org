@@ -1,13 +1,116 @@
-#+title: My Keyboard setup
+#+title: My Keyboard Setup
 
-This folder contains my keyboard setup, and everything required to
-build and flash them.
+This folder contains my keyboard configurations and everything required to build and flash them.
 
-Today, there is 2 keyboards:
-- ZSA Moonlander, using QMK
-- Eyelash Corne (wireless), using zmk (with some updates)
+* Keyboards
 
-* Notes
+** ZSA Moonlander
 
-- Clone =zmk=: https://github.com/zmkfirmware/zmk
-- Clone =new_corne=: https://github.com/krisalcordo/zmk-new_corne 
+QMK-based firmware for the Moonlander split ergonomic keyboard.
+- Location: =moonlander/=
+- Firmware: QMK
+- Features: 72 keys, RGB backlighting, wired USB-C
+- See [[file:moonlander/README.org][moonlander/README.org]] for details
+
+** Eyelash Corne
+
+ZMK-based firmware for the wireless Corne (crkbd) keyboard.
+- Location: =eyelash_corne/=
+- Firmware: ZMK (with custom modifications)
+- Features: 42 keys, wireless (Bluetooth), nice!view display, RGB underglow
+- See [[file:eyelash_corne/README.org][eyelash_corne/README.org]] for details
+
+* Quick Start
+
+** Building Firmware
+
+From the =keyboards/= directory, use the Makefile:
+
+#+begin_src bash
+# Build Moonlander firmware
+make moonlander/build
+
+# Build Eyelash Corne firmware
+make eyelash_corne/build
+# or use the shorter alias
+make corne/build
+#+end_src
+
+** Flashing Firmware
+
+#+begin_src bash
+# Flash Moonlander (wired)
+make moonlander/flash
+
+# Flash Eyelash Corne (wireless)
+make eyelash_corne/flash
+# or use the shorter alias
+make corne/flash
+#+end_src
+
+** Other Targets
+
+#+begin_src bash
+# Build all keyboards
+make all
+
+# Update QMK (Moonlander only)
+make moonlander/update
+
+# Clean build artifacts
+make clean
+make moonlander/clean
+
+# Show help
+make help
+#+end_src
+
+** From Repository Root
+
+All keyboard targets are also available from the repository root Makefile:
+
+#+begin_src bash
+cd /path/to/home
+make moonlander/build
+make eyelash_corne/flash
+#+end_src
+
+* Common Layouts
+
+Both keyboards share similar layout philosophies:
+
+** Primary Layout: Bépo
+
+French-optimized layout based on [[https://bepo.fr][bépo]] with adaptations for split ergonomic keyboards.
+- Works with US International layout on the host OS
+- Home row mods for modifiers
+- Layer-based access to symbols, numbers, and navigation
+
+** Alternative Layouts
+
+- *ErgoL*: Alternative French layout based on [[https://ergol.org][ErgoL]]
+- *QWERTY*: Standard layout for compatibility
+
+** Shared Features
+
+- Home row mods (GUI, Alt, Shift, Ctrl, Hyper)
+- Smart numword layer for efficient number entry
+- Combos for frequently used keys
+- French accent support via macros/Unicode
+- Multiple layers: Base, Symbols, Numbers, Navigation, Function
+
+* Configuration Philosophy
+
+- Minimize finger movement with home row mods
+- Layer-based approach for symbols and numbers
+- French language support as first-class citizen
+- Optimized for programming and text editing
+- Wireless option (Corne) and wired option (Moonlander) for different use cases
+
+* Additional Resources
+
+- [[file:moonlander/README.org][Moonlander detailed documentation]]
+- [[file:eyelash_corne/README.org][Eyelash Corne detailed documentation]]
+- [[https://docs.qmk.fm/][QMK Firmware Documentation]]
+- [[https://zmk.dev/][ZMK Firmware Documentation]]
+

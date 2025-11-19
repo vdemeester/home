@@ -70,6 +70,37 @@ fmt:
 dots:
 	@$(MAKE) -C dots
 
+# Keyboards
+.PHONY: keyboards moonlander/build moonlander/flash moonlander/update moonlander/clean
+.PHONY: eyelash_corne/build eyelash_corne/flash corne/build corne/flash
+
+moonlander/build:
+	@$(MAKE) -C keyboards moonlander/build
+
+moonlander/flash:
+	@$(MAKE) -C keyboards moonlander/flash
+
+moonlander/update:
+	@$(MAKE) -C keyboards moonlander/update
+
+moonlander/clean:
+	@$(MAKE) -C keyboards moonlander/clean
+
+eyelash_corne/build:
+	@$(MAKE) -C keyboards eyelash_corne/build
+
+eyelash_corne/flash:
+	@$(MAKE) -C keyboards eyelash_corne/flash
+
+corne/build:
+	@$(MAKE) -C keyboards corne/build
+
+corne/flash:
+	@$(MAKE) -C keyboards corne/flash
+
+keyboards:
+	@$(MAKE) -C keyboards help
+
 # Maintenance
 .PHONY: clean
 clean: clean-system clean-results

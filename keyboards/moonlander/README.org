@@ -1,0 +1,247 @@
+#+title: ZSA Moonlander QMK Config
+
+* Overview
+
+This is a custom QMK firmware configuration for the ZSA Moonlander keyboard - a split ergonomic keyboard with 72 keys, thumb clusters, and RGB backlighting.
+
+** Hardware
+
+- *Keyboard*: ZSA Moonlander
+- *MCU*: STM32 ARM Cortex
+- *Keys*: 72 keys (36 per side) with hot-swap sockets
+- *Thumb Cluster*: 6 keys per side
+- *Features*: RGB backlighting, USB-C, adjustable tenting
+
+** Firmware Features
+
+- Multiple keyboard layouts: Bépo (primary), ErgoL, QWERTY
+- Home row mods with custom timing (280ms tapping term)
+- Smart numword layer for efficient number entry
+- Extensive combos for frequently used keys and symbols
+- Key overrides for context-sensitive behavior
+- Leader key support for text macros
+- Layer lock for sustained layer access
+- Tap dance for multi-function keys
+- French accent macros using US International layout
+- Repeat key support for efficiency
+
+* Building and Flashing
+
+** Build Firmware
+
+From the =keyboards/moonlander= directory:
+
+#+begin_src bash
+./go.sh build
+#+end_src
+
+This script will:
+1. Clone QMK firmware if not present
+2. Symlink the config directory
+3. Build the firmware using QMK
+
+The compiled firmware will be in =build/qmk_firmware/.build/=.
+
+** Flash Firmware
+
+To build and flash the keyboard:
+
+#+begin_src bash
+./go.sh flash
+#+end_src
+
+This will build the firmware and enter flashing mode. Press the reset button on the keyboard when prompted.
+
+** Update QMK
+
+To update the QMK firmware submodules:
+
+#+begin_src bash
+./go.sh update
+#+end_src
+
+** Clean Build
+
+To clean build artifacts:
+
+#+begin_src bash
+./go.sh clean
+#+end_src
+
+* Keyboard Layouts
+
+** Bépo (Layer 0)
+
+Primary French-optimized layout based on [[https://bepo.fr][bépo]] with adaptations:
+- Works with US International keyboard layout on the host OS
+- Home row mods: A (GUI), U (Alt), I (Shift), E (Ctrl) on left; C (Hyper), T (Ctrl), S (Shift), R (Alt), N (GUI) on right
+- Number row with key overrides (Shift for numbers 0-9)
+- French accents via custom macros (é, è, à, ê, etc.)
+- Smart numword layer activation
+- Thumb keys for layer access and common modifiers
+
+** ErgoL (Layer 1)
+
+Alternative French layout based on [[https://ergol.org][ErgoL]] optimized for ergonomics and efficiency.
+
+** QWERTY (Layer 2)
+
+Standard QWERTY layout for compatibility and shared use, with home row mods.
+
+** Symbol Layer (Layer 3)
+
+Programming-focused symbols and special characters:
+- Brackets, braces, parentheses
+- Math operators
+- Special characters accessible via layer toggle
+
+** Number Layer (Layer 4)
+
+Dedicated numpad-style number layer with smart numword activation:
+- Calculator-style layout
+- Auto-disable after 5 seconds of inactivity
+- Quick access to numeric symbols
+
+** Navigation Layer (Layer 5)
+
+Arrow keys, page navigation, home/end, and media controls.
+
+** Mouse Layer (Layer 6)
+
+Mouse emulation for cursor control without leaving the keyboard.
+
+** Modifier Layer (Layer 7)
+
+Additional modifiers and function keys.
+
+* Configuration Details
+
+** Timing Settings
+
+- *Tapping Term*: 280ms - Time to distinguish tap from hold
+- *Quick Tap Term*: 100ms - Quick successive taps
+- *Flow Tap Term*: 150ms - For home row mod flow
+- *Combo Term*: 40ms - Time window for combo activation
+- *Numword Timeout*: 5000ms - Auto-disable numword after inactivity
+
+** Home Row Mods
+
+Home row mods are configured for both QWERTY and Bépo layouts:
+
+*Left hand (QWERTY)*: A (GUI), S (Alt), D (Shift), F (Ctrl), G (Hyper)
+*Right hand (QWERTY)*: H (Hyper), J (Ctrl), K (Shift), L (Alt), ; (GUI)
+
+*Left hand (Bépo)*: A (GUI), U (Alt), I (Shift), E (Ctrl), , (Hyper)
+*Right hand (Bépo)*: C (Hyper), T (Ctrl), S (Shift), R (Alt), N (GUI)
+
+** Combos
+
+Extensive combo system for:
+- Layer switching (Bépo, ErgoL, QWERTY)
+- Escape key
+- Special characters (|, @, #, $, /, \, &, -, _, =)
+- Brackets and parentheses
+- Leader key activation
+
+** Key Overrides
+
+Context-sensitive key behavior:
+- Shift + ^ = ! (Bépo)
+- Shift + . = : (Bépo)
+- Shift + , = ; (Bépo)
+- Shift + number row keys = numbers (Bépo)
+- RAlt + B = | (Bépo)
+- RAlt + Space = _ (Bépo)
+
+** French Accents
+
+Macros for French accented characters using US International layout:
+- é, è, ê (e with acute, grave, circumflex)
+- à, â (a with grave, circumflex)
+- ù, û (u with grave, circumflex)
+- î, ô (i, o with circumflex)
+- ë, ï (e, i with trema)
+- ç (c with cedilla)
+- € (euro symbol)
+
+All accents support both lowercase and uppercase variants.
+
+** QMK Features Enabled
+
+- *Combos*: Key combinations for special functions
+- *Key Overrides*: Context-sensitive key behavior
+- *Leader Key*: Text expansion and macros
+- *Repeat Key*: Repeat last key press
+- *Tap Dance*: Multiple functions per key
+- *Layer Lock*: Lock layers for sustained access
+
+** QMK Features Disabled
+
+- Audio
+- Caps Word
+- Auto Shift
+- Command
+- Console
+- Space Cadet
+- Most RGB matrix effects (for firmware size optimization)
+
+* Build Configuration
+
+The firmware uses custom =rules.mk= and =config.h= files:
+- Optimized for size with LTO (Link Time Optimization)
+- Custom layer modes for numword functionality
+- Chordal hold for better home row mod behavior
+
+* Usage Tips
+
+** Switching Layouts
+
+Use combos to switch between layouts:
+- Bépo: Nav (Backspace) + Shift
+- ErgoL: Num (Space) + Sym (Enter)
+- QWERTY: Delete + RAlt
+
+** Numword Layer
+
+Activate with the Space key on the Bépo layer (hold). Auto-disables after 5 seconds of inactivity.
+
+** Leader Key
+
+Access via combo (D + F on QWERTY). Example sequence:
+- Leader + F: Types "QMK is awesome."
+
+** Mouse Toggle
+
+Toggle mouse layer with Q + R combo.
+
+* Development
+
+** File Structure
+
+- =config/config.h= - Configuration constants and macros
+- =config/keymap.c= - Main keymap definition
+- =config/layermodes.c= - Custom layer mode implementations
+- =config/layermodes.h= - Layer mode headers
+- =config/rules.mk= - QMK feature toggles
+- =go.sh= - Build and flash script
+
+** Adding Custom Keycodes
+
+1. Add enum to =custom_keycodes= in =keymap.c=
+2. Implement handling in =process_record_user()=
+3. Use in keymap definition
+
+** Modifying Combos
+
+1. Add combo definition in =combos= enum
+2. Define key sequence in =PROGMEM= array
+3. Add to =combo_events[]= array
+
+* Inspirations and References
+
+- [[https://docs.qmk.fm/][QMK Documentation]]
+- [[https://configure.zsa.io/][ZSA Oryx Configurator]]
+- [[https://github.com/manna-harbour/miryoku][Miryoku layout]]
+- [[https://sunaku.github.io/home-row-mods.html][Home row mods guide]]
+- [[https://bepo.fr][Bépo keyboard layout]]
+- [[https://ergol.org][ErgoL keyboard layout]]

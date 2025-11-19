@@ -83,19 +83,29 @@ Project-specific development shells:
 - Tekton development environment
 
 ** =/keyboards=
-Hardware keyboard configurations:
+Hardware keyboard configurations with complete build and flash tooling.
 
-*** Corne Keyboard (Eyelash Corne)
-Located in =/keyboards/keyboards/eyelash_corne=:
-- ZMK-based configuration for the Corne keyboard
+See [[file:keyboards/README.org][keyboards/README.org]] for detailed keyboard documentation and usage.
 
 *** Moonlander
-Located in =/keyboards/keyboards/zsa/moonlander=:
+Located in =/keyboards/moonlander=:
 - QMK-based configuration for the ZSA Moonlander keyboard
+- 72-key split ergonomic keyboard with RGB backlighting
+- Wired USB-C connectivity
+- See [[file:keyboards/moonlander/README.org][keyboards/moonlander/README.org]] for full documentation
+
+*** Eyelash Corne
+Located in =/keyboards/eyelash_corne=:
+- ZMK-based configuration for the wireless Corne (crkbd) keyboard
+- 42-key split ergonomic keyboard with nice!view display
+- Wireless Bluetooth connectivity with nice!nano v2
+- RGB underglow and custom animations
+- See [[file:keyboards/eyelash_corne/README.org][keyboards/eyelash_corne/README.org]] for full documentation
 
 *** Kanata (software)
 Located in =systems/kyushu/main.kbd=:
-- Software keyboard remapper configuration, to mimic the mechanic keyboards
+- Software keyboard remapper configuration to mimic mechanical keyboards
+- System-level key remapping for non-keyboard hardware
 
 * Usage
 
@@ -147,6 +157,18 @@ The repository includes several useful make targets for common operations:
 *** Development
 - =make fmt= - Format Nix files using nixpkgs-fmt
 - =make pre-commit= - Run pre-commit checks
+
+*** Keyboards
+- =make moonlander/build= - Build Moonlander QMK firmware
+- =make moonlander/flash= - Build and flash Moonlander firmware
+- =make moonlander/update= - Update QMK submodules
+- =make moonlander/clean= - Clean Moonlander build artifacts
+- =make eyelash_corne/build= - Build Eyelash Corne ZMK firmware
+- =make eyelash_corne/flash= - Build and flash Eyelash Corne firmware
+- =make corne/build= - Alias for eyelash_corne/build
+- =make corne/flash= - Alias for eyelash_corne/flash
+
+See [[file:keyboards/README.org][keyboards/README.org]] for detailed keyboard documentation.
 
 *** Maintenance
 - =make clean= - Clean up old system generations and results
