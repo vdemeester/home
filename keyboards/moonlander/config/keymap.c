@@ -118,7 +118,7 @@ enum combos {
   TOGGLE_MOUSE,
   BEPO_ESC, QWERTY_ESC,
   // Experiments
-  PIPE, AROBASE, HASH, DOLLAR, SLASH, BSLASH, AMPR, MINUS, UNDERSCORE,
+  PIPE, AROBASE, HASH, DOLLAR, SLASH, BSLASH, AMPR, MINUS, UNDERSCORE, EQUAL,
   LEADER,
   LPRN, RPRN, LCBR, RCBR, LBRC, RBRC, LABK, RABK,
 };
@@ -140,6 +140,7 @@ const uint16_t PROGMEM combo_qwe_slash[] = {KC_E, HM_SFT_D, COMBO_END};  // /
 const uint16_t PROGMEM combo_qwe_bslash[] = {HM_SFT_D, KC_C, COMBO_END}; // antislash
 const uint16_t PROGMEM combo_qwe_minus[] = {KC_W, HM_ALT_S, COMBO_END};  // -
 const uint16_t PROGMEM combo_qwe_unds[] = {HM_CTL_F, KC_V, COMBO_END};   // _
+const uint16_t PROGMEM combo_qwe_equal[] = {HM_ALT_S, KC_X, COMBO_END};  // = 
 
 const uint16_t PROGMEM combo_qwe_leader[] = {HM_SFT_D, HM_CTL_F, COMBO_END}; // FIXME: change this most likely.
 
@@ -171,6 +172,7 @@ combo_t key_combos[] = {
   [AMPR] = COMBO(combo_qwe_ampr, KC_AMPR),
   [MINUS] = COMBO(combo_qwe_minus, KC_PMNS),
   [UNDERSCORE] = COMBO(combo_qwe_unds, KC_UNDS),
+  [EQUAL] = COMBO(combo_qwe_equal, KC_EQL),
 
   [LEADER] = COMBO(combo_qwe_leader, QK_LEAD),
   
