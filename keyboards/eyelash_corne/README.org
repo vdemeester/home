@@ -1,0 +1,154 @@
+#+title: Eyelash Corne ZMK Config
+
+* Overview
+
+This is a custom ZMK firmware configuration for the Eyelash Corne keyboard - a 42-key split ergonomic keyboard based on the Corne (crkbd) design.
+
+** Hardware
+
+- *Keyboard*: Eyelash Corne (42-key split)
+- *MCU*: nice!nano v2 (nRF52840)
+- *Display*: nice!view with custom gem animation
+- *Underglow*: RGB underglow (WS2812 LED strip)
+- *Encoder*: Rotary encoder support (EC11)
+- *Features*: Wireless (Bluetooth), battery-powered, mouse emulation
+
+** Firmware Features
+
+- Multiple keyboard layouts: Bépo (primary), ErgoL, QWERTY
+- Home row mods with custom timing and behavior
+- Smart numword layer for efficient number entry
+- Comprehensive combos for frequently used keys
+- Mod-morph behaviors for context-sensitive keys
+- Mouse emulation support via pointing device
+- French and currency Unicode character support
+- Custom nice!view display with animation
+- RGB underglow with auto-off on idle
+- 12-minute sleep timeout for battery conservation
+- Bluetooth connectivity with increased transmission power
+
+* Building and Flashing
+
+** Build Firmware
+
+From the =keyboards/eyelash_corne= directory:
+
+#+begin_src bash
+./go.sh build
+#+end_src
+
+This builds both left and right firmware files using Docker and outputs them to the =firmwares/= directory.
+
+** Flash Firmware
+
+To build and flash both sides:
+
+#+begin_src bash
+./go.sh flash
+#+end_src
+
+This will:
+1. Build the firmware
+2. Wait for you to connect the left side in bootloader mode
+3. Flash the left side
+4. Wait for you to connect the right side in bootloader mode
+5. Flash the right side
+
+The script supports both auto-mounted devices (=/run/media/$USER/NICENANO=) and manual mounting to =/mnt=.
+
+* Keyboard Layouts
+
+** Bépo (Layer 0)
+
+Primary French-optimized layout based on [[https://bepo.fr][bépo]] with adaptations:
+- Works with US International keyboard layout on the host OS
+- Home row mods: A (GUI), U (Alt), I (Shift), E (Ctrl) on left; C (Hyper), T (Ctrl), S (Shift), R (Alt), N (GUI) on right
+- Smart numword layer activation
+- Unicode characters for French accents and currency symbols
+- Thumb keys: Delete (Accent layer), Space/Underscore (Numword), Backspace (Nav layer), Shift, Enter (Symbol layer), Alt
+
+** ErgoL (Layer 1)
+
+Alternative French layout based on [[https://ergol.org][ErgoL]].
+
+** QWERTY (Layer 2)
+
+Standard QWERTY layout for compatibility and shared use.
+
+** Accent Layer (Layer 3)
+
+Provides access to French accented characters:
+- Vowels with acute (´), grave (`), circumflex (^), and trema (¨) accents
+- Special characters: Æ, Œ, Ñ, Ç
+
+** Symbol Layer (Layer 4)
+
+Programming-focused symbols with home row mods:
+- Brackets, braces, parentheses
+- Math operators: *, /, =, +, -
+- Special characters: @, #, $, %, ^, &, |, ~
+
+** Number Layer (Layer 5)
+
+Smart numword layer for efficient number entry with calculator-style layout.
+
+** Navigation Layer (Layer 6)
+
+Arrow keys, page navigation, and common shortcuts.
+
+** Function Layer (Layer 7)
+
+Function keys (F1-F12), media controls, and system controls.
+
+* Configuration Details
+
+** Power Management
+
+- Sleep timeout: 12 minutes of inactivity
+- RGB underglow auto-off on idle
+- Soft off support for manual power down
+
+** Bluetooth
+
+- Increased transmission power (+8 dBm) for better range
+- Supports multiple paired devices
+
+** Display
+
+- Custom nice!view status screen
+- Gem animation (4.8-second interval)
+- Shows current layer, battery status, and Bluetooth connection
+
+** Mouse Emulation
+
+- Movement sensitivity: 1200
+- Scroll sensitivity: 20
+- Idle time: 125ms
+
+* Build Configuration
+
+The firmware is built using =build.yaml= which defines:
+- Left half with nice!view gem display
+- Right half with nice!view gem display
+- Settings reset configuration for troubleshooting
+
+* Inspirations and References
+
+- https://github.com/urob/zmk-config
+- https://github.com/manna-harbour/miryoku_zmk
+- https://github.com/mctechnology17/zmk-config
+- https://github.com/urob/zmk-helpers
+- https://github.com/rayduck/pnohty
+- https://sunaku.github.io/home-row-mods.html
+- https://sunaku.github.io/ergohaven-remnant-keyboard.html
+- https://github.com/JeffDess/zmk-config
+- https://github.com/Townk/zmk-config
+- https://github.com/GPeye/hammerbeam-slideshow
+- https://github.com/zzeneg/zmk-nice-view-hid
+- https://github.com/GPeye/urchin-peripheral-animation
+- https://github.com/GPeye/nice-view-mod
+- https://github.com/n3oney/zmk-config
+- https://github.com/moutis/zmk-config
+- https://github.com/englmaxi/zmk-config
+- https://github.com/SethMilliken/zmk-config
+- https://github.com/minusfive/knucklehead
