@@ -17,7 +17,7 @@ The repository follows a modular architecture centered around `flake.nix`:
 - **`/systems`**: NixOS system configurations, organized by hostname with a shared `/systems/common` directory containing base, desktop, hardware, programs, services, and users modules
 - **`/home`**: Home-manager configurations with `/home/common` containing desktop, dev, services, and shell modules
 - **`/pkgs`**: Custom Nix packages that are exposed via overlays
-- **`/tools`**: Source code for custom tools (bekind, battery-monitor, emacs configuration)
+- **`/tools`**: Source code for custom tools (battery-monitor, emacs configuration)
 - **`/modules`**: Custom NixOS modules (wireguard-client, wireguard-server, govanityurl, gosmee)
 - **`/overlays`**: Nix overlays for additions, modifications, and unstable packages
 - **`/keyboards`**: Hardware keyboard configurations (ZMK for Corne, QMK for Moonlander, Kanata software remapper)

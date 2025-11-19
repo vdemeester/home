@@ -13,7 +13,6 @@ in
   scripts = pkgs.callPackage ./my/scripts { };
   vrsync = pkgs.callPackage ./my/vrsync { };
   vde-thinkpad = pkgs.callPackage ./my/vde-thinkpad { };
-  bekind = pkgs.callPackage ../tools/bekind { };
   battery-monitor = pkgs.callPackage ../tools/battery-monitor { };
   ape = pkgs.callPackage ./ape { };
   ram = pkgs.callPackage ./ram { };

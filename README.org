@@ -47,13 +47,12 @@ Traditional dotfiles managed outside of home-manager:
 ** =/tools=
 Custom tools and utilities:
 - Battery monitor
-- Bekind (Kubernetes tooling)
 - Emacs configuration
 - Various Go-based utilities
 
 ** =/pkgs=
 Custom Nix packages and overlays including:
-- Development tools (bekind, govanityurl, manifest-tool)
+- Development tools (govanityurl, manifest-tool)
 - System utilities (battery-monitor, systemd-email, vrsync)
 - Custom scripts and utilities (ape, ram, batzconverter)
 - Emacs packages
@@ -217,7 +216,6 @@ nix profile install .#<package-name>
 All packages are defined in the =/pkgs= directory and are available for both =x86_64-linux= and =aarch64-linux= systems. Notable packages include:
 
 **** Development Tools
-- =bekind= - CLI tool for managing kind (Kubernetes in Docker) clusters with profile support
 - =battery-monitor= - System battery monitoring utility
 - =govanityurl= - Go vanity URL service
 - =manifest-tool= - Container manifest tool
