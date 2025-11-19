@@ -113,9 +113,6 @@ _: {
       syncthing = {
         id = "N3AMUVI-FM2BAOD-U3OMZDJ-UHMQE6J-ACMM5B7-S7BTK6P-PSM36NR-DVZHLQF";
         folders = {
-          org = {
-            type = "receiveonly";
-          };
           sync = {
             type = "receiveonly";
           };
@@ -141,9 +138,6 @@ _: {
       syncthing = {
         id = "TXCV3TS-TUEOTH6-ETB3LBV-KCIHT4L-RCCOIE3-VPBCNJB-VHQEAYI-WOXK5A5";
         folders = {
-          org = {
-            type = "receiveonly";
-          };
           sync = {
             type = "receiveonly";
           };
@@ -316,7 +310,6 @@ _: {
         id = "QGD6ICB-EPSGCEN-IQWKN77-BCRWE67-56HX5IA-E4IDBCI-WE46DK3-EC63DQ7";
         folders = {
           sync = { };
-          org = { };
         };
       };
     };
@@ -392,22 +385,22 @@ _: {
       ssh = {
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFH3Lk4bRgNyFRK/Hzg1PvVbL/dpyI1SmLJFkb6VQDw";
       };
-      # syncthing = {
-      #   id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
-      #   folders = {
-      #     org = { };
-      #     documents = { };
-      #     sync = { };
-      #     screenshots = { };
-      #     wallpapers = { };
-      #     # photos = {
-      #     #   paused = true; # TODO: implement this, start as paused
-      #     # };
-      #     # music = {
-      #     #   paused = true; # TODO: implement this, start as paused
-      #     # };
-      #   };
-      # };
+      syncthing = {
+        id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
+        folders = {
+          org = { };
+          documents = { };
+          sync = { };
+          screenshots = { };
+          wallpapers = { };
+          # photos = {
+          #   paused = true; # TODO: implement this, start as paused
+          # };
+          # music = {
+          #   paused = true; # TODO: implement this, start as paused
+          # };
+        };
+      };
     };
     aion = {
       net = {
