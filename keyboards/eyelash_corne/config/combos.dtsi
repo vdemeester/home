@@ -27,29 +27,29 @@ ZMK_COMBO(to_qwerty, &to QWE, LH2 RH2, BEP ERG)
 ZMK_COMBO(toggle_mouse, &tog MOU, LT1 LT4, BEP ERG QWE MOU)
 
 // underscore
-ZMK_COMBO(underscore, &kp UNDER, LB1 RB1, BEP ERG QWE)
-
-ZMK_COMBO(minus, &kp KP_MINUS, LT1 RT1, BEP ERG QWE)
-
 ZMK_COMBO(capsword, &caps_word, LB4 RB4, BEP ERG QWE)
 
 // Experiments
 /* ZMK_COMBO(exclamation, &kp EXCL, LT4 LT3, BEP ERG QWE) */
-ZMK_COMBO(arobase, &kp AT, LT3 LT2, BEP ERG QWE)
-ZMK_COMBO(pipe, &kp PIPE, LT4 LT3, BEP ERG QWE)
-ZMK_COMBO(hash, &kp HASH, LT2 LT1, BEP ERG QWE)
-ZMK_COMBO(ampr, &kp AMPS, LT1 LT0, BEP ERG QWE)
-ZMK_COMBO(dollar, &kp DLLR, LT1 LM1, BEP ERG QWE)
-ZMK_COMBO(slash, &kp SLASH, LT2 LM2, BEP ERG QWE)
-ZMK_COMBO(bslash, &kp BSLH, LM2 LB2, BEP ERG QWE)
-ZMK_COMBO(lprn, &kp RPAR, RM3 RM2, BEP ERG QWE)
-ZMK_COMBO(rprn, &kp LPAR, RM2 RM1, BEP ERG QWE)
-ZMK_COMBO(lcbr, &kp LBRC, RT2 RM2, BEP ERG QWE)
-ZMK_COMBO(rcbr, &kp RBRC, RM2 RB2, BEP ERG QWE)
-ZMK_COMBO(lbrc, &kp RBKT, RT3 RT2, BEP ERG QWE)
-ZMK_COMBO(rbrc, &kp LBKT, RT2 RT1, BEP ERG QWE)
-ZMK_COMBO(labk, &kp GT, RB3 RB2, BEP ERG QWE)
-ZMK_COMBO(rabk, &kp LT, RB2 RB1, BEP ERG QWE)
+ZMK_COMBO(arobase, &kp AT, LT3 LT2, BEP ERG QWE)  // @
+ZMK_COMBO(pipe, &kp PIPE, LT4 LT3, BEP ERG QWE)   // |
+ZMK_COMBO(hash, &kp HASH, LT2 LT1, BEP ERG QWE)   // #
+ZMK_COMBO(ampr, &kp AMPS, LT1 LT0, BEP ERG QWE)   // &
+ZMK_COMBO(dollar, &kp DLLR, LT1 LM1, BEP ERG QWE) // $
+ZMK_COMBO(slash, &kp SLASH, LT2 LM2, BEP ERG QWE) // /
+ZMK_COMBO(bslash, &kp BSLH, LM2 LB2, BEP ERG QWE) // antislash
+ZMK_COMBO(minus, &kp KP_MINUS, LT3 LM3, BEP ERG QWE) // -
+ZMK_COMBO(underscore, &kp UNDER, LM1 LB1, BEP ERG QWE) // _
+ZMK_COMBO(equal, &kp EQUAL, LM3 LB3, BEP ERG QWE) // =
+
+ZMK_COMBO(lprn, &kp LPAR, RT2 RM2, BEP ERG QWE)   // (
+ZMK_COMBO(rprn, &kp RPAR, RM2 RB2, BEP ERG QWE)   // )
+ZMK_COMBO(lcbr, &kp LBRC, RT1 RM1, BEP ERG QWE)   // {
+ZMK_COMBO(rcbr, &kp RBRC, RM1 RB1, BEP ERG QWE)   // }
+ZMK_COMBO(lbrc, &kp RBKT, RT3 RM3, BEP ERG QWE)   // [
+ZMK_COMBO(rbrc, &kp LBKT, RM3 RB3, BEP ERG QWE)   // ]
+ZMK_COMBO(labk, &kp GT, RT3 RT2, BEP ERG QWE)     // <
+ZMK_COMBO(rabk, &kp LT, RT2 RT1, BEP ERG QWE)     // >
 
 
 /*
