@@ -157,6 +157,16 @@ cd tools/<tool-name>
 go test ./...
 ```
 
+### Keyboard Firmware
+
+```bash
+# Build Moonlander QMK firmware
+cd keyboards/moonlander && ./go.sh build
+
+# Build eyelash_corne ZMK firmware (if applicable)
+cd keyboards/eyelash_corne && <build command>
+```
+
 ## Special Notes
 
 - The repository uses XDG base directories for Nix configuration (enabled via `use-xdg-base-directories = true`)

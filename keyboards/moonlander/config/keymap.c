@@ -22,6 +22,7 @@
 #include "version.h"
 #include "keymap_us.h"
 #include "keymap_us_international_linux.h"
+#include "layermodes.h"
 
 enum layers {
   BEPO,
@@ -46,6 +47,7 @@ enum custom_keycodes {
   FR_E_GRAVE_CAPS,
   FR_A_GRAVE,
   FR_A_GRAVE_CAPS,
+  NUMWORD,  // Numword layer activation
 };
 
 const key_override_t circ_exclamation_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_CIRC, KC_EXLM, 1 << BEPO);
@@ -220,13 +222,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		  // $  " « » ( ) @ + - / * = %
 		  // shift: # 1 2 3 4 5 6 7 8 9 0 ° `
 		  // ralt : – — < > [ ] ^ ± − ÷ × ≠ ‰
-		  // shift+ralt : ¶ „ “ ” ≤ ≥ _ ¬ ¼ ½ ¾ ′ ″
+		  // shift+ralt : ¶ „ " " ≤ ≥ _ ¬ ¼ ½ ¾ ′ ″
 		  // FIXME: should I invert ?
 		  KC_DLR,  FR_DQUO,    US_LDAQ,    US_RDAQ,  KC_LPRN,    KC_RPRN,    XXXXXXX,           XXXXXXX, KC_AT,    KC_PLUS,    KC_PMNS,    KC_PSLS,    KC_PAST,    KC_PERC,
 		  KC_TAB,  KC_B,    FR_E_AIGU,    KC_P,    KC_O,    FR_E_GRAVE,    XXXXXXX,           XXXXXXX, KC_CIRC,    KC_V,    KC_D,    KC_L,    KC_J,    KC_Z,
 		  LT(NUMB, KC_EQL),  HM_GUI_A,    HM_ALT_U,    HM_SFT_I,    HM_CTL_E,    HM_HYP_COMM,    XXXXXXX,           XXXXXXX, HM_HYP_C,    HM_CTL_T,    HM_SFT_S,    HM_ALT_R,    HM_GUI_N, LT(SYMB,KC_M),
 		  KC_GRV,  FR_A_GRAVE,    KC_Y,    KC_X,    KC_DOT,    KC_K,                                FR_QUOT,    KC_Q,    KC_G, KC_H,  KC_F, KC_W,
-		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, LT(MODS, KC_DEL),  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, LT(MODS, KC_DEL),  QK_REP,               NUMWORD,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
 		  LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  OS_LSFT,  LT(SYMB, KC_ENT)
 		  ),
   [ERGL] = LAYOUT(
@@ -234,7 +236,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
 		  KC_EQL,  HM_GUI_A,    HM_ALT_S,    HM_SFT_D,    HM_CTL_F,    HM_HYP_G,    XXXXXXX,           XXXXXXX, HM_HYP_H,    HM_CTL_J,    HM_SFT_K,    HM_ALT_L,    HM_GUI_SCLN, KC_QUOT,
 		  KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
-		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               NUMWORD,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
 		  LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  OS_LSFT,  LT(SYMB, KC_ENT)
 		  ),
   [QWER] = LAYOUT(
@@ -242,7 +244,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
 		  KC_EQL,  HM_GUI_A,    HM_ALT_S,    HM_SFT_D,    HM_CTL_F,    HM_HYP_G,    XXXXXXX,           XXXXXXX, HM_HYP_H,    HM_CTL_J,    HM_SFT_K,    HM_ALT_L,    HM_GUI_SCLN, KC_QUOT,
 		  KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
-		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               NUMWORD,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
 		  LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  OS_LSFT,  LT(SYMB, KC_ENT)
 		  ),
 
@@ -292,6 +294,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   uint8_t current_layer = get_highest_layer(layer_state);
   uint8_t mod_state = get_mods();
+
+  // Process numword before other logic
+  if (!process_num_word(keycode, record)) {
+    return false;
+  }
+
+  // Handle NUMWORD separately since it needs both press and release
+  if (keycode == NUMWORD) {
+    process_num_word_activation(NUMB, record);
+    return false;
+  }
+
   if (record->event.pressed) {
     switch (keycode) {
       // FR_DQUO on bépo layout

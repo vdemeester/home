@@ -11,4 +11,7 @@ SPACE_CADET_ENABLE = no
 TAP_DANCE_ENABLE = yes
 LAYER_LOCK_ENABLE = yes
 
+# Include numword layer modes
+SRC += layermodes.c
+
 EXTRAFLAGS += -flto

@@ -28,6 +28,9 @@
 #define COMBO_TERM 40
 #define CHORDAL_HOLD
 
+// Numword configuration
+#define NUMWORD_TIMEOUT 5000  // Time in ms before numword auto-disables (optional)
+
 /* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD 1 */
 /* #define CAPS_WORD_INVERT_ON_SHIFT 1 */
 
