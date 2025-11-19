@@ -132,6 +132,7 @@ let
       outline-indent
       ox-pandoc
       ox-jira
+      ox-tufte
       pandoc-mode
       popon
       popper
