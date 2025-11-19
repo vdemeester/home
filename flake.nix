@@ -71,11 +71,6 @@
           # desktop = "sway";
           desktop = "niri";
         };
-        # Test VM, name is..
-        foobar = libx.mkHost {
-          hostname = "foobar";
-          desktop = "niri";
-        };
         # Servers (unstable)
         aomi = libx.mkHost {
           hostname = "aomi";
@@ -127,6 +122,10 @@
           hostname = "kerkouane";
           pkgsInput = inputs.nixpkgs-25_05;
           homeInput = inputs.home-manager-25_05;
+        };
+        # NOTE: experimentations
+        foo = libx.newMkHost {
+          hostname = "foo";
         };
       };
 

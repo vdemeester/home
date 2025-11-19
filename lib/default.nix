@@ -41,6 +41,43 @@
       ];
     };
 
+  newMkHost =
+    {
+      hostname,
+      system ? "x86_64-linux",
+      pkgsInput ? inputs.nixpkgs,
+    }:
+    let
+      globals = import ../globals.nix {
+        inherit (pkgsInput) lib;
+        inherit hostname;
+      };
+      specialArgs = {
+        inherit
+          self
+          inputs
+          outputs
+          stateVersion
+          hostname
+          globals
+          system
+          ;
+        libx = import ./functions.nix { inherit (pkgsInput) lib; };
+      };
+    in
+    pkgsInput.lib.nixosSystem {
+      inherit specialArgs;
+      inherit system;
+      modules = [
+        self.nixosModules.wireguard-client
+        self.nixosModules.wireguard-server
+        self.nixosModules.govanityurl
+        self.nixosModules.gosmee
+        inputs.agenix.nixosModules.default
+        ../systems/new.nix
+      ];
+    };
+
   # Function for generating host configs
   mkHost =
     {
