@@ -43,7 +43,10 @@
           })
           (
             inputs.nixpkgs.lib.attrsets.filterAttrs (
-              _: config: builtins.hasAttr "system" config._module.specialArgs
+              _: config:
+              (
+                builtins.hasAttr "system" config._module.specialArgs && config._module.specialArgs.hostname != "foo"
+              )
             ) self.nixosConfigurations
           )
       );
