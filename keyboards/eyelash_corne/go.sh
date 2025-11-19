@@ -6,7 +6,7 @@ cPWD="$(dirname "$(readlink -f "$0")")"
 source "${cPWD}/lib/functions.sh"
 
 function build() {
-	docker build --target output_collector --output type=local,dest="firmwares" -f eyelash_corne/Dockerfile eyelash_corne
+	tar -cf - Dockerfile build.yaml config zephyr | docker build --target output_collector --output type=local,dest="firmwares" -f Dockerfile -
 }
 
 function flash() {
@@ -30,11 +30,32 @@ function flash() {
 	fi
 }
 
-build
+help() {
+	echo "go.sh [build/flash]"
+}
 
-flash left usb-Adafruit_nRF_UF2_6863BEB9EE8668EC-0:0
-echo "$(echo_green ) Left side is completed.."
-sleep 2
+[[ -z ${1-""} ]] && {
+	set +x
+	echo "need at least one arg"
+	help
+	exit 1
+}
 
-flash right usb-Adafruit_nRF_UF2_0E9CC2AD6581EE32-0:0
-echo "$(echo_green )" "Right side is completed.. enjoy 🥳"
+case "$1" in
+build) build ;;
+flash)
+	build
+
+	flash left usb-Adafruit_nRF_UF2_6863BEB9EE8668EC-0:0
+	echo "$(echo_green ) Left side is completed.."
+	sleep 2
+
+	flash right usb-Adafruit_nRF_UF2_0E9CC2AD6581EE32-0:0
+	echo "$(echo_green )" "Right side is completed.. enjoy 🥳"
+	;;
+*)
+	echo "Wrong argument $1"
+	help
+	exit 1
+	;;
+esac

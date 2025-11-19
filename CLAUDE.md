@@ -163,8 +163,8 @@ go test ./...
 # Build Moonlander QMK firmware in folder keyboards/moonlander of the git repository
 ./go.sh build
 
-# Build eyelash_corne ZMK firmware in folder keyboards of the git repository
-./eyelash_corne.sh build
+# Build eyelash_corne ZMK firmware in folder keyboards/eyelash_corne of the git repository
+./go.sh build
 ```
 
 ## Special Notes
