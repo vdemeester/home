@@ -163,8 +163,8 @@ go test ./...
 # Build Moonlander QMK firmware
 cd keyboards/moonlander && ./go.sh build
 
-# Build eyelash_corne ZMK firmware (if applicable)
-cd keyboards/eyelash_corne && <build command>
+# Build eyelash_corne ZMK firmware
+cd keyboards && ./eyelash_corne.sh build
 ```
 
 ## Special Notes
