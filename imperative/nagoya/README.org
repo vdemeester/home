@@ -1,0 +1,87 @@
+#+TITLE: Nagoya Configuration
+#+FILETAGS: imperative debian server nagoya
+
+Configuration scripts for the Nagoya system, a Debian-based server.
+
+* Overview
+
+This directory contains idempotent configuration scripts for the Nagoya host, which runs Debian and is not managed by NixOS.
+
+** System Information
+
+- *Hostname:* nagoya
+- *OS:* Debian
+- *Type:* Server
+- *Architecture:* aarch64
+- *VPN Address:* 10.100.0.80/24
+
+* Files
+
+** =apply.sh=
+
+The main configuration script that sets up the system. This script is designed to be run multiple times safely (idempotent).
+
+* Setup Components
+
+The =apply.sh= script configures the following:
+
+** Wireguard VPN
+- Configures wireguard VPN client
+- Creates =/etc/wireguard/wg0.conf= with VPN settings
+- Connects to VPN endpoint at 167.99.17.238:51820
+- Assigns client IP: 10.100.0.80/24
+- Requires =WG_PRIVATE_KEY= environment variable
+
+** Docker
+- Removes old Docker packages (docker.io, podman-docker, etc.)
+- Installs official Docker CE from docker.com repository
+- Installs docker-ce, docker-ce-cli, containerd.io, and docker-buildx-plugin
+- Configures Docker APT repository with proper GPG keys
+
+** Kind (Kubernetes in Docker)
+- Installs Kind v0.30.0 for ARM64
+- Installs to =/usr/local/bin/kind=
+- Used for local Kubernetes development
+
+** Syncthing
+- Installs Syncthing from official APT repository
+- Configures GPG keys for package verification
+- Note: User service setup needs to be completed (see TODOs)
+
+* Usage
+
+** Running the Script
+
+From the repository root:
+
+#+begin_src bash
+# Basic run (without wireguard configuration)
+sudo ./imperative/nagoya/apply.sh
+
+# With wireguard private key
+sudo WG_PRIVATE_KEY="your-private-key-here" ./imperative/nagoya/apply.sh
+#+end_src
+
+** First-Time Setup
+
+1. Ensure you have root/sudo access
+2. Have your wireguard private key ready
+3. Run the script with the WG_PRIVATE_KEY environment variable
+
+** Updating Configuration
+
+Simply re-run the script. It's designed to be idempotent, meaning running it multiple times will bring the system to the desired state without causing issues.
+
+* TODOs
+
+- [ ] Complete Syncthing user service setup
+- [ ] Add config.txt configuration (diff with default, nvme settings)
+- [ ] Add error handling for missing Kind download
+- [ ] Consider adding Docker post-install steps (user groups, etc.)
+
+* Notes
+
+- The script uses =set -euo pipefail= for strict error handling
+- All setup functions are prefixed with =setup.=
+- Logging functions provide colored output for better readability
+- Shellcheck directives are used where system files are sourced

@@ -1,0 +1,226 @@
+#+TITLE: Imperative Configuration
+#+FILETAGS: imperative configuration scripts
+
+Idempotent configuration scripts for systems not managed by NixOS.
+
+* Overview
+
+This directory contains configuration scripts for hosts that cannot or do not use NixOS. Unlike the declarative NixOS configurations in =/systems=, these scripts use an imperative approach but are designed to be idempotent - safe to run multiple times.
+
+** Philosophy
+
+While NixOS provides declarative configuration management, some systems need to use traditional Linux distributions for various reasons:
+- Hardware compatibility requirements
+- Organizational constraints
+- Testing different distributions
+- Transition periods before migrating to NixOS
+
+These scripts bridge the gap by providing repeatable, documented configuration management for non-NixOS systems.
+
+** Key Principles
+
+1. *Idempotent* - Scripts can be run multiple times safely
+2. *Self-contained* - Each host directory is independent
+3. *Documented* - Each host has a README explaining its setup
+4. *Versioned* - Configuration is tracked in git like NixOS configs
+
+* Directory Structure
+
+Each host has its own directory containing:
+
+#+begin_example
+imperative/
+├── README.org          # This file
+├── nagoya/             # Debian server
+│   ├── README.org      # Host-specific documentation
+│   └── apply.sh        # Main configuration script
+└── wakasu/             # Fedora desktop
+    ├── README.org      # Host-specific documentation
+    └── apply.sh        # Main configuration script
+#+end_example
+
+* Current Hosts
+
+** nagoya - Debian Server
+- *OS:* Debian (aarch64)
+- *Type:* Server
+- *Components:* Docker, Kind, Wireguard, Syncthing
+- *VPN IP:* 10.100.0.80/24
+
+See [[file:nagoya/README.org][nagoya/README.org]] for details.
+
+** wakasu - Fedora Desktop
+- *OS:* Fedora
+- *Type:* Desktop
+- *User:* vincent
+- *Components:* Helix, ACPI, Wireguard, Syncthing
+- *VPN IP:* 10.100.0.90/24
+
+See [[file:wakasu/README.org][wakasu/README.org]] for details.
+
+* Usage
+
+** Running Configuration Scripts
+
+From the repository root:
+
+#+begin_src bash
+# Apply configuration for a specific host
+sudo ./imperative/<hostname>/apply.sh
+
+# With environment variables (e.g., for wireguard)
+sudo WG_PRIVATE_KEY="..." ./imperative/<hostname>/apply.sh
+#+end_src
+
+** Adding a New Host
+
+1. Create a new directory for the host:
+   #+begin_src bash
+   mkdir imperative/<hostname>
+   #+end_src
+
+2. Create an =apply.sh= script following the existing patterns:
+   - Use =set -euo pipefail= for safety
+   - Implement colored logging functions
+   - Make functions idempotent
+   - Use =setup.*= naming convention for functions
+
+3. Create a =README.org= documenting:
+   - System information
+   - Components installed
+   - Usage instructions
+   - Environment variables needed
+
+4. Make the script executable:
+   #+begin_src bash
+   chmod +x imperative/<hostname>/apply.sh
+   #+end_src
+
+5. Update this README to include the new host
+
+** Testing Scripts
+
+Test scripts in a VM or container before running on production systems:
+
+#+begin_src bash
+# Example with Docker
+docker run -it --rm -v $(pwd):/repo debian:latest
+cd /repo
+./imperative/<hostname>/apply.sh
+#+end_src
+
+* Script Conventions
+
+** Error Handling
+
+All scripts use strict error handling:
+#+begin_src bash
+set -euo pipefail
+#+end_src
+
+This ensures:
+- =set -e= - Exit on any error
+- =set -u= - Exit on undefined variable
+- =set -o pipefail= - Catch errors in pipes
+
+** Logging
+
+Use colored logging functions for clarity:
+
+#+begin_src bash
+log_info "Normal operation message"
+log_warn "Warning message"
+log_error "Error message"
+#+end_src
+
+** Function Naming
+
+Use =setup.*= prefix for setup functions:
+
+#+begin_src bash
+setup.docker() { ... }
+setup.wireguard() { ... }
+setup.syncthing() { ... }
+#+end_src
+
+** Environment Variables
+
+- Document all required environment variables in the host's README
+- Provide sensible defaults where possible
+- Fail gracefully or warn when optional variables are missing
+
+** Idempotency
+
+Make operations idempotent by:
+- Checking if software is already installed
+- Using =||= for commands that might fail on re-run
+- Avoiding destructive operations
+- Using configuration management tools when available
+
+* Integration with NixOS Configs
+
+While these scripts are imperative, they share concepts with the NixOS configurations:
+
+- *Wireguard configuration* matches the network topology in =globals.nix=
+- *Syncthing* IDs should be coordinated with NixOS hosts
+- *VPN IP addressing* follows the same scheme (10.100.0.0/24)
+
+* Transitioning to NixOS
+
+When ready to migrate a host to NixOS:
+
+1. Document the current system state using the imperative script as reference
+2. Create a new NixOS configuration in =/systems/<hostname>=
+3. Test the NixOS configuration in a VM
+4. Perform the migration
+5. Archive or remove the imperative configuration
+
+* Maintenance
+
+** Updating Scripts
+
+When updating scripts:
+
+1. Test changes in a VM or non-production system
+2. Update the host's README if behavior changes
+3. Run shellcheck to catch common issues:
+   #+begin_src bash
+   shellcheck imperative/<hostname>/apply.sh
+   #+end_src
+
+** Version Control
+
+All changes to imperative configurations should be:
+- Committed to git
+- Documented in commit messages
+- Tagged if significant milestones are reached
+
+* Comparison: Imperative vs NixOS
+
+| Aspect           | Imperative (this directory) | NixOS (=/systems=)          |
+|------------------+-----------------------------+---------------------------|
+| *Approach*         | Scripts to reach state      | Declare desired state     |
+| *Idempotency*      | Manual (via careful coding) | Automatic                 |
+| *Rollback*         | Manual/difficult            | Built-in generations      |
+| *Reproducibility*  | Best effort                 | Guaranteed                |
+| *Documentation*    | README + comments           | Code is documentation     |
+| *OS Support*       | Any Linux distro            | NixOS only                |
+| *Learning Curve*   | Familiar bash scripts       | Steeper (Nix language)    |
+| *State Management* | Imperative commands         | Declarative configuration |
+
+* Resources
+
+** Similar Approaches
+- Ansible playbooks (declarative automation)
+- Chef/Puppet recipes (configuration management)
+- Shell scripts (traditional approach)
+
+** Why Not Use These Tools?
+
+For simple single-host configurations, a well-written bash script:
+- Has no dependencies beyond bash and standard tools
+- Is easy to understand and modify
+- Runs quickly without agent overhead
+- Keeps everything in this repository
+
+For managing many similar hosts, consider tools like Ansible.

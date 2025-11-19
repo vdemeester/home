@@ -1,0 +1,111 @@
+#+TITLE: Wakasu Configuration
+#+FILETAGS: imperative fedora desktop wakasu
+
+Configuration scripts for the Wakasu system, a Fedora-based desktop.
+
+* Overview
+
+This directory contains idempotent configuration scripts for the Wakasu host, which runs Fedora and is not managed by NixOS.
+
+** System Information
+
+- *Hostname:* wakasu
+- *OS:* Fedora
+- *Type:* Desktop
+- *User:* vincent
+- *VPN Address:* 10.100.0.90/24
+
+* Files
+
+** =apply.sh=
+
+The main configuration script that sets up the system. This script is designed to be run multiple times safely (idempotent).
+
+* Setup Components
+
+The =apply.sh= script configures the following:
+
+** Default Packages
+- *helix* - Modern terminal-based text editor
+- *acpi* - Command-line utilities for ACPI (power management)
+
+** Syncthing
+- Installs Syncthing from Fedora repositories
+- Enables and starts systemd user service for user =vincent=
+- Enables loginctl lingering so service starts at boot
+- Syncthing will be available at http://localhost:8384
+
+** Wireguard VPN
+- Installs wireguard-tools package
+- Creates =/etc/wireguard/wg0.conf= with VPN settings
+- Connects to VPN endpoint at 167.99.17.238:51820
+- Assigns client IP: 10.100.0.90/24
+- Requires =WG_PRIVATE_KEY= environment variable
+- Gracefully skips configuration if private key is not provided
+
+* Usage
+
+** Running the Script
+
+From the repository root:
+
+#+begin_src bash
+# Basic run (wireguard config will be skipped)
+sudo ./imperative/wakasu/apply.sh
+
+# With wireguard private key
+sudo WG_PRIVATE_KEY="your-private-key-here" ./imperative/wakasu/apply.sh
+#+end_src
+
+** First-Time Setup
+
+1. Ensure you have root/sudo access
+2. Have your wireguard private key ready (optional)
+3. Run the script
+
+** Updating Configuration
+
+Simply re-run the script. It's designed to be idempotent, meaning running it multiple times will bring the system to the desired state without causing issues.
+
+** Enabling Wireguard
+
+After running the script with =WG_PRIVATE_KEY=:
+
+#+begin_src bash
+# Start wireguard
+sudo systemctl start wg-quick@wg0
+
+# Enable wireguard at boot
+sudo systemctl enable wg-quick@wg0
+
+# Check status
+sudo systemctl status wg-quick@wg0
+#+end_src
+
+** Managing Syncthing
+
+#+begin_src bash
+# Check syncthing status
+systemctl --user status syncthing
+
+# Restart syncthing
+systemctl --user restart syncthing
+
+# View syncthing logs
+journalctl --user -u syncthing
+#+end_src
+
+* Default Packages Explained
+
+** Helix
+A modern, Kakoune/Neovim inspired editor with built-in LSP support and tree-sitter syntax highlighting. Provides a powerful terminal-based editing experience.
+
+** ACPI
+Utilities for monitoring battery, temperature, and power management on laptops. Useful for checking battery status and system power state.
+
+* Notes
+
+- The script uses =set -euo pipefail= for strict error handling
+- All setup functions are prefixed with =setup.=
+- Logging functions provide colored output for better readability
+- User-specific configuration is stored in the =USER_NAME= variable

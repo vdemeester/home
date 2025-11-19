@@ -206,6 +206,48 @@ make all  # Install all dotfiles
 make niri # Install only niri configuration
 #+end_src
 
+** Managing Non-NixOS Systems
+
+For systems not managed by NixOS, the =/imperative= directory provides
+idempotent configuration scripts organized by hostname.
+
+See [[file:imperative/README.org][imperative/README.org]] for detailed documentation.
+
+*** Running Configuration Scripts
+
+#+begin_src bash
+# Apply configuration for a specific host
+sudo ./imperative/<hostname>/apply.sh
+
+# With environment variables (e.g., for wireguard)
+sudo WG_PRIVATE_KEY="..." ./imperative/<hostname>/apply.sh
+#+end_src
+
+*** Available Hosts
+
+**** nagoya (Debian Server)
+#+begin_src bash
+# Configure nagoya with wireguard
+sudo WG_PRIVATE_KEY="your-key" ./imperative/nagoya/apply.sh
+#+end_src
+
+Installs: Docker, Kind, Wireguard, Syncthing
+
+See [[file:imperative/nagoya/README.org][imperative/nagoya/README.org]] for details.
+
+**** wakasu (Fedora Desktop)
+#+begin_src bash
+# Configure wakasu
+sudo ./imperative/wakasu/apply.sh
+
+# With wireguard
+sudo WG_PRIVATE_KEY="your-key" ./imperative/wakasu/apply.sh
+#+end_src
+
+Installs: Helix, ACPI, Wireguard, Syncthing
+
+See [[file:imperative/wakasu/README.org][imperative/wakasu/README.org]] for details.
+
 ** Building and Installing Packages
 
 The repository provides various custom packages that can be built and installed directly from the flake:
@@ -309,6 +351,12 @@ GitHub Actions workflows automatically:
 - =aion= - aarch64 server
 - =rhea= - aarch64 server
 - =kerkouane= - =x86_64= server
+
+*** Non-NixOS Systems (Imperative Configuration)
+- =nagoya= - Debian server (aarch64)
+- =wakasu= - Fedora desktop
+
+See [[file:imperative/README.org][imperative/README.org]] for details on managing these systems.
 
 * References
 
