@@ -444,11 +444,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763544841,
-        "narHash": "sha256-HIyAK1MKMgO1X1fnCXRTCL5PZjbgE7up8SYHe93FDIQ=",
+        "lastModified": 1763550659,
+        "narHash": "sha256-h+HCp1zFFp+hI9IVHgB0A86ykQ4Z2O9pSqTIJRUrm84=",
         "owner": "vdemeester",
         "repo": "go-org-readwise",
-        "rev": "f5f6c57eb8d04c79b7ff2b43569981b0f3f22275",
+        "rev": "c3ad1a4d281fedea1849efc8215798fbec27321d",
         "type": "github"
       },
       "original": {
@@ -784,11 +784,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1763546331,
-        "narHash": "sha256-YnEL2bBGaOPMjSNwA7vo9Cn93AwZJ0gwo3C5yJBjnz4=",
+        "lastModified": 1763554603,
+        "narHash": "sha256-5lKevkNW9CLYh9u1pECLnger3EMxn0svgsEX/ruqxuc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "bd491bdc48335c3c7e4267e548690a858f5a5632",
+        "rev": "9750ea44ed892ccd02e2be0d0dd355cc356f74c7",
         "type": "github"
       },
       "original": {
