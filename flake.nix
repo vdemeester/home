@@ -255,6 +255,10 @@
       url = "github:vdemeester/buildkit-tekton";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    go-org-readwise = {
+      url = "github:vdemeester/go-org-readwise";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # nixpkgs
     nixpkgs = {

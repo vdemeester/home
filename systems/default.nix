@@ -32,6 +32,7 @@
       inputs.niri.overlays.niri
       inputs.chapeau-rouge.overlays.openshift
       inputs.chick-group.overlays.default
+      inputs.go-org-readwise.overlays.default
       inputs.agenix.overlays.default
       inputs.claude-code.overlays.default
 

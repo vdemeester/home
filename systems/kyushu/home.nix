@@ -48,6 +48,8 @@
     # lisp
     roswell
     sbcl
+
+    go-org-readwise
   ];
 
 }
