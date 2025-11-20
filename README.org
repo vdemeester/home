@@ -76,11 +76,6 @@ Nix overlays for:
 - Package modifications
 - Unstable package access
 
-** =/shells=
-Project-specific development shells:
-- OpenStack development environment
-- Tekton development environment
-
 ** =/keyboards=
 Hardware keyboard configurations with complete build and flash tooling.
 
@@ -126,7 +121,6 @@ The main entry point is =flake.nix=, which provides:
 - Home-manager configurations
 - System-manager configurations
 - Custom packages and overlays
-- Development shells
 
 ** Building a System
 
