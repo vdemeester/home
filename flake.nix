@@ -361,9 +361,6 @@
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/develop";
     nixos-raspberrypi.inputs.flake-compat.follows = "flake-compat";
 
-    claude-code.url = "github:sadjow/claude-code-nix";
-    claude-code.inputs.nixpkgs.follows = "nixpkgs";
-
     copilot-cli.url = "github:scarisey/copilot-cli-flake";
     copilot-cli.inputs.nixpkgs.follows = "nixpkgs";
   };

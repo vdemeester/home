@@ -9,8 +9,9 @@
     aichat
     # aider-chat
     goose-cli
-    gemini-cli
-    claude-code
+    master.claude-code
+    master.claude-code-acp
+    master.gemini-cli
     # llm
     # openai-whisper
     # whisper-cpp
@@ -18,8 +19,8 @@
     # python313Packages.google-generativeai
     repomix
     # editors
-    code-cursor
-    cursor-cli
+    master.code-cursor
+    master.cursor-cli
     # inputs.code-cursor-nix.packages.x86_64-linux.cursor
     # mcp-servers
     github-mcp-server

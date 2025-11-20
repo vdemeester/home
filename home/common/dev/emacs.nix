@@ -183,7 +183,6 @@ in
     ugrep
     # See if I can hide this under an option
     org-capture
-    # github-copilot-cli # for copilot.el
     nodejs
     ec
     et
