@@ -123,9 +123,11 @@
       enable = true;
       user = "vincent";
       group = "users";
+      openFirewall = true;
     };
     jellyseerr = {
       enable = true;
+      openFirewall = true;
     };
     aria2 = {
       # FIXME: make sure aria2 runs as user vincent
@@ -146,29 +148,35 @@
       enable = true;
       user = "vincent";
       group = "users";
+      openFirewall = true;
     };
     radarr = {
       enable = true;
       user = "vincent";
       group = "users";
+      openFirewall = true;
     };
     bazarr = {
       enable = true;
       user = "vincent";
       group = "users";
+      openFirewall = true;
     };
     prowlarr = {
       enable = true;
+      openFirewall = true;
     };
     readarr = {
       enable = true;
       user = "vincent";
       group = "users";
+      openFirewall = true;
     };
     lidarr = {
       enable = true;
       user = "vincent";
       group = "users";
+      openFirewall = true;
     };
   };
 
