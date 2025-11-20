@@ -37,6 +37,7 @@
           gemini-cli = _prev.gemini-cli;
           cursor-cli = _prev.cursor-cli;
           code-cursor = _prev.code-cursor;
+          antigravity = _prev.antigravity;
           # example = prev.example.overrideAttrs (oldAttrs: rec {
           # ...
           # });

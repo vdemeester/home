@@ -21,6 +21,7 @@
     # editors
     master.code-cursor
     master.cursor-cli
+    master.antigravity
     # inputs.code-cursor-nix.packages.x86_64-linux.cursor
     # mcp-servers
     github-mcp-server
