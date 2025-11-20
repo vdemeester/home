@@ -124,7 +124,7 @@
       user = "vincent";
       group = "users";
     };
-    jellyseer = {
+    jellyseerr = {
       enable = true;
     };
     aria2 = {
