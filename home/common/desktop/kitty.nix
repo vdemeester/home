@@ -3,7 +3,6 @@ _: {
     enable = true;
     shellIntegration.enableZshIntegration = true;
     settings = {
-      term = "xterm-256color";
       close_on_child_death = "yes";
       font_family = "JetBrains Mono";
       tab_bar_edge = "top";
