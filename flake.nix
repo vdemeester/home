@@ -147,6 +147,10 @@
           hostname = "aion";
           system = "aarch64-linux";
         };
+        wakasu = libx.mkSystemManager {
+          hostname = "wakasu";
+          system = "x86_64-linux";
+        };
       };
 
       images = {
