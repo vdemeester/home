@@ -68,6 +68,10 @@ To clean build artifacts:
 ./go.sh clean
 #+end_src
 
+* Keymap Visualization
+
+[[file:../moonlander.svg]]
+
 * Keyboard Layouts
 
 ** Bépo (Layer 0)

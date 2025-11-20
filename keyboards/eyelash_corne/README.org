@@ -56,6 +56,10 @@ This will:
 
 The script supports both auto-mounted devices (=/run/media/$USER/NICENANO=) and manual mounting to =/mnt=.
 
+* Keymap Visualization
+
+[[file:eyelash_corne.svg]]
+
 * Keyboard Layouts
 
 ** Bépo (Layer 0)
