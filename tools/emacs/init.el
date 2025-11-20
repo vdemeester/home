@@ -1812,7 +1812,12 @@ Add this function to the `after-save-hook'."
   :load-path "/home/vincent/src/github.com/xenodium/agent-shell/"
   :config
   (setq agent-shell-google-authentication
-	(agent-shell-google-make-authentication :api-key (passage-get "redhat/google/osp/vdeemest-api-key"))))
+	(agent-shell-google-make-authentication :api-key (passage-get "redhat/google/osp/vdeemest-api-key")))
+  (setq agent-shell-anthropic-claude-environment
+	(agent-shell-make-environment-variables
+	 "CLAUDE_CODE_USE_VERTEX" "1"
+	 "CLOUD_ML_REGION" "us-east5"
+	 "ANTHROPIC_VERTEX_PROJECT_ID" "itpc-gcp-pnd-pe-eng-claude")))
 
 (use-package devdocs
   :commands (devdocs-lookup devdocs-install vde/install-devdocs)
