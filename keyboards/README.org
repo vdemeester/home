@@ -1,102 +1,33 @@
-#+title: My Keyboard Setup
+#+title: Keyboard Configurations
 
-This folder contains my keyboard configurations and everything required to build and flash them.
+Custom firmware configurations for split ergonomic keyboards with Bépo, ErgoL, and QWERTY layouts.
 
 * Keyboards
 
-** ZSA Moonlander
-
-QMK-based firmware for the Moonlander split ergonomic keyboard.
-- Location: =moonlander/=
-- Firmware: QMK
-- Features: 72 keys, RGB backlighting, wired USB-C
-- See [[file:moonlander/README.org][moonlander/README.org]] for details
-
-** Eyelash Corne
-
-ZMK-based firmware for the wireless Corne (crkbd) keyboard.
-- Location: =eyelash_corne/=
-- Firmware: ZMK (with custom modifications)
-- Features: 42 keys, wireless (Bluetooth), nice!view display, RGB underglow
-- See [[file:eyelash_corne/README.org][eyelash_corne/README.org]] for details
+| Keyboard       | Firmware | Keys | Features                                 | Details                                  |
+|----------------+----------+------+------------------------------------------+------------------------------------------|
+| Moonlander     | QMK      |   72 | RGB backlighting, wired USB-C            | [[file:moonlander/README.org][moonlander/README.org]]                    |
+| Eyelash Corne  | ZMK      |   42 | Wireless, nice!view display, RGB underglow | [[file:eyelash_corne/README.org][eyelash_corne/README.org]]                |
 
 * Quick Start
 
-** Building Firmware
-
-From the =keyboards/= directory, use the Makefile:
-
 #+begin_src bash
-# Build Moonlander firmware
-make moonlander/build
+# Build and flash
+make moonlander/build    # or moonlander/flash
+make eyelash_corne/build # or eyelash_corne/flash (alias: corne/build)
 
-# Build Eyelash Corne firmware
-make eyelash_corne/build
-# or use the shorter alias
-make corne/build
+# Other targets
+make all                 # Build all keyboards
+make clean               # Clean build artifacts
+make help                # Show all targets
 #+end_src
 
-** Flashing Firmware
+* Layout Features
 
-#+begin_src bash
-# Flash Moonlander (wired)
-make moonlander/flash
-
-# Flash Eyelash Corne (wireless)
-make eyelash_corne/flash
-# or use the shorter alias
-make corne/flash
-#+end_src
-
-** Other Targets
-
-#+begin_src bash
-# Build all keyboards
-make all
-
-# Update QMK (Moonlander only)
-make moonlander/update
-
-# Clean build artifacts
-make clean
-make moonlander/clean
-
-# Show help
-make help
-#+end_src
-
-** From Repository Root
-
-All keyboard targets are also available from the repository root Makefile:
-
-#+begin_src bash
-cd /path/to/home
-make moonlander/build
-make eyelash_corne/flash
-#+end_src
-
-* Common Layouts
-
-Both keyboards share similar layout philosophies:
-
-** Primary Layout: Bépo
-
-French-optimized layout based on [[https://bepo.fr][bépo]] with adaptations for split ergonomic keyboards.
-- Works with US International layout on the host OS
-- Home row mods for modifiers
-- Layer-based access to symbols, numbers, and navigation
-
-** Alternative Layouts
-
-- *ErgoL*: Alternative French layout based on [[https://ergol.org][ErgoL]]
-- *QWERTY*: Standard layout for compatibility
-
-** Shared Features
-
+Both keyboards use:
+- *Primary*: [[https://bepo.fr][Bépo]] (French-optimized) | *Alternatives*: [[https://ergol.org][ErgoL]], QWERTY
 - Home row mods (GUI, Alt, Shift, Ctrl, Hyper)
-- Smart numword layer for efficient number entry
-- Combos for frequently used keys
-- French accent support via macros/Unicode
+- Smart numword layer, combos, French accents
 - Multiple layers: Base, Symbols, Numbers, Navigation, Function
 
 * Configuration Philosophy
@@ -107,10 +38,5 @@ French-optimized layout based on [[https://bepo.fr][bépo]] with adaptations for
 - Optimized for programming and text editing
 - Wireless option (Corne) and wired option (Moonlander) for different use cases
 
-* Additional Resources
-
-- [[file:moonlander/README.org][Moonlander detailed documentation]]
-- [[file:eyelash_corne/README.org][Eyelash Corne detailed documentation]]
-- [[https://docs.qmk.fm/][QMK Firmware Documentation]]
-- [[https://zmk.dev/][ZMK Firmware Documentation]]
+See individual READMEs for detailed documentation.
 

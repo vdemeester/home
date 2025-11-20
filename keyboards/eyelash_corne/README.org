@@ -1,140 +1,51 @@
 #+title: Eyelash Corne ZMK Config
 
-* Overview
+Custom ZMK firmware for the Eyelash Corne keyboard (42-key split, nice!nano v2, wireless Bluetooth).
 
-This is a custom ZMK firmware configuration for the Eyelash Corne keyboard - a 42-key split ergonomic keyboard based on the Corne (crkbd) design.
+* Features
 
-** Hardware
+- Layouts: Bépo (primary), ErgoL, QWERTY
+- Home row mods, smart numword layer, combos, mod-morph
+- Mouse emulation, French/currency Unicode support
+- nice!view display (gem animation), RGB underglow (auto-off on idle)
+- Power: 12min sleep timeout, +8dBm BT transmission
 
-- *Keyboard*: Eyelash Corne (42-key split)
-- *MCU*: nice!nano v2 (nRF52840)
-- *Display*: nice!view with custom gem animation
-- *Underglow*: RGB underglow (WS2812 LED strip)
-- *Encoder*: Rotary encoder support (EC11)
-- *Features*: Wireless (Bluetooth), battery-powered, mouse emulation
-
-** Firmware Features
-
-- Multiple keyboard layouts: Bépo (primary), ErgoL, QWERTY
-- Home row mods with custom timing and behavior
-- Smart numword layer for efficient number entry
-- Comprehensive combos for frequently used keys
-- Mod-morph behaviors for context-sensitive keys
-- Mouse emulation support via pointing device
-- French and currency Unicode character support
-- Custom nice!view display with animation
-- RGB underglow with auto-off on idle
-- 12-minute sleep timeout for battery conservation
-- Bluetooth connectivity with increased transmission power
-
-* Building and Flashing
-
-** Build Firmware
-
-From the =keyboards/eyelash_corne= directory:
+* Build & Flash
 
 #+begin_src bash
-./go.sh build
+./go.sh build  # Build both sides (output: firmwares/)
+./go.sh flash  # Build and flash left/right (bootloader mode prompts)
 #+end_src
 
-This builds both left and right firmware files using Docker and outputs them to the =firmwares/= directory.
-
-** Flash Firmware
-
-To build and flash both sides:
-
-#+begin_src bash
-./go.sh flash
-#+end_src
-
-This will:
-1. Build the firmware
-2. Wait for you to connect the left side in bootloader mode
-3. Flash the left side
-4. Wait for you to connect the right side in bootloader mode
-5. Flash the right side
-
-The script supports both auto-mounted devices (=/run/media/$USER/NICENANO=) and manual mounting to =/mnt=.
+Supports auto-mount (=/run/media/$USER/NICENANO=) and manual mount (=/mnt=).
 
 * Keymap Visualization
 
-[[file:eyelash_corne.svg]]
+[[file:../eyelash_corne.svg]]
 
-* Keyboard Layouts
+* Layers
 
-** Bépo (Layer 0)
+| Layer | Name       | Description                                              |
+|-------+------------+----------------------------------------------------------|
+| L0    | Bépo       | Primary French layout, home row mods, Unicode accents    |
+| L1    | ErgoL      | Alternative French layout                                |
+| L2    | QWERTY     | Standard layout                                          |
+| L3    | Accents    | French vowels (´ ` ^ ¨), Æ Œ Ñ Ç                         |
+| L4    | Symbols    | Programming symbols, brackets, operators                 |
+| L5    | Numbers    | Calculator-style numpad                                  |
+| L6    | Navigation | Arrows, page nav, shortcuts                              |
+| L7    | Function   | F1-F12, media, system controls                           |
 
-Primary French-optimized layout based on [[https://bepo.fr][bépo]] with adaptations:
-- Works with US International keyboard layout on the host OS
-- Home row mods: A (GUI), U (Alt), I (Shift), E (Ctrl) on left; C (Hyper), T (Ctrl), S (Shift), R (Alt), N (GUI) on right
-- Smart numword layer activation
-- Unicode characters for French accents and currency symbols
-- Thumb keys: Delete (Accent layer), Space/Underscore (Numword), Backspace (Nav layer), Shift, Enter (Symbol layer), Alt
+*Home row mods (Bépo)*: Left: A(GUI) U(Alt) I(Shift) E(Ctrl) | Right: C(Hyper) T(Ctrl) S(Shift) R(Alt) N(GUI)
 
-** ErgoL (Layer 1)
+* Configuration
 
-Alternative French layout based on [[https://ergol.org][ErgoL]].
+- *Power*: 12min sleep timeout, RGB auto-off, soft off support
+- *Bluetooth*: +8dBm transmission, multiple devices
+- *Display*: nice!view gem animation (4.8s interval), shows layer/battery/BT
+- *Mouse*: Movement 1200, scroll 20, idle 125ms
 
-** QWERTY (Layer 2)
-
-Standard QWERTY layout for compatibility and shared use.
-
-** Accent Layer (Layer 3)
-
-Provides access to French accented characters:
-- Vowels with acute (´), grave (`), circumflex (^), and trema (¨) accents
-- Special characters: Æ, Œ, Ñ, Ç
-
-** Symbol Layer (Layer 4)
-
-Programming-focused symbols with home row mods:
-- Brackets, braces, parentheses
-- Math operators: *, /, =, +, -
-- Special characters: @, #, $, %, ^, &, |, ~
-
-** Number Layer (Layer 5)
-
-Smart numword layer for efficient number entry with calculator-style layout.
-
-** Navigation Layer (Layer 6)
-
-Arrow keys, page navigation, and common shortcuts.
-
-** Function Layer (Layer 7)
-
-Function keys (F1-F12), media controls, and system controls.
-
-* Configuration Details
-
-** Power Management
-
-- Sleep timeout: 12 minutes of inactivity
-- RGB underglow auto-off on idle
-- Soft off support for manual power down
-
-** Bluetooth
-
-- Increased transmission power (+8 dBm) for better range
-- Supports multiple paired devices
-
-** Display
-
-- Custom nice!view status screen
-- Gem animation (4.8-second interval)
-- Shows current layer, battery status, and Bluetooth connection
-
-** Mouse Emulation
-
-- Movement sensitivity: 1200
-- Scroll sensitivity: 20
-- Idle time: 125ms
-
-* Build Configuration
-
-The firmware is built using =build.yaml= which defines:
-- Left half with nice!view gem display
-- Right half with nice!view gem display
-- Settings reset configuration for troubleshooting
+Build config (=build.yaml=): Left/right halves with nice!view, settings reset
 
 * Inspirations and References
 
