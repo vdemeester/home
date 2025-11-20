@@ -119,6 +119,14 @@
     #   group = "users";
     #   mediaLocation = "/neo/pictures/photos";
     # };
+    jellyfin = {
+      enable = true;
+      user = "vincent";
+      group = "users";
+    };
+    jellyseer = {
+      enable = true;
+    };
     aria2 = {
       # FIXME: make sure aria2 runs as user vincent
       enable = true;
