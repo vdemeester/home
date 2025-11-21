@@ -656,10 +656,5 @@ parse_config:
       draw_separate: true
     combo_toggle_mouse:
       draw_separate: true
-    combo_minus:
-      align: "top"
-      offset: 1
-    combo_underscore:
-      align: "bottom"
-      offset: 2
+
 
