@@ -83,7 +83,7 @@ generate_moonlander() {
 	fi
 
 	# Parse QMK JSON and draw SVG
-	keymap parse -c 14 -q "$qmk_json" |
+	keymap -c "$config_yaml" parse -c 14 -q "$qmk_json" |
 		keymap -c "$config_yaml" draw - >"$output_svg"
 
 	log_success "Generated: $output_svg"
