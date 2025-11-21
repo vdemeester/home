@@ -133,8 +133,8 @@ rect.side {
 
 /* color accent for combo boxes */
 rect.combo, rect.combo-separate {
-    fill: #666;
-    stroke: #aaa;
+    fill: #4a5568;
+    stroke: #cbd5e0;
     stroke-width: 2;
 }
 
@@ -195,7 +195,8 @@ text.trans {
 
 /* styling for unused/empty keys (XXXXXXX, KC_NO) */
 /* Target keys that have neither text nor glyph (use) elements */
-g.key:not(:has(text)):not(:has(use)) rect.key {
+/* Exclude combo diagram keys */
+g[class*='layer-']:not([class*='combopos']) g.key:not(:has(text)):not(:has(use)) rect.key {
     fill: #0d1117;
     stroke: #30363d;
     stroke-dasharray: 2, 2;
@@ -354,6 +355,11 @@ path.combo {
     fill: none;
     stroke: white;
     stroke-width: 4px;
+}
+
+.layer-lock {
+    transform: scale(1.8);
+    transform-box: fill-box;
 }
 </style>
 <g transform="translate(30, 0)" class="layer-L0">
