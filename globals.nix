@@ -393,12 +393,12 @@ _: {
           sync = { };
           screenshots = { };
           wallpapers = { };
-          # photos = {
-          #   paused = true; # TODO: implement this, start as paused
-          # };
-          # music = {
-          #   paused = true; # TODO: implement this, start as paused
-          # };
+          photos = {
+            #   paused = true; # TODO: implement this, start as paused
+          };
+          music = {
+            #   paused = true; # TODO: implement this, start as paused
+          };
         };
       };
     };
