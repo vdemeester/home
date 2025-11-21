@@ -22,8 +22,6 @@ Custom QMK firmware for the ZSA Moonlander split keyboard (72 keys, STM32 MCU, R
 
 [[file:../moonlander.svg]]
 
-*Note*: The Moonlander configuration is an almost direct mapping of the [[file:../eyelash_corne/README.org][Eyelash Corne]] layout. The keymap visualization above does not include combo diagrams (QMK limitation), but the combos are identical. See the [[file:../eyelash_corne.svg][Eyelash Corne visualization]] for a complete view of combos.
-
 * Layers
 
 | Layer | Name       | Description                                                      |
