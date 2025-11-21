@@ -1,5 +1,6 @@
 .PHONY: help moonlander/build moonlander/flash moonlander/clean moonlander/update
-.PHONY: eyelash_corne/build eyelash_corne/flash corne/build corne/flash
+.PHONY: eyelash_corne/build eyelash_corne/flash
+.PHONY: draw moonlander/draw eyelash_corne/draw
 .PHONY: all clean
 
 # Default target
@@ -15,6 +16,11 @@ help:
 	@echo "Eyelash Corne (ZMK):"
 	@echo "  eyelash_corne/build  - Build Eyelash Corne firmware (aliases: corne/build)"
 	@echo "  eyelash_corne/flash  - Build and flash Eyelash Corne firmware (aliases: corne/flash)"
+	@echo ""
+	@echo "Keymap Drawing:"
+	@echo "  draw                 - Generate keymap SVGs for all keyboards"
+	@echo "  moonlander/draw      - Generate keymap SVG for Moonlander"
+	@echo "  eyelash_corne/draw   - Generate keymap SVG for Eyelash Corne"
 	@echo ""
 	@echo "Other:"
 	@echo "  all                  - Build all keyboards"
@@ -40,10 +46,15 @@ eyelash_corne/build:
 eyelash_corne/flash:
 	cd eyelash_corne && ./go.sh flash
 
-# Convenient aliases for eyelash_corne
-corne/build: eyelash_corne/build
+# Keymap drawing targets
+draw:
+	./generate-keymaps.sh all
 
-corne/flash: eyelash_corne/flash
+moonlander/draw:
+	./generate-keymaps.sh moonlander
+
+eyelash_corne/draw:
+	./generate-keymaps.sh eyelash_corne
 
 # Composite targets
 all: moonlander/build eyelash_corne/build

@@ -71,32 +71,36 @@ dots:
 	@$(MAKE) -C dots
 
 # Keyboards
-.PHONY: keyboards moonlander/build moonlander/flash moonlander/update moonlander/clean
-.PHONY: eyelash_corne/build eyelash_corne/flash corne/build corne/flash
+.PHONY: keyboards keyboards/moonlander/build keyboards/moonlander/flash keyboards/moonlander/update keyboards/moonlander/clean
+.PHONY: keyboards/eyelash_corne/build keyboards/eyelash_corne/flash
+.PHONY: keyboards/draw keyboards/moonlander/draw keyboards/eyelash_corne/draw
 
-moonlander/build:
+keyboards/moonlander/build:
 	@$(MAKE) -C keyboards moonlander/build
 
-moonlander/flash:
+keyboards/moonlander/flash:
 	@$(MAKE) -C keyboards moonlander/flash
 
-moonlander/update:
+keyboards/moonlander/update:
 	@$(MAKE) -C keyboards moonlander/update
 
-moonlander/clean:
+keyboards/moonlander/clean:
 	@$(MAKE) -C keyboards moonlander/clean
 
-eyelash_corne/build:
+keyboards/eyelash_corne/build:
 	@$(MAKE) -C keyboards eyelash_corne/build
 
-eyelash_corne/flash:
+keyboards/eyelash_corne/flash:
 	@$(MAKE) -C keyboards eyelash_corne/flash
 
-corne/build:
-	@$(MAKE) -C keyboards corne/build
+keyboards/draw:
+	@$(MAKE) -C keyboards draw
 
-corne/flash:
-	@$(MAKE) -C keyboards corne/flash
+keyboards/moonlander/draw:
+	@$(MAKE) -C keyboards moonlander/draw
+
+keyboards/eyelash_corne/draw:
+	@$(MAKE) -C keyboards eyelash_corne/draw
 
 keyboards:
 	@$(MAKE) -C keyboards help

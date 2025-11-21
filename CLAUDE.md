@@ -162,10 +162,15 @@ go test ./...
 
 ```bash
 # Build Moonlander QMK firmware in folder keyboards/moonlander of the git repository
-./go.sh build
+make keyboards/moonlander/build
 
 # Build eyelash_corne ZMK firmware in folder keyboards/eyelash_corne of the git repository
-./go.sh build
+make keyboards/eyelash_corne/build
+
+# Generate keymap SVGs for visualization
+make keyboards/draw                # Generate SVGs for all keyboards
+make keyboards/moonlander/draw     # Generate SVG for Moonlander only
+make keyboards/eyelash_corne/draw  # Generate SVG for Eyelash Corne only
 ```
 
 ## Special Notes

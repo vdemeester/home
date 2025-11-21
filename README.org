@@ -164,14 +164,15 @@ The repository includes several useful make targets for common operations:
 - =make pre-commit= - Run pre-commit checks
 
 *** Keyboards
-- =make moonlander/build= - Build Moonlander QMK firmware
-- =make moonlander/flash= - Build and flash Moonlander firmware
-- =make moonlander/update= - Update QMK submodules
-- =make moonlander/clean= - Clean Moonlander build artifacts
-- =make eyelash_corne/build= - Build Eyelash Corne ZMK firmware
-- =make eyelash_corne/flash= - Build and flash Eyelash Corne firmware
-- =make corne/build= - Alias for eyelash_corne/build
-- =make corne/flash= - Alias for eyelash_corne/flash
+- =make keyboards/moonlander/build= - Build Moonlander QMK firmware
+- =make keyboards/moonlander/flash= - Build and flash Moonlander firmware
+- =make keyboards/moonlander/update= - Update QMK submodules
+- =make keyboards/moonlander/clean= - Clean Moonlander build artifacts
+- =make keyboards/eyelash_corne/build= - Build Eyelash Corne ZMK firmware
+- =make keyboards/eyelash_corne/flash= - Build and flash Eyelash Corne firmware
+- =make keyboards/draw= - Generate keymap SVGs for all keyboards
+- =make keyboards/moonlander/draw= - Generate keymap SVG for Moonlander
+- =make keyboards/eyelash_corne/draw= - Generate keymap SVG for Eyelash Corne
 
 See [[file:keyboards/README.org][keyboards/README.org]] for detailed keyboard documentation.
 

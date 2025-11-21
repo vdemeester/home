@@ -12,13 +12,26 @@ Custom firmware configurations for split ergonomic keyboards with Bépo, ErgoL, 
 * Quick Start
 
 #+begin_src bash
-# Build and flash
-make moonlander/build    # or moonlander/flash
-make eyelash_corne/build # or eyelash_corne/flash (alias: corne/build)
+# Moonlander (QMK)
+make moonlander/build    # Build firmware
+make moonlander/flash    # Build and flash firmware
+make moonlander/update   # Update QMK submodules
+make moonlander/clean    # Clean build artifacts
+
+# Eyelash Corne (ZMK)
+make eyelash_corne/build # Build firmware
+make eyelash_corne/flash # Build and flash firmware
+make corne/build         # Alias for eyelash_corne/build
+make corne/flash         # Alias for eyelash_corne/flash
+
+# Keymap Drawing
+make draw                # Generate keymap SVGs for all keyboards
+make draw/moonlander     # Generate keymap SVG for Moonlander
+make draw/eyelash_corne  # Generate keymap SVG for Eyelash Corne
 
 # Other targets
 make all                 # Build all keyboards
-make clean               # Clean build artifacts
+make clean               # Clean all build artifacts
 make help                # Show all targets
 #+end_src
 
