@@ -117,6 +117,15 @@ draw_config:
         fill: #7b7e81;
     }
 
+    /* styling for unused/empty keys (XXXXXXX, KC_NO) */
+    /* Target keys that have neither text nor glyph (use) elements */
+    g.key:not(:has(text)):not(:has(use)) rect.key {
+        fill: #0d1117;
+        stroke: #30363d;
+        stroke-dasharray: 2, 2;
+        opacity: 0.5;
+    }
+
     /* styling for combo dendrons */
     path.combo {
         stroke-width: 1;
