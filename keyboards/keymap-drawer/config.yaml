@@ -57,8 +57,8 @@ draw_config:
 
     /* color accent for combo boxes */
     rect.combo, rect.combo-separate {
-        fill: #666;
-        stroke: #aaa;
+        fill: #4a5568;
+        stroke: #cbd5e0;
         stroke-width: 2;
     }
 
@@ -119,7 +119,8 @@ draw_config:
 
     /* styling for unused/empty keys (XXXXXXX, KC_NO) */
     /* Target keys that have neither text nor glyph (use) elements */
-    g.key:not(:has(text)):not(:has(use)) rect.key {
+    /* Exclude combo diagram keys */
+    g[class*='layer-']:not([class*='combopos']) g.key:not(:has(text)):not(:has(use)) rect.key {
         fill: #0d1117;
         stroke: #30363d;
         stroke-dasharray: 2, 2;
@@ -279,6 +280,11 @@ draw_config:
         stroke: white;
         stroke-width: 4px;
     }
+
+    .layer-lock {
+        transform: scale(1.8);
+        transform-box: fill-box;
+    }
   svg_extra_style: ''
   shrink_wide_legends: 6
   glyph_tap_size: 14
@@ -386,6 +392,11 @@ draw_config:
       <svg xmlns="http://www.w3.org/2000/svg" width="26" height="24" viewBox="0 0 24 26" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon icon-tabler icon-tabler-player-play">
           <path fill="#fff" stroke="none" d="M11.02 4v16a1 1 0 0 0 1.52.85l13-8a1 1 0 0 0 0-1.7l-13-8a1 1 0 0 0-1.52.85Z" style="fill:#fff;fill-opacity:1"/>
           <path fill="#fff" stroke="none" d="M1.6 3h2.72c.82 0 1.48.65 1.48 1.45V19.5c0 .8-.66 1.44-1.48 1.44h-2.7c-.82 0-1.48-.65-1.48-1.44V4.45C.14 3.65.8 3 1.61 3Z" style="fill:#fff;fill-opacity:1;stroke:none;stroke-width:0;stroke-dasharray:none"/>
+      </svg>
+    layer-lock: |
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="#fff"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="#fff" fill="none"/>
       </svg>
   glyph_urls:
     tabler: https://unpkg.com/@tabler/icons/icons/outline/{}.svg
@@ -552,6 +563,8 @@ parse_config:
     "&AIGU SPACE": "'"
     "&kp AE": "Æ"
     "&kp OE": "Œ"
+    "&key_repeat": "REPEAT"
+    "&alt_repeat": "ALT_REP"
   sticky_label: sticky
   toggle_label: toggle
   trans_legend:
@@ -652,6 +665,7 @@ parse_config:
     BT_CLR: '$$bt-clear$$'
     BT_NXT: '$$bt-next$$'
     BT_PRV: '$$bt-prev$$'
+    '&key_repeat': 'REPEAT'
     # QMK/Moonlander specific keycodes
     FR_DQUO: '"'
     FR_QUOT: "'"

@@ -19,6 +19,7 @@
 #include "hold-tap.dtsi"
 #include "mod-morph.dtsi"
 #include "mouse.dtsi"
+#include "alt-repeat.dtsi"
 
 #define ZMK_MOUSE_DEFAULT_MOVE_VAL 1200  // 600
 #define ZMK_MOUSE_DEFAULT_SCRL_VAL 20    // 10
@@ -36,9 +37,9 @@ ZMK_LAYER(Bepo,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
      &kp TAB     &b_pipe     &kp EACUT   &p_amp      &kp O        &AGRA E                 &kp UP                &car_excl   &kp V         &kp D         &kp L        &kp J        &kp Z
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &smart_num NUM NUM   &hml GL A   &hml AL U   &hml SL I   &cl_e_euro   &hyp_com_smc  &kp LEFT  &kp RET  &kp RIGHT    &hmr HL C   &hmr CR T     &hmr SR S     &hmr AR R    &hmr GL N    &kp M
+     &smart_num NUM NUM   &hml GL A   &hml AL U   &hml SL I   &cl_e_euro   &hyp_com_smc  &kp LEFT  &alt_repeat  &kp RIGHT    &hmr HL C   &hmr CR T     &hmr SR S     &hmr AR R    &hmr GL N    &kp M
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE   &AGRA A     &kp Y       &kp X       &dot_col     &kp K        &kp C_MUTE &kp DOWN              &sqt_qma    &kp Q         &kp G         &kp H        &kp F        &kp W
+     &kp GRAVE   &AGRA A     &kp Y       &kp X       &dot_col     &kp K        &key_repeat &kp DOWN          &sqt_qma    &kp Q         &kp G         &kp H        &kp F        &kp W
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
                                         &lt ACC DEL  &num_spc_und &lt NAV BSPC                                   &kp SL      &lt SYM RET   &kp AR
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
@@ -51,9 +52,9 @@ ZMK_LAYER(ErgoL,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
      &kp TAB     &kp Q       &kp C       &kp O       &kp P        &kp  W                  &kp UP                &kp J       &kp M         &kp D         &kp EXCL     &kp Y        &kp LBKT
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp EQUAL   &hml GL A   &hml AL S   &hml SL E   &hml CL N    &kp F         &kp LEFT  &kp RET  &kp RIGHT    &kp L       &hmr CR R     &hmr SR T     &hmr AR I    &hmr GL U    &kp SQT
+     &kp EQUAL   &hml GL A   &hml AL S   &hml SL E   &hml CL N    &kp F         &kp LEFT  &alt_repeat  &kp RIGHT    &kp L       &hmr CR R     &hmr SR T     &hmr AR I    &hmr GL U    &kp SQT
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE   &kp Z       &kp X       &min_qma    &kp V        &kp B        &kp C_MUTE &kp DOWN              &dot_col    &kp H         &kp G         &com_smc     &kp K        &kp RBKT
+     &kp GRAVE   &kp Z       &kp X       &min_qma    &kp V        &kp B        &key_repeat &kp DOWN          &dot_col    &kp H         &kp G         &com_smc     &kp K        &kp RBKT
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
                                          ___         ___          ___                                           ___         ___           ___
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
@@ -65,9 +66,9 @@ ZMK_LAYER(Qwerty,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
      &kp TAB     &kp Q       &kp W       &kp E       &kp R        &kp T                   &kp UP                &kp Y       &kp U         &kp I         &kp O        &kp P        &kp LBKT
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp EQUAL   &hml GL A   &hml AL S   &hml SL D   &hml CL F    &kp G         &kp LEFT  &kp RET  &kp RIGHT    &kp H       &hmr CR J     &hmr SR K     &hmr AR L   &hmr GL SEMI  &kp SQT
+     &kp EQUAL   &hml GL A   &hml AL S   &hml SL D   &hml CL F    &kp G         &kp LEFT  &alt_repeat  &kp RIGHT    &kp H       &hmr CR J     &hmr SR K     &hmr AR L   &hmr GL SEMI  &kp SQT
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE   &kp Z       &kp X       &kp C       &kp V        &kp B        &kp C_MUTE &kp DOWN              &kp N       &kp M         &kp COMMA     &kp DOT      &kp FSLH     &kp RBKT
+     &kp GRAVE   &kp Z       &kp X       &kp C       &kp V        &kp B        &key_repeat &kp DOWN          &kp N       &kp M         &kp COMMA     &kp DOT      &kp FSLH     &kp RBKT
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
                                          ___         ___          ___                                           ___         ___           ___
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
