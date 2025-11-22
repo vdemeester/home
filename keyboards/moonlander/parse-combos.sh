@@ -1,5 +1,27 @@
 #!/usr/bin/env bash
 # Parse combo definitions from keymap.c and generate YAML format for keymap-drawer
+#
+# This script maps QMK keycodes to their visual positions in the keymap-drawer output.
+# The positions are derived from the QWERTY layer layout in keymap.c.
+#
+# HOW POSITIONS WERE DETERMINED:
+# 1. Convert QMK keymap to JSON (from QMK firmware directory):
+#    $ qmk c2json --no-cpp -kb zsa/moonlander -km vincent > moonlander.json
+#
+# 2. Parse JSON to YAML with keymap-drawer (14 columns for Moonlander):
+#    $ keymap parse -c 14 -q moonlander.json > moonlander.yaml
+#
+# 3. The resulting YAML contains the layout array where each key has a sequential
+#    index (0-71 in row-major order). Match keycodes to their positions by looking
+#    at the QWERTY layer (L2) array in the JSON output.
+#
+# 4. For combo definitions in keymap.c, the key positions in combo arrays correspond
+#    to these visual indices. Example from keymap.c:
+#      const uint16_t qwer_combo[] = {KC_Q, KC_W, COMBO_END};
+#    Maps to positions [15, 16] where KC_Q=position 15, KC_W=position 16
+#
+# NOTE: Home row mod keys (HM_*) need special mapping since they differ between
+# layers (e.g., HM_GUI_A on QWERTY vs Bépo), but physical position stays the same.
 
 set -euo pipefail
 
