@@ -87,15 +87,45 @@ generate_moonlander() {
 	log_info "Parsing keymap to YAML..."
 	keymap -c "$config_yaml" parse -c 14 -q "$qmk_json" >"$keymap_yaml"
 
-	# Add combo definitions from keymap.c
-	log_info "Parsing combos from keymap.c..."
-	local parse_combos_script="$SCRIPT_DIR/moonlander/parse-combos.sh"
-	if [[ -x "$parse_combos_script" ]]; then
-		"$parse_combos_script" "$SCRIPT_DIR/moonlander/config/keymap.c" >>"$keymap_yaml"
-	else
-		log_warn "Combo parser not found or not executable: $parse_combos_script"
-		log_warn "Skipping combo generation"
-	fi
+	# Add manual combo definitions to the YAML
+	log_info "Adding manual combo definitions..."
+	cat >>"$keymap_yaml" <<'EOF'
+combos:
+  # Layer switching combos (L0=Bépo, L1=ErgoL, L2=QWERTY)
+  - { p: [67, 70], k: "→ Bépo", l: [L1, L2], draw_separate: true }
+  - { p: [66, 71], k: "→ ErgoL", l: [L0, L2], draw_separate: true }
+  - { p: [58, 61], k: "→ QWERTY", l: [L0, L1], draw_separate: true }
+  - { p: [17, 18], k: "⇄ Mouse", draw_separate: true }
+
+  # Escape combos (layer-specific)
+  - { p: [39, 40], k: ESC, l: [L0] }
+  - { p: [39, 40], k: ESC, l: [L2] }
+
+  # Special character combos (available on all layers)
+  - { p: [15, 16], k: "|" }
+  - { p: [16, 17], k: "@" }
+  - { p: [17, 18], k: "#" }
+  - { p: [18, 19], k: "&" }
+  - { p: [18, 32], k: "$" }
+  - { p: [17, 31], k: "/" }
+  - { p: [31, 45], k: "\\" }
+  - { p: [16, 30], k: "-" }
+  - { p: [32, 46], k: "_" }
+  - { p: [30, 44], k: "=" }
+
+  # Bracket combos (available on all layers)
+  - { p: [23, 38], k: "(" }
+  - { p: [38, 50], k: ")" }
+  - { p: [22, 37], k: "{" }
+  - { p: [37, 49], k: "}" }
+  - { p: [24, 39], k: "[" }
+  - { p: [39, 51], k: "]" }
+  - { p: [23, 24], k: "<" }
+  - { p: [24, 25], k: ">" }
+
+  # Leader key combo (available on all layers)
+  - { p: [31, 32], k: LEADER }
+EOF
 
 	# Draw SVG from YAML with combos
 	log_info "Drawing SVG with combos..."
