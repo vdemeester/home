@@ -49,6 +49,29 @@ Rename albums in Lidarr with interactive confirmation.
 - Interactive confirmation before applying changes
 - Dry-run and auto-confirm (--yolo/--no-confirm) modes
 
+*** lidarr-retag-albums.py
+
+Retag albums in Lidarr with interactive confirmation.
+
+*Usage:*
+#+begin_src shell
+# Dry run to preview retags
+./lidarr-retag-albums.py http://localhost:8686 API_KEY --dry-run
+
+# Interactive mode (asks y/n for each artist)
+./lidarr-retag-albums.py http://localhost:8686 API_KEY
+
+# Auto-confirm all retags (--yolo or --no-confirm)
+./lidarr-retag-albums.py http://localhost:8686 API_KEY --yolo
+#+end_src
+
+*Features:*
+- Checks all artists for albums with files needing retag
+- Shows preview of up to 5 file retags per artist with tag changes
+- Displays old → new values for each modified tag
+- Interactive confirmation before applying changes
+- Dry-run and auto-confirm (--yolo/--no-confirm) modes
+
 *** sonarr-rename-series.py
 
 Rename TV series episodes in Sonarr with interactive confirmation.
