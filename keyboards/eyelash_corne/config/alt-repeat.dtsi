@@ -1,65 +1,15 @@
-/*
- * Alternate Repeat - Similar to QMK's QK_AREP
- *
- * This implementation provides alternate repeat functionality inspired by QMK.
- * It includes default alternate key pairs for navigation, brackets, media keys,
- * and common programming shortcuts.
- *
- * Default Alternate Pairs (from QMK):
- * Navigation:
- * - Left ↔ Right Arrow
- * - Up ↔ Down Arrow
- * - Home ↔ End
- * - Page Up ↔ Page Down
- *
- * Brackets:
- * - [ ↔ ]
- * - { ↔ }
- * - ( ↔ )
- * - < ↔ >
- *
- * Misc:
- * - Backspace ↔ Delete
- * - , ↔ .
- * - ; ↔ :
- * - / ↔ \
- *
- * Media:
- * - Volume Up ↔ Volume Down
- * - Brightness Up ↔ Brightness Down
- * - Next Track ↔ Previous Track
- *
- * Programming:
- * - Forward ↔ Backward
- * - Next ↔ Previous
- *
- * Note: Due to ZMK's devicetree-based architecture, this implementation uses
- * a combination of behaviors and macros. For full context-aware alternates
- * like QMK's get_alt_repeat_key_keycode_user(), custom C code would be needed.
- */
-
 / {
     behaviors {
-        /*
-         * Main alternate repeat behavior
-         * This is a basic implementation that handles common punctuation pairs.
-         * For directional keys and more complex alternates, use dedicated macros.
-         */
         alt_repeat: alt_repeat {
             compatible = "zmk,behavior-mod-morph";
             label = "ALT_REPEAT";
             #binding-cells = <0>;
-            bindings = <&kp DOT>, <&kp COMMA>;  // Default: . ↔ ,
+            bindings = <&kp DOT>, <&kp COMMA>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
     };
 
     macros {
-        /*
-         * Navigation Alternates
-         */
-
-        // Left ↔ Right Arrow
         alt_left: alt_left {
             compatible = "zmk,behavior-macro";
             label = "ALT_LEFT";
@@ -78,7 +28,6 @@
             bindings = <&kp LEFT>;
         };
 
-        // Up ↔ Down Arrow
         alt_up: alt_up {
             compatible = "zmk,behavior-macro";
             label = "ALT_UP";
@@ -97,7 +46,6 @@
             bindings = <&kp UP>;
         };
 
-        // Home ↔ End
         alt_home: alt_home {
             compatible = "zmk,behavior-macro";
             label = "ALT_HOME";
@@ -116,7 +64,6 @@
             bindings = <&kp HOME>;
         };
 
-        // Page Up ↔ Page Down
         alt_pgup: alt_pgup {
             compatible = "zmk,behavior-macro";
             label = "ALT_PGUP";
@@ -135,11 +82,6 @@
             bindings = <&kp PG_UP>;
         };
 
-        /*
-         * Bracket Alternates
-         */
-
-        // [ ↔ ]
         alt_lbkt: alt_lbkt {
             compatible = "zmk,behavior-macro";
             label = "ALT_LBKT";
@@ -158,7 +100,6 @@
             bindings = <&kp LBKT>;
         };
 
-        // { ↔ }
         alt_lbrc: alt_lbrc {
             compatible = "zmk,behavior-macro";
             label = "ALT_LBRC";
@@ -177,7 +118,6 @@
             bindings = <&kp LBRC>;
         };
 
-        // ( ↔ )
         alt_lpar: alt_lpar {
             compatible = "zmk,behavior-macro";
             label = "ALT_LPAR";
@@ -196,7 +136,6 @@
             bindings = <&kp LPAR>;
         };
 
-        // < ↔ >
         alt_lt: alt_lt {
             compatible = "zmk,behavior-macro";
             label = "ALT_LT";
@@ -215,11 +154,6 @@
             bindings = <&kp LT>;
         };
 
-        /*
-         * Misc Alternates
-         */
-
-        // Backspace ↔ Delete
         alt_bspc: alt_bspc {
             compatible = "zmk,behavior-macro";
             label = "ALT_BSPC";
@@ -238,7 +172,6 @@
             bindings = <&kp BSPC>;
         };
 
-        // , ↔ .
         alt_comma: alt_comma {
             compatible = "zmk,behavior-macro";
             label = "ALT_COMMA";
@@ -257,7 +190,6 @@
             bindings = <&kp COMMA>;
         };
 
-        // ; ↔ :
         alt_semi: alt_semi {
             compatible = "zmk,behavior-macro";
             label = "ALT_SEMI";
@@ -276,7 +208,6 @@
             bindings = <&kp SEMI>;
         };
 
-        // / ↔ \
         alt_fslh: alt_fslh {
             compatible = "zmk,behavior-macro";
             label = "ALT_FSLH";
@@ -295,7 +226,6 @@
             bindings = <&kp FSLH>;
         };
 
-        // " ↔ '
         alt_dqt: alt_dqt {
             compatible = "zmk,behavior-macro";
             label = "ALT_DQT";
@@ -314,11 +244,6 @@
             bindings = <&kp DQT>;
         };
 
-        /*
-         * Media Key Alternates
-         */
-
-        // Volume Up ↔ Volume Down
         alt_volu: alt_volu {
             compatible = "zmk,behavior-macro";
             label = "ALT_VOLU";
@@ -337,7 +262,6 @@
             bindings = <&kp C_VOL_UP>;
         };
 
-        // Brightness Up ↔ Brightness Down
         alt_briu: alt_briu {
             compatible = "zmk,behavior-macro";
             label = "ALT_BRIU";
@@ -356,7 +280,6 @@
             bindings = <&kp C_BRI_UP>;
         };
 
-        // Next Track ↔ Previous Track
         alt_next: alt_next {
             compatible = "zmk,behavior-macro";
             label = "ALT_NEXT";
@@ -375,13 +298,6 @@
             bindings = <&kp C_NEXT>;
         };
 
-        /*
-         * Programming Shortcuts
-         * Note: In QMK these work with modifiers (e.g., Ctrl+F ↔ Ctrl+B)
-         * In ZMK, you would bind these with modifiers in your keymap
-         */
-
-        // Forward ↔ Backward (F ↔ B)
         alt_f: alt_f {
             compatible = "zmk,behavior-macro";
             label = "ALT_F";
@@ -400,7 +316,6 @@
             bindings = <&kp F>;
         };
 
-        // Down ↔ Up (D ↔ U)
         alt_d: alt_d {
             compatible = "zmk,behavior-macro";
             label = "ALT_D";
@@ -419,7 +334,6 @@
             bindings = <&kp D>;
         };
 
-        // Next ↔ Previous (N ↔ P)
         alt_n: alt_n {
             compatible = "zmk,behavior-macro";
             label = "ALT_N";
@@ -438,7 +352,6 @@
             bindings = <&kp N>;
         };
 
-        // Home ↔ End (A ↔ E)
         alt_a: alt_a {
             compatible = "zmk,behavior-macro";
             label = "ALT_A";
@@ -457,7 +370,6 @@
             bindings = <&kp A>;
         };
 
-        // Vim jump list: Older ↔ Newer (O ↔ I)
         alt_o: alt_o {
             compatible = "zmk,behavior-macro";
             label = "ALT_O";
@@ -476,7 +388,6 @@
             bindings = <&kp O>;
         };
 
-        // Vim: Down ↔ Up (J ↔ K)
         alt_j: alt_j {
             compatible = "zmk,behavior-macro";
             label = "ALT_J";
@@ -495,7 +406,6 @@
             bindings = <&kp J>;
         };
 
-        // Vim: Left ↔ Right (H ↔ L)
         alt_h: alt_h {
             compatible = "zmk,behavior-macro";
             label = "ALT_H";
@@ -514,7 +424,6 @@
             bindings = <&kp H>;
         };
 
-        // Vim: Forward ↔ Backward by word (W ↔ B)
         alt_w: alt_w {
             compatible = "zmk,behavior-macro";
             label = "ALT_W";
@@ -523,8 +432,5 @@
             tap-ms = <0>;
             bindings = <&kp B>;
         };
-
-        // Note: alt_b is already defined above for F ↔ B pair
-        // For W ↔ B, you can use alt_w for W→B and alt_b for B→W
     };
 };
