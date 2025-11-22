@@ -1,0 +1,108 @@
+#+TITLE: Tools
+#+AUTHOR: Vincent Demeester
+#+DATE: 2025-11-22
+
+Collection of custom tools and utilities for system management and automation.
+
+* Python Scripts
+
+** Media Management (*arr Stack)
+
+*** lidarr-update-paths.py
+
+Update artist paths in Lidarr to use a 'library' subdirectory.
+
+*Usage:*
+#+begin_src shell
+# Dry run to preview changes
+./lidarr-update-paths.py http://localhost:8686 API_KEY /data/music --dry-run
+
+# Apply changes
+./lidarr-update-paths.py http://localhost:8686 API_KEY /data/music
+#+end_src
+
+*Features:*
+- Migrates artists from =/music/<artist>= to =/music/library/<artist>=
+- Dry-run mode for safe preview
+- Categorizes artists by current location
+- Bulk path updates via Lidarr API
+
+*** sonarr-rename-series.py
+
+Rename TV series episodes in Sonarr with interactive confirmation.
+
+*Usage:*
+#+begin_src shell
+# Dry run to preview renames
+./sonarr-rename-series.py http://localhost:8989 API_KEY --dry-run
+
+# Interactive mode (asks y/n for each series)
+./sonarr-rename-series.py http://localhost:8989 API_KEY
+
+# Auto-confirm all renames
+./sonarr-rename-series.py http://localhost:8989 API_KEY --no-confirm
+#+end_src
+
+*Features:*
+- Checks all series for episodes needing rename
+- Shows preview of up to 10 episode renames per series
+- Interactive confirmation before applying changes
+- Dry-run and no-confirm modes
+
+*** radarr-rename-movies.py
+
+Rename movies in Radarr with interactive confirmation.
+
+*Usage:*
+#+begin_src shell
+# Dry run to preview renames
+./radarr-rename-movies.py http://localhost:7878 API_KEY --dry-run
+
+# Interactive mode (asks y/n for each movie)
+./radarr-rename-movies.py http://localhost:7878 API_KEY
+
+# Auto-confirm all renames
+./radarr-rename-movies.py http://localhost:7878 API_KEY --no-confirm
+#+end_src
+
+*Features:*
+- Checks all movies for files needing rename
+- Shows preview of all file renames per movie
+- Interactive confirmation before applying changes
+- Dry-run and no-confirm modes
+
+* Directories
+
+** battery-monitor/
+
+Battery monitoring daemon and notification system.
+
+Go-based tool that monitors laptop battery levels and sends notifications
+when battery is low or charging state changes.
+
+*Building:*
+#+begin_src shell
+cd battery-monitor
+go build
+#+end_src
+
+** emacs/
+
+Emacs configuration and custom packages.
+
+Personal Emacs setup including:
+- Custom themes
+- Package configurations
+- Org-mode settings
+- Development environment customizations
+
+* Notes
+
+All Python scripts use the =uv= tool with inline script metadata (PEP 723).
+They require only the =requests= library and will automatically manage
+dependencies when run with =uv=.
+
+All scripts are executable and include built-in help:
+#+begin_src shell
+./script-name.py --help
+#+end_src
