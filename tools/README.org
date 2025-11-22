@@ -27,6 +27,28 @@ Update artist paths in Lidarr to use a 'library' subdirectory.
 - Categorizes artists by current location
 - Bulk path updates via Lidarr API
 
+*** lidarr-rename-albums.py
+
+Rename albums in Lidarr with interactive confirmation.
+
+*Usage:*
+#+begin_src shell
+# Dry run to preview renames
+./lidarr-rename-albums.py http://localhost:8686 API_KEY --dry-run
+
+# Interactive mode (asks y/n for each artist)
+./lidarr-rename-albums.py http://localhost:8686 API_KEY
+
+# Auto-confirm all renames (--yolo or --no-confirm)
+./lidarr-rename-albums.py http://localhost:8686 API_KEY --yolo
+#+end_src
+
+*Features:*
+- Checks all artists for albums with files needing rename
+- Shows preview of up to 10 file renames per artist
+- Interactive confirmation before applying changes
+- Dry-run and auto-confirm (--yolo/--no-confirm) modes
+
 *** sonarr-rename-series.py
 
 Rename TV series episodes in Sonarr with interactive confirmation.
@@ -39,15 +61,15 @@ Rename TV series episodes in Sonarr with interactive confirmation.
 # Interactive mode (asks y/n for each series)
 ./sonarr-rename-series.py http://localhost:8989 API_KEY
 
-# Auto-confirm all renames
-./sonarr-rename-series.py http://localhost:8989 API_KEY --no-confirm
+# Auto-confirm all renames (--yolo or --no-confirm)
+./sonarr-rename-series.py http://localhost:8989 API_KEY --yolo
 #+end_src
 
 *Features:*
 - Checks all series for episodes needing rename
 - Shows preview of up to 10 episode renames per series
 - Interactive confirmation before applying changes
-- Dry-run and no-confirm modes
+- Dry-run and auto-confirm (--yolo/--no-confirm) modes
 
 *** radarr-rename-movies.py
 
@@ -61,15 +83,15 @@ Rename movies in Radarr with interactive confirmation.
 # Interactive mode (asks y/n for each movie)
 ./radarr-rename-movies.py http://localhost:7878 API_KEY
 
-# Auto-confirm all renames
-./radarr-rename-movies.py http://localhost:7878 API_KEY --no-confirm
+# Auto-confirm all renames (--yolo or --no-confirm)
+./radarr-rename-movies.py http://localhost:7878 API_KEY --yolo
 #+end_src
 
 *Features:*
 - Checks all movies for files needing rename
 - Shows preview of all file renames per movie
 - Interactive confirmation before applying changes
-- Dry-run and no-confirm modes
+- Dry-run and auto-confirm (--yolo/--no-confirm) modes
 
 * Directories
 

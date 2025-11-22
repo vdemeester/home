@@ -108,7 +108,9 @@ def main():
     )
     parser.add_argument(
         "--no-confirm",
+        "--yolo",
         action="store_true",
+        dest="no_confirm",
         help="Skip interactive confirmation (use with caution)",
     )
 

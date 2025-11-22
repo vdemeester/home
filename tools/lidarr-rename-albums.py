@@ -5,19 +5,19 @@
 # ]
 # ///
 """
-Rename series episodes in Sonarr with interactive confirmation.
+Rename albums in Lidarr with interactive confirmation.
 
 This script:
-1. Fetches all series from Sonarr API
-2. Checks which series have episodes that need renaming
-3. Previews the rename changes for each series
+1. Fetches all artists from Lidarr API
+2. Checks which artists have albums with files that need renaming
+3. Previews the rename changes for each album
 4. Asks for confirmation before applying renames
 
 Usage:
-    ./sonarr-rename-series.py <sonarr_url> <api_key>
+    ./lidarr-rename-albums.py <lidarr_url> <api_key>
 
 Example:
-    ./sonarr-rename-series.py http://localhost:8989 your-api-key
+    ./lidarr-rename-albums.py http://localhost:8686 your-api-key
 """
 
 import argparse
@@ -27,9 +27,9 @@ from typing import Any, Dict, List
 import requests
 
 
-def get_all_series(base_url: str, api_key: str) -> List[Dict[str, Any]]:
-    """Fetch all series from Sonarr API."""
-    url = f"{base_url}/api/v3/series"
+def get_all_artists(base_url: str, api_key: str) -> List[Dict[str, Any]]:
+    """Fetch all artists from Lidarr API."""
+    url = f"{base_url}/api/v1/artist"
     headers = {"X-Api-Key": api_key}
 
     try:
@@ -37,17 +37,17 @@ def get_all_series(base_url: str, api_key: str) -> List[Dict[str, Any]]:
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching series: {e}", file=sys.stderr)
+        print(f"Error fetching artists: {e}", file=sys.stderr)
         sys.exit(1)
 
 
-def get_rename_preview(
-    base_url: str, api_key: str, series_id: int
+def get_artist_albums(
+    base_url: str, api_key: str, artist_id: int
 ) -> List[Dict[str, Any]]:
-    """Get preview of files that will be renamed for a series."""
-    url = f"{base_url}/api/v3/rename"
+    """Fetch all albums for a specific artist."""
+    url = f"{base_url}/api/v1/album"
     headers = {"X-Api-Key": api_key}
-    params = {"seriesId": series_id}
+    params = {"artistId": artist_id}
 
     try:
         response = requests.get(url, headers=headers, params=params)
@@ -55,19 +55,39 @@ def get_rename_preview(
         return response.json()
     except requests.exceptions.RequestException as e:
         print(
-            f"Error fetching rename preview for series {series_id}: {e}",
+            f"Error fetching albums for artist {artist_id}: {e}",
+            file=sys.stderr,
+        )
+        return []
+
+
+def get_rename_preview(
+    base_url: str, api_key: str, artist_id: int
+) -> List[Dict[str, Any]]:
+    """Get preview of files that will be renamed for an artist."""
+    url = f"{base_url}/api/v1/rename"
+    headers = {"X-Api-Key": api_key}
+    params = {"artistId": artist_id}
+
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(
+            f"Error fetching rename preview for artist {artist_id}: {e}",
             file=sys.stderr,
         )
         return []
 
 
 def execute_rename(
-    base_url: str, api_key: str, series_id: int
+    base_url: str, api_key: str, artist_id: int
 ) -> Dict[str, Any]:
-    """Execute rename operation for a series."""
-    url = f"{base_url}/api/v3/command"
+    """Execute rename operation for an artist."""
+    url = f"{base_url}/api/v1/command"
     headers = {"X-Api-Key": api_key, "Content-Type": "application/json"}
-    payload = {"name": "RenameFiles", "seriesId": series_id}
+    payload = {"name": "RenameFiles", "artistId": artist_id}
 
     try:
         response = requests.post(url, headers=headers, json=payload)
@@ -75,7 +95,7 @@ def execute_rename(
         return response.json()
     except requests.exceptions.RequestException as e:
         print(
-            f"Error executing rename for series {series_id}: {e}",
+            f"Error executing rename for artist {artist_id}: {e}",
             file=sys.stderr,
         )
         return {}
@@ -95,12 +115,12 @@ def ask_confirmation(prompt: str) -> bool:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Rename Sonarr series episodes with confirmation"
+        description="Rename Lidarr albums with confirmation"
     )
     parser.add_argument(
-        "sonarr_url", help="Sonarr base URL (e.g., http://localhost:8989)"
+        "lidarr_url", help="Lidarr base URL (e.g., http://localhost:8686)"
     )
-    parser.add_argument("api_key", help="Sonarr API key")
+    parser.add_argument("api_key", help="Lidarr API key")
     parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -117,54 +137,58 @@ def main():
     args = parser.parse_args()
 
     # Normalize URLs
-    base_url = args.sonarr_url.rstrip("/")
+    base_url = args.lidarr_url.rstrip("/")
 
-    print(f"Fetching series from {base_url}...")
-    all_series = get_all_series(base_url, args.api_key)
-    print(f"Found {len(all_series)} series\n")
+    print(f"Fetching artists from {base_url}...")
+    all_artists = get_all_artists(base_url, args.api_key)
+    print(f"Found {len(all_artists)} artists\n")
 
-    series_with_renames = []
-    series_without_renames = []
+    artists_with_renames = []
+    artists_without_renames = []
 
-    # Check each series for rename candidates
-    print("Checking which series need renaming...")
-    for series in all_series:
-        series_id = series.get("id")
-        series_title = series.get("title", "Unknown")
+    # Check each artist for rename candidates
+    print("Checking which artists have albums needing renaming...")
+    for artist in all_artists:
+        artist_id = artist.get("id")
+        artist_name = artist.get("artistName", "Unknown")
 
         rename_preview = get_rename_preview(
-            base_url, args.api_key, series_id
+            base_url, args.api_key, artist_id
         )
 
         if rename_preview:
-            series_with_renames.append(
-                (series_id, series_title, rename_preview)
+            # Get album count for this artist
+            albums = get_artist_albums(base_url, args.api_key, artist_id)
+            album_count = len(albums) if albums else 0
+
+            artists_with_renames.append(
+                (artist_id, artist_name, album_count, rename_preview)
             )
         else:
-            series_without_renames.append(series_title)
+            artists_without_renames.append(artist_name)
 
     # Print summary
     print("\n" + "=" * 80)
     print("SUMMARY")
     print("=" * 80)
 
-    if series_without_renames:
-        count = len(series_without_renames)
-        print(f"\n✓ No renames needed ({count} series):")
-        for title in series_without_renames[:5]:  # Show first 5
-            print(f"  - {title}")
-        if len(series_without_renames) > 5:
-            print(f"  ... and {len(series_without_renames) - 5} more")
+    if artists_without_renames:
+        count = len(artists_without_renames)
+        print(f"\n✓ No renames needed ({count} artists):")
+        for name in artists_without_renames[:5]:  # Show first 5
+            print(f"  - {name}")
+        if len(artists_without_renames) > 5:
+            print(f"  ... and {len(artists_without_renames) - 5} more")
 
-    if series_with_renames:
-        count = len(series_with_renames)
-        print(f"\n→ Series with renames needed: {count}")
+    if artists_with_renames:
+        count = len(artists_with_renames)
+        print(f"\n→ Artists with renames needed: {count}")
 
-    if not series_with_renames:
-        print("\nNo series need renaming!")
+    if not artists_with_renames:
+        print("\nNo artists need renaming!")
         return
 
-    # Process each series that needs renaming
+    # Process each artist that needs renaming
     print("\n" + "=" * 80)
     print("RENAME PREVIEW")
     print("=" * 80)
@@ -172,10 +196,13 @@ def main():
     renamed_count = 0
     skipped_count = 0
 
-    for series_id, series_title, rename_preview in series_with_renames:
+    for artist_id, artist_name, album_count, rename_preview in (
+        artists_with_renames
+    ):
         print(f"\n{'=' * 80}")
-        print(f"Series: {series_title}")
-        print(f"Episodes to rename: {len(rename_preview)}")
+        print(f"Artist: {artist_name}")
+        print(f"Albums: {album_count}")
+        print(f"Files to rename: {len(rename_preview)}")
         print("=" * 80)
 
         # Show preview of renames (limit to first 10)
@@ -183,13 +210,13 @@ def main():
         for i, item in enumerate(rename_preview[:display_limit]):
             existing_path = item.get("existingPath", "Unknown")
             new_path = item.get("newPath", "Unknown")
-            print(f"\n  Episode {i + 1}:")
+            print(f"\n  File {i + 1}:")
             print(f"    FROM: {existing_path}")
             print(f"    TO:   {new_path}")
 
         if len(rename_preview) > display_limit:
             remaining = len(rename_preview) - display_limit
-            print(f"\n  ... and {remaining} more episodes")
+            print(f"\n  ... and {remaining} more files")
 
         # Ask for confirmation (unless in dry-run or no-confirm mode)
         should_rename = False
@@ -200,15 +227,16 @@ def main():
             should_rename = True
             print("\n[NO CONFIRM] Proceeding with rename...")
         else:
+            file_word = "file" if len(rename_preview) == 1 else "files"
             prompt = (
-                f"\nRename {len(rename_preview)} episodes "
-                f"for '{series_title}'?"
+                f"\nRename {len(rename_preview)} {file_word} "
+                f"for '{artist_name}'?"
             )
             should_rename = ask_confirmation(prompt)
 
         if should_rename and not args.dry_run:
             print("Executing rename...")
-            result = execute_rename(base_url, args.api_key, series_id)
+            result = execute_rename(base_url, args.api_key, artist_id)
             if result:
                 print("✓ Rename command queued successfully")
                 renamed_count += 1
@@ -227,19 +255,19 @@ def main():
 
     if args.dry_run:
         print(
-            f"\n[DRY RUN] Found {len(series_with_renames)} series "
+            f"\n[DRY RUN] Found {len(artists_with_renames)} artists "
             "that need renaming"
         )
         print("No changes were made. Remove --dry-run to apply renames.")
     else:
-        print(f"\nSeries processed: {len(series_with_renames)}")
+        print(f"\nArtists processed: {len(artists_with_renames)}")
         print(f"  - Renamed: {renamed_count}")
         print(f"  - Skipped: {skipped_count}")
 
         if renamed_count > 0:
             print(
                 "\nNote: Rename operations are queued. "
-                "Check Sonarr's queue for progress."
+                "Check Lidarr's queue for progress."
             )
 
 
