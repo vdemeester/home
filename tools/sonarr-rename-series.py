@@ -62,12 +62,16 @@ def get_rename_preview(
 
 
 def execute_rename(
-    base_url: str, api_key: str, series_id: int
+    base_url: str, api_key: str, series_id: int, file_ids: List[int]
 ) -> Dict[str, Any]:
     """Execute rename operation for a series."""
     url = f"{base_url}/api/v3/command"
     headers = {"X-Api-Key": api_key, "Content-Type": "application/json"}
-    payload = {"name": "RenameFiles", "seriesId": series_id}
+    payload = {
+        "name": "RenameFiles",
+        "seriesId": series_id,
+        "files": file_ids,
+    }
 
     try:
         response = requests.post(url, headers=headers, json=payload)
@@ -208,12 +212,22 @@ def main():
 
         if should_rename and not args.dry_run:
             print("Executing rename...")
-            result = execute_rename(base_url, args.api_key, series_id)
-            if result:
-                print("✓ Rename command queued successfully")
-                renamed_count += 1
+            # Extract episode file IDs from preview
+            file_ids = [item.get("episodeFileId") for item in rename_preview]
+            file_ids = [fid for fid in file_ids if fid is not None]
+
+            if file_ids:
+                result = execute_rename(
+                    base_url, args.api_key, series_id, file_ids
+                )
+                if result:
+                    print("✓ Rename command queued successfully")
+                    renamed_count += 1
+                else:
+                    print("✗ Failed to queue rename command")
+                    skipped_count += 1
             else:
-                print("✗ Failed to queue rename command")
+                print("✗ No valid file IDs found")
                 skipped_count += 1
         else:
             if not args.dry_run:
