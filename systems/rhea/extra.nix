@@ -41,7 +41,7 @@
             email = "vincent@sbr.pm";
             storage = "/var/lib/traefik/acme.json";
             dnsChallenge = {
-              provider = "gandi";
+              provider = "gandiv5";
               delayBeforeCheck = "0s";
             };
           };
