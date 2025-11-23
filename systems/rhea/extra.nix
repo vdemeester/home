@@ -143,6 +143,21 @@
       enable = true;
       user = "vincent";
       group = "users";
+      openFirewall = true;
+      package = pkgs.transmission_4;
+      openRPCPort = true; # Open firewall for RPC
+      home = "/neo/torrents";
+      settings = {
+        # Override default settings
+        incomplete-dir-enabled = true;
+        rpc-bind-address = "0.0.0.0"; # Bind to own IP
+        rpc-host-whitelist = "localhost,rhea.home,rhea.vpn,rhea.sbr.pm,192.168.1.50,10.100.0.50";
+        rpc-host-whitelist-enabled = true;
+        rpc-whitelist-enabled = true;
+        rpc-whitelist = "127.0.0.1,192.168.1.*,10.100.0.*"; # Whitelist your remote machine (10.0.0.1 in this example)
+        rpc-username = "transmission";
+        rpc-password = "transmission";
+      };
     };
     sonarr = {
       enable = true;

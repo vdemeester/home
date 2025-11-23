@@ -394,9 +394,11 @@ _: {
           screenshots = { };
           wallpapers = { };
           photos = {
+            path = "/neo/pictures/photos";
             #   paused = true; # TODO: implement this, start as paused
           };
           music = {
+            path = "/neo/music";
             #   paused = true; # TODO: implement this, start as paused
           };
         };
