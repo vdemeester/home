@@ -12,6 +12,7 @@ let
   athena = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4KRP1rzOwyA2zP1Nf1WlLRHqAGutLtOHYWfH732xh"; # ssh-keyscan -q -t ed25519 athena.sbr.pm
   demeter = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqQfEyHyjIGglayB9FtCqL7bnYfNSQlBXks2IuyCPmd"; # ssh-keyscan -q -t ed25519 demeter.sbr.pm
   kerkouane = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJguVoQYObRLyNxELFc3ai2yDJ25+naiM3tKrBGuxwwA"; # ssh-keyscan -q -t ed25519 kerkouane.sbr.pm
+  rhea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFH3Lk4bRgNyFRK/Hzg1PvVbL/dpyI1SmLJFkb6VQDw"; # ssh-keyscan -q -t ed25519 rhea.sbr.pm
   sakhalin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/PMBThi4DhgZR8VywbRDzzMVh2Qp3T6NJAcPubfXz6"; # ssh-keyscan -q -t ed25519 sakhalin.sbr.pm
   shikoku = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm"; # ssh-keyscan -q -t ed25519 shikoku.sbr.pm
   # wakasu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrAh07USjRnAdS3mMNGdKee1KumjYDLzgXaiZ5LYi2D"; # ssh-keyscan -q -t ed25519 wakasu.sbr.pm
@@ -27,6 +28,7 @@ let
     athena
     demeter
     kerkouane
+    rhea
     sakhalin
     shikoku
   ];
@@ -90,4 +92,5 @@ in
   # Others
   "secrets/minica.pem.age".publicKeys = users ++ systems;
   "secrets/shikoku/aria2rpcsecret.age".publicKeys = users ++ [ shikoku ];
+  "secrets/rhea/gandi.env.age".publicKeys = users ++ [ rhea ];
 }

@@ -3,6 +3,7 @@
   globals,
   lib,
   pkgs,
+  config,
   ...
 }:
 let
@@ -11,7 +12,7 @@ let
     http = {
       routers = {
         jellyfin = {
-          rule = "Host(`jellyfin.rhea.sbr.pm`)";
+          rule = "Host(`jellyfin.sbr.pm`)";
           service = "jellyfin";
           entryPoints = [ "websecure" ];
           tls = {
@@ -19,7 +20,7 @@ let
           };
         };
         jellyseerr = {
-          rule = "Host(`jellyseerr.rhea.sbr.pm`)";
+          rule = "Host(`jellyseerr.sbr.pm`)";
           service = "jellyseerr";
           entryPoints = [ "websecure" ];
           tls = {
@@ -27,7 +28,7 @@ let
           };
         };
         sonarr = {
-          rule = "Host(`sonarr.rhea.sbr.pm`)";
+          rule = "Host(`sonarr.sbr.pm`)";
           service = "sonarr";
           entryPoints = [ "websecure" ];
           tls = {
@@ -35,7 +36,7 @@ let
           };
         };
         radarr = {
-          rule = "Host(`radarr.rhea.sbr.pm`)";
+          rule = "Host(`radarr.sbr.pm`)";
           service = "radarr";
           entryPoints = [ "websecure" ];
           tls = {
@@ -43,7 +44,7 @@ let
           };
         };
         lidarr = {
-          rule = "Host(`lidarr.rhea.sbr.pm`)";
+          rule = "Host(`lidarr.sbr.pm`)";
           service = "lidarr";
           entryPoints = [ "websecure" ];
           tls = {
@@ -51,7 +52,7 @@ let
           };
         };
         bazarr = {
-          rule = "Host(`bazarr.rhea.sbr.pm`)";
+          rule = "Host(`bazarr.sbr.pm`)";
           service = "bazarr";
           entryPoints = [ "websecure" ];
           tls = {
@@ -59,7 +60,7 @@ let
           };
         };
         transmission = {
-          rule = "Host(`transmission.rhea.sbr.pm`)";
+          rule = "Host(`transmission.sbr.pm`) || Host(`t.sbr.pm`)";
           service = "transmission";
           entryPoints = [ "websecure" ];
           tls = {
@@ -122,6 +123,13 @@ let
   };
 in
 {
+  age.secrets."gandi.env" = {
+    file = ../../secrets/rhea/gandi.env.age;
+    mode = "400";
+    owner = "traefik";
+    group = "traefik";
+  };
+
   users.users.vincent.linger = true;
 
   services = {
@@ -356,11 +364,9 @@ in
     443
   ];
 
-  # Environment file for Gandi API key
-  # You'll need to create /var/lib/traefik/gandi.env with:
-  # GANDIV5_API_KEY=your_api_key_here
+  # Environment file for Gandi API key (managed by agenix)
   systemd.services.traefik.serviceConfig = {
-    EnvironmentFile = "/var/lib/traefik/gandi.env";
+    EnvironmentFile = config.age.secrets."gandi.env".path;
   };
 
   environment.systemPackages = with pkgs; [
