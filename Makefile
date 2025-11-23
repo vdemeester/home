@@ -118,6 +118,38 @@ dns-update-gandi:
 dns-update-gandi-dry-run:
 	@bash tools/update-gandi-dns.sh --dry-run
 
+# Media Management (*arr Stack)
+# Default values (can be overridden via environment or make arguments)
+LIDARR_URL ?= https://lidarr.sbr.pm
+LIDARR_API_KEY ?= $(shell passage show home/services/lidarr)
+SONARR_URL ?= https://sonarr.sbr.pm
+SONARR_API_KEY ?= $(shell passage show home/services/sonarr)
+RADARR_URL ?= https://radarr.sbr.pm
+RADARR_API_KEY ?= $(shell passage show home/services/radarr)
+EXTRA_ARGS ?=
+
+.PHONY: lidarr-rename lidarr-retag lidarr-update-paths
+.PHONY: sonarr-rename
+.PHONY: radarr-rename
+
+# Lidarr
+lidarr-rename:
+	@tools/lidarr-rename-albums.py $(LIDARR_URL) $(LIDARR_API_KEY) $(EXTRA_ARGS)
+
+lidarr-retag:
+	@tools/lidarr-retag-albums.py $(LIDARR_URL) $(LIDARR_API_KEY) $(EXTRA_ARGS)
+
+lidarr-update-paths:
+	@tools/lidarr-update-paths.py $(LIDARR_URL) $(LIDARR_API_KEY) $(LIDARR_ROOT_PATH) $(EXTRA_ARGS)
+
+# Sonarr
+sonarr-rename:
+	@tools/sonarr-rename-series.py $(SONARR_URL) $(SONARR_API_KEY) $(EXTRA_ARGS)
+
+# Radarr
+radarr-rename:
+	@tools/radarr-rename-movies.py $(RADARR_URL) $(RADARR_API_KEY) $(EXTRA_ARGS)
+
 # Maintenance
 .PHONY: clean
 clean: clean-system clean-results

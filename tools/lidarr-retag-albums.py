@@ -20,101 +20,42 @@ Example:
     ./lidarr-retag-albums.py http://localhost:8686 your-api-key
 """
 
-import argparse
-import sys
 from typing import Any, Dict, List
 
-import requests
-
-
-def get_all_artists(base_url: str, api_key: str) -> List[Dict[str, Any]]:
-    """Fetch all artists from Lidarr API."""
-    url = f"{base_url}/api/v1/artist"
-    headers = {"X-Api-Key": api_key}
-
-    try:
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching artists: {e}", file=sys.stderr)
-        sys.exit(1)
+from arrlib import (
+    ArrClient,
+    create_arr_parser,
+    get_confirmation_decision,
+    print_final_summary,
+    print_item_list,
+    print_section_header,
+)
 
 
 def get_artist_albums(
-    base_url: str, api_key: str, artist_id: int
+    client: ArrClient, artist_id: int
 ) -> List[Dict[str, Any]]:
     """Fetch all albums for a specific artist."""
-    url = f"{base_url}/api/v1/album"
-    headers = {"X-Api-Key": api_key}
-    params = {"artistId": artist_id}
-
-    try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(
-            f"Error fetching albums for artist {artist_id}: {e}",
-            file=sys.stderr,
-        )
-        return []
+    return client.get("/api/v1/album", params={"artistId": artist_id})
 
 
 def get_retag_preview(
-    base_url: str, api_key: str, artist_id: int
+    client: ArrClient, artist_id: int
 ) -> List[Dict[str, Any]]:
     """Get preview of files that will be retagged for an artist."""
-    url = f"{base_url}/api/v1/retag"
-    headers = {"X-Api-Key": api_key}
-    params = {"artistId": artist_id}
-
-    try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(
-            f"Error fetching retag preview for artist {artist_id}: {e}",
-            file=sys.stderr,
-        )
-        return []
+    return client.get("/api/v1/retag", params={"artistId": artist_id})
 
 
 def execute_retag(
-    base_url: str, api_key: str, artist_id: int, file_ids: List[int]
+    client: ArrClient, artist_id: int, file_ids: List[int]
 ) -> Dict[str, Any]:
     """Execute retag operation for an artist."""
-    url = f"{base_url}/api/v1/command"
-    headers = {"X-Api-Key": api_key, "Content-Type": "application/json"}
     payload = {
         "name": "RetagFiles",
         "artistId": artist_id,
         "files": file_ids,
     }
-
-    try:
-        response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(
-            f"Error executing retag for artist {artist_id}: {e}",
-            file=sys.stderr,
-        )
-        return {}
-
-
-def ask_confirmation(prompt: str) -> bool:
-    """Ask user for yes/no confirmation."""
-    while True:
-        response = input(f"{prompt} (y/n): ").lower().strip()
-        if response in ["y", "yes"]:
-            return True
-        elif response in ["n", "no"]:
-            return False
-        else:
-            print("Please answer 'y' or 'n'")
+    return client.post("/api/v1/command", payload)
 
 
 def format_tag_changes(changes: List[Dict[str, Any]]) -> str:
@@ -130,33 +71,16 @@ def format_tag_changes(changes: List[Dict[str, Any]]) -> str:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Retag Lidarr albums with confirmation"
+    parser = create_arr_parser(
+        "Lidarr", "Retag Lidarr albums with confirmation", 8686
     )
-    parser.add_argument(
-        "lidarr_url", help="Lidarr base URL (e.g., http://localhost:8686)"
-    )
-    parser.add_argument("api_key", help="Lidarr API key")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show what would be retagged without making changes",
-    )
-    parser.add_argument(
-        "--no-confirm",
-        "--yolo",
-        action="store_true",
-        dest="no_confirm",
-        help="Skip interactive confirmation (use with caution)",
-    )
-
     args = parser.parse_args()
 
-    # Normalize URLs
-    base_url = args.lidarr_url.rstrip("/")
+    # Create client
+    client = ArrClient(args.lidarr_url, args.api_key)
 
-    print(f"Fetching artists from {base_url}...")
-    all_artists = get_all_artists(base_url, args.api_key)
+    print(f"Fetching artists from {client.base_url}...")
+    all_artists = client.get("/api/v1/artist")
     print(f"Found {len(all_artists)} artists\n")
 
     artists_with_retags = []
@@ -168,13 +92,11 @@ def main():
         artist_id = artist.get("id")
         artist_name = artist.get("artistName", "Unknown")
 
-        retag_preview = get_retag_preview(
-            base_url, args.api_key, artist_id
-        )
+        retag_preview = get_retag_preview(client, artist_id)
 
         if retag_preview:
             # Get album count for this artist
-            albums = get_artist_albums(base_url, args.api_key, artist_id)
+            albums = get_artist_albums(client, artist_id)
             album_count = len(albums) if albums else 0
 
             artists_with_retags.append(
@@ -184,17 +106,8 @@ def main():
             artists_without_retags.append(artist_name)
 
     # Print summary
-    print("\n" + "=" * 80)
-    print("SUMMARY")
-    print("=" * 80)
-
-    if artists_without_retags:
-        count = len(artists_without_retags)
-        print(f"\n✓ No retags needed ({count} artists):")
-        for name in artists_without_retags[:5]:  # Show first 5
-            print(f"  - {name}")
-        if len(artists_without_retags) > 5:
-            print(f"  ... and {len(artists_without_retags) - 5} more")
+    print_section_header("SUMMARY")
+    print_item_list(artists_without_retags, "✓ No retags needed")
 
     if artists_with_retags:
         count = len(artists_with_retags)
@@ -205,9 +118,7 @@ def main():
         return
 
     # Process each artist that needs retagging
-    print("\n" + "=" * 80)
-    print("RETAG PREVIEW")
-    print("=" * 80)
+    print_section_header("RETAG PREVIEW")
 
     retagged_count = 0
     skipped_count = 0
@@ -233,32 +144,22 @@ def main():
             remaining = len(retag_preview) - display_limit
             print(f"\n  ... and {remaining} more files")
 
-        # Ask for confirmation (unless in dry-run or no-confirm mode)
-        should_retag = False
+        # Ask for confirmation
+        file_word = "file" if len(retag_preview) == 1 else "files"
+        prompt = (
+            f"\nRetag {len(retag_preview)} {file_word} "
+            f"for '{artist_name}'?"
+        )
+        should_retag = get_confirmation_decision(args, prompt)
 
-        if args.dry_run:
-            print("\n[DRY RUN] Skipping actual retag")
-        elif args.no_confirm:
-            should_retag = True
-            print("\n[NO CONFIRM] Proceeding with retag...")
-        else:
-            file_word = "file" if len(retag_preview) == 1 else "files"
-            prompt = (
-                f"\nRetag {len(retag_preview)} {file_word} "
-                f"for '{artist_name}'?"
-            )
-            should_retag = ask_confirmation(prompt)
-
-        if should_retag and not args.dry_run:
+        if should_retag:
             print("Executing retag...")
             # Extract track file IDs from preview
             file_ids = [item.get("trackFileId") for item in retag_preview]
             file_ids = [fid for fid in file_ids if fid is not None]
 
             if file_ids:
-                result = execute_retag(
-                    base_url, args.api_key, artist_id, file_ids
-                )
+                result = execute_retag(client, artist_id, file_ids)
                 if result:
                     print("✓ Retag command queued successfully")
                     retagged_count += 1
@@ -274,26 +175,20 @@ def main():
             skipped_count += 1
 
     # Final summary
-    print("\n" + "=" * 80)
-    print("FINAL SUMMARY")
-    print("=" * 80)
-
     if args.dry_run:
+        print_section_header("FINAL SUMMARY")
         print(
             f"\n[DRY RUN] Found {len(artists_with_retags)} artists "
             "that need retagging"
         )
         print("No changes were made. Remove --dry-run to apply retags.")
     else:
-        print(f"\nArtists processed: {len(artists_with_retags)}")
-        print(f"  - Retagged: {retagged_count}")
-        print(f"  - Skipped: {skipped_count}")
-
-        if retagged_count > 0:
-            print(
-                "\nNote: Retag operations are queued. "
-                "Check Lidarr's queue for progress."
-            )
+        print_final_summary(
+            len(artists_with_retags),
+            retagged_count,
+            skipped_count,
+            "Retagged",
+        )
 
 
 if __name__ == "__main__":

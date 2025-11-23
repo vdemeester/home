@@ -187,6 +187,43 @@ See [[file:keyboards/README.org][keyboards/README.org]] for detailed keyboard do
 
 See [[file:tools/README.org][tools/README.org]] for detailed DNS tool documentation.
 
+*** Media Management (*arr Stack)
+
+Default URLs and API keys (from passage) are configured for =*.sbr.pm= services.
+Override via environment variables or make arguments if needed.
+
+**** Lidarr
+- =make lidarr-rename= - Rename albums in Lidarr with confirmation
+- =make lidarr-rename EXTRA_ARGS="--dry-run"= - Preview album renames
+- =make lidarr-retag= - Retag albums in Lidarr with confirmation
+- =make lidarr-retag EXTRA_ARGS="--dry-run"= - Preview album retags
+- =make lidarr-update-paths= - Update artist paths (requires =LIDARR_ROOT_PATH=)
+
+**** Sonarr
+- =make sonarr-rename= - Rename TV series episodes with confirmation
+- =make sonarr-rename EXTRA_ARGS="--dry-run"= - Preview episode renames
+
+**** Radarr
+- =make radarr-rename= - Rename movies with confirmation
+- =make radarr-rename EXTRA_ARGS="--dry-run"= - Preview movie renames
+
+**** Examples
+#+begin_src bash
+# Use defaults (*.sbr.pm with passage API keys)
+make lidarr-rename
+
+# Dry-run mode
+make sonarr-rename EXTRA_ARGS="--dry-run"
+
+# Override URL and API key (e.g., for local testing)
+make radarr-rename RADARR_URL=http://localhost:7878 RADARR_API_KEY=mykey
+
+# Use --no-confirm flag
+make lidarr-retag EXTRA_ARGS="--no-confirm"
+#+end_src
+
+See [[file:tools/README.org][tools/README.org]] for detailed *arr tool documentation.
+
 *** Maintenance
 - =make clean= - Clean up old system generations and results
 - =make clean-system= - Remove system generations older than 15 days

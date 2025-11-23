@@ -20,107 +20,42 @@ Example:
     ./radarr-rename-movies.py http://localhost:7878 your-api-key
 """
 
-import argparse
-import sys
 from typing import Any, Dict, List
 
-import requests
-
-
-def get_all_movies(base_url: str, api_key: str) -> List[Dict[str, Any]]:
-    """Fetch all movies from Radarr API."""
-    url = f"{base_url}/api/v3/movie"
-    headers = {"X-Api-Key": api_key}
-
-    try:
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching movies: {e}", file=sys.stderr)
-        sys.exit(1)
+from arrlib import (
+    ArrClient,
+    create_arr_parser,
+    get_confirmation_decision,
+    print_final_summary,
+    print_item_list,
+    print_section_header,
+)
 
 
 def get_rename_preview(
-    base_url: str, api_key: str, movie_id: int
+    client: ArrClient, movie_id: int
 ) -> List[Dict[str, Any]]:
     """Get preview of files that will be renamed for a movie."""
-    url = f"{base_url}/api/v3/rename"
-    headers = {"X-Api-Key": api_key}
-    params = {"movieId": movie_id}
-
-    try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(
-            f"Error fetching rename preview for movie {movie_id}: {e}",
-            file=sys.stderr,
-        )
-        return []
+    return client.get("/api/v3/rename", params={"movieId": movie_id})
 
 
-def execute_rename(
-    base_url: str, api_key: str, movie_id: int
-) -> Dict[str, Any]:
+def execute_rename(client: ArrClient, movie_id: int) -> Dict[str, Any]:
     """Execute rename operation for a movie."""
-    url = f"{base_url}/api/v3/command"
-    headers = {"X-Api-Key": api_key, "Content-Type": "application/json"}
     payload = {"name": "RenameMovie", "movieIds": [movie_id]}
-
-    try:
-        response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(
-            f"Error executing rename for movie {movie_id}: {e}",
-            file=sys.stderr,
-        )
-        return {}
-
-
-def ask_confirmation(prompt: str) -> bool:
-    """Ask user for yes/no confirmation."""
-    while True:
-        response = input(f"{prompt} (y/n): ").lower().strip()
-        if response in ["y", "yes"]:
-            return True
-        elif response in ["n", "no"]:
-            return False
-        else:
-            print("Please answer 'y' or 'n'")
+    return client.post("/api/v3/command", payload)
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Rename Radarr movies with confirmation"
+    parser = create_arr_parser(
+        "Radarr", "Rename Radarr movies with confirmation", 7878
     )
-    parser.add_argument(
-        "radarr_url", help="Radarr base URL (e.g., http://localhost:7878)"
-    )
-    parser.add_argument("api_key", help="Radarr API key")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show what would be renamed without making changes",
-    )
-    parser.add_argument(
-        "--no-confirm",
-        "--yolo",
-        action="store_true",
-        dest="no_confirm",
-        help="Skip interactive confirmation (use with caution)",
-    )
-
     args = parser.parse_args()
 
-    # Normalize URLs
-    base_url = args.radarr_url.rstrip("/")
+    # Create client
+    client = ArrClient(args.radarr_url, args.api_key)
 
-    print(f"Fetching movies from {base_url}...")
-    all_movies = get_all_movies(base_url, args.api_key)
+    print(f"Fetching movies from {client.base_url}...")
+    all_movies = client.get("/api/v3/movie")
     print(f"Found {len(all_movies)} movies\n")
 
     movies_with_renames = []
@@ -136,9 +71,7 @@ def main():
             f"{movie_title} ({year})" if year else movie_title
         )
 
-        rename_preview = get_rename_preview(
-            base_url, args.api_key, movie_id
-        )
+        rename_preview = get_rename_preview(client, movie_id)
 
         if rename_preview:
             movies_with_renames.append(
@@ -148,17 +81,8 @@ def main():
             movies_without_renames.append(display_title)
 
     # Print summary
-    print("\n" + "=" * 80)
-    print("SUMMARY")
-    print("=" * 80)
-
-    if movies_without_renames:
-        count = len(movies_without_renames)
-        print(f"\n✓ No renames needed ({count} movies):")
-        for title in movies_without_renames[:5]:  # Show first 5
-            print(f"  - {title}")
-        if len(movies_without_renames) > 5:
-            print(f"  ... and {len(movies_without_renames) - 5} more")
+    print_section_header("SUMMARY")
+    print_item_list(movies_without_renames, "✓ No renames needed")
 
     if movies_with_renames:
         count = len(movies_with_renames)
@@ -169,9 +93,7 @@ def main():
         return
 
     # Process each movie that needs renaming
-    print("\n" + "=" * 80)
-    print("RENAME PREVIEW")
-    print("=" * 80)
+    print_section_header("RENAME PREVIEW")
 
     renamed_count = 0
     skipped_count = 0
@@ -190,24 +112,17 @@ def main():
             print(f"    FROM: {existing_path}")
             print(f"    TO:   {new_path}")
 
-        # Ask for confirmation (unless in dry-run or no-confirm mode)
-        should_rename = False
+        # Ask for confirmation
+        file_word = "file" if len(rename_preview) == 1 else "files"
+        prompt = (
+            f"\nRename {len(rename_preview)} {file_word} "
+            f"for '{movie_title}'?"
+        )
+        should_rename = get_confirmation_decision(args, prompt)
 
-        if args.dry_run:
-            print("\n[DRY RUN] Skipping actual rename")
-        elif args.no_confirm:
-            should_rename = True
-            print("\n[NO CONFIRM] Proceeding with rename...")
-        else:
-            file_word = "file" if len(rename_preview) == 1 else "files"
-            should_rename = ask_confirmation(
-                f"\nRename {len(rename_preview)} {file_word} "
-                f"for '{movie_title}'?"
-            )
-
-        if should_rename and not args.dry_run:
+        if should_rename:
             print("Executing rename...")
-            result = execute_rename(base_url, args.api_key, movie_id)
+            result = execute_rename(client, movie_id)
             if result:
                 print("✓ Rename command queued successfully")
                 renamed_count += 1
@@ -220,26 +135,20 @@ def main():
             skipped_count += 1
 
     # Final summary
-    print("\n" + "=" * 80)
-    print("FINAL SUMMARY")
-    print("=" * 80)
-
     if args.dry_run:
+        print_section_header("FINAL SUMMARY")
         print(
             f"\n[DRY RUN] Found {len(movies_with_renames)} movies "
             "that need renaming"
         )
         print("No changes were made. Remove --dry-run to apply renames.")
     else:
-        print(f"\nMovies processed: {len(movies_with_renames)}")
-        print(f"  - Renamed: {renamed_count}")
-        print(f"  - Skipped: {skipped_count}")
-
-        if renamed_count > 0:
-            print(
-                "\nNote: Rename operations are queued. "
-                "Check Radarr's queue for progress."
-            )
+        print_final_summary(
+            len(movies_with_renames),
+            renamed_count,
+            skipped_count,
+            "Renamed",
+        )
 
 
 if __name__ == "__main__":

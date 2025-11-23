@@ -20,131 +20,55 @@ Example:
     ./lidarr-rename-albums.py http://localhost:8686 your-api-key
 """
 
-import argparse
-import sys
 from typing import Any, Dict, List
 
-import requests
-
-
-def get_all_artists(base_url: str, api_key: str) -> List[Dict[str, Any]]:
-    """Fetch all artists from Lidarr API."""
-    url = f"{base_url}/api/v1/artist"
-    headers = {"X-Api-Key": api_key}
-
-    try:
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching artists: {e}", file=sys.stderr)
-        sys.exit(1)
+from arrlib import (
+    ArrClient,
+    create_arr_parser,
+    get_confirmation_decision,
+    print_final_summary,
+    print_item_list,
+    print_section_header,
+)
 
 
 def get_artist_albums(
-    base_url: str, api_key: str, artist_id: int
+    client: ArrClient, artist_id: int
 ) -> List[Dict[str, Any]]:
     """Fetch all albums for a specific artist."""
-    url = f"{base_url}/api/v1/album"
-    headers = {"X-Api-Key": api_key}
-    params = {"artistId": artist_id}
-
-    try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(
-            f"Error fetching albums for artist {artist_id}: {e}",
-            file=sys.stderr,
-        )
-        return []
+    return client.get("/api/v1/album", params={"artistId": artist_id})
 
 
 def get_rename_preview(
-    base_url: str, api_key: str, artist_id: int
+    client: ArrClient, artist_id: int
 ) -> List[Dict[str, Any]]:
     """Get preview of files that will be renamed for an artist."""
-    url = f"{base_url}/api/v1/rename"
-    headers = {"X-Api-Key": api_key}
-    params = {"artistId": artist_id}
-
-    try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(
-            f"Error fetching rename preview for artist {artist_id}: {e}",
-            file=sys.stderr,
-        )
-        return []
+    return client.get("/api/v1/rename", params={"artistId": artist_id})
 
 
 def execute_rename(
-    base_url: str, api_key: str, artist_id: int, file_ids: List[int]
+    client: ArrClient, artist_id: int, file_ids: List[int]
 ) -> Dict[str, Any]:
     """Execute rename operation for an artist."""
-    url = f"{base_url}/api/v1/command"
-    headers = {"X-Api-Key": api_key, "Content-Type": "application/json"}
     payload = {
         "name": "RenameFiles",
         "artistId": artist_id,
         "files": file_ids,
     }
-
-    try:
-        response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(
-            f"Error executing rename for artist {artist_id}: {e}",
-            file=sys.stderr,
-        )
-        return {}
-
-
-def ask_confirmation(prompt: str) -> bool:
-    """Ask user for yes/no confirmation."""
-    while True:
-        response = input(f"{prompt} (y/n): ").lower().strip()
-        if response in ["y", "yes"]:
-            return True
-        elif response in ["n", "no"]:
-            return False
-        else:
-            print("Please answer 'y' or 'n'")
+    return client.post("/api/v1/command", payload)
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Rename Lidarr albums with confirmation"
+    parser = create_arr_parser(
+        "Lidarr", "Rename Lidarr albums with confirmation", 8686
     )
-    parser.add_argument(
-        "lidarr_url", help="Lidarr base URL (e.g., http://localhost:8686)"
-    )
-    parser.add_argument("api_key", help="Lidarr API key")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show what would be renamed without making changes",
-    )
-    parser.add_argument(
-        "--no-confirm",
-        "--yolo",
-        action="store_true",
-        dest="no_confirm",
-        help="Skip interactive confirmation (use with caution)",
-    )
-
     args = parser.parse_args()
 
-    # Normalize URLs
-    base_url = args.lidarr_url.rstrip("/")
+    # Create client
+    client = ArrClient(args.lidarr_url, args.api_key)
 
-    print(f"Fetching artists from {base_url}...")
-    all_artists = get_all_artists(base_url, args.api_key)
+    print(f"Fetching artists from {client.base_url}...")
+    all_artists = client.get("/api/v1/artist")
     print(f"Found {len(all_artists)} artists\n")
 
     artists_with_renames = []
@@ -156,13 +80,11 @@ def main():
         artist_id = artist.get("id")
         artist_name = artist.get("artistName", "Unknown")
 
-        rename_preview = get_rename_preview(
-            base_url, args.api_key, artist_id
-        )
+        rename_preview = get_rename_preview(client, artist_id)
 
         if rename_preview:
             # Get album count for this artist
-            albums = get_artist_albums(base_url, args.api_key, artist_id)
+            albums = get_artist_albums(client, artist_id)
             album_count = len(albums) if albums else 0
 
             artists_with_renames.append(
@@ -172,17 +94,8 @@ def main():
             artists_without_renames.append(artist_name)
 
     # Print summary
-    print("\n" + "=" * 80)
-    print("SUMMARY")
-    print("=" * 80)
-
-    if artists_without_renames:
-        count = len(artists_without_renames)
-        print(f"\n✓ No renames needed ({count} artists):")
-        for name in artists_without_renames[:5]:  # Show first 5
-            print(f"  - {name}")
-        if len(artists_without_renames) > 5:
-            print(f"  ... and {len(artists_without_renames) - 5} more")
+    print_section_header("SUMMARY")
+    print_item_list(artists_without_renames, "✓ No renames needed")
 
     if artists_with_renames:
         count = len(artists_with_renames)
@@ -193,9 +106,7 @@ def main():
         return
 
     # Process each artist that needs renaming
-    print("\n" + "=" * 80)
-    print("RENAME PREVIEW")
-    print("=" * 80)
+    print_section_header("RENAME PREVIEW")
 
     renamed_count = 0
     skipped_count = 0
@@ -222,32 +133,22 @@ def main():
             remaining = len(rename_preview) - display_limit
             print(f"\n  ... and {remaining} more files")
 
-        # Ask for confirmation (unless in dry-run or no-confirm mode)
-        should_rename = False
+        # Ask for confirmation
+        file_word = "file" if len(rename_preview) == 1 else "files"
+        prompt = (
+            f"\nRename {len(rename_preview)} {file_word} "
+            f"for '{artist_name}'?"
+        )
+        should_rename = get_confirmation_decision(args, prompt)
 
-        if args.dry_run:
-            print("\n[DRY RUN] Skipping actual rename")
-        elif args.no_confirm:
-            should_rename = True
-            print("\n[NO CONFIRM] Proceeding with rename...")
-        else:
-            file_word = "file" if len(rename_preview) == 1 else "files"
-            prompt = (
-                f"\nRename {len(rename_preview)} {file_word} "
-                f"for '{artist_name}'?"
-            )
-            should_rename = ask_confirmation(prompt)
-
-        if should_rename and not args.dry_run:
+        if should_rename:
             print("Executing rename...")
             # Extract track file IDs from preview
             file_ids = [item.get("trackFileId") for item in rename_preview]
             file_ids = [fid for fid in file_ids if fid is not None]
 
             if file_ids:
-                result = execute_rename(
-                    base_url, args.api_key, artist_id, file_ids
-                )
+                result = execute_rename(client, artist_id, file_ids)
                 if result:
                     print("✓ Rename command queued successfully")
                     renamed_count += 1
@@ -263,26 +164,20 @@ def main():
             skipped_count += 1
 
     # Final summary
-    print("\n" + "=" * 80)
-    print("FINAL SUMMARY")
-    print("=" * 80)
-
     if args.dry_run:
+        print_section_header("FINAL SUMMARY")
         print(
             f"\n[DRY RUN] Found {len(artists_with_renames)} artists "
             "that need renaming"
         )
         print("No changes were made. Remove --dry-run to apply renames.")
     else:
-        print(f"\nArtists processed: {len(artists_with_renames)}")
-        print(f"  - Renamed: {renamed_count}")
-        print(f"  - Skipped: {skipped_count}")
-
-        if renamed_count > 0:
-            print(
-                "\nNote: Rename operations are queued. "
-                "Check Lidarr's queue for progress."
-            )
+        print_final_summary(
+            len(artists_with_renames),
+            renamed_count,
+            skipped_count,
+            "Renamed",
+        )
 
 
 if __name__ == "__main__":

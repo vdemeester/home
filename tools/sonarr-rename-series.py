@@ -20,111 +20,48 @@ Example:
     ./sonarr-rename-series.py http://localhost:8989 your-api-key
 """
 
-import argparse
-import sys
 from typing import Any, Dict, List
 
-import requests
-
-
-def get_all_series(base_url: str, api_key: str) -> List[Dict[str, Any]]:
-    """Fetch all series from Sonarr API."""
-    url = f"{base_url}/api/v3/series"
-    headers = {"X-Api-Key": api_key}
-
-    try:
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching series: {e}", file=sys.stderr)
-        sys.exit(1)
+from arrlib import (
+    ArrClient,
+    create_arr_parser,
+    get_confirmation_decision,
+    print_final_summary,
+    print_item_list,
+    print_section_header,
+)
 
 
 def get_rename_preview(
-    base_url: str, api_key: str, series_id: int
+    client: ArrClient, series_id: int
 ) -> List[Dict[str, Any]]:
     """Get preview of files that will be renamed for a series."""
-    url = f"{base_url}/api/v3/rename"
-    headers = {"X-Api-Key": api_key}
-    params = {"seriesId": series_id}
-
-    try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(
-            f"Error fetching rename preview for series {series_id}: {e}",
-            file=sys.stderr,
-        )
-        return []
+    return client.get("/api/v3/rename", params={"seriesId": series_id})
 
 
 def execute_rename(
-    base_url: str, api_key: str, series_id: int, file_ids: List[int]
+    client: ArrClient, series_id: int, file_ids: List[int]
 ) -> Dict[str, Any]:
     """Execute rename operation for a series."""
-    url = f"{base_url}/api/v3/command"
-    headers = {"X-Api-Key": api_key, "Content-Type": "application/json"}
     payload = {
         "name": "RenameFiles",
         "seriesId": series_id,
         "files": file_ids,
     }
-
-    try:
-        response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(
-            f"Error executing rename for series {series_id}: {e}",
-            file=sys.stderr,
-        )
-        return {}
-
-
-def ask_confirmation(prompt: str) -> bool:
-    """Ask user for yes/no confirmation."""
-    while True:
-        response = input(f"{prompt} (y/n): ").lower().strip()
-        if response in ["y", "yes"]:
-            return True
-        elif response in ["n", "no"]:
-            return False
-        else:
-            print("Please answer 'y' or 'n'")
+    return client.post("/api/v3/command", payload)
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Rename Sonarr series episodes with confirmation"
+    parser = create_arr_parser(
+        "Sonarr", "Rename Sonarr series episodes with confirmation", 8989
     )
-    parser.add_argument(
-        "sonarr_url", help="Sonarr base URL (e.g., http://localhost:8989)"
-    )
-    parser.add_argument("api_key", help="Sonarr API key")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show what would be renamed without making changes",
-    )
-    parser.add_argument(
-        "--no-confirm",
-        "--yolo",
-        action="store_true",
-        dest="no_confirm",
-        help="Skip interactive confirmation (use with caution)",
-    )
-
     args = parser.parse_args()
 
-    # Normalize URLs
-    base_url = args.sonarr_url.rstrip("/")
+    # Create client
+    client = ArrClient(args.sonarr_url, args.api_key)
 
-    print(f"Fetching series from {base_url}...")
-    all_series = get_all_series(base_url, args.api_key)
+    print(f"Fetching series from {client.base_url}...")
+    all_series = client.get("/api/v3/series")
     print(f"Found {len(all_series)} series\n")
 
     series_with_renames = []
@@ -136,9 +73,7 @@ def main():
         series_id = series.get("id")
         series_title = series.get("title", "Unknown")
 
-        rename_preview = get_rename_preview(
-            base_url, args.api_key, series_id
-        )
+        rename_preview = get_rename_preview(client, series_id)
 
         if rename_preview:
             series_with_renames.append(
@@ -148,17 +83,8 @@ def main():
             series_without_renames.append(series_title)
 
     # Print summary
-    print("\n" + "=" * 80)
-    print("SUMMARY")
-    print("=" * 80)
-
-    if series_without_renames:
-        count = len(series_without_renames)
-        print(f"\n✓ No renames needed ({count} series):")
-        for title in series_without_renames[:5]:  # Show first 5
-            print(f"  - {title}")
-        if len(series_without_renames) > 5:
-            print(f"  ... and {len(series_without_renames) - 5} more")
+    print_section_header("SUMMARY")
+    print_item_list(series_without_renames, "✓ No renames needed")
 
     if series_with_renames:
         count = len(series_with_renames)
@@ -169,9 +95,7 @@ def main():
         return
 
     # Process each series that needs renaming
-    print("\n" + "=" * 80)
-    print("RENAME PREVIEW")
-    print("=" * 80)
+    print_section_header("RENAME PREVIEW")
 
     renamed_count = 0
     skipped_count = 0
@@ -195,31 +119,21 @@ def main():
             remaining = len(rename_preview) - display_limit
             print(f"\n  ... and {remaining} more episodes")
 
-        # Ask for confirmation (unless in dry-run or no-confirm mode)
-        should_rename = False
+        # Ask for confirmation
+        prompt = (
+            f"\nRename {len(rename_preview)} episodes "
+            f"for '{series_title}'?"
+        )
+        should_rename = get_confirmation_decision(args, prompt)
 
-        if args.dry_run:
-            print("\n[DRY RUN] Skipping actual rename")
-        elif args.no_confirm:
-            should_rename = True
-            print("\n[NO CONFIRM] Proceeding with rename...")
-        else:
-            prompt = (
-                f"\nRename {len(rename_preview)} episodes "
-                f"for '{series_title}'?"
-            )
-            should_rename = ask_confirmation(prompt)
-
-        if should_rename and not args.dry_run:
+        if should_rename:
             print("Executing rename...")
             # Extract episode file IDs from preview
             file_ids = [item.get("episodeFileId") for item in rename_preview]
             file_ids = [fid for fid in file_ids if fid is not None]
 
             if file_ids:
-                result = execute_rename(
-                    base_url, args.api_key, series_id, file_ids
-                )
+                result = execute_rename(client, series_id, file_ids)
                 if result:
                     print("✓ Rename command queued successfully")
                     renamed_count += 1
@@ -235,26 +149,20 @@ def main():
             skipped_count += 1
 
     # Final summary
-    print("\n" + "=" * 80)
-    print("FINAL SUMMARY")
-    print("=" * 80)
-
     if args.dry_run:
+        print_section_header("FINAL SUMMARY")
         print(
             f"\n[DRY RUN] Found {len(series_with_renames)} series "
             "that need renaming"
         )
         print("No changes were made. Remove --dry-run to apply renames.")
     else:
-        print(f"\nSeries processed: {len(series_with_renames)}")
-        print(f"  - Renamed: {renamed_count}")
-        print(f"  - Skipped: {skipped_count}")
-
-        if renamed_count > 0:
-            print(
-                "\nNote: Rename operations are queued. "
-                "Check Sonarr's queue for progress."
-            )
+        print_final_summary(
+            len(series_with_renames),
+            renamed_count,
+            skipped_count,
+            "Renamed",
+        )
 
 
 if __name__ == "__main__":
