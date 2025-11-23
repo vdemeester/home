@@ -286,6 +286,10 @@
       repo = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    dns = {
+      url = "github:nix-community/dns.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager-25_05 = {
       type = "github";
       owner = "nix-community";
