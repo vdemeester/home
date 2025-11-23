@@ -82,7 +82,7 @@ echo
 if [[ "$DRY_RUN" == "false" ]]; then
     echo -e "${CYAN}Fetching current DNS records from Gandi...${RESET}"
     CURRENT_RECORDS=$(curl -s \
-      -H "Authorization: Apikey $GANDIV5_PERSONAL_TOKEN" \
+      -H "Authorization: Bearer $GANDIV5_PERSONAL_TOKEN" \
       "$API_URL" || echo "[]")
 
     echo -e "${GREEN}Current records fetched${RESET}"
@@ -149,7 +149,7 @@ while IFS= read -r line; do
             # Update/create the record
             RESPONSE=$(curl -s -w "\n%{http_code}" \
               -X PUT \
-              -H "Authorization: Apikey $GANDIV5_PERSONAL_TOKEN" \
+              -H "Authorization: Bearer $GANDIV5_PERSONAL_TOKEN" \
               -H "Content-Type: application/json" \
               -d "{\"rrset_values\": [\"$VALUE\"], \"rrset_ttl\": $TTL}" \
               "$API_URL/$NAME/A")

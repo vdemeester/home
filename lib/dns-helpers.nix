@@ -1,16 +1,13 @@
 { globals }:
 {
   # Helper to get first IP from machine config
-  # Prefers regular IPs, fallback to VPN IPs
+  # Uses VPN IPs only (10.100.0.x) for public DNS
   getMachineIP =
     machine:
     let
-      ips = machine.net.ips or [ ];
       vpnIps = machine.net.vpn.ips or [ ];
-      # Prefer regular IPs, fallback to VPN IPs
-      allIps = if ips != [ ] then ips else vpnIps;
     in
-    if builtins.isList allIps then builtins.head allIps else allIps;
+    if builtins.isList vpnIps then builtins.head vpnIps else vpnIps;
 
   # Generate machine subdomains with wildcard support
   # Takes a list of machine names and returns an attribute set of DNS records
@@ -30,6 +27,7 @@
 
   # Helper to generate service DNS records from globals
   # Takes a services attribute set and returns DNS records with alias support
+  # Uses VPN IPs only (10.100.0.x) for public DNS
   mkServiceRecords =
     services:
     builtins.listToAttrs (
@@ -38,7 +36,7 @@
         let
           service = services.${serviceName};
           hostName = if builtins.isAttrs service then service.host else service;
-          hostIP = globals.machines.${hostName}.net.ips;
+          hostIP = globals.machines.${hostName}.net.vpn.ips;
           ip = if builtins.isList hostIP then builtins.head hostIP else hostIP;
           aliases = if builtins.isAttrs service then (service.aliases or [ ]) else [ ];
         in
