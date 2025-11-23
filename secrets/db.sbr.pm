@@ -25,6 +25,14 @@ aix.sbr.pm. IN A 10.100.0.89
 *.aix.sbr.pm. IN A 10.100.0.89
 rhea.sbr.pm. IN A 192.168.1.50
 *.rhea.sbr.pm. IN A 192.168.1.50
+jellyfin.sbr.pm. IN A 192.168.1.50
+jellyseerr.sbr.pm. IN A 192.168.1.50
+sonarr.sbr.pm. IN A 192.168.1.50
+radarr.sbr.pm. IN A 192.168.1.50
+lidarr.sbr.pm. IN A 192.168.1.50
+bazarr.sbr.pm. IN A 192.168.1.50
+transmission.sbr.pm. IN A 192.168.1.50
+t.sbr.pm. IN A 192.168.1.50
 aion.sbr.pm. IN A 192.168.1.49
 *.aion.sbr.pm. IN A 192.168.1.49
 demeter.sbr.pm. IN A 192.168.1.182
