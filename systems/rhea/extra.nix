@@ -43,6 +43,10 @@
             dnsChallenge = {
               provider = "gandiv5";
               delayBeforeCheck = "0s";
+              resolvers = [
+                "1.1.1.1:53"
+                "8.8.8.8:53"
+              ];
             };
           };
         };
