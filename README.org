@@ -46,9 +46,13 @@ Traditional dotfiles managed outside of home-manager:
 
 ** =/tools=
 Custom tools and utilities:
+- DNS management scripts (show-dns.sh, update-gandi-dns.sh)
+- Media management scripts (*arr stack automation)
 - Battery monitor
 - Emacs configuration
 - Various Go-based utilities
+
+See [[file:tools/README.org][tools/README.org]] for detailed tool documentation.
 
 ** =/pkgs=
 Custom Nix packages and overlays including:
@@ -175,6 +179,13 @@ The repository includes several useful make targets for common operations:
 - =make keyboards/eyelash_corne/draw= - Generate keymap SVG for Eyelash Corne
 
 See [[file:keyboards/README.org][keyboards/README.org]] for detailed keyboard documentation.
+
+*** DNS Management
+- =make dns-show= - Display DNS zone configuration from NixOS
+- =make dns-update-gandi= - Sync DNS records to Gandi Live DNS
+- =make dns-update-gandi-dry-run= - Preview DNS changes without applying
+
+See [[file:tools/README.org][tools/README.org]] for detailed DNS tool documentation.
 
 *** Maintenance
 - =make clean= - Clean up old system generations and results

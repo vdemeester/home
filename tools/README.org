@@ -4,6 +4,56 @@
 
 Collection of custom tools and utilities for system management and automation.
 
+* Shell Scripts
+
+** DNS Management
+
+*** show-dns.sh
+
+Display DNS zone configuration from NixOS bind configuration.
+
+*Usage:*
+#+begin_src shell
+# Show DNS zone for sbr.pm
+./show-dns.sh
+
+# Or via make target
+make dns-show
+#+end_src
+
+*Features:*
+- Reads DNS records from NixOS configuration
+- Displays formatted zone file output
+- Useful for verifying DNS configuration before sync
+
+*** update-gandi-dns.sh
+
+Synchronize DNS records from NixOS configuration to Gandi Live DNS.
+
+*Usage:*
+#+begin_src shell
+# Dry run to preview changes (requires GANDIV5_PERSONAL_TOKEN)
+./update-gandi-dns.sh --dry-run
+
+# Apply changes to Gandi DNS
+./update-gandi-dns.sh
+
+# Or via make targets
+make dns-update-gandi-dry-run
+make dns-update-gandi
+#+end_src
+
+*Features:*
+- Extracts A records from NixOS DNS zone configuration
+- Syncs records to Gandi Live DNS API using Bearer token authentication
+- Dry-run mode for safe preview of changes
+- Skips unchanged records to minimize API calls
+- Supports wildcard DNS records
+
+*Requirements:*
+- =GANDIV5_PERSONAL_TOKEN= environment variable (Gandi Personal Access Token)
+- On rhea: =source /run/agenix/gandi.env= to load token
+
 * Python Scripts
 
 ** Media Management (*arr Stack)

@@ -108,15 +108,15 @@ keyboards:
 # DNS
 .PHONY: dns-show
 dns-show:
-	@bash scripts/show-dns.sh
+	@bash tools/show-dns.sh
 
 .PHONY: dns-update-gandi
 dns-update-gandi:
-	@bash scripts/update-gandi-dns.sh
+	@bash tools/update-gandi-dns.sh
 
 .PHONY: dns-update-gandi-dry-run
 dns-update-gandi-dry-run:
-	@bash scripts/update-gandi-dns.sh --dry-run
+	@bash tools/update-gandi-dns.sh --dry-run
 
 # Maintenance
 .PHONY: clean
