@@ -350,6 +350,11 @@
     };
   };
 
+  security.acme = {
+    acceptTerms = true;
+    email = "vincent@sbr.pm";
+  };
+
   networking.useDHCP = lib.mkDefault true;
 
   # Open firewall for Traefik
