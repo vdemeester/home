@@ -6,122 +6,6 @@
   config,
   ...
 }:
-let
-  # Traefik dynamic configuration
-  traefikDynamicConfig = {
-    http = {
-      routers = {
-        jellyfin = {
-          rule = "Host(`jellyfin.sbr.pm`)";
-          service = "jellyfin";
-          entryPoints = [ "websecure" ];
-          tls = {
-            certResolver = "letsencrypt";
-          };
-        };
-        jellyseerr = {
-          rule = "Host(`jellyseerr.sbr.pm`)";
-          service = "jellyseerr";
-          entryPoints = [ "websecure" ];
-          tls = {
-            certResolver = "letsencrypt";
-          };
-        };
-        sonarr = {
-          rule = "Host(`sonarr.sbr.pm`)";
-          service = "sonarr";
-          entryPoints = [ "websecure" ];
-          tls = {
-            certResolver = "letsencrypt";
-          };
-        };
-        radarr = {
-          rule = "Host(`radarr.sbr.pm`)";
-          service = "radarr";
-          entryPoints = [ "websecure" ];
-          tls = {
-            certResolver = "letsencrypt";
-          };
-        };
-        lidarr = {
-          rule = "Host(`lidarr.sbr.pm`)";
-          service = "lidarr";
-          entryPoints = [ "websecure" ];
-          tls = {
-            certResolver = "letsencrypt";
-          };
-        };
-        bazarr = {
-          rule = "Host(`bazarr.sbr.pm`)";
-          service = "bazarr";
-          entryPoints = [ "websecure" ];
-          tls = {
-            certResolver = "letsencrypt";
-          };
-        };
-        transmission = {
-          rule = "Host(`transmission.sbr.pm`) || Host(`t.sbr.pm`)";
-          service = "transmission";
-          entryPoints = [ "websecure" ];
-          tls = {
-            certResolver = "letsencrypt";
-          };
-        };
-      };
-      services = {
-        jellyfin = {
-          loadBalancer = {
-            servers = [
-              { url = "http://localhost:8096"; }
-            ];
-          };
-        };
-        jellyseerr = {
-          loadBalancer = {
-            servers = [
-              { url = "http://localhost:5055"; }
-            ];
-          };
-        };
-        sonarr = {
-          loadBalancer = {
-            servers = [
-              { url = "http://localhost:8989"; }
-            ];
-          };
-        };
-        radarr = {
-          loadBalancer = {
-            servers = [
-              { url = "http://localhost:7878"; }
-            ];
-          };
-        };
-        lidarr = {
-          loadBalancer = {
-            servers = [
-              { url = "http://localhost:8686"; }
-            ];
-          };
-        };
-        bazarr = {
-          loadBalancer = {
-            servers = [
-              { url = "http://localhost:6767"; }
-            ];
-          };
-        };
-        transmission = {
-          loadBalancer = {
-            servers = [
-              { url = "http://localhost:9091"; }
-            ];
-          };
-        };
-      };
-    };
-  };
-in
 {
   age.secrets."gandi.env" = {
     file = ../../secrets/rhea/gandi.env.age;
@@ -162,10 +46,120 @@ in
             };
           };
         };
+      };
 
-        # Providers
-        providers.file = {
-          filename = pkgs.writeText "traefik-dynamic.toml" (lib.generators.toTOML { } traefikDynamicConfig);
+      # Dynamic configuration using module option
+      dynamicConfigOptions = {
+        http = {
+          routers = {
+            jellyfin = {
+              rule = "Host(`jellyfin.sbr.pm`)";
+              service = "jellyfin";
+              entryPoints = [ "websecure" ];
+              tls = {
+                certResolver = "letsencrypt";
+              };
+            };
+            jellyseerr = {
+              rule = "Host(`jellyseerr.sbr.pm`)";
+              service = "jellyseerr";
+              entryPoints = [ "websecure" ];
+              tls = {
+                certResolver = "letsencrypt";
+              };
+            };
+            sonarr = {
+              rule = "Host(`sonarr.sbr.pm`)";
+              service = "sonarr";
+              entryPoints = [ "websecure" ];
+              tls = {
+                certResolver = "letsencrypt";
+              };
+            };
+            radarr = {
+              rule = "Host(`radarr.sbr.pm`)";
+              service = "radarr";
+              entryPoints = [ "websecure" ];
+              tls = {
+                certResolver = "letsencrypt";
+              };
+            };
+            lidarr = {
+              rule = "Host(`lidarr.sbr.pm`)";
+              service = "lidarr";
+              entryPoints = [ "websecure" ];
+              tls = {
+                certResolver = "letsencrypt";
+              };
+            };
+            bazarr = {
+              rule = "Host(`bazarr.sbr.pm`)";
+              service = "bazarr";
+              entryPoints = [ "websecure" ];
+              tls = {
+                certResolver = "letsencrypt";
+              };
+            };
+            transmission = {
+              rule = "Host(`transmission.sbr.pm`) || Host(`t.sbr.pm`)";
+              service = "transmission";
+              entryPoints = [ "websecure" ];
+              tls = {
+                certResolver = "letsencrypt";
+              };
+            };
+          };
+          services = {
+            jellyfin = {
+              loadBalancer = {
+                servers = [
+                  { url = "http://localhost:8096"; }
+                ];
+              };
+            };
+            jellyseerr = {
+              loadBalancer = {
+                servers = [
+                  { url = "http://localhost:5055"; }
+                ];
+              };
+            };
+            sonarr = {
+              loadBalancer = {
+                servers = [
+                  { url = "http://localhost:8989"; }
+                ];
+              };
+            };
+            radarr = {
+              loadBalancer = {
+                servers = [
+                  { url = "http://localhost:7878"; }
+                ];
+              };
+            };
+            lidarr = {
+              loadBalancer = {
+                servers = [
+                  { url = "http://localhost:8686"; }
+                ];
+              };
+            };
+            bazarr = {
+              loadBalancer = {
+                servers = [
+                  { url = "http://localhost:6767"; }
+                ];
+              };
+            };
+            transmission = {
+              loadBalancer = {
+                servers = [
+                  { url = "http://localhost:9091"; }
+                ];
+              };
+            };
+          };
         };
       };
     };
