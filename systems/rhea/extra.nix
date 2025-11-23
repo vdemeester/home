@@ -5,10 +5,163 @@
   pkgs,
   ...
 }:
+let
+  # Traefik dynamic configuration
+  traefikDynamicConfig = {
+    http = {
+      routers = {
+        jellyfin = {
+          rule = "Host(`jellyfin.rhea.sbr.pm`)";
+          service = "jellyfin";
+          entryPoints = [ "websecure" ];
+          tls = {
+            certResolver = "letsencrypt";
+          };
+        };
+        jellyseerr = {
+          rule = "Host(`jellyseerr.rhea.sbr.pm`)";
+          service = "jellyseerr";
+          entryPoints = [ "websecure" ];
+          tls = {
+            certResolver = "letsencrypt";
+          };
+        };
+        sonarr = {
+          rule = "Host(`sonarr.rhea.sbr.pm`)";
+          service = "sonarr";
+          entryPoints = [ "websecure" ];
+          tls = {
+            certResolver = "letsencrypt";
+          };
+        };
+        radarr = {
+          rule = "Host(`radarr.rhea.sbr.pm`)";
+          service = "radarr";
+          entryPoints = [ "websecure" ];
+          tls = {
+            certResolver = "letsencrypt";
+          };
+        };
+        lidarr = {
+          rule = "Host(`lidarr.rhea.sbr.pm`)";
+          service = "lidarr";
+          entryPoints = [ "websecure" ];
+          tls = {
+            certResolver = "letsencrypt";
+          };
+        };
+        bazarr = {
+          rule = "Host(`bazarr.rhea.sbr.pm`)";
+          service = "bazarr";
+          entryPoints = [ "websecure" ];
+          tls = {
+            certResolver = "letsencrypt";
+          };
+        };
+        transmission = {
+          rule = "Host(`transmission.rhea.sbr.pm`)";
+          service = "transmission";
+          entryPoints = [ "websecure" ];
+          tls = {
+            certResolver = "letsencrypt";
+          };
+        };
+      };
+      services = {
+        jellyfin = {
+          loadBalancer = {
+            servers = [
+              { url = "http://localhost:8096"; }
+            ];
+          };
+        };
+        jellyseerr = {
+          loadBalancer = {
+            servers = [
+              { url = "http://localhost:5055"; }
+            ];
+          };
+        };
+        sonarr = {
+          loadBalancer = {
+            servers = [
+              { url = "http://localhost:8989"; }
+            ];
+          };
+        };
+        radarr = {
+          loadBalancer = {
+            servers = [
+              { url = "http://localhost:7878"; }
+            ];
+          };
+        };
+        lidarr = {
+          loadBalancer = {
+            servers = [
+              { url = "http://localhost:8686"; }
+            ];
+          };
+        };
+        bazarr = {
+          loadBalancer = {
+            servers = [
+              { url = "http://localhost:6767"; }
+            ];
+          };
+        };
+        transmission = {
+          loadBalancer = {
+            servers = [
+              { url = "http://localhost:9091"; }
+            ];
+          };
+        };
+      };
+    };
+  };
+in
 {
   users.users.vincent.linger = true;
 
   services = {
+    traefik = {
+      enable = true;
+
+      staticConfigOptions = {
+        # Entry points
+        entryPoints = {
+          web = {
+            address = ":80";
+            http.redirections.entryPoint = {
+              to = "websecure";
+              scheme = "https";
+            };
+          };
+          websecure = {
+            address = ":443";
+          };
+        };
+
+        # Certificate resolver using Gandi DNS
+        certificatesResolvers.letsencrypt = {
+          acme = {
+            email = "vincent@sbr.pm";
+            storage = "/var/lib/traefik/acme.json";
+            dnsChallenge = {
+              provider = "gandiv5";
+              delayBeforeCheck = "0s";
+            };
+          };
+        };
+
+        # Providers
+        providers.file = {
+          filename = pkgs.writeText "traefik-dynamic.toml" (lib.generators.toTOML { } traefikDynamicConfig);
+        };
+      };
+    };
+
     wireguard = {
       enable = true;
       ips = libx.wg-ips globals.machines.rhea.net.vpn.ips;
@@ -196,6 +349,19 @@
   };
 
   networking.useDHCP = lib.mkDefault true;
+
+  # Open firewall for Traefik
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+
+  # Environment file for Gandi API key
+  # You'll need to create /var/lib/traefik/gandi.env with:
+  # GANDIV5_API_KEY=your_api_key_here
+  systemd.services.traefik.serviceConfig = {
+    EnvironmentFile = "/var/lib/traefik/gandi.env";
+  };
 
   environment.systemPackages = with pkgs; [
     lm_sensors
