@@ -1,5 +1,34 @@
-{ dns, ... }:
+{ dns, globals, ... }:
 with dns.lib.combinators;
+let
+  # Machines with home network IPs that should have wildcards
+  machinesWithWildcard = [
+    "okinawa"
+    "sakhalin"
+    "aomi"
+    "rhea"
+    "aion"
+    "shikoku"
+    "athena"
+    "demeter"
+    "nagoya"
+  ];
+
+  mkHomeMachineRecords = builtins.listToAttrs (
+    map (machineName: {
+      name = machineName;
+      value =
+        let
+          homeIP = globals.machines.${machineName}.net.ips;
+          ip = if builtins.isList homeIP then builtins.head homeIP else homeIP;
+        in
+        {
+          A = [ ip ];
+          subdomains."*".A = [ ip ];
+        };
+    }) machinesWithWildcard
+  );
+in
 {
   SOA = {
     nameServer = "ns1.home.";
@@ -18,57 +47,23 @@ with dns.lib.combinators;
 
   subdomains = {
     # Name servers
-    ns1.A = [ "192.168.1.182" ];
-    ns2.A = [ "192.168.1.183" ];
+    ns1.A = [ (builtins.head globals.machines.demeter.net.ips) ];
+    ns2.A = [ (builtins.head globals.machines.athena.net.ips) ];
 
     # Cache wildcard
-    cache.subdomains."*".A = [ "192.168.1.70" ];
+    cache.subdomains."*".A = [ (builtins.head globals.machines.sakhalin.net.ips) ];
 
-    # Machines with wildcards
-    okinawa = {
-      A = [ "192.168.1.19" ];
-      subdomains."*".A = [ "192.168.1.19" ];
-    };
-    hokkaido.A = [ "192.168.1.11" ];
-    honshu.A = [ "192.168.1.17" ];
-    kobe.A = [ "192.168.1.18" ];
-    sakhalin = {
-      A = [ "192.168.1.70" ];
-      subdomains."*".A = [ "192.168.1.70" ];
-    };
-    synodine.A = [ "192.168.1.20" ];
+    # Machines without wildcards
+    hokkaido.A = [ (builtins.head globals.machines.hokkaido.net.ips) ];
+    kobe.A = [ (builtins.head globals.machines.kobe.net.ips) ];
+    synodine.A = [ (builtins.head globals.machines.synodine.net.ips) ];
+
+    # Hardcoded entries not in globals or incomplete in globals
     wakasu = {
       A = [ "192.168.1.77" ];
       subdomains."*".A = [ "192.168.1.77" ];
     };
-    aomi = {
-      A = [ "192.168.1.23" ];
-      subdomains."*".A = [ "192.168.1.23" ];
-    };
-    rhea = {
-      A = [ "192.168.1.50" ];
-      subdomains."*".A = [ "192.168.1.50" ];
-    };
-    aion = {
-      A = [ "192.168.1.49" ];
-      subdomains."*".A = [ "192.168.1.49" ];
-    };
-    shikoku = {
-      A = [ "192.168.1.24" ];
-      subdomains."*".A = [ "192.168.1.24" ];
-    };
-    athena = {
-      A = [ "192.168.1.183" ];
-      subdomains."*".A = [ "192.168.1.183" ];
-    };
-    demeter = {
-      A = [ "192.168.1.182" ];
-      subdomains."*".A = [ "192.168.1.182" ];
-    };
-    nagoya = {
-      A = [ "192.168.1.80" ];
-      subdomains."*".A = [ "192.168.1.80" ];
-    };
+    honshu.A = [ "192.168.1.17" ];
     remakrable.A = [ "192.168.1.57" ];
     hass.A = [ "192.168.1.181" ];
 
@@ -136,5 +131,6 @@ with dns.lib.combinators;
     k8sn1.A = [ "192.168.1.130" ];
     k8sn2.A = [ "192.168.1.131" ];
     k8sn3.A = [ "192.168.1.132" ];
-  };
+  }
+  // mkHomeMachineRecords;
 }

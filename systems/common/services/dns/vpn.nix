@@ -1,5 +1,35 @@
-{ dns, ... }:
+{ dns, globals, ... }:
 with dns.lib.combinators;
+let
+  # Machines that have VPN entries
+  machineList = [
+    "okinawa"
+    "aomi"
+    "shikoku"
+    "sakhalin"
+    "rhea"
+    "aion"
+    "athena"
+    "demeter"
+    "nagoya"
+    "kyushu"
+  ];
+
+  mkVpnMachineRecords = builtins.listToAttrs (
+    map (machineName: {
+      name = machineName;
+      value =
+        let
+          vpnIP = globals.machines.${machineName}.net.vpn.ips;
+          ip = if builtins.isList vpnIP then builtins.head vpnIP else vpnIP;
+        in
+        {
+          A = [ ip ];
+          subdomains."*".A = [ ip ];
+        };
+    }) machineList
+  );
+in
 {
   SOA = {
     nameServer = "ns1.vpn.";
@@ -18,54 +48,15 @@ with dns.lib.combinators;
 
   subdomains = {
     # Name servers
-    ns1.A = [ "10.100.0.2" ];
-    ns2.A = [ "10.100.0.16" ];
+    ns1.A = [ (builtins.head globals.machines.shikoku.net.vpn.ips) ];
+    ns2.A = [ (builtins.head globals.machines.sakhalin.net.vpn.ips) ];
 
-    # Cache/Massimo wildcards
+    # Cache/Massimo wildcards - these don't exist in globals, keeping hardcoded
     cache.subdomains."*".A = [ "10.100.0.6" ];
     massimo.subdomains."*".A = [ "10.100.0.6" ];
 
-    # Machines with wildcards
-    okinawa = {
-      A = [ "10.100.0.14" ];
-      subdomains."*".A = [ "10.100.0.14" ];
-    };
-    aomi = {
-      A = [ "10.100.0.17" ];
-      subdomains."*".A = [ "10.100.0.17" ];
-    };
-    shikoku = {
-      A = [ "10.100.0.2" ];
-      subdomains."*".A = [ "10.100.0.2" ];
-    };
-    sakhalin = {
-      A = [ "10.100.0.16" ];
-      subdomains."*".A = [ "10.100.0.16" ];
-    };
-    rhea = {
-      A = [ "10.100.0.50" ];
-      subdomains."*".A = [ "10.100.0.50" ];
-    };
-    aion = {
-      A = [ "10.100.0.49" ];
-      subdomains."*".A = [ "10.100.0.49" ];
-    };
-    athena = {
-      A = [ "10.100.0.83" ];
-      subdomains."*".A = [ "10.100.0.83" ];
-    };
-    demeter = {
-      A = [ "10.100.0.82" ];
-      subdomains."*".A = [ "10.100.0.82" ];
-    };
-    nagoya = {
-      A = [ "10.100.0.80" ];
-      subdomains."*".A = [ "10.100.0.80" ];
-    };
-    kyushu = {
-      A = [ "10.100.0.19" ];
-      subdomains."*".A = [ "10.100.0.19" ];
-    };
+    # hass - hardcoded as it's not in the machine list
     hass.A = [ "10.100.0.81" ];
-  };
+  }
+  // mkVpnMachineRecords;
 }

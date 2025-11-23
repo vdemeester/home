@@ -534,4 +534,17 @@ _: {
       };
     };
   };
+  services = {
+    # Media services on rhea
+    jellyfin.host = "rhea";
+    jellyseerr.host = "rhea";
+    sonarr.host = "rhea";
+    radarr.host = "rhea";
+    lidarr.host = "rhea";
+    bazarr.host = "rhea";
+    transmission = {
+      host = "rhea";
+      aliases = [ "t" ];
+    };
+  };
 }

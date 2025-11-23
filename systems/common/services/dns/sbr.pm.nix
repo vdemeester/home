@@ -1,5 +1,32 @@
-{ dns, ... }:
+{ dns, globals, ... }:
 with dns.lib.combinators;
+let
+  dnsHelpers = import ../../../../lib/dns-helpers.nix { inherit globals; };
+  inherit (dnsHelpers) getMachineIP mkServiceRecords;
+
+  # Only include machines that should be in sbr.pm zone
+  machineList = [
+    "shikoku"
+    "sakhalin"
+    "aix"
+    "rhea"
+    "aion"
+    "demeter"
+    "athena"
+    "nagoya"
+    "kerkouane"
+  ];
+
+  mkMachineRecords = builtins.listToAttrs (
+    map (machineName: {
+      name = machineName;
+      value = {
+        A = [ (getMachineIP globals.machines.${machineName}) ];
+        subdomains."*".A = [ (getMachineIP globals.machines.${machineName}) ];
+      };
+    }) machineList
+  );
+in
 {
   SOA = {
     nameServer = "ns1.sbr.pm.";
@@ -17,9 +44,9 @@ with dns.lib.combinators;
   ];
 
   subdomains = {
-    # Name servers
-    ns1.A = [ "192.168.1.182" ];
-    ns2.A = [ "192.168.1.183" ];
+    # Name servers (demeter and athena)
+    ns1.A = [ (getMachineIP globals.machines.demeter) ];
+    ns2.A = [ (getMachineIP globals.machines.athena) ];
 
     # Wildcard for public endpoint
     "*".A = [
@@ -28,61 +55,7 @@ with dns.lib.combinators;
         ttl = 10800;
       }
     ];
-
-    # Machines
-    wakasu = {
-      A = [ "192.168.1.77" ];
-      subdomains."*".A = [ "192.168.1.77" ];
-    };
-    shikoku = {
-      A = [ "192.168.1.24" ];
-      subdomains."*".A = [ "192.168.1.24" ];
-    };
-    sakhalin = {
-      A = [ "192.168.1.70" ];
-      subdomains."*".A = [ "192.168.1.70" ];
-    };
-    aix = {
-      A = [ "10.100.0.89" ];
-      subdomains."*".A = [ "10.100.0.89" ];
-    };
-    rhea = {
-      A = [ "192.168.1.50" ];
-      subdomains."*".A = [ "192.168.1.50" ];
-    };
-    aion = {
-      A = [ "192.168.1.49" ];
-      subdomains."*".A = [ "192.168.1.49" ];
-    };
-    demeter = {
-      A = [ "192.168.1.182" ];
-      subdomains."*".A = [ "192.168.1.182" ];
-    };
-    athena = {
-      A = [ "192.168.1.183" ];
-      subdomains."*".A = [ "192.168.1.183" ];
-    };
-    honshu = {
-      A = [ "192.168.1.15" ];
-      subdomains."*".A = [ "192.168.1.15" ];
-    };
-    nagoya = {
-      A = [ "192.168.1.80" ];
-      subdomains."*".A = [ "192.168.1.80" ];
-    };
-    kerkouane = {
-      A = [ "10.100.0.1" ];
-      subdomains."*".A = [ "10.100.0.1" ];
-    };
-
-    # Rhea media services
-    jellyfin.A = [ "192.168.1.50" ];
-    jellyseerr.A = [ "192.168.1.50" ];
-    sonarr.A = [ "192.168.1.50" ];
-    radarr.A = [ "192.168.1.50" ];
-    lidarr.A = [ "192.168.1.50" ];
-    bazarr.A = [ "192.168.1.50" ];
-    transmission.A = [ "192.168.1.50" ];
-    t.A = [ "192.168.1.50" ];
-  };
+  }
+  // mkMachineRecords
+  // mkServiceRecords globals.services;
 }

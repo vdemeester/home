@@ -105,6 +105,19 @@ keyboards/eyelash_corne/draw:
 keyboards:
 	@$(MAKE) -C keyboards help
 
+# DNS
+.PHONY: dns-show
+dns-show:
+	@bash scripts/show-dns.sh
+
+.PHONY: dns-update-gandi
+dns-update-gandi:
+	@bash scripts/update-gandi-dns.sh
+
+.PHONY: dns-update-gandi-dry-run
+dns-update-gandi-dry-run:
+	@bash scripts/update-gandi-dns.sh --dry-run
+
 # Maintenance
 .PHONY: clean
 clean: clean-system clean-results
