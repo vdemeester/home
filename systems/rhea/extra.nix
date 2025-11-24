@@ -53,119 +53,163 @@
       };
 
       # Dynamic configuration using module option
-      dynamicConfigOptions = {
-        http = {
-          routers = {
-            jellyfin = {
-              rule = "Host(`jellyfin.sbr.pm`)";
-              service = "jellyfin";
+      dynamicConfigOptions =
+        let
+          # Filter machines that have syncthing configured
+          syncthingMachines = lib.filterAttrs (
+            _name: machine: machine ? syncthing && machine.syncthing ? folders
+          ) globals.machines;
+
+          # Generate routers for syncthing hosts
+          syncthingRouters = lib.mapAttrs' (
+            name: _machine:
+            lib.nameValuePair "syncthing-${name}" {
+              rule = "Host(`syncthing.sbr.pm`) && PathPrefix(`/${name}`) || Host(`s.sbr.pm`) && PathPrefix(`/${name}`)";
+              service = "syncthing-${name}";
               entryPoints = [ "websecure" ];
+              middlewares = [ "syncthing-${name}-strip" ];
               tls = {
                 certResolver = "letsencrypt";
               };
-            };
-            jellyseerr = {
-              rule = "Host(`jellyseerr.sbr.pm`)";
-              service = "jellyseerr";
-              entryPoints = [ "websecure" ];
-              tls = {
-                certResolver = "letsencrypt";
-              };
-            };
-            sonarr = {
-              rule = "Host(`sonarr.sbr.pm`)";
-              service = "sonarr";
-              entryPoints = [ "websecure" ];
-              tls = {
-                certResolver = "letsencrypt";
-              };
-            };
-            radarr = {
-              rule = "Host(`radarr.sbr.pm`)";
-              service = "radarr";
-              entryPoints = [ "websecure" ];
-              tls = {
-                certResolver = "letsencrypt";
-              };
-            };
-            lidarr = {
-              rule = "Host(`lidarr.sbr.pm`)";
-              service = "lidarr";
-              entryPoints = [ "websecure" ];
-              tls = {
-                certResolver = "letsencrypt";
-              };
-            };
-            bazarr = {
-              rule = "Host(`bazarr.sbr.pm`)";
-              service = "bazarr";
-              entryPoints = [ "websecure" ];
-              tls = {
-                certResolver = "letsencrypt";
-              };
-            };
-            transmission = {
-              rule = "Host(`transmission.sbr.pm`) || Host(`t.sbr.pm`)";
-              service = "transmission";
-              entryPoints = [ "websecure" ];
-              tls = {
-                certResolver = "letsencrypt";
-              };
-            };
-          };
-          services = {
-            jellyfin = {
+            }
+          ) syncthingMachines;
+
+          # Generate services for syncthing hosts
+          syncthingServices = lib.mapAttrs' (
+            name: machine:
+            lib.nameValuePair "syncthing-${name}" {
               loadBalancer = {
                 servers = [
-                  { url = "http://localhost:8096"; }
+                  { url = "http://${builtins.head machine.net.vpn.ips}:8384"; }
                 ];
               };
-            };
-            jellyseerr = {
-              loadBalancer = {
-                servers = [
-                  { url = "http://localhost:5055"; }
-                ];
+            }
+          ) syncthingMachines;
+
+          # Generate middleware for path stripping
+          syncthingMiddlewares = lib.mapAttrs' (
+            name: _machine:
+            lib.nameValuePair "syncthing-${name}-strip" {
+              stripPrefix = {
+                prefixes = [ "/${name}" ];
+              };
+            }
+          ) syncthingMachines;
+        in
+        {
+          http = {
+            routers = syncthingRouters // {
+              jellyfin = {
+                rule = "Host(`jellyfin.sbr.pm`)";
+                service = "jellyfin";
+                entryPoints = [ "websecure" ];
+                tls = {
+                  certResolver = "letsencrypt";
+                };
+              };
+              jellyseerr = {
+                rule = "Host(`jellyseerr.sbr.pm`)";
+                service = "jellyseerr";
+                entryPoints = [ "websecure" ];
+                tls = {
+                  certResolver = "letsencrypt";
+                };
+              };
+              sonarr = {
+                rule = "Host(`sonarr.sbr.pm`)";
+                service = "sonarr";
+                entryPoints = [ "websecure" ];
+                tls = {
+                  certResolver = "letsencrypt";
+                };
+              };
+              radarr = {
+                rule = "Host(`radarr.sbr.pm`)";
+                service = "radarr";
+                entryPoints = [ "websecure" ];
+                tls = {
+                  certResolver = "letsencrypt";
+                };
+              };
+              lidarr = {
+                rule = "Host(`lidarr.sbr.pm`)";
+                service = "lidarr";
+                entryPoints = [ "websecure" ];
+                tls = {
+                  certResolver = "letsencrypt";
+                };
+              };
+              bazarr = {
+                rule = "Host(`bazarr.sbr.pm`)";
+                service = "bazarr";
+                entryPoints = [ "websecure" ];
+                tls = {
+                  certResolver = "letsencrypt";
+                };
+              };
+              transmission = {
+                rule = "Host(`transmission.sbr.pm`) || Host(`t.sbr.pm`)";
+                service = "transmission";
+                entryPoints = [ "websecure" ];
+                tls = {
+                  certResolver = "letsencrypt";
+                };
               };
             };
-            sonarr = {
-              loadBalancer = {
-                servers = [
-                  { url = "http://localhost:8989"; }
-                ];
+            services = syncthingServices // {
+              jellyfin = {
+                loadBalancer = {
+                  servers = [
+                    { url = "http://localhost:8096"; }
+                  ];
+                };
+              };
+              jellyseerr = {
+                loadBalancer = {
+                  servers = [
+                    { url = "http://localhost:5055"; }
+                  ];
+                };
+              };
+              sonarr = {
+                loadBalancer = {
+                  servers = [
+                    { url = "http://localhost:8989"; }
+                  ];
+                };
+              };
+              radarr = {
+                loadBalancer = {
+                  servers = [
+                    { url = "http://localhost:7878"; }
+                  ];
+                };
+              };
+              lidarr = {
+                loadBalancer = {
+                  servers = [
+                    { url = "http://localhost:8686"; }
+                  ];
+                };
+              };
+              bazarr = {
+                loadBalancer = {
+                  servers = [
+                    { url = "http://localhost:6767"; }
+                  ];
+                };
+              };
+              transmission = {
+                loadBalancer = {
+                  servers = [
+                    { url = "http://localhost:9091"; }
+                  ];
+                };
               };
             };
-            radarr = {
-              loadBalancer = {
-                servers = [
-                  { url = "http://localhost:7878"; }
-                ];
-              };
-            };
-            lidarr = {
-              loadBalancer = {
-                servers = [
-                  { url = "http://localhost:8686"; }
-                ];
-              };
-            };
-            bazarr = {
-              loadBalancer = {
-                servers = [
-                  { url = "http://localhost:6767"; }
-                ];
-              };
-            };
-            transmission = {
-              loadBalancer = {
-                servers = [
-                  { url = "http://localhost:9091"; }
-                ];
-              };
-            };
+            middlewares = syncthingMiddlewares;
           };
         };
-      };
     };
 
     wireguard = {
