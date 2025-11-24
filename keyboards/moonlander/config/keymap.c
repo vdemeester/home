@@ -224,7 +224,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		  XXXXXXX, KC_EXLM,  KC_PAST, KC_PSLS, KC_EQL,  KC_AMPR,  XXXXXXX,           XXXXXXX, KC_HASH, KC_LPRN, KC_RPRN, KC_SCLN, FR_DQUO, XXXXXXX,
 		  XXXXXXX, KC_TILD,  KC_LBRC, KC_RBRC, KC_PLUS, KC_PERC,                              KC_AT,   KC_COLN, KC_COMM, KC_DOT,  FR_QUOT, XXXXXXX,
 		  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, _______,           RM_VALU,           RM_TOGG,          _______, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
-		  RM_HUED, RM_VALD, RM_HUEU, TOGGLE_LAYER_COLOR,_______, _______
+		  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,_______, _______
 		  ),
   [NUMB] = LAYOUT(
 		  VRSN,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -235,8 +235,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		  _______, _______, _______,           _______, _______, _______
 		  ),
   [NAVI] = LAYOUT(
-		  VRSN,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,
-		  _______, _______, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,  _______,           _______, KC_PSCR,   KC_HOME,    KC_UP,    KC_END,    KC_PGUP, _______,
+		  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+		  VRSN,    _______, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,  _______,           _______, KC_PSCR,   KC_HOME,    KC_UP,    KC_END,    KC_PGUP, QK_BOOT,
 		  _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,  _______,           _______, _______, KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_PGDN, _______,
 		  _______, _______, _______, _______, _______, _______,                              KC_MUTE, _______, _______, _______, _______, _______,
 		  EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
@@ -602,8 +602,8 @@ bool rgb_matrix_indicators_user(void) {
     case NAVI:
       rgb_matrix_set_color_all(RGB_OFF);
 
-      rgb_matrix_set_color(0, RGB_RED);
-      rgb_matrix_set_color(36, RGB_RED);
+      rgb_matrix_set_color(1, RGB_RED);
+      rgb_matrix_set_color(37, RGB_RED);
 
       // Arrows
       rgb_matrix_set_color(52, 0, 113, 255);
