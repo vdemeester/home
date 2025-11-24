@@ -102,6 +102,163 @@ ZMK_MOD_MORPH(hyp_com_smc,
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 
+// Additional bépo right_alt (AltGr) behaviors based on https://www.raktres.net/projects/svg_kbd_layout/
+
+// tap: O | right_alt + tap: œ (OE ligature)
+ZMK_MOD_MORPH(o_oe,
+    bindings = <&kp O>, <&kp OE>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: V | right_alt + tap: ? (question mark)
+ZMK_MOD_MORPH(v_qmark,
+    bindings = <&kp V>, <&kp QMARK>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: L | right_alt + tap: / (forward slash)
+ZMK_MOD_MORPH(l_fslh,
+    bindings = <&kp L>, <&kp FSLH>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: Z | right_alt + tap: (skip - schwa not easily available)
+
+// tap: W | right_alt + tap: (skip - breve dead key)
+
+// tap: Y | right_alt + tap: { (left brace)
+ZMK_MOD_MORPH(y_lbrc,
+    bindings = <&kp Y>, <&kp LBRC>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: X | right_alt + tap: } (right brace)
+ZMK_MOD_MORPH(x_rbrc,
+    bindings = <&kp X>, <&kp RBRC>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: K | right_alt + tap: ~ (tilde)
+ZMK_MOD_MORPH(k_tilde,
+    bindings = <&kp K>, <&kp TILDE>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: Q | right_alt + tap: ° (degree)
+ZMK_MOD_MORPH(q_deg,
+    bindings = <&kp Q>, <&kp RA(LS(N8))>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: G | right_alt + tap: µ (micro)
+ZMK_MOD_MORPH(g_mu,
+    bindings = <&kp G>, <&kp RA(M)>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: H | right_alt + tap: (skip - dagger not easily available)
+
+// tap: F | right_alt + tap: (skip - ogonek dead key)
+
+// tap: À | right_alt + tap: \ (backslash)
+ZMK_MOD_MORPH(agra_a_bslh,
+    bindings = <&AGRA A>, <&kp BSLH>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: C | right_alt + tap: © (copyright)
+ZMK_MOD_MORPH(c_copy,
+    bindings = <&hmr HL C>, <&kp RA(C)>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: T | right_alt + tap: (skip - thorn not easily available)
+
+// tap: S | right_alt + tap: ß (eszett/sharp s)
+ZMK_MOD_MORPH(s_ss,
+    bindings = <&hmr SR S>, <&kp RA(S)>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: R | right_alt + tap: ® (registered)
+ZMK_MOD_MORPH(r_reg,
+    bindings = <&hmr AR R>, <&kp RA(R)>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: N | right_alt + tap: ~ (tilde)
+ZMK_MOD_MORPH(n_tilde,
+    bindings = <&hmr GL N>, <&kp TILDE>;
+    mods = <(MOD_RALT)>;
+)
+
+// tap: M | right_alt + tap: (skip - macron dead key)
+
+// Shift+AltGr (right_alt+shift) behaviors based on bépo standard
+
+// tap: B | right_alt + tap: | | shift+right_alt + tap: ¦ (broken pipe)
+ZMK_MOD_MORPH(b_pipe_brkp,
+    bindings = <&b_pipe>, <&kp RA(LS(BSLH))>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tap: P | right_alt + tap: & | shift+right_alt + tap: § (section)
+ZMK_MOD_MORPH(p_amp_sect,
+    bindings = <&p_amp>, <&kp RA(S)>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tap: O/œ | shift+right_alt + tap: Œ (capital OE)
+ZMK_MOD_MORPH(o_oe_cap,
+    bindings = <&o_oe>, <&kp RA(LS(K))>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tap: L | right_alt + tap: / | shift+right_alt + tap: £ (pound)
+ZMK_MOD_MORPH(l_fslh_pound,
+    bindings = <&l_fslh>, <&kp RA(LS(N4))>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tap: Y | right_alt + tap: { | shift+right_alt + tap: ' (right single quote)
+ZMK_MOD_MORPH(y_lbrc_rsqt,
+    bindings = <&y_lbrc>, <&kp RA(RBKT)>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tap: X | right_alt + tap: } | shift+right_alt + tap: ' (left single quote)
+ZMK_MOD_MORPH(x_rbrc_lsqt,
+    bindings = <&x_rbrc>, <&kp RA(LBKT)>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tap: À | right_alt + tap: \ | shift+right_alt + tap: Æ (capital AE)
+ZMK_MOD_MORPH(agra_a_bslh_ae,
+    bindings = <&agra_a_bslh>, <&kp RA(LS(Z))>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tap: C/© | shift+right_alt + tap: © (keep same - copyright)
+// Already handled by c_copy
+
+// tap: T | shift+right_alt + tap: ™ (trademark)
+ZMK_MOD_MORPH(t_tm,
+    bindings = <&hmr CR T>, <&kp RA(LS(N2))>;
+    mods = <(MOD_LSFT|MOD_RALT)>;
+)
+
+// tap: G | right_alt + tap: µ | shift+right_alt + tap: † (dagger)
+ZMK_MOD_MORPH(g_mu_dag,
+    bindings = <&g_mu>, <&kp RA(T)>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+// tap: H | shift+right_alt + tap: ‡ (double dagger)
+ZMK_MOD_MORPH(h_ddag,
+    bindings = <&kp H>, <&kp RA(LS(N7))>;
+    mods = <(MOD_LSFT|MOD_RALT)>;
+)
+
 /*
 Local Variables:
 mode: c

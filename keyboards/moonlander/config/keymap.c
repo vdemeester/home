@@ -54,9 +54,48 @@ const key_override_t circ_exclamation_override = ko_make_with_layers(MOD_MASK_SH
 const key_override_t dot_colon_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, KC_COLN, 1 << BEPO);
 const key_override_t comma_semicolon_override = ko_make_with_layers(MOD_MASK_SHIFT, HM_HYP_COMM, KC_SCLN, 1 << BEPO);
 
-// row 1
+// Right Alt (AltGr) behaviors for bépo layer
 const key_override_t b_pipe_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_B, KC_PIPE, 1 << BEPO, MOD_MASK_SHIFT);
 const key_override_t b_brkp_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_B, US_BRKP, 1 << BEPO);
+
+const key_override_t p_amp_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_P, KC_AMPR, 1 << BEPO, MOD_MASK_SHIFT);
+const key_override_t p_sect_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_P, US_SECT, 1 << BEPO);
+
+const key_override_t o_oe_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_O, US_OE, 1 << BEPO, MOD_MASK_SHIFT);
+const key_override_t o_oe_cap_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_O, US_OE_CAP, 1 << BEPO);
+
+const key_override_t v_qmark_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_V, KC_QUES, 1 << BEPO, MOD_MASK_SHIFT);
+
+const key_override_t l_fslh_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_L, KC_SLSH, 1 << BEPO, MOD_MASK_SHIFT);
+const key_override_t l_pound_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_L, US_PND, 1 << BEPO);
+
+const key_override_t y_lbrc_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_Y, KC_LCBR, 1 << BEPO, MOD_MASK_SHIFT);
+const key_override_t y_rsqt_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_Y, US_RSQT, 1 << BEPO);
+
+const key_override_t x_rbrc_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_X, KC_RCBR, 1 << BEPO, MOD_MASK_SHIFT);
+const key_override_t x_lsqt_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_X, US_LSQT, 1 << BEPO);
+
+const key_override_t k_tilde_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_K, KC_TILD, 1 << BEPO, MOD_MASK_SHIFT);
+
+const key_override_t q_deg_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_Q, US_DEG, 1 << BEPO, MOD_MASK_SHIFT);
+
+const key_override_t g_mu_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, KC_G, US_MICR, 1 << BEPO, MOD_MASK_SHIFT);
+const key_override_t g_dag_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_G, US_DAGG, 1 << BEPO);
+
+const key_override_t h_ddag_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, KC_H, US_DDAG, 1 << BEPO);
+
+const key_override_t agra_bslh_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, FR_A_GRAVE, KC_BSLS, 1 << BEPO, MOD_MASK_SHIFT);
+const key_override_t agra_ae_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, FR_A_GRAVE, US_AE_CAP, 1 << BEPO);
+
+const key_override_t c_copy_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, HM_HYP_C, US_COPY, 1 << BEPO, MOD_MASK_SHIFT);
+
+const key_override_t t_tm_override = ko_make_with_layers(MOD_BIT_LSHIFT | MOD_BIT_RALT, HM_CTL_T, US_TM, 1 << BEPO);
+
+const key_override_t s_ss_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, HM_SFT_S, US_SS, 1 << BEPO, MOD_MASK_SHIFT);
+
+const key_override_t r_reg_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, HM_ALT_R, US_REGD, 1 << BEPO, MOD_MASK_SHIFT);
+
+const key_override_t n_tilde_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, HM_GUI_N, KC_TILD, 1 << BEPO, MOD_MASK_SHIFT);
 
 const key_override_t space_underscore_override = ko_make_with_layers_and_negmods(MOD_BIT_RALT, LT(NUMB, KC_SPC), KC_UNDS, 1 << BEPO, MOD_MASK_SHIFT);
 
@@ -65,8 +104,32 @@ const key_override_t *key_overrides[] = {
   &dot_colon_override,
   &comma_semicolon_override,
 
+  // RAlt behaviors
   &b_pipe_override,
   &b_brkp_override,
+  &p_amp_override,
+  &p_sect_override,
+  &o_oe_override,
+  &o_oe_cap_override,
+  &v_qmark_override,
+  &l_fslh_override,
+  &l_pound_override,
+  &y_lbrc_override,
+  &y_rsqt_override,
+  &x_rbrc_override,
+  &x_lsqt_override,
+  &k_tilde_override,
+  &q_deg_override,
+  &g_mu_override,
+  &g_dag_override,
+  &h_ddag_override,
+  &agra_bslh_override,
+  &agra_ae_override,
+  &c_copy_override,
+  &t_tm_override,
+  &s_ss_override,
+  &r_reg_override,
+  &n_tilde_override,
   &space_underscore_override,
 };
 
