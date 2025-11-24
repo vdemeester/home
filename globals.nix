@@ -569,5 +569,9 @@ _: {
       host = "rhea";
       aliases = [ "t" ];
     };
+    syncthing = {
+      host = "rhea";
+      aliases = [ "s" ];
+    };
   };
 }
