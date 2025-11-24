@@ -52,11 +52,11 @@ in
   # Email (Gandi)
   MX = [
     {
-      priority = 10;
+      preference = 10;
       exchange = "spool.mail.gandi.net.";
     }
     {
-      priority = 50;
+      preference = 50;
       exchange = "fb.mail.gandi.net.";
     }
   ];
