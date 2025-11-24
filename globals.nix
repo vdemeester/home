@@ -450,6 +450,15 @@ _: {
       };
     };
     wakasu = {
+      net = {
+        vpn = {
+          ips = [ "10.100.0.8" ];
+        };
+        names = [
+          "wakasu.vpn"
+          "wakasu.sbr.pm"
+        ];
+      };
       syncthing = {
         id = "WM23THJ-ECXRLXA-HE5TIKO-VPLSMRY-Y2EWZI7-Q7JMLPX-5Q5UNEN-QMB7ZQJ";
         folders = {
@@ -459,6 +468,20 @@ _: {
           screenshots = { };
           wallpapers = { };
         };
+      };
+    };
+    # Home Assistant
+    hass = {
+      net = {
+        ips = [ "192.168.1.181" ];
+        vpn = {
+          ips = [ "10.100.0.81" ];
+        };
+        names = [
+          "hass.home"
+          "hass.vpn"
+          "hass.sbr.pm"
+        ];
       };
     };
     okinawa = {

@@ -10,20 +10,31 @@ Collection of custom tools and utilities for system management and automation.
 
 *** show-dns.sh
 
-Display DNS zone configuration from NixOS bind configuration.
+Display DNS zone configuration from NixOS bind configuration with enhanced formatting.
 
 *Usage:*
 #+begin_src shell
-# Show DNS zone for sbr.pm
+# Show compact summary view (default)
 ./show-dns.sh
+
+# Show full zone files with syntax highlighting
+./show-dns.sh --verbose
+
+# Check zones for specific host
+./show-dns.sh athena
 
 # Or via make target
 make dns-show
 #+end_src
 
 *Features:*
-- Reads DNS records from NixOS configuration
-- Displays formatted zone file output
+- Compact summary view with record counts by default
+- Color-coded DNS record types (SOA, NS, A, PTR, etc.)
+- Column-aligned output for easy scanning
+- Groups records by type with spacing
+- Shows TTL values when present
+- Verbose mode for full zone file output
+- Statistics summary at the end
 - Useful for verifying DNS configuration before sync
 
 *** update-gandi-dns.sh

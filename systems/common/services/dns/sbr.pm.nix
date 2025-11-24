@@ -15,6 +15,9 @@ let
     "athena"
     "nagoya"
     "kerkouane"
+    "aomi"
+    "kyushu"
+    "wakasu"
   ];
 
   mkMachineRecords = builtins.listToAttrs (
@@ -43,6 +46,21 @@ in
     "ns2.sbr.pm."
   ];
 
+  # Root domain points to public endpoint
+  A = [ "167.99.17.238" ];
+
+  # Email (Gandi)
+  MX = [
+    {
+      priority = 10;
+      exchange = "spool.mail.gandi.net.";
+    }
+    {
+      priority = 50;
+      exchange = "fb.mail.gandi.net.";
+    }
+  ];
+
   subdomains = {
     # Name servers (demeter and athena)
     ns1.A = [ (getMachineIP globals.machines.demeter) ];
@@ -55,6 +73,19 @@ in
         ttl = 10800;
       }
     ];
+
+    # Email CNAMEs (Gandi mail service)
+    imap.CNAME = [ "access.mail.gandi.net." ];
+    pop.CNAME = [ "access.mail.gandi.net." ];
+    smtp.CNAME = [ "relay.mail.gandi.net." ];
+    webmail.CNAME = [ "webmail.gandi.net." ];
+
+    # Shortcuts
+    p.A = [ "167.99.17.238" ]; # public endpoint shortcut
+    www = {
+      A = [ "167.99.17.238" ];
+      subdomains."*".A = [ "167.99.17.238" ];
+    };
   }
   // mkMachineRecords
   // mkServiceRecords globals.services;
