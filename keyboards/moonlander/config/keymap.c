@@ -193,72 +193,182 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+  // ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐
+  // │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │             │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │   TAB   │    B    │    É    │    P    │    O    │    È    │ XXXXXXX │             │ XXXXXXX │    ^    │    V    │    D    │    L    │    J    │    Z    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ NUMWORD │  GUI/A  │  ALT/U  │  SFT/I  │  CTL/E  │  HYP/,  │ XXXXXXX │             │ XXXXXXX │  HYP/C  │  CTL/T  │  SFT/S  │  ALT/R  │  GUI/N  │ SYMB/M  │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┘             └─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │   GRV   │    À    │    Y    │    X    │    .    │    K    │                                 │    '    │    Q    │    G    │    H    │    F    │    W    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼───────────────┐     ┌───────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ MODS/DEL│         │     REPEAT    │     │  ALT-REP  │         │  RALT   │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │
+  // └─────────┴─────────┴─────────┴─────────┴─────────┼─────────┼─────────┬─────┤     ├─────┬─────┼─────────┼─────────┴─────────┴─────────┴─────────┴─────────┘
+  //                                                   │ NUMB/SPC│ NAVI/BSP│ XXX │     │ XXX │SHIFT│ SYMB/ENT│
+  //                                                   └─────────┴─────────┴─────┘     └─────┴─────┴─────────┘
   [BEPO] = LAYOUT(
-		  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-		  KC_TAB,  KC_B,    FR_E_AIGU,    KC_P,    KC_O,    FR_E_GRAVE,    XXXXXXX,           XXXXXXX, KC_CIRC,    KC_V,    KC_D,    KC_L,    KC_J,    KC_Z,
-		  NUMWORD,  HM_GUI_A,    HM_ALT_U,    HM_SFT_I,    HM_CTL_E,    HM_HYP_COMM,    XXXXXXX,           XXXXXXX, HM_HYP_C,    HM_CTL_T,    HM_SFT_S,    HM_ALT_R,    HM_GUI_N, LT(SYMB,KC_M),
-		  KC_GRV,  FR_A_GRAVE,    KC_Y,    KC_X,    KC_DOT,    KC_K,                                FR_QUOT,    KC_Q,    KC_G, KC_H,  KC_F, KC_W,
-		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, LT(MODS, KC_DEL),  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
-		  LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  OS_LSFT,  LT(SYMB, KC_ENT)
-		  ),
-  [ERGL] = LAYOUT(
-		  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-		  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
-		  NUMWORD,  HM_GUI_A,    HM_ALT_S,    HM_SFT_D,    HM_CTL_F,    HM_HYP_G,    XXXXXXX,           XXXXXXX, HM_HYP_H,    HM_CTL_J,    HM_SFT_K,    HM_ALT_L,    HM_GUI_SCLN, KC_QUOT,
-		  KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
-		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
-		  LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  OS_LSFT,  LT(SYMB, KC_ENT)
-		  ),
-  [QWER] = LAYOUT(
-		  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-		  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    XXXXXXX,           XXXXXXX, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
-		  NUMWORD,  HM_GUI_A,    HM_ALT_S,    HM_SFT_D,    HM_CTL_F,    HM_HYP_G,    XXXXXXX,           XXXXXXX, HM_HYP_H,    HM_CTL_J,    HM_SFT_K,    HM_ALT_L,    HM_GUI_SCLN, KC_QUOT,
-		  KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RBRC,
-		  XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, KC_DEL,  QK_REP,               QK_AREP,      KC_RALT, XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
-		  LT(NUMB, KC_SPC),  LT(NAVI,KC_BSPC), XXXXXXX,           XXXXXXX,  OS_LSFT,  LT(SYMB, KC_ENT)
-		  ),
+    XXXXXXX,  XXXXXXX,     XXXXXXX,     XXXXXXX,      XXXXXXX,         XXXXXXX,         XXXXXXX,    XXXXXXX,  XXXXXXX,         XXXXXXX,     XXXXXXX,     XXXXXXX,      XXXXXXX,         XXXXXXX,
+    KC_TAB,   KC_B,        FR_E_AIGU,   KC_P,         KC_O,            FR_E_GRAVE,      XXXXXXX,    XXXXXXX,  KC_CIRC,         KC_V,        KC_D,        KC_L,         KC_J,            KC_Z,
+    NUMWORD,  HM_GUI_A,    HM_ALT_U,    HM_SFT_I,     HM_CTL_E,        HM_HYP_COMM,     XXXXXXX,    XXXXXXX,  HM_HYP_C,        HM_CTL_T,    HM_SFT_S,    HM_ALT_R,     HM_GUI_N,        LT(SYMB,KC_M),
+    KC_GRV,   FR_A_GRAVE,  KC_Y,        KC_X,         KC_DOT,          KC_K,                                  FR_QUOT,         KC_Q,        KC_G,        KC_H,         KC_F,            KC_W,
+    XXXXXXX,  XXXXXXX,     XXXXXXX,     XXXXXXX,      LT(MODS,KC_DEL),                  QK_REP,     QK_AREP,                   KC_RALT,     XXXXXXX,     XXXXXXX,      XXXXXXX,         XXXXXXX,
+                                                      LT(NUMB,KC_SPC), LT(NAVI,KC_BSPC), XXXXXXX,    XXXXXXX,  OS_LSFT,         LT(SYMB,KC_ENT)
+  ),
 
+  // ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐
+  // │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │             │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │   TAB   │    Q    │    W    │    E    │    R    │    T    │ XXXXXXX │             │ XXXXXXX │    Y    │    U    │    I    │    O    │    P    │    [    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ NUMWORD │  GUI/A  │  ALT/S  │  SFT/D  │  CTL/F  │  HYP/G  │ XXXXXXX │             │ XXXXXXX │  HYP/H  │  CTL/J  │  SFT/K  │  ALT/L  │  GUI/;  │    "    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┘             └─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │   GRV   │    Z    │    X    │    C    │    V    │    B    │                                 │    N    │    M    │    ,    │    .    │    /    │    ]    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼───────────────┐     ┌───────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │   DEL   │         │     REPEAT    │     │  ALT-REP  │         │  RALT   │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │
+  // └─────────┴─────────┴─────────┴─────────┴─────────┼─────────┼─────────┬─────┤     ├─────┬─────┼─────────┼─────────┴─────────┴─────────┴─────────┴─────────┘
+  //                                                   │ NUMB/SPC│ NAVI/BSP│ XXX │     │ XXX │SHIFT│ SYMB/ENT│
+  //                                                   └─────────┴─────────┴─────┘     └─────┴─────┴─────────┘
+  [ERGL] = LAYOUT(
+    XXXXXXX,  XXXXXXX,     XXXXXXX,   XXXXXXX,   XXXXXXX,     XXXXXXX,         XXXXXXX,    XXXXXXX,  XXXXXXX,      XXXXXXX,     XXXXXXX,   XXXXXXX,      XXXXXXX,      XXXXXXX,
+    KC_TAB,   KC_Q,        KC_W,      KC_E,      KC_R,        KC_T,            XXXXXXX,    XXXXXXX,  KC_Y,         KC_U,        KC_I,      KC_O,         KC_P,         KC_LBRC,
+    NUMWORD,  HM_GUI_A,    HM_ALT_S,  HM_SFT_D,  HM_CTL_F,    HM_HYP_G,        XXXXXXX,    XXXXXXX,  HM_HYP_H,     HM_CTL_J,    HM_SFT_K,  HM_ALT_L,     HM_GUI_SCLN,  KC_QUOT,
+    KC_GRV,   KC_Z,        KC_X,      KC_C,      KC_V,        KC_B,                                  KC_N,         KC_M,        KC_COMM,   KC_DOT,       KC_SLSH,      KC_RBRC,
+    XXXXXXX,  XXXXXXX,     XXXXXXX,   XXXXXXX,   KC_DEL,                       QK_REP,     QK_AREP,                KC_RALT,     XXXXXXX,   XXXXXXX,      XXXXXXX,      XXXXXXX,
+                                                 LT(NUMB,KC_SPC), LT(NAVI,KC_BSPC), XXXXXXX,    XXXXXXX,  OS_LSFT,      LT(SYMB,KC_ENT)
+  ),
+
+  // ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐
+  // │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │             │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │   TAB   │    Q    │    W    │    E    │    R    │    T    │ XXXXXXX │             │ XXXXXXX │    Y    │    U    │    I    │    O    │    P    │    [    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ NUMWORD │  GUI/A  │  ALT/S  │  SFT/D  │  CTL/F  │  HYP/G  │ XXXXXXX │             │ XXXXXXX │  HYP/H  │  CTL/J  │  SFT/K  │  ALT/L  │  GUI/;  │    "    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┘             └─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │   GRV   │    Z    │    X    │    C    │    V    │    B    │                                 │    N    │    M    │    ,    │    .    │    /    │    ]    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼───────────────┐     ┌───────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │   DEL   │         │     REPEAT    │     │  ALT-REP  │         │  RALT   │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │
+  // └─────────┴─────────┴─────────┴─────────┴─────────┼─────────┼─────────┬─────┤     ├─────┬─────┼─────────┼─────────┴─────────┴─────────┴─────────┴─────────┘
+  //                                                   │ NUMB/SPC│ NAVI/BSP│ XXX │     │ XXX │SHIFT│ SYMB/ENT│
+  //                                                   └─────────┴─────────┴─────┘     └─────┴─────┴─────────┘
+  [QWER] = LAYOUT(
+    XXXXXXX,  XXXXXXX,     XXXXXXX,   XXXXXXX,   XXXXXXX,     XXXXXXX,         XXXXXXX,    XXXXXXX,  XXXXXXX,      XXXXXXX,     XXXXXXX,   XXXXXXX,      XXXXXXX,      XXXXXXX,
+    KC_TAB,   KC_Q,        KC_W,      KC_E,      KC_R,        KC_T,            XXXXXXX,    XXXXXXX,  KC_Y,         KC_U,        KC_I,      KC_O,         KC_P,         KC_LBRC,
+    NUMWORD,  HM_GUI_A,    HM_ALT_S,  HM_SFT_D,  HM_CTL_F,    HM_HYP_G,        XXXXXXX,    XXXXXXX,  HM_HYP_H,     HM_CTL_J,    HM_SFT_K,  HM_ALT_L,     HM_GUI_SCLN,  KC_QUOT,
+    KC_GRV,   KC_Z,        KC_X,      KC_C,      KC_V,        KC_B,                                  KC_N,         KC_M,        KC_COMM,   KC_DOT,       KC_SLSH,      KC_RBRC,
+    XXXXXXX,  XXXXXXX,     XXXXXXX,   XXXXXXX,   KC_DEL,                       QK_REP,     QK_AREP,                KC_RALT,     XXXXXXX,   XXXXXXX,      XXXXXXX,      XXXXXXX,
+                                                 LT(NUMB,KC_SPC), LT(NAVI,KC_BSPC), XXXXXXX,    XXXXXXX,  OS_LSFT,      LT(SYMB,KC_ENT)
+  ),
+
+  // ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐
+  // │  VRSN   │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │             │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │    \    │    `    │    <    │    >    │    -    │    |    │ XXXXXXX │             │ XXXXXXX │    ^    │    {    │    }    │    $    │    ^    │ XXXXXXX │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ XXXXXXX │    !    │    *    │    /    │    =    │    &    │ XXXXXXX │             │ XXXXXXX │    #    │    (    │    )    │    ;    │    "    │ XXXXXXX │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┘             └─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ XXXXXXX │    ~    │    [    │    ]    │    +    │    %    │                                 │    @    │    :    │    ,    │    .    │    '    │ XXXXXXX │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼───────────────┐     ┌───────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │  _____  │         │   RGB VAL+    │     │  RGB TOG  │         │  _____  │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │
+  // └─────────┴─────────┴─────────┴─────────┴─────────┼─────────┼─────────┬─────┤     ├─────┬─────┼─────────┼─────────┴─────────┴─────────┴─────────┴─────────┘
+  //                                                   │ XXXXXXX │ XXXXXXX │ XXX │     │ XXX │_____│  _____  │
+  //                                                   └─────────┴─────────┴─────┘     └─────┴─────┴─────────┘
   [SYMB] = LAYOUT(
-		  VRSN,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-		  KC_BSLS, FR_GRAVE, KC_LABK, KC_RABK, KC_PMNS, KC_PIPE,  XXXXXXX,           XXXXXXX, KC_CIRC, KC_LCBR, KC_RCBR, KC_DLR,  FR_CIRC, XXXXXXX,
-		  XXXXXXX, KC_EXLM,  KC_PAST, KC_PSLS, KC_EQL,  KC_AMPR,  XXXXXXX,           XXXXXXX, KC_HASH, KC_LPRN, KC_RPRN, KC_SCLN, FR_DQUO, XXXXXXX,
-		  XXXXXXX, KC_TILD,  KC_LBRC, KC_RBRC, KC_PLUS, KC_PERC,                              KC_AT,   KC_COLN, KC_COMM, KC_DOT,  FR_QUOT, XXXXXXX,
-		  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, _______,           RM_VALU,           RM_TOGG,          _______, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
-		  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,_______, _______
-		  ),
+    VRSN,     XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,   XXXXXXX,    XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
+    KC_BSLS,  FR_GRAVE,  KC_LABK,  KC_RABK,  KC_PMNS,  KC_PIPE,   XXXXXXX,    XXXXXXX,  KC_CIRC,   KC_LCBR,  KC_RCBR,  KC_DLR,    FR_CIRC,  XXXXXXX,
+    XXXXXXX,  KC_EXLM,   KC_PAST,  KC_PSLS,  KC_EQL,   KC_AMPR,   XXXXXXX,    XXXXXXX,  KC_HASH,   KC_LPRN,  KC_RPRN,  KC_SCLN,   FR_DQUO,  XXXXXXX,
+    XXXXXXX,  KC_TILD,   KC_LBRC,  KC_RBRC,  KC_PLUS,  KC_PERC,                         KC_AT,     KC_COLN,  KC_COMM,  KC_DOT,    FR_QUOT,  XXXXXXX,
+    XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,  _______,             RM_VALU,    RM_TOGG,             _______,  XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
+                                              XXXXXXX,  XXXXXXX,   XXXXXXX,    XXXXXXX,  _______,   _______
+  ),
+
+  // ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐
+  // │  VRSN   │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │             │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │   F1    │   F2    │   F3    │   F4    │   F5    │  _____  │             │  _____  │  _____  │    7    │    8    │    9    │    *    │    /    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │   F6    │   F7    │   F8    │   F9    │   F10   │  _____  │             │  _____  │  _____  │    4    │    5    │    6    │    -    │    +    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┘             └─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │   F11   │   F12   │   F13   │   F14   │   F15   │                                 │  _____  │    1    │    2    │    3    │    .    │    ,    │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼───────────────┐     ┌───────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ EE CLR  │  _____  │  _____  │  _____  │  _____  │         │     _____     │     │   _____   │         │    0    │  _____  │  _____  │  _____  │  _____  │
+  // └─────────┴─────────┴─────────┴─────────┴─────────┼─────────┼─────────┬─────┤     ├─────┬─────┼─────────┼─────────┴─────────┴─────────┴─────────┴─────────┘
+  //                                                   │  _____  │  _____  │ ___ │     │ ___ │_____│  _____  │
+  //                                                   └─────────┴─────────┴─────┘     └─────┴─────┴─────────┘
   [NUMB] = LAYOUT(
-		  VRSN,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-		  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,           _______, _______, KC_7,    KC_8,    KC_9,    KC_PAST, KC_PSLS,
-		  _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,           _______, _______, KC_4,    KC_5,    KC_6,    KC_PMNS, KC_PPLS,
-		  _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,                              _______, KC_1,    KC_2,    KC_3,    KC_PDOT, KC_PCMM,
-		  EE_CLR,  _______, _______, _______, _______,          _______,           _______,          KC_0, _______, _______,    _______, _______,
-		  _______, _______, _______,           _______, _______, _______
-		  ),
+    VRSN,     XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+    _______,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    _______,    _______,  _______,  KC_7,     KC_8,     KC_9,     KC_PAST,  KC_PSLS,
+    _______,  KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   _______,    _______,  _______,  KC_4,     KC_5,     KC_6,     KC_PMNS,  KC_PPLS,
+    _______,  KC_F11,   KC_F12,   KC_F13,   KC_F14,   KC_F15,                         _______,  KC_1,     KC_2,     KC_3,     KC_PDOT,  KC_PCMM,
+    EE_CLR,   _______,  _______,  _______,  _______,            _______,    _______,            KC_0,     _______,  _______,  _______,  _______,
+                                            _______,  _______,  _______,    _______,  _______,  _______
+  ),
+
+  // ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐
+  // │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │             │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  VRSN   │  _____  │    @    │    {    │    }    │    |    │  _____  │             │  _____  │  PRTSCR │  HOME   │   UP    │   END   │  PG UP  │  BOOT   │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │  _____  │ MED PRV │ MED PLY │ MED NXT │  _____  │  _____  │             │  _____  │  _____  │  LEFT   │  DOWN   │  RIGHT  │  PG DN  │  _____  │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┘             └─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │  _____  │  _____  │  _____  │  _____  │  _____  │                                 │  MUTE   │  _____  │  _____  │  _____  │  _____  │  _____  │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼───────────────┐     ┌───────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ EE CLR  │  _____  │  _____  │  _____  │  _____  │         │    VOL DN     │     │   VOL UP  │         │  _____  │  _____  │  _____  │  _____  │  _____  │
+  // └─────────┴─────────┴─────────┴─────────┴─────────┼─────────┼─────────┬─────┤     ├─────┬─────┼─────────┼─────────┴─────────┴─────────┴─────────┴─────────┘
+  //                                                   │  _____  │  _____  │ ___ │     │ ___ │_____│  _____  │
+  //                                                   └─────────┴─────────┴─────┘     └─────┴─────┴─────────┘
   [NAVI] = LAYOUT(
-		  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-		  VRSN,    _______, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,  _______,           _______, KC_PSCR,   KC_HOME,    KC_UP,    KC_END,    KC_PGUP, QK_BOOT,
-		  _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,  _______,           _______, _______, KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_PGDN, _______,
-		  _______, _______, _______, _______, _______, _______,                              KC_MUTE, _______, _______, _______, _______, _______,
-		  EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
-		  _______, _______, _______,           _______, _______, _______
-		  ),
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+    VRSN,     _______,  KC_AT,    KC_LCBR,  KC_RCBR,  KC_PIPE,  _______,    _______,  KC_PSCR,  KC_HOME,  KC_UP,    KC_END,   KC_PGUP,  QK_BOOT,
+    _______,  _______,  KC_MPRV,  KC_MPLY,  KC_MNXT,  _______,  _______,    _______,  _______,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_PGDN,  _______,
+    _______,  _______,  _______,  _______,  _______,  _______,                        KC_MUTE,  _______,  _______,  _______,  _______,  _______,
+    EE_CLR,   _______,  _______,  _______,  _______,            KC_VOLD,    KC_VOLU,            _______,  _______,  _______,  _______,  _______,
+                                            _______,  _______,  _______,    _______,  _______,  _______
+  ),
   
+
+  // ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐
+  // │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │             │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │  BOOT   │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │  _____  │  _____  │  _____  │  _____  │  _____  │  _____  │             │  _____  │  _____  │  _____  │  MS UP  │  _____  │  _____  │  _____  │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │  WHL L  │  WHL U  │  WHL D  │  WHL R  │  _____  │  _____  │             │  _____  │  _____  │  MS LFT │  MS DN  │  MS RGT │  _____  │  _____  │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┘             └─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │  _____  │  _____  │  _____  │  _____  │  _____  │                                 │  _____  │  _____  │  _____  │  _____  │  _____  │  _____  │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼───────────────┐     ┌───────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ EE CLR  │  _____  │  _____  │  _____  │  _____  │         │    VOL DN     │     │   VOL UP  │         │  _____  │  _____  │  _____  │  _____  │  _____  │
+  // └─────────┴─────────┴─────────┴─────────┴─────────┼─────────┼─────────┬─────┤     ├─────┬─────┼─────────┼─────────┴─────────┴─────────┴─────────┴─────────┘
+  //                                                   │  BTN 1  │  BTN 3  │ ___ │     │ ___ │BTN 3│  BTN 2  │
+  //                                                   └─────────┴─────────┴─────┘     └─────┴─────┴─────────┘
   [MOUS] = LAYOUT(
-		  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,
-		  _______, _______, _______, _______,   _______, _______, _______,           _______, _______, _______, MS_UP, _______, _______, _______,
-		  _______, MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, _______, _______,           _______, _______, MS_LEFT, MS_DOWN, MS_RGHT, _______, _______,
-		  _______, _______, _______, _______, _______, _______,                              _______, _______, _______, _______, _______, _______,
-		  EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
-		  MS_BTN1, MS_BTN3, _______,           _______, MS_BTN3, MS_BTN2
-		  ),
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  QK_BOOT,
+    _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  MS_UP,    _______,  _______,  _______,
+    _______,  MS_WHLL,  MS_WHLU,  MS_WHLD,  MS_WHLR,  _______,  _______,    _______,  _______,  MS_LEFT,  MS_DOWN,  MS_RGHT,  _______,  _______,
+    _______,  _______,  _______,  _______,  _______,  _______,                        _______,  _______,  _______,  _______,  _______,  _______,
+    EE_CLR,   _______,  _______,  _______,  _______,            KC_VOLD,    KC_VOLU,            _______,  _______,  _______,  _______,  _______,
+                                            MS_BTN1,  MS_BTN3,  _______,    _______,  MS_BTN3,  MS_BTN2
+  ),
+
+  // ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┐
+  // │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │             │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │ XXXXXXX │  BOOT   │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │  _____  │  _____  │  _____  │  _____  │  _____  │  _____  │             │  _____  │  _____  │  _____  │  MS UP  │  _____  │  _____  │  _____  │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │   GUI   │   ALT   │  SHIFT  │   CTL   │  HYPER  │  _____  │             │  _____  │  _____  │   CTL   │  SHIFT  │   ALT   │   GUI   │  _____  │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┘             └─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │  _____  │  _____  │  _____  │  _____  │  _____  │  _____  │                                 │  _____  │  _____  │  _____  │  _____  │  _____  │  _____  │
+  // ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼───────────────┐     ┌───────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+  // │ EE CLR  │  _____  │  _____  │  _____  │  _____  │         │    VOL DN     │     │   VOL UP  │         │  _____  │  _____  │  _____  │  _____  │  _____  │
+  // └─────────┴─────────┴─────────┴─────────┴─────────┼─────────┼─────────┬─────┤     ├─────┬─────┼─────────┼─────────┴─────────┴─────────┴─────────┴─────────┘
+  //                                                   │  BTN 1  │  BTN 3  │ ___ │     │ ___ │BTN 3│  BTN 2  │
+  //                                                   └─────────┴─────────┴─────┘     └─────┴─────┴─────────┘
   [MODS] = LAYOUT(
-		  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,
-		  _______, _______, _______, _______,   _______, _______, _______,           _______, _______, _______, MS_UP, _______, _______, _______,
-		  _______, OS_LGUI,  OS_LALT,  OS_LSFT, OS_LCTL, OS_HYPR, _______,           _______, _______, OS_LCTL, OS_LSFT, OS_LALT, OS_LGUI, _______,
-		  _______, _______, _______, _______, _______, _______,                              _______, _______, _______, _______, _______, _______,
-		  EE_CLR,  _______, _______, _______, _______,          KC_VOLD,           KC_VOLU,           _______, _______, _______, _______,  _______,
-		  MS_BTN1, MS_BTN3, _______,           _______, MS_BTN3, MS_BTN2
-		  ),
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  QK_BOOT,
+    _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  MS_UP,    _______,  _______,  _______,
+    _______,  OS_LGUI,  OS_LALT,  OS_LSFT,  OS_LCTL,  OS_HYPR,  _______,    _______,  _______,  OS_LCTL,  OS_LSFT,  OS_LALT,  OS_LGUI,  _______,
+    _______,  _______,  _______,  _______,  _______,  _______,                        _______,  _______,  _______,  _______,  _______,  _______,
+    EE_CLR,   _______,  _______,  _______,  _______,            KC_VOLD,    KC_VOLU,            _______,  _______,  _______,  _______,  _______,
+                                            MS_BTN1,  MS_BTN3,  _______,    _______,  MS_BTN3,  MS_BTN2
+  ),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
