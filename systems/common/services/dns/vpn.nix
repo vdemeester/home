@@ -51,10 +51,6 @@ in
     ns1.A = [ (builtins.head globals.machines.shikoku.net.vpn.ips) ];
     ns2.A = [ (builtins.head globals.machines.sakhalin.net.vpn.ips) ];
 
-    # Cache/Massimo wildcards - these don't exist in globals, keeping hardcoded
-    cache.subdomains."*".A = [ "10.100.0.6" ];
-    massimo.subdomains."*".A = [ "10.100.0.6" ];
-
     # hass - hardcoded as it's not in the machine list
     hass.A = [ "10.100.0.81" ];
   }
