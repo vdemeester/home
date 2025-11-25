@@ -7,9 +7,9 @@ force:
 
 define rule.template
 $(1)/% : $(2)/% force
-	@echo "📋 Copying $$< → $$@"
+	@echo "📋 Linking $$< → $$@"
 	@mkdir -p $$(@D)
-	@cp -f $$< $$@
+	@ln -snf $$< $$@
 endef
 
 rule.define = $(eval $(call rule.template,$(1),$(2)))
