@@ -1502,6 +1502,16 @@ Use this function via a hook."
   (org-habit-show-habits-only-for-today nil)
   (org-habit-graph-column 80))
 
+(use-package ob-ditaa
+  :after org
+  :commands (org-babel-execute:ditaa)
+  :config
+  (setq org-ditaa-jar-path "/home/vincent/local/state/nix/profiles/home-manager/home-path/lib/ditaa.jar"))
+
+(use-package ob-dot
+  :after org
+  :commands (org-babel-execute:dot))
+
 (use-package xeft
   :commands (xeft)
   :custom
