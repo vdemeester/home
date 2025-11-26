@@ -50,6 +50,7 @@
     sbcl
 
     go-org-readwise
+    gh-restart-failed
   ];
 
 }
