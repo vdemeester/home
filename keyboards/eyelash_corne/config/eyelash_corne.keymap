@@ -34,11 +34,11 @@
 // - TODO go to accent layer (and back)
 ZMK_LAYER(Bepo,
 // ╭───────────┬───────────┬───────────┬───────────┬────────────┬────────────╮                                ╭───────────┬─────────────┬─────────────┬────────────┬────────────┬────────────╮
-     &kp TAB   &b_pipe_brkp  &kp EACUT  &p_amp_sect  &o_oe_cap    &AGRA E                 &kp UP                &car_excl   &v_qmark      &kp D       &l_fslh_pound  &kp J        &kp Z
+     &kp TAB     &b_pipe     &kp EACUT   &p_amp      &kp O        &AGRA E                 &kp UP                &car_excl   &kp V         &kp D         &kp L        &kp J        &kp Z
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &smart_num NUM NUM   &hml GL A   &hml AL U   &hml SL I   &cl_e_euro   &hyp_com_smc  &kp LEFT  &kp RET  &kp RIGHT    &c_copy      &t_tm         &s_ss         &r_reg       &n_tilde     &kp M
+     &smart_num NUM NUM   &hml GL A   &hml AL U   &hml SL I   &cl_e_euro   &hyp_com_smc  &kp LEFT  &kp RET  &kp RIGHT    &hmr HL C   &hmr CR T     &hmr SR S     &hmr AR R    &hmr GL N    &kp M
 // ├───────────┼───────────┼───────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┼────────────┼────────────┤
-     &kp GRAVE &agra_a_bslh_ae &y_lbrc_rsqt &x_rbrc_lsqt &dot_col  &k_tilde    &key_repeat &kp DOWN          &sqt_qma    &q_deg      &g_mu_dag      &h_ddag      &kp F        &kp W
+     &kp GRAVE   &AGRA A     &kp Y       &kp X       &dot_col     &kp K        &key_repeat &kp DOWN          &sqt_qma    &kp Q         &kp G         &kp H        &kp F        &kp W
 // ╰───────────┴───────────────────────┼───────────┼────────────┼────────────┤                                ├───────────┼─────────────┼─────────────┼────────────┴────────────┴────────────╯
                                         &lt ACC DEL  &num_spc_und &lt NAV BSPC                                   &kp SL      &lt SYM RET   &kp AR
 //                                     ╰───────────┴────────────┴────────────╯                                ╰───────────┴─────────────┴─────────────╯
