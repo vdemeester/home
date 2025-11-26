@@ -18,6 +18,7 @@ List pull requests with failed checks and restart selected workflows.
 
 Options:
     -i, --ignore PATTERN    Ignore workflows matching PATTERN (can be used multiple times)
+    -l, --label LABEL       Filter PRs by label (can be used multiple times)
     -h, --help             Show this help message
 
 Arguments:
@@ -36,6 +37,7 @@ Examples:
     gh-restart-failed                                    # Use current repository
     gh-restart-failed owner/repo                         # Use specific GitHub repository
     gh-restart-failed -i "build" -i "test"              # Ignore build and test workflows
+    gh-restart-failed -l "bug" -l "enhancement"         # Only show PRs with bug OR enhancement labels
     gh-restart-failed /path/to/repo                     # Use repository at path
 
 EOF
@@ -61,6 +63,7 @@ check_dependencies() {
 
 # Default ignore patterns
 IGNORE_PATTERNS=("Label Checker")
+LABEL_FILTERS=()
 
 # Parse arguments
 REPO_ARG=""
@@ -75,6 +78,15 @@ while [[ $# -gt 0 ]]; do
                 shift 2
             else
                 echo -e "${RED}Error: --ignore requires a pattern argument${NC}" >&2
+                exit 1
+            fi
+            ;;
+        -l|--label)
+            if [ -n "${2:-}" ]; then
+                LABEL_FILTERS+=("$2")
+                shift 2
+            else
+                echo -e "${RED}Error: --label requires a label argument${NC}" >&2
                 exit 1
             fi
             ;;
@@ -108,11 +120,23 @@ if [ ${#IGNORE_PATTERNS[@]} -gt 0 ]; then
     echo -e "${YELLOW}Ignoring workflows matching: ${IGNORE_PATTERNS[*]}${NC}" >&2
 fi
 
+# Show label filters
+if [ ${#LABEL_FILTERS[@]} -gt 0 ]; then
+    echo -e "${YELLOW}Filtering PRs with labels: ${LABEL_FILTERS[*]}${NC}" >&2
+fi
+
 # Get all open PRs with their check status
 echo -e "${BLUE}Fetching pull requests...${NC}" >&2
 
+# Build label filter arguments for gh pr list
+LABEL_ARGS=()
+for label in "${LABEL_FILTERS[@]}"; do
+    LABEL_ARGS+=(--label "$label")
+done
+
 # Fetch PRs with detailed check information
 prs_json=$(gh pr list "${REPO_FLAG[@]}" \
+    "${LABEL_ARGS[@]}" \
     --json number,title,headRefName,author,statusCheckRollup \
     --limit 100)
 
