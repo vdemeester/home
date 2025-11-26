@@ -219,8 +219,12 @@ while IFS= read -r pr_line; do
     echo "$failed_runs" | while IFS='|' read -r run_id workflow_name status; do
         echo -e "  ${GREEN}→${NC} Restarting: $workflow_name ($status)"
 
-        if gh run rerun "${REPO_FLAG[@]}" "$run_id" --failed 2>&1 | grep -v "^$"; then
-            echo -e "    ${GREEN}✓${NC} Restarted successfully"
+        rerun_output=$(gh run rerun "${REPO_FLAG[@]}" "$run_id" --failed 2>&1)
+
+        if echo "$rerun_output" | grep -q "created over a month ago"; then
+            echo -e "    ${YELLOW}⚠${NC} Cannot restart: workflow run is too old (>1 month)"
+        elif echo "$rerun_output" | grep -qi "error"; then
+            echo -e "    ${RED}✗${NC} Failed to restart: $rerun_output"
         else
             echo -e "    ${GREEN}✓${NC} Restarted successfully"
         fi
