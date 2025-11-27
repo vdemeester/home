@@ -360,6 +360,12 @@
         rpc-whitelist = "127.0.0.1,192.168.1.*,10.100.0.*"; # Whitelist your remote machine (10.0.0.1 in this example)
         rpc-username = "transmission";
         rpc-password = "transmission";
+        download-queue-enabled = true;
+        download-queue-size = 15;
+        queue-stalled-enabled = true;
+        queue-stalled-minutes = 30;
+        ratio-limit = 0.1;
+        ratio-limit-enabled = true;
       };
     };
     sonarr = {
