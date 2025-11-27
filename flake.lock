@@ -50,6 +50,31 @@
         "type": "github"
       }
     },
+    "agenix-25_11": {
+      "inputs": {
+        "darwin": "darwin_3",
+        "home-manager": [
+          "home-manager-25_11"
+        ],
+        "nixpkgs": [
+          "nixpkgs-25_11"
+        ],
+        "systems": "systems_3"
+      },
+      "locked": {
+        "lastModified": 1762618334,
+        "narHash": "sha256-wyT7Pl6tMFbFrs8Lk/TlEs81N6L+VSybPfiIgzU8lbQ=",
+        "owner": "ryantm",
+        "repo": "agenix",
+        "rev": "fcdea223397448d35d9b31f798479227e80183f6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ryantm",
+        "repo": "agenix",
+        "type": "github"
+      }
+    },
     "argononed": {
       "flake": false,
       "locked": {
@@ -218,6 +243,28 @@
       "inputs": {
         "nixpkgs": [
           "agenix-25_05",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1744478979,
+        "narHash": "sha256-dyN+teG9G82G+m+PX/aSAagkC+vUv0SgUw3XkPhQodQ=",
+        "owner": "lnl7",
+        "repo": "nix-darwin",
+        "rev": "43975d782b418ebf4969e9ccba82466728c2851b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lnl7",
+        "ref": "master",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
+    "darwin_3": {
+      "inputs": {
+        "nixpkgs": [
+          "agenix-25_11",
           "nixpkgs"
         ]
       },
@@ -512,6 +559,27 @@
         "type": "github"
       }
     },
+    "home-manager-25_11": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-25_11"
+        ]
+      },
+      "locked": {
+        "lastModified": 1764177491,
+        "narHash": "sha256-dhX2abFWxeXab3Aad4Pg1xGtn9W84/qetNXfmYUwktw=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "2217780c39169a9c77915200137550c2ef0fa974",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-25.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "lanzaboote": {
       "inputs": {
         "crane": "crane",
@@ -775,6 +843,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-25_11": {
+      "locked": {
+        "lastModified": 1764020296,
+        "narHash": "sha256-6zddwDs2n+n01l+1TG6PlyokDdXzu/oBmEejcH5L5+A=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a320ce8e6e2cc6b4397eef214d202a50a4583829",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1761765539,
@@ -873,6 +957,7 @@
       "inputs": {
         "agenix": "agenix",
         "agenix-25_05": "agenix-25_05",
+        "agenix-25_11": "agenix-25_11",
         "buildkit-tekton": "buildkit-tekton",
         "chapeau-rouge": "chapeau-rouge",
         "chick-group": "chick-group",
@@ -885,6 +970,7 @@
         "go-org-readwise": "go-org-readwise",
         "home-manager": "home-manager",
         "home-manager-25_05": "home-manager-25_05",
+        "home-manager-25_11": "home-manager-25_11",
         "lanzaboote": "lanzaboote",
         "niri": "niri",
         "nix-github-actions": "nix-github-actions_4",
@@ -892,6 +978,7 @@
         "nixos-raspberrypi": "nixos-raspberrypi",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-25_05": "nixpkgs-25_05",
+        "nixpkgs-25_11": "nixpkgs-25_11",
         "nixpkgs-master": "nixpkgs-master",
         "pre-commit-hooks": "pre-commit-hooks",
         "system-manager": "system-manager"
@@ -954,6 +1041,21 @@
       }
     },
     "systems_2": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

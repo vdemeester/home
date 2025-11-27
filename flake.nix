@@ -275,6 +275,12 @@
       repo = "nixpkgs";
       ref = "nixos-25.05";
     };
+    nixpkgs-25_11 = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-25.11";
+    };
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
@@ -297,6 +303,13 @@
       ref = "release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-25_05";
     };
+    home-manager-25_11 = {
+      type = "github";
+      owner = "nix-community";
+      repo = "home-manager";
+      ref = "release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs-25_11";
+    };
 
     niri = {
       type = "github";
@@ -304,6 +317,7 @@
       repo = "niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs-25_05";
+      # inputs.nixpkgs-stable.follows = "nixpkgs-25_11";
     };
 
     dagger = {
@@ -347,6 +361,9 @@
     agenix-25_05.url = "github:ryantm/agenix";
     agenix-25_05.inputs.nixpkgs.follows = "nixpkgs-25_05";
     agenix-25_05.inputs.home-manager.follows = "home-manager-25_05";
+    agenix-25_11.url = "github:ryantm/agenix";
+    agenix-25_11.inputs.nixpkgs.follows = "nixpkgs-25_11";
+    agenix-25_11.inputs.home-manager.follows = "home-manager-25_11";
 
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
