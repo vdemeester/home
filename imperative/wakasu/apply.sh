@@ -58,6 +58,7 @@ setup.nix() {
 
 	# Source Nix profile
 	if [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+		# shellcheck source=/dev/null
 		. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 		log_info "Nix installed successfully! Please restart your shell or run: source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
 	else
@@ -101,33 +102,22 @@ setup.wireguard() {
 	log_info "Install wireguard..."
 	sudo dnf install -y wireguard-tools
 
-	log_info "Setup wireguard configuration..."
+	log_info "Setup wireguard private key..."
 	if [ -z "${WG_PRIVATE_KEY:-}" ]; then
 		log_warn "WG_PRIVATE_KEY not set, skipping wireguard configuration"
 		log_warn "Set WG_PRIVATE_KEY environment variable and re-run to configure"
 		return 0
 	fi
 
-	sudo tee /etc/wireguard/wg0.conf <<EOF
-[Interface]
-PrivateKey = ${WG_PRIVATE_KEY}
-## Client IP
-Address = 10.100.0.90/24
+	# Create wireguard directory if it doesn't exist
+	sudo mkdir -p /etc/wireguard
 
-## if you have DNS server running
-# DNS = 192.168.11.1
+	# Write the private key to the expected location for the wireguard-client module
+	echo "${WG_PRIVATE_KEY}" | sudo tee /etc/wireguard/private.key > /dev/null
+	sudo chmod 600 /etc/wireguard/private.key
 
-[Peer]
-PublicKey = +H3fxErP9HoFUrPgU19ra9+GDLQw+VwvLWx3lMct7QI=
-
-## to pass internet trafic 0.0.0.0 but for peer connection only use 192.168.11.0/24, or you can also specify comma separated IPs
-AllowedIPs =  10.100.0.0/24
-
-Endpoint = 167.99.17.238:51820
-PersistentKeepalive = 25
-EOF
-
-	log_info "Wireguard configuration created at /etc/wireguard/wg0.conf"
+	log_info "Wireguard private key created at /etc/wireguard/private.key"
+	log_info "The rest of the WireGuard configuration is managed by system-manager"
 }
 
 setup.default_packages() {
@@ -146,8 +136,10 @@ setup.system_manager() {
 	fi
 
 	# Get the path to this script to locate the repository
-	local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-	local repo_root="$(cd "${script_dir}/../.." && pwd)"
+	local script_dir
+	script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+	local repo_root
+	repo_root="$(cd "${script_dir}/../.." && pwd)"
 
 	log_info "Repository root: ${repo_root}"
 
