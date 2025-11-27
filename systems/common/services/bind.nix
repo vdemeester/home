@@ -1,13 +1,18 @@
 {
   globals,
   inputs,
+  pkgs,
   ...
 }:
 let
   dns = inputs.dns;
 
-  # Generate zone file content using dns.nix
-  mkZone = zoneName: zoneFile: dns.lib.toString zoneName (import zoneFile { inherit dns globals; });
+  # Generate zone file content and write to Nix store
+  mkZoneFile =
+    zoneName: zoneFile:
+    pkgs.writeText "db.${zoneName}" (
+      dns.lib.toString zoneName (import zoneFile { inherit dns globals; })
+    );
 in
 {
   services.bind = {
@@ -26,31 +31,31 @@ in
       {
         name = "sbr.pm";
         master = true;
-        file = mkZone "sbr.pm" ./dns/sbr.pm.nix;
+        file = mkZoneFile "sbr.pm" ./dns/sbr.pm.nix;
       }
       # home zone
       {
         name = "home";
         master = true;
-        file = mkZone "home" ./dns/home.nix;
+        file = mkZoneFile "home" ./dns/home.nix;
       }
       # home reverse zone
       {
         name = "192.168.1.in-addr.arpa";
         master = true;
-        file = mkZone "192.168.1.in-addr.arpa" ./dns/192.168.1.nix;
+        file = mkZoneFile "192.168.1.in-addr.arpa" ./dns/192.168.1.nix;
       }
       # vpn zone
       {
         name = "vpn";
         master = true;
-        file = mkZone "vpn" ./dns/vpn.nix;
+        file = mkZoneFile "vpn" ./dns/vpn.nix;
       }
       # vpn reverse zone
       {
         name = "10.100.0.in-addr.arpa";
         master = true;
-        file = mkZone "10.100.0.in-addr.arpa" ./dns/10.100.0.nix;
+        file = mkZoneFile "10.100.0.in-addr.arpa" ./dns/10.100.0.nix;
       }
     ];
   };
