@@ -48,9 +48,6 @@ in
     enable = true;
     package = pkgs.git;
 
-    userName = "Vincent Demeester";
-    userEmail = "vincent@sbr.pm";
-
     includes = lib.lists.forEach redhat_folders (x: {
       condition = "gitdir:${config.home.homeDirectory}/${x}/";
       contents.user.email = "vdemeest@redhat.com";
@@ -64,30 +61,34 @@ in
       signByDefault = false;
     };
 
-    aliases = {
-      b = "branch - -color - v";
-      br = "branch";
-      ca = "commit --amend";
-      ci = "commit --signoff";
-      co = "checkout";
-      conflicts = "!git ls-files --unmerged | cut -c51- | sort -u | xargs $EDITOR";
-      dft = "difftool";
-      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
-      lga = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --branches --remotes";
-      lol = "log --pretty=oneline --abbrev-commit --graph --decorate";
-      ls-ignored = "ls-files --exclude-standard --ignored --others";
-      resolve = "!git ls-files --unmerged | cut -c51- | sort -u | xargs git add";
-      st = "status";
-      su = "submodule update --init --recursive";
-      unstage = "reset HEAD";
-      w = "status -sb";
-      wdiff = "diff --color-words";
-      kdiff = "difftool --tool=kitty --no-symlinks --dir-diff";
-    };
     attributes = [
       "*.org   diff=org"
     ];
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Vincent Demeester";
+        email = "vincent@sbr.pm";
+      };
+      alias = {
+        b = "branch - -color - v";
+        br = "branch";
+        ca = "commit --amend";
+        ci = "commit --signoff";
+        co = "checkout";
+        conflicts = "!git ls-files --unmerged | cut -c51- | sort -u | xargs $EDITOR";
+        dft = "difftool";
+        lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
+        lga = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --branches --remotes";
+        lol = "log --pretty=oneline --abbrev-commit --graph --decorate";
+        ls-ignored = "ls-files --exclude-standard --ignored --others";
+        resolve = "!git ls-files --unmerged | cut -c51- | sort -u | xargs git add";
+        st = "status";
+        su = "submodule update --init --recursive";
+        unstage = "reset HEAD";
+        w = "status -sb";
+        wdiff = "diff --color-words";
+        kdiff = "difftool --tool=kitty --no-symlinks --dir-diff";
+      };
       core = {
         pager = "${pkgs.delta}/bin/delta";
         abbrev = 12;

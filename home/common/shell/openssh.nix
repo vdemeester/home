@@ -12,14 +12,17 @@
   # services.ssh-agent.enable = true;
   programs.ssh = {
     enable = true;
-    serverAliveInterval = 60;
-    hashKnownHosts = true;
-    userKnownHostsFile = "${config.home.homeDirectory}/.ssh/known_hosts";
+    enableDefaultConfig = false;
     # controlMaster = "auto";
     # controlPersist = "10m"; # FIXME: issue with OpenSSH 10p1, can re-enable in a few weeks.
     # controlPath = "${config.home.homeDirectory}/.ssh/master-%C";
-    addKeysToAgent = "confirm";
     matchBlocks = {
+      "*" = {
+        serverAliveInterval = 60;
+        hashKnownHosts = true;
+        userKnownHostsFile = "${config.home.homeDirectory}/.ssh/known_hosts";
+        addKeysToAgent = "confirm";
+      };
       "github.com" = {
         hostname = "github.com";
         user = "git";
