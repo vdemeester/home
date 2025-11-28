@@ -1,0 +1,482 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# fedora-vm - Create and provision Fedora VMs with libvirt
+#
+# This script automates the creation of Fedora-based virtual machines using
+# libvirt/virt-install with cloud-init for automatic provisioning.
+
+# Default configuration
+FEDORA_VERSION="${FEDORA_VERSION:-41}"
+FEDORA_RELEASE="${FEDORA_RELEASE:-1.7}"
+VM_NAME=""
+VM_MEMORY="2048"
+VM_CPUS="2"
+VM_DISK_SIZE="10"
+SCRIPT_TO_RUN=""
+SCRIPT_CONTENT=""
+SSH_KEY="${SSH_KEY:-$HOME/.ssh/id_rsa.pub}"
+CLEANUP_ON_EXIT="false"
+KEEP_VM="false"
+WORKDIR="${WORKDIR:-/tmp/fedora-vm-$$}"
+LIBVIRT_URI="${LIBVIRT_URI:-qemu:///system}"
+VM_USER="${VM_USER:-fedora}"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Logging functions
+log_info() {
+    echo -e "${BLUE}[INFO]${NC} $*"
+}
+
+log_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $*"
+}
+
+log_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $*"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $*" >&2
+}
+
+# Usage information
+usage() {
+    cat <<EOF
+Usage: fedora-vm [OPTIONS]
+
+Create and provision a Fedora VM with libvirt, then execute a script inside it.
+
+OPTIONS:
+    -n, --name NAME           VM name (required)
+    -s, --script PATH         Path to script to execute in VM
+    -c, --command "CMD"       Command string to execute in VM
+    -m, --memory MB           Memory in MB (default: 2048)
+    -p, --cpus NUM            Number of CPUs (default: 2)
+    -d, --disk-size GB        Disk size in GB (default: 10)
+    -k, --ssh-key PATH        SSH public key to inject (default: ~/.ssh/id_rsa.pub)
+    -u, --user USERNAME       VM username (default: fedora)
+    -v, --fedora-version VER  Fedora version (default: 41)
+    --cleanup                 Delete VM after script execution
+    --keep                    Keep VM running after script execution
+    --workdir PATH            Working directory for temp files (default: /tmp/fedora-vm-PID)
+    -h, --help                Show this help message
+
+EXAMPLES:
+    # Create VM and run a script
+    fedora-vm --name test-vm --script ./setup.sh
+
+    # Create VM and run a command
+    fedora-vm --name test-vm --command "dnf install -y httpd && systemctl start httpd"
+
+    # Create VM with custom resources
+    fedora-vm --name big-vm --memory 4096 --cpus 4 --disk-size 20 --script ./build.sh
+
+    # Create VM and clean up after
+    fedora-vm --name temp-vm --script ./test.sh --cleanup
+
+ENVIRONMENT VARIABLES:
+    FEDORA_VERSION      Fedora version to use (default: 41)
+    LIBVIRT_URI         Libvirt connection URI (default: qemu:///system)
+    VM_USER             Default username (default: fedora)
+    SSH_KEY             Default SSH public key path
+
+EOF
+    exit 0
+}
+
+# Cleanup function
+cleanup() {
+    local exit_code=$?
+
+    if [[ "$CLEANUP_ON_EXIT" == "true" ]]; then
+        log_info "Cleaning up..."
+
+        if [[ -n "$VM_NAME" ]] && virsh -c "$LIBVIRT_URI" list --all | grep -q " $VM_NAME "; then
+            log_info "Destroying VM: $VM_NAME"
+            virsh -c "$LIBVIRT_URI" destroy "$VM_NAME" 2>/dev/null || true
+            virsh -c "$LIBVIRT_URI" undefine "$VM_NAME" --remove-all-storage 2>/dev/null || true
+        fi
+
+        if [[ -d "$WORKDIR" ]]; then
+            log_info "Removing working directory: $WORKDIR"
+            rm -rf "$WORKDIR"
+        fi
+    fi
+
+    exit $exit_code
+}
+
+trap cleanup EXIT INT TERM
+
+# Parse arguments
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -n|--name)
+                VM_NAME="$2"
+                shift 2
+                ;;
+            -s|--script)
+                SCRIPT_TO_RUN="$2"
+                shift 2
+                ;;
+            -c|--command)
+                SCRIPT_CONTENT="$2"
+                shift 2
+                ;;
+            -m|--memory)
+                VM_MEMORY="$2"
+                shift 2
+                ;;
+            -p|--cpus)
+                VM_CPUS="$2"
+                shift 2
+                ;;
+            -d|--disk-size)
+                VM_DISK_SIZE="$2"
+                shift 2
+                ;;
+            -k|--ssh-key)
+                SSH_KEY="$2"
+                shift 2
+                ;;
+            -u|--user)
+                VM_USER="$2"
+                shift 2
+                ;;
+            -v|--fedora-version)
+                FEDORA_VERSION="$2"
+                shift 2
+                ;;
+            --cleanup)
+                CLEANUP_ON_EXIT="true"
+                shift
+                ;;
+            --keep)
+                KEEP_VM="true"
+                shift
+                ;;
+            --workdir)
+                WORKDIR="$2"
+                shift 2
+                ;;
+            -h|--help)
+                usage
+                ;;
+            *)
+                log_error "Unknown option: $1"
+                usage
+                ;;
+        esac
+    done
+
+    # Validate required arguments
+    if [[ -z "$VM_NAME" ]]; then
+        log_error "VM name is required (use -n or --name)"
+        exit 1
+    fi
+
+    if [[ -z "$SCRIPT_TO_RUN" ]] && [[ -z "$SCRIPT_CONTENT" ]]; then
+        log_error "Either --script or --command must be provided"
+        exit 1
+    fi
+
+    if [[ ! -f "$SSH_KEY" ]]; then
+        log_error "SSH public key not found: $SSH_KEY"
+        exit 1
+    fi
+
+    if [[ -n "$SCRIPT_TO_RUN" ]] && [[ ! -f "$SCRIPT_TO_RUN" ]]; then
+        log_error "Script file not found: $SCRIPT_TO_RUN"
+        exit 1
+    fi
+}
+
+# Download Fedora cloud image
+download_fedora_image() {
+    local image_url="https://download.fedoraproject.org/pub/fedora/linux/releases/${FEDORA_VERSION}/Cloud/x86_64/images/Fedora-Cloud-Base-Generic.x86_64-${FEDORA_VERSION}-${FEDORA_RELEASE}.qcow2"
+    local image_file="$WORKDIR/fedora-${FEDORA_VERSION}-base.qcow2"
+
+    if [[ -f "$image_file" ]]; then
+        log_info "Using existing Fedora image: $image_file"
+        echo "$image_file"
+        return
+    fi
+
+    log_info "Downloading Fedora ${FEDORA_VERSION} cloud image..."
+    if ! curl -L -o "$image_file" "$image_url"; then
+        log_error "Failed to download Fedora image"
+        exit 1
+    fi
+
+    log_success "Downloaded Fedora image: $image_file"
+    echo "$image_file"
+}
+
+# Create cloud-init configuration
+create_cloud_init_config() {
+    local ssh_pub_key
+    ssh_pub_key=$(cat "$SSH_KEY")
+
+    log_info "Creating cloud-init configuration..."
+
+    # Create meta-data
+    cat > "$WORKDIR/meta-data" <<EOF
+instance-id: $VM_NAME
+local-hostname: $VM_NAME
+EOF
+
+    # Create user-data
+    cat > "$WORKDIR/user-data" <<EOF
+#cloud-config
+users:
+  - name: $VM_USER
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - $ssh_pub_key
+
+# Disable password authentication
+ssh_pwauth: false
+
+# Set timezone
+timezone: UTC
+
+# Update packages on first boot
+package_update: true
+package_upgrade: false
+
+# Install basic packages
+packages:
+  - vim
+  - curl
+  - wget
+  - git
+
+# Run commands on first boot
+runcmd:
+  - systemctl enable sshd
+  - systemctl start sshd
+
+# Signal completion
+final_message: "Cloud-init setup complete. System ready."
+EOF
+
+    log_success "Cloud-init configuration created"
+}
+
+# Create cloud-init ISO
+create_cloud_init_iso() {
+    local iso_file="$WORKDIR/cloud-init.iso"
+
+    log_info "Creating cloud-init ISO..."
+
+    if command -v genisoimage &> /dev/null; then
+        genisoimage -output "$iso_file" \
+            -volid cidata -joliet -rock \
+            "$WORKDIR/user-data" "$WORKDIR/meta-data" &> /dev/null
+    elif command -v mkisofs &> /dev/null; then
+        mkisofs -output "$iso_file" \
+            -volid cidata -joliet -rock \
+            "$WORKDIR/user-data" "$WORKDIR/meta-data" &> /dev/null
+    else
+        log_error "Neither genisoimage nor mkisofs found. Please install one of them."
+        exit 1
+    fi
+
+    log_success "Cloud-init ISO created: $iso_file"
+    echo "$iso_file"
+}
+
+# Create VM
+create_vm() {
+    local base_image="$1"
+    local cloud_init_iso="$2"
+    local vm_disk="$WORKDIR/${VM_NAME}.qcow2"
+
+    log_info "Creating VM disk from base image..."
+    qemu-img create -f qcow2 -F qcow2 -b "$base_image" "$vm_disk" "${VM_DISK_SIZE}G" &> /dev/null
+
+    log_info "Creating VM: $VM_NAME"
+    virt-install \
+        --connect "$LIBVIRT_URI" \
+        --name "$VM_NAME" \
+        --memory "$VM_MEMORY" \
+        --vcpus "$VM_CPUS" \
+        --disk "$vm_disk,device=disk,bus=virtio" \
+        --disk "$cloud_init_iso,device=cdrom" \
+        --os-variant fedora-unknown \
+        --virt-type kvm \
+        --graphics none \
+        --network network=default,model=virtio \
+        --import \
+        --noautoconsole &> /dev/null
+
+    log_success "VM created: $VM_NAME"
+}
+
+# Wait for VM to be ready
+wait_for_vm() {
+    local max_attempts=60
+    local attempt=0
+    local vm_ip=""
+
+    log_info "Waiting for VM to get IP address..."
+
+    while [[ $attempt -lt $max_attempts ]]; do
+        vm_ip=$(virsh -c "$LIBVIRT_URI" domifaddr "$VM_NAME" 2>/dev/null | awk '/ipv4/ {print $4}' | cut -d'/' -f1 | head -n1)
+
+        if [[ -n "$vm_ip" ]]; then
+            log_success "VM IP address: $vm_ip"
+            echo "$vm_ip"
+            return 0
+        fi
+
+        sleep 2
+        ((attempt++))
+    done
+
+    log_error "Timeout waiting for VM IP address"
+    exit 1
+}
+
+# Wait for SSH to be ready
+wait_for_ssh() {
+    local vm_ip="$1"
+    local max_attempts=60
+    local attempt=0
+
+    log_info "Waiting for SSH to be ready..."
+
+    while [[ $attempt -lt $max_attempts ]]; do
+        if ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+               -o ConnectTimeout=5 -q "$VM_USER@$vm_ip" "exit" &>/dev/null; then
+            log_success "SSH is ready"
+            return 0
+        fi
+
+        sleep 2
+        ((attempt++))
+    done
+
+    log_error "Timeout waiting for SSH"
+    exit 1
+}
+
+# Wait for cloud-init to complete
+wait_for_cloud_init() {
+    local vm_ip="$1"
+    local max_attempts=120
+    local attempt=0
+
+    log_info "Waiting for cloud-init to complete..."
+
+    while [[ $attempt -lt $max_attempts ]]; do
+        if ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+               -q "$VM_USER@$vm_ip" \
+               "cloud-init status --wait" &>/dev/null; then
+            log_success "Cloud-init completed"
+            return 0
+        fi
+
+        sleep 2
+        ((attempt++))
+    done
+
+    log_error "Timeout waiting for cloud-init"
+    exit 1
+}
+
+# Execute script in VM
+execute_script() {
+    local vm_ip="$1"
+    local remote_script="/tmp/fedora-vm-script-$$.sh"
+
+    log_info "Executing script in VM..."
+
+    if [[ -n "$SCRIPT_TO_RUN" ]]; then
+        # Upload and execute script file
+        log_info "Uploading script: $SCRIPT_TO_RUN"
+        scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+            "$SCRIPT_TO_RUN" "$VM_USER@$vm_ip:$remote_script"
+
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+            "$VM_USER@$vm_ip" "chmod +x $remote_script && $remote_script"
+    else
+        # Execute command string
+        log_info "Executing command"
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+            "$VM_USER@$vm_ip" "$SCRIPT_CONTENT"
+    fi
+
+    local exit_code=$?
+
+    if [[ $exit_code -eq 0 ]]; then
+        log_success "Script execution completed successfully"
+    else
+        log_error "Script execution failed with exit code: $exit_code"
+        exit $exit_code
+    fi
+}
+
+# Main function
+main() {
+    parse_args "$@"
+
+    log_info "Starting VM provisioning..."
+    log_info "VM Name: $VM_NAME"
+    log_info "Memory: ${VM_MEMORY}MB, CPUs: $VM_CPUS, Disk: ${VM_DISK_SIZE}GB"
+    log_info "Fedora Version: $FEDORA_VERSION"
+    log_info "Working Directory: $WORKDIR"
+
+    # Create working directory
+    mkdir -p "$WORKDIR"
+
+    # Download Fedora image
+    local base_image
+    base_image=$(download_fedora_image)
+
+    # Create cloud-init configuration
+    create_cloud_init_config
+
+    # Create cloud-init ISO
+    local cloud_init_iso
+    cloud_init_iso=$(create_cloud_init_iso)
+
+    # Create VM
+    create_vm "$base_image" "$cloud_init_iso"
+
+    # Wait for VM to be ready
+    local vm_ip
+    vm_ip=$(wait_for_vm)
+
+    # Wait for SSH
+    wait_for_ssh "$vm_ip"
+
+    # Wait for cloud-init
+    wait_for_cloud_init "$vm_ip"
+
+    # Execute script
+    execute_script "$vm_ip"
+
+    # Handle cleanup or keep VM
+    if [[ "$KEEP_VM" == "true" ]]; then
+        log_success "VM is running at: $vm_ip"
+        log_info "SSH access: ssh $VM_USER@$vm_ip"
+        log_info "To destroy VM: virsh destroy $VM_NAME && virsh undefine $VM_NAME --remove-all-storage"
+        CLEANUP_ON_EXIT="false"  # Don't cleanup on exit
+    else
+        CLEANUP_ON_EXIT="true"
+    fi
+
+    log_success "Done!"
+}
+
+main "$@"

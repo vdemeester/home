@@ -21,6 +21,7 @@ in
   manifest-tool = pkgs.callPackage ./manifest-tool { };
   gh-restart-failed = pkgs.callPackage ../tools/gh-restart-failed { };
   arr = pkgs.callPackage ../tools/arr { };
+  fedora-vm = pkgs.callPackage ../tools/fedora-vm { };
 
   chmouzies-ai = pkgs.callPackage ./chmouzies/ai.nix { };
   chmouzies-git = pkgs.callPackage ./chmouzies/git.nix { };
