@@ -1,9 +1,5 @@
 {
-  config,
   hostname,
-  inputs,
-  lib,
-  outputs,
   ...
 }:
 {
@@ -14,24 +10,26 @@
   ];
 
   nixpkgs = {
-    overlays = [
-      # Our own flake exports (from overlays and pkgs dir)
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-
-      # And from other flakes
-      inputs.emacs-overlay.overlay
-      inputs.chapeau-rouge.overlays.openshift
-      inputs.chick-group.overlays.default
-      inputs.agenix.overlays.default
-
-      # Migrate to "modifications"
-      (_: prev: {
-        inherit (inputs.buildkit-tekton.packages.${prev.system}) tkn-local;
-        inherit (inputs.dagger.packages.${prev.system}) dagger;
-      })
-    ];
+    # Note: Overlays cause infinite recursion in system-manager
+    # Disabling for now - packages will come from standard nixpkgs
+    # overlays = [
+    #   # Our own flake exports (from overlays and pkgs dir)
+    #   outputs.overlays.additions
+    #   outputs.overlays.modifications
+    #   outputs.overlays.unstable-packages
+    #
+    #   # And from other flakes
+    #   inputs.emacs-overlay.overlay
+    #   inputs.chapeau-rouge.overlays.openshift
+    #   inputs.chick-group.overlays.default
+    #   inputs.agenix.overlays.default
+    #
+    #   # Migrate to "modifications"
+    #   (_: prev: {
+    #     inherit (inputs.buildkit-tekton.packages.${prev.system}) tkn-local;
+    #     inherit (inputs.dagger.packages.${prev.system}) dagger;
+    #   })
+    # ];
     config = {
       allowUnfree = true;
     };
@@ -39,21 +37,23 @@
   nix = {
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake
-    registry = lib.mkForce (lib.mapAttrs (_: value: { flake = value; }) inputs);
+    # Note: These options are not available in system-manager
+    # registry = lib.mkForce (lib.mapAttrs (_: value: { flake = value; }) inputs);
 
     # This will additionally add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well, awesome!
-    nixPath = lib.mkForce (
-      lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry
-    );
+    # nixPath = lib.mkForce (
+    #   lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry
+    # );
 
-    optimise = {
-      automatic = true;
-      dates = [
-        "01:10"
-        "12:10"
-      ];
-    };
+    # Note: These options are not available in system-manager
+    # optimise = {
+    #   automatic = true;
+    #   dates = [
+    #     "01:10"
+    #     "12:10"
+    #   ];
+    # };
 
     settings = {
       auto-optimise-store = true;
@@ -99,7 +99,8 @@
 
     # On laptops at least, make the daemon and builders low priority
     # to have a responding system while building
-    daemonIOSchedClass = "idle";
-    daemonCPUSchedPolicy = "idle";
+    # Note: These options are not available in system-manager
+    # daemonIOSchedClass = "idle";
+    # daemonCPUSchedPolicy = "idle";
   };
 }
