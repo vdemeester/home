@@ -92,39 +92,39 @@
           hostname = "athena";
           system = "aarch64-linux";
           hardwareType = "rpi4";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          pkgsInput = inputs.nixpkgs-25_11;
+          homeInput = inputs.home-manager-25_11;
         };
         demeter = libx.mkHost {
           hostname = "demeter";
           system = "aarch64-linux";
           hardwareType = "rpi4";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          pkgsInput = inputs.nixpkgs-25_11;
+          homeInput = inputs.home-manager-25_11;
         };
         aix = libx.mkHost {
           hostname = "aix";
           system = "aarch64-linux";
           hardwareType = "rpi4";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          pkgsInput = inputs.nixpkgs-25_11;
+          homeInput = inputs.home-manager-25_11;
         };
         aion = libx.mkHost {
           hostname = "aion";
           system = "aarch64-linux";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          pkgsInput = inputs.nixpkgs-25_11;
+          homeInput = inputs.home-manager-25_11;
         };
         rhea = libx.mkHost {
           hostname = "rhea";
           system = "aarch64-linux";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          pkgsInput = inputs.nixpkgs-25_11;
+          homeInput = inputs.home-manager-25_11;
         };
         kerkouane = libx.mkHost {
           hostname = "kerkouane";
-          pkgsInput = inputs.nixpkgs-25_05;
-          homeInput = inputs.home-manager-25_05;
+          pkgsInput = inputs.nixpkgs-25_11;
+          homeInput = inputs.home-manager-25_11;
         };
         # NOTE: experimentations
         foo = libx.newMkHost {
@@ -367,8 +367,6 @@
 
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
-    lanzaboote.inputs.flake-compat.follows = "flake-compat";
-    lanzaboote.inputs.pre-commit-hooks-nix.follows = "pre-commit-hooks";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
