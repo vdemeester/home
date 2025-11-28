@@ -67,8 +67,10 @@ in
       }
     ];
     openFirewall = lib.mkForce false;
-    passwordAuthentication = false;
-    permitRootLogin = "without-password";
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "without-password";
+    };
   };
 
   services.wireguard.server = {
@@ -229,6 +231,6 @@ in
   };
   security.acme = {
     acceptTerms = true;
-    email = "vincent@sbr.pm";
+    defaults.email = "vincent@sbr.pm";
   };
 }
