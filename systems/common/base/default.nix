@@ -62,6 +62,7 @@
   security = {
     polkit.enable = true;
     rtkit.enable = true;
+    pam.sshAgentAuth.enable = true;
   };
 
   # Clear out /tmp after a fortnight and give all normal users a ~/tmp

@@ -227,7 +227,6 @@ in
           repo: https://git.sr.ht/~vdemeester/sec
     '';
   };
-  security.pam.enableSSHAgentAuth = true;
   security.acme = {
     acceptTerms = true;
     email = "vincent@sbr.pm";

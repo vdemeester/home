@@ -60,7 +60,4 @@
       };
     };
   };
-
-  # TODO: could be enable by default for all ?
-  security.pam.enableSSHAgentAuth = true;
 }
