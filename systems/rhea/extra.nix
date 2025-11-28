@@ -155,6 +155,14 @@
                   certResolver = "letsencrypt";
                 };
               };
+              immich = {
+                rule = "Host(`immich.sbr.pm`)";
+                service = "immich";
+                entryPoints = [ "websecure" ];
+                tls = {
+                  certResolver = "letsencrypt";
+                };
+              };
             };
             services = syncthingServices // {
               jellyfin = {
@@ -203,6 +211,13 @@
                 loadBalancer = {
                   servers = [
                     { url = "http://localhost:9091"; }
+                  ];
+                };
+              };
+              immich = {
+                loadBalancer = {
+                  servers = [
+                    { url = "http://localhost:2283"; }
                   ];
                 };
               };
@@ -316,12 +331,12 @@
                 /neo/videos               192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
         			'';
     };
-    # immich = {
-    #   enable = true;
-    #   user = "vincent";
-    #   group = "users";
-    #   mediaLocation = "/neo/pictures/photos";
-    # };
+    immich = {
+      enable = true;
+      user = "vincent";
+      group = "users";
+      mediaLocation = "/neo/pictures/photos";
+    };
     jellyfin = {
       enable = true;
       user = "vincent";
