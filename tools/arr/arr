@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+"""
+arr - Unified CLI for managing *arr services (Sonarr, Radarr, Lidarr).
+
+This tool provides a consistent interface for common operations across
+the *arr media management stack.
+
+Usage:
+    arr <service> <command> [options]
+
+Services:
+    sonarr      Manage Sonarr TV series
+    radarr      Manage Radarr movies
+    lidarr      Manage Lidarr music
+
+Commands vary by service. Use 'arr <service> --help' for details.
+
+Examples:
+    arr sonarr rename http://localhost:8989 your-api-key
+    arr radarr rename http://localhost:7878 your-api-key --dry-run
+    arr lidarr rename-albums http://localhost:8686 your-api-key
+    arr lidarr retag-albums http://localhost:8686 your-api-key
+    arr lidarr update-paths http://localhost:8686 your-api-key /old /new
+"""
+
+import sys
+from pathlib import Path
+
+# Add the arr package directory to Python path
+ARR_DIR = Path(__file__).parent.resolve()
+sys.path.insert(0, str(ARR_DIR))
+
+
+def print_usage():
+    """Print usage information."""
+    print(__doc__)
+    sys.exit(1)
+
+
+def main():
+    """Main entry point for the arr CLI."""
+    if len(sys.argv) < 2:
+        print_usage()
+
+    service = sys.argv[1].lower()
+
+    # Map services to their command modules
+    if service == "sonarr":
+        if len(sys.argv) < 3:
+            print("Usage: arr sonarr <command> [options]")
+            print("\nCommands:")
+            print("  rename     Rename series episodes")
+            sys.exit(1)
+
+        command = sys.argv[2].lower()
+        if command == "rename":
+            # Remove 'sonarr rename' from argv and run the script
+            sys.argv = [sys.argv[0]] + sys.argv[3:]
+            from commands import sonarr_rename
+            sonarr_rename.main()
+        else:
+            print(f"Unknown sonarr command: {command}")
+            sys.exit(1)
+
+    elif service == "radarr":
+        if len(sys.argv) < 3:
+            print("Usage: arr radarr <command> [options]")
+            print("\nCommands:")
+            print("  rename     Rename movies")
+            sys.exit(1)
+
+        command = sys.argv[2].lower()
+        if command == "rename":
+            sys.argv = [sys.argv[0]] + sys.argv[3:]
+            from commands import radarr_rename
+            radarr_rename.main()
+        else:
+            print(f"Unknown radarr command: {command}")
+            sys.exit(1)
+
+    elif service == "lidarr":
+        if len(sys.argv) < 3:
+            print("Usage: arr lidarr <command> [options]")
+            print("\nCommands:")
+            print("  rename-albums    Rename albums")
+            print("  retag-albums     Retag albums metadata")
+            print("  update-paths     Update library paths")
+            sys.exit(1)
+
+        command = sys.argv[2].lower()
+        if command == "rename-albums":
+            sys.argv = [sys.argv[0]] + sys.argv[3:]
+            from commands import lidarr_rename_albums
+            lidarr_rename_albums.main()
+        elif command == "retag-albums":
+            sys.argv = [sys.argv[0]] + sys.argv[3:]
+            from commands import lidarr_retag_albums
+            lidarr_retag_albums.main()
+        elif command == "update-paths":
+            sys.argv = [sys.argv[0]] + sys.argv[3:]
+            from commands import lidarr_update_paths
+            lidarr_update_paths.main()
+        else:
+            print(f"Unknown lidarr command: {command}")
+            sys.exit(1)
+
+    elif service in ["-h", "--help", "help"]:
+        print_usage()
+
+    else:
+        print(f"Unknown service: {service}")
+        print("\nAvailable services: sonarr, radarr, lidarr")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

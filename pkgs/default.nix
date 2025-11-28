@@ -19,7 +19,8 @@ in
   govanityurl = pkgs.callPackage ./govanityurl { };
   batzconverter = pkgs.callPackage ./batzconverter { };
   manifest-tool = pkgs.callPackage ./manifest-tool { };
-  gh-restart-failed = pkgs.callPackage ./gh-restart-failed { };
+  gh-restart-failed = pkgs.callPackage ../tools/gh-restart-failed { };
+  arr = pkgs.callPackage ../tools/arr { };
 
   chmouzies-ai = pkgs.callPackage ./chmouzies/ai.nix { };
   chmouzies-git = pkgs.callPackage ./chmouzies/git.nix { };

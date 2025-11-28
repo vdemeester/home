@@ -1,9 +1,3 @@
-#!/usr/bin/env -S uv run --quiet --script
-# /// script
-# dependencies = [
-#   "requests",
-# ]
-# ///
 """
 Rename movies in Radarr with interactive confirmation.
 
@@ -14,15 +8,15 @@ This script:
 4. Asks for confirmation before applying renames
 
 Usage:
-    ./radarr-rename-movies.py <radarr_url> <api_key>
+    arr radarr rename <radarr_url> <api_key>
 
 Example:
-    ./radarr-rename-movies.py http://localhost:7878 your-api-key
+    arr radarr rename http://localhost:7878 your-api-key
 """
 
 from typing import Any, Dict, List
 
-from arrlib import (
+from lib import (
     ArrClient,
     create_arr_parser,
     get_confirmation_decision,

@@ -1,9 +1,3 @@
-#!/usr/bin/env -S uv run --quiet --script
-# /// script
-# dependencies = [
-#   "requests",
-# ]
-# ///
 """
 Update artist paths in Lidarr to use a 'library' subdirectory.
 
@@ -15,10 +9,10 @@ This script:
    <music_folder>/library/<artist>
 
 Usage:
-    ./lidarr-update-paths.py <lidarr_url> <api_key> <music_folder>
+    arr lidarr update-paths <lidarr_url> <api_key> <music_folder>
 
 Example:
-    ./lidarr-update-paths.py http://localhost:8686 your-api-key /data/music
+    arr lidarr update-paths http://localhost:8686 your-api-key /data/music
 """
 
 import argparse

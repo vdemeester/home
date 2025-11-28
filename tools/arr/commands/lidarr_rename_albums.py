@@ -1,9 +1,3 @@
-#!/usr/bin/env -S uv run --quiet --script
-# /// script
-# dependencies = [
-#   "requests",
-# ]
-# ///
 """
 Rename albums in Lidarr with interactive confirmation.
 
@@ -14,15 +8,15 @@ This script:
 4. Asks for confirmation before applying renames
 
 Usage:
-    ./lidarr-rename-albums.py <lidarr_url> <api_key>
+    arr lidarr rename-albums <lidarr_url> <api_key>
 
 Example:
-    ./lidarr-rename-albums.py http://localhost:8686 your-api-key
+    arr lidarr rename-albums http://localhost:8686 your-api-key
 """
 
 from typing import Any, Dict, List
 
-from arrlib import (
+from lib import (
     ArrClient,
     create_arr_parser,
     get_confirmation_decision,

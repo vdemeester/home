@@ -1,9 +1,3 @@
-#!/usr/bin/env -S uv run --quiet --script
-# /// script
-# dependencies = [
-#   "requests",
-# ]
-# ///
 """
 Rename series episodes in Sonarr with interactive confirmation.
 
@@ -14,15 +8,15 @@ This script:
 4. Asks for confirmation before applying renames
 
 Usage:
-    ./sonarr-rename-series.py <sonarr_url> <api_key>
+    arr sonarr rename <sonarr_url> <api_key>
 
 Example:
-    ./sonarr-rename-series.py http://localhost:8989 your-api-key
+    arr sonarr rename http://localhost:8989 your-api-key
 """
 
 from typing import Any, Dict, List
 
-from arrlib import (
+from lib import (
     ArrClient,
     create_arr_parser,
     get_confirmation_decision,
