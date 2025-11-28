@@ -269,12 +269,6 @@
       repo = "nixpkgs";
       ref = "nixos-unstable";
     };
-    nixpkgs-25_05 = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-25.05";
-    };
     nixpkgs-25_11 = {
       type = "github";
       owner = "NixOS";
@@ -296,13 +290,6 @@
       url = "github:nix-community/dns.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager-25_05 = {
-      type = "github";
-      owner = "nix-community";
-      repo = "home-manager";
-      ref = "release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-25_05";
-    };
     home-manager-25_11 = {
       type = "github";
       owner = "nix-community";
@@ -316,8 +303,7 @@
       owner = "sodiboo";
       repo = "niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-25_05";
-      # inputs.nixpkgs-stable.follows = "nixpkgs-25_11";
+      inputs.nixpkgs-stable.follows = "nixpkgs-25_11";
     };
 
     dagger = {
@@ -330,7 +316,7 @@
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-25_05";
+      inputs.nixpkgs-stable.follows = "nixpkgs-25_11";
     };
 
     nixos-hardware = {
@@ -358,9 +344,6 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
-    agenix-25_05.url = "github:ryantm/agenix";
-    agenix-25_05.inputs.nixpkgs.follows = "nixpkgs-25_05";
-    agenix-25_05.inputs.home-manager.follows = "home-manager-25_05";
     agenix-25_11.url = "github:ryantm/agenix";
     agenix-25_11.inputs.nixpkgs.follows = "nixpkgs-25_11";
     agenix-25_11.inputs.home-manager.follows = "home-manager-25_11";
