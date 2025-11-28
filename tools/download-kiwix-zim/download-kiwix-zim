@@ -1,0 +1,284 @@
+#!/usr/bin/env python3
+
+"""
+Browse and download ZIM files from the Kiwix library using fzf
+
+Usage:
+    download-kiwix-zim.py [OPTIONS] [DOWNLOAD_DIR]
+
+Options:
+    -l, --lang LANG     Filter by language code (e.g., eng, fra, spa)
+    -h, --help          Show help message
+
+Requirements:
+    - fzf
+    - aria2c or wget
+"""
+
+import argparse
+import subprocess
+import sys
+import urllib.request
+import xml.etree.ElementTree as ET
+from pathlib import Path
+from typing import List, Dict
+
+CATALOG_URL = "https://library.kiwix.org/catalog/v2/entries"
+
+
+def parse_args():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser(
+        description="Browse and download ZIM files from the Kiwix library"
+    )
+    parser.add_argument(
+        "-l",
+        "--lang",
+        help="Filter by language code (e.g., eng, fra, spa)",
+        default="",
+    )
+    parser.add_argument(
+        "download_dir",
+        nargs="?",
+        default=str(Path.home() / "Downloads"),
+        help="Download directory (default: ~/Downloads)",
+    )
+    return parser.parse_args()
+
+
+def check_dependencies():
+    """Check if required tools are available."""
+    missing = []
+
+    if subprocess.run(["which", "fzf"], capture_output=True).returncode != 0:
+        missing.append("fzf")
+
+    has_aria2c = (
+        subprocess.run(["which", "aria2c"], capture_output=True).returncode
+        == 0
+    )
+    has_wget = (
+        subprocess.run(["which", "wget"], capture_output=True).returncode == 0
+    )
+
+    if not has_aria2c and not has_wget:
+        missing.append("aria2c or wget")
+
+    if missing:
+        deps = ", ".join(missing)
+        print(f"Error: Missing required dependencies: {deps}", file=sys.stderr)
+        sys.exit(1)
+
+
+def fetch_catalog(lang_filter: str = "") -> str:
+    """Fetch the Kiwix catalog XML."""
+    url = CATALOG_URL
+    # Request all entries (there are ~3,500 total)
+    params = ["count=5000"]
+    if lang_filter:
+        params.append(f"lang={lang_filter}")
+
+    if params:
+        url += "?" + "&".join(params)
+
+    print("Fetching Kiwix catalog...", file=sys.stderr)
+
+    try:
+        with urllib.request.urlopen(url) as response:
+            return response.read().decode("utf-8")
+    except Exception as e:
+        print(f"Error fetching catalog: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+def parse_catalog(xml_content: str) -> List[Dict[str, str]]:
+    """Parse the OPDS XML catalog and extract ZIM entries."""
+    entries = []
+
+    # Parse XML with namespace handling
+    try:
+        root = ET.fromstring(xml_content)
+    except ET.ParseError as e:
+        print(f"Error parsing XML: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    # Define namespaces
+    namespaces = {
+        "atom": "http://www.w3.org/2005/Atom",
+        "dc": "http://purl.org/dc/terms/",
+    }
+
+    # Extract entries
+    for entry in root.findall("atom:entry", namespaces):
+        title = entry.find("atom:title", namespaces)
+        language = entry.find("atom:language", namespaces)
+        flavour = entry.find("atom:flavour", namespaces)
+        summary = entry.find("atom:summary", namespaces)
+
+        # Find the ZIM download link
+        zim_link = None
+        for link in entry.findall("atom:link", namespaces):
+            if link.get("type") == "application/x-zim":
+                zim_link = link
+                break
+
+        if title is not None and zim_link is not None:
+            url = zim_link.get("href", "")
+            size = int(zim_link.get("length", "0"))
+
+            # Format size
+            if size >= 1024 * 1024 * 1024:
+                size_human = f"{size / (1024 * 1024 * 1024):.1f}G"
+            elif size >= 1024 * 1024:
+                size_human = f"{size / (1024 * 1024):.0f}M"
+            else:
+                size_human = f"{size / 1024:.0f}K"
+
+            lang = language.text if language is not None else "unknown"
+            flav = (
+                flavour.text
+                if flavour is not None and flavour.text
+                else "standard"
+            )
+            summ = summary.text if summary is not None else ""
+
+            entries.append({
+                "title": title.text or "",
+                "language": lang,
+                "flavour": flav,
+                "summary": summ,
+                "size": size_human,
+                "url": url,
+            })
+
+    return entries
+
+
+def run_fzf(entries: List[Dict[str, str]]) -> List[Dict[str, str]]:
+    """Run fzf to select entries."""
+    if not entries:
+        print("No entries found", file=sys.stderr)
+        sys.exit(0)
+
+    # Format entries for fzf
+    lines = []
+    for entry in entries:
+        line = (
+            f"{entry['title']}\t[{entry['language']}]\t"
+            f"{entry['size']}\t{entry['flavour']}\t{entry['url']}"
+        )
+        lines.append(line)
+
+    # Run fzf
+    fzf_input = "\n".join(lines)
+
+    try:
+        preview_cmd = (
+            "echo {1} && echo && echo Language: {2} && "
+            "echo Size: {3} && echo Type: {4}"
+        )
+        header_msg = (
+            "Select ZIM file to download "
+            "(Tab for multi-select, Enter to confirm)"
+        )
+
+        result = subprocess.run(
+            [
+                "fzf",
+                "--delimiter=\t",
+                "--with-nth=1,2,3,4",
+                f"--preview={preview_cmd}",
+                "--preview-window=up:5",
+                f"--header={header_msg}",
+                "--multi",
+                "--bind=ctrl-a:select-all",
+                "--bind=ctrl-d:deselect-all",
+            ],
+            input=fzf_input,
+            capture_output=True,
+            text=True,
+        )
+
+        if result.returncode != 0:
+            print("No selection made", file=sys.stderr)
+            sys.exit(0)
+
+        # Parse selected lines
+        selected = []
+        for line in result.stdout.strip().split("\n"):
+            if line:
+                parts = line.split("\t")
+                if len(parts) >= 5:
+                    selected.append({
+                        "title": parts[0],
+                        "language": parts[1].strip("[]"),
+                        "size": parts[2],
+                        "flavour": parts[3],
+                        "url": parts[4],
+                    })
+
+        return selected
+
+    except FileNotFoundError:
+        print("Error: fzf not found", file=sys.stderr)
+        sys.exit(1)
+
+
+def download_zim(entry: Dict[str, str], download_dir: str):
+    """Download a ZIM file."""
+    Path(download_dir).mkdir(parents=True, exist_ok=True)
+
+    url = entry["url"]
+    title = entry['title']
+    lang = entry['language']
+    size = entry['size']
+    print(f"Downloading: {title} [{lang}] ({size})")
+    print(f"URL: {url}")
+
+    # Try aria2c first, then wget
+    has_aria = (
+        subprocess.run(["which", "aria2c"], capture_output=True).returncode
+        == 0
+    )
+    has_wget = (
+        subprocess.run(["which", "wget"], capture_output=True).returncode == 0
+    )
+
+    if has_aria:
+        subprocess.run(["aria2c", "-d", download_dir, "-x", "4", url])
+    elif has_wget:
+        subprocess.run(["wget", "-P", download_dir, url])
+    else:
+        print("Error: No download tool available", file=sys.stderr)
+        sys.exit(1)
+
+
+def main():
+    """Main function."""
+    args = parse_args()
+
+    check_dependencies()
+
+    xml_content = fetch_catalog(args.lang)
+
+    print("Parsing catalog...", file=sys.stderr)
+    entries = parse_catalog(xml_content)
+
+    print(f"Found {len(entries)} ZIM files", file=sys.stderr)
+
+    selected = run_fzf(entries)
+
+    if not selected:
+        print("No files selected", file=sys.stderr)
+        sys.exit(0)
+
+    print(f"\nDownloading {len(selected)} file(s) to: {args.download_dir}\n")
+
+    for entry in selected:
+        download_zim(entry, args.download_dir)
+
+    print("\nDownload(s) complete!")
+
+
+if __name__ == "__main__":
+    main()
