@@ -576,5 +576,7 @@ _: {
     };
     # MQTT on demeter
     mqtt.host = "demeter";
+    # Kiwix on sakhalin
+    kiwix.host = "sakhalin";
   };
 }

@@ -135,6 +135,7 @@
         /export/toshito              192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
       '';
     };
+
     wireguard = {
       enable = true;
       ips = libx.wg-ips globals.machines.sakhalin.net.vpn.ips;
@@ -201,5 +202,19 @@
     '';
 
     startAt = "daily";
+  };
+  # Kiwix serve
+  systemd.services.kiwix-serve = {
+    description = "Kiwix offline content server";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+
+    serviceConfig = {
+      Type = "simple";
+      User = "vincent";
+      ExecStart = "${pkgs.kiwix-tools}/bin/kiwix-serve --port=8080 --library /mnt/gaia/kiwix/*.zim";
+      Restart = "on-failure";
+      RestartSec = "5s";
+    };
   };
 }

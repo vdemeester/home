@@ -169,6 +169,14 @@
                   certResolver = "letsencrypt";
                 };
               };
+              kiwix = {
+                rule = "Host(`kiwix.sbr.pm`)";
+                service = "kiwix";
+                entryPoints = [ "websecure" ];
+                tls = {
+                  certResolver = "letsencrypt";
+                };
+              };
             };
             services = syncthingServices // {
               jellyfin = {
@@ -224,6 +232,13 @@
                 loadBalancer = {
                   servers = [
                     { url = "http://localhost:2283"; }
+                  ];
+                };
+              };
+              kiwix = {
+                loadBalancer = {
+                  servers = [
+                    { url = "http://${builtins.head globals.machines.sakhalin.net.vpn.ips}:8080"; }
                   ];
                 };
               };
