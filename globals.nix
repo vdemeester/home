@@ -574,5 +574,7 @@ _: {
       host = "rhea";
       aliases = [ "s" ];
     };
+    # MQTT on demeter
+    mqtt.host = "demeter";
   };
 }

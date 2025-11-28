@@ -33,6 +33,12 @@
           websecure = {
             address = ":443";
           };
+          mqtt = {
+            address = ":1883";
+          };
+          mqtts = {
+            address = ":8883";
+          };
         };
 
         # Certificate resolver using Gandi DNS
@@ -223,6 +229,32 @@
               };
             };
             middlewares = syncthingMiddlewares;
+          };
+          tcp = {
+            routers = {
+              mqtt = {
+                rule = "HostSNI(`*`)";
+                service = "mqtt";
+                entryPoints = [ "mqtt" ];
+              };
+              mqtts = {
+                rule = "HostSNI(`mqtt.sbr.pm`)";
+                service = "mqtt";
+                entryPoints = [ "mqtts" ];
+                tls = {
+                  certResolver = "letsencrypt";
+                };
+              };
+            };
+            services = {
+              mqtt = {
+                loadBalancer = {
+                  servers = [
+                    { address = "${builtins.head globals.machines.demeter.net.vpn.ips}:1883"; }
+                  ];
+                };
+              };
+            };
           };
         };
     };
@@ -430,6 +462,8 @@
   networking.firewall.allowedTCPPorts = [
     80
     443
+    1883 # MQTT
+    8883 # MQTTS
   ];
 
   # Environment file for Gandi API key (managed by agenix)

@@ -93,4 +93,5 @@ in
   "secrets/minica.pem.age".publicKeys = users ++ systems;
   "secrets/shikoku/aria2rpcsecret.age".publicKeys = users ++ [ shikoku ];
   "secrets/rhea/gandi.env.age".publicKeys = users ++ [ rhea ];
+  "secrets/demeter/mosquitto-homeassistant-password.age".publicKeys = users ++ [ demeter ];
 }
