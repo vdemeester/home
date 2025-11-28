@@ -6,19 +6,13 @@ This script:
 2. Checks which movies have files that need renaming
 3. Previews the rename changes for each movie
 4. Asks for confirmation before applying renames
-
-Usage:
-    arr radarr rename <radarr_url> <api_key>
-
-Example:
-    arr radarr rename http://localhost:7878 your-api-key
 """
 
 from typing import Any, Dict, List
 
 from lib import (
     ArrClient,
-    create_arr_parser,
+    CommandContext,
     get_confirmation_decision,
     print_final_summary,
     print_item_list,
@@ -39,14 +33,11 @@ def execute_rename(client: ArrClient, movie_id: int) -> Dict[str, Any]:
     return client.post("/api/v3/command", payload)
 
 
-def main():
-    parser = create_arr_parser(
-        "Radarr", "Rename Radarr movies with confirmation", 7878
-    )
-    args = parser.parse_args()
-
-    # Create client
-    client = ArrClient(args.radarr_url, args.api_key)
+def run(url: str, api_key: str, dry_run: bool, no_confirm: bool):
+    """Execute the radarr rename command."""
+    # Create client and context
+    client = ArrClient(url, api_key)
+    ctx = CommandContext(dry_run, no_confirm)
 
     print(f"Fetching movies from {client.base_url}...")
     all_movies = client.get("/api/v3/movie")
@@ -112,7 +103,7 @@ def main():
             f"\nRename {len(rename_preview)} {file_word} "
             f"for '{movie_title}'?"
         )
-        should_rename = get_confirmation_decision(args, prompt)
+        should_rename = get_confirmation_decision(ctx, prompt)
 
         if should_rename:
             print("Executing rename...")
@@ -124,12 +115,12 @@ def main():
                 print("✗ Failed to queue rename command")
                 skipped_count += 1
         else:
-            if not args.dry_run:
+            if not ctx.dry_run:
                 print("Skipped")
             skipped_count += 1
 
     # Final summary
-    if args.dry_run:
+    if ctx.dry_run:
         print_section_header("FINAL SUMMARY")
         print(
             f"\n[DRY RUN] Found {len(movies_with_renames)} movies "
@@ -143,7 +134,3 @@ def main():
             skipped_count,
             "Renamed",
         )
-
-
-if __name__ == "__main__":
-    main()

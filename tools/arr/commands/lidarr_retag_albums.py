@@ -6,19 +6,13 @@ This script:
 2. Checks which artists have albums with files that need retagging
 3. Previews the retag changes for each album
 4. Asks for confirmation before applying retags
-
-Usage:
-    arr lidarr retag-albums <lidarr_url> <api_key>
-
-Example:
-    arr lidarr retag-albums http://localhost:8686 your-api-key
 """
 
 from typing import Any, Dict, List
 
 from lib import (
     ArrClient,
-    create_arr_parser,
+    CommandContext,
     get_confirmation_decision,
     print_final_summary,
     print_item_list,
@@ -64,14 +58,11 @@ def format_tag_changes(changes: List[Dict[str, Any]]) -> str:
     return "\n".join(lines) if lines else "      No changes"
 
 
-def main():
-    parser = create_arr_parser(
-        "Lidarr", "Retag Lidarr albums with confirmation", 8686
-    )
-    args = parser.parse_args()
-
-    # Create client
-    client = ArrClient(args.lidarr_url, args.api_key)
+def run(url: str, api_key: str, dry_run: bool, no_confirm: bool):
+    """Execute the lidarr retag-albums command."""
+    # Create client and context
+    client = ArrClient(url, api_key)
+    ctx = CommandContext(dry_run, no_confirm)
 
     print(f"Fetching artists from {client.base_url}...")
     all_artists = client.get("/api/v1/artist")
@@ -144,7 +135,7 @@ def main():
             f"\nRetag {len(retag_preview)} {file_word} "
             f"for '{artist_name}'?"
         )
-        should_retag = get_confirmation_decision(args, prompt)
+        should_retag = get_confirmation_decision(ctx, prompt)
 
         if should_retag:
             print("Executing retag...")
@@ -164,12 +155,12 @@ def main():
                 print("✗ No valid file IDs found")
                 skipped_count += 1
         else:
-            if not args.dry_run:
+            if not ctx.dry_run:
                 print("Skipped")
             skipped_count += 1
 
     # Final summary
-    if args.dry_run:
+    if ctx.dry_run:
         print_section_header("FINAL SUMMARY")
         print(
             f"\n[DRY RUN] Found {len(artists_with_retags)} artists "
@@ -183,7 +174,3 @@ def main():
             skipped_count,
             "Retagged",
         )
-
-
-if __name__ == "__main__":
-    main()

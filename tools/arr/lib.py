@@ -6,7 +6,6 @@ Provides common functionality for API interaction, user confirmation,
 and output formatting across all *arr stack scripts.
 """
 
-import argparse
 import sys
 from typing import Any, Dict, List, Optional
 
@@ -102,43 +101,19 @@ def ask_confirmation(prompt: str) -> bool:
             print("Please answer 'y' or 'n'")
 
 
-def create_arr_parser(
-    service_name: str, description: str, default_port: int
-) -> argparse.ArgumentParser:
-    """
-    Create a standard argument parser for *arr scripts.
+class CommandContext:
+    """Context object for command execution with common options."""
 
-    Args:
-        service_name: Name of the service (e.g., "Sonarr", "Radarr")
-        description: Description for the script
-        default_port: Default port for the service
+    def __init__(self, dry_run: bool = False, no_confirm: bool = False):
+        """
+        Initialize command context.
 
-    Returns:
-        Configured ArgumentParser instance
-    """
-    parser = argparse.ArgumentParser(description=description)
-    parser.add_argument(
-        f"{service_name.lower()}_url",
-        metavar="url",
-        help=(
-            f"{service_name} base URL "
-            f"(e.g., http://localhost:{default_port})"
-        ),
-    )
-    parser.add_argument("api_key", help=f"{service_name} API key")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show what would be changed without making changes",
-    )
-    parser.add_argument(
-        "--no-confirm",
-        "--yolo",
-        action="store_true",
-        dest="no_confirm",
-        help="Skip interactive confirmation (use with caution)",
-    )
-    return parser
+        Args:
+            dry_run: If True, show changes without applying them
+            no_confirm: If True, skip interactive confirmations
+        """
+        self.dry_run = dry_run
+        self.no_confirm = no_confirm
 
 
 def print_separator(char: str = "=", width: int = 80) -> None:
@@ -177,22 +152,22 @@ def print_item_list(
 
 
 def get_confirmation_decision(
-    args: argparse.Namespace, prompt: str
+    ctx: CommandContext, prompt: str
 ) -> bool:
     """
     Determine whether to proceed based on dry-run, no-confirm, or user input.
 
     Args:
-        args: Parsed command-line arguments
+        ctx: Command context with dry_run and no_confirm flags
         prompt: Confirmation prompt to show user
 
     Returns:
         True if should proceed, False otherwise
     """
-    if args.dry_run:
+    if ctx.dry_run:
         print("\n[DRY RUN] Skipping actual operation")
         return False
-    elif args.no_confirm:
+    elif ctx.no_confirm:
         print("\n[NO CONFIRM] Proceeding with operation...")
         return True
     else:

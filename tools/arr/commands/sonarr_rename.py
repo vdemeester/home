@@ -6,19 +6,13 @@ This script:
 2. Checks which series have episodes that need renaming
 3. Previews the rename changes for each series
 4. Asks for confirmation before applying renames
-
-Usage:
-    arr sonarr rename <sonarr_url> <api_key>
-
-Example:
-    arr sonarr rename http://localhost:8989 your-api-key
 """
 
 from typing import Any, Dict, List
 
 from lib import (
     ArrClient,
-    create_arr_parser,
+    CommandContext,
     get_confirmation_decision,
     print_final_summary,
     print_item_list,
@@ -45,14 +39,11 @@ def execute_rename(
     return client.post("/api/v3/command", payload)
 
 
-def main():
-    parser = create_arr_parser(
-        "Sonarr", "Rename Sonarr series episodes with confirmation", 8989
-    )
-    args = parser.parse_args()
-
-    # Create client
-    client = ArrClient(args.sonarr_url, args.api_key)
+def run(url: str, api_key: str, dry_run: bool, no_confirm: bool):
+    """Execute the sonarr rename command."""
+    # Create client and context
+    client = ArrClient(url, api_key)
+    ctx = CommandContext(dry_run, no_confirm)
 
     print(f"Fetching series from {client.base_url}...")
     all_series = client.get("/api/v3/series")
@@ -118,7 +109,7 @@ def main():
             f"\nRename {len(rename_preview)} episodes "
             f"for '{series_title}'?"
         )
-        should_rename = get_confirmation_decision(args, prompt)
+        should_rename = get_confirmation_decision(ctx, prompt)
 
         if should_rename:
             print("Executing rename...")
@@ -138,12 +129,12 @@ def main():
                 print("✗ No valid file IDs found")
                 skipped_count += 1
         else:
-            if not args.dry_run:
+            if not ctx.dry_run:
                 print("Skipped")
             skipped_count += 1
 
     # Final summary
-    if args.dry_run:
+    if ctx.dry_run:
         print_section_header("FINAL SUMMARY")
         print(
             f"\n[DRY RUN] Found {len(series_with_renames)} series "
@@ -157,7 +148,3 @@ def main():
             skipped_count,
             "Renamed",
         )
-
-
-if __name__ == "__main__":
-    main()

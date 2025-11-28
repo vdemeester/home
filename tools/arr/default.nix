@@ -14,6 +14,7 @@ python3.pkgs.buildPythonApplication {
   nativeBuildInputs = [ makeWrapper ];
 
   propagatedBuildInputs = with python3.pkgs; [
+    click
     requests
   ];
 

@@ -7,15 +7,8 @@ This script:
    contains 'library'
 3. Updates paths that need to be moved to
    <music_folder>/library/<artist>
-
-Usage:
-    arr lidarr update-paths <lidarr_url> <api_key> <music_folder>
-
-Example:
-    arr lidarr update-paths http://localhost:8686 your-api-key /data/music
 """
 
-import argparse
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
@@ -66,30 +59,15 @@ def update_artist_path(
         return False
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Update Lidarr artist paths to use library subdirectory"
-    )
-    parser.add_argument(
-        "lidarr_url", help="Lidarr base URL (e.g., http://localhost:8686)"
-    )
-    parser.add_argument("api_key", help="Lidarr API key")
-    parser.add_argument("music_folder", help="Base music folder path")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show what would be updated without making changes",
-    )
-
-    args = parser.parse_args()
-
+def run(url: str, api_key: str, music_folder: str, dry_run: bool):
+    """Execute the lidarr update-paths command."""
     # Normalize URLs and paths
-    base_url = args.lidarr_url.rstrip("/")
-    music_folder = Path(args.music_folder).resolve()
-    library_folder = music_folder / "library"
+    base_url = url.rstrip("/")
+    music_folder_path = Path(music_folder).resolve()
+    library_folder = music_folder_path / "library"
 
     print(f"Fetching artists from {base_url}...")
-    artists = get_all_artists(base_url, args.api_key)
+    artists = get_all_artists(base_url, api_key)
     print(f"Found {len(artists)} artists\n")
 
     needs_update = []
@@ -103,7 +81,7 @@ def main():
         artist_id = artist.get("id")
 
         # Check if path is directly in music_folder
-        if current_path.parent == music_folder:
+        if current_path.parent == music_folder_path:
             new_path = library_folder / current_path.name
             needs_update.append(
                 (artist_id, artist_name, current_path, new_path)
@@ -143,7 +121,7 @@ def main():
             print(f"  ... and {len(unknown_location) - 5} more")
 
     # Perform updates
-    if needs_update and not args.dry_run:
+    if needs_update and not dry_run:
         print(f"\n{'=' * 80}")
         print("UPDATING PATHS")
         print("=" * 80)
@@ -154,7 +132,7 @@ def main():
         for artist_id, name, old_path, new_path in needs_update:
             print(f"\nUpdating {name}...", end=" ")
             success = update_artist_path(
-                base_url, args.api_key, artist_id, str(new_path)
+                base_url, api_key, artist_id, str(new_path)
             )
             if success:
                 print("✓ SUCCESS")
@@ -166,14 +144,10 @@ def main():
         print(f"\n{'=' * 80}")
         print(f"Results: {success_count} updated, {fail_count} failed")
         print("=" * 80)
-    elif needs_update and args.dry_run:
+    elif needs_update and dry_run:
         print(
             "\n[DRY RUN] No changes were made. "
             "Remove --dry-run to apply updates."
         )
     else:
         print("\nNo artists need updating!")
-
-
-if __name__ == "__main__":
-    main()
