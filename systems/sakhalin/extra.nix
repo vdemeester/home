@@ -97,6 +97,21 @@
             }
           ];
         }
+        {
+          job_name = "exportarr";
+          static_configs = [
+            {
+              targets = [
+                "rhea.sbr.pm:9707" # sonarr
+                "rhea.sbr.pm:9708" # radarr
+                "rhea.sbr.pm:9709" # lidarr
+                "rhea.sbr.pm:9710" # prowlarr
+                "rhea.sbr.pm:9711" # readarr
+                "rhea.sbr.pm:9712" # bazarr
+              ];
+            }
+          ];
+        }
       ];
       exporters.node = {
         enable = true;

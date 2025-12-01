@@ -18,6 +18,25 @@
     group = "traefik";
   };
 
+  age.secrets."exportarr-sonarr-apikey" = {
+    file = ../../secrets/rhea/exportarr-sonarr-apikey.age;
+  };
+  age.secrets."exportarr-radarr-apikey" = {
+    file = ../../secrets/rhea/exportarr-radarr-apikey.age;
+  };
+  age.secrets."exportarr-lidarr-apikey" = {
+    file = ../../secrets/rhea/exportarr-lidarr-apikey.age;
+  };
+  age.secrets."exportarr-prowlarr-apikey" = {
+    file = ../../secrets/rhea/exportarr-prowlarr-apikey.age;
+  };
+  age.secrets."exportarr-readarr-apikey" = {
+    file = ../../secrets/rhea/exportarr-readarr-apikey.age;
+  };
+  age.secrets."exportarr-bazarr-apikey" = {
+    file = ../../secrets/rhea/exportarr-bazarr-apikey.age;
+  };
+
   users.users.vincent.linger = true;
 
   services = {
@@ -396,6 +415,44 @@
       user = "vincent";
       group = "users";
       openFirewall = true;
+    };
+    prometheus.exporters = {
+      exportarr-sonarr = {
+        enable = true;
+        port = 9707;
+        url = "http://localhost:8989";
+        apiKeyFile = config.age.secrets."exportarr-sonarr-apikey".path;
+      };
+      exportarr-radarr = {
+        enable = true;
+        port = 9708;
+        url = "http://localhost:7878";
+        apiKeyFile = config.age.secrets."exportarr-radarr-apikey".path;
+      };
+      exportarr-lidarr = {
+        enable = true;
+        port = 9709;
+        url = "http://localhost:8686";
+        apiKeyFile = config.age.secrets."exportarr-lidarr-apikey".path;
+      };
+      exportarr-prowlarr = {
+        enable = true;
+        port = 9710;
+        url = "http://localhost:9696";
+        apiKeyFile = config.age.secrets."exportarr-prowlarr-apikey".path;
+      };
+      exportarr-readarr = {
+        enable = true;
+        port = 9711;
+        url = "http://localhost:8787";
+        apiKeyFile = config.age.secrets."exportarr-readarr-apikey".path;
+      };
+      exportarr-bazarr = {
+        enable = true;
+        port = 9712;
+        url = "http://localhost:6767";
+        apiKeyFile = config.age.secrets."exportarr-bazarr-apikey".path;
+      };
     };
   };
 

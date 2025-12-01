@@ -93,5 +93,11 @@ in
   "secrets/minica.pem.age".publicKeys = users ++ systems;
   "secrets/shikoku/aria2rpcsecret.age".publicKeys = users ++ [ shikoku ];
   "secrets/rhea/gandi.env.age".publicKeys = users ++ [ rhea ];
+  "secrets/rhea/exportarr-sonarr-apikey.age".publicKeys = users ++ [ rhea ];
+  "secrets/rhea/exportarr-radarr-apikey.age".publicKeys = users ++ [ rhea ];
+  "secrets/rhea/exportarr-lidarr-apikey.age".publicKeys = users ++ [ rhea ];
+  "secrets/rhea/exportarr-prowlarr-apikey.age".publicKeys = users ++ [ rhea ];
+  "secrets/rhea/exportarr-readarr-apikey.age".publicKeys = users ++ [ rhea ];
+  "secrets/rhea/exportarr-bazarr-apikey.age".publicKeys = users ++ [ rhea ];
   "secrets/demeter/mosquitto-homeassistant-password.age".publicKeys = users ++ [ demeter ];
 }
