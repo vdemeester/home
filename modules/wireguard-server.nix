@@ -33,10 +33,33 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = [ pkgs.wireguard-tools ];
     boot.kernel.sysctl."net.ipv4.ip_forward" = lib.mkForce 1; # FIXME should probably be mkDefault
-    networking.firewall.extraCommands = ''
-      iptables -t nat -A POSTROUTING -s10.100.0.0/32 -j MASQUERADE
-      iptables -A FORWARD -i wg+ -j ACCEPT
-    '';
+
+    # Enable nftables and configure NAT/forwarding rules for WireGuard
+    networking.nftables = {
+      enable = true;
+      tables = {
+        wireguard-nat = {
+          family = "ip";
+          content = ''
+            chain postrouting {
+              type nat hook postrouting priority 100; policy accept;
+              ip saddr 10.100.0.0/24 masquerade
+            }
+          '';
+        };
+        wireguard-filter = {
+          family = "inet";
+          content = ''
+            chain forward {
+              type filter hook forward priority 0; policy accept;
+              iifname "wg0" accept
+              oifname "wg0" accept
+            }
+          '';
+        };
+      };
+    };
+
     networking.firewall.allowedUDPPorts = [ 51820 ];
     networking.firewall.trustedInterfaces = [ "wg0" ];
     networking.wireguard.enable = true;
