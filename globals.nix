@@ -574,12 +574,12 @@ _: {
       host = "rhea";
       aliases = [ "s" ];
     };
-    # MQTT on demeter
-    mqtt.host = "demeter";
-    # Services on sakhalin
-    kiwix.host = "sakhalin";
-    n8n.host = "sakhalin";
-    paperless.host = "sakhalin";
-    grafana.host = "sakhalin";
+    # MQTT on demeter (routed through rhea/traefik)
+    mqtt.host = "rhea";
+    # Services on sakhalin (routed through rhea/traefik)
+    kiwix.host = "rhea";
+    n8n.host = "rhea";
+    paperless.host = "rhea";
+    grafana.host = "rhea";
   };
 }

@@ -224,7 +224,7 @@
               mqtt = {
                 loadBalancer = {
                   servers = [
-                    { address = "${builtins.head globals.machines.demeter.net.vpn.ips}:1883"; }
+                    { address = "${builtins.head globals.machines.demeter.net.ips}:1883"; }
                   ];
                 };
               };
