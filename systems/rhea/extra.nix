@@ -284,80 +284,82 @@
     #   enable = true;
     #   devices = [ { device = "/dev/nvme0n1"; } ];
     # };
-    samba.settings = {
+    samba = {
+      enable = true;
+      openFirewall = true;
       settings = {
-        "backup" = {
+        backup = {
           path = "/neo/backup";
-          public = true;
+          public = "yes";
           browseable = "yes";
           "read only" = "no";
           "guest ok" = "yes";
-          writable = true;
+          writable = "yes";
           comment = "backup";
           "create mask" = "0644";
           "directory mask" = "0755";
           "force user" = "vincent";
           "force group" = "users";
         };
-        "documents" = {
+        documents = {
           path = "/neo/documents";
-          public = true;
+          public = "yes";
           browseable = "yes";
           "read only" = "no";
           "guest ok" = "yes";
-          writable = true;
+          writable = "yes";
           comment = "documents";
           "create mask" = "0644";
           "directory mask" = "0755";
           "force user" = "vincent";
           "force group" = "users";
         };
-        "downloads" = {
+        downloads = {
           path = "/neo/downloads";
-          public = true;
+          public = "yes";
           browseable = "yes";
           "read only" = "no";
           "guest ok" = "yes";
-          writable = true;
+          writable = "yes";
           comment = "downloads";
           "create mask" = "0644";
           "directory mask" = "0755";
           "force user" = "vincent";
           "force group" = "users";
         };
-        "music" = {
+        music = {
           path = "/neo/music";
-          public = true;
+          public = "yes";
           browseable = "yes";
           "read only" = "no";
           "guest ok" = "yes";
-          writable = true;
+          writable = "yes";
           comment = "music";
           "create mask" = "0644";
           "directory mask" = "0755";
           "force user" = "vincent";
           "force group" = "users";
         };
-        "pictures" = {
+        pictures = {
           path = "/neo/pictures";
-          public = true;
+          public = "yes";
           browseable = "yes";
           "read only" = "no";
           "guest ok" = "yes";
-          writable = true;
+          writable = "yes";
           comment = "pictures";
           "create mask" = "0644";
           "directory mask" = "0755";
           "force user" = "vincent";
           "force group" = "users";
         };
-        "videos" = {
+        videos = {
           path = "/neo/videos";
-          public = true;
+          public = "yes";
           browseable = "yes";
           "read only" = "no";
           "guest ok" = "yes";
-          writable = true;
+          writable = "yes";
           comment = "videos";
           "create mask" = "0644";
           "directory mask" = "0755";
@@ -366,16 +368,20 @@
         };
       };
     };
+    samba-wsdd = {
+      enable = true;
+      openFirewall = true;
+    };
     nfs.server = {
       enable = true;
       exports = ''
                 /neo                      192.168.1.0/24(rw,fsid=0,no_subtree_check) 10.100.0.0/24(rw,fsid=0,no_subtree_check)
                 /neo/backup               192.168.1.0/24(rw,fsid=1,no_subtree_check) 10.100.0.0/24(rw,fsid=1,no_subtree_check)
                 /neo/documents            192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
-                /neo/downloads            192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
-                /neo/music                192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
-                /neo/pictures             192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
-                /neo/videos               192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
+                /neo/downloads            192.168.1.0/24(rw,fsid=3,no_subtree_check) 10.100.0.0/24(rw,fsid=3,no_subtree_check)
+                /neo/music                192.168.1.0/24(rw,fsid=4,no_subtree_check) 10.100.0.0/24(rw,fsid=4,no_subtree_check)
+                /neo/pictures             192.168.1.0/24(rw,fsid=5,no_subtree_check) 10.100.0.0/24(rw,fsid=5,no_subtree_check)
+                /neo/videos               192.168.1.0/24(rw,fsid=6,no_subtree_check) 10.100.0.0/24(rw,fsid=6,no_subtree_check)
         			'';
     };
     immich = {
@@ -468,7 +474,7 @@
 
   security.acme = {
     acceptTerms = true;
-    email = "vincent@sbr.pm";
+    defaults.email = "vincent@sbr.pm";
   };
 
   networking.useDHCP = lib.mkDefault true;
