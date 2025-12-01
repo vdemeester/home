@@ -15,18 +15,21 @@
   users.users.vincent.linger = true;
 
   services = {
-    samba.settings."vincent" = {
-      path = "/data/share";
-      public = true;
-      browseable = "yes";
-      "read only" = "no";
-      "guest ok" = "yes";
-      writable = true;
-      comment = "Vincent's share";
-      "create mask" = "0644";
-      "directory mask" = "0755";
-      "force user" = "vincent";
-      "force group" = "users";
+    samba.settings = {
+      global."server string" = "Aix";
+      vincent = {
+        path = "/data/share";
+        public = "yes";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        writable = "yes";
+        comment = "Vincent's share";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "vincent";
+        "force group" = "users";
+      };
     };
     wireguard = {
       enable = true;

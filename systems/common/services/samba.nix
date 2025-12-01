@@ -15,7 +15,6 @@
           workgroup = "WORKGROUP";
           "server smb encrypt" = "required";
           "server min protocol" = "SMB3_00";
-          "server string" = "Aix";
           "hosts allow" = "192.168. 10.100. 127.0.0.1 localhost";
           "hosts deny" = "0.0.0.0/0";
         };

@@ -7,6 +7,10 @@
   ...
 }:
 {
+  imports = [
+    ../common/services/samba.nix
+  ];
+
   age.secrets."gandi.env" = {
     file = ../../secrets/rhea/gandi.env.age;
     mode = "400";
@@ -284,93 +288,86 @@
     #   enable = true;
     #   devices = [ { device = "/dev/nvme0n1"; } ];
     # };
-    samba = {
-      enable = true;
-      openFirewall = true;
-      settings = {
-        backup = {
-          path = "/neo/backup";
-          public = "yes";
-          browseable = "yes";
-          "read only" = "no";
-          "guest ok" = "yes";
-          writable = "yes";
-          comment = "backup";
-          "create mask" = "0644";
-          "directory mask" = "0755";
-          "force user" = "vincent";
-          "force group" = "users";
-        };
-        documents = {
-          path = "/neo/documents";
-          public = "yes";
-          browseable = "yes";
-          "read only" = "no";
-          "guest ok" = "yes";
-          writable = "yes";
-          comment = "documents";
-          "create mask" = "0644";
-          "directory mask" = "0755";
-          "force user" = "vincent";
-          "force group" = "users";
-        };
-        downloads = {
-          path = "/neo/downloads";
-          public = "yes";
-          browseable = "yes";
-          "read only" = "no";
-          "guest ok" = "yes";
-          writable = "yes";
-          comment = "downloads";
-          "create mask" = "0644";
-          "directory mask" = "0755";
-          "force user" = "vincent";
-          "force group" = "users";
-        };
-        music = {
-          path = "/neo/music";
-          public = "yes";
-          browseable = "yes";
-          "read only" = "no";
-          "guest ok" = "yes";
-          writable = "yes";
-          comment = "music";
-          "create mask" = "0644";
-          "directory mask" = "0755";
-          "force user" = "vincent";
-          "force group" = "users";
-        };
-        pictures = {
-          path = "/neo/pictures";
-          public = "yes";
-          browseable = "yes";
-          "read only" = "no";
-          "guest ok" = "yes";
-          writable = "yes";
-          comment = "pictures";
-          "create mask" = "0644";
-          "directory mask" = "0755";
-          "force user" = "vincent";
-          "force group" = "users";
-        };
-        videos = {
-          path = "/neo/videos";
-          public = "yes";
-          browseable = "yes";
-          "read only" = "no";
-          "guest ok" = "yes";
-          writable = "yes";
-          comment = "videos";
-          "create mask" = "0644";
-          "directory mask" = "0755";
-          "force user" = "vincent";
-          "force group" = "users";
-        };
+    samba.settings = {
+      global."server string" = "Rhea";
+      backup = {
+        path = "/neo/backup";
+        public = "yes";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        writable = "yes";
+        comment = "backup";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "vincent";
+        "force group" = "users";
       };
-    };
-    samba-wsdd = {
-      enable = true;
-      openFirewall = true;
+      documents = {
+        path = "/neo/documents";
+        public = "yes";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        writable = "yes";
+        comment = "documents";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "vincent";
+        "force group" = "users";
+      };
+      downloads = {
+        path = "/neo/downloads";
+        public = "yes";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        writable = "yes";
+        comment = "downloads";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "vincent";
+        "force group" = "users";
+      };
+      music = {
+        path = "/neo/music";
+        public = "yes";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        writable = "yes";
+        comment = "music";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "vincent";
+        "force group" = "users";
+      };
+      pictures = {
+        path = "/neo/pictures";
+        public = "yes";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        writable = "yes";
+        comment = "pictures";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "vincent";
+        "force group" = "users";
+      };
+      videos = {
+        path = "/neo/videos";
+        public = "yes";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        writable = "yes";
+        comment = "videos";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "vincent";
+        "force group" = "users";
+      };
     };
     nfs.server = {
       enable = true;
