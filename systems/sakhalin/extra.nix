@@ -212,7 +212,7 @@
     serviceConfig = {
       Type = "simple";
       User = "vincent";
-      ExecStart = "${pkgs.kiwix-tools}/bin/kiwix-serve --port=8080 --library /mnt/gaia/kiwix/*.zim";
+      ExecStart = "${pkgs.kiwix-tools}/bin/kiwix-serve --port=8080 /mnt/gaia/kiwix/*.zim";
       Restart = "on-failure";
       RestartSec = "5s";
     };
