@@ -124,5 +124,72 @@ def lidarr_update_paths(url, api_key, music_folder, dry_run):
     lidarr_update_paths.run(url, api_key, music_folder, dry_run)
 
 
+@lidarr.command("sync-spotify")
+@click.argument("url")
+@click.option("--api-key", "-k", envvar="LIDARR_API_KEY", required=True, help="Lidarr API key")
+@click.option("--spotify-client-id", envvar="SPOTIFY_CLIENT_ID", required=True, help="Spotify application client ID")
+@click.option("--spotify-client-secret", envvar="SPOTIFY_CLIENT_SECRET", required=True, help="Spotify application client secret")
+@click.option("--spotify-username", "-u", envvar="SPOTIFY_USERNAME", help="Spotify username for interactive mode (to list your playlists)")
+@click.argument("playlist_ids", nargs=-1, required=False)
+@click.option("--root-folder", default="/music", help="Root folder for music in Lidarr")
+@click.option("--monitor", default="all", type=click.Choice(["all", "future", "missing", "existing", "none"]), help="Album monitoring mode")
+@click.option("--request-delay", default=1.5, type=float, help="Delay between Lidarr API requests (seconds)")
+@click.option("--dry-run", is_flag=True, help="Show what would be added without making changes")
+@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
+def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, spotify_username, playlist_ids, root_folder, monitor, request_delay, dry_run, no_confirm):
+    """Sync Spotify playlists to Lidarr.
+
+    Fetches tracks from Spotify playlists and adds missing artists to Lidarr.
+
+    URL: Lidarr server URL (e.g., http://localhost:8686)
+
+    Credentials can be provided via flags or environment variables:
+    - LIDARR_API_KEY
+    - SPOTIFY_CLIENT_ID (get from https://developer.spotify.com/dashboard)
+    - SPOTIFY_CLIENT_SECRET
+    - SPOTIFY_USERNAME (optional, for interactive mode)
+
+    Interactive mode: If no PLAYLIST_IDS are provided and --spotify-username
+    is set, you'll be prompted to select from your public playlists using fzf.
+
+    Examples:
+        # Interactive mode - select from your playlists
+        export SPOTIFY_USERNAME=your-spotify-username
+        arr lidarr sync-spotify http://localhost:8686 -u your-username
+
+        # Or with environment variables
+        export LIDARR_API_KEY=your-lidarr-key
+        export SPOTIFY_CLIENT_ID=your-client-id
+        export SPOTIFY_CLIENT_SECRET=your-client-secret
+        export SPOTIFY_USERNAME=your-username
+        arr lidarr sync-spotify http://localhost:8686
+
+        # Sync specific playlists (no username needed)
+        arr lidarr sync-spotify http://localhost:8686 \\
+            37i9dQZF1DXcBWIGoYBM5M 37i9dQZF1DX0XUsuxWHRQd
+
+        # Dry run
+        arr lidarr sync-spotify http://localhost:8686 -u username --dry-run
+
+        # Monitor only future albums
+        arr lidarr sync-spotify http://localhost:8686 \\
+            -u username --monitor future
+    """
+    from commands import lidarr_sync_spotify
+    lidarr_sync_spotify.run(
+        url,
+        api_key,
+        spotify_client_id,
+        spotify_client_secret,
+        spotify_username,
+        list(playlist_ids),
+        root_folder,
+        monitor,
+        request_delay,
+        dry_run,
+        no_confirm
+    )
+
+
 if __name__ == "__main__":
     cli()

@@ -6,7 +6,7 @@
 
 python3.pkgs.buildPythonApplication {
   pname = "arr";
-  version = "dev";
+  version = "1.1.0";
   format = "other";
 
   src = ./.;
@@ -16,6 +16,7 @@ python3.pkgs.buildPythonApplication {
   propagatedBuildInputs = with python3.pkgs; [
     click
     requests
+    spotipy
   ];
 
   # Don't try to create __pycache__ directories during build
@@ -47,7 +48,7 @@ python3.pkgs.buildPythonApplication {
     longDescription = ''
       arr provides a consistent interface for common operations across
       the *arr media management stack, including renaming, retagging,
-      and path updates.
+      path updates, and Spotify playlist syncing.
     '';
     platforms = platforms.unix;
   };
