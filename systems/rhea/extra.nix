@@ -189,12 +189,18 @@
               // localRouters
               // {
                 kiwix = mkRouter "kiwix" [ "kiwix.sbr.pm" ];
+                n8n = mkRouter "n8n" [ "n8n.sbr.pm" ];
+                paperless = mkRouter "paperless" [ "paperless.sbr.pm" ];
+                grafana = mkRouter "grafana" [ "grafana.sbr.pm" ];
               };
             services =
               syncthingServices
               // localHttpServices
               // {
-                kiwix = mkService "http://${builtins.head globals.machines.sakhalin.net.vpn.ips}:8080";
+                kiwix = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8080";
+                n8n = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:5678";
+                paperless = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8000";
+                grafana = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3000";
               };
             middlewares = syncthingMiddlewares // syncthingAddSlashMiddlewares;
           };

@@ -576,7 +576,10 @@ _: {
     };
     # MQTT on demeter
     mqtt.host = "demeter";
-    # Kiwix on sakhalin
+    # Services on sakhalin
     kiwix.host = "sakhalin";
+    n8n.host = "sakhalin";
+    paperless.host = "sakhalin";
+    grafana.host = "sakhalin";
   };
 }
