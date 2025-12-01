@@ -134,9 +134,10 @@ def lidarr_update_paths(url, api_key, music_folder, dry_run):
 @click.option("--root-folder", default="/music", help="Root folder for music in Lidarr")
 @click.option("--monitor", default="all", type=click.Choice(["all", "future", "missing", "existing", "none"]), help="Album monitoring mode")
 @click.option("--request-delay", default=1.5, type=float, help="Delay between Lidarr API requests (seconds)")
+@click.option("--all-playlists", is_flag=True, help="Select all playlists (skip fzf selection)")
 @click.option("--dry-run", is_flag=True, help="Show what would be added without making changes")
 @click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
-def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, spotify_username, playlist_ids, root_folder, monitor, request_delay, dry_run, no_confirm):
+def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, spotify_username, playlist_ids, root_folder, monitor, request_delay, all_playlists, dry_run, no_confirm):
     """Sync Spotify playlists to Lidarr.
 
     Fetches tracks from Spotify playlists and adds missing artists to Lidarr.
@@ -164,11 +165,14 @@ def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, 
         export SPOTIFY_USERNAME=your-username
         arr lidarr sync-spotify http://localhost:8686
 
+        # Select all playlists automatically
+        arr lidarr sync-spotify http://localhost:8686 -u username --all-playlists
+
         # Sync specific playlists (no username needed)
         arr lidarr sync-spotify http://localhost:8686 \\
             37i9dQZF1DXcBWIGoYBM5M 37i9dQZF1DX0XUsuxWHRQd
 
-        # Dry run
+        # Dry run to see artist list for manual addition
         arr lidarr sync-spotify http://localhost:8686 -u username --dry-run
 
         # Monitor only future albums
@@ -187,7 +191,8 @@ def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, 
         monitor,
         request_delay,
         dry_run,
-        no_confirm
+        no_confirm,
+        all_playlists
     )
 
 

@@ -98,6 +98,7 @@ def run(
     request_delay: float,
     dry_run: bool,
     no_confirm: bool,
+    all_playlists: bool,
 ):
     """Execute the lidarr sync-spotify command."""
     # Create clients and context
@@ -130,22 +131,29 @@ def run(
             return
 
         print(f"Found {len(user_playlists)} public playlists\n")
-        print(
-            "Use fzf to select playlists (TAB to select, "
-            "ENTER to confirm, ESC to cancel)"
-        )
 
-        # Use fzf for selection
-        selected_ids = select_with_fzf(
-            user_playlists, "{name} (by {owner}, {tracks_total} tracks)"
-        )
+        if all_playlists:
+            # Select all playlists automatically
+            selected_ids = [p["id"] for p in user_playlists]
+            print(f"Selecting all {len(selected_ids)} playlists\n")
+        else:
+            # Interactive selection with fzf
+            print(
+                "Use fzf to select playlists (TAB to select, "
+                "ENTER to confirm, ESC to cancel)"
+            )
 
-        if not selected_ids:
-            print("\nNo playlists selected. Exiting.")
-            return
+            selected_ids = select_with_fzf(
+                user_playlists, "{name} (by {owner}, {tracks_total} tracks)"
+            )
+
+            if not selected_ids:
+                print("\nNo playlists selected. Exiting.")
+                return
+
+            print(f"\nSelected {len(selected_ids)} playlist(s)\n")
 
         playlist_ids = selected_ids
-        print(f"\nSelected {len(playlist_ids)} playlist(s)\n")
     elif not playlist_ids:
         print(
             "\nError: No playlist IDs provided and no Spotify username set."
@@ -235,10 +243,16 @@ def run(
 
     if artists_to_add:
         print(f"\n→ Artists to add: {len(artists_to_add)}")
-        for artist_name, _ in artists_to_add[:10]:
-            print(f"  - {artist_name}")
-        if len(artists_to_add) > 10:
-            print(f"  ... and {len(artists_to_add) - 10} more")
+        if dry_run:
+            # In dry-run mode, show all artists for manual addition
+            for artist_name, _ in artists_to_add:
+                print(f"  - {artist_name}")
+        else:
+            # In normal mode, show first 10 to avoid clutter
+            for artist_name, _ in artists_to_add[:10]:
+                print(f"  - {artist_name}")
+            if len(artists_to_add) > 10:
+                print(f"  ... and {len(artists_to_add) - 10} more")
     else:
         print("\nAll artists from the playlists are already in Lidarr!")
         return
@@ -260,6 +274,7 @@ def run(
 
     added_count = 0
     failed_count = 0
+    dry_run_artists = []  # Track artists for dry-run output
 
     for idx, (artist_name, artist_data) in enumerate(artists_to_add, 1):
         print(f"\n[{idx}/{len(artists_to_add)}] Searching for: {artist_name}")
@@ -307,6 +322,13 @@ def run(
                     failed_count += 1
             else:
                 print("  [DRY RUN] Would add this artist")
+                dry_run_artists.append(
+                    {
+                        "spotify_name": artist_name,
+                        "lidarr_name": artist_mb_name,
+                        "albums": artist_data["albums"],
+                    }
+                )
                 added_count += 1
 
             # Add a delay between requests to avoid overwhelming Lidarr
@@ -335,6 +357,22 @@ def run(
             "\n[DRY RUN] No changes were made. "
             "Remove --dry-run to add artists."
         )
+        if dry_run_artists:
+            print_section_header("ARTISTS TO ADD MANUALLY")
+            print(
+                "\nCopy the artist names below to search and add them "
+                "manually in Lidarr:\n"
+            )
+            for artist in dry_run_artists:
+                print(f"• {artist['lidarr_name']}")
+                if artist["spotify_name"] != artist["lidarr_name"]:
+                    print(f"  (Spotify: {artist['spotify_name']})")
+                if artist["albums"]:
+                    album_count = len(artist["albums"])
+                    print(f"  Albums in playlists: {album_count}")
+            print(
+                f"\n\nTotal: {len(dry_run_artists)} artists to add manually"
+            )
     elif added_count > 0:
         print(
             f"\nMonitoring mode: {monitor}\n"
