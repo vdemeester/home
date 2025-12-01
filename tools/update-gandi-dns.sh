@@ -42,10 +42,17 @@ if [[ "$DRY_RUN" == "true" ]]; then
 fi
 echo
 
-# Get the DNS zone file content from Nix
-echo -e "${CYAN}Extracting DNS records from Nix configuration...${RESET}"
-ZONE_FILE=$(nix eval --raw '.#nixosConfigurations.demeter.config.services.bind.zones."sbr.pm".file' --apply 'path: builtins.readFile path' 2>&1 | \
-           grep -v "^warning:" | grep -v "^Using saved setting" | grep -v "^building ")
+# Get the DNS zone file content from Nix (using Gandi-specific config with VPN IPs)
+echo -e "${CYAN}Extracting DNS records from Nix configuration (Gandi/VPN version)...${RESET}"
+ZONE_FILE=$(nix eval --impure --raw --expr '
+  let
+    pkgs = import <nixpkgs> {};
+    dns = (builtins.getFlake (toString ./.)).inputs.dns;
+    globals = (import ./globals.nix) {};
+    zone = import ./systems/common/services/dns/sbr.pm-gandi.nix { inherit dns globals; };
+  in
+  dns.lib.toString "sbr.pm" zone
+' 2>&1 | grep -v "^warning:" | grep -v "^Using saved setting" | grep -v "^building ")
 
 if [[ -z "$ZONE_FILE" ]]; then
     echo -e "${RED}Error: Could not generate zone file${RESET}"
