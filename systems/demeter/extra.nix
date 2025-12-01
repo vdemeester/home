@@ -37,11 +37,34 @@
       ];
     };
 
-    wireguard = {
+    # Dual-hub client: connect to both local hub (self) and remote hub (kerkouane)
+    wireguard.dualClient = {
       enable = true;
       ips = libx.wg-ips globals.machines.demeter.net.vpn.ips;
-      endpoint = "${globals.net.vpn.endpoint}";
-      endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
+
+      # Local hub (self)
+      localHub = {
+        enable = true;
+        endpoint = builtins.head globals.machines.demeter.net.ips;
+        endpointPort = globals.net.localHub.port;
+        endpointPublicKey = globals.machines.demeter.net.vpn.pubkey;
+      };
+
+      # Remote hub (kerkouane)
+      remoteHub = {
+        endpoint = globals.net.vpn.endpoint;
+        endpointPort = globals.net.vpn.port;
+        endpointPublicKey = globals.machines.kerkouane.net.vpn.pubkey;
+      };
+    };
+
+    # Local hub server for home network
+    wireguard.localHub = {
+      enable = true;
+      ips = libx.wg-ips globals.machines.demeter.net.vpn.ips;
+      listenAddress = builtins.head globals.machines.demeter.net.ips;
+      listenPort = globals.net.localHub.port;
+      peers = libx.generateWireguardPeers globals.machines;
     };
   };
 

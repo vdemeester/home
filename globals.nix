@@ -88,7 +88,14 @@ _: {
       ];
     };
     vpn = {
+      # Remote hub (kerkouane)
       endpoint = "167.99.17.238";
+      port = 51820;
+    };
+    localHub = {
+      # Local hub (demeter) for home network optimization
+      host = "demeter";
+      port = 51821;
     };
   };
   machines = {

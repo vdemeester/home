@@ -71,6 +71,8 @@
       modules = [
         self.nixosModules.wireguard-client
         self.nixosModules.wireguard-server
+        self.nixosModules.wireguard-local-hub
+        self.nixosModules.wireguard-dual-client
         self.nixosModules.govanityurl
         self.nixosModules.gosmee
         inputs.agenix.nixosModules.default
@@ -114,6 +116,8 @@
       modules = [
         self.nixosModules.wireguard-client
         self.nixosModules.wireguard-server
+        self.nixosModules.wireguard-local-hub
+        self.nixosModules.wireguard-dual-client
         self.nixosModules.govanityurl
         self.nixosModules.gosmee
         inputs.agenix.nixosModules.default
@@ -177,6 +181,8 @@
         )
         self.nixosModules.wireguard-client
         self.nixosModules.wireguard-server
+        self.nixosModules.wireguard-local-hub
+        self.nixosModules.wireguard-dual-client
         self.nixosModules.govanityurl
         self.nixosModules.gosmee
         inputs.agenix.nixosModules.default

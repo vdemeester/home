@@ -136,6 +136,8 @@
         # provided modules (to be upstreamed)
         wireguard-client = ./modules/wireguard-client.nix;
         wireguard-server = ./modules/wireguard-server.nix;
+        wireguard-local-hub = ./modules/wireguard-local-hub.nix;
+        wireguard-dual-client = ./modules/wireguard-dual-client.nix;
         govanityurl = ./modules/govanityurl.nix;
         gosmee = ./modules/gosmee.nix;
       };
