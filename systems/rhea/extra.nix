@@ -77,7 +77,10 @@
               rule = "Host(`syncthing.sbr.pm`) && PathPrefix(`/${name}`) || Host(`s.sbr.pm`) && PathPrefix(`/${name}`)";
               service = "syncthing-${name}";
               entryPoints = [ "websecure" ];
-              middlewares = [ "syncthing-${name}-strip" ];
+              middlewares = [
+                "syncthing-${name}-addslash"
+                "syncthing-${name}-strip"
+              ];
               tls = {
                 certResolver = "letsencrypt";
               };
@@ -102,6 +105,18 @@
             lib.nameValuePair "syncthing-${name}-strip" {
               stripPrefix = {
                 prefixes = [ "/${name}" ];
+              };
+            }
+          ) syncthingMachines;
+
+          # Generate middleware for adding trailing slash
+          syncthingAddSlashMiddlewares = lib.mapAttrs' (
+            name: _machine:
+            lib.nameValuePair "syncthing-${name}-addslash" {
+              redirectRegex = {
+                regex = "^(https?://[^/]+/${name})$";
+                replacement = "$${1}/";
+                permanent = true;
               };
             }
           ) syncthingMachines;
@@ -247,7 +262,7 @@
                 };
               };
             };
-            middlewares = syncthingMiddlewares;
+            middlewares = syncthingMiddlewares // syncthingAddSlashMiddlewares;
           };
           tcp = {
             routers = {
