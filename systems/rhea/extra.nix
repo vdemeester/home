@@ -65,6 +65,48 @@
       # Dynamic configuration using module option
       dynamicConfigOptions =
         let
+          # Helper function to create a simple HTTP router
+          mkRouter = name: hosts: {
+            rule = lib.concatStringsSep " || " (map (host: "Host(`${host}`)") hosts);
+            service = name;
+            entryPoints = [ "websecure" ];
+            tls.certResolver = "letsencrypt";
+          };
+
+          # Helper function to create a simple HTTP service
+          mkService = url: {
+            loadBalancer.servers = [ { inherit url; } ];
+          };
+
+          # Define local services with their ports and optional alternate hosts
+          localServices = {
+            jellyfin.port = 8096;
+            jellyseerr.port = 5055;
+            sonarr.port = 8989;
+            radarr.port = 7878;
+            lidarr.port = 8686;
+            bazarr.port = 6767;
+            transmission = {
+              port = 9091;
+              altHosts = [ "t.sbr.pm" ];
+            };
+            immich.port = 2283;
+          };
+
+          # Generate routers for local services
+          localRouters = lib.mapAttrs' (
+            name: cfg:
+            let
+              hosts = [ "${name}.sbr.pm" ] ++ (cfg.altHosts or [ ]);
+            in
+            lib.nameValuePair name (mkRouter name hosts)
+          ) localServices;
+
+          # Generate services for local services
+          localHttpServices = lib.mapAttrs' (
+            name: cfg: lib.nameValuePair name (mkService "http://localhost:${toString cfg.port}")
+          ) localServices;
+
           # Filter machines that have syncthing configured
           syncthingMachines = lib.filterAttrs (
             _name: machine: machine ? syncthing && machine.syncthing ? folders
@@ -123,145 +165,18 @@
         in
         {
           http = {
-            routers = syncthingRouters // {
-              jellyfin = {
-                rule = "Host(`jellyfin.sbr.pm`)";
-                service = "jellyfin";
-                entryPoints = [ "websecure" ];
-                tls = {
-                  certResolver = "letsencrypt";
-                };
+            routers =
+              syncthingRouters
+              // localRouters
+              // {
+                kiwix = mkRouter "kiwix" [ "kiwix.sbr.pm" ];
               };
-              jellyseerr = {
-                rule = "Host(`jellyseerr.sbr.pm`)";
-                service = "jellyseerr";
-                entryPoints = [ "websecure" ];
-                tls = {
-                  certResolver = "letsencrypt";
-                };
+            services =
+              syncthingServices
+              // localHttpServices
+              // {
+                kiwix = mkService "http://${builtins.head globals.machines.sakhalin.net.vpn.ips}:8080";
               };
-              sonarr = {
-                rule = "Host(`sonarr.sbr.pm`)";
-                service = "sonarr";
-                entryPoints = [ "websecure" ];
-                tls = {
-                  certResolver = "letsencrypt";
-                };
-              };
-              radarr = {
-                rule = "Host(`radarr.sbr.pm`)";
-                service = "radarr";
-                entryPoints = [ "websecure" ];
-                tls = {
-                  certResolver = "letsencrypt";
-                };
-              };
-              lidarr = {
-                rule = "Host(`lidarr.sbr.pm`)";
-                service = "lidarr";
-                entryPoints = [ "websecure" ];
-                tls = {
-                  certResolver = "letsencrypt";
-                };
-              };
-              bazarr = {
-                rule = "Host(`bazarr.sbr.pm`)";
-                service = "bazarr";
-                entryPoints = [ "websecure" ];
-                tls = {
-                  certResolver = "letsencrypt";
-                };
-              };
-              transmission = {
-                rule = "Host(`transmission.sbr.pm`) || Host(`t.sbr.pm`)";
-                service = "transmission";
-                entryPoints = [ "websecure" ];
-                tls = {
-                  certResolver = "letsencrypt";
-                };
-              };
-              immich = {
-                rule = "Host(`immich.sbr.pm`)";
-                service = "immich";
-                entryPoints = [ "websecure" ];
-                tls = {
-                  certResolver = "letsencrypt";
-                };
-              };
-              kiwix = {
-                rule = "Host(`kiwix.sbr.pm`)";
-                service = "kiwix";
-                entryPoints = [ "websecure" ];
-                tls = {
-                  certResolver = "letsencrypt";
-                };
-              };
-            };
-            services = syncthingServices // {
-              jellyfin = {
-                loadBalancer = {
-                  servers = [
-                    { url = "http://localhost:8096"; }
-                  ];
-                };
-              };
-              jellyseerr = {
-                loadBalancer = {
-                  servers = [
-                    { url = "http://localhost:5055"; }
-                  ];
-                };
-              };
-              sonarr = {
-                loadBalancer = {
-                  servers = [
-                    { url = "http://localhost:8989"; }
-                  ];
-                };
-              };
-              radarr = {
-                loadBalancer = {
-                  servers = [
-                    { url = "http://localhost:7878"; }
-                  ];
-                };
-              };
-              lidarr = {
-                loadBalancer = {
-                  servers = [
-                    { url = "http://localhost:8686"; }
-                  ];
-                };
-              };
-              bazarr = {
-                loadBalancer = {
-                  servers = [
-                    { url = "http://localhost:6767"; }
-                  ];
-                };
-              };
-              transmission = {
-                loadBalancer = {
-                  servers = [
-                    { url = "http://localhost:9091"; }
-                  ];
-                };
-              };
-              immich = {
-                loadBalancer = {
-                  servers = [
-                    { url = "http://localhost:2283"; }
-                  ];
-                };
-              };
-              kiwix = {
-                loadBalancer = {
-                  servers = [
-                    { url = "http://${builtins.head globals.machines.sakhalin.net.vpn.ips}:8080"; }
-                  ];
-                };
-              };
-            };
             middlewares = syncthingMiddlewares // syncthingAddSlashMiddlewares;
           };
           tcp = {
