@@ -181,7 +181,7 @@ failed_zones=0
 
 for zone_name in "${ZONES[@]}"; do
     # Get the zone file content directly
-    zone_content=$(nix eval --raw ".#nixosConfigurations.${HOST}.config.services.bind.zones.\"${zone_name}\".file" 2>&1 | grep -v "^warning:" | grep -v "^Using saved setting" || true)
+    zone_content=$(nix eval --raw ".#nixosConfigurations.${HOST}.config.services.bind.zones.\"${zone_name}\".file" --apply 'path: builtins.readFile path' 2>&1 | grep -v "^warning:" | grep -v "^Using saved setting" | grep -v "^building " || true)
 
     if [[ -n "$zone_content" ]] && [[ "$zone_content" != *"error"* ]]; then
         total_zones=$((total_zones + 1))

@@ -44,8 +44,8 @@ echo
 
 # Get the DNS zone file content from Nix
 echo -e "${CYAN}Extracting DNS records from Nix configuration...${RESET}"
-ZONE_FILE=$(nix eval --raw '.#nixosConfigurations.demeter.config.services.bind.zones."sbr.pm".file' 2>&1 | \
-           grep -v "^warning:" | grep -v "^Using saved setting")
+ZONE_FILE=$(nix eval --raw '.#nixosConfigurations.demeter.config.services.bind.zones."sbr.pm".file' --apply 'path: builtins.readFile path' 2>&1 | \
+           grep -v "^warning:" | grep -v "^Using saved setting" | grep -v "^building ")
 
 if [[ -z "$ZONE_FILE" ]]; then
     echo -e "${RED}Error: Could not generate zone file${RESET}"
