@@ -192,13 +192,19 @@ Successfully tested builds for:
 5. **Incremental Migration**: Hosts can be migrated one at a time
 6. **Explicit Dependencies**: Cross-host references are clearly visible
 
+## Completion Status
+
+✅ **COMPLETED**
+1. Created infrastructure.nix for all active mkHost systems (9 hosts)
+2. Fixed all globals references in host `extra.nix` files
+3. Tested all active host builds successfully
+4. Fixed lib functions to handle null VPN public keys
+5. Archived `globals.nix` to `globals.nix.archive`
+
 ## Remaining Work
 
-1. **Create infrastructure.nix** for remaining hosts (shikoku, etc.)
-2. **Fix any remaining globals** references in host `extra.nix` files
-3. **Test all host builds**
-4. **Consider removing machines-registry.nix** in favor of discovering machines from their individual configs
-5. **Archive or remove** `globals.nix`
+1. **Create infrastructure.nix** for inactive/commented hosts (shikoku, foo, redhat)
+2. **Consider removing machines-registry.nix** in favor of discovering machines from their individual configs
 
 ## Future Improvements
 
