@@ -475,20 +475,17 @@
     defaults.email = "vincent@sbr.pm";
   };
 
-  # Grant vincent ownership of the immich database and schemas
+  # Grant vincent ownership and superuser privileges for the immich database
   systemd.services.postgresql.postStart = lib.mkAfter ''
     PSQL="${config.services.postgresql.package}/bin/psql --port=${toString config.services.postgresql.settings.port}"
-    $PSQL -tAc "SELECT 1 FROM pg_roles WHERE rolname = 'vincent'" | grep -q 1 || $PSQL -tAc "CREATE ROLE vincent WITH LOGIN"
+    $PSQL -tAc "SELECT 1 FROM pg_roles WHERE rolname = 'vincent'" | grep -q 1 || $PSQL -tAc "CREATE ROLE vincent WITH LOGIN SUPERUSER"
+    $PSQL -tAc "ALTER ROLE vincent WITH SUPERUSER"
     $PSQL -tAc "ALTER DATABASE immich OWNER TO vincent"
     $PSQL immich -tAc "ALTER SCHEMA public OWNER TO vincent"
-    $PSQL immich -tAc "ALTER SCHEMA vectors OWNER TO vincent" || true
     $PSQL immich -tAc "GRANT ALL PRIVILEGES ON SCHEMA public TO vincent"
-    $PSQL immich -tAc "GRANT ALL PRIVILEGES ON SCHEMA vectors TO vincent" || true
     $PSQL immich -tAc "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO vincent"
     $PSQL immich -tAc "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO vincent"
-    $PSQL immich -tAc "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA vectors TO vincent" || true
     $PSQL immich -tAc "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO vincent"
-    $PSQL immich -tAc "ALTER DEFAULT PRIVILEGES IN SCHEMA vectors GRANT ALL ON TABLES TO vincent" || true
   '';
 
   networking.useDHCP = lib.mkDefault true;
