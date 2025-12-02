@@ -173,6 +173,24 @@ make keyboards/moonlander/draw     # Generate SVG for Moonlander only
 make keyboards/eyelash_corne/draw  # Generate SVG for Eyelash Corne only
 ```
 
+## Deployment Safety
+
+**IMPORTANT: Always ask for user confirmation before deploying to remote hosts.**
+
+When making configuration changes that require deployment:
+
+1. **Show the changes first** - Use `git diff` or explain what will be deployed
+2. **Ask for explicit approval** - Never run `nixos-rebuild switch` or `make host/<hostname>/switch` without asking the user first
+3. **Suggest dry-run builds** - Offer to run `make host/<hostname>/build` or `nixos-rebuild build` to test first
+4. **Confirm the target host** - Make sure the user wants to deploy to that specific machine
+
+Examples of what to ask:
+- "Would you like me to deploy these changes to rhea?"
+- "Should I run a dry-build first to verify the configuration?"
+- "These changes will affect <hostname>. Do you want to proceed with the deployment?"
+
+**Never deploy automatically** - even if it seems like the logical next step. Remote deployments can have significant impact on running services.
+
 ## Special Notes
 
 - The repository uses XDG base directories for Nix configuration (enabled via `use-xdg-base-directories = true`)
