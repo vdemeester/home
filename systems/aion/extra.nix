@@ -1,8 +1,8 @@
 {
-  config,
   libx,
   lib,
   pkgs,
+  config,
   ...
 }:
 {
