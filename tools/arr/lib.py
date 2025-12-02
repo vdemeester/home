@@ -448,6 +448,173 @@ def select_with_fzf(
         sys.exit(1)
 
 
+class JellyfinClient:
+    """Client for Jellyfin API interactions."""
+
+    def __init__(self, base_url: str, api_token: str, user_id: str):
+        """
+        Initialize the Jellyfin API client.
+
+        Args:
+            base_url: Base URL of the Jellyfin service
+                      (e.g., http://localhost:8096)
+            api_token: API token for authentication
+            user_id: User ID for playlist ownership
+        """
+        self.base_url = base_url.rstrip("/")
+        self.api_token = api_token
+        self.user_id = user_id
+        self.headers = {
+            "Authorization": f'MediaBrowser Token="{api_token}"',
+            "Content-Type": "application/json",
+        }
+
+    def get(
+        self, endpoint: str, params: Optional[Dict[str, Any]] = None
+    ) -> List[Dict[str, Any]] | Dict[str, Any]:
+        """
+        Make a GET request to the Jellyfin API.
+
+        Args:
+            endpoint: API endpoint path (e.g., /Items)
+            params: Optional query parameters
+
+        Returns:
+            JSON response data
+
+        Raises:
+            SystemExit: If the request fails
+        """
+        url = f"{self.base_url}{endpoint}"
+        try:
+            response = requests.get(
+                url, headers=self.headers, params=params, timeout=30
+            )
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(
+                f"Error fetching from Jellyfin {endpoint}: {e}",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    def post(
+        self, endpoint: str, payload: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Make a POST request to the Jellyfin API.
+
+        Args:
+            endpoint: API endpoint path (e.g., /Playlists)
+            payload: JSON payload to send
+
+        Returns:
+            JSON response data
+
+        Raises:
+            SystemExit: If the request fails
+        """
+        url = f"{self.base_url}{endpoint}"
+        try:
+            response = requests.post(
+                url, headers=self.headers, json=payload, timeout=30
+            )
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(
+                f"Error posting to Jellyfin {endpoint}: {e}",
+                file=sys.stderr,
+            )
+            if hasattr(e, "response") and e.response is not None:
+                try:
+                    error_detail = e.response.json()
+                    print(f"  Detail: {error_detail}", file=sys.stderr)
+                except Exception:
+                    print(
+                        f"  Response: {e.response.text[:200]}",
+                        file=sys.stderr,
+                    )
+            sys.exit(1)
+
+    def search_tracks(
+        self, query: str, limit: int = 50
+    ) -> List[Dict[str, Any]]:
+        """
+        Search for tracks in Jellyfin library.
+
+        Args:
+            query: Search query string
+            limit: Maximum number of results
+
+        Returns:
+            List of track items
+        """
+        params = {
+            "searchTerm": query,
+            "IncludeItemTypes": "Audio",
+            "Recursive": "true",
+            "Limit": limit,
+            "userId": self.user_id,
+        }
+        result = self.get("/Items", params=params)
+        return result.get("Items", [])
+
+    def get_playlists(self) -> List[Dict[str, Any]]:
+        """
+        Get all playlists for the user.
+
+        Returns:
+            List of playlist items
+        """
+        params = {
+            "IncludeItemTypes": "Playlist",
+            "Recursive": "true",
+            "userId": self.user_id,
+        }
+        result = self.get("/Items", params=params)
+        return result.get("Items", [])
+
+    def create_playlist(
+        self, name: str, item_ids: List[str], is_public: bool = False
+    ) -> Dict[str, Any]:
+        """
+        Create a new playlist in Jellyfin.
+
+        Args:
+            name: Playlist name
+            item_ids: List of Jellyfin item IDs to add
+            is_public: Whether the playlist is public
+
+        Returns:
+            Created playlist data
+        """
+        payload = {
+            "Name": name,
+            "Ids": item_ids,
+            "UserId": self.user_id,
+            "IsPublic": is_public,
+        }
+        return self.post("/Playlists", payload)
+
+    def add_to_playlist(
+        self, playlist_id: str, item_ids: List[str]
+    ) -> Dict[str, Any]:
+        """
+        Add items to an existing playlist.
+
+        Args:
+            playlist_id: Jellyfin playlist ID
+            item_ids: List of item IDs to add
+
+        Returns:
+            Response data
+        """
+        params = {"ids": ",".join(item_ids), "userId": self.user_id}
+        return self.post(f"/Playlists/{playlist_id}/Items", params)
+
+
 class SpotifyClient:
     """Client for Spotify API interactions using client credentials flow."""
 

@@ -1,6 +1,6 @@
 # arr - Unified CLI for *arr Services
 
-A command-line tool for managing Sonarr, Radarr, and Lidarr media servers.
+A command-line tool for managing Sonarr, Radarr, Lidarr, and Jellyfin media servers.
 
 ## Features
 
@@ -11,6 +11,8 @@ A command-line tool for managing Sonarr, Radarr, and Lidarr media servers.
   - Retag album metadata
   - Update library paths
   - **Sync Spotify playlists** - automatically add artists from your Spotify playlists
+- **Jellyfin**:
+  - **Sync Spotify playlists to Jellyfin** - create playlists in Jellyfin from your Spotify playlists
 
 ## Installation
 
@@ -280,6 +282,209 @@ Artists to add: 10
 Monitoring mode: all
 New artists will start searching for albums based on your Lidarr settings.
 ```
+
+## Jellyfin Playlist Sync
+
+Sync your Spotify playlists to Jellyfin by matching tracks in your Jellyfin library.
+
+### Prerequisites
+
+1. **Get Jellyfin API Token**:
+   - Log in to Jellyfin web interface
+   - Go to Dashboard → API Keys
+   - Click "+" to create a new API key
+   - Give it a name (e.g., "arr script")
+   - Copy the generated API token
+
+2. **Get Jellyfin User ID**:
+   - Go to Dashboard → Users
+   - Click on your username
+   - Look at the URL: `http://your-jellyfin/web/index.html#!/users/user.html?userId=USER_ID_HERE`
+   - Copy the User ID from the URL
+
+3. **Set up Spotify credentials** (same as Lidarr sync):
+   - Follow the Spotify setup instructions in the "Spotify Playlist Sync" section above
+   - You need: Client ID, Client Secret, and optionally your Spotify username
+
+### Quick Start
+
+```bash
+# Set environment variables
+export JELLYFIN_URL="http://localhost:8096"  # Optional, defaults to http://localhost:8096
+export JELLYFIN_API_TOKEN="your-jellyfin-api-token"
+export JELLYFIN_USER_ID="your-jellyfin-user-id"
+export SPOTIFY_CLIENT_ID="your-spotify-client-id"
+export SPOTIFY_CLIENT_SECRET="your-spotify-client-secret"
+export SPOTIFY_USERNAME="your-spotify-username"
+
+# Interactive mode - select playlists with fzf (uses env vars)
+arr jellyfin sync-spotify
+
+# Or with flags
+arr jellyfin sync-spotify \
+    --url http://localhost:8096 \
+    -t your-token \
+    -i your-user-id \
+    -u your-username
+```
+
+### Usage
+
+The tool supports three modes of operation:
+
+| Mode | Command | Description |
+|------|---------|-------------|
+| **Interactive (fzf)** | `arr jellyfin sync-spotify -u USERNAME` | Select playlists interactively with fzf |
+| **All playlists** | `arr jellyfin sync-spotify -u USERNAME --all` | Sync all public playlists from user |
+| **Specific playlists** | `arr jellyfin sync-spotify -p ID1 -p ID2` | Sync specific playlists by ID |
+
+#### Mode 1: Interactive Selector with fzf (Recommended)
+
+Select playlists interactively using fzf. Requires `--spotify-username`.
+
+```bash
+# With environment variables (URL defaults to http://localhost:8096)
+arr jellyfin sync-spotify
+
+# Or with flags
+arr jellyfin sync-spotify -u your-spotify-username
+
+# With dry run
+arr jellyfin sync-spotify -u your-spotify-username --dry-run
+```
+
+**Interactive controls:**
+- `TAB`: Select/deselect a playlist
+- `↑/↓` or `j/k`: Navigate
+- `ENTER`: Confirm selection
+- `ESC` or `Ctrl+C`: Cancel
+- Type to filter playlists
+
+#### Mode 2: Sync ALL User Playlists
+
+Sync all public playlists from a Spotify user. Requires `--spotify-username` and `--all`.
+
+```bash
+# Sync all playlists (no fzf selection)
+arr jellyfin sync-spotify -u your-spotify-username --all
+
+# With dry run to preview
+arr jellyfin sync-spotify -u your-spotify-username --all --dry-run
+```
+
+#### Mode 3: Sync Specific Playlists by ID
+
+Sync specific playlists using `-p` flag (can be repeated).
+
+```bash
+# Sync specific playlists
+arr jellyfin sync-spotify \
+    -p PLAYLIST_ID_1 -p PLAYLIST_ID_2
+
+# With all options
+arr jellyfin sync-spotify \
+    --url http://localhost:8096 \
+    --api-token your-token \
+    --user-id your-user-id \
+    --spotify-client-id your-id \
+    --spotify-client-secret your-secret \
+    -p PLAYLIST_ID_1 -p PLAYLIST_ID_2
+```
+
+### Options
+
+```bash
+# Adjust match threshold (default: 0.6)
+# Lower = more matches but more false positives
+# Higher = fewer matches but more accurate
+arr jellyfin sync-spotify --match-threshold 0.4
+
+# Make playlists public (default: private)
+arr jellyfin sync-spotify --public
+
+# Skip confirmation prompts (for automation)
+arr jellyfin sync-spotify --no-confirm
+
+# Custom Jellyfin URL (or use JELLYFIN_URL env var)
+arr jellyfin sync-spotify --url http://jellyfin.example.com:8096
+```
+
+### How It Works
+
+1. Fetches tracks from specified Spotify playlist(s)
+2. For each track, searches your Jellyfin library using track name, artist, and album
+3. Uses fuzzy matching with configurable threshold (default: 0.6) to find best matches
+4. Creates corresponding playlists in Jellyfin with matched tracks
+5. Reports matching statistics and lists unmatched tracks
+
+**Matching Algorithm:**
+- Track name match: 40% weight
+- Artist name match: 40% weight
+- Album name match: 20% weight
+- Total score must be ≥ threshold (default 0.6) to be considered a match
+
+### Example Output
+
+```
+================================================================================
+SYNCING SPOTIFY PLAYLISTS TO JELLYFIN
+================================================================================
+
+
+Playlist: Chill Vibes (by username, 50 tracks)
+  Retrieved 50 tracks from Spotify
+  Matching tracks in Jellyfin library...
+    [1/50] Searching: Song Name - Artist Name
+      ✓ Matched (confidence: 0.85)
+    [2/50] Searching: Another Song - Another Artist
+      ✗ No match (best score: 0.45, threshold: 0.60)
+    ...
+
+  Matched 45/50 tracks (90.0%)
+
+  ✓ Created playlist in Jellyfin (ID: abc123)
+
+================================================================================
+FINAL SUMMARY
+================================================================================
+
+Total playlists processed: 1
+  - Created: 1
+  - Skipped: 0
+
+Total tracks processed: 50
+  - Matched: 45
+  - Failed to match: 5
+  - Match rate: 90.0%
+
+================================================================================
+FAILED MATCHES
+================================================================================
+
+The following 5 tracks could not be matched (threshold: 0.60):
+
+  • Song Name - Artist Name (from 'Chill Vibes')
+    Album: Album Name, Best score: 0.45
+  ...
+
+Tip: Lower --match-threshold if too many false negatives. Default is 0.6.
+
+✓ Successfully created 1 playlist(s) in Jellyfin!
+```
+
+### Troubleshooting
+
+**Playlists already exist**: The tool skips playlists that already exist in Jellyfin (matched by name). Delete the existing playlist in Jellyfin if you want to recreate it.
+
+**Low match rate**: If many tracks aren't matching:
+1. Check that the tracks actually exist in your Jellyfin library
+2. Lower the `--match-threshold` (try 0.4 or 0.5)
+3. Verify your music library has proper metadata (track names, artist names, album names)
+
+**No matches at all**: Verify that:
+- Your Jellyfin library is properly indexed
+- You're using the correct user ID (must have access to the music library)
+- The music library contains the artists/albums you're trying to match
 
 ## Other Commands
 

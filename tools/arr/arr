@@ -44,6 +44,12 @@ def lidarr():
     pass
 
 
+@cli.group()
+def jellyfin():
+    """Manage Jellyfin media server."""
+    pass
+
+
 @sonarr.command()
 @click.argument("url")
 @click.argument("api_key")
@@ -282,6 +288,79 @@ def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, 
         dry_run,
         no_confirm,
         all_playlists
+    )
+
+
+@jellyfin.command("sync-spotify")
+@click.option("--url", envvar="JELLYFIN_URL", default="http://localhost:8096", help="Jellyfin server URL")
+@click.option("--api-token", "-t", envvar="JELLYFIN_API_TOKEN", required=True, help="Jellyfin API token")
+@click.option("--user-id", "-i", envvar="JELLYFIN_USER_ID", required=True, help="Jellyfin user ID")
+@click.option("--spotify-client-id", envvar="SPOTIFY_CLIENT_ID", required=True, help="Spotify application client ID")
+@click.option("--spotify-client-secret", envvar="SPOTIFY_CLIENT_SECRET", required=True, help="Spotify application client secret")
+@click.option("--spotify-username", "-u", envvar="SPOTIFY_USERNAME", help="Spotify username for interactive mode (to list your playlists)")
+@click.option("--playlist-id", "-p", "playlist_ids", multiple=True, help="Spotify playlist ID (can be specified multiple times)")
+@click.option("--all", "--all-playlists", "all_playlists", is_flag=True, help="Sync all user playlists (requires --spotify-username)")
+@click.option("--match-threshold", default=0.6, type=float, help="Minimum confidence score for track matching (0.0-1.0)")
+@click.option("--public", is_flag=True, help="Make created playlists public")
+@click.option("--dry-run", is_flag=True, help="Show what would be created without making changes")
+@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
+def jellyfin_sync_spotify(url, api_token, user_id, spotify_client_id, spotify_client_secret, spotify_username, playlist_ids, match_threshold, all_playlists, public, dry_run, no_confirm):
+    """Sync Spotify playlists to Jellyfin.
+
+    Fetches tracks from Spotify playlists and creates matching playlists in Jellyfin.
+
+    Three modes of operation:
+    1. Interactive selector (fzf): Use --spotify-username without --playlist-id or --all
+    2. Sync all playlists: Use --spotify-username --all
+    3. Sync specific playlists: Use --playlist-id (one or more times)
+
+    All options can be provided via flags or environment variables:
+    - JELLYFIN_URL (default: http://localhost:8096)
+    - JELLYFIN_API_TOKEN (get from Jellyfin Dashboard > API Keys)
+    - JELLYFIN_USER_ID (get from user profile URL)
+    - SPOTIFY_CLIENT_ID (get from https://developer.spotify.com/dashboard)
+    - SPOTIFY_CLIENT_SECRET
+    - SPOTIFY_USERNAME (optional, for interactive/all modes)
+
+    Examples:
+        # Interactive mode - select playlists with fzf
+        export JELLYFIN_API_TOKEN=your-token
+        export JELLYFIN_USER_ID=your-user-id
+        export SPOTIFY_CLIENT_ID=your-client-id
+        export SPOTIFY_CLIENT_SECRET=your-client-secret
+        export SPOTIFY_USERNAME=your-username
+        arr jellyfin sync-spotify
+
+        # Sync ALL playlists from a user
+        arr jellyfin sync-spotify -u username --all
+
+        # Sync specific playlists by ID
+        arr jellyfin sync-spotify \\
+            -p 37i9dQZF1DXcBWIGoYBM5M -p 37i9dQZF1DX0XUsuxWHRQd
+
+        # Dry run with interactive selection
+        arr jellyfin sync-spotify -u username --dry-run
+
+        # Lower match threshold for more matches (may have false positives)
+        arr jellyfin sync-spotify -u username --match-threshold 0.4
+
+        # Make playlists public
+        arr jellyfin sync-spotify -u username --public
+    """
+    from commands import jellyfin_sync_spotify
+    jellyfin_sync_spotify.run(
+        url,
+        api_token,
+        user_id,
+        spotify_client_id,
+        spotify_client_secret,
+        spotify_username,
+        list(playlist_ids),
+        match_threshold,
+        dry_run,
+        no_confirm,
+        all_playlists,
+        public
     )
 
 
