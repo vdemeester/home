@@ -191,6 +191,81 @@ class ArrClient:
 
         return {}
 
+    def put(
+        self,
+        endpoint: str,
+        payload: Dict[str, Any],
+        max_retries: int = 3,
+        retry_delay: float = 2.0,
+    ) -> Dict[str, Any]:
+        """
+        Make a PUT request to the *arr API with retry logic.
+
+        Args:
+            endpoint: API endpoint path (e.g., /api/v3/series)
+            payload: JSON payload to send
+            max_retries: Maximum number of retry attempts
+            retry_delay: Initial delay between retries (seconds)
+
+        Returns:
+            JSON response data (empty dict on failure)
+        """
+        url = f"{self.base_url}{endpoint}"
+        headers = {**self.headers, "Content-Type": "application/json"}
+
+        for attempt in range(max_retries):
+            try:
+                response = requests.put(
+                    url, headers=headers, json=payload, timeout=30
+                )
+                response.raise_for_status()
+                return response.json()
+            except requests.exceptions.HTTPError as e:
+                status_code = e.response.status_code if e.response else None
+
+                # Retry on server errors (5xx) or rate limiting (429)
+                if status_code in [429, 500, 502, 503, 504]:
+                    if attempt < max_retries - 1:
+                        wait_time = retry_delay * (2**attempt)
+                        print(
+                            f"  Server error ({status_code}), "
+                            f"retrying in {wait_time}s... "
+                            f"(attempt {attempt + 1}/{max_retries})"
+                        )
+                        time.sleep(wait_time)
+                        continue
+
+                print(
+                    f"Error putting to {endpoint}: HTTP {status_code}",
+                    file=sys.stderr,
+                )
+                if e.response:
+                    try:
+                        error_detail = e.response.json()
+                        print(f"  Detail: {error_detail}", file=sys.stderr)
+                    except Exception:
+                        print(
+                            f"  Response: {e.response.text[:200]}",
+                            file=sys.stderr,
+                        )
+                return {}
+            except requests.exceptions.Timeout:
+                if attempt < max_retries - 1:
+                    wait_time = retry_delay * (2**attempt)
+                    print(
+                        f"  Request timeout, retrying in {wait_time}s... "
+                        f"(attempt {attempt + 1}/{max_retries})"
+                    )
+                    time.sleep(wait_time)
+                    continue
+                print(f"Error: Request timeout on {endpoint}", file=sys.stderr)
+                return {}
+            except requests.exceptions.RequestException as e:
+                print(f"Error putting to {endpoint}: {e}", file=sys.stderr)
+                return {}
+
+        return {}
+
 
 def ask_confirmation(prompt: str) -> bool:
     """

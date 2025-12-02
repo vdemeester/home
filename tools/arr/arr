@@ -124,6 +124,95 @@ def lidarr_update_paths(url, api_key, music_folder, dry_run):
     lidarr_update_paths.run(url, api_key, music_folder, dry_run)
 
 
+@lidarr.command("update-monitoring")
+@click.argument("url")
+@click.argument("api_key")
+@click.option("--monitor", default="future", type=click.Choice(["all", "future", "missing", "existing", "none"]), help="Album monitoring mode (default: future)")
+@click.option("--monitor-new-items", type=click.Choice(["all", "new", "none"]), help="Monitor new items mode - controls automatic monitoring of albums added to MusicBrainz after the artist is in Lidarr")
+@click.option("--artist", "-a", help="Filter by artist name pattern (case-insensitive)")
+@click.option("--dry-run", is_flag=True, help="Show what would be changed without making changes")
+@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
+def lidarr_update_monitoring(url, api_key, monitor, monitor_new_items, artist, dry_run, no_confirm):
+    """Update artist monitoring settings.
+
+    Changes the monitoring mode for artists in Lidarr. By default updates
+    all artists to monitor 'future' albums only.
+
+    Monitoring modes (--monitor):
+      - all: Monitor all albums (past and future)
+      - future: Monitor only future albums (default)
+      - missing: Monitor only missing albums
+      - existing: Monitor only existing albums
+      - none: Don't monitor any albums
+
+    Monitor new items modes (--monitor-new-items):
+      Controls what happens with albums added to MusicBrainz AFTER the artist
+      is already in Lidarr (e.g., new releases or newly discovered old albums)
+      - all: Automatically monitor all new albums
+      - new: Monitor new albums
+      - none: Don't monitor new albums
+
+    Examples:
+        # Update all artists to monitor future albums only
+        arr lidarr update-monitoring http://localhost:8686 your-api-key
+
+        # Update specific artist pattern
+        arr lidarr update-monitoring http://localhost:8686 your-api-key \\
+            --artist "Taylor Swift"
+
+        # Set all artists to monitor all albums
+        arr lidarr update-monitoring http://localhost:8686 your-api-key \\
+            --monitor all
+
+        # Set all artists to monitor future albums and auto-monitor new items
+        arr lidarr update-monitoring http://localhost:8686 your-api-key \\
+            --monitor future --monitor-new-items all
+
+        # Dry run to see what would change
+        arr lidarr update-monitoring http://localhost:8686 your-api-key \\
+            --dry-run
+    """
+    from commands import lidarr_update_monitoring
+    lidarr_update_monitoring.run(url, api_key, monitor, monitor_new_items, artist, dry_run, no_confirm)
+
+
+@lidarr.command("update-metadata-profile")
+@click.argument("url")
+@click.argument("api_key")
+@click.option("--profile", "-p", help="Metadata profile name to apply (if not specified, lists available profiles)")
+@click.option("--artist", "-a", help="Filter by artist name pattern (case-insensitive)")
+@click.option("--dry-run", is_flag=True, help="Show what would be changed without making changes")
+@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
+def lidarr_update_metadata_profile(url, api_key, profile, artist, dry_run, no_confirm):
+    """Update artist metadata profile settings.
+
+    Changes the metadata profile for artists in Lidarr. Metadata profiles
+    control which release types and album types are monitored (e.g., studio
+    albums, EPs, live albums, etc.).
+
+    If no profile is specified, the command will list available profiles and
+    use the first one as default.
+
+    Examples:
+        # List available metadata profiles and update all artists to first one
+        arr lidarr update-metadata-profile http://localhost:8686 your-api-key
+
+        # Update all artists to a specific metadata profile
+        arr lidarr update-metadata-profile http://localhost:8686 your-api-key \\
+            --profile "Standard"
+
+        # Update specific artist pattern
+        arr lidarr update-metadata-profile http://localhost:8686 your-api-key \\
+            --profile "Standard" --artist "Taylor Swift"
+
+        # Dry run to see what would change
+        arr lidarr update-metadata-profile http://localhost:8686 your-api-key \\
+            --profile "Standard" --dry-run
+    """
+    from commands import lidarr_update_metadata_profile
+    lidarr_update_metadata_profile.run(url, api_key, profile, artist, dry_run, no_confirm)
+
+
 @lidarr.command("sync-spotify")
 @click.argument("url")
 @click.option("--api-key", "-k", envvar="LIDARR_API_KEY", required=True, help="Lidarr API key")
