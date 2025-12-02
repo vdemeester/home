@@ -2,22 +2,26 @@
   lib,
   hardwareType,
   pkgs,
+  system,
   ...
 }:
 let
-  # Detect if we are building RPI4 host, because RPI4 doesn't have TPM support
-  isRPI4 = hardwareType == "rpi4";
+  # Systems without TPM hardware
+  # - rpi4: Raspberry Pi 4
+  # - Most aarch64 SBCs (Radxa CM3588, etc.) don't have TPM chips
+  # For aarch64, only enable TPM if explicitly set via hardwareType
+  hasNoTPM = hardwareType == "rpi4" || (system == "aarch64-linux" && hardwareType == "");
 in
 {
   environment.systemPackages =
-    if isRPI4 then
+    if hasNoTPM then
       [ ]
     else
       with pkgs;
       [
         tpm2-tss
       ];
-  security = lib.mkIf (!isRPI4) {
+  security = lib.mkIf (!hasNoTPM) {
     tpm2 = {
       enable = true;
       pkcs11.enable = true;
