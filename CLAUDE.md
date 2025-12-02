@@ -13,7 +13,7 @@ This is a comprehensive NixOS and home-manager monorepo for managing personal in
 The repository follows a modular architecture centered around `flake.nix`:
 
 - **`/lib`**: Core library functions including `mkHost`, `mkHome`, and `mkSystemManager` for generating NixOS, home-manager, and system-manager configurations
-- **`globals.nix`**: Global configuration including machine definitions (network, SSH, syncthing), DNS zones, and VPN settings
+- **`/modules/infrastructure`**: Infrastructure modules defining NixOS options for machine metadata (network, VPN, SSH, Syncthing), service mappings, DNS zones, and user SSH keys
 - **`/systems`**: NixOS system configurations, organized by hostname with a shared `/systems/common` directory containing base, desktop, hardware, programs, services, and users modules
 - **`/home`**: Home-manager configurations with `/home/common` containing desktop, dev, services, and shell modules
 - **`/pkgs`**: Custom Nix packages that are exposed via overlays
@@ -137,8 +137,9 @@ These run automatically via git hooks if installed with `make install-hooks`.
 
 1. Create `/systems/<hostname>` directory with `boot.nix` and `hardware.nix`
 2. Add host entry in `flake.nix` nixosConfigurations using `libx.mkHost`
-3. Add machine metadata to `globals.nix` (network IPs, SSH keys, syncthing ID if applicable)
-4. If using secrets, update `secrets.nix` with host SSH key
+3. Create `/systems/<hostname>/infrastructure.nix` with machine metadata (network IPs, VPN config, SSH keys, Syncthing ID if applicable)
+4. Add machine to `modules/infrastructure/machines-registry.nix` for cross-host references (DNS, Traefik)
+5. If using secrets, update `secrets.nix` with host SSH key
 
 ### Adding a New Package
 
@@ -195,5 +196,6 @@ Examples of what to ask:
 
 - The repository uses XDG base directories for Nix configuration (enabled via `use-xdg-base-directories = true`)
 - Custom binary caches are configured: vdemeester.cachix.org, chapeau-rouge.cachix.org, nixos-raspberrypi.cachix.org
-- The `globals.nix` file contains sensitive network topology information and should be consulted when working with networking or machine-specific configurations
+- Infrastructure configuration is managed through NixOS modules in `/modules/infrastructure/` with per-host configs in `/systems/<hostname>/infrastructure.nix`
+- The central machines registry (`modules/infrastructure/machines-registry.nix`) contains sensitive network topology information
 - Some hosts use specific NixOS versions: stable hosts use 25.05, unstable hosts use nixos-unstable

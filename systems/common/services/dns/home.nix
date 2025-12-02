@@ -1,4 +1,4 @@
-{ dns, globals, ... }:
+{ dns, config, ... }:
 with dns.lib.combinators;
 let
   # Machines with home network IPs that should have wildcards
@@ -19,7 +19,7 @@ let
       name = machineName;
       value =
         let
-          homeIP = globals.machines.${machineName}.net.ips;
+          homeIP = config.infrastructure.machines.${machineName}.net.ips;
           ip = if builtins.isList homeIP then builtins.head homeIP else homeIP;
         in
         {
@@ -47,15 +47,15 @@ in
 
   subdomains = {
     # Name servers
-    ns1.A = [ (builtins.head globals.machines.demeter.net.ips) ];
-    ns2.A = [ (builtins.head globals.machines.athena.net.ips) ];
+    ns1.A = [ (builtins.head config.infrastructure.machines.demeter.net.ips) ];
+    ns2.A = [ (builtins.head config.infrastructure.machines.athena.net.ips) ];
 
     # Cache wildcard
-    cache.subdomains."*".A = [ (builtins.head globals.machines.sakhalin.net.ips) ];
+    cache.subdomains."*".A = [ (builtins.head config.infrastructure.machines.sakhalin.net.ips) ];
 
     # Machines without wildcards
-    hokkaido.A = [ (builtins.head globals.machines.hokkaido.net.ips) ];
-    synodine.A = [ (builtins.head globals.machines.synodine.net.ips) ];
+    hokkaido.A = [ (builtins.head config.infrastructure.machines.hokkaido.net.ips) ];
+    synodine.A = [ (builtins.head config.infrastructure.machines.synodine.net.ips) ];
 
     # Hardcoded entries not in globals or incomplete in globals
     wakasu = {

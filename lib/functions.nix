@@ -15,7 +15,12 @@ let
     @param host The host configuration to check
     @return true if host has a non-empty VPN public key, false otherwise
   */
-  hasVPNPublicKey = host: (lib.attrsets.attrByPath [ "net" "vpn" "pubkey" ] "" host) != "";
+  hasVPNPublicKey =
+    host:
+    let
+      pubkey = lib.attrsets.attrByPath [ "net" "vpn" "pubkey" ] null host;
+    in
+    pubkey != null && pubkey != "";
 
   /**
     Check if a host has VPN IP addresses configured.

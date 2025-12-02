@@ -1,6 +1,5 @@
 {
   libx,
-  globals,
   lib,
   pkgs,
   config,
@@ -129,7 +128,7 @@
           # Filter machines that have syncthing configured
           syncthingMachines = lib.filterAttrs (
             _name: machine: machine ? syncthing && machine.syncthing ? folders
-          ) globals.machines;
+          ) config.infrastructure.machines;
 
           # Generate routers for syncthing hosts
           syncthingRouters = lib.mapAttrs' (
@@ -154,7 +153,21 @@
             lib.nameValuePair "syncthing-${name}" {
               loadBalancer = {
                 servers = [
-                  { url = "http://${builtins.head machine.net.vpn.ips}:8384"; }
+                  {
+                    url =
+                      let
+                        vpnIps = machine.net.vpn.ips or [ ];
+                        localIps = machine.net.ips or [ ];
+                        ip =
+                          if vpnIps != [ ] then
+                            builtins.head vpnIps
+                          else if localIps != [ ] then
+                            builtins.head localIps
+                          else
+                            "127.0.0.1";
+                      in
+                      "http://${ip}:8384";
+                  }
                 ];
               };
             }
@@ -197,10 +210,10 @@
               syncthingServices
               // localHttpServices
               // {
-                kiwix = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8080";
-                n8n = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:5678";
-                paperless = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8000";
-                grafana = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3000";
+                kiwix = mkService "http://${builtins.head config.infrastructure.machines.sakhalin.net.ips}:8080";
+                n8n = mkService "http://${builtins.head config.infrastructure.machines.sakhalin.net.ips}:5678";
+                paperless = mkService "http://${builtins.head config.infrastructure.machines.sakhalin.net.ips}:8000";
+                grafana = mkService "http://${builtins.head config.infrastructure.machines.sakhalin.net.ips}:3000";
               };
             middlewares = syncthingMiddlewares // syncthingAddSlashMiddlewares;
           };
@@ -224,7 +237,7 @@
               mqtt = {
                 loadBalancer = {
                   servers = [
-                    { address = "${builtins.head globals.machines.demeter.net.ips}:1883"; }
+                    { address = "${builtins.head config.infrastructure.machines.demeter.net.ips}:1883"; }
                   ];
                 };
               };
@@ -235,9 +248,9 @@
 
     wireguard = {
       enable = true;
-      ips = libx.wg-ips globals.machines.rhea.net.vpn.ips;
-      endpoint = "${globals.net.vpn.endpoint}";
-      endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
+      ips = libx.wg-ips config.infrastructure.machine.network.vpn.ips;
+      endpoint = config.infrastructure.vpn.endpoint;
+      endpointPublicKey = "+H3fxErP9HoFUrPgU19ra9+GDLQw+VwvLWx3lMct7QI="; # kerkouane
     };
     # smartd = {
     #   enable = true;

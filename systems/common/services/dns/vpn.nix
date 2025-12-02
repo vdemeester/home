@@ -1,4 +1,4 @@
-{ dns, globals, ... }:
+{ dns, config, ... }:
 with dns.lib.combinators;
 let
   # Machines that have VPN entries
@@ -20,7 +20,7 @@ let
       name = machineName;
       value =
         let
-          vpnIP = globals.machines.${machineName}.net.vpn.ips;
+          vpnIP = config.infrastructure.machines.${machineName}.net.vpn.ips;
           ip = if builtins.isList vpnIP then builtins.head vpnIP else vpnIP;
         in
         {
@@ -48,8 +48,8 @@ in
 
   subdomains = {
     # Name servers
-    ns1.A = [ (builtins.head globals.machines.shikoku.net.vpn.ips) ];
-    ns2.A = [ (builtins.head globals.machines.sakhalin.net.vpn.ips) ];
+    ns1.A = [ (builtins.head config.infrastructure.machines.shikoku.net.vpn.ips) ];
+    ns2.A = [ (builtins.head config.infrastructure.machines.sakhalin.net.vpn.ips) ];
 
     # hass - hardcoded as it's not in the machine list
     hass.A = [ "10.100.0.81" ];

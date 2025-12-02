@@ -2,7 +2,7 @@
 # Takes an IP selector function to allow different IP selection strategies
 {
   dns,
-  globals,
+  config,
   getIPForMachine,
 }:
 with dns.lib.combinators;
@@ -16,7 +16,7 @@ let
         let
           service = services.${serviceName};
           hostName = if builtins.isAttrs service then service.host else service;
-          ip = getIPForMachine globals.machines.${hostName};
+          ip = getIPForMachine config.infrastructure.machines.${hostName};
           aliases = if builtins.isAttrs service then (service.aliases or [ ]) else [ ];
         in
         [
@@ -52,8 +52,8 @@ let
     map (machineName: {
       name = machineName;
       value = {
-        A = [ (getIPForMachine globals.machines.${machineName}) ];
-        subdomains."*".A = [ (getIPForMachine globals.machines.${machineName}) ];
+        A = [ (getIPForMachine config.infrastructure.machines.${machineName}) ];
+        subdomains."*".A = [ (getIPForMachine config.infrastructure.machines.${machineName}) ];
       };
     }) machineList
   );
@@ -91,8 +91,8 @@ in
 
   subdomains = {
     # Name servers (demeter and athena)
-    ns1.A = [ (getIPForMachine globals.machines.demeter) ];
-    ns2.A = [ (getIPForMachine globals.machines.athena) ];
+    ns1.A = [ (getIPForMachine config.infrastructure.machines.demeter) ];
+    ns2.A = [ (getIPForMachine config.infrastructure.machines.athena) ];
 
     # Wildcard for public endpoint
     "*".A = [
@@ -116,5 +116,5 @@ in
     };
   }
   // mkMachineRecords
-  // mkServiceRecords globals.services;
+  // mkServiceRecords config.infrastructure.services;
 }

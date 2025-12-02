@@ -7,7 +7,6 @@
   outputs,
   stateVersion,
   inputs,
-  globals,
   libx,
   ...
 }:
@@ -57,7 +56,7 @@ in
     initialPassword = "changeMe";
 
     # FIXME set this up better
-    openssh.authorizedKeys.keys = globals.ssh.vincent;
+    openssh.authorizedKeys.keys = config.infrastructure.users.vincent.sshKeys;
 
     # 🤔
     packages = [ pkgs.home-manager ];
@@ -92,7 +91,6 @@ in
       lib
       hostname
       desktop
-      globals
       outputs
       inputs
       stateVersion
