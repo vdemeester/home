@@ -1,5 +1,5 @@
 # Local DNS zone for sbr.pm - uses local IPs (192.168.1.x) with VPN fallback
-{ dns, globals, ... }:
+{ dns, config, ... }:
 let
   # Helper to get local IP, fallback to VPN IP
   getLocalMachineIP =
@@ -12,6 +12,6 @@ let
     if builtins.isList ips then builtins.head ips else ips;
 in
 import ./sbr.pm-common.nix {
-  inherit dns globals;
+  inherit dns config;
   getIPForMachine = getLocalMachineIP;
 }

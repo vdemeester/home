@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  globals,
   libx,
   ...
 }:
@@ -68,7 +67,7 @@
         # identityAgent = "empty";
       };
     }
-    // libx.sshConfigs globals.machines;
+    // (if config ? osConfig then libx.sshConfigs config.osConfig.infrastructure.machines else { });
     extraConfig = ''
       # IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
       GlobalKnownHostsFile ~/.ssh/ssh_known_hosts ~/.ssh/ssh_known_hosts.redhat ~/.ssh/ssh_known_hosts.mutable
@@ -79,7 +78,8 @@
       IdentityFile ~/.ssh/id_ed25519
     '';
   };
-  home.file.".ssh/ssh_known_hosts".text = libx.sshKnownHosts globals.machines;
+  home.file.".ssh/ssh_known_hosts".text =
+    if config ? osConfig then libx.sshKnownHosts config.osConfig.infrastructure.machines else "";
   home.file.".ssh/ssh_known_hosts.redhat".text = ''
     # Red Hat
     gitlab.cee.redhat.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICBgflBIyju1LV/29PmFDw0GLdB9h0JUXglNrvWjBQ2u

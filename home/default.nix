@@ -1,11 +1,11 @@
 {
+  config,
   desktop,
   hostname,
   lib,
   stateVersion,
   username,
   inputs,
-  globals,
   libx,
   ...
 }:
@@ -17,8 +17,9 @@
   ++ lib.optional (builtins.isString desktop) ./common/desktop
   ++ lib.optional (builtins.pathExists (./. + "/common/users/${username}")) ./common/users/${username}
   ++ lib.optional (
-    builtins.hasAttr "${hostname}" globals.machines
-    && libx.hasSyncthingFolders globals.machines."${hostname}"
+    config ? osConfig
+    && builtins.hasAttr "${hostname}" config.osConfig.infrastructure.machines
+    && libx.hasSyncthingFolders config.osConfig.infrastructure.machines."${hostname}"
   ) ./common/services/syncthing.nix
   ++ lib.optional (builtins.pathExists (
     ../systems/. + "/${hostname}/home.nix"

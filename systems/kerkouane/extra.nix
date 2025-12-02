@@ -1,5 +1,5 @@
 {
-  globals,
+  config,
   lib,
   libx,
   pkgs,
@@ -62,7 +62,7 @@ in
   services.openssh = {
     listenAddresses = [
       {
-        addr = builtins.head globals.machines.kerkouane.net.vpn.ips;
+        addr = builtins.head config.infrastructure.machine.network.vpn.ips;
         port = 22;
       }
     ];
@@ -75,8 +75,8 @@ in
 
   services.wireguard.server = {
     enable = true;
-    ips = libx.wg-ips globals.machines.kerkouane.net.vpn.ips;
-    peers = libx.generateWireguardPeers globals.machines;
+    ips = libx.wg-ips config.infrastructure.machine.network.vpn.ips;
+    peers = libx.generateWireguardPeers config.infrastructure.machines;
   };
 
   services.gosmee = {

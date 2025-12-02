@@ -17,6 +17,9 @@
     ./common/base
     ./common/users
   ]
+  ++ lib.optional (builtins.pathExists (
+    ./. + "/${hostname}/infrastructure.nix"
+  )) ./${hostname}/infrastructure.nix
   ++ lib.optional (builtins.pathExists (./. + "/${hostname}/extra.nix")) ./${hostname}/extra.nix
   ++ lib.optional (builtins.isString desktop) ./common/desktop;
 

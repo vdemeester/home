@@ -15,12 +15,6 @@
       desktop ? null,
       system ? "x86_64-linux",
     }:
-    let
-      globals = import ../globals.nix {
-        inherit (inputs.nixpkgs) lib;
-        inherit hostname;
-      };
-    in
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       extraSpecialArgs = {
@@ -31,7 +25,6 @@
           stateVersion
           hostname
           desktop
-          globals
           ;
         username = user;
         libx = import ./functions.nix { inherit (inputs.nixpkgs) lib; };
@@ -48,10 +41,6 @@
       pkgsInput ? inputs.nixpkgs,
     }:
     let
-      globals = import ../globals.nix {
-        inherit (pkgsInput) lib;
-        inherit hostname;
-      };
       specialArgs = {
         inherit
           self
@@ -59,7 +48,6 @@
           outputs
           stateVersion
           hostname
-          globals
           system
           ;
         libx = import ./functions.nix { inherit (pkgsInput) lib; };
@@ -73,6 +61,7 @@
         self.nixosModules.wireguard-server
         self.nixosModules.govanityurl
         self.nixosModules.gosmee
+        self.nixosModules.infrastructure
         inputs.agenix.nixosModules.default
         ../systems/new.nix
       ];
@@ -89,10 +78,6 @@
       homeInput ? inputs.home-manager,
     }:
     let
-      globals = import ../globals.nix {
-        inherit (pkgsInput) lib;
-        inherit hostname;
-      };
       specialArgs = {
         inherit
           self
@@ -103,7 +88,6 @@
           desktop
           hardwareType
           system
-          globals
           ;
         libx = import ./functions.nix { inherit (pkgsInput) lib; };
       };
@@ -116,6 +100,7 @@
         self.nixosModules.wireguard-server
         self.nixosModules.govanityurl
         self.nixosModules.gosmee
+        self.nixosModules.infrastructure
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager
@@ -140,10 +125,6 @@
     }:
     let
       system = "aarch64-linux";
-      globals = import ../globals.nix {
-        inherit (pkgsInput) lib;
-        inherit hostname;
-      };
       specialArgs = {
         inherit
           self
@@ -154,7 +135,6 @@
           desktop
           hardwareType
           system
-          globals
           nixos-raspberrypi
           ;
         libx = import ./functions.nix { inherit (pkgsInput) lib; };
@@ -179,6 +159,7 @@
         self.nixosModules.wireguard-server
         self.nixosModules.govanityurl
         self.nixosModules.gosmee
+        self.nixosModules.infrastructure
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager
@@ -201,10 +182,6 @@
       homeInput ? inputs.home-manager,
     }:
     let
-      globals = import ../globals.nix {
-        inherit (pkgsInput) lib;
-        inherit hostname;
-      };
       extraSpecialArgs = {
         inherit
           self
@@ -213,7 +190,6 @@
           stateVersion
           hostname
           desktop
-          globals
           ;
         libx = import ./functions.nix { inherit (pkgsInput) lib; };
       };

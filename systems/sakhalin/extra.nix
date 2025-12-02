@@ -1,6 +1,6 @@
 {
+  config,
   libx,
-  globals,
   lib,
   pkgs,
   ...
@@ -36,7 +36,7 @@
     };
     paperless = {
       enable = true;
-      address = "${builtins.head globals.machines.sakhalin.net.vpn.ips}";
+      address = "${builtins.head config.infrastructure.machine.network.vpn.ips}";
     };
     # services.postgresql.enable = true;
     # services.postgresql.package = pkgs.postgresql_15;
@@ -153,9 +153,9 @@
 
     wireguard = {
       enable = true;
-      ips = libx.wg-ips globals.machines.sakhalin.net.vpn.ips;
-      endpoint = "${globals.net.vpn.endpoint}";
-      endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
+      ips = libx.wg-ips config.infrastructure.machine.network.vpn.ips;
+      endpoint = config.infrastructure.vpn.endpoint;
+      endpointPublicKey = "+H3fxErP9HoFUrPgU19ra9+GDLQw+VwvLWx3lMct7QI="; # kerkouane
     };
   };
   environment.systemPackages = with pkgs; [ yt-dlp ]; # -----------------------------------

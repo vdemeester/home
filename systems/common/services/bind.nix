@@ -1,5 +1,5 @@
 {
-  globals,
+  config,
   inputs,
   pkgs,
   ...
@@ -11,7 +11,7 @@ let
   mkZoneFile =
     zoneName: zoneFile:
     pkgs.writeText "db.${zoneName}" (
-      dns.lib.toString zoneName (import zoneFile { inherit dns globals; })
+      dns.lib.toString zoneName (import zoneFile { inherit dns config; })
     );
 in
 {
@@ -24,7 +24,7 @@ in
     extraOptions = ''
       dnssec-validation no;
     '';
-    cacheNetworks = [ "127.0.0.0/8" ] ++ globals.net.dns.cacheNetworks;
+    cacheNetworks = [ "127.0.0.0/8" ] ++ config.infrastructure.dns.cacheNetworks;
 
     zones = [
       # sbr.pm zone
