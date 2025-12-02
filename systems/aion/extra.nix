@@ -3,6 +3,7 @@
   globals,
   lib,
   pkgs,
+  config,
   ...
 }:
 {
@@ -35,6 +36,7 @@
 
   # Grant vincent ownership of the immich database and schemas
   systemd.services.postgresql.postStart = lib.mkAfter ''
+    PSQL="${config.services.postgresql.package}/bin/psql --port=${toString config.services.postgresql.settings.port}"
     $PSQL -tAc "SELECT 1 FROM pg_roles WHERE rolname = 'vincent'" | grep -q 1 || $PSQL -tAc "CREATE ROLE vincent WITH LOGIN"
     $PSQL -tAc "ALTER DATABASE immich OWNER TO vincent"
     $PSQL immich -tAc "ALTER SCHEMA public OWNER TO vincent"
