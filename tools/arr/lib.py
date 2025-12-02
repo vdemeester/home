@@ -451,7 +451,10 @@ def select_with_fzf(
 class JellyfinClient:
     """Client for Jellyfin API interactions."""
 
-    def __init__(self, base_url: str, api_token: str, user_id: str):
+    def __init__(
+        self, base_url: str, api_token: str, user_id: str,
+        debug: bool = False
+    ):
         """
         Initialize the Jellyfin API client.
 
@@ -459,15 +462,54 @@ class JellyfinClient:
             base_url: Base URL of the Jellyfin service
                       (e.g., http://localhost:8096)
             api_token: API token for authentication
-            user_id: User ID for playlist ownership
+            user_id: User ID or username for playlist ownership
+            debug: Enable debug output
         """
         self.base_url = base_url.rstrip("/")
         self.api_token = api_token
-        self.user_id = user_id
+        self.debug = debug
         self.headers = {
             "Authorization": f'MediaBrowser Token="{api_token}"',
             "Content-Type": "application/json",
         }
+
+        # Resolve username to user ID if needed
+        self.user_id = self._resolve_user_id(user_id)
+
+    def _resolve_user_id(self, user_identifier: str) -> str:
+        """
+        Resolve a username or user ID to a proper user ID.
+
+        If the identifier looks like a GUID, use it as-is.
+        Otherwise, look up the user by username.
+
+        Args:
+            user_identifier: Username or user ID
+
+        Returns:
+            Resolved user ID (GUID)
+        """
+        # Check if it's already a GUID (basic check for 8-4-4-4-12 format)
+        if len(user_identifier) == 32 or (
+            len(user_identifier) == 36 and user_identifier.count('-') == 4
+        ):
+            return user_identifier
+
+        # Otherwise, look up by username
+        try:
+            response = self.get("/Users")
+            if isinstance(response, list):
+                for user in response:
+                    user_name = user.get("Name", "").lower()
+                    if user_name == user_identifier.lower():
+                        return user.get("Id")
+        except Exception:
+            # If lookup fails, return the original identifier
+            # and let subsequent API calls fail with a clearer error
+            pass
+
+        # If not found, return original (might be unrecognized ID)
+        return user_identifier
 
     def get(
         self, endpoint: str, params: Optional[Dict[str, Any]] = None
@@ -539,27 +581,132 @@ class JellyfinClient:
             sys.exit(1)
 
     def search_tracks(
-        self, query: str, limit: int = 50
+        self, query: str, limit: int = 50, artist_name: str = None,
+        track_name: str = None
     ) -> List[Dict[str, Any]]:
         """
         Search for tracks in Jellyfin library.
 
         Args:
-            query: Search query string
+            query: Legacy search query string (for backward compatibility)
             limit: Maximum number of results
+            artist_name: Artist name to search by (preferred)
+            track_name: Track name to search by
 
         Returns:
             List of track items
         """
+        # Prefer searching by artist name when available
+        if artist_name:
+            # Find artist using NameStartsWith (more reliable)
+            artist_words = artist_name.split()
+            artist_first_word = (
+                artist_words[0] if artist_words else artist_name
+            )
+
+            artist_params = {
+                "NameStartsWith": artist_first_word,
+                "IncludeItemTypes": "MusicArtist",
+                "Limit": 50,
+                "Recursive": True,
+            }
+            artist_result = self.get(
+                f"/Users/{self.user_id}/Items", params=artist_params
+            )
+
+            artists = artist_result.get("Items", [])
+
+            if self.debug:
+                print(
+                    f"DEBUG: Searching for artist starting with "
+                    f"'{artist_first_word}' - Found {len(artists)} artists"
+                )
+                if artists:
+                    for idx, artist in enumerate(artists[:5], 1):
+                        print(f"  {idx}. {artist.get('Name')}")
+
+            if artists:
+                # Find exact or best match
+                artist_name_lower = artist_name.lower()
+                matched_artist = None
+
+                for artist in artists:
+                    if artist.get('Name', '').lower() == artist_name_lower:
+                        matched_artist = artist
+                        break
+
+                # If no exact match, use first result
+                if not matched_artist:
+                    matched_artist = artists[0]
+
+                artist_id = matched_artist.get("Id")
+
+                if self.debug:
+                    artist_name_str = matched_artist.get('Name')
+                    print(
+                        f"DEBUG: Using artist: {artist_name_str} "
+                        f"(ID: {artist_id})"
+                    )
+
+                track_params = {
+                    "ArtistIds": artist_id,
+                    "IncludeItemTypes": "Audio",
+                    "Recursive": True,
+                    "Limit": limit,
+                    "Fields": (
+                        "Artists,Album,AlbumArtist,"
+                        "AlbumArtists,ArtistItems"
+                    ),
+                }
+                result = self.get(
+                    f"/Users/{self.user_id}/Items", params=track_params
+                )
+                items = result.get("Items", [])
+
+                if self.debug:
+                    print(f"DEBUG: Found {len(items)} tracks by this artist")
+
+                return items
+
+        # Fallback: search by track name
+        search_term = track_name or query
+        words = search_term.split()
+        first_word = words[0] if words else search_term
+
         params = {
-            "searchTerm": query,
+            "NameStartsWith": first_word,
             "IncludeItemTypes": "Audio",
-            "Recursive": "true",
-            "Limit": limit,
-            "userId": self.user_id,
+            "Recursive": True,
+            "Limit": 200,  # Larger limit: filtering client-side
+            "Fields": (
+                "Artists,Album,AlbumArtist,"
+                "AlbumArtists,ArtistItems"
+            ),
+            "EnableUserData": False,  # Skip user data for speed
         }
-        result = self.get("/Items", params=params)
-        return result.get("Items", [])
+
+        result = self.get(
+            f"/Users/{self.user_id}/Items", params=params
+        )
+
+        items = result.get("Items", [])
+
+        # Enrich items with album artist data if track artists are missing
+        for item in items:
+            if not item.get('Artists') and item.get('AlbumId'):
+                try:
+                    album_id = item['AlbumId']
+                    album = self.get(
+                        f"/Users/{self.user_id}/Items/{album_id}",
+                        params={"Fields": "Artists,AlbumArtists"}
+                    )
+                    # Use album artists as track artists
+                    item['Artists'] = album.get('AlbumArtists', [])
+                    item['Album'] = album.get('Name', '')
+                except Exception:
+                    pass  # Continue even if album fetch fails
+
+        return items
 
     def get_playlists(self) -> List[Dict[str, Any]]:
         """
@@ -571,9 +718,8 @@ class JellyfinClient:
         params = {
             "IncludeItemTypes": "Playlist",
             "Recursive": "true",
-            "userId": self.user_id,
         }
-        result = self.get("/Items", params=params)
+        result = self.get(f"/Users/{self.user_id}/Items", params=params)
         return result.get("Items", [])
 
     def create_playlist(

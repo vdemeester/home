@@ -48,6 +48,7 @@ def match_track_in_jellyfin(
     track_name: str,
     artist_names: List[str],
     album_name: str,
+    debug: bool = False,
 ) -> Tuple[str | None, float]:
     """
     Search for a track in Jellyfin and find the best match.
@@ -62,12 +63,29 @@ def match_track_in_jellyfin(
         Tuple of (jellyfin_item_id, confidence_score)
         Returns (None, 0.0) if no match found
     """
-    # Build search query with track and primary artist
+    # Search by artist name (much more reliable than track name)
     primary_artist = artist_names[0] if artist_names else ""
-    query = f"{track_name} {primary_artist}"
 
-    # Search Jellyfin
-    results = jellyfin.search_tracks(query, limit=20)
+    # Search Jellyfin using artist name
+    results = jellyfin.search_tracks(
+        query=f"{track_name} {primary_artist}",  # Fallback legacy query
+        artist_name=primary_artist,
+        track_name=track_name,
+        limit=200  # Get more tracks since we're filtering by artist
+    )
+
+    if debug:
+        print(
+            f"        DEBUG: Searched for artist '{primary_artist}', "
+            f"track '{track_name}' - found {len(results)} results"
+        )
+        if results and len(results) > 0:
+            first_name = results[0].get('Name', 'N/A')
+            first_artists = results[0].get('Artists', [])
+            print(
+                f"        DEBUG: First result: {first_name} "
+                f"by {first_artists}"
+            )
 
     if not results:
         return None, 0.0
@@ -80,37 +98,86 @@ def match_track_in_jellyfin(
     best_match = None
     best_score = 0.0
 
+    # Debug: track top 5 matches
+    top_matches = []
+
     for item in results:
         score = 0.0
+        score_breakdown = {"name": 0.0, "artist": 0.0, "album": 0.0}
 
         # Check track name (weight: 40%)
         item_name = normalize_string(item.get("Name", ""))
         if item_name == norm_track:
             score += 0.4
+            score_breakdown["name"] = 0.4
         elif norm_track in item_name or item_name in norm_track:
             score += 0.2
+            score_breakdown["name"] = 0.2
 
         # Check artist names (weight: 40%)
         item_artists = item.get("Artists", [])
         item_artist_names = {normalize_string(a) for a in item_artists}
         if norm_artists & item_artist_names:  # Intersection
             score += 0.4
+            score_breakdown["artist"] = 0.4
         elif any(
             any(ia in na or na in ia for ia in item_artist_names)
             for na in norm_artists
         ):
             score += 0.2
+            score_breakdown["artist"] = 0.2
 
         # Check album name (weight: 20%)
         item_album = normalize_string(item.get("Album", ""))
         if item_album == norm_album:
             score += 0.2
+            score_breakdown["album"] = 0.2
         elif norm_album in item_album or item_album in norm_album:
             score += 0.1
+            score_breakdown["album"] = 0.1
 
         if score > best_score:
             best_score = score
             best_match = item.get("Id")
+
+        # Track top matches for debugging
+        top_matches.append({
+            "id": item.get("Id"),
+            "name": item.get("Name", ""),
+            "artists": item.get("Artists", []),
+            "album": item.get("Album", ""),
+            "score": score,
+            "breakdown": score_breakdown
+        })
+
+    # Show top matches if debug is enabled
+    if debug:
+        top_matches.sort(key=lambda x: x["score"], reverse=True)
+        print("        DEBUG: Top 5 matches:")
+        for idx, match in enumerate(top_matches[:5], 1):
+            indicator = (
+                "<<<< SELECTED" if match.get("id") == best_match else ""
+            )
+            print(
+                f"          {idx}. [{match['score']:.2f}] "
+                f"{match['name']} - {match['artists']} "
+                f"(Album: {match['album']}) {indicator}"
+            )
+            bd = match['breakdown']
+            print(
+                f"             Score breakdown: name={bd['name']:.2f}, "
+                f"artist={bd['artist']:.2f}, album={bd['album']:.2f}"
+            )
+
+        # Find and show the selected track
+        selected = next(
+            (m for m in top_matches if m.get("id") == best_match), None
+        )
+        if selected:
+            print(
+                f"        DEBUG: SELECTED TRACK: {selected['name']} "
+                f"from album '{selected['album']}'"
+            )
 
     return best_match, best_score
 
@@ -123,16 +190,17 @@ def run(
     spotify_client_secret: str,
     spotify_username: str,
     playlist_ids: List[str],
+    all_playlists: bool,
     match_threshold: float,
+    public: bool,
     dry_run: bool,
     no_confirm: bool,
-    all_playlists: bool,
-    public: bool,
+    debug: bool = False,
 ):
     """Execute the jellyfin sync-spotify command."""
     # Create clients and context
     jellyfin = JellyfinClient(
-        jellyfin_url, jellyfin_api_token, jellyfin_user_id
+        jellyfin_url, jellyfin_api_token, jellyfin_user_id, debug=debug
     )
     ctx = CommandContext(dry_run, no_confirm)
 
@@ -254,6 +322,9 @@ def run(
                 ]
                 album_name = track.get("album", "")
 
+                if idx == 1 and debug:  # Debug first track
+                    print(f"    DEBUG: Spotify track data: {track}")
+
                 if not track_name or not artist_names:
                     continue
 
@@ -262,9 +333,15 @@ def run(
                     f"    [{idx}/{len(tracks)}] Searching: "
                     f"{track_name} - {', '.join(artist_names)}"
                 )
+                if debug:
+                    print(
+                        f"        DEBUG: track_name='{track_name}', "
+                        f"artist_names={artist_names}, "
+                        f"album_name='{album_name}'"
+                    )
 
                 item_id, score = match_track_in_jellyfin(
-                    jellyfin, track_name, artist_names, album_name
+                    jellyfin, track_name, artist_names, album_name, debug
                 )
 
                 if item_id and score >= match_threshold:

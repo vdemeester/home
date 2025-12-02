@@ -304,7 +304,8 @@ def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, 
 @click.option("--public", is_flag=True, help="Make created playlists public")
 @click.option("--dry-run", is_flag=True, help="Show what would be created without making changes")
 @click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
-def jellyfin_sync_spotify(url, api_token, user_id, spotify_client_id, spotify_client_secret, spotify_username, playlist_ids, match_threshold, all_playlists, public, dry_run, no_confirm):
+@click.option("--debug", is_flag=True, help="Show debug output for troubleshooting")
+def jellyfin_sync_spotify(url, api_token, user_id, spotify_client_id, spotify_client_secret, spotify_username, playlist_ids, all_playlists, match_threshold, public, dry_run, no_confirm, debug):
     """Sync Spotify playlists to Jellyfin.
 
     Fetches tracks from Spotify playlists and creates matching playlists in Jellyfin.
@@ -356,11 +357,12 @@ def jellyfin_sync_spotify(url, api_token, user_id, spotify_client_id, spotify_cl
         spotify_client_secret,
         spotify_username,
         list(playlist_ids),
+        all_playlists,
         match_threshold,
+        public,
         dry_run,
         no_confirm,
-        all_playlists,
-        public
+        debug
     )
 
 
