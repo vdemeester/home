@@ -663,6 +663,10 @@ minibuffer, even without explicitly focusing it."
 		  ("\\.go\\'" ("_test.go"))
 		  ))))
 
+(use-package lua-ts-mode
+  :mode "\\.lua\\'"
+  :hook (lua-ts-mode . eglot-ensure))
+
 (use-package nix-ts-mode
   :if (executable-find "nix")
   :mode ("\\.nix\\'" "\\.nix.in\\'"))

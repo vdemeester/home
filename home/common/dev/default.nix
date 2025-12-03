@@ -3,6 +3,7 @@
   imports = [
     ./ai.nix
     ./go.nix
+    ./lua.nix
     ./nix.nix
     ./python.nix
     ./base.nix
