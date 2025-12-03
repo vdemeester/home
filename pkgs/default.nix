@@ -15,6 +15,7 @@ in
   vrsync = pkgs.callPackage ./my/vrsync { };
   vde-thinkpad = pkgs.callPackage ./my/vde-thinkpad { };
   battery-monitor = pkgs.callPackage ../tools/battery-monitor { };
+  claude-hooks = pkgs.callPackage ../tools/claude-hooks { };
   ape = pkgs.callPackage ./ape { };
   ram = pkgs.callPackage ./ram { };
   govanityurl = pkgs.callPackage ./govanityurl { };
