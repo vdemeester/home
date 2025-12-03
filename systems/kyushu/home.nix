@@ -26,6 +26,8 @@
 
     did
 
+    finamp
+
     # Keyboard
     qmk
     qmk_hid
