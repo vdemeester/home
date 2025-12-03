@@ -25,6 +25,10 @@
   networking = {
     hostName = hostname;
     # useDHCP = lib.mkDefault true;
+
+    # Use nftables as the firewall backend (default since NixOS 23.11)
+    # Explicitly enabled for clarity and to ensure iptables is not used
+    nftables.enable = lib.mkDefault true;
   };
 
   environment.systemPackages = with pkgs; [
