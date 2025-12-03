@@ -275,13 +275,16 @@ def run(
     # Check existing Jellyfin playlists
     print("Fetching existing Jellyfin playlists...")
     existing_playlists = jellyfin.get_playlists()
-    existing_playlist_names = {
-        normalize_string(p.get("Name", "")) for p in existing_playlists
+    # Map normalized names to playlist data (for idempotent updates)
+    existing_playlist_map = {
+        normalize_string(p.get("Name", "")): p
+        for p in existing_playlists
     }
 
     print_section_header("SYNCING SPOTIFY PLAYLISTS TO JELLYFIN")
 
     playlists_created = 0
+    playlists_updated = 0
     playlists_skipped = 0
     total_tracks = 0
     matched_tracks = 0
@@ -291,20 +294,27 @@ def run(
         try:
             # Get playlist info
             info = spotify.get_playlist_info(playlist_id)
-            playlist_name = info["name"]
-            print(
-                f"\n\nPlaylist: {playlist_name} "
-                f"(by {info['owner']}, {info['tracks_total']} tracks)"
-            )
+            if debug:
+                print(f"\n  DEBUG: Playlist info: {info}")
 
-            # Check if playlist already exists in Jellyfin
-            if normalize_string(playlist_name) in existing_playlist_names:
+            playlist_name = info.get("name")
+            if not playlist_name or not isinstance(playlist_name, str):
                 print(
-                    f"  ⚠ Playlist '{playlist_name}' already exists "
-                    "in Jellyfin, skipping..."
+                    f"\n\nError: Invalid playlist name for {playlist_id}: "
+                    f"{playlist_name}"
                 )
                 playlists_skipped += 1
                 continue
+
+            print(
+                f"\n\nPlaylist: {playlist_name} "
+                f"(by {info.get('owner', 'Unknown')}, "
+                f"{info.get('tracks_total', 0)} tracks)"
+            )
+
+            # Check if playlist already exists in Jellyfin
+            normalized_name = normalize_string(playlist_name)
+            existing_playlist = existing_playlist_map.get(normalized_name)
 
             # Get tracks
             tracks = spotify.get_playlist_tracks(playlist_id)
@@ -329,46 +339,74 @@ def run(
                     continue
 
                 total_tracks += 1
-                print(
-                    f"    [{idx}/{len(tracks)}] Searching: "
-                    f"{track_name} - {', '.join(artist_names)}"
-                )
-                if debug:
+                if not debug:
+                    # Compact progress output when not debugging
+                    print(
+                        f"    [{idx}/{len(tracks)}] {track_name} - "
+                        f"{', '.join(artist_names)[:40]}...",
+                        end="",
+                        flush=True
+                    )
+                else:
+                    print(
+                        f"    [{idx}/{len(tracks)}] Searching: "
+                        f"{track_name} - {', '.join(artist_names)}"
+                    )
                     print(
                         f"        DEBUG: track_name='{track_name}', "
                         f"artist_names={artist_names}, "
                         f"album_name='{album_name}'"
                     )
 
-                item_id, score = match_track_in_jellyfin(
-                    jellyfin, track_name, artist_names, album_name, debug
-                )
+                try:
+                    item_id, score = match_track_in_jellyfin(
+                        jellyfin, track_name, artist_names, album_name, debug
+                    )
 
-                if item_id and score >= match_threshold:
-                    jellyfin_item_ids.append(item_id)
-                    matched_tracks += 1
-                    print(f"      ✓ Matched (confidence: {score:.2f})")
-                else:
+                    if item_id and score >= match_threshold:
+                        jellyfin_item_ids.append(item_id)
+                        matched_tracks += 1
+                        if debug:
+                            print(f"      ✓ Matched (confidence: {score:.2f})")
+                        else:
+                            print(f" ✓ {score:.2f}")
+                    else:
+                        local_failed.append(
+                            {
+                                "track": track_name,
+                                "artists": ", ".join(artist_names),
+                                "album": album_name,
+                                "score": score,
+                                "playlist": playlist_name,
+                            }
+                        )
+                        if debug:
+                            print(
+                                f"      ✗ No match (best score: {score:.2f}, "
+                                f"threshold: {match_threshold:.2f})"
+                            )
+                        else:
+                            print(f" ✗ {score:.2f}")
+                except Exception as e:
+                    print(
+                        f"\n      ⚠ Error matching track: {e}"
+                    )
                     local_failed.append(
                         {
                             "track": track_name,
                             "artists": ", ".join(artist_names),
                             "album": album_name,
-                            "score": score,
+                            "score": 0.0,
                             "playlist": playlist_name,
                         }
                     )
-                    print(
-                        f"      ✗ No match (best score: {score:.2f}, "
-                        f"threshold: {match_threshold:.2f})"
-                    )
 
-                # Small delay to avoid hammering Jellyfin
-                time.sleep(0.1)
+                # Reduced delay - artist search batches multiple tracks
+                time.sleep(0.05)
 
             failed_matches.extend(local_failed)
 
-            # Create playlist in Jellyfin
+            # Create or update playlist in Jellyfin
             if jellyfin_item_ids:
                 print(
                     f"\n  Matched {len(jellyfin_item_ids)}/{len(tracks)} "
@@ -377,28 +415,56 @@ def run(
 
                 if not ctx.dry_run:
                     try:
-                        result = jellyfin.create_playlist(
-                            playlist_name, jellyfin_item_ids, public
-                        )
-                        if result and result.get("Id"):
+                        if existing_playlist:
+                            # Update existing playlist
+                            playlist_jellyfin_id = existing_playlist.get("Id")
                             print(
-                                f"  ✓ Created playlist in Jellyfin "
-                                f"(ID: {result['Id']})"
+                                f"  ℹ Updating existing playlist "
+                                f"(ID: {playlist_jellyfin_id})"
                             )
-                            playlists_created += 1
+
+                            # Clear existing tracks
+                            if jellyfin.clear_playlist(playlist_jellyfin_id):
+                                # Add new tracks
+                                jellyfin.add_to_playlist(
+                                    playlist_jellyfin_id, jellyfin_item_ids
+                                )
+                                print(
+                                    f"  ✓ Updated playlist in Jellyfin "
+                                    f"with {len(jellyfin_item_ids)} tracks"
+                                )
+                                playlists_updated += 1
+                            else:
+                                print("  ✗ Failed to clear playlist")
+                                playlists_skipped += 1
                         else:
-                            print("  ✗ Failed to create playlist")
-                            playlists_skipped += 1
+                            # Create new playlist
+                            result = jellyfin.create_playlist(
+                                playlist_name, jellyfin_item_ids, public
+                            )
+                            if result and result.get("Id"):
+                                print(
+                                    f"  ✓ Created playlist in Jellyfin "
+                                    f"(ID: {result['Id']})"
+                                )
+                                playlists_created += 1
+                            else:
+                                print("  ✗ Failed to create playlist")
+                                playlists_skipped += 1
                     except Exception as e:
-                        print(f"  ✗ Error creating playlist: {e}")
+                        print(f"  ✗ Error updating/creating playlist: {e}")
                         playlists_skipped += 1
                 else:
+                    action = "update" if existing_playlist else "create"
                     print(
-                        f"  [DRY RUN] Would create playlist "
+                        f"  [DRY RUN] Would {action} playlist "
                         f"'{playlist_name}' with {len(jellyfin_item_ids)} "
                         "tracks"
                     )
-                    playlists_created += 1
+                    if existing_playlist:
+                        playlists_updated += 1
+                    else:
+                        playlists_created += 1
             else:
                 print(
                     "\n  ✗ No tracks matched - playlist not created"
@@ -414,6 +480,7 @@ def run(
     print_section_header("FINAL SUMMARY")
     print(f"\nTotal playlists processed: {len(playlist_ids)}")
     print(f"  - Created: {playlists_created}")
+    print(f"  - Updated: {playlists_updated}")
     print(f"  - Skipped: {playlists_skipped}")
     print(f"\nTotal tracks processed: {total_tracks}")
     print(f"  - Matched: {matched_tracks}")
@@ -451,8 +518,13 @@ def run(
             "\n[DRY RUN] No changes were made. "
             "Remove --dry-run to create playlists."
         )
-    elif playlists_created > 0:
+    elif playlists_created > 0 or playlists_updated > 0:
+        messages = []
+        if playlists_created > 0:
+            messages.append(f"created {playlists_created}")
+        if playlists_updated > 0:
+            messages.append(f"updated {playlists_updated}")
         print(
-            f"\n✓ Successfully created {playlists_created} playlist(s) "
+            f"\n✓ Successfully {' and '.join(messages)} playlist(s) "
             "in Jellyfin!"
         )

@@ -758,7 +758,71 @@ class JellyfinClient:
             Response data
         """
         params = {"ids": ",".join(item_ids), "userId": self.user_id}
-        return self.post(f"/Playlists/{playlist_id}/Items", params)
+        url = f"{self.base_url}/Playlists/{playlist_id}/Items"
+        try:
+            response = requests.post(
+                url, headers=self.headers, params=params, timeout=30
+            )
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(
+                f"Error adding items to playlist: {e}",
+                file=sys.stderr,
+            )
+            return {}
+
+    def get_playlist_items(self, playlist_id: str) -> List[str]:
+        """
+        Get all item IDs in a playlist.
+
+        Args:
+            playlist_id: Jellyfin playlist ID
+
+        Returns:
+            List of item IDs in the playlist
+        """
+        params = {
+            "ParentId": playlist_id,
+            "Fields": "Id",
+        }
+        result = self.get(f"/Users/{self.user_id}/Items", params=params)
+        items = result.get("Items", [])
+        return [item.get("Id") for item in items if item.get("Id")]
+
+    def clear_playlist(self, playlist_id: str) -> bool:
+        """
+        Remove all items from a playlist.
+
+        Args:
+            playlist_id: Jellyfin playlist ID
+
+        Returns:
+            True if successful
+        """
+        # Get current items
+        item_ids = self.get_playlist_items(playlist_id)
+
+        if not item_ids:
+            return True  # Already empty
+
+        # Remove all items
+        try:
+            url = (
+                f"{self.base_url}/Playlists/{playlist_id}/Items"
+                f"?EntryIds={','.join(item_ids)}"
+            )
+            response = requests.delete(
+                url, headers=self.headers, timeout=30
+            )
+            response.raise_for_status()
+            return True
+        except requests.exceptions.RequestException as e:
+            print(
+                f"Error clearing playlist: {e}",
+                file=sys.stderr,
+            )
+            return False
 
 
 class SpotifyClient:
