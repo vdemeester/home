@@ -19,6 +19,9 @@ $(call rule.define,~,$(~))
 all += niri
 niri : ~/.config/niri/config.kdl
 
+all += claude-skills
+claude-skills : ~/.claude/skills
+
 # Example: Override default rule to generate content instead of copying
 # Uncomment and customize this pattern for files that should be generated:
 #

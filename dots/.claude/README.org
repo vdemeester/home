@@ -1,0 +1,343 @@
+#+title: Claude AI Skills Infrastructure
+#+author: Vincent Demeester
+#+date: [2025-12-03 Wed]
+
+* Overview
+
+This directory contains the Personal AI Infrastructure (PAI) skills for Claude Code. These skills provide structured context and best practices for various development workflows.
+
+Inspired by [[https://github.com/danielmiessler/Personal_AI_Infrastructure][Daniel Miessler's Personal AI Infrastructure]].
+
+* Directory Structure
+
+#+begin_src
+.claude/
+├── README.org           # This file
+├── skills/              # AI skills (symlinked to ~/.claude/skills)
+│   ├── CORE/           # Core operating principles
+│   │   ├── CONSTITUTION.md
+│   │   ├── SKILL.md
+│   │   ├── prompting.md
+│   │   └── history-system.md    # History/notes integration
+│   ├── homelab/        # Homelab infrastructure management
+│   ├── golang/         # Go development best practices
+│   ├── nix/            # Nix/NixOS best practices
+│   └── notes/          # Note-writing workflow (denote)
+└── history/            # Captured work history (in ~/.claude/)
+    ├── sessions/       # Work session summaries
+    ├── learnings/      # Problem-solving insights
+    ├── research/       # Deep investigations
+    ├── execution/      # Command outputs
+    └── decisions/      # Architecture decisions
+#+end_src
+
+**Note**: History entries in =~/.claude/history/= are interconnected with denote notes in =~/desktop/org/notes/= using the =:history:= tag.
+
+* Skills
+
+** CORE Skills
+The CORE skills auto-load and define fundamental operating principles:
+- *CONSTITUTION.md*: Personal AI philosophy and architectural principles
+- *SKILL.md*: Core behaviors, response patterns, and workflows
+- *prompting.md*: Effective prompting guidelines
+
+** Domain-Specific Skills
+- *homelab*: Managing NixOS infrastructure in ~/src/home repository
+- *golang*: Go development patterns, testing, and Nix integration
+- *nix*: NixOS/home-manager configuration best practices
+- *notes*: Note-taking in denote format with org-mode
+- *history-system* (in CORE): Integration between history capture and denote notes
+
+* Installation
+
+Skills are managed through the dots Makefile:
+
+#+begin_src bash
+# Install/update skills symlink
+cd ~/src/home/dots
+make claude-skills
+
+# This creates: ~/.claude/skills -> ~/src/home/dots/.claude/skills
+#+end_src
+
+* Usage
+
+Skills are automatically available in Claude Code sessions. No special invocation needed - Claude will reference them contextually based on the task.
+
+* Editing Skills
+
+Skills are plain markdown files that can be edited directly:
+
+#+begin_src bash
+# Edit a skill
+cd ~/src/home/dots/.claude/skills
+vim homelab/SKILL.md
+
+# Changes are immediately available (no rebuild required)
+#+end_src
+
+* Adding New Skills
+
+1. Create a new directory in =.claude/skills/=
+2. Add a =SKILL.md= file with the skill content
+3. Skills are automatically discovered by Claude Code
+
+Example:
+#+begin_src bash
+mkdir -p .claude/skills/rust
+cat > .claude/skills/rust/SKILL.md << 'EOF'
+# Rust Development Skill
+
+## Purpose
+Guide Rust development following best practices.
+
+## Best Practices
+- Use cargo for builds
+- Write comprehensive tests
+- Follow Rust idioms
+EOF
+#+end_src
+
+* History System
+
+The History system automatically captures and documents AI interactions to build a comprehensive knowledge base.
+
+Adapted from the [[https://github.com/danielmiessler/Personal_AI_Infrastructure/blob/main/.claude/skills/CORE/CONSTITUTION.md#history-system][Personal AI Infrastructure History System]].
+
+** Purpose
+Capture ALL valuable work for future reference, learning, and analysis.
+
+** Directory Structure
+
+#+begin_src
+~/.claude/history/
+├── raw-outputs/              # Raw event logs (JSONL)
+│   └── YYYY-MM/
+│       └── YYYY-MM-DD_all-events.jsonl
+│
+├── learnings/                # Problem-solving narratives
+│   └── YYYY-MM/
+│       └── YYYY-MM-DD-HHMMSS_LEARNING_description.md
+│
+├── sessions/                 # Work logs and summaries
+│   └── YYYY-MM/
+│       └── YYYY-MM-DD-HHMMSS_SESSION_description.md
+│
+├── research/                 # Analysis and investigations
+│   └── YYYY-MM-DD_topic/
+│       ├── analysis.md
+│       ├── findings.md
+│       └── sources.md
+│
+├── execution/                # Command outputs and results
+│   └── YYYY-MM/
+│       └── YYYY-MM-DD-HHMMSS_command-name.txt
+│
+└── upgrades/                 # Architectural changes
+    ├── deprecated/
+    │   └── YYYY-MM-DD_upgrade-name/
+    │       ├── README.md
+    │       └── [deprecated files]
+    └── YYYY-MM-DD_upgrade-description.md
+#+end_src
+
+** What Gets Captured
+
+*** Automatic Capture (via hooks)
+- Session start and completion events
+- Tool usage and command execution
+- All events logged to =raw-outputs/YYYY-MM/YYYY-MM-DD_all-events.jsonl=
+
+*** Manual Capture (by AI)
+- *Research completed* → save to =research/=
+- *Learning captured* → save to =learnings/=
+- *Work summary* → save to =sessions/=
+- *Command outputs* → save to =execution/=
+
+*** Workflow-Driven
+- Some skills auto-save outputs
+- Example: research skill → =history/research/=
+
+** Categories
+
+*** Learnings
+Problem-solving narratives and insights:
+- How a bug was diagnosed and fixed
+- Why a particular approach was chosen
+- Lessons learned from failures
+- Pattern discoveries
+
+Example: =2025-12/2025-12-03-154500_LEARNING_wireguard-vpn-setup.md=
+
+*** Sessions
+Work logs and summaries of significant work sessions:
+- What was accomplished
+- Decisions made
+- Next steps
+- Context for future reference
+
+Example: =2025-12/2025-12-03-100000_SESSION_homelab-infrastructure-upgrade.md=
+
+*** Research
+Analysis and investigations:
+- Technical explorations
+- Tool evaluations
+- Architecture comparisons
+- Deep dives into topics
+
+Example: =2025-12-03_personal-ai-infrastructure/=
+
+*** Execution
+Command outputs and results:
+- Build logs
+- Test results
+- Deployment outputs
+- Script executions
+
+Example: =2025-12/2025-12-03-150000_nixos-rebuild.txt=
+
+*** Upgrades
+Architectural changes and migrations:
+- System improvements
+- Breaking changes
+- Deprecated approaches
+- Migration guides
+
+Example: =2025-12-03_claude-skills-implementation.md=
+
+** Scratchpad vs History
+
+*** Scratchpad (=~/.claude/scratchpad/=)
+- Temporary working files
+- Tests and experiments
+- Draft outputs
+- Delete when done
+
+*** History (=~/.claude/history/=)
+- Permanent valuable outputs
+- Research findings
+- Learnings and insights
+- Session logs
+- Keep forever
+
+** Critical Rule
+*When in doubt, save to history!*
+
+** Benefits
+
+1. *Learn from history*: Reference past solutions to similar problems
+2. *Track evolution*: See how approaches and understanding develop over time
+3. *Share knowledge*: Documentation is automatically created
+4. *Context building*: AI can reference past interactions for better assistance
+5. *Institutional memory*: Build a knowledge base over time
+
+** Integration with Denote Notes
+
+The History system is interconnected with the denote note-taking system in =~/desktop/org/notes/=.
+
+*** Tag-Based Integration
+All history-related notes use the =:history:= tag plus category-specific tags:
+- =:history:session:= - Work session summaries
+- =:history:learning:= - Problem-solving insights
+- =:history:research:= - Deep investigations
+- =:history:decision:= - Architecture decisions
+- =:history:execution:= - Command execution logs
+
+*** Bidirectional Links
+History entries in =~/.claude/history/= and denote notes cross-reference each other:
+
+From history to notes (markdown links in .md files):
+#+begin_src markdown
+## Related Notes
+- [Topic Note](~/desktop/org/notes/20251203T151822--topic__history_session.org)
+#+end_src
+
+From notes to history (org-mode links in .org files):
+#+begin_src org
+,* Related History
+- [[file:~/.claude/history/sessions/2025-12/2025-12-03-150000_SESSION_implementation.md][Implementation Session]]
+#+end_src
+
+**Note on formats**: History uses markdown (=.md=), notes use org-mode (=.org=). Both are plain text, searchable, and git-friendly. Use appropriate link syntax for each format.
+
+*** Finding History-Linked Notes
+#+begin_src bash
+# All history notes (by tag)
+ls ~/desktop/org/notes/*__history*.org
+
+# Automated history notes (by pkai signature)
+ls ~/desktop/org/notes/*==pkai*.org
+
+# Specific category
+ls ~/desktop/org/notes/*__history_learning*.org
+ls ~/desktop/org/notes/*==pkai*__history_session*.org
+
+# Search across both systems
+rg "topic" ~/.claude/history/ ~/desktop/org/notes/*__history*.org
+#+end_src
+
+*Signature*: =pkai= stands for "Personal Knowledge Automated Infrastructure" and identifies notes created by the history system. This makes it easy to distinguish automated notes from manual ones.
+
+*** When to Use Each System
+- *History directory* (=~/.claude/history/=): Chronological tracking, raw captures, session-by-session
+- *Denote notes* (=~/desktop/org/notes/=): Topic-based organization, long-term reference, knowledge building
+- *Both*: Significant learnings, important decisions, research worth sharing
+
+See =skills/CORE/history-system.md= for complete integration details.
+
+** Implementation Status
+
+Current implementation (manual workflow):
+1. Manually create history entries for significant work
+2. Manually create denote notes with =:history:= tag
+3. Cross-link between history and notes
+4. Organize by category and date
+
+Future automation (with hooks):
+- Automatic session capture via hooks
+- Auto-suggest history entries for significant work
+- Searchable indexing across both systems
+- AI-assisted note generation from history
+
+* Philosophy
+
+** Deterministic Over Probabilistic
+Prefer structured, testable, code-based solutions over pure prompt engineering.
+
+** Progressive Disclosure
+Load context in three tiers:
+1. *Essential*: Core principles always loaded
+2. *Contextual*: Task-specific knowledge loaded as needed
+3. *Reference*: Detailed docs retrieved on demand
+
+** Code Before Prompts
+Build CLI tools and code first, then wrap with AI assistance. Code is:
+- Testable
+- Versioned
+- Deterministic
+- Shareable
+
+* Version Control
+
+Skills are tracked in the home repository:
+
+#+begin_src bash
+cd ~/src/home
+git add dots/.claude/
+git commit -m "feat: Update Claude AI skills"
+#+end_src
+
+* References
+
+- [[https://github.com/danielmiessler/Personal_AI_Infrastructure][Personal AI Infrastructure]] - Original inspiration
+- [[file:~/src/home/CLAUDE.md][Repository CLAUDE.md]] - Repository-specific Claude instructions
+- [[file:~/desktop/org/notes/20251203T151822--personal-ai-infrastructure-implementation-plan__ai_claude_infrastructure_nixos_plan.org][PAI Implementation Plan]] - Planning notes
+
+* Advantages
+
+- *Instant updates*: Edit skills, changes are immediate
+- *No rebuilds*: No NixOS rebuild required
+- *Version controlled*: All skills tracked in git
+- *Portable*: Works across all machines
+- *Iterative*: Easy to refine and experiment
+- *Integrated*: Works with existing Claude Code plugins
