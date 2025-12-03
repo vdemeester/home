@@ -57,6 +57,7 @@
     go-org-readwise
     gh-restart-failed
     arr
+    claude-hooks
   ];
 
 }
