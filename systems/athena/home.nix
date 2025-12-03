@@ -1,6 +1,7 @@
 { lib, ... }:
 {
   imports = [
+    ../../home/common/desktop/passage.nix
     ../../home/common/services/imapfilter.nix
   ];
 
