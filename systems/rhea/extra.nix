@@ -92,6 +92,15 @@
             tls.certResolver = "letsencrypt";
           };
 
+          # Helper function to create a router with middlewares
+          mkRouterWithMiddlewares = name: hosts: middlewares: {
+            rule = lib.concatStringsSep " || " (map (host: "Host(`${host}`)") hosts);
+            service = name;
+            entryPoints = [ "websecure" ];
+            tls.certResolver = "letsencrypt";
+            inherit middlewares;
+          };
+
           # Helper function to create a simple HTTP service
           mkService = url: {
             loadBalancer.servers = [ { inherit url; } ];
@@ -188,6 +197,8 @@
               syncthingRouters
               // localRouters
               // {
+                # Override immich router to add large file upload middleware
+                immich = mkRouterWithMiddlewares "immich" [ "immich.sbr.pm" ] [ "immich-buffering" ];
                 kiwix = mkRouter "kiwix" [ "kiwix.sbr.pm" ];
                 n8n = mkRouter "n8n" [ "n8n.sbr.pm" ];
                 paperless = mkRouter "paperless" [ "paperless.sbr.pm" ];
@@ -202,7 +213,20 @@
                 paperless = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8000";
                 grafana = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3000";
               };
-            middlewares = syncthingMiddlewares // syncthingAddSlashMiddlewares;
+            middlewares =
+              syncthingMiddlewares
+              // syncthingAddSlashMiddlewares
+              // {
+                # Middleware for handling large file uploads (Immich)
+                immich-buffering = {
+                  buffering = {
+                    maxRequestBodyBytes = 0; # No limit
+                    memRequestBodyBytes = 104857600; # 100MB in memory
+                    maxResponseBodyBytes = 0; # No limit
+                    memResponseBodyBytes = 104857600; # 100MB in memory
+                  };
+                };
+              };
           };
           tcp = {
             routers = {
