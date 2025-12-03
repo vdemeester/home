@@ -1,0 +1,38 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun /home/vincent/.claude/hooks/initialize-session.ts"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun /home/vincent/.claude/hooks/capture-tool-output.ts"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "bug-hunter@chmouel-cc-plugins": true,
+    "deslop@chmouel-cc-plugins": true,
+    "jira-ticket@chmouel-cc-plugins": true,
+    "codereview@chmouel-cc-plugins": true,
+    "git-commit@vdemeester-claude-code-plugins": true,
+    "weekly-review@vdemeester-claude-code-plugins": true,
+    "commit-commands@claude-code-plugins": true,
+    "plugin-dev@claude-code-plugins": true,
+    "feature-dev@claude-code-plugins": true,
+    "hookify@claude-code-plugins": true,
+    "gh-tools@vdemeester-claude-code-plugins": true
+  },
+  "alwaysThinkingEnabled": false
+}

@@ -28,6 +28,9 @@ claude-agents : ~/.claude/agents
 all += claude-hooks
 claude-hooks : ~/.claude/hooks
 
+all += claude-settings
+claude-settings : ~/.claude/settings.json
+
 # Example: Override default rule to generate content instead of copying
 # Uncomment and customize this pattern for files that should be generated:
 #
