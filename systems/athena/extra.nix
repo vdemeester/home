@@ -58,6 +58,20 @@
           '';
         };
       };
+      virtualHosts."home.athena.sbr.pm" = {
+        listen = [
+          {
+            addr = "0.0.0.0";
+            port = 8080;
+          }
+        ];
+        locations."/" = {
+          root = "${pkgs.homepage}";
+          extraConfig = ''
+            index index.html;
+          '';
+        };
+      };
     };
   };
 }

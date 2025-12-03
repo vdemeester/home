@@ -61,21 +61,18 @@ let
   ) globals.machines;
 
   # Generate syncthing service entries
-  syncthingServices =
-    [
-      {
-        name = "Syncthing (Overview)";
-        url = "https://syncthing.sbr.pm";
-        description = "File synchronization overview";
-      }
-    ]
-    ++ (lib.mapAttrsToList (
-      name: _machine: {
-        name = "Syncthing (${name})";
-        url = "https://syncthing.sbr.pm/${name}";
-        description = "Syncthing on ${name}";
-      }
-    ) syncthingMachines);
+  syncthingServices = [
+    {
+      name = "Syncthing (Overview)";
+      url = "https://syncthing.sbr.pm";
+      description = "File synchronization overview";
+    }
+  ]
+  ++ (lib.mapAttrsToList (name: _machine: {
+    name = "Syncthing (${name})";
+    url = "https://syncthing.sbr.pm/${name}";
+    description = "Syncthing on ${name}";
+  }) syncthingMachines);
 
   # Generate service entries from service list
   mkServiceEntry =
@@ -84,7 +81,8 @@ let
       # Capitalize first letter
       capitalize = str: (lib.toUpper (lib.substring 0 1 str)) + (lib.substring 1 (-1) str);
       displayName = capitalize serviceName;
-      description = category.descriptions.${serviceName} or "Service on ${globals.services.${serviceName}.host}";
+      description =
+        category.descriptions.${serviceName} or "Service on ${globals.services.${serviceName}.host}";
     in
     {
       name = displayName;
@@ -93,29 +91,24 @@ let
     };
 
   # Generate all service entries for a category
-  mkCategoryServices = category: map (serviceName: mkServiceEntry category serviceName) category.services;
+  mkCategoryServices =
+    category: map (serviceName: mkServiceEntry category serviceName) category.services;
 
   # Generate service list HTML
   mkServiceList =
     services:
-    lib.concatMapStringsSep "\n" (
-      service: ''
-        <div class="service-card">
-          <h3><a href="${service.url}">${service.name}</a></h3>
-          <p>${service.description}</p>
-        </div>
-      ''
-    ) services;
+    lib.concatMapStringsSep "\n" (service: ''
+      <div class="service-card">
+        <h3><a href="${service.url}">${service.name}</a></h3>
+        <p>${service.description}</p>
+      </div>
+    '') services;
 
   # Generate category section HTML
   mkCategorySection =
     categoryId: category:
     let
-      services =
-        if categoryId == "sync" then
-          syncthingServices
-        else
-          mkCategoryServices category;
+      services = if categoryId == "sync" then syncthingServices else mkCategoryServices category;
     in
     ''
       <section class="category">
@@ -236,11 +229,9 @@ let
 
         ${mkCategorySection "media" serviceCategories.media}
         ${mkCategorySection "downloads" serviceCategories.downloads}
-        ${
-          mkCategorySection "sync" {
-            title = "File Synchronization";
-          }
-        }
+        ${mkCategorySection "sync" {
+          title = "File Synchronization";
+        }}
         ${mkCategorySection "utilities" serviceCategories.utilities}
       </div>
     </body>

@@ -192,7 +192,7 @@
             lib.nameValuePair "syncthing-${name}-addslash" {
               redirectRegex = {
                 regex = "^(https?://[^/]+/${name})$";
-                replacement = "$${1}/";
+                replacement = "$$1/";
                 permanent = true;
               };
             }
@@ -206,6 +206,7 @@
               // {
                 # Override immich router to add large file upload middleware
                 immich = mkRouterWithMiddlewares "immich" [ "immich.sbr.pm" ] [ "immich-buffering" ];
+                home = mkRouter "home" [ "home.sbr.pm" ];
                 kiwix = mkRouter "kiwix" [ "kiwix.sbr.pm" ];
                 n8n = mkRouter "n8n" [ "n8n.sbr.pm" ];
                 paperless = mkRouter "paperless" [ "paperless.sbr.pm" ];
@@ -215,6 +216,7 @@
               syncthingServices
               // localHttpServices
               // {
+                home = mkService "http://${builtins.head globals.machines.athena.net.ips}:8080";
                 kiwix = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8080";
                 n8n = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:5678";
                 paperless = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8000";

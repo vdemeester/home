@@ -1,7 +1,15 @@
 { inputs, ... }:
+let
+  globals = import ../globals.nix { };
+in
 {
   # FIXME: migrate to pkgs and overlays on root
-  additions = final: _prev: import ../pkgs { pkgs = final; };
+  additions =
+    final: _prev:
+    import ../pkgs {
+      pkgs = final;
+      inherit globals;
+    };
   modifications = final: prev: {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
