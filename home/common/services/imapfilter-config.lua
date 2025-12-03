@@ -25,8 +25,8 @@ messages = account['INBOX']:select_all()
 
 -- Example 1: Move GitHub notifications to a GitHub folder
 -- Uncomment and customize as needed
--- github = messages:contain_from('notifications@github.com')
--- github:move_messages(account['GitHub'])
+github = messages:contain_from('notifications@github.com')
+github:move_messages(account['GitHub'])
 
 -- Example 2: Move mailing list emails
 -- Uncomment and customize as needed
