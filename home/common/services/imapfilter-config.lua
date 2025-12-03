@@ -38,5 +38,51 @@ github:move_messages(account['GitHub'])
 -- spam = messages:contain_subject('[SPAM]')
 -- spam:move_messages(account['Junk'])
 
--- Add your custom Lua rules below:
--- TODO: Add custom filtering rules here
+----------
+-- Helper Functions
+----------
+
+-- Filter messages from a list of senders
+-- @param messages: message set to filter
+-- @param senders: table/list of email addresses
+-- @param action: 'archive' or 'delete'
+-- @param archive_folder: folder name for archiving (optional, defaults to 'Archives')
+function filter_by_senders(messages, senders, action, archive_folder)
+  archive_folder = archive_folder or 'Archives'
+  local results = Set {}
+
+  for _, sender in ipairs(senders) do
+    results = results + messages:contain_from(sender)
+  end
+
+  if action == 'delete' then
+    results:delete_messages()
+  elseif action == 'archive' then
+    results:move_messages(account[archive_folder])
+  else
+    print("Unknown action: " .. action .. ". Use 'archive' or 'delete'")
+  end
+
+  return results
+end
+
+----------
+-- Marketing Email Filters
+----------
+
+-- List of marketing senders to archive
+local to_archive = {
+  -- Add your marketing email addresses here
+  -- 'newsletter@example.com',
+  -- 'marketing@company.com',
+}
+
+-- List of marketing senders to delete
+local to_delete = {
+  -- Add email addresses to delete here
+  -- 'spam@example.com',
+}
+
+-- Apply filters (uncomment to enable)
+-- filter_by_senders(messages, to_archive, 'archive')
+-- filter_by_senders(messages, to_delete, 'delete')
