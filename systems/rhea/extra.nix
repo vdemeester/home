@@ -55,6 +55,13 @@
           };
           websecure = {
             address = ":443";
+            transport = {
+              respondingTimeouts = {
+                readTimeout = "600s"; # 10 minutes for large uploads
+                writeTimeout = "600s";
+                idleTimeout = "600s";
+              };
+            };
           };
           mqtt = {
             address = ":1883";
@@ -224,6 +231,7 @@
                     memRequestBodyBytes = 104857600; # 100MB in memory
                     maxResponseBodyBytes = 0; # No limit
                     memResponseBodyBytes = 104857600; # 100MB in memory
+                    retryExpression = "IsNetworkError() && Attempts() < 2";
                   };
                 };
               };
