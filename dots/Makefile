@@ -22,6 +22,9 @@ niri : ~/.config/niri/config.kdl
 all += claude-skills
 claude-skills : ~/.claude/skills
 
+all += claude-agents
+claude-agents : ~/.claude/agents
+
 # Example: Override default rule to generate content instead of copying
 # Uncomment and customize this pattern for files that should be generated:
 #
