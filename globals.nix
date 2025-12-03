@@ -31,10 +31,6 @@ _: {
       id = "wpiah-ydwwx";
       path = "/home/vincent/desktop/pictures/wallpapers";
     };
-    photos = {
-      id = "uetya-ypa3d";
-      path = "/home/vincent/desktop/pictures/photos";
-    };
     music = {
       id = "kcyrf-mugzt";
       path = "/home/vincent/desktop/music";
@@ -393,10 +389,6 @@ _: {
           sync = { };
           screenshots = { };
           wallpapers = { };
-          photos = {
-            path = "/neo/pictures/photos";
-            #   paused = true; # TODO: implement this, start as paused
-          };
           music = {
             path = "/neo/music";
             #   paused = true; # TODO: implement this, start as paused
