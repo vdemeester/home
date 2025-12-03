@@ -193,6 +193,7 @@ def run(
     all_playlists: bool,
     match_threshold: float,
     public: bool,
+    skip_existing: bool,
     dry_run: bool,
     no_confirm: bool,
     debug: bool = False,
@@ -315,6 +316,15 @@ def run(
             # Check if playlist already exists in Jellyfin
             normalized_name = normalize_string(playlist_name)
             existing_playlist = existing_playlist_map.get(normalized_name)
+
+            # Skip if playlist exists and skip_existing flag is set
+            if existing_playlist and skip_existing:
+                print(
+                    f"  ⚠ Playlist '{playlist_name}' already exists "
+                    "in Jellyfin, skipping (--skip-existing enabled)..."
+                )
+                playlists_skipped += 1
+                continue
 
             # Get tracks
             tracks = spotify.get_playlist_tracks(playlist_id)

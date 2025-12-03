@@ -302,10 +302,11 @@ def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, 
 @click.option("--all", "--all-playlists", "all_playlists", is_flag=True, help="Sync all user playlists (requires --spotify-username)")
 @click.option("--match-threshold", default=0.6, type=float, help="Minimum confidence score for track matching (0.0-1.0)")
 @click.option("--public", is_flag=True, help="Make created playlists public")
+@click.option("--skip-existing", is_flag=True, help="Skip playlists that already exist in Jellyfin")
 @click.option("--dry-run", is_flag=True, help="Show what would be created without making changes")
 @click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
 @click.option("--debug", is_flag=True, help="Show debug output for troubleshooting")
-def jellyfin_sync_spotify(url, api_token, user_id, spotify_client_id, spotify_client_secret, spotify_username, playlist_ids, all_playlists, match_threshold, public, dry_run, no_confirm, debug):
+def jellyfin_sync_spotify(url, api_token, user_id, spotify_client_id, spotify_client_secret, spotify_username, playlist_ids, all_playlists, match_threshold, public, skip_existing, dry_run, no_confirm, debug):
     """Sync Spotify playlists to Jellyfin.
 
     Fetches tracks from Spotify playlists and creates matching playlists in Jellyfin.
@@ -347,6 +348,9 @@ def jellyfin_sync_spotify(url, api_token, user_id, spotify_client_id, spotify_cl
 
         # Make playlists public
         arr jellyfin sync-spotify -u username --public
+
+        # Skip playlists that already exist (don't update them)
+        arr jellyfin sync-spotify -u username --skip-existing
     """
     from commands import jellyfin_sync_spotify
     jellyfin_sync_spotify.run(
@@ -360,6 +364,7 @@ def jellyfin_sync_spotify(url, api_token, user_id, spotify_client_id, spotify_cl
         all_playlists,
         match_threshold,
         public,
+        skip_existing,
         dry_run,
         no_confirm,
         debug
