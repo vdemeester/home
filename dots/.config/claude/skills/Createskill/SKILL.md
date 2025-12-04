@@ -13,7 +13,7 @@ Systematic skill creation framework for building consistent, well-structured Cla
 - User wants to create a new skill
 - User asks to validate, update, or fix an existing skill
 - User mentions skill structure, compliance, or canonicalization
-- User is working in `/home/vincent/.claude/skills/` directory
+- User is working in `/home/vincent/.config/claude/skills/` directory
 - User asks about skill creation best practices or framework
 
 ## TitleCase Naming Convention
@@ -25,7 +25,7 @@ Systematic skill creation framework for building consistent, well-structured Cla
 | Skill directory | TitleCase | `Golang`, `Homelab`, `Createskill` |
 | Workflow files | TitleCase.md | `Create.md`, `UpdateInfo.md` |
 | Reference docs | TitleCase.md | `Guide.md`, `Reference.md` |
-| Tool files | TitleCase.ts | `ManageTool.ts` |
+| Tool files | TitleCase.sh | `ManageTool.sh` |
 
 **Wrong (NEVER use):**
 - `createskill`, `create-skill`, `CREATE_SKILL`
@@ -121,6 +121,28 @@ User: "Validate the golang skill"
 - Name workflows with clear action verbs (Create, Update, Validate)
 - Keep workflows focused on single tasks
 - Use TitleCase.md naming
+
+### Tools
+- **Prefer shell scripts** for tools (simplicity, portability)
+- **Use Python** only when complexity requires it (complex parsing, data structures)
+- **Avoid TypeScript** - not preferred for skill tools
+- Name tools with TitleCase.sh or TitleCase.py
+- Keep tools focused and single-purpose
+
+**Dependency Management:**
+- **For shell scripts with dependencies:** Use `nix-shell` shebang for maximum portability
+  ```bash
+  #!/usr/bin/env nix-shell
+  #! nix-shell -i bash -p jq curl
+  ```
+- **For Python scripts with dependencies:** Use `uv` shebang for isolated environments
+  ```python
+  #!/usr/bin/env -S uv run --quiet --script
+  # /// script
+  # dependencies = ["requests", "click"]
+  # ///
+  ```
+- This makes scripts portable without requiring global installation of dependencies
 
 ### Examples
 - Provide at least one concrete example
