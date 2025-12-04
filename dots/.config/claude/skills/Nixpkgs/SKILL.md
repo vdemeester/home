@@ -15,6 +15,22 @@ Expert guidance for contributing to the NixOS/nixpkgs repository, reviewing pull
 - Current directory path contains `github.com/NixOS/nixpkgs` or `~/src/nixpkgs`
 - User explicitly mentions nixpkgs-review, nix-update, or nixpkgs contribution
 
+## Workflow Routing
+
+When the user's request matches specific nixpkgs operations, route to the appropriate workflow:
+
+| Workflow | Trigger | File |
+|----------|---------|------|
+| **Review** | "review pr", "nixpkgs-review", "review pull request", "test pr" | `workflows/Review.md` |
+| **Add Package** | "add package", "new package", "init package", "create package" | `workflows/AddPackage.md` |
+| **Update Package** | "update package", "bump version", "upgrade package", "nix-update" | `workflows/UpdatePackage.md` |
+| **Fix Package** | "fix package", "broken package", "build failing", "package doesn't work" | `workflows/FixPackage.md` |
+
+**When to use workflows:**
+- Route when the user explicitly asks about one of these operations
+- Workflows provide comprehensive, step-by-step guidance for nixpkgs contributions
+- For general nixpkgs questions or tool usage, continue with this main skill
+
 ## Quick Reference
 
 ### Review PR
