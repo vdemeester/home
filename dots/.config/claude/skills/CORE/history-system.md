@@ -36,7 +36,7 @@ Denote notes use **Org-mode** (`.org`) format:
 
 ### History Directory
 ```
-~/.claude/history/
+~/.config/claude/history/
 ├── sessions/                 # Work session summaries
 │   └── YYYY-MM/
 │       └── YYYY-MM-DD-HHMMSS_SESSION_description.md
@@ -82,7 +82,7 @@ All history-related notes in the denote system use the `:history:` tag, plus cat
 ### Bidirectional Links
 
 **From History to Notes**:
-History entries in `~/.claude/history/` can reference notes (using markdown links):
+History entries in `~/.config/claude/history/` can reference notes (using markdown links):
 ```markdown
 ## Related Notes
 - [PAI Implementation](~/desktop/org/notes/20251203T151822--personal-ai-infrastructure__ai_claude.org)
@@ -92,7 +92,7 @@ History entries in `~/.claude/history/` can reference notes (using markdown link
 Notes can reference history entries:
 ```org
 * Related History
-- [[file:~/.claude/history/sessions/2025-12/2025-12-03-151822_SESSION_claude-skills-implementation.md][Implementation Session]]
+- [[file:~/.config/claude/history/sessions/2025-12/2025-12-03-151822_SESSION_claude-skills-implementation.md][Implementation Session]]
 ```
 
 ## Capture Workflows
@@ -264,8 +264,8 @@ Brief context of what this documents
 Main content...
 
 * Related History Entries
-- [[file:~/.claude/history/sessions/...][Session Entry]]
-- [[file:~/.claude/history/learnings/...][Learning Entry]]
+- [[file:~/.config/claude/history/sessions/...][Session Entry]]
+- [[file:~/.config/claude/history/learnings/...][Learning Entry]]
 
 * Related Notes
 - [[file:~/desktop/org/notes/...][Other Note]]
@@ -281,7 +281,7 @@ Main content...
 2. **After fixing**: Create learning entry
    ```bash
    # Create learning in history
-   vim ~/.claude/history/learnings/2025-12/2025-12-03-160000_LEARNING_wireguard-connection-issue.md
+   vim ~/.config/claude/history/learnings/2025-12/2025-12-03-160000_LEARNING_wireguard-connection-issue.md
    ```
 3. **Optionally**: Create denote note for reference (with pkai signature)
    ```bash
@@ -298,8 +298,8 @@ Main content...
 1. **Research the topic**: Gather information
 2. **Create research entry**:
    ```bash
-   mkdir -p ~/.claude/history/research/2025-12-03_nix-flake-best-practices
-   vim ~/.claude/history/research/2025-12-03_nix-flake-best-practices/analysis.md
+   mkdir -p ~/.config/claude/history/research/2025-12-03_nix-flake-best-practices
+   vim ~/.config/claude/history/research/2025-12-03_nix-flake-best-practices/analysis.md
    ```
 3. **Create denote note** for easy discovery (with pkai signature):
    ```bash
@@ -313,7 +313,7 @@ Main content...
 1. **Work on implementation**
 2. **After completion**, create session entry:
    ```bash
-   vim ~/.claude/history/sessions/2025-12/2025-12-03-150000_SESSION_claude-skills-implementation.md
+   vim ~/.config/claude/history/sessions/2025-12/2025-12-03-150000_SESSION_claude-skills-implementation.md
    ```
 3. **Update planning note** with completion status:
    ```bash
@@ -339,25 +339,25 @@ ls ~/desktop/org/notes/*==pkai*__history_session*.org
 ### By Category in History Directory
 ```bash
 # Find all sessions
-ls ~/.claude/history/sessions/*/*_SESSION_*.md
+ls ~/.config/claude/history/sessions/*/*_SESSION_*.md
 
 # Find all learnings
-ls ~/.claude/history/learnings/*/*_LEARNING_*.md
+ls ~/.config/claude/history/learnings/*/*_LEARNING_*.md
 
 # Find recent research
-ls -lt ~/.claude/history/research/
+ls -lt ~/.config/claude/history/research/
 ```
 
 ### By Content
 ```bash
 # Search all history
-rg "wireguard" ~/.claude/history/
+rg "wireguard" ~/.config/claude/history/
 
 # Search history notes
 rg "wireguard" ~/desktop/org/notes/*__history*.org
 
 # Combined search
-rg "wireguard" ~/.claude/history/ ~/desktop/org/notes/*__history*.org
+rg "wireguard" ~/.config/claude/history/ ~/desktop/org/notes/*__history*.org
 ```
 
 ## When to Use History vs Notes
@@ -400,7 +400,7 @@ rg "wireguard" ~/.claude/history/ ~/desktop/org/notes/*__history*.org
 - Use org-mode file links for portability
 
 ### Organization
-- Keep history in `~/.claude/history/` (chronological)
+- Keep history in `~/.config/claude/history/` (chronological)
 - Keep notes in `~/desktop/org/notes/` (topical)
 - Use tags consistently in both systems
 
@@ -433,16 +433,16 @@ rg "wireguard" ~/.claude/history/ ~/desktop/org/notes/*__history*.org
 ```bash
 DATE=$(date +"%Y-%m")
 TIMESTAMP=$(date +"%Y-%m-%d-%H%M%S")
-mkdir -p ~/.claude/history/sessions/$DATE
-vim ~/.claude/history/sessions/$DATE/${TIMESTAMP}_SESSION_description.md
+mkdir -p ~/.config/claude/history/sessions/$DATE
+vim ~/.config/claude/history/sessions/$DATE/${TIMESTAMP}_SESSION_description.md
 ```
 
 ### Create Learning Entry
 ```bash
 DATE=$(date +"%Y-%m")
 TIMESTAMP=$(date +"%Y-%m-%d-%H%M%S")
-mkdir -p ~/.claude/history/learnings/$DATE
-vim ~/.claude/history/learnings/$DATE/${TIMESTAMP}_LEARNING_description.md
+mkdir -p ~/.config/claude/history/learnings/$DATE
+vim ~/.config/claude/history/learnings/$DATE/${TIMESTAMP}_LEARNING_description.md
 ```
 
 ### Create History Note (with pkai signature)

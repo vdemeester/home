@@ -12,7 +12,7 @@ Migrated from TypeScript/Bun implementation in `dots/.claude/hooks/`.
 **What it does**:
 - Detects and skips subagent sessions
 - Sets terminal tab title to "Claude Ready"
-- Logs session start to `~/.claude/history/sessions/YYYY-MM/YYYY-MM-DD_session-log.txt`
+- Logs session start to `~/.config/claude/history/sessions/YYYY-MM/YYYY-MM-DD_session-log.txt`
 - Implements debouncing to prevent duplicate triggers (2 second window)
 
 ### 2. `claude-hooks-capture-tool-output`
@@ -20,7 +20,7 @@ Migrated from TypeScript/Bun implementation in `dots/.claude/hooks/`.
 
 **What it does**:
 - Captures outputs from interesting tools (Bash, Edit, Write, Read, Task, NotebookEdit, Skill, SlashCommand)
-- Logs to JSONL files: `~/.claude/history/tool-outputs/YYYY-MM/YYYY-MM-DD_tool-outputs.jsonl`
+- Logs to JSONL files: `~/.config/claude/history/tool-outputs/YYYY-MM/YYYY-MM-DD_tool-outputs.jsonl`
 - Silent failure - doesn't disrupt workflow if logging fails
 - Automatically creates directory structure
 
@@ -42,7 +42,7 @@ Migrated from TypeScript/Bun implementation in `dots/.claude/hooks/`.
 - Skips subagent sessions (silent)
 - Displays a message asking if session should be saved
 - Works with `/save-session` slash command for creating session entries
-- Saves to `~/.claude/history/sessions/YYYY-MM/YYYY-MM-DD-HHMMSS_SESSION_description.md`
+- Saves to `~/.config/claude/history/sessions/YYYY-MM/YYYY-MM-DD-HHMMSS_SESSION_description.md`
 
 ## Architecture
 
@@ -222,13 +222,13 @@ The old TypeScript hooks in `dots/.claude/hooks/` can be removed after verifying
 - Verify hooks are executable: `ls -la $(which claude-hooks-initialize-session)`
 
 **Permission errors:**
-- Ensure directories exist: `mkdir -p ~/.claude/history/{sessions,tool-outputs}`
-- Check write permissions on `~/.claude/history`
+- Ensure directories exist: `mkdir -p ~/.config/claude/history/{sessions,tool-outputs}`
+- Check write permissions on `~/.config/claude/history`
 
 **Debugging:**
 - Hooks write errors to stderr - check terminal output
 - Run hooks manually to test: `claude-hooks-initialize-session`
-- Check log files: `ls -la ~/.claude/history/`
+- Check log files: `ls -la ~/.config/claude/history/`
 
 **Build errors:**
 - Run `go mod tidy` to update dependencies
@@ -237,7 +237,7 @@ The old TypeScript hooks in `dots/.claude/hooks/` can be removed after verifying
 
 ## Environment Variables
 
-- `CLAUDE_DIR` - Override default `~/.claude` directory (optional)
+- `CLAUDE_DIR` - Override default `~/.config/claude` directory (optional)
 - `CLAUDE_PROJECT_DIR` - Set by Claude Code (used for subagent detection)
 - `CLAUDE_AGENT_TYPE` - Set by Claude Code for subagents (used for detection)
 

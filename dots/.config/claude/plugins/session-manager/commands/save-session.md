@@ -4,7 +4,7 @@ description: Save a summary of the current Claude Code session to history
 
 # Save Session
 
-Create a comprehensive session summary following the history-system format and save it to `~/.claude/history/sessions/`.
+Create a comprehensive session summary following the history-system format and save it to `~/.config/claude/history/sessions/`.
 
 ## Important Guidelines
 
@@ -31,7 +31,7 @@ Create a session entry file with:
 
 **Filename format**: `YYYY-MM-DD-HHMMSS_SESSION_description.md`
 
-**Location**: `~/.claude/history/sessions/YYYY-MM/`
+**Location**: `~/.config/claude/history/sessions/YYYY-MM/`
 
 **Template**:
 ```markdown
@@ -68,7 +68,7 @@ Create a session entry file with:
 
 Use the Write tool to save the session entry to:
 ```
-~/.claude/history/sessions/YYYY-MM/YYYY-MM-DD-HHMMSS_SESSION_description.md
+~/.config/claude/history/sessions/YYYY-MM/YYYY-MM-DD-HHMMSS_SESSION_description.md
 ```
 
 Replace:
@@ -80,7 +80,7 @@ Replace:
 
 After saving, inform the user:
 ```
-✅ Session saved to: ~/.claude/history/sessions/YYYY-MM/YYYY-MM-DD-HHMMSS_SESSION_description.md
+✅ Session saved to: ~/.config/claude/history/sessions/YYYY-MM/YYYY-MM-DD-HHMMSS_SESSION_description.md
 
 Summary:
 - X tasks completed
@@ -104,7 +104,7 @@ Summary:
 - Added claude-history folder to globals.nix syncthingFolders
 - Generated syncthing folder ID (j5zdn-6kq4t)
 - Configured claude-history sync for kyushu and aomi
-- Path: /home/vincent/.claude/history
+- Path: /home/vincent/.config/claude/history
 
 ## Decisions Made
 - **Syncthing ID format**: Used random 5-char strings (xxxxx-xxxxx) following existing pattern
@@ -112,7 +112,7 @@ Summary:
 
 ## Technical Details
 - Syncthing folder ID: j5zdn-6kq4t
-- Path: /home/vincent/.claude/history
+- Path: /home/vincent/.config/claude/history
 - Synced machines: kyushu (SBLRZF4-...), aomi (CN5P3MV-...)
 
 ## Next Steps

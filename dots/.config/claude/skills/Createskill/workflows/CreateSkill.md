@@ -20,12 +20,12 @@ Ask the user:
 ### 3. Create Directory Structure
 
 ```bash
-mkdir -p ~/.claude/skills/[SkillName]/{workflows,tools}
+mkdir -p ~/.config/claude/skills/[SkillName]/{workflows,tools}
 ```
 
 ### 4. Create SKILL.md
 
-Create `~/.claude/skills/[SkillName]/SKILL.md` with:
+Create `~/.config/claude/skills/[SkillName]/SKILL.md` with:
 
 ```yaml
 ---
@@ -76,7 +76,7 @@ Show the created structure and ask for confirmation or adjustments.
 Created skill: [SkillName]
 
 Structure:
-~/.claude/skills/[SkillName]/
+~/.config/claude/skills/[SkillName]/
 ├── SKILL.md
 ├── workflows/
 │   └── [WorkflowName].md

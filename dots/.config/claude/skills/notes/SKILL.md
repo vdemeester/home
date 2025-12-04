@@ -116,7 +116,7 @@ Additional content...
 - `:history:decision:` - Architecture and design decisions
 - `:history:execution:` - Command execution logs
 
-**Note**: History-tagged notes are interconnected with `~/.claude/history/` entries. See the history-system skill for details.
+**Note**: History-tagged notes are interconnected with `~/.config/claude/history/` entries. See the history-system skill for details.
 
 ## Creating Notes
 
@@ -410,8 +410,8 @@ What this documents
 Main content
 
 * Related History Entries
-- [[file:~/.claude/history/sessions/2025-12/...][Session Entry]]
-- [[file:~/.claude/history/learnings/2025-12/...][Learning Entry]]
+- [[file:~/.config/claude/history/sessions/2025-12/...][Session Entry]]
+- [[file:~/.config/claude/history/learnings/2025-12/...][Learning Entry]]
 
 * Related Notes
 - [[file:~/desktop/org/notes/...][Other Note]]
@@ -442,7 +442,7 @@ rg "topic" ~/desktop/org/notes/*==pkai*.org
 **From Notes to History**:
 ```org
 * Related History
-- [[file:~/.claude/history/sessions/2025-12/2025-12-03-150000_SESSION_implementation.md][Implementation Session]]
+- [[file:~/.config/claude/history/sessions/2025-12/2025-12-03-150000_SESSION_implementation.md][Implementation Session]]
 ```
 
 **From History to Notes**:

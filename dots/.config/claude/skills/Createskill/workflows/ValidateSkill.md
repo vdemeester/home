@@ -6,7 +6,7 @@ Validate a skill's structure, naming, and compliance with conventions.
 
 ### 1. Read the Skill File
 
-Read `~/.claude/skills/[SkillName]/SKILL.md`
+Read `~/.config/claude/skills/[SkillName]/SKILL.md`
 
 ### 2. Check Directory Naming
 

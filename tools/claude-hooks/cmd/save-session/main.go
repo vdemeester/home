@@ -31,7 +31,7 @@ func main() {
 	fmt.Println("")
 	fmt.Println("**Session ending**. Would you like me to save a summary of this session to your history?")
 	fmt.Println("")
-	fmt.Println("I can create a session entry in `~/.claude/history/sessions/` documenting:")
+	fmt.Println("I can create a session entry in `~/.config/claude/history/sessions/` documenting:")
 	fmt.Println("- What was accomplished")
 	fmt.Println("- Decisions made")
 	fmt.Println("- Next steps")
