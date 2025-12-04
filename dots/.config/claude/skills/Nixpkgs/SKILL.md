@@ -1,15 +1,21 @@
-# Nixpkgs Workflow
+---
+name: Nixpkgs
+description: Contributing to NixOS/nixpkgs repository. USE WHEN in nixpkgs repository (git remote contains NixOS/nixpkgs OR path contains github.com/NixOS/nixpkgs), reviewing PRs, updating packages, or contributing to nixpkgs.
+---
 
-Work with the NixOS/nixpkgs repository: review PRs, update packages, and contribute.
+# Nixpkgs Contribution Guide
 
-## When to Use
+## Purpose
+Expert guidance for contributing to the NixOS/nixpkgs repository, reviewing pull requests, and maintaining packages.
 
-- "review nixpkgs pr"
-- "update nixpkgs package"
-- "nixpkgs contribution"
-- "nixpkgs-review"
+## Context Detection
 
-## Quick Commands
+**This skill activates when:**
+- Git remote URL contains `NixOS/nixpkgs` or `nixos/nixpkgs`
+- Current directory path contains `github.com/NixOS/nixpkgs` or `~/src/nixpkgs`
+- User explicitly mentions nixpkgs-review, nix-update, or nixpkgs contribution
+
+## Quick Reference
 
 ### Review PR
 ```bash
@@ -225,7 +231,7 @@ nix-update --version=branch=main package-name
 ### Update Source Types
 ```bash
 # PyPI package
-nix-update python-package
+nix-update python3Packages.package-name
 
 # GitHub release
 nix-update github-package
@@ -315,7 +321,7 @@ git push -u origin fix/package-name-issue
 gh pr create
 ```
 
-## nixpkgs-review Best Practices
+## Review Best Practices
 
 ### Review Workflow
 ```bash
@@ -366,7 +372,7 @@ nixpkgs-review pr 12345 -p new-package
 
 # Check:
 # - Package name follows conventions
-# - In correct category
+# - In correct category (pkgs/by-name/)
 # - Meta attributes complete
 # - License specified
 # - Maintainers added
@@ -414,6 +420,40 @@ nix-update haskellPackages.package-name
 nixpkgs-review pr 12345 -p nodePackages.package-name
 ```
 
+## Commit Message Format
+
+### Version Updates
+```
+package-name: 1.0.0 -> 1.1.0
+```
+
+### New Packages
+```
+package-name: init at 1.0.0
+```
+
+### Fixes
+```
+package-name: fix build on aarch64-linux
+```
+
+### Multi-Package Updates
+```
+pythonPackages: update multiple packages
+
+- package1: 1.0 -> 1.1
+- package2: 2.0 -> 2.1
+```
+
+### Breaking Changes
+```
+package-name: 1.0.0 -> 2.0.0
+
+Breaking changes:
+- API changed from X to Y
+- Configuration format updated
+```
+
 ## Advanced nixpkgs-review
 
 ### Remote Builders
@@ -444,6 +484,33 @@ for pr in 12345 12346 12347; do
   nixpkgs-review pr $pr --no-shell --post-result
 done
 ```
+
+## Package Organization
+
+### pkgs/by-name Structure
+```
+pkgs/by-name/
+  he/hello/package.nix       # Packages starting with "he"
+  fi/firefox/package.nix     # Packages starting with "fi"
+  go/go/package.nix          # Packages starting with "go"
+```
+
+**Rules:**
+- Package name determines directory (first 2 letters)
+- File must be named `package.nix`
+- One package per directory
+- Automatically included in all-packages.nix
+
+### Traditional Structure
+```
+pkgs/
+  applications/
+  development/
+  servers/
+  tools/
+```
+
+Use for packages not yet migrated to `by-name`.
 
 ## Troubleshooting
 
@@ -477,39 +544,6 @@ nixpkgs-review pr 12345 --show-trace
 nix-instantiate --parse default.nix
 ```
 
-## Resources
-
-- [nixpkgs-review](https://github.com/Mic92/nixpkgs-review)
-- [nix-update](https://github.com/Mic92/nix-update)
-- [nixpkgs Contributing Guide](https://github.com/NixOS/nixpkgs/blob/master/CONTRIBUTING.md)
-- [Reviewing Contributions](https://ryantm.github.io/nixpkgs/contributing/reviewing-contributions/)
-- [Nixpkgs Manual](https://nixos.org/manual/nixpkgs/stable/)
-
-## Commit Message Format
-
-### Version Updates
-```
-package-name: 1.0.0 -> 1.1.0
-```
-
-### New Packages
-```
-package-name: init at 1.0.0
-```
-
-### Fixes
-```
-package-name: fix build on aarch64-linux
-```
-
-### Multi-Package Updates
-```
-pythonPackages: update multiple packages
-
-- package1: 1.0 -> 1.1
-- package2: 2.0 -> 2.1
-```
-
 ## Tips and Tricks
 
 1. **Use --post-result**: Auto-comment on PRs to help maintainers
@@ -522,3 +556,12 @@ pythonPackages: update multiple packages
 8. **Comment on approach**: Not just build success
 9. **Approve quickly**: Don't block good PRs
 10. **Learn from reviews**: Read other reviewers' comments
+
+## Resources
+
+- [nixpkgs-review](https://github.com/Mic92/nixpkgs-review)
+- [nix-update](https://github.com/Mic92/nix-update)
+- [nixpkgs Contributing Guide](https://github.com/NixOS/nixpkgs/blob/master/CONTRIBUTING.md)
+- [Reviewing Contributions](https://ryantm.github.io/nixpkgs/contributing/reviewing-contributions/)
+- [Nixpkgs Manual](https://nixos.org/manual/nixpkgs/stable/)
+- [Package Naming Conventions](https://nixos.org/manual/nixpkgs/stable/#sec-package-naming)
