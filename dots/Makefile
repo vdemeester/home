@@ -34,6 +34,9 @@ claude-settings : ~/.config/claude/settings.json
 all += claude-plugins
 claude-plugins : ~/.config/claude/plugins/session-manager
 
+all += claude-statusline
+claude-statusline : ~/.config/claude/statusline.sh
+
 all += claude-compat
 claude-compat : ~/.claude
 
