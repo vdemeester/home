@@ -35,6 +35,10 @@ _: {
       id = "kcyrf-mugzt";
       path = "/home/vincent/desktop/music";
     };
+    claude-history = {
+      id = "j5zdn-6kq4t";
+      path = "/home/vincent/.claude/history";
+    };
   };
   net = {
     dns = {
@@ -215,6 +219,7 @@ _: {
           sync = { };
           screenshots = { };
           wallpapers = { };
+          claude-history = { };
           # TODO: implement paused or filter theses
           # photos = {
           #   type = "receiveonly";
@@ -251,6 +256,7 @@ _: {
           sync = { };
           screenshots = { };
           wallpapers = { };
+          claude-history = { };
           # photos = {
           #   type = "receiveonly";
           #   paused = true; # TODO: implement this, start as paused

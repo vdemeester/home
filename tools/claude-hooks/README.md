@@ -34,6 +34,16 @@ Migrated from TypeScript/Bun implementation in `dots/.claude/hooks/`.
 - Exit code 0 if valid, 1 if broken links found
 - Skips external URLs, anchors, and mailto links
 
+### 4. `claude-hooks-save-session`
+**Event**: SessionEnd
+
+**What it does**:
+- Prompts user to save session summary when ending a Claude Code session
+- Skips subagent sessions (silent)
+- Displays a message asking if session should be saved
+- Works with `/save-session` slash command for creating session entries
+- Saves to `~/.claude/history/sessions/YYYY-MM/YYYY-MM-DD-HHMMSS_SESSION_description.md`
+
 ## Architecture
 
 ```
@@ -41,6 +51,7 @@ tools/claude-hooks/
 ├── cmd/
 │   ├── capture-tool-output/main.go   # PostToolUse hook
 │   ├── initialize-session/main.go    # SessionStart hook
+│   ├── save-session/main.go          # SessionEnd hook
 │   └── validate-docs/main.go         # Documentation validator
 ├── internal/
 │   └── paths/paths.go                # Shared path utilities
@@ -100,9 +111,25 @@ tools/claude-hooks/
              }
            ]
          }
+       ],
+       "SessionEnd": [
+         {
+           "hooks": [
+             {
+               "type": "command",
+               "command": "claude-hooks-save-session"
+             }
+           ]
+         }
        ]
      }
    }
+   ```
+
+5. **Enable the session-manager plugin** (for `/save-session` command):
+   ```bash
+   # Symlink the plugin if not already linked
+   ln -s ~/src/home/dots/.claude/plugins/session-manager ~/.claude/plugins/session-manager
    ```
 
 ### Manual Build (without Nix)
@@ -113,6 +140,7 @@ cd tools/claude-hooks
 # Build all hooks
 go build -o bin/claude-hooks-capture-tool-output ./cmd/capture-tool-output
 go build -o bin/claude-hooks-initialize-session ./cmd/initialize-session
+go build -o bin/claude-hooks-save-session ./cmd/save-session
 go build -o bin/claude-hooks-validate-docs ./cmd/validate-docs
 
 # Copy to PATH

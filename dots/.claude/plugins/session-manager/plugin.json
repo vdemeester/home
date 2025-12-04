@@ -1,0 +1,12 @@
+{
+  "name": "session-manager",
+  "version": "1.0.0",
+  "description": "Save and manage Claude Code session summaries",
+  "author": "Vincent Demeester",
+  "commands": [
+    {
+      "name": "save-session",
+      "file": "commands/save-session.md"
+    }
+  ]
+}

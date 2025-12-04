@@ -62,10 +62,23 @@ POST_TOOL_HOOKS=$(cat <<'EOF'
 EOF
 )
 
+SESSION_END_HOOKS=$(cat <<'EOF'
+{
+  "hooks": [
+    {
+      "type": "command",
+      "command": "claude-hooks-save-session"
+    }
+  ]
+}
+EOF
+)
+
 # Use jq to update the settings.json with proper JSON merging
 UPDATED_SETTINGS=$(echo "$CURRENT_SETTINGS" | jq --argjson sessionStart "$NEW_HOOKS" \
     --argjson postTool "$POST_TOOL_HOOKS" \
-    '.hooks.SessionStart = [$sessionStart] | .hooks.PostToolUse = [$postTool]')
+    --argjson sessionEnd "$SESSION_END_HOOKS" \
+    '.hooks.SessionStart = [$sessionStart] | .hooks.PostToolUse = [$postTool] | .hooks.SessionEnd = [$sessionEnd]')
 
 if [[ "$DRY_RUN" == true ]]; then
     echo "=== DRY RUN - No changes made ==="
@@ -81,6 +94,7 @@ else
     echo "Hook binaries configured:"
     echo "  - SessionStart: claude-hooks-initialize-session"
     echo "  - PostToolUse: claude-hooks-capture-tool-output"
+    echo "  - SessionEnd: claude-hooks-save-session"
     echo ""
     echo "Make sure claude-hooks is installed:"
     echo "  nix profile install .#claude-hooks"

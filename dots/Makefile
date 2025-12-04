@@ -31,6 +31,9 @@ claude-hooks : ~/.claude/hooks
 all += claude-settings
 claude-settings : ~/.claude/settings.json
 
+all += claude-plugins
+claude-plugins : ~/.claude/plugins/session-manager
+
 # Example: Override default rule to generate content instead of copying
 # Uncomment and customize this pattern for files that should be generated:
 #
