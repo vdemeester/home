@@ -1,3 +1,8 @@
+---
+name: golang
+description: Go development best practices and patterns. USE WHEN writing Go code, designing Go projects, working with Go tools, testing, or integrating Go with Nix.
+---
+
 # Go Development Best Practices
 
 ## Purpose

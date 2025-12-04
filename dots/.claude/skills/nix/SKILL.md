@@ -1,3 +1,8 @@
+---
+name: nix
+description: Expert guidance on Nix, NixOS, and home-manager best practices. USE WHEN working with Nix expressions, NixOS configuration, home-manager, flakes, or Nix package development.
+---
+
 # Nix Best Practices
 
 ## Purpose

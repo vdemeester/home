@@ -1,3 +1,8 @@
+---
+name: homelab
+description: NixOS homelab infrastructure management for the home repository. USE WHEN working with NixOS systems, home-manager configs, networking, services, or personal infrastructure.
+---
+
 # Homelab Management Skill
 
 ## Purpose

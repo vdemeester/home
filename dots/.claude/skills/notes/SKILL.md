@@ -1,3 +1,8 @@
+---
+name: notes
+description: Note-taking workflow using denote format and org-mode. USE WHEN user wants to create notes, organize knowledge, document learnings, or work with denote/org-mode files.
+---
+
 # Note Writing Workflow
 
 ## Purpose

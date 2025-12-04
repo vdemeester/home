@@ -1,3 +1,8 @@
+---
+name: CORE
+description: Personal AI Infrastructure core principles and operating system. AUTO-LOADS at session start. USE WHEN any session begins OR user asks about identity, response patterns, workflow preferences, or core principles.
+---
+
 # CORE Skill
 
 ## Overview

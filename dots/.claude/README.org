@@ -1,19 +1,22 @@
-#+title: Claude AI Skills Infrastructure
+#+title: Claude Code Infrastructure
 #+author: Vincent Demeester
 #+date: [2025-12-03 Wed]
 
 * Overview
 
-This directory contains the Personal AI Infrastructure (PAI) skills for Claude Code. These skills provide structured context and best practices for various development workflows.
+This directory contains Claude Code infrastructure that is shared across machines and tracked in git. It includes agents, skills, hooks, plugins, and settings for the Personal AI Infrastructure (PAI).
 
 Inspired by [[https://github.com/danielmiessler/Personal_AI_Infrastructure][Daniel Miessler's Personal AI Infrastructure]].
 
 * Directory Structure
 
 #+begin_src
-.claude/
+dots/.claude/
 ├── README.org           # This file
-├── skills/              # AI skills (symlinked to ~/.claude/skills)
+├── agents/              # Specialized AI agents
+├── hooks/               # Event-driven automation hooks
+├── plugins/             # Custom plugins (session-manager, etc.)
+├── skills/              # Modular AI capabilities
 │   ├── CORE/           # Core operating principles
 │   │   ├── CONSTITUTION.md
 │   │   ├── SKILL.md
@@ -23,48 +26,188 @@ Inspired by [[https://github.com/danielmiessler/Personal_AI_Infrastructure][Dani
 │   ├── golang/         # Go development best practices
 │   ├── nix/            # Nix/NixOS best practices
 │   └── notes/          # Note-writing workflow (denote)
-└── history/            # Captured work history (in ~/.claude/)
+└── settings.json        # Shared settings (tracked in git)
+
+~/.claude/
+├── agents/             -> /home/vincent/src/home/dots/.claude/agents/
+├── hooks/              -> /home/vincent/src/home/dots/.claude/hooks/
+├── plugins/            -> /home/vincent/src/home/dots/.claude/plugins/
+├── skills/             -> /home/vincent/src/home/dots/.claude/skills/
+├── settings.json       -> /home/vincent/src/home/dots/.claude/settings.json
+├── settings.local.json # Machine/project-specific (NOT tracked)
+└── history/            # Captured sessions and logs (synced via Syncthing)
     ├── sessions/       # Work session summaries
     ├── learnings/      # Problem-solving insights
     ├── research/       # Deep investigations
     ├── execution/      # Command outputs
-    └── decisions/      # Architecture decisions
+    ├── decisions/      # Architecture decisions
+    └── tool-outputs/   # Captured tool executions (via hooks)
 #+end_src
 
-**Note**: History entries in =~/.claude/history/= are interconnected with denote notes in =~/desktop/org/notes/= using the =:history:= tag.
+**Note**: History entries in =~/.claude/history/= are interconnected with denote notes in =~/desktop/org/notes/= using the =:history:= tag. History is synced across machines via Syncthing.
 
-* Skills
+* Components
 
-** CORE Skills
+** Agents (agents/)
+
+Specialized AI agents with specific expertise:
+- *engineer* - Software engineering and implementation
+- *architect* - Architecture and PRD creation
+- *designer* - UX/UI design and accessibility
+- *claude-researcher* - Web research with WebSearch
+- *researcher* - Comprehensive multi-tool research
+
+See =agents/= for individual agent documentation.
+
+** Skills (skills/)
+
+*** CORE Skills
 The CORE skills auto-load and define fundamental operating principles:
 - *CONSTITUTION.md*: Personal AI philosophy and architectural principles
 - *SKILL.md*: Core behaviors, response patterns, and workflows
 - *prompting.md*: Effective prompting guidelines
+- *history-system.md*: Integration between history capture and denote notes
 
-** Domain-Specific Skills
+*** Domain-Specific Skills
 - *homelab*: Managing NixOS infrastructure in ~/src/home repository
 - *golang*: Go development patterns, testing, and Nix integration
 - *nix*: NixOS/home-manager configuration best practices
 - *notes*: Note-taking in denote format with org-mode
-- *history-system* (in CORE): Integration between history capture and denote notes
+- *Art*: Visual content generation and Mermaid diagrams
+- *Createskill*: Skill creation and validation
 
-* Installation
+See each skill's =SKILL.md= for documentation.
 
-Skills are managed through the dots Makefile:
+** Hooks (hooks/)
+
+Event-driven automation implemented in Go (see =~/src/home/tools/claude-hooks=):
+- *claude-hooks-initialize-session* - SessionStart: Sets terminal title, logs session start
+- *claude-hooks-capture-tool-output* - PostToolUse: Logs tool executions to JSONL
+- *claude-hooks-save-session* - SessionEnd: Prompts to save session summary
+- *claude-hooks-validate-docs* - Manual/Pre-commit: Validates documentation links
+
+See =tools/claude-hooks/README.md= for detailed documentation.
+
+** Plugins (plugins/)
+
+Custom Claude Code plugins:
+- *session-manager*: Provides =/save-session= command for creating session summaries
+
+* Installation and Setup
+
+** Setup on New Machine
+
+To set up Claude Code infrastructure on a new machine:
 
 #+begin_src bash
-# Install/update skills symlink
-cd ~/src/home/dots
-make claude-skills
+# Clone the home repository
+cd ~/src/home
 
-# This creates: ~/.claude/skills -> ~/src/home/dots/.claude/skills
+# Run make to create all symlinks
+cd dots
+make all
+
+# This will link:
+# - ~/.claude/skills/
+# - ~/.claude/agents/
+# - ~/.claude/hooks/
+# - ~/.claude/plugins/
+# - ~/.claude/settings.json
+
+# Optionally create machine-specific settings
+cat > ~/.claude/settings.local.json <<EOF
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)"
+    ]
+  }
+}
+EOF
+#+end_src
+
+** Makefile Targets
+
+#+begin_src bash
+# Link individual components
+make claude-skills     # Link skills
+make claude-agents     # Link agents
+make claude-hooks      # Link hooks
+make claude-plugins    # Link plugins (session-manager, etc.)
+make claude-settings   # Link settings.json
+
+# Link everything
+make all
+#+end_src
+
+* Settings Strategy
+
+** settings.json (Shared)
+
+*Location*: =dots/.claude/settings.json= (symlinked to =~/.claude/settings.json=)
+
+*Purpose*: Shared configuration across all machines
+
+*Contains*:
+- Hook configurations
+- Enabled plugins list
+- General preferences (alwaysThinkingEnabled, etc.)
+- Shared MCP server configs
+
+*Why shared*:
+- Consistent hooks across machines
+- Same plugins enabled everywhere
+- Synchronized preferences
+- Uses absolute paths that are consistent (=/home/vincent/.claude/...=)
+
+** settings.local.json (Machine-Specific)
+
+*Location*: =~/.claude/settings.local.json= or project =.claude/settings.local.json=
+
+*Purpose*: Machine or project-specific overrides
+
+*Contains*:
+- Permissions (project-specific)
+- Machine-specific paths
+- Local environment variables
+- Project-specific plugin configs
+
+*Not tracked in git*: Machine/project-specific configuration
+
+** Settings Precedence
+
+Claude Code merges settings in this order:
+1. =settings.json= (base configuration)
+2. =settings.local.json= (overrides)
+
+Local settings always take precedence over shared settings.
+
+** Permissions
+
+Permissions are intentionally kept in =settings.local.json= because:
+- Different projects need different permissions
+- Security policies may vary by machine
+- Easier to audit per-project permissions
+
+Example project-specific permissions:
+#+begin_src json
+{
+  "permissions": {
+    "allow": [
+      "Bash(make:*)",
+      "Bash(nix:*)",
+      "WebFetch(domain:docs.example.com)"
+    ]
+  }
+}
 #+end_src
 
 * Usage
 
+** Skills
 Skills are automatically available in Claude Code sessions. No special invocation needed - Claude will reference them contextually based on the task.
 
-* Editing Skills
+** Editing Skills
 
 Skills are plain markdown files that can be edited directly:
 
@@ -76,7 +219,7 @@ vim homelab/SKILL.md
 # Changes are immediately available (no rebuild required)
 #+end_src
 
-* Adding New Skills
+** Adding New Skills
 
 1. Create a new directory in =.claude/skills/=
 2. Add a =SKILL.md= file with the skill content
@@ -333,11 +476,58 @@ git commit -m "feat: Update Claude AI skills"
 - [[file:~/src/home/CLAUDE.md][Repository CLAUDE.md]] - Repository-specific Claude instructions
 - [[file:~/desktop/org/notes/20251203T151822--personal-ai-infrastructure-implementation-plan__ai_claude_infrastructure_nixos_plan.org][PAI Implementation Plan]] - Planning notes
 
-* Advantages
+* Benefits of This Approach
 
-- *Instant updates*: Edit skills, changes are immediate
-- *No rebuilds*: No NixOS rebuild required
-- *Version controlled*: All skills tracked in git
-- *Portable*: Works across all machines
-- *Iterative*: Easy to refine and experiment
-- *Integrated*: Works with existing Claude Code plugins
+1. *Consistency*: Same agents, skills, hooks, and plugins everywhere
+2. *Version Control*: Infrastructure tracked in git
+3. *Flexibility*: Machine-specific overrides when needed
+4. *Portability*: Easy to set up on new machines
+5. *Maintainability*: Single source of truth for shared config
+6. *Instant updates*: Edit skills, changes are immediate
+7. *No rebuilds*: No NixOS rebuild required (for skills/agents/plugins)
+8. *Iterative*: Easy to refine and experiment
+
+* Troubleshooting
+
+** Symlinks not working?
+#+begin_src bash
+cd ~/src/home/dots
+make all
+#+end_src
+
+** Settings not loading?
+#+begin_src bash
+# Check symlink
+ls -la ~/.claude/settings.json
+
+# Should point to: /home/vincent/src/home/dots/.claude/settings.json
+#+end_src
+
+** Hooks not running?
+#+begin_src bash
+# Check settings.json has hooks configured
+cat ~/.claude/settings.json | grep -A 10 hooks
+
+# Verify hook binaries are in PATH
+which claude-hooks-initialize-session
+which claude-hooks-capture-tool-output
+which claude-hooks-save-session
+#+end_src
+
+** History not syncing?
+#+begin_src bash
+# Verify Syncthing is running
+systemctl --user status syncthing
+
+# Check if claude-history folder is configured
+# After rebuilding NixOS with updated globals.nix
+#+end_src
+
+* Related Documentation
+
+- *Agents*: See individual agent =.md= files in =agents/=
+- *Skills*: See each skill's =SKILL.md= in =skills/=
+- *Hooks*: See =~/src/home/tools/claude-hooks/README.md=
+- *History System*: See =skills/CORE/history-system.md=
+- *Repository Instructions*: See =~/src/home/CLAUDE.md=
+- *PAI Implementation Plan*: See =~/desktop/org/notes/20251203T151822--personal-ai-infrastructure-implementation-plan__ai_claude_infrastructure_nixos_plan.org=
