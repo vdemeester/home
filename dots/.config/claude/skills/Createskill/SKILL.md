@@ -121,6 +121,6 @@ User: "Validate the golang skill"
 ## Integration
 
 This skill works with your existing skills:
-- References `.claude/skills/` directory structure
+- References `.config/claude/skills/` directory structure
 - Follows patterns from CORE, golang, nix, homelab, notes skills
 - Validates against established conventions
