@@ -8,12 +8,18 @@ description: Expert guidance on Nix, NixOS, and home-manager best practices. USE
 ## Purpose
 Expert guidance on Nix, NixOS, and home-manager following best practices.
 
+## Context Detection
+
+### nixpkgs Repository
+When working in the NixOS/nixpkgs repository (detected by git remote or path like `~/src/github.com/NixOS/nixpkgs`), prefer the Nixpkgs workflow for PR reviews, package updates, and contributions.
+
 ## Workflow Routing
 
 When the user's request matches specific Nix operations, route to the appropriate workflow:
 
 | Workflow | Trigger | File |
 |----------|---------|------|
+| **Nixpkgs** | "review PR", "nixpkgs-review", "nix-update", "contribute to nixpkgs" | `workflows/Nixpkgs.md` |
 | **Build** | "build nix package", "nixos-rebuild build", "compile nix" | `workflows/Build.md` |
 | **Debug** | "debug nix", "nix error", "troubleshoot build", "evaluation error" | `workflows/Debug.md` |
 | **Develop** | "development shell", "nix develop", "devShell", "direnv" | `workflows/Develop.md` |
