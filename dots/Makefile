@@ -22,22 +22,11 @@ niri : ~/.config/niri/config.kdl
 all += claude-skills
 claude-skills : ~/.config/claude/skills
 
-all += claude-agents
+all += claude-agents claude-settings claude-plugins claude-statusline claude-compat
 claude-agents : ~/.config/claude/agents
-
-all += claude-hooks
-claude-hooks : ~/.config/claude/hooks
-
-all += claude-settings
 claude-settings : ~/.config/claude/settings.json
-
-all += claude-plugins
 claude-plugins : ~/.config/claude/plugins/session-manager
-
-all += claude-statusline
 claude-statusline : ~/.config/claude/statusline.sh
-
-all += claude-compat
 claude-compat : ~/.claude
 
 # Backward compatibility: symlink ~/.claude to ~/.config/claude
