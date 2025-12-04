@@ -35,6 +35,18 @@ nixpkgs-review wip --staged
 nixpkgs-review rev HEAD
 ```
 
+### Ofborg Commands
+```bash
+# Trigger builds on PR (comment on GitHub)
+@ofborg build package-name
+
+# Run NixOS tests
+@ofborg test test-name
+
+# Re-evaluate (only if eval failed)
+@ofborg eval
+```
+
 ## Setup
 
 ### Install nixpkgs-review
@@ -394,8 +406,76 @@ done
 parallel nixpkgs-review pr {} --no-shell --post-result ::: 12345 12346 12347
 ```
 
+## Using Ofborg
+
+Ofborg is the nixpkgs CI bot that automatically builds and tests packages.
+
+### Automatic Checks
+
+Ofborg runs automatically on every PR:
+- **ofborg-eval**: Validates Nix expressions
+- **ofborg-eval-check-maintainers**: Verifies maintainers exist
+- **ofborg-eval-check-meta**: Ensures meta attributes present
+- **ofborg-eval-darwin**: Checks macOS builds
+- **ofborg-eval-nixos**: Checks NixOS builds
+
+Check ofborg results in the PR "Checks" tab.
+
+### Triggering Manual Builds
+
+Comment on the PR to trigger ofborg:
+
+```bash
+# Build specific package
+@ofborg build package-name
+
+# Build multiple packages
+@ofborg build package1 package2
+
+# Run NixOS tests
+@ofborg test nginx
+
+# Re-evaluate (only if eval failed)
+@ofborg eval
+
+# Multiple commands
+@ofborg build firefox @ofborg test firefox
+```
+
+### Interpreting Results
+
+**Green checkmark (✓)**: Build succeeded
+**Red X (✗)**: Build failed - click "Details" for logs
+**Orange dot**: Skipped (broken/unsupported platform)
+
+### When to Use Ofborg
+
+Use `@ofborg build`:
+- Test on platforms you don't have (aarch64, darwin)
+- Verify complex dependency changes
+- After fixing build failures
+
+Use `@ofborg test`:
+- After changing NixOS modules
+- Verify service configurations
+- After updating packages that tests depend on
+
+### Integration with nixpkgs-review
+
+nixpkgs-review automatically uses ofborg evaluation results:
+```bash
+# Uses ofborg's evaluation if available
+nixpkgs-review pr 12345
+
+# Force local evaluation
+nixpkgs-review pr 12345 --eval local
+```
+
+This saves time by reusing ofborg's work on determining changed packages.
+
 ## Resources
 
 - [nixpkgs-review](https://github.com/Mic92/nixpkgs-review)
+- [Ofborg](https://github.com/NixOS/ofborg)
 - [Reviewing Contributions](https://ryantm.github.io/nixpkgs/contributing/reviewing-contributions/)
 - [Nixpkgs Manual - Contributing](https://nixos.org/manual/nixpkgs/stable/#chap-contributing)

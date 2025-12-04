@@ -25,6 +25,7 @@ When the user's request matches specific nixpkgs operations, route to the approp
 | **Add Package** | "add package", "new package", "init package", "create package" | `workflows/AddPackage.md` |
 | **Update Package** | "update package", "bump version", "upgrade package", "nix-update" | `workflows/UpdatePackage.md` |
 | **Fix Package** | "fix package", "broken package", "build failing", "package doesn't work" | `workflows/FixPackage.md` |
+| **Maintainer** | "maintainer", "triage issues", "package maintenance", "become maintainer" | `workflows/Maintainer.md` |
 
 **When to use workflows:**
 - Route when the user explicitly asks about one of these operations
