@@ -22,7 +22,7 @@ Adapted from [Personal AI Infrastructure](https://github.com/danielmiessler/Pers
 ```json
 {
   "hooks": {
-    "SessionStart": ["bun ~/.claude/hooks/initialize-session.ts"]
+    "SessionStart": ["bun ~/.config/claude/hooks/initialize-session.ts"]
   }
 }
 ```
@@ -36,14 +36,14 @@ Adapted from [Personal AI Infrastructure](https://github.com/danielmiessler/Pers
 **What it does**:
 - Captures outputs from interesting tools (Bash, Edit, Write, Read, Task, etc.)
 - Logs to JSONL files organized by year-month
-- Stores in `~/.claude/history/tool-outputs/YYYY-MM/YYYY-MM-DD_tool-outputs.jsonl`
+- Stores in `~/.config/claude/history/tool-outputs/YYYY-MM/YYYY-MM-DD_tool-outputs.jsonl`
 - Silent failure - doesn't disrupt workflow
 
 **Setup**:
 ```json
 {
   "hooks": {
-    "PostToolUse": ["bun ~/.claude/hooks/capture-tool-output.ts"]
+    "PostToolUse": ["bun ~/.config/claude/hooks/capture-tool-output.ts"]
   }
 }
 ```
@@ -70,7 +70,7 @@ Adapted from [Personal AI Infrastructure](https://github.com/danielmiessler/Pers
 **Usage**:
 ```bash
 # Run manually
-bun ~/.claude/hooks/validate-docs.ts
+bun ~/.config/claude/hooks/validate-docs.ts
 
 # Add to pre-commit (optional)
 ```
@@ -96,7 +96,7 @@ The following hooks from PAI were **not imported** as they require more setup or
 ### Directory Structure
 
 ```
-~/.claude/hooks/
+~/.config/claude/hooks/
 ├── README.md                    # This file
 ├── lib/
 │   └── claude-paths.ts         # Path utilities
@@ -108,21 +108,23 @@ The following hooks from PAI were **not imported** as they require more setup or
 ### Helper Library: lib/claude-paths.ts
 
 Provides:
-- `CLAUDE_DIR`: Base directory (~/.claude)
+- `CLAUDE_DIR`: Base directory (~/.config/claude)
 - `HOOKS_DIR`, `SKILLS_DIR`, `AGENTS_DIR`, `HISTORY_DIR`: Subdirectories
 - `getHistoryFilePath(subdir, filename)`: Generate history file paths
 - `getTimestamp()`: Get formatted timestamp
 - Path validation on import
 
+**Note**: For backward compatibility, `~/.claude/` is symlinked to `~/.config/claude/`.
+
 ## Configuration
 
-Hooks are configured in Claude Code settings (`.claude/settings.json` or `.claude/settings.local.json`):
+Hooks are configured in Claude Code settings (`.config/claude/settings.json` or `.config/claude/settings.local.json`):
 
 ```json
 {
   "hooks": {
-    "SessionStart": ["bun ~/.claude/hooks/initialize-session.ts"],
-    "PostToolUse": ["bun ~/.claude/hooks/capture-tool-output.ts"]
+    "SessionStart": ["bun ~/.config/claude/hooks/initialize-session.ts"],
+    "PostToolUse": ["bun ~/.config/claude/hooks/capture-tool-output.ts"]
   }
 }
 ```
@@ -146,10 +148,10 @@ Available hook events:
 
 ## History Logging
 
-Hooks that capture data store it in `~/.claude/history/`:
+Hooks that capture data store it in `~/.config/claude/history/`:
 
 ```
-~/.claude/history/
+~/.config/claude/history/
 ├── sessions/
 │   └── YYYY-MM/
 │       └── YYYY-MM-DD_session-log.txt
@@ -158,13 +160,13 @@ Hooks that capture data store it in `~/.claude/history/`:
         └── YYYY-MM-DD_tool-outputs.jsonl
 ```
 
-This integrates with the history system documented in `.claude/skills/CORE/history-system.md`.
+This integrates with the history system documented in `.config/claude/skills/CORE/history-system.md`.
 
 ## Adding More Hooks
 
 To add additional hooks:
 
-1. Create the hook file in `~/.claude/hooks/`
+1. Create the hook file in `~/.config/claude/hooks/`
 2. Add shebang: `#!/usr/bin/env bun`
 3. Make it executable: `chmod +x hook-name.ts`
 4. Use `lib/claude-paths.ts` for paths
@@ -175,18 +177,18 @@ To add additional hooks:
 
 **Hook not running:**
 - Check settings.json syntax
-- Verify file is executable (`ls -la ~/.claude/hooks/`)
+- Verify file is executable (`ls -la ~/.config/claude/hooks/`)
 - Check hook output in stderr
 - Verify Bun is installed: `bun --version`
 
 **Permission errors:**
-- Ensure directories exist: `mkdir -p ~/.claude/history/{sessions,tool-outputs}`
+- Ensure directories exist: `mkdir -p ~/.config/claude/history/{sessions,tool-outputs}`
 - Check write permissions
 
 **Debugging:**
 - Hooks write to stderr - check terminal output
 - Add debug logging: `console.error('[hook-name] Debug message')`
-- Run manually: `bun ~/.claude/hooks/hook-name.ts`
+- Run manually: `bun ~/.config/claude/hooks/hook-name.ts`
 
 ## Future Enhancements
 

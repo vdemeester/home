@@ -372,8 +372,8 @@ The home repository uses pre-commit hooks for:
 # Format files
 make fmt
 
-# Re-add and commit
-git add .
+# Re-add specific formatted files and commit
+git add path/to/formatted/file.nix
 git commit --signoff -m "your message"
 ```
 
@@ -486,7 +486,9 @@ git config --global diff.algorithm histogram
 git config --global merge.conflictstyle diff3
 ```
 
-## Integration with /git-commit:commit Command
+## Preferred Method: Use /git-commit:commit Command
+
+**IMPORTANT**: When creating commits, ALWAYS prefer using the `/git-commit:commit` slash command instead of running `git commit` directly.
 
 The `/git-commit:commit` slash command provides a guided workflow:
 
@@ -495,6 +497,7 @@ The `/git-commit:commit` slash command provides a guided workflow:
 3. **Commit message creation** - Focus on WHY and impact
 4. **User approval** - Explicit confirmation before committing
 5. **Smart push offer** - Automatic push handling
+6. **Explicit file staging** - Never uses `git add -A` or `git add .`
 
 The command follows all the best practices in this skill and ensures:
 - Proper `--signoff` usage
@@ -502,6 +505,16 @@ The command follows all the best practices in this skill and ensures:
 - No emojis
 - Focus on WHY over WHAT
 - Atomic, well-structured commits
+- Explicit file staging (never adds all files blindly)
+
+**When to use it**:
+- Creating any new commit
+- Committing staged or unstaged changes
+- Need to review changes before committing
+
+**When you can use git directly**:
+- Amending the last commit (`git commit --amend`)
+- Specific git operations like rebase, cherry-pick, etc.
 
 ## Anti-Patterns to Avoid
 
@@ -533,6 +546,26 @@ git commit -m "feat: Add login function
 git push --force origin main  # NEVER!
 ```
 
+### ❌ Using git add -A or git add .
+```bash
+git add -A   # NEVER! Too broad, adds everything
+git add .    # NEVER! Too broad, adds everything
+```
+
+**Why to avoid**:
+- Adds ALL changes including unintended files
+- Can include generated files (build outputs, dependencies)
+- Can include sensitive files (.env, credentials)
+- Bypasses intentional staging control
+- Makes commits less atomic and focused
+
+**✅ Instead, explicitly add files or directories**:
+```bash
+git add src/auth/
+git add docs/authentication.md
+git add tests/auth.test.ts
+```
+
 ### ❌ Committing Secrets
 ```bash
 git add .env  # Check for secrets first!
@@ -546,12 +579,13 @@ git add config/credentials.json  # NO!
 1. ✅ **ALWAYS use `--signoff`**
 2. ✅ **Include `Co-Authored-By: Claude`** when working with AI
 3. ❌ **NEVER use emojis** in commit messages
-4. ✅ **Focus on WHY and IMPACT**, not WHAT
-5. ✅ **Keep commits atomic** - one logical change per commit
-6. ✅ **Use HEREDOC** for multi-line commit messages
-7. ✅ **Rebase, don't merge** when updating feature branches
-8. ✅ **Review before committing** - check diffs and verify no secrets
-9. ✅ **2-3 bullet points** maximum, each under 80 chars
-10. ✅ **Test before committing** - run pre-commit checks
+4. ❌ **NEVER use `git add -A` or `git add .`** - always add files explicitly
+5. ✅ **Focus on WHY and IMPACT**, not WHAT
+6. ✅ **Keep commits atomic** - one logical change per commit
+7. ✅ **Use HEREDOC** for multi-line commit messages
+8. ✅ **Rebase, don't merge** when updating feature branches
+9. ✅ **Review before committing** - check diffs and verify no secrets
+10. ✅ **2-3 bullet points** maximum, each under 80 chars
+11. ✅ **Test before committing** - run pre-commit checks
 
 **Remember**: Future you will thank present you for clear, descriptive commit messages that explain WHY changes were made!

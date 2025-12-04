@@ -31,6 +31,12 @@
       }
     ]
   },
+  "skills": {
+    "enabled": true,
+    "directories": [
+      "~/.config/claude/skills"
+    ]
+  },
   "enabledPlugins": {
     "bug-hunter@chmouel-cc-plugins": true,
     "deslop@chmouel-cc-plugins": true,

@@ -20,19 +20,28 @@ all += niri
 niri : ~/.config/niri/config.kdl
 
 all += claude-skills
-claude-skills : ~/.claude/skills
+claude-skills : ~/.config/claude/skills
 
 all += claude-agents
-claude-agents : ~/.claude/agents
+claude-agents : ~/.config/claude/agents
 
 all += claude-hooks
-claude-hooks : ~/.claude/hooks
+claude-hooks : ~/.config/claude/hooks
 
 all += claude-settings
-claude-settings : ~/.claude/settings.json
+claude-settings : ~/.config/claude/settings.json
 
 all += claude-plugins
-claude-plugins : ~/.claude/plugins/session-manager
+claude-plugins : ~/.config/claude/plugins/session-manager
+
+all += claude-compat
+claude-compat : ~/.claude
+
+# Backward compatibility: symlink ~/.claude to ~/.config/claude
+~/.claude : force
+	@echo "🔗 Creating backward compatibility symlink: ~/.claude -> ~/.config/claude"
+	@mkdir -p ~/.config
+	@ln -snf ~/.config/claude ~/.claude
 
 # Example: Override default rule to generate content instead of copying
 # Uncomment and customize this pattern for files that should be generated:

@@ -11,7 +11,7 @@ Inspired by [[https://github.com/danielmiessler/Personal_AI_Infrastructure][Dani
 * Directory Structure
 
 #+begin_src
-dots/.claude/
+dots/.config/claude/
 ├── README.org           # This file
 ├── agents/              # Specialized AI agents
 ├── hooks/               # Event-driven automation hooks
@@ -28,12 +28,12 @@ dots/.claude/
 │   └── notes/          # Note-writing workflow (denote)
 └── settings.json        # Shared settings (tracked in git)
 
-~/.claude/
-├── agents/             -> /home/vincent/src/home/dots/.claude/agents/
-├── hooks/              -> /home/vincent/src/home/dots/.claude/hooks/
-├── plugins/            -> /home/vincent/src/home/dots/.claude/plugins/
-├── skills/             -> /home/vincent/src/home/dots/.claude/skills/
-├── settings.json       -> /home/vincent/src/home/dots/.claude/settings.json
+~/.config/claude/
+├── agents/             -> /home/vincent/src/home/dots/.config/claude/agents/
+├── hooks/              -> /home/vincent/src/home/dots/.config/claude/hooks/
+├── plugins/            -> /home/vincent/src/home/dots/.config/claude/plugins/
+├── skills/             -> /home/vincent/src/home/dots/.config/claude/skills/
+├── settings.json       -> /home/vincent/src/home/dots/.config/claude/settings.json
 ├── settings.local.json # Machine/project-specific (NOT tracked)
 └── history/            # Captured sessions and logs (synced via Syncthing)
     ├── sessions/       # Work session summaries
@@ -42,9 +42,13 @@ dots/.claude/
     ├── execution/      # Command outputs
     ├── decisions/      # Architecture decisions
     └── tool-outputs/   # Captured tool executions (via hooks)
+
+~/.claude/              -> ~/.config/claude/ (backward compatibility)
 #+end_src
 
-**Note**: History entries in =~/.claude/history/= are interconnected with denote notes in =~/desktop/org/notes/= using the =:history:= tag. History is synced across machines via Syncthing.
+**Note**: History entries in =~/.config/claude/history/= are interconnected with denote notes in =~/desktop/org/notes/= using the =:history:= tag. History is synced across machines via Syncthing.
+
+**Migration Note**: Claude Code now uses XDG Base Directory specification (=~/.config/claude/=). For backward compatibility, =~/.claude/= is symlinked to =~/.config/claude/= so older documentation and hooks continue to work.
 
 * Components
 
@@ -108,14 +112,15 @@ cd dots
 make all
 
 # This will link:
-# - ~/.claude/skills/
-# - ~/.claude/agents/
-# - ~/.claude/hooks/
-# - ~/.claude/plugins/
-# - ~/.claude/settings.json
+# - ~/.config/claude/skills/
+# - ~/.config/claude/agents/
+# - ~/.config/claude/hooks/
+# - ~/.config/claude/plugins/
+# - ~/.config/claude/settings.json
+# - ~/.claude/ -> ~/.config/claude/ (backward compatibility)
 
 # Optionally create machine-specific settings
-cat > ~/.claude/settings.local.json <<EOF
+cat > ~/.config/claude/settings.local.json <<EOF
 {
   "permissions": {
     "allow": [
@@ -144,7 +149,7 @@ make all
 
 ** settings.json (Shared)
 
-*Location*: =dots/.claude/settings.json= (symlinked to =~/.claude/settings.json=)
+*Location*: =dots/.config/claude/settings.json= (symlinked to =~/.config/claude/settings.json=)
 
 *Purpose*: Shared configuration across all machines
 
@@ -158,11 +163,11 @@ make all
 - Consistent hooks across machines
 - Same plugins enabled everywhere
 - Synchronized preferences
-- Uses absolute paths that are consistent (=/home/vincent/.claude/...=)
+- Uses absolute paths that are consistent (=/home/vincent/.config/claude/...=)
 
 ** settings.local.json (Machine-Specific)
 
-*Location*: =~/.claude/settings.local.json= or project =.claude/settings.local.json=
+*Location*: =~/.config/claude/settings.local.json= or project =.claude/settings.local.json=
 
 *Purpose*: Machine or project-specific overrides
 
@@ -213,7 +218,7 @@ Skills are plain markdown files that can be edited directly:
 
 #+begin_src bash
 # Edit a skill
-cd ~/src/home/dots/.claude/skills
+cd ~/src/home/dots/.config/claude/skills
 vim homelab/SKILL.md
 
 # Changes are immediately available (no rebuild required)
@@ -221,14 +226,14 @@ vim homelab/SKILL.md
 
 ** Adding New Skills
 
-1. Create a new directory in =.claude/skills/=
+1. Create a new directory in =.config/claude/skills/=
 2. Add a =SKILL.md= file with the skill content
 3. Skills are automatically discovered by Claude Code
 
 Example:
 #+begin_src bash
-mkdir -p .claude/skills/rust
-cat > .claude/skills/rust/SKILL.md << 'EOF'
+mkdir -p .config/claude/skills/rust
+cat > .config/claude/skills/rust/SKILL.md << 'EOF'
 # Rust Development Skill
 
 ## Purpose
@@ -253,7 +258,7 @@ Capture ALL valuable work for future reference, learning, and analysis.
 ** Directory Structure
 
 #+begin_src
-~/.claude/history/
+~/.config/claude/history/
 ├── raw-outputs/              # Raw event logs (JSONL)
 │   └── YYYY-MM/
 │       └── YYYY-MM-DD_all-events.jsonl
@@ -350,13 +355,13 @@ Example: =2025-12-03_claude-skills-implementation.md=
 
 ** Scratchpad vs History
 
-*** Scratchpad (=~/.claude/scratchpad/=)
+*** Scratchpad (=~/.config/claude/scratchpad/=)
 - Temporary working files
 - Tests and experiments
 - Draft outputs
 - Delete when done
 
-*** History (=~/.claude/history/=)
+*** History (=~/.config/claude/history/=)
 - Permanent valuable outputs
 - Research findings
 - Learnings and insights
@@ -387,7 +392,7 @@ All history-related notes use the =:history:= tag plus category-specific tags:
 - =:history:execution:= - Command execution logs
 
 *** Bidirectional Links
-History entries in =~/.claude/history/= and denote notes cross-reference each other:
+History entries in =~/.config/claude/history/= and denote notes cross-reference each other:
 
 From history to notes (markdown links in .md files):
 #+begin_src markdown
@@ -398,7 +403,7 @@ From history to notes (markdown links in .md files):
 From notes to history (org-mode links in .org files):
 #+begin_src org
 ,* Related History
-- [[file:~/.claude/history/sessions/2025-12/2025-12-03-150000_SESSION_implementation.md][Implementation Session]]
+- [[file:~/.config/claude/history/sessions/2025-12/2025-12-03-150000_SESSION_implementation.md][Implementation Session]]
 #+end_src
 
 **Note on formats**: History uses markdown (=.md=), notes use org-mode (=.org=). Both are plain text, searchable, and git-friendly. Use appropriate link syntax for each format.
@@ -416,13 +421,13 @@ ls ~/desktop/org/notes/*__history_learning*.org
 ls ~/desktop/org/notes/*==pkai*__history_session*.org
 
 # Search across both systems
-rg "topic" ~/.claude/history/ ~/desktop/org/notes/*__history*.org
+rg "topic" ~/.config/claude/history/ ~/desktop/org/notes/*__history*.org
 #+end_src
 
 *Signature*: =pkai= stands for "Personal Knowledge Automated Infrastructure" and identifies notes created by the history system. This makes it easy to distinguish automated notes from manual ones.
 
 *** When to Use Each System
-- *History directory* (=~/.claude/history/=): Chronological tracking, raw captures, session-by-session
+- *History directory* (=~/.config/claude/history/=): Chronological tracking, raw captures, session-by-session
 - *Denote notes* (=~/desktop/org/notes/=): Topic-based organization, long-term reference, knowledge building
 - *Both*: Significant learnings, important decisions, research worth sharing
 
@@ -466,7 +471,7 @@ Skills are tracked in the home repository:
 
 #+begin_src bash
 cd ~/src/home
-git add dots/.claude/
+git add dots/.config/claude/
 git commit -m "feat: Update Claude AI skills"
 #+end_src
 
@@ -498,15 +503,19 @@ make all
 ** Settings not loading?
 #+begin_src bash
 # Check symlink
-ls -la ~/.claude/settings.json
+ls -la ~/.config/claude/settings.json
 
-# Should point to: /home/vincent/src/home/dots/.claude/settings.json
+# Should point to: /home/vincent/src/home/dots/.config/claude/settings.json
+
+# Check backward compatibility symlink
+ls -la ~/.claude
+# Should point to: ~/.config/claude
 #+end_src
 
 ** Hooks not running?
 #+begin_src bash
 # Check settings.json has hooks configured
-cat ~/.claude/settings.json | grep -A 10 hooks
+cat ~/.config/claude/settings.json | grep -A 10 hooks
 
 # Verify hook binaries are in PATH
 which claude-hooks-initialize-session
