@@ -38,6 +38,37 @@ Running the **WorkflowName** workflow from the **GitHub** skill...
 
 ## Quick Reference
 
+### Repository Context
+
+When working with GitHub commands, you often need the repository owner/name. Here's how to get it:
+
+```bash
+# Get current repository owner/name using gh CLI (preferred)
+gh repo view --json nameWithOwner -q .nameWithOwner
+# Output: owner/repo
+
+# Alternative: Parse from git remote URL
+git remote get-url origin | sed -n 's#.*github\.com[:/]\(.*\)\.git#\1#p'
+# Output: owner/repo
+
+# Get just the owner
+gh repo view --json owner -q .owner.login
+
+# Get just the repo name
+gh repo view --json name -q .name
+```
+
+**Usage in workflows:**
+```bash
+# Store for multiple commands
+REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner)
+gh pr list -R "$REPO"
+gh run list -R "$REPO"
+
+# Or use directly in commands
+gh pr checks -R "$(gh repo view --json nameWithOwner -q .nameWithOwner)" 123
+```
+
 ### Essential gh Commands
 
 ```bash
@@ -134,6 +165,9 @@ gh-restart-failed
 
 # Use specific repository
 gh-restart-failed owner/repo
+
+# Use a pull request in a specific repository
+gh-restart-failed owner/repo#123
 
 # Ignore specific workflows
 gh-restart-failed -i "Label Checker" -i "build"
