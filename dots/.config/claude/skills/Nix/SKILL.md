@@ -1,5 +1,5 @@
 ---
-name: nix
+name: Nix
 description: Expert guidance on Nix, NixOS, and home-manager best practices. USE WHEN working with Nix expressions, NixOS configuration, home-manager, flakes, or Nix package development.
 ---
 
@@ -7,6 +7,26 @@ description: Expert guidance on Nix, NixOS, and home-manager best practices. USE
 
 ## Purpose
 Expert guidance on Nix, NixOS, and home-manager following best practices.
+
+## Workflow Routing
+
+When the user's request matches specific Nix operations, route to the appropriate workflow:
+
+| Workflow | Trigger | File |
+|----------|---------|------|
+| **Build** | "build nix package", "nixos-rebuild build", "compile nix" | `workflows/Build.md` |
+| **Debug** | "debug nix", "nix error", "troubleshoot build", "evaluation error" | `workflows/Debug.md` |
+| **Develop** | "development shell", "nix develop", "devShell", "direnv" | `workflows/Develop.md` |
+| **Deploy** | "deploy nixos", "nixos-rebuild switch", "remote deployment" | `workflows/Deploy.md` |
+| **Package** | "create package", "nix derivation", "buildGoModule", "package app" | `workflows/Package.md` |
+| **Flakes** | "create flake", "flake.lock", "update inputs", "flake outputs" | `workflows/Flakes.md` |
+| **Secrets** | "manage secrets", "agenix", "encrypt secrets", "age encryption" | `workflows/Secrets.md` |
+| **Troubleshoot** | "hash mismatch", "nix failing", "common errors", "fix nix issue" | `workflows/Troubleshoot.md` |
+
+**When to use workflows:**
+- Route when the user explicitly asks about one of these operations
+- Workflows provide comprehensive, focused guidance for specific Nix tasks
+- For general Nix guidance or module configuration, continue with this main skill
 
 ## Core Principles
 
