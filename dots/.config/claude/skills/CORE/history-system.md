@@ -1,4 +1,11 @@
-# History System
+# Universal Output Capture System (UOCS) - History System Documentation
+
+**Location:** `~/.config/claude/history/`
+**Purpose:** Automated documentation of ALL work performed by PAI and specialized agents
+**Status:** ✅ FULLY OPERATIONAL
+
+
+---
 
 ## Overview
 
@@ -59,6 +66,17 @@ Denote notes use **Org-mode** (`.org`) format:
     └── YYYY-MM/
         └── YYYY-MM-DD-HHMMSS_DECISION_description.md
 ```
+
+**Quick Decision Guide:**
+- "What happened this session?" → `sessions/`
+- "What did we learn?" → `learnings/`
+- "What features were built?" → `execution/features/`
+- "What broke and when?" → `execution/bugs/`
+- "What was improved?" → `execution/refactors/`
+- "Why this approach?" → `decisions/`
+- "What did we investigate?" → `research/`
+- "Raw execution logs?" → `raw-outputs/`
+
 
 ### Notes Directory
 ```
