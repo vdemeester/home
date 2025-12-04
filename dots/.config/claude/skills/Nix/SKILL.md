@@ -21,6 +21,7 @@ When the user's request matches specific Nix operations, route to the appropriat
 | **Package** | "create package", "nix derivation", "buildGoModule", "package app" | `workflows/Package.md` |
 | **Flakes** | "create flake", "flake.lock", "update inputs", "flake outputs" | `workflows/Flakes.md` |
 | **Secrets** | "manage secrets", "agenix", "encrypt secrets", "age encryption" | `workflows/Secrets.md` |
+| **Security** | "harden nixos", "apparmor", "firewall", "security hardening" | `workflows/Security.md` |
 | **Troubleshoot** | "hash mismatch", "nix failing", "common errors", "fix nix issue" | `workflows/Troubleshoot.md` |
 
 **When to use workflows:**
@@ -496,6 +497,57 @@ nix-prefetch-github owner repo --rev <commit-hash>
 - Minimize use of `import`
 - Use `builtins` wisely
 - Avoid expensive list operations in hot paths
+
+## Security
+
+### Security-First Approach
+NixOS provides unique security advantages through its declarative model and immutable store, but requires active hardening for production systems.
+
+### Quick Security Wins
+```nix
+{
+  # 1. Enable firewall (default deny)
+  networking.firewall.enable = true;
+
+  # 2. Harden SSH
+  services.openssh.settings = {
+    PermitRootLogin = "no";
+    PasswordAuthentication = false;
+  };
+
+  # 3. Automatic security updates
+  system.autoUpgrade = {
+    enable = true;
+    allowReboot = false;
+  };
+
+  # 4. Enable AppArmor
+  security.apparmor.enable = true;
+
+  # 5. Use encrypted secrets
+  age.secrets.mySecret.file = ../secrets/mySecret.age;
+}
+```
+
+### Hardened Profile
+For security-critical systems, use the hardened profile:
+```nix
+imports = [
+  <nixpkgs/nixos/modules/profiles/hardened.nix>
+];
+```
+
+See `workflows/Security.md` for comprehensive hardening guidance.
+
+### Security Checklist
+- [ ] Firewall enabled with default deny
+- [ ] SSH hardened (no root, no passwords)
+- [ ] Secrets encrypted with agenix
+- [ ] Regular system updates configured
+- [ ] AppArmor or systemd service hardening enabled
+- [ ] Audit logging configured for critical services
+- [ ] Minimal package installation
+- [ ] Strong password policies enforced
 
 ## Resources
 
