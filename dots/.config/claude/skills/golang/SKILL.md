@@ -8,6 +8,25 @@ description: Go development best practices and patterns. USE WHEN writing Go cod
 ## Purpose
 Guide Go development following official standards, community best practices, and idiomatic patterns from Effective Go and the Go team's code review guidelines.
 
+## Workflow Routing
+
+**When executing a workflow, output this notification directly:**
+
+```
+Running the **WorkflowName** workflow from the **Golang** skill...
+```
+
+| Workflow | Trigger | File |
+|----------|---------|------|
+| **Build** | "build go project", "compile", "cross compile" | `workflows/Build.md` |
+| **Test** | "run tests", "test coverage", "race detector" | `workflows/Test.md` |
+| **Benchmark** | "benchmark", "measure performance", "profile" | `workflows/Benchmark.md` |
+| **Lint** | "lint", "format", "gofmt", "golangci-lint" | `workflows/Lint.md` |
+| **Deps** | "dependencies", "go mod", "update deps", "vendor" | `workflows/Deps.md` |
+| **Debug** | "debug", "delve", "troubleshoot" | `workflows/Debug.md` |
+| **Profile** | "profile performance", "pprof", "optimize" | `workflows/Profile.md` |
+| **Generate** | "generate code", "mockgen", "stringer", "protobuf" | `workflows/Generate.md` |
+
 ## Core Principles
 
 1. **Clarity over cleverness**: Write simple, readable code that's easy to maintain
