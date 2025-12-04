@@ -218,27 +218,53 @@ fi
 **Interactive tool for restarting failed checks across multiple PRs:**
 
 ```bash
-# List and restart failed checks interactively
+# Interactive mode: List and restart failed checks with fzf
 gh-restart-failed
 
-# Use specific repository
+# Direct mode: Restart specific PR without interactive selection
+gh-restart-failed owner/repo#123
+
+# Direct mode with current repository
+gh-restart-failed#42
+
+# Use specific repository (interactive)
 gh-restart-failed owner/repo
 
 # Ignore specific workflows (Label Checker ignored by default)
 gh-restart-failed -i "build" -i "test"
 
-# Filter by PR labels
+# Filter by PR labels (interactive mode)
 gh-restart-failed -l "bug" -l "enhancement"
+
+# Direct mode with options
+gh-restart-failed -i "Label Checker" owner/repo#123
 ```
 
 **Features:**
-- Interactive fzf interface with multi-select
+- **Two modes**: Interactive (fzf) or direct (specify PR number)
+- **Direct syntax**: `owner/repo#123` to skip interactive selection
+- Interactive fzf interface with multi-select (when no PR specified)
 - Preview failed checks before restarting
-- Handles multiple PRs at once
+- Handles multiple PRs at once (interactive mode)
 - Filters out old runs (>1 month)
 - Color-coded output with status
+- No fzf dependency required for direct mode
 
 **Location**: `~/src/home/tools/gh-restart-failed/`
+
+**Usage Modes:**
+
+1. **Interactive** (requires fzf): Browse and select PRs interactively
+   ```bash
+   gh-restart-failed
+   gh-restart-failed owner/repo
+   ```
+
+2. **Direct** (no fzf needed): Immediately restart specific PR
+   ```bash
+   gh-restart-failed owner/repo#123
+   gh-restart-failed#42  # current repo
+   ```
 
 ## Custom Tool: Intelligent Restart (Planned)
 
