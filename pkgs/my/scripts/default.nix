@@ -1,7 +1,25 @@
-{ stdenv }:
+{
+  stdenv,
+  lib,
+}:
 
 stdenv.mkDerivation {
-  name = "vde-scripts-0.4";
-  builder = ./builder.sh;
+  pname = "vde-scripts";
+  version = "0.4";
+
   src = ./.;
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $out/bin
+    cp $src/bin/* $out/bin/
+
+    runHook postInstall
+  '';
+
+  meta = with lib; {
+    description = "Vincent's personal scripts collection";
+    platforms = platforms.unix;
+  };
 }

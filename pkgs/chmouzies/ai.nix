@@ -1,15 +1,14 @@
 # https://github.com/chmouel/chmouzies/tree/master/kubernetes
 {
   stdenv,
+  lib,
   fetchFromGitLab,
   python313,
   installShellFiles,
 }:
 
-stdenv.mkDerivation rec {
-  name = "chmouzies-ai";
+stdenv.mkDerivation {
   pname = "chmouzies-ai";
-
   version = "0-unstable-2025-09-30";
 
   src = fetchFromGitLab {
@@ -22,5 +21,27 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [ python313 ];
   nativeBuildInputs = [ installShellFiles ];
 
-  builder = ./builder.ai.sh;
+  installPhase =
+    let
+      binaries = [
+        "aicommit"
+        "git-commit-suggest-label"
+      ];
+    in
+    ''
+      runHook preInstall
+
+      mkdir -p $out/bin
+      ${lib.concatMapStringsSep "\n" (b: "cp $src/ai/${b} $out/bin/") binaries}
+
+      installShellCompletion --cmd aicommit --zsh $src/ai/_aicommit
+
+      runHook postInstall
+    '';
+
+  meta = with lib; {
+    description = "Chmouel's AI-assisted git tools";
+    homepage = "https://gitlab.com/chmouel/chmouzies";
+    platforms = platforms.unix;
+  };
 }
