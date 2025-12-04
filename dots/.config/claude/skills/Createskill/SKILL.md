@@ -7,6 +7,15 @@ description: Skill creation framework for creating, validating, updating, or can
 
 Systematic skill creation framework for building consistent, well-structured Claude Code skills.
 
+### Context Detection
+
+**This skill activates when:**
+- User wants to create a new skill
+- User asks to validate, update, or fix an existing skill
+- User mentions skill structure, compliance, or canonicalization
+- User is working in `/home/vincent/.claude/skills/` directory
+- User asks about skill creation best practices or framework
+
 ## TitleCase Naming Convention
 
 **All naming must use TitleCase (PascalCase).**

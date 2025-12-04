@@ -7,6 +7,15 @@ description: Kubernetes development and operations best practices. USE WHEN work
 
 Expert guidance on Kubernetes operations, kubectl command-line usage, and cloud-native development best practices.
 
+### Context Detection
+
+**This skill activates when:**
+- Current directory contains Kubernetes manifests (`.yaml` or `.yml` files with `kind:`, `apiVersion:`)
+- User asks about kubectl commands or Kubernetes resources
+- User mentions pods, deployments, services, namespaces, or other K8s concepts
+- Commands like `kubectl`, `helm`, or `k9s` are mentioned
+- User is troubleshooting Kubernetes issues or debugging pods
+
 ## Workflow Routing
 
 **When executing a workflow, output this notification directly:**

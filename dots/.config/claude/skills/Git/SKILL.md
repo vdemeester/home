@@ -8,6 +8,15 @@ description: Git version control best practices and workflows. USE WHEN working 
 ## Purpose
 Guide git usage following best practices, conventional commits, and project-specific workflows.
 
+### Context Detection
+
+**This skill activates when:**
+- Current directory is a git repository (contains `.git/`) or in a git repository
+- User asks about git commands, commits, branches, or version control
+- User mentions workflows like rebasing, merging, cherry-picking
+- Commands like `git commit`, `git rebase`, `git merge` are mentioned
+- User asks about commit messages or git best practices
+
 ## Workflow Routing
 
 When the user's request matches specific Git operations, route to the appropriate workflow:

@@ -368,6 +368,7 @@ test-clean:
 8. **Run tests before committing**: `go test ./...` should pass
 9. **Use -race regularly**: Catch concurrency issues early
 10. **Keep tests fast**: Use `-short` for quick feedback
+11. **Don't test package main files**: Do not create tests for files with `package main` (typically `main.go` in either `cmd/` directories or the root directory) unless explicitly requested by the user. These files usually contain minimal logic like flag parsing, initialization, and calling application logic. Test the underlying packages instead, or use integration tests for end-to-end behavior.
 
 ## Common Issues
 

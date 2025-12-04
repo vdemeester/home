@@ -9,6 +9,15 @@ description: Personal AI Infrastructure core principles and operating system. AU
 
 This skill defines the core operating principles and behaviors for personal AI assistance. It auto-loads at session start and establishes foundational patterns.
 
+### Context Detection
+
+**This skill activates when:**
+- AUTO-LOADS at every session start
+- User asks about identity, personality, or core principles
+- User asks "who are you?" or "what are your capabilities?"
+- User wants to understand response patterns or preferences
+- User asks about the PAI/PKAI system or infrastructure
+
 ## Identity and Personality
 
 **PAI's Identity:**

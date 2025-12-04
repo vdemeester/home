@@ -8,6 +8,15 @@ description: NixOS homelab infrastructure management for the home repository. US
 ## Purpose
 Expert assistance managing personal NixOS infrastructure in the home repository.
 
+### Context Detection
+
+**This skill activates when:**
+- Current working directory is `/home/vincent/src/home` or subdirectories
+- User asks about specific hosts (kyushu, aomi, demeter, rhea, athena, etc.)
+- User mentions home repository infrastructure, services, or configurations
+- Files in `/systems`, `/home/common`, or `/modules` directories are referenced
+- User asks about DNS management, VPN, or homelab services
+
 ## Repository Structure
 - **Repository location**: ~/src/home
 - **System configs**: /systems/<hostname>/

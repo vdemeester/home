@@ -9,7 +9,20 @@ Visual content generation skill for creating diagrams, flowcharts, and technical
 
 ## Purpose
 
-This skill helps create visual content when text alone isn't sufficient. It's particularly useful for:
+This skill helps create visual content when text alone isn't sufficient.
+
+### Context Detection
+
+**This skill activates when:**
+- User asks for a diagram, flowchart, or visualization
+- User mentions creating visual representations of concepts
+- User wants to illustrate architecture, processes, or relationships
+- User asks for Mermaid diagrams, ASCII art, or graphical explanations
+- User explicitly says "show me a diagram" or "draw a flowchart"
+
+## Use Cases
+
+It's particularly useful for:
 - Technical diagrams and architecture visualizations
 - Flowcharts and process diagrams
 - Concept maps and taxonomies

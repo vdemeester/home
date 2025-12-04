@@ -8,6 +8,15 @@ description: Note-taking workflow using denote format and org-mode. USE WHEN use
 ## Purpose
 Assist with creating and organizing notes in denote format using org-mode.
 
+### Context Detection
+
+**This skill activates when:**
+- User asks to create a note, write a note, or document something
+- User mentions denote, org-mode, or note-taking
+- Working directory is `/home/vincent/desktop/org/notes`
+- User references `.org` files with denote naming pattern
+- User asks about organizing knowledge or documentation
+
 ## Note Location
 **Notes directory**: `/home/vincent/desktop/org/notes`
 

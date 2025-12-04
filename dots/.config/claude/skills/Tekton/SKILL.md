@@ -7,6 +7,15 @@ description: Tekton Pipelines CI/CD best practices for Kubernetes-native workflo
 
 Expert guidance on Tekton Pipelines, a Kubernetes-native CI/CD framework for building, testing, and deploying applications with declarative, reusable workflows.
 
+### Context Detection
+
+**This skill activates when:**
+- Current directory contains Tekton YAML files (Task, Pipeline, PipelineRun, etc.)
+- User asks about Tekton tasks, pipelines, or triggers
+- User mentions `tkn` CLI commands
+- Files contain `tekton.dev/v1` or `triggers.tekton.dev` API versions
+- User is troubleshooting pipeline runs or debugging CI/CD workflows
+
 ## Workflow Routing
 
 **When executing a workflow, output this notification directly:**

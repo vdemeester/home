@@ -8,6 +8,15 @@ description: Expert guidance on Nix, NixOS, and home-manager best practices. USE
 ## Purpose
 Expert guidance on Nix, NixOS, and home-manager following best practices.
 
+### Context Detection
+
+**This skill activates when:**
+- Current directory contains `flake.nix`, `default.nix`, `shell.nix`, or `configuration.nix`
+- Git repository contains Nix configuration files
+- User is working with `.nix` files
+- User explicitly mentions NixOS, home-manager, flakes, or Nix packages
+- Commands like `nix build`, `nixos-rebuild`, or `home-manager` are mentioned
+
 ## Workflow Routing
 
 When the user's request matches specific Nix operations, route to the appropriate workflow:

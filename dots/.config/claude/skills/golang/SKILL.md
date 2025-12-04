@@ -8,6 +8,12 @@ description: Go development best practices and patterns. USE WHEN writing Go cod
 ## Purpose
 Guide Go development following official standards, community best practices, and idiomatic patterns from Effective Go and the Go team's code review guidelines.
 
+### Context Detection
+
+**This skill actives when:**
+- Claude is asked to work on Go code
+- Current directory path or current git repository contains go.mod
+
 ## Workflow Routing
 
 **When executing a workflow, output this notification directly:**

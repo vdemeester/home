@@ -14,6 +14,7 @@ Expert guidance for contributing to the NixOS/nixpkgs repository, reviewing pull
 - Git remote URL contains `NixOS/nixpkgs` or `nixos/nixpkgs`
 - Current directory path contains `github.com/NixOS/nixpkgs` or `~/src/nixpkgs`
 - User explicitly mentions nixpkgs-review, nix-update, or nixpkgs contribution
+- User asks a question about nix packages
 
 ## Workflow Routing
 
