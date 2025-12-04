@@ -2,6 +2,7 @@
   lib,
   buildGoModule,
   fetchFromGitHub,
+  installShellFiles,
 }:
 
 buildGoModule rec {
@@ -21,8 +22,18 @@ buildGoModule rec {
   };
   vendorHash = null;
 
+  nativeBuildInputs = [ installShellFiles ];
+
+  postInstall = ''
+    # urfave/cli v2 shell completion support
+    installShellCompletion --cmd manifest-tool \
+      --bash <($out/bin/manifest-tool completion bash) \
+      --fish <($out/bin/manifest-tool completion fish) \
+      --zsh <($out/bin/manifest-tool completion zsh)
+  '';
+
   meta = {
-    description = "";
+    description = "Tool for inspecting and creating multi-platform container image manifests";
     homepage = "https://github.com/estesp/manifest-tool";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ vdemeester ];

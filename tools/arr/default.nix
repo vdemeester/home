@@ -2,6 +2,7 @@
   python3,
   lib,
   makeWrapper,
+  installShellFiles,
 }:
 
 python3.pkgs.buildPythonApplication {
@@ -11,7 +12,10 @@ python3.pkgs.buildPythonApplication {
 
   src = ./.;
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [
+    makeWrapper
+    installShellFiles
+  ];
 
   propagatedBuildInputs = with python3.pkgs; [
     click
@@ -41,6 +45,15 @@ python3.pkgs.buildPythonApplication {
     # Wrap the main script to set PYTHONPATH
     wrapProgram $out/bin/arr \
       --prefix PYTHONPATH : "$out/lib/arr"
+  '';
+
+  postInstall = ''
+    # Generate shell completions for click-based CLI
+    export PYTHONPATH="$out/lib/arr:$PYTHONPATH"
+    installShellCompletion --cmd arr \
+      --bash <(_ARR_COMPLETE=bash_source $out/bin/arr) \
+      --fish <(_ARR_COMPLETE=fish_source $out/bin/arr) \
+      --zsh <(_ARR_COMPLETE=zsh_source $out/bin/arr)
   '';
 
   meta = with lib; {

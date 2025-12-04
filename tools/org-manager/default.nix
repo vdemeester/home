@@ -1,6 +1,7 @@
 {
   lib,
   buildGoModule,
+  installShellFiles,
 }:
 
 buildGoModule {
@@ -14,10 +15,19 @@ buildGoModule {
 
   vendorHash = "sha256-hocnLCzWN8srQcO3BMNkd2lt0m54Qe7sqAhUxVZlz1k=";
 
+  nativeBuildInputs = [ installShellFiles ];
+
   ldflags = [
     "-s"
     "-w"
   ];
+
+  postInstall = ''
+    installShellCompletion --cmd org-manager \
+      --bash <($out/bin/org-manager completion bash) \
+      --fish <($out/bin/org-manager completion fish) \
+      --zsh <($out/bin/org-manager completion zsh)
+  '';
 
   meta = with lib; {
     description = "Tool for managing org-mode files including backup, validation, and link checking";
