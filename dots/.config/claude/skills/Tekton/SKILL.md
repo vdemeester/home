@@ -17,6 +17,7 @@ Running the **WorkflowName** workflow from the **Tekton** skill...
 
 | Workflow | Trigger | File |
 |----------|---------|------|
+| **Debug** | "debug pipeline", "troubleshoot task", "pipeline failing", "taskrun error" | `workflows/Debug.md` |
 | **TknCli** | "tkn command", "view logs", "pipeline run", "task run" | `workflows/TknCli.md` |
 | **Tasks** | "create task", "task definition", "step", "taskrun" | `workflows/Tasks.md` |
 | **Pipelines** | "create pipeline", "pipeline workflow", "pipelinerun" | `workflows/Pipelines.md` |
