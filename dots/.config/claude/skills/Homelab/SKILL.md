@@ -1,5 +1,5 @@
 ---
-name: homelab
+name: Homelab
 description: NixOS homelab infrastructure management for the home repository. USE WHEN working with NixOS systems, home-manager configs, networking, services, or personal infrastructure.
 ---
 

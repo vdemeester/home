@@ -19,7 +19,7 @@ Required fields:
 ```yaml
 ---
 name: SkillName          # Must be TitleCase
-description: ...         # Must be ONE LINE with USE WHEN triggers
+description: [What it does]. USE WHEN [intent triggers using OR]. [Additional capabilities].
 ---
 ```
 

@@ -1,5 +1,5 @@
 ---
-name: git
+name: Git
 description: Git version control best practices and workflows. USE WHEN working with git commands, commits, branches, pull requests, rebasing, or version control operations.
 ---
 
