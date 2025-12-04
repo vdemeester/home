@@ -8,6 +8,27 @@ description: Git version control best practices and workflows. USE WHEN working 
 ## Purpose
 Guide git usage following best practices, conventional commits, and project-specific workflows.
 
+## Workflow Routing
+
+When the user's request matches specific Git operations, route to the appropriate workflow:
+
+| Workflow | Trigger | File |
+|----------|---------|------|
+| **Commit** | "create commit", "commit changes", "write commit message", "amend commit" | `workflows/Commit.md` |
+| **Branch** | "create branch", "switch branches", "delete branch", "branch management" | `workflows/Branch.md` |
+| **Rebase** | "rebase branch", "interactive rebase", "clean up commits", "squash commits" | `workflows/Rebase.md` |
+| **Merge** | "merge branch", "merge conflicts", "resolve conflicts", "merge strategies" | `workflows/Merge.md` |
+| **Stash** | "stash changes", "save work in progress", "temporarily save", "switch branches" | `workflows/Stash.md` |
+| **Bisect** | "find bad commit", "when did this break", "regression debugging", "binary search" | `workflows/Bisect.md` |
+| **Worktree** | "multiple branches", "parallel development", "work on multiple branches" | `workflows/Worktree.md` |
+| **Cherry-Pick** | "cherry pick", "apply specific commit", "copy commit", "backport fix" | `workflows/Cherry.md` |
+| **Reset** | "undo commit", "reset branch", "discard changes", "move branch pointer" | `workflows/Reset.md` |
+
+**When to use workflows:**
+- Route when the user explicitly asks about one of these operations
+- Workflows provide comprehensive, focused guidance for specific Git tasks
+- For general git advice or commit creation, continue with this main skill
+
 ## Commit Message Philosophy
 
 **Focus on WHY, not WHAT**
@@ -223,6 +244,45 @@ Examples:
 
 ### Branch Workflow
 
+**Prefer Worktrees for Significant Work**
+
+For substantial changes (new features, bug fixes, refactoring), **use Git worktrees instead of branch switching**:
+
+```bash
+# Instead of switching branches
+git checkout -b feature/user-auth  # ❌ Old approach
+
+# Create worktree for new work
+git worktree add ../myproject-user-auth -b feature/user-auth  # ✅ Better
+
+# Now you have:
+# ~/projects/myproject/ (main branch - continue current work)
+# ~/projects/myproject-user-auth/ (feature branch - new work)
+```
+
+**Why worktrees?**
+- No context switching - keep current work untouched
+- No stashing needed - both codebases available simultaneously
+- Run tests on both versions in parallel
+- Easier to compare implementations side-by-side
+- Faster than switching branches (no index/working directory updates)
+
+**When to use worktrees:**
+- ✅ Starting new feature development
+- ✅ Fixing bugs that need testing
+- ✅ Code review (checkout PR in separate worktree)
+- ✅ Comparing implementations
+- ✅ Long-running work that might be interrupted
+
+**When branch switching is fine:**
+- Small, quick changes
+- Documentation updates
+- Trivial fixes
+
+See `workflows/Worktree.md` for comprehensive worktree guidance.
+
+### Traditional Branch Workflow (for quick changes)
+
 ```bash
 # Create feature branch
 git checkout -b feature/user-auth
@@ -379,11 +439,12 @@ git commit --signoff -m "your message"
 
 ## Common Workflows
 
-### Feature Development
+### Feature Development (Recommended: Use Worktree)
 
 ```bash
-# 1. Create branch
-git checkout -b feature/new-feature
+# 1. Create worktree for new feature
+git worktree add ../myproject-new-feature -b feature/new-feature
+cd ../myproject-new-feature
 
 # 2. Make changes and commit atomically
 git add src/module1/
@@ -401,13 +462,18 @@ git push -u origin feature/new-feature
 
 # 5. Create PR
 gh pr create
+
+# 6. When done, remove worktree
+cd ~/projects/myproject
+git worktree remove ../myproject-new-feature
 ```
 
-### Fixing a Bug
+### Fixing a Bug (Recommended: Use Worktree)
 
 ```bash
-# 1. Create fix branch
-git checkout -b fix/null-pointer-crash
+# 1. Create worktree for bug fix
+git worktree add ../myproject-bugfix -b fix/null-pointer-crash
+cd ../myproject-bugfix
 
 # 2. Commit the fix
 git add src/validation.ts
@@ -420,6 +486,10 @@ git commit --signoff -m "fix: Prevent null pointer in user validation
 # 3. Push and create PR
 git push -u origin fix/null-pointer-crash
 gh pr create
+
+# 4. When done, remove worktree
+cd ~/projects/myproject
+git worktree remove ../myproject-bugfix
 ```
 
 ## Troubleshooting
