@@ -1,14 +1,31 @@
-{ stdenv }:
+{
+  stdenv,
+  lib,
+}:
 
 stdenv.mkDerivation rec {
-  name = "systemd-email";
+  pname = "systemd-email";
+  version = "0.1.0";
+
   src = ./.;
 
-  phases = [ "install" ];
+  dontUnpack = true;
+  dontBuild = true;
 
-  install = ''
+  installPhase = ''
+    runHook preInstall
+
     mkdir -p $out/bin
     cp $src/systemd-email $out/bin
     chmod +x $out/bin/systemd-email
+
+    runHook postInstall
   '';
+
+  meta = with lib; {
+    description = "Systemd service for sending email notifications on service failures";
+    license = licenses.mit;
+    platforms = platforms.linux;
+    mainProgram = "systemd-email";
+  };
 }
