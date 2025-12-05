@@ -268,25 +268,62 @@ CLOSED: [2025-12-03 Wed 14:23]
 
 ## Finding and Organizing Notes
 
+### Using the Org Skill
+
+This skill can integrate with the **Org skill** for programmatic org-mode operations on note files.
+
+**Tool location:** `~/.config/claude/skills/Org/tools/org-manager`
+
+**Search notes:**
+```bash
+# Search for term across all notes
+org-manager search ~/desktop/org/notes/*.org "wireguard"
+
+# Count TODOs in notes
+org-manager count ~/desktop/org/notes/20251203T151822--project__ai.org
+
+# List sections in a note
+org-manager sections ~/desktop/org/notes/20251203T151822--project__ai.org
+```
+
 ### By Tags
 Notes with `:nixos:` tag can be found by searching filenames with `_nixos`
+
+```bash
+# Find notes with specific tag
+ls ~/desktop/org/notes/*__*homelab*.org
+ls ~/desktop/org/notes/*__*nixos*.org
+```
 
 ### By Date
 Files are naturally sorted by timestamp, most recent first when reverse sorted
 
+```bash
+# Most recent notes
+ls -t ~/desktop/org/notes/*.org | head -10
+
+# Notes from specific month
+ls ~/desktop/org/notes/202512*.org
+```
+
 ### By Title
 Search for keywords in the title portion between `--` and `__`
 
-### Using grep
+```bash
+# Find notes with "wireguard" in title
+ls ~/desktop/org/notes/*--*wireguard*.org
+```
+
+### Using grep (fallback)
 ```bash
 # Find notes about a topic
 grep -l "wireguard" ~/desktop/org/notes/*.org
 
-# Find notes with specific tag
-ls ~/desktop/org/notes/*__*homelab*.org
-
 # Search content
 grep -r "NixOS configuration" ~/desktop/org/notes/
+
+# Find notes with specific tag in frontmatter
+rg "#+filetags:.*:nixos:" ~/desktop/org/notes/
 ```
 
 ## Special Note Types

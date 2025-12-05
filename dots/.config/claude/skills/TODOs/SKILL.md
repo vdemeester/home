@@ -315,34 +315,83 @@ If you're using Emacs, these commands are available:
 - `TAB` - Cycle visibility
 - `S-TAB` - Global cycle visibility
 
-## Viewing TODOs from Command Line
+## Using the Org Skill for TODO Operations
 
-### Show Active Tasks
+This skill integrates with the **Org skill** for programmatic org-mode manipulation. The Org skill provides the `org-manager` tool for reliable TODO operations.
+
+### Tool Location
+`~/.config/claude/skills/Org/tools/org-manager`
+
+### Common Operations
+
+**List TODOs:**
+```bash
+# All NEXT tasks
+org-manager list ~/desktop/org/todos.org --state=NEXT
+
+# All STRT tasks
+org-manager list ~/desktop/org/todos.org --state=STRT
+
+# Tasks scheduled for today
+org-manager scheduled ~/desktop/org/todos.org
+
+# High priority tasks (1-2)
+org-manager list ~/desktop/org/todos.org --priority=1,2
+
+# Tasks in specific section
+org-manager by-section ~/desktop/org/todos.org "Work"
+```
+
+**Modify TODOs:**
+```bash
+# Add new TODO
+org-manager add ~/desktop/org/todos.org "Task description" \
+  --section=Work --priority=2 --scheduled=2025-12-10
+
+# Update state
+org-manager update-state ~/desktop/org/todos.org "Task heading" DONE
+
+# Schedule task
+org-manager schedule ~/desktop/org/todos.org "Task heading" 2025-12-10
+
+# Set priority
+org-manager priority ~/desktop/org/todos.org "Task heading" 2
+
+# Archive completed
+org-manager archive ~/desktop/org/todos.org
+```
+
+**Statistics:**
+```bash
+# Count by state
+org-manager count ~/desktop/org/todos.org
+
+# Get all sections
+org-manager sections ~/desktop/org/todos.org
+
+# Search for term
+org-manager search ~/desktop/org/todos.org "wireguard"
+```
+
+All commands return JSON for easy parsing:
+```bash
+org-manager list ~/desktop/org/todos.org --state=NEXT | jq -r '.data[] | "[\(.todo)] \(.heading)"'
+```
+
+### Fallback: Direct Command Line (Legacy)
+
+If org-manager is not available, you can use grep/sed:
+
 ```bash
 # All NEXT tasks
 grep -n "^\*\* NEXT" ~/desktop/org/todos.org
 
-# All STRT tasks
-grep -n "^\*\* STRT" ~/desktop/org/todos.org
-
 # Tasks scheduled for today
 today=$(date +"%Y-%m-%d")
 grep -B1 "SCHEDULED: <$today" ~/desktop/org/todos.org
-```
 
-### Show by Priority
-```bash
 # High priority tasks
 grep "^\*\* TODO \[#[12]\]" ~/desktop/org/todos.org
-```
-
-### Show by Category
-```bash
-# Work tasks
-sed -n '/^\* Work/,/^\* [A-Z]/p' ~/desktop/org/todos.org | grep "^\*\* TODO\|^\*\* NEXT"
-
-# Systems tasks
-sed -n '/^\* Systems/,/^\* [A-Z]/p' ~/desktop/org/todos.org | grep "^\*\* TODO\|^\*\* NEXT"
 ```
 
 ## Suggested Workflows
