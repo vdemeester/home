@@ -516,28 +516,28 @@ _: {
     };
   };
   services = {
-    # Media services on rhea
-    immich.host = "rhea";
-    jellyfin.host = "rhea";
-    jellyseerr.host = "rhea";
-    sonarr.host = "rhea";
-    radarr.host = "rhea";
-    lidarr.host = "rhea";
-    bazarr.host = "rhea";
+    # Media services (proxied through aion/traefik)
+    immich.host = "aion";
+    jellyfin.host = "aion";
+    jellyseerr.host = "aion";
+    sonarr.host = "aion";
+    radarr.host = "aion";
+    lidarr.host = "aion";
+    bazarr.host = "aion";
     transmission = {
-      host = "rhea";
+      host = "aion";
       aliases = [ "t" ];
     };
     syncthing = {
-      host = "rhea";
+      host = "aion";
       aliases = [ "s" ];
     };
-    # MQTT on demeter (routed through rhea/traefik)
-    mqtt.host = "rhea";
-    # Services on sakhalin (routed through rhea/traefik)
-    kiwix.host = "rhea";
-    n8n.host = "rhea";
-    paperless.host = "rhea";
-    grafana.host = "rhea";
+    # MQTT on demeter (routed through aion/traefik)
+    mqtt.host = "aion";
+    # Services on sakhalin (routed through aion/traefik)
+    kiwix.host = "aion";
+    n8n.host = "aion";
+    paperless.host = "aion";
+    grafana.host = "aion";
   };
 }

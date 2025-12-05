@@ -17,13 +17,14 @@ let
   shikoku = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm"; # ssh-keyscan -q -t ed25519 shikoku.sbr.pm
   # wakasu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrAh07USjRnAdS3mMNGdKee1KumjYDLzgXaiZ5LYi2D"; # ssh-keyscan -q -t ed25519 wakasu.sbr.pm
   kyushu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINd795m+P54GlGJdMaGci9pQ9N942VUz8ri2F14+LWxg"; # ssh-keyscan -q -t ed25519 kyushu.sbr.pm
+  aion = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMs2o62unBFN/LHRg3q2N4QyZW0+DC/gjw3yzRbWdzx5"; # ssh-keyscan -q -t ed25519 aion.sbr.pm
   # TODO: kobe
-  # TODO: aion
   # TODO: aix
   desktops = [
     kyushu
   ];
   servers = [
+    aion
     aomi
     athena
     demeter
@@ -92,6 +93,7 @@ in
   # Others
   "secrets/minica.pem.age".publicKeys = users ++ systems;
   "secrets/shikoku/aria2rpcsecret.age".publicKeys = users ++ [ shikoku ];
+  "secrets/aion/gandi.env.age".publicKeys = users ++ [ aion ];
   "secrets/rhea/gandi.env.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/exportarr-sonarr-apikey.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/exportarr-radarr-apikey.age".publicKeys = users ++ [ rhea ];
