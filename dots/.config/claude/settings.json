@@ -1,8 +1,4 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.config/claude/statusline.sh"
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -35,11 +31,9 @@
       }
     ]
   },
-  "skills": {
-    "enabled": true,
-    "directories": [
-      "~/.config/claude/skills"
-    ]
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.config/claude/statusline.sh"
   },
   "enabledPlugins": {
     "bug-hunter@chmouel-cc-plugins": true,
@@ -54,5 +48,11 @@
     "hookify@claude-code-plugins": true,
     "gh-tools@vdemeester-claude-code-plugins": true
   },
-  "alwaysThinkingEnabled": false
+  "alwaysThinkingEnabled": true,
+  "skills": {
+    "enabled": true,
+    "directories": [
+      "~/.config/claude/skills"
+    ]
+  }
 }
