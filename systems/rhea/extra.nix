@@ -360,6 +360,10 @@
     };
     nfs.server = {
       enable = true;
+      # Fixed ports for firewall configuration
+      lockdPort = 4001;
+      mountdPort = 4002;
+      statdPort = 4000;
       exports = ''
                 /neo                      192.168.1.0/24(rw,fsid=0,no_subtree_check) 10.100.0.0/24(rw,fsid=0,no_subtree_check)
                 /neo/backup               192.168.1.0/24(rw,fsid=1,no_subtree_check) 10.100.0.0/24(rw,fsid=1,no_subtree_check)
@@ -524,13 +528,31 @@
 
   networking.useDHCP = lib.mkDefault true;
 
-  # Open firewall for Traefik
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-    1883 # MQTT
-    8883 # MQTTS
-  ];
+  # Open firewall for Traefik and NFS
+  networking.firewall = {
+    allowedTCPPorts = [
+      80
+      443
+      1883 # MQTT
+      8883 # MQTTS
+      # NFS ports
+      111 # rpcbind
+      2049 # NFS daemon
+      4000 # statd
+      4001 # lockd
+      4002 # mountd
+      20048 # mountd (NFSv4)
+    ];
+    allowedUDPPorts = [
+      # NFS ports
+      111 # rpcbind
+      2049 # NFS daemon
+      4000 # statd
+      4001 # lockd
+      4002 # mountd
+      20048 # mountd (NFSv4)
+    ];
+  };
 
   # Environment file for Gandi API key (managed by agenix)
   systemd.services.traefik.serviceConfig = {
