@@ -13,7 +13,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "chmouel";
     repo = "batzconverter";
     rev = finalAttrs.version;
-    sha256 = "sha256-9tN0fr1FcAxBRDpV5l7N6iAQ+1WOb6gEbpcmahfta5o=";
+    hash = "sha256-9tN0fr1FcAxBRDpV5l7N6iAQ+1WOb6gEbpcmahfta5o=";
   };
 
   installPhase = ''

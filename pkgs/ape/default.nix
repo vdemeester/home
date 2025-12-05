@@ -11,7 +11,7 @@ buildGoModule (finalAttrs: {
   src = fetchgit {
     url = "https://git.sr.ht/~vdemeester/ape";
     rev = "v${finalAttrs.version}";
-    sha256 = "sha256-Ww2HuwR5Fx/tnYHARqeuDv2NU26oQPyIjtkYj291WTg=";
+    hash = "sha256-Ww2HuwR5Fx/tnYHARqeuDv2NU26oQPyIjtkYj291WTg=";
   };
   vendorHash = "sha256-XLRjxJu28yt02+SykO8OqvFCl0nSFyVbHKRUGcS7Mrs=";
 

@@ -11,7 +11,7 @@ buildGoModule (finalAttrs: {
   src = fetchgit {
     url = "https://git.sr.ht/~vdemeester/ram";
     rev = "v${finalAttrs.version}";
-    sha256 = "sha256-2Vn8alPlVM5j0VSCZwbmnWdZqfd4qp/g29R3lpLhXv4=";
+    hash = "sha256-2Vn8alPlVM5j0VSCZwbmnWdZqfd4qp/g29R3lpLhXv4=";
   };
   vendorHash = null;
 

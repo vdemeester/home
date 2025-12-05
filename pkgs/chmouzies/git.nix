@@ -15,7 +15,7 @@ stdenv.mkDerivation {
     owner = "chmouel";
     repo = "chmouzies";
     rev = "10773a982503829e5f276a3bd8fd526dab4f92d3";
-    sha256 = "sha256-Lr4tYzgEhvVhJhSRDGuUlrp7XP2iUNX7H2nizlEko3Q=";
+    hash = "sha256-Lr4tYzgEhvVhJhSRDGuUlrp7XP2iUNX7H2nizlEko3Q=";
   };
 
   propagatedBuildInputs = [ python313 ];

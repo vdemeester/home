@@ -15,7 +15,7 @@ buildGoModule (finalAttrs: {
     owner = "estesp";
     repo = "manifest-tool";
     rev = "v${finalAttrs.version}";
-    sha256 = "sha256-aw8c8VhSFexUpQqXDOd/pRSiuRl4njBe+LDONTVK7Uw=";
+    hash = "sha256-aw8c8VhSFexUpQqXDOd/pRSiuRl4njBe+LDONTVK7Uw=";
   };
   vendorHash = null;
 

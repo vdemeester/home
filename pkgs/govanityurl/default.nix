@@ -11,7 +11,7 @@ buildGoModule (finalAttrs: {
   src = fetchgit {
     url = "https://git.sr.ht/~vdemeester/vanityurl";
     rev = "v${finalAttrs.version}";
-    sha256 = "sha256-7AdNbbIcNSPRAi8u0+2b/Lscq4MFXci0+WeND8wZkhU=";
+    hash = "sha256-7AdNbbIcNSPRAi8u0+2b/Lscq4MFXci0+WeND8wZkhU=";
   };
   vendorHash = "sha256-qe7SxvrmgbcUnBUbUVx/l3hLZ1BRHZyDgi8tLtULCms=";
 
