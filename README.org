@@ -316,23 +316,32 @@ All packages are defined in the =/pkgs= directory and are available for both =x8
 - =battery-monitor= - System battery monitoring utility
 - =govanityurl= - Go vanity URL service
 - =manifest-tool= - Container manifest tool
+- =ape= - Git mirror upstream updater
+- =ram= - Golang opinionated continuous testing tool
 
 **** Chmouzies (Helper Scripts)
-- =chmouzies-ai= - AI-related helper scripts
-- =chmouzies-git= - Git workflow helpers
-- =chmouzies-kubernetes= - Kubernetes utilities
+- =chmouzies-ai= - AI-assisted git tools
+- =chmouzies-git= - Git-related helper scripts and GitHub CLI extensions
+- =chmouzies-kubernetes= - Kubernetes and OpenShift helper scripts
+
+**** Claude Code Tools
+- =claude-hooks= - Claude Code hooks for session management, tool output capture, and documentation validation
+- =gh-restart-failed= - List and restart failed GitHub workflow checks on pull requests
+
+**** Media and Content Management
+- =arr= - Unified CLI for managing *arr services (Sonarr, Radarr, Lidarr)
+- =download-kiwix-zim= - Browse and download ZIM files from the Kiwix library using fzf
+- =homepage= - Simple HTML homepage listing all services from globals.nix
 
 **** System Utilities
 - =vrsync= - Custom rsync utility
 - =vde-thinkpad= - ThinkPad-specific utilities
 - =systemd-email= - Email notifications for systemd
 - =nixfmt-plus= - Enhanced Nix formatter
-
-**** Custom Scripts
-- =scripts= - Collection of utility scripts for various tasks
-- =ape= - Custom utility package
-- =ram= - Custom utility package
 - =batzconverter= - Custom conversion utility
+
+**** Documentation and Organization
+- =scripts= - Collection of utility scripts for various tasks
 
 **** Emacs Packages
 - =bookmark-plus= - Enhanced bookmarking for Emacs
@@ -387,13 +396,16 @@ GitHub Actions workflows automatically:
 - =aomi= - Server
 - =sakhalin= - Server
 
-*** Servers (stable, NixOS 25.05)
+*** Servers (stable, NixOS 25.11)
 - =athena= - Raspberry Pi 4
 - =demeter= - Raspberry Pi 4
 - =aix= - Raspberry Pi 4
 - =aion= - aarch64 server
 - =rhea= - aarch64 server
 - =kerkouane= - =x86_64= server
+
+*** Experimental/Test Systems
+- =foo= - Test VM (experimental configuration)
 
 *** Non-NixOS Systems (Imperative Configuration)
 - =nagoya= - Debian server (aarch64)
