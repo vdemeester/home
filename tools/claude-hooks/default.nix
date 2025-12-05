@@ -1,6 +1,9 @@
-{ buildGoModule }:
+{
+  buildGoModule,
+  lib,
+}:
 
-buildGoModule rec {
+buildGoModule {
   pname = "claude-hooks";
   version = "0.1.0";
   src = ./.;
@@ -25,6 +28,8 @@ buildGoModule rec {
 
   meta = {
     description = "Claude Code hooks for session management, tool output capture, and documentation validation";
+    license = lib.licenses.mit;
+    platforms = lib.platforms.unix;
     mainProgram = "claude-hooks-capture-tool-output";
   };
 }

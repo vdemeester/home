@@ -4,21 +4,22 @@
   fetchgit,
 }:
 
-buildGoModule rec {
-  name = "ram-${version}";
+buildGoModule (finalAttrs: {
+  pname = "ram";
   version = "0.3.2";
-  rev = "v${version}";
 
   src = fetchgit {
-    inherit rev;
     url = "https://git.sr.ht/~vdemeester/ram";
-    sha256 = "1zjyw699cxylvgh9zakqyylmjrwxwq36g0jls5iwwm75admgqnfr";
+    rev = "v${finalAttrs.version}";
+    sha256 = "sha256-2Vn8alPlVM5j0VSCZwbmnWdZqfd4qp/g29R3lpLhXv4=";
   };
   vendorHash = null;
 
   meta = {
-    description = "A golang opiniated continuous testing tool 🐏";
+    description = "A golang opinionated continuous testing tool";
     homepage = "https://git.sr.ht/~vdemeester/ram";
     license = lib.licenses.asl20;
+    platforms = lib.platforms.unix;
+    mainProgram = "ram";
   };
-}
+})

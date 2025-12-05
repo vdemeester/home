@@ -3,7 +3,7 @@
   lib,
 }:
 
-buildGoModule rec {
+buildGoModule {
   pname = "battery-monitor";
   version = "0.1.0";
 
@@ -11,10 +11,10 @@ buildGoModule rec {
 
   vendorHash = "sha256-K9lqUdIR2EpLEQMTrlv6bGj3IpwK/yaFCqY7S7nuXg4=";
 
-  meta = with lib; {
+  meta = {
     description = "Battery monitoring tool for laptops";
-    license = licenses.mit;
-    platforms = platforms.linux;
+    license = lib.licenses.mit;
+    platforms = lib.platforms.linux;
     mainProgram = "battery-monitor";
   };
 }
