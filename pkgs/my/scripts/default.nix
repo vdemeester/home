@@ -18,8 +18,9 @@ stdenv.mkDerivation {
     runHook postInstall
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Vincent's personal scripts collection";
-    platforms = platforms.unix;
+    license = lib.licenses.mit;
+    platforms = lib.platforms.linux;
   };
 }
