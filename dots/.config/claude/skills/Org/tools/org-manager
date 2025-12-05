@@ -1,0 +1,476 @@
+#!/usr/bin/env bash
+# org-manager - CLI tool for org-mode file manipulation via Emacs batch mode
+# Copyright (C) 2025 Vincent Demeester
+# Part of Claude Code Org skill
+
+set -euo pipefail
+
+# Configuration
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BATCH_FUNCTIONS="${BATCH_FUNCTIONS:-$SCRIPT_DIR/batch-functions.el}"
+EMACS="${EMACS:-emacs}"
+
+# Debug mode
+DEBUG="${DEBUG:-0}"
+
+# Colors for output (if not outputting JSON)
+if [[ -t 1 ]] && [[ "${JSON_OUTPUT:-1}" != "1" ]]; then
+    RED='\033[0;31m'
+    YELLOW='\033[1;33m'
+    NC='\033[0m' # No Color
+else
+    RED=''
+    YELLOW=''
+    NC=''
+fi
+
+# Error handling
+error() {
+    echo -e "${RED}Error: $*${NC}" >&2
+    exit 1
+}
+
+debug() {
+    if [[ "$DEBUG" == "1" ]]; then
+        echo -e "${YELLOW}Debug: $*${NC}" >&2
+    fi
+}
+
+# Check dependencies
+check_deps() {
+    if ! command -v "$EMACS" &> /dev/null; then
+        error "Emacs not found. Set EMACS environment variable or install emacs."
+    fi
+
+    if [[ ! -f "$BATCH_FUNCTIONS" ]]; then
+        error "batch-functions.el not found at: $BATCH_FUNCTIONS"
+    fi
+}
+
+# Run Emacs in batch mode
+run_elisp() {
+    local elisp_code="$1"
+
+    debug "Running elisp: $elisp_code"
+
+    if [[ "$DEBUG" == "1" ]]; then
+        "$EMACS" --batch --no-init-file \
+            --load "$BATCH_FUNCTIONS" \
+            --eval "$elisp_code" 2>&1
+    else
+        "$EMACS" --batch --no-init-file \
+            --load "$BATCH_FUNCTIONS" \
+            --eval "$elisp_code" 2>/dev/null
+    fi
+}
+
+# Usage information
+usage() {
+    cat <<EOF
+org-manager - Org-mode file manipulation tool
+
+Usage: org-manager <command> <file> [options]
+
+READ COMMANDS:
+  list <file> [--state=STATE] [--priority=N] [--tags=TAG1,TAG2]
+      List TODO items with optional filters
+
+  scheduled <file> [--date=YYYY-MM-DD|today]
+      Get items scheduled for date (default: today)
+
+  count <file> [--state=STATE]
+      Count TODO items by state
+
+  search <file> <term>
+      Search for term in file
+
+  by-section <file> <section>
+      Get TODOs in specific section
+
+  sections <file>
+      List all top-level sections
+
+WRITE COMMANDS:
+  add <file> <heading> --section=NAME [--scheduled=DATE] [--priority=N] [--tags=TAG1,TAG2]
+      Add new TODO item
+
+  update-state <file> <heading> <new-state>
+      Change TODO state (NEXT, STRT, TODO, WAIT, DONE, CANX)
+
+  schedule <file> <heading> <date>
+      Set SCHEDULED date (YYYY-MM-DD)
+
+  deadline <file> <heading> <date>
+      Set DEADLINE date (YYYY-MM-DD)
+
+  priority <file> <heading> <priority>
+      Set priority (1-5)
+
+  archive <file>
+      Archive all DONE and CANX items
+
+OPTIONS:
+  --state=STATE         Filter by TODO state
+  --priority=N          Filter by priority (1-5) or list: 1,2
+  --tags=TAG1,TAG2      Filter by tags (match any)
+  --date=YYYY-MM-DD     Specific date (or 'today')
+  --section=NAME        Section name for new items
+  --scheduled=DATE      Schedule date for new items
+
+ENVIRONMENT:
+  EMACS                 Path to emacs binary (default: emacs)
+  BATCH_FUNCTIONS       Path to batch-functions.el
+  DEBUG                 Enable debug output (1 or 0)
+
+EXAMPLES:
+  # List NEXT tasks
+  org-manager list ~/desktop/org/todos.org --state=NEXT
+
+  # Add high-priority task
+  org-manager add ~/desktop/org/todos.org "Review PR" \\
+    --section=Work --priority=2 --scheduled=2025-12-10
+
+  # Mark task done
+  org-manager update-state ~/desktop/org/todos.org "Review PR" DONE
+
+  # Get today's schedule
+  org-manager scheduled ~/desktop/org/todos.org
+
+  # Count by state
+  org-manager count ~/desktop/org/todos.org
+
+OUTPUT:
+  All commands return JSON for easy parsing:
+  {"success": true, "data": [...]}
+  {"success": false, "error": "message"}
+
+EXIT CODES:
+  0    Success
+  1    General error
+  2    File not found
+  3    Invalid arguments
+
+EOF
+    exit 0
+}
+
+# Parse arguments helper
+parse_option() {
+    local arg="$1"
+    local prefix="$2"
+    echo "${arg#"$prefix"}"
+}
+
+# Commands
+
+cmd_list() {
+    local file="$1"; shift
+    local state="" priority="" tags=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --state=*)
+                state=$(parse_option "$1" "--state=")
+                shift
+                ;;
+            --priority=*)
+                priority=$(parse_option "$1" "--priority=")
+                shift
+                ;;
+            --tags=*)
+                tags=$(parse_option "$1" "--tags=")
+                shift
+                ;;
+            *)
+                error "Unknown option: $1"
+                ;;
+        esac
+    done
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp
+    elisp="(progn
+      (let ((result (org-batch-list-todos \"$file\"
+                      $([ -n "$state" ] && echo "\"$state\"" || echo "nil")
+                      $([ -n "$priority" ] && echo "'($priority)" || echo "nil")
+                      $([ -n "$tags" ] && echo "'(${tags//,/\" \"})" || echo "nil"))))
+        (org-batch-output-json t result))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_scheduled() {
+    local file="$1"; shift
+    local date="today"
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --date=*)
+                date=$(parse_option "$1" "--date=")
+                shift
+                ;;
+            *)
+                error "Unknown option: $1"
+                ;;
+        esac
+    done
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((result (org-batch-scheduled-today \"$file\" \"$date\")))
+        (org-batch-output-json t result))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_count() {
+    local file="$1"; shift
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((result (org-batch-count-by-state \"$file\")))
+        (org-batch-output-json t result))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_search() {
+    local file="$1"
+    local term="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$term" ]] || error "Search term required"
+
+    local elisp="(progn
+      (let ((result (org-batch-search \"$file\" \"$term\")))
+        (org-batch-output-json t result))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_by_section() {
+    local file="$1"
+    local section="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$section" ]] || error "Section name required"
+
+    local elisp="(progn
+      (let ((result (org-batch-by-section \"$file\" \"$section\")))
+        (org-batch-output-json t result))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_sections() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((result (org-batch-get-sections \"$file\")))
+        (org-batch-output-json t result))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_add() {
+    local file="$1"
+    local heading="$2"; shift 2
+    local section="" scheduled="" priority="" tags=""
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --section=*)
+                section=$(parse_option "$1" "--section=")
+                shift
+                ;;
+            --scheduled=*)
+                scheduled=$(parse_option "$1" "--scheduled=")
+                shift
+                ;;
+            --priority=*)
+                priority=$(parse_option "$1" "--priority=")
+                shift
+                ;;
+            --tags=*)
+                tags=$(parse_option "$1" "--tags=")
+                shift
+                ;;
+            *)
+                error "Unknown option: $1"
+                ;;
+        esac
+    done
+
+    [[ -n "$section" ]] || error "--section required"
+
+    local elisp
+    elisp="(progn
+      (let ((result (org-batch-add-todo \"$file\" \"$section\" \"$heading\"
+                      $([ -n "$scheduled" ] && echo "\"$scheduled\"" || echo "nil")
+                      $([ -n "$priority" ] && echo "$priority" || echo "nil")
+                      $([ -n "$tags" ] && echo "'(${tags//,/\" \"})" || echo "nil"))))
+        (if result
+            (org-batch-output-json t (list :added t :heading \"$heading\"))
+          (org-batch-output-error \"Section not found: $section\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_update_state() {
+    local file="$1"
+    local heading="$2"
+    local new_state="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$new_state" ]] || error "New state required"
+
+    local elisp="(progn
+      (let ((result (org-batch-update-state \"$file\" \"$heading\" \"$new_state\")))
+        (if result
+            (org-batch-output-json t (list :updated t :heading \"$heading\" :state \"$new_state\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_schedule() {
+    local file="$1"
+    local heading="$2"
+    local date="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$date" ]] || error "Date required (YYYY-MM-DD)"
+
+    local elisp="(progn
+      (let ((result (org-batch-schedule-task \"$file\" \"$heading\" \"$date\")))
+        (if result
+            (org-batch-output-json t (list :scheduled t :heading \"$heading\" :date \"$date\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_deadline() {
+    local file="$1"
+    local heading="$2"
+    local date="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$date" ]] || error "Date required (YYYY-MM-DD)"
+
+    local elisp="(progn
+      (let ((result (org-batch-set-deadline \"$file\" \"$heading\" \"$date\")))
+        (if result
+            (org-batch-output-json t (list :deadline t :heading \"$heading\" :date \"$date\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_priority() {
+    local file="$1"
+    local heading="$2"
+    local priority="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$priority" ]] || error "Priority required (1-5)"
+
+    local elisp="(progn
+      (let ((result (org-batch-set-priority \"$file\" \"$heading\" $priority)))
+        (if result
+            (org-batch-output-json t (list :priority t :heading \"$heading\" :value $priority))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_archive() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((count (org-batch-archive-done \"$file\")))
+        (org-batch-output-json t (list :archived count)))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+# Main
+main() {
+    check_deps
+
+    if [[ $# -eq 0 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
+        usage
+    fi
+
+    local command="$1"; shift
+
+    case "$command" in
+        list)
+            cmd_list "$@"
+            ;;
+        scheduled)
+            cmd_scheduled "$@"
+            ;;
+        count)
+            cmd_count "$@"
+            ;;
+        search)
+            cmd_search "$@"
+            ;;
+        by-section)
+            cmd_by_section "$@"
+            ;;
+        sections)
+            cmd_sections "$@"
+            ;;
+        add)
+            cmd_add "$@"
+            ;;
+        update-state)
+            cmd_update_state "$@"
+            ;;
+        schedule)
+            cmd_schedule "$@"
+            ;;
+        deadline)
+            cmd_deadline "$@"
+            ;;
+        priority)
+            cmd_priority "$@"
+            ;;
+        archive)
+            cmd_archive "$@"
+            ;;
+        *)
+            error "Unknown command: $command. Use --help for usage."
+            ;;
+    esac
+}
+
+main "$@"

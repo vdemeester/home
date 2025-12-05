@@ -26,6 +26,7 @@ When the user's request matches specific TODO operations, route to the appropria
 | **Add** | "add todo", "create task", "new todo", "capture item" | `workflows/Add.md` |
 | **View** | "show todos", "what's next", "active tasks", "scheduled items" | `workflows/View.md` |
 | **Update** | "mark done", "update todo", "change priority", "reschedule" | `workflows/Update.md` |
+| **ReviewInbox** | "review inbox", "analyze inbox", "suggest refile targets" | `workflows/ReviewInbox.md` |
 | **Refile** | "refile", "move todo", "organize item", "file to project" | `workflows/Refile.md` |
 | **Archive** | "archive done", "clean up", "archive completed" | `workflows/Archive.md` |
 | **Review** | "daily review", "weekly review", "plan week", "review system" | `workflows/Review.md` |
