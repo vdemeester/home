@@ -43,7 +43,7 @@ fi
 # Count agents
 agents_count=0
 if [ -d "$claude_dir/agents" ]; then
-	agents_count=$(find "$claude_dir/agents" -maxdepth 1 -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
+	agents_count=$(find -L "$claude_dir/agents" -maxdepth 1 -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
 fi
 
 # LINE 1: Identity, model, context, directory
