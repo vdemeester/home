@@ -8,9 +8,9 @@ This skill provides reliable access to org-mode files for TODO management, note 
 
 ## Tool: org-manager
 
-CLI tool for org-mode operations via Emacs batch mode.
+CLI tool for org-mode and denote operations via Emacs batch mode.
 
-### Usage
+### TODO Operations
 
 ```bash
 # List TODOs
@@ -28,6 +28,29 @@ CLI tool for org-mode operations via Emacs batch mode.
 
 # Update state
 ./tools/org-manager update-state ~/desktop/org/todos.org "Task name" DONE
+```
+
+### Denote Operations
+
+```bash
+# Create denote-formatted note
+./tools/org-manager denote-create "Note Title" "tag1,tag2,tag3" \
+  --category=homelab --directory=~/desktop/org/notes
+
+# Create with signature (automated notes)
+./tools/org-manager denote-create "Session Log" "history,session" \
+  --signature=pkai --category=history
+
+# Read note metadata
+./tools/org-manager denote-metadata ~/desktop/org/notes/20251205T*.org
+
+# Update note frontmatter
+./tools/org-manager denote-update ~/desktop/org/notes/20251205T*.org \
+  --title="New Title" --tags="new,tags"
+
+# Append content to note
+echo "* New Section" > /tmp/content.org
+./tools/org-manager denote-append ~/desktop/org/notes/20251205T*.org /tmp/content.org
 ```
 
 ### Output
@@ -54,26 +77,39 @@ All commands return JSON:
 
 ### Files
 
-- `tools/batch-functions.el` - Core elisp operations (343 lines)
-- `tools/org-manager` - Bash CLI wrapper (450 lines)
+- `tools/batch-functions.el` - Core elisp TODO operations (343 lines)
+- `tools/denote-batch-functions.el` - Denote note creation and management (300 lines)
+- `tools/org-manager` - Bash CLI wrapper (680 lines)
 
 ### Functions
 
-**Read operations:**
+**TODO Operations (batch-functions.el):**
 - `org-batch-list-todos` - Parse and filter TODOs
 - `org-batch-scheduled-today` - Get scheduled items
 - `org-batch-by-section` - Filter by section
 - `org-batch-count-by-state` - Count statistics
 - `org-batch-search` - Full-text search
 - `org-batch-get-sections` - List sections
-
-**Write operations:**
 - `org-batch-add-todo` - Add new TODO
 - `org-batch-update-state` - Change states
 - `org-batch-schedule-task` - Set SCHEDULED
 - `org-batch-set-deadline` - Set DEADLINE
 - `org-batch-set-priority` - Set priority
 - `org-batch-archive-done` - Archive items
+
+**Denote Operations (denote-batch-functions.el):**
+- `denote-batch-create-note` - Create denote note with proper formatting
+- `denote-batch-create-note-from-file` - Create note with content from file
+- `denote-batch-append-content` - Append content to existing note
+- `denote-batch-update-frontmatter` - Update note metadata
+- `denote-batch-read-metadata` - Read note metadata as JSON
+
+**Features:**
+- Automatic timestamp generation (YYYYMMDDTHHMMSS)
+- Signature support for automated notes (`==pkai`)
+- Proper denote filename format: `TIMESTAMP==SIG--title__tags.org`
+- Org-mode frontmatter generation (#+title, #+date, #+filetags, etc.)
+- JSON output for all operations
 
 ## Performance
 

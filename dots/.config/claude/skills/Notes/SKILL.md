@@ -129,13 +129,46 @@ Additional content...
 
 ## Creating Notes
 
-### Generate Timestamp
+### Using org-manager (Recommended)
+
+The `org-manager` tool provides batch mode denote integration for creating notes programmatically:
+
+```bash
+# Create a simple note
+org-manager denote-create "Note Title" "tag1,tag2,tag3" \
+  --category=homelab --directory=~/desktop/org/notes
+
+# Create with signature (for automated notes)
+org-manager denote-create "Session Summary" "history,session" \
+  --signature=pkai --category=history
+
+# Create with initial content from file
+echo "* Custom Content" > /tmp/content.org
+org-manager denote-create "My Note" "nixos,config" \
+  --content=/tmp/content.org
+```
+
+**Output**: Returns JSON with created file path:
+```json
+{
+  "success": true,
+  "filepath": "/path/to/20251205T140049--note-title__tag1_tag2_tag3.org",
+  "timestamp": "20251205T140049",
+  "message": "Created note: ..."
+}
+```
+
+### Manual Creation
+
+If creating notes manually without org-manager:
+
+#### Generate Timestamp
 ```bash
 # Get current timestamp for identifier
 date +"%Y%m%dT%H%M%S"
 ```
 
-### Generate Full Date
+#### Generate Full Date
 ```bash
 # Get org-mode formatted date
 date +"[%Y-%m-%d %a %H:%M]"
@@ -270,11 +303,33 @@ CLOSED: [2025-12-03 Wed 14:23]
 
 ### Using the Org Skill
 
-This skill can integrate with the **Org skill** for programmatic org-mode operations on note files.
+This skill integrates with the **Org skill** for programmatic org-mode operations on note files.
 
 **Tool location:** `~/.config/claude/skills/Org/tools/org-manager`
 
-**Search notes:**
+**Create notes (denote integration):**
+```bash
+# Create new note with proper denote formatting
+org-manager denote-create "My Note Title" "tag1,tag2" \
+  --category=category --directory=~/desktop/org/notes
+
+# Create automated note with signature
+org-manager denote-create "Session Log" "history,session" \
+  --signature=pkai --category=history
+
+# Read note metadata
+org-manager denote-metadata ~/desktop/org/notes/20251205T*.org
+
+# Update note frontmatter
+org-manager denote-update ~/desktop/org/notes/20251205T*.org \
+  --title="New Title" --tags="new,tags"
+
+# Append content to existing note
+echo "* New Section" > /tmp/content.org
+org-manager denote-append ~/desktop/org/notes/20251205T*.org /tmp/content.org
+```
+
+**Search and query notes:**
 ```bash
 # Search for term across all notes
 org-manager search ~/desktop/org/notes/*.org "wireguard"

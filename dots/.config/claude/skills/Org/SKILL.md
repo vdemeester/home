@@ -24,6 +24,7 @@ Provide reliable, programmatic access to org-mode files using Emacs batch mode a
 
 ### Usage
 
+#### TODO Operations
 ```bash
 # List TODOs
 ./tools/org-manager list ~/desktop/org/todos.org --state=NEXT
@@ -43,6 +44,28 @@ Provide reliable, programmatic access to org-mode files using Emacs batch mode a
 
 # Search
 ./tools/org-manager search ~/desktop/org/todos.org "term"
+```
+
+#### Denote Operations
+```bash
+# Create denote-formatted note
+./tools/org-manager denote-create "My Note Title" "tag1,tag2,tag3" \
+  --category=homelab --directory=~/desktop/org/notes
+
+# Create with signature (for automated notes)
+./tools/org-manager denote-create "Session Log" "history,session" \
+  --signature=pkai --category=history
+
+# Read note metadata
+./tools/org-manager denote-metadata ~/desktop/org/notes/20251205T*.org
+
+# Update note frontmatter
+./tools/org-manager denote-update ~/desktop/org/notes/20251205T*.org \
+  --title="New Title" --tags="new,tags" --category="updated"
+
+# Append content to note
+echo "* New Section" > /tmp/content.org
+./tools/org-manager denote-append ~/desktop/org/notes/20251205T*.org /tmp/content.org
 ```
 
 ### Output Format
@@ -70,6 +93,7 @@ All commands return JSON:
 
 ### Core Functions (batch-functions.el)
 
+**TODO Operations:**
 - `org-batch-list-todos` - Parse and filter TODOs
 - `org-batch-scheduled-today` - Get scheduled items
 - `org-batch-by-section` - Filter by section
@@ -81,6 +105,22 @@ All commands return JSON:
 - `org-batch-set-deadline` - Set DEADLINE
 - `org-batch-set-priority` - Set priority
 - `org-batch-archive-done` - Archive items
+
+### Denote Functions (denote-batch-functions.el)
+
+**Note Creation and Management:**
+- `denote-batch-create-note` - Create denote note with proper naming and frontmatter
+- `denote-batch-create-note-from-file` - Create note with content from file
+- `denote-batch-append-content` - Append content to existing note
+- `denote-batch-update-frontmatter` - Update note metadata (title, tags, category)
+- `denote-batch-read-metadata` - Read note metadata as JSON
+
+**Features:**
+- Automatic timestamp generation (YYYYMMDDTHHMMSS)
+- Signature support for automated notes (e.g., `==pkai`)
+- Proper denote filename format: `TIMESTAMP==SIG--title__tags.org`
+- Org-mode frontmatter generation (#+title, #+date, #+filetags, etc.)
+- JSON output for programmatic integration
 
 ### Configuration
 

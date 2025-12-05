@@ -8,6 +8,7 @@ set -euo pipefail
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BATCH_FUNCTIONS="${BATCH_FUNCTIONS:-$SCRIPT_DIR/batch-functions.el}"
+DENOTE_FUNCTIONS="${DENOTE_FUNCTIONS:-$SCRIPT_DIR/denote-batch-functions.el}"
 EMACS="${EMACS:-emacs}"
 
 # Debug mode
@@ -45,6 +46,10 @@ check_deps() {
     if [[ ! -f "$BATCH_FUNCTIONS" ]]; then
         error "batch-functions.el not found at: $BATCH_FUNCTIONS"
     fi
+
+    if [[ ! -f "$DENOTE_FUNCTIONS" ]]; then
+        error "denote-batch-functions.el not found at: $DENOTE_FUNCTIONS"
+    fi
 }
 
 # Run Emacs in batch mode
@@ -60,6 +65,23 @@ run_elisp() {
     else
         "$EMACS" --batch --no-init-file \
             --load "$BATCH_FUNCTIONS" \
+            --eval "$elisp_code" 2>/dev/null
+    fi
+}
+
+# Run Emacs in batch mode with denote functions
+run_denote_elisp() {
+    local elisp_code="$1"
+
+    debug "Running denote elisp: $elisp_code"
+
+    if [[ "$DEBUG" == "1" ]]; then
+        "$EMACS" --batch --no-init-file \
+            --load "$DENOTE_FUNCTIONS" \
+            --eval "$elisp_code" 2>&1
+    else
+        "$EMACS" --batch --no-init-file \
+            --load "$DENOTE_FUNCTIONS" \
             --eval "$elisp_code" 2>/dev/null
     fi
 }
@@ -109,6 +131,20 @@ WRITE COMMANDS:
   archive <file>
       Archive all DONE and CANX items
 
+DENOTE COMMANDS:
+  denote-create <title> <tags> [--signature=SIG] [--category=CAT] [--directory=DIR] [--content=FILE]
+      Create a denote-formatted note with proper naming and frontmatter
+      Tags: comma-separated list (e.g., nixos,homelab,plan)
+
+  denote-append <filepath> <content-file>
+      Append content to existing denote note
+
+  denote-metadata <filepath>
+      Read metadata from denote note
+
+  denote-update <filepath> [--title=TITLE] [--tags=TAGS] [--category=CAT]
+      Update denote note frontmatter
+
 OPTIONS:
   --state=STATE         Filter by TODO state
   --priority=N          Filter by priority (1-5) or list: 1,2
@@ -138,6 +174,17 @@ EXAMPLES:
 
   # Count by state
   org-manager count ~/desktop/org/todos.org
+
+  # Create denote note
+  org-manager denote-create "NixOS Refactoring Plan" "nixos,refactoring,plan" \\
+    --category=homelab --directory=~/desktop/org/notes
+
+  # Create automated note with signature
+  org-manager denote-create "Session Summary" "history,session" \\
+    --signature=pkai --category=history
+
+  # Read note metadata
+  org-manager denote-metadata ~/desktop/org/notes/20251205T*.org
 
 OUTPUT:
   All commands return JSON for easy parsing:
@@ -420,6 +467,151 @@ cmd_archive() {
     run_elisp "$elisp"
 }
 
+# Denote commands
+
+cmd_denote_create() {
+    local title="$1"
+    local tags="$2"; shift 2
+    local signature="" category="" directory="" content_file=""
+
+    [[ -n "$title" ]] || error "Title required"
+    [[ -n "$tags" ]] || error "Tags required (comma-separated)"
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --signature=*)
+                signature=$(parse_option "$1" "--signature=")
+                shift
+                ;;
+            --category=*)
+                category=$(parse_option "$1" "--category=")
+                shift
+                ;;
+            --directory=*)
+                directory=$(parse_option "$1" "--directory=")
+                shift
+                ;;
+            --content=*)
+                content_file=$(parse_option "$1" "--content=")
+                shift
+                ;;
+            *)
+                error "Unknown option: $1"
+                ;;
+        esac
+    done
+
+    # Convert comma-separated tags to elisp list
+    local tags_list="'(${tags//,/ })"
+
+    # Build elisp call
+    local elisp="(progn"
+
+    if [[ -n "$content_file" ]]; then
+        [[ -f "$content_file" ]] || error "Content file not found: $content_file"
+        elisp="$elisp
+      (denote-batch-create-note-from-file
+        \"$title\"
+        $tags_list
+        \"$content_file\""
+    else
+        elisp="$elisp
+      (denote-batch-create-note
+        \"$title\"
+        $tags_list"
+    fi
+
+    # Add optional parameters
+    [[ -n "$signature" ]] && elisp="$elisp
+        \"$signature\"" || elisp="$elisp
+        nil"
+    [[ -n "$category" ]] && elisp="$elisp
+        \"$category\"" || elisp="$elisp
+        nil"
+    [[ -n "$directory" ]] && elisp="$elisp
+        \"$directory\"" || elisp="$elisp
+        nil"
+
+    elisp="$elisp)
+      (kill-emacs 0))"
+
+    run_denote_elisp "$elisp"
+}
+
+cmd_denote_append() {
+    local filepath="$1"
+    local content_file="$2"
+
+    [[ -f "$filepath" ]] || error "File not found: $filepath"
+    [[ -f "$content_file" ]] || error "Content file not found: $content_file"
+
+    # Read content
+    local content
+    content=$(<"$content_file")
+
+    # Escape quotes for elisp
+    content="${content//\"/\\\"}"
+
+    local elisp="(progn
+      (denote-batch-append-content \"$filepath\" \"$content\")
+      (kill-emacs 0))"
+
+    run_denote_elisp "$elisp"
+}
+
+cmd_denote_metadata() {
+    local filepath="$1"
+
+    [[ -f "$filepath" ]] || error "File not found: $filepath"
+
+    local elisp="(progn
+      (denote-batch-read-metadata \"$filepath\")
+      (kill-emacs 0))"
+
+    run_denote_elisp "$elisp"
+}
+
+cmd_denote_update() {
+    local filepath="$1"; shift
+    local new_title="" new_tags="" new_category=""
+
+    [[ -f "$filepath" ]] || error "File not found: $filepath"
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --title=*)
+                new_title=$(parse_option "$1" "--title=")
+                shift
+                ;;
+            --tags=*)
+                new_tags=$(parse_option "$1" "--tags=")
+                shift
+                ;;
+            --category=*)
+                new_category=$(parse_option "$1" "--category=")
+                shift
+                ;;
+            *)
+                error "Unknown option: $1"
+                ;;
+        esac
+    done
+
+    # Convert tags if provided
+    local tags_list="nil"
+    [[ -n "$new_tags" ]] && tags_list="'(${new_tags//,/ })"
+
+    # shellcheck disable=SC2155
+    local elisp="(progn
+      (denote-batch-update-frontmatter \"$filepath\"
+        $([ -n "$new_title" ] && echo "\"$new_title\"" || echo "nil")
+        $tags_list
+        $([ -n "$new_category" ] && echo "\"$new_category\"" || echo "nil"))
+      (kill-emacs 0))"
+
+    run_denote_elisp "$elisp"
+}
+
 # Main
 main() {
     check_deps
@@ -466,6 +658,18 @@ main() {
             ;;
         archive)
             cmd_archive "$@"
+            ;;
+        denote-create)
+            cmd_denote_create "$@"
+            ;;
+        denote-append)
+            cmd_denote_append "$@"
+            ;;
+        denote-metadata)
+            cmd_denote_metadata "$@"
+            ;;
+        denote-update)
+            cmd_denote_update "$@"
             ;;
         *)
             error "Unknown command: $command. Use --help for usage."
