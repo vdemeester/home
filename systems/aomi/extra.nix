@@ -27,6 +27,8 @@
 
   networking.firewall.enable = false;
 
+  boot.supportedFilesystems = [ "nfs" ];
+
   # TODO make it an option ? (otherwise I'll add it for all)
   users.users.vincent.linger = true;
 
