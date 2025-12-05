@@ -180,6 +180,7 @@ It is shared with iOS and replace the deprecated `org-journal-file' below.")
   ("C-x C-b" . bs-show)
   ("M-o" . other-window)
   ("M-j" . duplicate-dwim)
+  ("<f5>" . revert-buffer)
   ;; (:map completion-preview-active-mode-map
   ;; ("M-n" . #'completion-preview-next-candidate)
   ;; ("M-p" . #'completion-preview-prev-candidate))
