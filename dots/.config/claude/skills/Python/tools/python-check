@@ -1,0 +1,99 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "ruff>=0.8.0",
+#     "mypy>=1.13.0",
+#     "pytest>=8.0.0",
+#     "pytest-cov>=6.0.0",
+# ]
+# ///
+"""Run all Python quality checks: lint, type check, and tests.
+
+This comprehensive check runs:
+1. ruff check (linting)
+2. ruff format --check (formatting)
+3. mypy (type checking)
+4. pytest with coverage (testing)
+"""
+
+import subprocess
+import sys
+from pathlib import Path
+
+
+def run_check(name: str, cmd: list[str]) -> tuple[bool, int]:
+    """Run a check command.
+
+    Args:
+        name: Name of the check
+        cmd: Command and arguments to run
+
+    Returns:
+        Tuple of (success, exit_code)
+    """
+    print(f"\n{'='*60}")
+    print(f"Running: {name}")
+    print(f"{'='*60}")
+    print(f"Command: {' '.join(cmd)}\n")
+
+    result = subprocess.run(cmd, check=False)
+    success = result.returncode == 0
+
+    if success:
+        print(f"\n✓ {name} passed")
+    else:
+        print(f"\n✗ {name} failed")
+
+    return success, result.returncode
+
+
+def main() -> int:
+    """Run all quality checks.
+
+    Returns:
+        Exit code (0 if all checks pass, 1 if any fail)
+    """
+    target = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
+
+    if not target.exists():
+        print(f"Error: {target} does not exist", file=sys.stderr)
+        return 1
+
+    checks: list[tuple[str, list[str]]] = [
+        ("Linting (ruff check)", ["ruff", "check", str(target)]),
+        ("Formatting (ruff format)", ["ruff", "format", "--check", str(target)]),
+        ("Type checking (mypy)", ["mypy", str(target)]),
+        ("Tests (pytest)", ["pytest", "--cov", str(target)]),
+    ]
+
+    results: list[tuple[str, bool, int]] = []
+
+    for name, cmd in checks:
+        success, code = run_check(name, cmd)
+        results.append((name, success, code))
+
+    # Print summary
+    print(f"\n{'='*60}")
+    print("Summary")
+    print(f"{'='*60}")
+
+    all_passed = True
+    for name, success, code in results:
+        status = "✓ PASS" if success else "✗ FAIL"
+        print(f"{status} - {name}")
+        if not success:
+            all_passed = False
+
+    print(f"{'='*60}\n")
+
+    if all_passed:
+        print("✓ All checks passed!")
+        return 0
+    else:
+        print("✗ Some checks failed")
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

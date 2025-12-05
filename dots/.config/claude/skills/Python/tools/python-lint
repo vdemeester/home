@@ -1,0 +1,61 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "ruff>=0.8.0",
+# ]
+# ///
+"""Run ruff linter and formatter on Python code.
+
+This script runs both ruff check and ruff format on the specified directory
+or the current directory if none is provided.
+"""
+
+import subprocess
+import sys
+from pathlib import Path
+
+
+def run_command(cmd: list[str]) -> int:
+    """Run a command and return its exit code.
+
+    Args:
+        cmd: Command and arguments to run
+
+    Returns:
+        Exit code from the command
+    """
+    print(f"Running: {' '.join(cmd)}")
+    result = subprocess.run(cmd, check=False)
+    return result.returncode
+
+
+def main() -> int:
+    """Run linter and formatter.
+
+    Returns:
+        Exit code (0 for success, non-zero for errors)
+    """
+    # Get target directory from args or use current directory
+    target = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
+
+    if not target.exists():
+        print(f"Error: {target} does not exist", file=sys.stderr)
+        return 1
+
+    # Run ruff check
+    check_result = run_command(["ruff", "check", "--fix", str(target)])
+
+    # Run ruff format
+    format_result = run_command(["ruff", "format", str(target)])
+
+    # Return non-zero if either failed
+    if check_result != 0 or format_result != 0:
+        return 1
+
+    print("\n✓ Linting and formatting complete!")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
