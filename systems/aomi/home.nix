@@ -12,6 +12,10 @@
 
   home.packages = with pkgs; [
     gnumake
+
+    go-org-readwise
+    gh-restart-failed
+    claude-hooks
   ];
 
   # Passage update service and timer

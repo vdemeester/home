@@ -51,9 +51,6 @@
     roswell
     sbcl
 
-    # typescript
-    bun
-
     go-org-readwise
     gh-restart-failed
     arr
