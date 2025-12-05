@@ -216,6 +216,31 @@
             ruff.enable = true;
             # shell
             shellcheck.enable = true;
+            # emacs lisp - basic syntax checking
+            elisp-byte-compile = {
+              enable = true; # Disabled by default, can be enabled manually
+              name = "Emacs Lisp byte-compile";
+              entry =
+                let
+                  pkgs = import inputs.nixpkgs { inherit system; };
+                  # Create a wrapper that runs Emacs byte-compilation
+                  elisp-check = pkgs.writeShellScript "elisp-check" ''
+                    ${pkgs.emacs}/bin/emacs --batch \
+                      --eval "(setq byte-compile-error-on-warn t)" \
+                      -f batch-byte-compile "$@"
+                  '';
+                in
+                toString elisp-check;
+              files = "\\.el$";
+              excludes = [
+                "tools/emacs/old/.*"
+                "tools/emacs/elpa/.*"
+                "tools/emacs/transient/.*"
+                "tools/emacs/custom\\.el"
+                "tools/emacs/\\.chatgpt-shell\\.el"
+                "\\.dir-locals\\.el"
+              ];
+            };
           };
         };
       });
