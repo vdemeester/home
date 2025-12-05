@@ -854,8 +854,6 @@ minibuffer, even without explicitly focusing it."
   (put 'diff-hl-inline-popup-hide
        'repeat-map 'diff-hl-command-map))
 
-(use-package diff-hl-inline-popup
-  :after (diff-hl))
 (use-package diff-hl-show-hunk
   :after (diff-hl))
 
