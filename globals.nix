@@ -42,49 +42,9 @@ _: {
   };
   net = {
     dns = {
-      # TODO: https://discourse.nixos.org/t/dynamic-dns-on-bind/21361
-      # TODO: https://github.com/nix-community/dns.nix
-      # Maybe switch to nsd
       cacheNetworks = [
         "192.168.1.0/24"
         "10.100.0.0/24"
-      ];
-      zones = [
-        {
-          # sbr
-          name = "sbr.pm";
-          master = true;
-          slaves = [ ];
-          file = ./secrets/db.sbr.pm;
-        }
-        {
-          # home
-          name = "home";
-          master = true;
-          slaves = [ ];
-          file = ./secrets/db.home;
-        }
-        {
-          # home.reverse
-          name = "192.168.1.in-addr.arpa";
-          master = true;
-          slaves = [ ];
-          file = ./secrets/db.192.168.1;
-        }
-        {
-          # vpn
-          name = "vpn";
-          master = true;
-          slaves = [ ];
-          file = ./secrets/db.vpn;
-        }
-        {
-          # vpn.reverse
-          name = "10.100.0.in-addr.arpa";
-          master = true;
-          slaves = [ ];
-          file = ./secrets/db.10.100.0;
-        }
       ];
     };
     vpn = {
