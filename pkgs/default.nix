@@ -38,7 +38,7 @@ in
       owner = "emacsmirror";
       repo = "bookmark-plus";
       rev = "73b8e1c2195860a8c24b5e2961914780c19cf5e3";
-      sha256 = "09aprlawi3m7qrdas3zlk52niap2sr741qzfpjwc2c22hrlyv8ng";
+      hash = "sha256-z6LtaYZCMMG4vO7jQE7W4qpoRZn0D61axqeOyBXNVyU=";
     };
   };
 
