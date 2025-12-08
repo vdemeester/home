@@ -29,10 +29,15 @@ let
   ];
   sshkeyPerHost = {
     kyushu = "${pkgs.writeText "yubikey5-c1" "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE="}";
+    aomi = "${pkgs.writeText "aomi" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJmTdMKYdgqpbQWBif58VBuwX+GqMGsMfB1ey1TKrM3 vincent@aomi"}";
   };
   defaultSSHKey = sshkeyPerHost.kyushu;
   getSSHKeyForHost =
     h: if builtins.hasAttr h sshkeyPerHost then sshkeyPerHost."${h}" else defaultSSHKey;
+  enableGpgSign = builtins.elem hostname [
+    "aomi"
+    "kyushu"
+  ];
 in
 {
   xdg.configFile."git/allowed_signers".text = '''';
@@ -103,10 +108,10 @@ in
         };
       };
       commit = {
-        gpgSign = true;
+        gpgSign = enableGpgSign;
       };
       tag = {
-        gpgSign = true;
+        gpgSign = enableGpgSign;
       };
       init = {
         defaultBranch = "main";

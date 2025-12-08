@@ -49,6 +49,15 @@ in
           The peer (server) public key
         '';
       };
+      mtu = mkOption {
+        type = with types; nullOr int;
+        default = null;
+        description = ''
+          MTU size for the WireGuard interface.
+          Common values: 1420 (conservative), 1380 (for PPPoE).
+          If null, uses system default.
+        '';
+      };
     };
   };
   config = mkIf cfg.enable {
@@ -81,7 +90,8 @@ in
             persistentKeepalive = 25;
           }
         ];
-      };
+      }
+      // lib.optionalAttrs (cfg.mtu != null) { inherit (cfg) mtu; };
     };
   };
 }
