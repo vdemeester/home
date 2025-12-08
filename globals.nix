@@ -382,14 +382,7 @@ _: {
         id = "YBQ6U6T-TMCZVUG-JNHGLRH-CZNZMHG-GQICVTK-LUXJR3H-KR2SXS7-CTNQCAU";
         folders = {
           org = { };
-          documents = { };
           sync = { };
-          screenshots = {
-            path = "/neo/pictures/vincent/screenshots";
-          };
-          wallpapers = {
-            path = "/neo/pictures/vincent/wallpapers";
-          };
         };
       };
     };
