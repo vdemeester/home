@@ -31,14 +31,10 @@ Each host has a dedicated directory in `/systems/<hostname>` containing:
 - `extra.nix` (optional): Additional host-specific configuration
 - `home.nix` (optional): Host-specific home-manager configuration
 
-The `mkHost` function in `/lib/default.nix` combines these with common modules and applies overlays.
-
 ### System Types
 
 - **Unstable systems** (kyushu, aomi, sakhalin, foobar): Use `nixpkgs` (nixos-unstable)
 - **Stable systems** (athena, demeter, aix, aion, rhea, kerkouane): Use `nixpkgs-25_05` with specific hardware types like "rpi4" for Raspberry Pi 4
-
-Desktop systems can use either "sway" or "niri" window managers, specified in the `mkHost` call.
 
 ### Package Management
 
@@ -52,6 +48,8 @@ Secrets are managed using agenix:
 - Host SSH keys are used for system-level secret decryption
 
 ## Common Commands
+
+Everything should happen using `make` (and `Makefile` accross the repository). You can use `make help` to figure out what it does.
 
 ### Building and Deploying Systems
 

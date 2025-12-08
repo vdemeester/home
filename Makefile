@@ -3,20 +3,30 @@ HOSTS          = $(shell nix flake show --json --all-systems 2>/dev/null | yq '.
 HOSTS_BUILD    = $(addprefix host/, $(addsuffix /build,$(HOSTS)))
 
 .PHONY: all
-all: dry-build
+all: help
 
-# Host operations
+.PHONY: help
+help: ## Show this help message
+	@echo 'Usage: make [target]'
+	@echo ''
+	@echo 'Available targets:'
+	@awk 'BEGIN {FS = ":.*##"} \
+		/^[a-zA-Z_\/%-]+:.*?##/ { printf "  %-30s %s\n", $$1, $$2 } \
+		/^##@/ { printf "\n%s\n", substr($$0, 5) }' $(MAKEFILE_LIST)
+
+##@ Host Operations (Remote)
+
 .PHONY: hosts
-hosts: ${HOSTS_BUILD}
+hosts: ${HOSTS_BUILD} ## List and build all hosts
 	echo ${HOSTS_BUILD} ${HOSTS}
 
-host/%/build: FORCE
+host/%/build: FORCE ## Build a specific remote host (e.g., make host/demeter/build)
 	nix build .#nixosConfigurations.$*.config.system.build.toplevel --no-link
 
-host/%/boot: FORCE
+host/%/boot: FORCE ## Deploy to remote host and activate on next boot (e.g., make host/demeter/boot)
 	nixos-rebuild --target-host root@$*.sbr.pm --flake .#$* boot
 
-host/%/switch: FORCE
+host/%/switch: FORCE ## Deploy to remote host and activate immediately (e.g., make host/demeter/switch)
 	nixos-rebuild --target-host root@$*.sbr.pm --flake .#$* switch
 
 # Host-specific overrides (non-standard DNS/network)
@@ -40,131 +50,104 @@ host/kerkouane/boot:
 host/kerkouane/switch:
 	nixos-rebuild --target-host root@kerkouane.vpn --flake .#kerkouane switch
 
-# Local system operations
+##@ Local System Operations
+
 .PHONY: boot
-boot:
+boot: ## Build and activate local system on next boot
 	sudo nixos-rebuild --flake .# boot
 
 .PHONY: switch
-switch:
+switch: ## Build and activate local system immediately
 	sudo nixos-rebuild --flake .# switch
 
 .PHONY: dry-build
-dry-build:
+dry-build: ## Test build local system without activating
 	nixos-rebuild --flake .# dry-build
 
 .PHONY: build
-build:
+build: ## Build local system without activating
 	nixos-rebuild --flake .# build
 
-# Development
+##@ Development
+
 .PHONY: pre-commit
-pre-commit: fmt
+pre-commit: fmt ## Run pre-commit checks (formatting)
 
 .PHONY: fmt
-fmt:
+fmt: ## Format Nix files
 	nixfmt-plus
 
-# Dotfiles
+##@ Dotfiles
+
 .PHONY: dots
-dots:
+dots: ## Build dotfiles
 	@$(MAKE) -C dots
 
-# Keyboards
+##@ Keyboards
+
 .PHONY: keyboards keyboards/moonlander/build keyboards/moonlander/flash keyboards/moonlander/update keyboards/moonlander/clean
 .PHONY: keyboards/eyelash_corne/build keyboards/eyelash_corne/flash
 .PHONY: keyboards/draw keyboards/moonlander/draw keyboards/eyelash_corne/draw
 
-keyboards/moonlander/build:
-	@$(MAKE) -C keyboards moonlander/build
-
-keyboards/moonlander/flash:
-	@$(MAKE) -C keyboards moonlander/flash
-
-keyboards/moonlander/update:
-	@$(MAKE) -C keyboards moonlander/update
-
-keyboards/moonlander/clean:
-	@$(MAKE) -C keyboards moonlander/clean
-
-keyboards/eyelash_corne/build:
-	@$(MAKE) -C keyboards eyelash_corne/build
-
-keyboards/eyelash_corne/flash:
-	@$(MAKE) -C keyboards eyelash_corne/flash
-
-keyboards/draw:
-	@$(MAKE) -C keyboards draw
-
-keyboards/moonlander/draw:
-	@$(MAKE) -C keyboards moonlander/draw
-
-keyboards/eyelash_corne/draw:
-	@$(MAKE) -C keyboards eyelash_corne/draw
-
-keyboards:
+keyboards: ## Show keyboard-specific help
 	@$(MAKE) -C keyboards help
 
-# DNS
+keyboards/moonlander/build: ## Build Moonlander QMK firmware
+	@$(MAKE) -C keyboards moonlander/build
+
+keyboards/moonlander/flash: ## Flash Moonlander firmware
+	@$(MAKE) -C keyboards moonlander/flash
+
+keyboards/moonlander/update: ## Update Moonlander QMK repository
+	@$(MAKE) -C keyboards moonlander/update
+
+keyboards/moonlander/clean: ## Clean Moonlander build artifacts
+	@$(MAKE) -C keyboards moonlander/clean
+
+keyboards/eyelash_corne/build: ## Build Eyelash Corne ZMK firmware
+	@$(MAKE) -C keyboards eyelash_corne/build
+
+keyboards/eyelash_corne/flash: ## Flash Eyelash Corne firmware
+	@$(MAKE) -C keyboards eyelash_corne/flash
+
+keyboards/draw: ## Generate keymap SVGs for all keyboards
+	@$(MAKE) -C keyboards draw
+
+keyboards/moonlander/draw: ## Generate Moonlander keymap SVG
+	@$(MAKE) -C keyboards moonlander/draw
+
+keyboards/eyelash_corne/draw: ## Generate Eyelash Corne keymap SVG
+	@$(MAKE) -C keyboards eyelash_corne/draw
+
+##@ DNS Management
+
 .PHONY: dns-show
-dns-show:
+dns-show: ## Show current DNS records
 	@bash tools/show-dns.sh
 
 .PHONY: dns-update-gandi
-dns-update-gandi:
+dns-update-gandi: ## Update Gandi DNS records
 	@bash tools/update-gandi-dns.sh
 
 .PHONY: dns-update-gandi-dry-run
-dns-update-gandi-dry-run:
+dns-update-gandi-dry-run: ## Dry-run Gandi DNS update
 	@bash tools/update-gandi-dns.sh --dry-run
 
-# Media Management (*arr Stack)
-# Default values (can be overridden via environment or make arguments)
-LIDARR_URL ?= https://lidarr.sbr.pm
-LIDARR_API_KEY ?= $(shell passage show home/services/lidarr)
-SONARR_URL ?= https://sonarr.sbr.pm
-SONARR_API_KEY ?= $(shell passage show home/services/sonarr)
-RADARR_URL ?= https://radarr.sbr.pm
-RADARR_API_KEY ?= $(shell passage show home/services/radarr)
-EXTRA_ARGS ?=
+##@ Maintenance
 
-.PHONY: lidarr-rename lidarr-retag lidarr-update-paths
-.PHONY: sonarr-rename
-.PHONY: radarr-rename
-
-# Lidarr
-lidarr-rename:
-	@tools/lidarr-rename-albums.py $(LIDARR_URL) $(LIDARR_API_KEY) $(EXTRA_ARGS)
-
-lidarr-retag:
-	@tools/lidarr-retag-albums.py $(LIDARR_URL) $(LIDARR_API_KEY) $(EXTRA_ARGS)
-
-lidarr-update-paths:
-	@tools/lidarr-update-paths.py $(LIDARR_URL) $(LIDARR_API_KEY) $(LIDARR_ROOT_PATH) $(EXTRA_ARGS)
-
-# Sonarr
-sonarr-rename:
-	@tools/sonarr-rename-series.py $(SONARR_URL) $(SONARR_API_KEY) $(EXTRA_ARGS)
-
-# Radarr
-radarr-rename:
-	@tools/radarr-rename-movies.py $(RADARR_URL) $(RADARR_API_KEY) $(EXTRA_ARGS)
-
-# Maintenance
 .PHONY: clean
-clean: clean-system clean-results
+clean: clean-system clean-results ## Clean old generations and build results
 
 .PHONY: clean-system
-clean-system:
+clean-system: ## Delete system generations older than 15 days
 	sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations 15d
 
 .PHONY: clean-results
-clean-results:
+clean-results: ## Remove build result symlinks
 	rm -f result result-*
 
-# Update flake inputs
 .PHONY: update
-update:
+update: ## Update flake inputs
 	nix flake update
 
 FORCE:
