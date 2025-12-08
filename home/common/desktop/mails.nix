@@ -1,4 +1,9 @@
-{ pkgs, hostname, ... }:
+{
+  pkgs,
+  config,
+  hostname,
+  ...
+}:
 {
   accounts.email = {
     maildirBasePath = "desktop/mails";
@@ -90,5 +95,10 @@
 
   programs.mbsync.enable = true;
   programs.msmtp.enable = true;
-  programs.mu.enable = true;
+  programs.mu = {
+    enable = true;
+    # Use XDG_DATA_HOME instead of XDG_CACHE_HOME to persist the mu database
+    # across reboots and prevent re-indexing
+    home = "${config.xdg.dataHome}/mu";
+  };
 }

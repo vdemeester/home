@@ -1599,7 +1599,8 @@ Add this function to the `after-save-hook'."
 (use-package mu4e
   :commands (mu4e)
   :custom
-  (mu4e-mu-home "/home/vincent/.local/cache/mu")
+  (mu4e-mu-home (expand-file-name "mu" (or (getenv "XDG_DATA_HOME")
+                                            (expand-file-name ".local/share" (getenv "HOME")))))
   (mu4e-context-policy 'pick-first)
   (mu4e-change-filenames-when-moving t)
   (mu4e-attachment-dir "~/desktop/downloads")
