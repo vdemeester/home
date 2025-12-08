@@ -353,11 +353,11 @@ _: {
           org = { };
           documents = { };
           sync = { };
-          screenshots = { };
-          wallpapers = { };
-          music = {
-            path = "/neo/music";
-            #   paused = true; # TODO: implement this, start as paused
+          screenshots = {
+            path = "/neo/pictures/vincent/screenshots";
+          };
+          wallpapers = {
+            path = "/neo/pictures/vincent/wallpapers";
           };
         };
       };
@@ -376,6 +376,7 @@ _: {
         ];
       };
       ssh = {
+        # TODO: update this, it will have change
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMs2o62unBFN/LHRg3q2N4QyZW0+DC/gjw3yzRbWdzx5";
       };
       syncthing = {
@@ -384,14 +385,12 @@ _: {
           org = { };
           documents = { };
           sync = { };
-          screenshots = { };
-          wallpapers = { };
-          # photos = {
-          #   paused = true; # TODO: implement this, start as paused
-          # };
-          # music = {
-          #   paused = true; # TODO: implement this, start as paused
-          # };
+          screenshots = {
+            path = "/neo/pictures/vincent/screenshots";
+          };
+          wallpapers = {
+            path = "/neo/pictures/vincent/wallpapers";
+          };
         };
       };
     };
