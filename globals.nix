@@ -366,7 +366,7 @@ _: {
       net = {
         ips = [ "192.168.1.49" ];
         vpn = {
-          pubkey = "T8qfsBiOcZNxUeRHFg+2FPdGj4AuGloJ4b+0uI2jM2w=";
+          pubkey = "USTpNYlBri+ebsbg63ohDilFF/cbHytjI0W9t13VVng=";
           ips = [ "10.100.0.49" ];
         };
         names = [
