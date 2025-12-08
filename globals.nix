@@ -376,11 +376,10 @@ _: {
         ];
       };
       ssh = {
-        # TODO: update this, it will have change
-        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMs2o62unBFN/LHRg3q2N4QyZW0+DC/gjw3yzRbWdzx5";
+        hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAXDNi2KtoRU83y/V5OWnMbFWmxwBknPmrNWV4RChE7R";
       };
       syncthing = {
-        id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
+        id = "YBQ6U6T-TMCZVUG-JNHGLRH-CZNZMHG-GQICVTK-LUXJR3H-KR2SXS7-CTNQCAU";
         folders = {
           org = { };
           documents = { };
