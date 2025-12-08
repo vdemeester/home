@@ -101,4 +101,5 @@
     # across reboots and prevent re-indexing
     home = "${config.xdg.dataHome}/mu";
   };
+  home.packages = with pkgs; [ mblaze ];
 }

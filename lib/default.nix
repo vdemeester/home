@@ -73,6 +73,7 @@
         self.nixosModules.wireguard-server
         self.nixosModules.govanityurl
         self.nixosModules.gosmee
+        self.nixosModules.rsync-replica
         inputs.agenix.nixosModules.default
         ../systems/new.nix
       ];
@@ -116,6 +117,7 @@
         self.nixosModules.wireguard-server
         self.nixosModules.govanityurl
         self.nixosModules.gosmee
+        self.nixosModules.rsync-replica
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager
@@ -179,6 +181,7 @@
         self.nixosModules.wireguard-server
         self.nixosModules.govanityurl
         self.nixosModules.gosmee
+        self.nixosModules.rsync-replica
         inputs.agenix.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
         homeInput.nixosModules.home-manager

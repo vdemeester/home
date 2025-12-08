@@ -138,6 +138,7 @@
         wireguard-server = ./modules/wireguard-server.nix;
         govanityurl = ./modules/govanityurl.nix;
         gosmee = ./modules/gosmee.nix;
+        rsync-replica = ./modules/rsync-replica;
       };
 
       # system-manager configurations
