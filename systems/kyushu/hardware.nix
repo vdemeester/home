@@ -59,4 +59,44 @@
       "_netdev"
     ];
   };
+
+  # NFS mounts from synodine (NFSv3)
+  fileSystems."/net/synodine/usbshare" = {
+    device = "synodine.home:/volumeUSB2/usbshare";
+    fsType = "nfs";
+    options = [
+      "nfsvers=3"
+      "x-systemd.automount"
+      "noauto"
+      "x-systemd.idle-timeout=600"
+      "soft"
+      "_netdev"
+    ];
+  };
+
+  fileSystems."/net/synodine/downloads" = {
+    device = "synodine.home:/volume1/downloads";
+    fsType = "nfs";
+    options = [
+      "nfsvers=3"
+      "x-systemd.automount"
+      "noauto"
+      "x-systemd.idle-timeout=600"
+      "soft"
+      "_netdev"
+    ];
+  };
+
+  fileSystems."/net/synodine/video" = {
+    device = "synodine.home:/volume1/video";
+    fsType = "nfs";
+    options = [
+      "nfsvers=3"
+      "x-systemd.automount"
+      "noauto"
+      "x-systemd.idle-timeout=600"
+      "soft"
+      "_netdev"
+    ];
+  };
 }
