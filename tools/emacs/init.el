@@ -1528,7 +1528,8 @@ Use this function via a hook."
 	 ("C-c n i" . denote-link-or-create)
 	 ("C-c n b" . denote-backlinks)
 	 ("C-c n F f" . denote-find-link)
-	 ("C-c n F b" . denote-find-backlink))
+	 ("C-c n F b" . denote-find-backlink)
+	 ("C-c n r" . vde/org-refile-to-denote))
   :custom
   (denote-directory org-notes-directory)
   (denote-rename-buffer-format "📝 %t")
@@ -1565,7 +1566,39 @@ Add this function to the `after-save-hook'."
      ((string-match "__journal.org$" (buffer-file-name))
       "journal")
      (t
-      (denote-sluggify (denote--retrieve-title-or-filename (buffer-file-name) 'org))))))
+      (denote-sluggify (denote--retrieve-title-or-filename (buffer-file-name) 'org)))))
+
+  (defun vde/org-refile-to-denote ()
+    "Refile to a denote note (existing or new)."
+    (interactive)
+    (let* ((source-buffer (current-buffer))
+	   (files (denote-directory-files))
+	   (choices (mapcar (lambda (f)
+			      (cons (denote-retrieve-title-value f 'org) f))
+			    files))
+	   (selection (completing-read "Refile to note: " (mapcar #'car choices)))
+	   (target (if-let ((match (cdr (assoc selection choices))))
+		       match
+		     (cl-letf (((symbol-function 'denote-title-prompt)
+                                (lambda (&rest _) selection)))
+		       (call-interactively #'denote))))
+	   (target-buffer (find-file-noselect target)))
+      (with-current-buffer target-buffer
+        (org-mode)
+        (save-excursion
+          (goto-char (point-min))
+          (unless (re-search-forward "^\\*+ " nil t)
+	    (goto-char (point-max))
+	    (insert "\n* Notes\n")))
+        (save-buffer))
+      (with-current-buffer source-buffer
+        (let ((org-refile-targets `((,target :maxlevel . 3)))
+	      (org-refile-use-outline-path 'file)
+              (org-refile-target-verify-function nil))
+          (org-refile-cache-clear)
+          ;; Force org to rebuild targets
+          (org-refile-get-targets)
+          (call-interactively #'org-refile))))))
 
 (use-package denote-org
   :after (denote org)
