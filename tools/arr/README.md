@@ -490,6 +490,70 @@ Tip: Lower --match-threshold if too many false negatives. Default is 0.6.
 
 ### Lidarr
 
+#### Queue Management
+
+Manage items in the Lidarr queue with interactive selection. This is especially useful for handling items that need manual import or have errors.
+
+```bash
+# View and manage all queue items interactively
+arr lidarr manage-queue http://localhost:8686 your-api-key
+
+# Show only items that need manual import
+arr lidarr manage-queue http://localhost:8686 your-api-key --filter manual
+
+# Show only items with warnings
+arr lidarr manage-queue http://localhost:8686 your-api-key --filter warning
+
+# Show only items with errors
+arr lidarr manage-queue http://localhost:8686 your-api-key --filter error
+
+# Show only completed items
+arr lidarr manage-queue http://localhost:8686 your-api-key --filter completed
+
+# Remove items and add to blocklist
+arr lidarr manage-queue http://localhost:8686 your-api-key --blocklist
+
+# Keep items in download client when removing from queue
+arr lidarr manage-queue http://localhost:8686 your-api-key --keep-in-client
+
+# Dry run to preview without making changes
+arr lidarr manage-queue http://localhost:8686 your-api-key --filter manual --dry-run
+```
+
+**Filter types:**
+- `all`: Show all queue items (default)
+- `manual`: Items that need manual import
+- `warning`: Items with warnings
+- `error`: Items with errors
+- `completed`: Items that have completed downloading
+
+**Removal options:**
+- `--remove-from-client` (default): Remove the item from your download client
+- `--keep-in-client`: Leave the item in your download client
+- `--blocklist`: Add the release to blocklist to prevent re-downloading
+- `--skip-redownload`: Don't automatically search for a replacement
+
+**Interactive controls:**
+- `TAB`: Select/deselect a queue item
+- `↑/↓` or `j/k`: Navigate queue items
+- `ENTER`: Confirm selection
+- `Ctrl+/`: Toggle preview window (shows detailed information)
+- `Ctrl+↑/↓`: Scroll preview window up/down (page at a time)
+- `Ctrl+u/d`: Scroll preview window up/down (half page at a time)
+- `ESC` or `Ctrl+C`: Cancel
+- Type to filter items
+
+**Preview window shows:**
+- Full item details (artist, album, release date)
+- Download information (status, protocol, client)
+- File size and download progress
+- Quality settings
+- Output path
+- Error and status messages
+- Download ID and timestamps
+
+#### Other Lidarr Commands
+
 ```bash
 # Rename albums
 arr lidarr rename-albums http://localhost:8686 your-api-key
