@@ -2,6 +2,21 @@
 
 Fix broken or failing packages in NixOS/nixpkgs.
 
+## ⚠️ CRITICAL: Always Test With nixpkgs-review wip
+
+**Before submitting your fix PR, you MUST run `nixpkgs-review wip`:**
+
+```bash
+nixpkgs-review wip
+
+# This verifies:
+# ✓ Your fix actually works
+# ✓ Package builds successfully
+# ✓ No new regressions in dependents
+```
+
+**Don't assume your fix works without testing - use nixpkgs-review!**
+
 ## When to Use
 
 - "fix broken package"

@@ -2,6 +2,21 @@
 
 Add new packages to NixOS/nixpkgs repository.
 
+## ⚠️ CRITICAL: Always Test With nixpkgs-review wip
+
+**Before submitting your new package PR, you MUST run `nixpkgs-review wip`:**
+
+```bash
+nixpkgs-review wip
+
+# This verifies:
+# ✓ Your package builds successfully
+# ✓ No evaluation errors
+# ✓ Package can be instantiated
+```
+
+**Untested packages that don't build will be immediately rejected.**
+
 ## When to Use
 
 - "add package to nixpkgs"

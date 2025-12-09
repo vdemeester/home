@@ -2,6 +2,21 @@
 
 Update existing packages in NixOS/nixpkgs to newer versions.
 
+## ⚠️ CRITICAL: Always Test With nixpkgs-review wip
+
+**Before submitting your update PR, you MUST run `nixpkgs-review wip`:**
+
+```bash
+nixpkgs-review wip
+
+# This verifies:
+# ✓ Your updated package builds
+# ✓ All dependent packages still work
+# ✓ No regressions introduced
+```
+
+**This is not optional - CI will catch issues anyway, but wasting CI resources and reviewer time is disrespectful to the community.**
+
 ## When to Use
 
 - "update nixpkgs package"

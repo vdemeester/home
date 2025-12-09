@@ -263,6 +263,34 @@ nix-update --build rust-package
 
 ## Contributing to nixpkgs
 
+### ⚠️ CRITICAL: Always Run nixpkgs-review wip Before Submitting
+
+**Before submitting ANY pull request to nixpkgs, you MUST run `nixpkgs-review wip`:**
+
+```bash
+# This is NOT optional - always run before pushing:
+nixpkgs-review wip
+
+# This ensures:
+# ✓ Your changes build successfully
+# ✓ Dependent packages aren't broken
+# ✓ You catch issues before CI does
+# ✓ You don't waste reviewer time with broken PRs
+```
+
+**Why this matters:**
+- CI takes time and resources - broken PRs waste both
+- Reviewers won't look at PRs that fail basic builds
+- You'll find and fix issues faster locally than through CI
+- It's respectful to the nixpkgs community
+
+**When to run it:**
+- After making any changes (run `nixpkgs-review wip`)
+- After updating a package (run `nixpkgs-review wip`)
+- After fixing a bug (run `nixpkgs-review wip`)
+- Before committing (run `nixpkgs-review wip`)
+- Before pushing (run `nixpkgs-review wip`)
+
 ### Setup nixpkgs Repository
 ```bash
 # Clone nixpkgs
@@ -564,16 +592,17 @@ nix-instantiate --parse default.nix
 
 ## Tips and Tricks
 
-1. **Use --post-result**: Auto-comment on PRs to help maintainers
-2. **Review regularly**: Help reduce PR backlog
-3. **Test on your system**: Real-world testing is valuable
-4. **Be thorough but kind**: Constructive feedback
-5. **Check ofborg results**: CI results before reviewing
-6. **Use nix-update**: Automate version updates
-7. **Review related PRs**: Check for conflicts
-8. **Comment on approach**: Not just build success
-9. **Approve quickly**: Don't block good PRs
-10. **Learn from reviews**: Read other reviewers' comments
+1. **⚠️ ALWAYS run `nixpkgs-review wip` before submitting**: This is the most important step - test your changes locally before pushing
+2. **Use --post-result**: Auto-comment on PRs to help maintainers
+3. **Review regularly**: Help reduce PR backlog
+4. **Test on your system**: Real-world testing is valuable
+5. **Be thorough but kind**: Constructive feedback
+6. **Check ofborg results**: CI results before reviewing
+7. **Use nix-update**: Automate version updates
+8. **Review related PRs**: Check for conflicts
+9. **Comment on approach**: Not just build success
+10. **Approve quickly**: Don't block good PRs
+11. **Learn from reviews**: Read other reviewers' comments
 
 ## Resources
 
