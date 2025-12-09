@@ -44,6 +44,17 @@ void process_num_word_activation(uint8_t layer, const keyrecord_t *record) {
 // Note: F-keys (F1-F15) are intentionally NOT in this list, so they will
 // send from the NUMB layer and then automatically disable numword
 static bool is_num_word_key(uint16_t keycode) {
+    // Extract base keycode from layer-tap, mod-tap, etc.
+    // This handles cases like LT(NAVI,KC_BSPC) -> KC_BSPC
+    switch (keycode) {
+        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+            keycode = keycode & 0xFF;  // Extract the base keycode
+            break;
+        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+            keycode = keycode & 0xFF;  // Extract the base keycode
+            break;
+    }
+
     switch (keycode) {
         // Numbers
         case KC_1 ... KC_0:
