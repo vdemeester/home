@@ -48,6 +48,8 @@
 
     transmission_4-gtk
 
+    forgejo-cli
+
     # lisp
     roswell
     sbcl
