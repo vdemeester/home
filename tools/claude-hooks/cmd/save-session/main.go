@@ -32,18 +32,44 @@ func main() {
 		fmt.Fprintf(os.Stderr, "[save-session] Warning: Could not send notification: %v\n", err)
 	}
 
-	// Output prompt for Claude to save the session
+	// Get session statistics
+	statsCmd := exec.Command("claude-hooks-session-stats")
+	statsCmd.Env = os.Environ()
+	statsOutput, err := statsCmd.Output()
+	if err != nil {
+		// Continue without stats if tool fails
+		fmt.Fprintf(os.Stderr, "[save-session] Warning: Could not get session stats: %v\n", err)
+	}
+
+	// Output directive for Claude to save the session
 	// This will be shown in the conversation
 	fmt.Println("")
 	fmt.Println("---")
 	fmt.Println("")
-	fmt.Println("**Session ending**. Would you like me to save a summary of this session to your history?")
+	fmt.Println("# Automatic Session Summary")
 	fmt.Println("")
-	fmt.Println("I can create a session entry in `~/.config/claude/history/sessions/` documenting:")
-	fmt.Println("- What was accomplished")
-	fmt.Println("- Decisions made")
-	fmt.Println("- Next steps")
-	fmt.Println("- Related notes")
+	fmt.Println("**IMPORTANT**: Please create a session summary and save it to the history directory.")
+	fmt.Println("")
+
+	// Show statistics if available
+	if len(statsOutput) > 0 {
+		fmt.Print(string(statsOutput))
+	}
+
+	fmt.Println("## Instructions")
+	fmt.Println("")
+	fmt.Println("Create a brief summary (2-4 paragraphs) of this session documenting:")
+	fmt.Println("- Primary tasks accomplished")
+	fmt.Println("- Key decisions or solutions")
+	fmt.Println("- Files/systems modified")
+	fmt.Println("- Any remaining work or next steps")
+	fmt.Println("")
+	fmt.Println("Save the summary using the Write tool to:")
+	fmt.Println("`~/.config/claude/history/sessions/<YYYY-MM>/<YYYY-MM-DD>_<brief-slug>.md`")
+	fmt.Println("")
+	fmt.Println("Use the format: `YYYY-MM-DD_<2-4 word slug describing the session>.md`")
+	fmt.Println("")
+	fmt.Println("Example: `~/.config/claude/history/sessions/2025-12/2025-12-10_notification-filtering-arr-completion.md`")
 	fmt.Println("")
 
 	os.Exit(0)

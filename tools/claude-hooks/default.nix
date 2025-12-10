@@ -16,6 +16,7 @@ buildGoModule {
     "cmd/initialize-session"
     "cmd/validate-docs"
     "cmd/save-session"
+    "cmd/session-stats"
   ];
 
   # Rename binaries to have consistent prefix
@@ -24,6 +25,7 @@ buildGoModule {
     mv $out/bin/initialize-session $out/bin/claude-hooks-initialize-session
     mv $out/bin/validate-docs $out/bin/claude-hooks-validate-docs
     mv $out/bin/save-session $out/bin/claude-hooks-save-session
+    mv $out/bin/session-stats $out/bin/claude-hooks-session-stats
   '';
 
   meta = {
