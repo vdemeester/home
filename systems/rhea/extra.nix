@@ -212,6 +212,7 @@
                 n8n = mkRouter "n8n" [ "n8n.sbr.pm" ];
                 paperless = mkRouter "paperless" [ "paperless.sbr.pm" ];
                 grafana = mkRouter "grafana" [ "grafana.sbr.pm" ];
+                dav = mkRouter "dav" [ "dav.sbr.pm" ];
               };
             services =
               syncthingServices
@@ -223,6 +224,7 @@
                 paperless = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8000";
                 grafana = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3000";
                 navidrome = mkService "http://${builtins.head globals.machines.aion.net.ips}:4533";
+                dav = mkService "http://${builtins.head globals.machines.athena.net.ips}:80";
               };
             middlewares =
               syncthingMiddlewares

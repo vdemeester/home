@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   libx,
   globals,
   ...
@@ -16,7 +17,14 @@
   # TODO make it an option ? (otherwise I'll add it for all)
   users.users.vincent.linger = true;
 
-  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/www/" ];
+  # Ensure nginx can access vincent's home directory
+  systemd.services.nginx.serviceConfig = {
+    ReadWritePaths = [ "/home/vincent/sync/boox" ];
+    # Run nginx workers as vincent user for proper permissions
+    User = lib.mkForce "vincent";
+    Group = lib.mkForce "users";
+  };
+
   services = {
     wireguard = {
       enable = true;
@@ -38,7 +46,7 @@
       recommendedOptimisation = true;
       virtualHosts."dav.athena.sbr.pm" = {
         locations."/" = {
-          root = "/var/www/dav";
+          root = "/home/vincent/sync/boox";
           basicAuthFile = "/var/www/dav.auth";
           extraConfig = ''
             						autoindex on;
