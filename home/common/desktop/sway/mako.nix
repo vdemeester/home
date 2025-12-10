@@ -45,6 +45,21 @@ _: {
       "mode=do-not-disturb" = {
         invisible = 1;
       };
+      # Ayla mentions - make urgent
+      "body~=.*[Aa]yla.*" = {
+        background-color = "#900000";
+        text-color = "#ffffff";
+        border-color = "#ff0000";
+        border-size = 4;
+        default-timeout = 0; # Don't auto-dismiss
+      };
+      "summary~=.*[Aa]yla.*" = {
+        background-color = "#900000";
+        text-color = "#ffffff";
+        border-color = "#ff0000";
+        border-size = 4;
+        default-timeout = 0; # Don't auto-dismiss
+      };
       #[app-name="Google Chrome" body~="calendar.google.com.*"]
       #max-visible=2
     };
