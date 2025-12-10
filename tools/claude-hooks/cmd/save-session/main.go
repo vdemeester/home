@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 )
 
 // isSubagentSession checks if this is a subagent session
@@ -22,6 +23,13 @@ func main() {
 	if isSubagentSession() {
 		// Silent exit for subagent sessions
 		os.Exit(0)
+	}
+
+	// Send desktop notification
+	cmd := exec.Command("notify-send", "-u", "low", "Claude Code", "Session ending")
+	if err := cmd.Run(); err != nil {
+		// Silent failure - don't break workflow
+		fmt.Fprintf(os.Stderr, "[save-session] Warning: Could not send notification: %v\n", err)
 	}
 
 	// Output prompt for Claude to save the session

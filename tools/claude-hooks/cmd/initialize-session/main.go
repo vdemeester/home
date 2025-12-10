@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -102,6 +103,13 @@ func main() {
 	tabTitle := "Claude Ready"
 	setTerminalTitle(tabTitle)
 	fmt.Fprintf(os.Stderr, "📍 Session initialized: \"%s\"\n", tabTitle)
+
+	// Send desktop notification
+	cmd := exec.Command("notify-send", "-u", "low", "Claude Code", "Session started")
+	if err := cmd.Run(); err != nil {
+		// Silent failure - don't break workflow
+		fmt.Fprintf(os.Stderr, "[initialize-session] Warning: Could not send notification: %v\n", err)
+	}
 
 	// Log session start to history (silent failure)
 	if err := logSessionStart(); err != nil {

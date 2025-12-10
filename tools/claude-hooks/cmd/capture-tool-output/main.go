@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"time"
 
@@ -109,6 +110,14 @@ func main() {
 	if _, err := f.WriteString(string(jsonData) + "\n"); err != nil {
 		fmt.Fprintf(os.Stderr, "[capture-tool-output] Error writing to file: %v\n", err)
 		os.Exit(0) // Silent failure
+	}
+
+	// Send desktop notification
+	notifyMsg := fmt.Sprintf("Tool executed: %s", data.ToolName)
+	cmd := exec.Command("notify-send", "-u", "low", "Claude Hook", notifyMsg)
+	if err := cmd.Run(); err != nil {
+		// Silent failure - don't break workflow
+		fmt.Fprintf(os.Stderr, "[capture-tool-output] Warning: Could not send notification: %v\n", err)
 	}
 
 	os.Exit(0)
