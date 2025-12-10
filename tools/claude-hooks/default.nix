@@ -18,6 +18,7 @@ buildGoModule {
   subPackages = [
     "cmd/capture-tool-output"
     "cmd/initialize-session"
+    "cmd/update-terminal-title"
     "cmd/validate-docs"
     "cmd/save-session"
     "cmd/session-stats"
@@ -27,6 +28,7 @@ buildGoModule {
   postInstall = ''
     mv $out/bin/capture-tool-output $out/bin/claude-hooks-capture-tool-output
     mv $out/bin/initialize-session $out/bin/claude-hooks-initialize-session
+    mv $out/bin/update-terminal-title $out/bin/claude-hooks-update-terminal-title
     mv $out/bin/validate-docs $out/bin/claude-hooks-validate-docs
     mv $out/bin/save-session $out/bin/claude-hooks-save-session
     mv $out/bin/session-stats $out/bin/claude-hooks-session-stats

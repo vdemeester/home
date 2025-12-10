@@ -16,6 +16,10 @@
           {
             "type": "command",
             "command": "claude-hooks-capture-tool-output"
+          },
+          {
+            "type": "command",
+            "command": "claude-hooks-update-terminal-title"
           }
         ]
       }
