@@ -38,9 +38,14 @@ let
     "aomi"
     "kyushu"
   ];
+  # List of allowed SSH signing keys for git commit verification
+  allowedSigners = ''
+    vincent@aomi ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJmTdMKYdgqpbQWBif58VBuwX+GqMGsMfB1ey1TKrM3
+    vincent@kyushu ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGHMa4rHuBbQQYv+8jvlkFCD2VYRGA4+5fnZAhLx8iDirzfEPqHB60UJWcDeixnJCUlpJjzFbS4crNOXhfCTCTE=
+  '';
 in
 {
-  xdg.configFile."git/allowed_signers".text = '''';
+  xdg.configFile."git/allowed_signers".text = allowedSigners;
   home.packages = with pkgs; [
     git-lfs
     gh
