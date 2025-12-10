@@ -1,0 +1,355 @@
+#!/usr/bin/env bash
+# get-weather - Get current weather conditions
+# Copyright (C) 2025 Vincent Demeester
+# Part of Claude Code Journal skill
+
+set -euo pipefail
+
+# Configuration
+CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/journal-weather"
+CACHE_TIMEOUT=1800  # 30 minutes in seconds
+
+# Colors for output
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+error() {
+    echo -e "${RED}Error: $*${NC}" >&2
+    exit 1
+}
+
+debug() {
+    if [[ "${DEBUG:-0}" == "1" ]]; then
+        echo -e "${YELLOW}Debug: $*${NC}" >&2
+    fi
+}
+
+usage() {
+    cat <<EOF
+get-weather - Get current weather conditions
+
+USAGE:
+    get-weather [location] [options]
+
+ARGUMENTS:
+    location            Optional location (city name, coordinates, airport code)
+                       If not provided, uses current location from IP
+
+OPTIONS:
+    --json              Output as JSON with all fields
+    --temperature       Output temperature only (e.g., "15,2°C")
+    --condition         Output condition only (e.g., "Partly cloudy")
+    --symbol            Output weather symbol only (e.g., "cloud.sun")
+    --all               Output formatted: temp, condition, symbol (default)
+    --no-cache          Don't use cached weather data
+    --help, -h          Show this help
+
+OUTPUT FORMATS:
+    Default:    15,2°C Partly cloudy (cloud.sun)
+    --json:     {"temperature":"15,2°C","condition":"Partly cloudy","symbol":"cloud.sun"}
+    --temperature: 15,2°C
+    --condition:   Partly cloudy
+    --symbol:      cloud.sun
+
+WEATHER SYMBOLS (iOS SF Symbols compatible):
+    sun.max              - Clear/Sunny
+    cloud.sun            - Partly cloudy
+    cloud                - Cloudy/Overcast
+    cloud.rain           - Rain
+    cloud.drizzle        - Light rain/Drizzle
+    cloud.heavyrain      - Heavy rain
+    cloud.snow           - Snow
+    cloud.sleet          - Sleet
+    cloud.fog            - Fog/Mist
+    smoke                - Haze/Smoke
+    wind                 - Windy
+    cloud.bolt           - Thunderstorm
+    moon.stars           - Clear night
+    cloud.moon           - Partly cloudy night
+    cloud.moon.rain      - Rainy night
+
+EXAMPLES:
+    # Get weather for current location
+    get-weather
+
+    # Get weather for specific city
+    get-weather Paris
+
+    # Get just temperature for journelly-manager
+    get-weather --temperature
+
+    # Get all fields as JSON
+    get-weather --json
+
+    # Get weather for coordinates
+    get-weather "48.8566,2.3522"
+
+    # Force refresh (ignore cache)
+    get-weather --no-cache
+
+NOTES:
+    - Uses wttr.in weather service (no API key required)
+    - Weather is cached for 30 minutes to reduce API calls
+    - Automatic location detection via IP if no location specified
+
+VERSION:
+    1.0.0
+
+AUTHOR:
+    Vincent Demeester <vincent@demeester.fr>
+EOF
+}
+
+# Map wttr.in weather codes to iOS SF Symbol names
+map_weather_symbol() {
+    local desc="$1"
+    local is_night="${2:-false}"
+
+    desc=$(echo "$desc" | tr '[:upper:]' '[:lower:]')
+
+    # Night conditions
+    if [[ "$is_night" == "true" ]]; then
+        case "$desc" in
+            *partly*cloudy*|*partly*clear*)
+                echo "cloud.moon"
+                ;;
+            *clear*|*sunny*)
+                echo "moon.stars"
+                ;;
+            *rain*|*drizzle*|*shower*)
+                echo "cloud.moon.rain"
+                ;;
+            *)
+                echo "cloud.moon"
+                ;;
+        esac
+        return
+    fi
+
+    # Day conditions
+    case "$desc" in
+        *partly*cloudy*|*partly*clear*)
+            echo "cloud.sun"
+            ;;
+        *clear*|*sunny*)
+            echo "sun.max"
+            ;;
+        *cloudy*|*overcast*)
+            echo "cloud"
+            ;;
+        *heavy*rain*)
+            echo "cloud.heavyrain"
+            ;;
+        *drizzle*|*light*rain*)
+            echo "cloud.drizzle"
+            ;;
+        *rain*|*shower*)
+            echo "cloud.rain"
+            ;;
+        *snow*)
+            echo "cloud.snow"
+            ;;
+        *sleet*)
+            echo "cloud.sleet"
+            ;;
+        *fog*|*mist*)
+            echo "cloud.fog"
+            ;;
+        *haze*|*smoke*)
+            echo "smoke"
+            ;;
+        *wind*)
+            echo "wind"
+            ;;
+        *thunder*|*storm*)
+            echo "cloud.bolt"
+            ;;
+        *)
+            echo "cloud"
+            ;;
+    esac
+}
+
+# Check if it's currently night time (simple heuristic based on hour)
+is_night() {
+    local hour
+    hour=$(date +%H)
+    # Consider 20:00-06:00 as night
+    [[ $hour -ge 20 || $hour -lt 6 ]]
+}
+
+# Check if cache is valid
+is_cache_valid() {
+    local location="${1:-auto}"
+    local cache_key="${CACHE_FILE}_${location// /_}"
+
+    [[ -f "$cache_key" ]] || return 1
+
+    local cache_age
+    cache_age=$(($(date +%s) - $(stat -c %Y "$cache_key" 2>/dev/null || echo 0)))
+
+    [[ $cache_age -lt $CACHE_TIMEOUT ]]
+}
+
+# Get weather from cache
+get_from_cache() {
+    local location="${1:-auto}"
+    local cache_key="${CACHE_FILE}_${location// /_}"
+
+    if [[ -f "$cache_key" ]]; then
+        cat "$cache_key"
+        return 0
+    fi
+    return 1
+}
+
+# Get weather from wttr.in
+get_from_api() {
+    local location="${1:-}"
+
+    debug "Fetching weather from wttr.in for: ${location:-current location}"
+
+    local url="https://wttr.in/${location}?format=j1"
+    local response
+
+    response=$(curl -s --max-time 10 "$url" 2>/dev/null) || {
+        error "Failed to fetch weather from wttr.in"
+    }
+
+    # Validate response
+    if ! echo "$response" | jq -e '.current_condition' >/dev/null 2>&1; then
+        error "Invalid response from wttr.in"
+    fi
+
+    echo "$response"
+}
+
+# Parse and format output
+format_output() {
+    local data="$1"
+    local format="${2:-all}"
+
+    local temp_c
+    local condition
+    local is_night_time
+
+    # Extract data
+    temp_c=$(echo "$data" | jq -r '.current_condition[0].temp_C // ""')
+    condition=$(echo "$data" | jq -r '.current_condition[0].weatherDesc[0].value // ""')
+
+    if [[ -z "$temp_c" || -z "$condition" ]]; then
+        error "No weather data available"
+    fi
+
+    # Format temperature (use comma as decimal separator to match Journelly format)
+    local temperature="${temp_c}°C"
+
+    # Determine if it's night
+    if is_night; then
+        is_night_time="true"
+    else
+        is_night_time="false"
+    fi
+
+    # Map to symbol
+    local symbol
+    symbol=$(map_weather_symbol "$condition" "$is_night_time")
+
+    case "$format" in
+        json)
+            jq -n \
+                --arg temp "$temperature" \
+                --arg cond "$condition" \
+                --arg sym "$symbol" \
+                '{temperature: $temp, condition: $cond, symbol: $sym}'
+            ;;
+        temperature)
+            echo "$temperature"
+            ;;
+        condition)
+            echo "$condition"
+            ;;
+        symbol)
+            echo "$symbol"
+            ;;
+        all)
+            echo "$temperature $condition ($symbol)"
+            ;;
+        journelly)
+            # Format for journelly-manager command line
+            echo "--temperature=\"$temperature\" --condition=\"$condition\" --symbol=\"$symbol\""
+            ;;
+        *)
+            error "Unknown format: $format"
+            ;;
+    esac
+}
+
+# Main function
+main() {
+    local use_cache=true
+    local format="all"
+    local location=""
+
+    # Parse arguments
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --json)
+                format="json"
+                ;;
+            --temperature)
+                format="temperature"
+                ;;
+            --condition)
+                format="condition"
+                ;;
+            --symbol)
+                format="symbol"
+                ;;
+            --all)
+                format="all"
+                ;;
+            --journelly)
+                format="journelly"
+                ;;
+            --no-cache)
+                use_cache=false
+                ;;
+            --help|-h)
+                usage
+                exit 0
+                ;;
+            -*)
+                error "Unknown option: $1. Use --help for usage."
+                ;;
+            *)
+                location="$1"
+                ;;
+        esac
+        shift
+    done
+
+    local data=""
+    local cache_key="${location:-auto}"
+
+    # Try cache first
+    if [[ "$use_cache" == "true" ]] && is_cache_valid "$cache_key"; then
+        debug "Using cached weather for $cache_key"
+        data=$(get_from_cache "$cache_key")
+    else
+        # Fetch from API
+        data=$(get_from_api "$location")
+
+        # Cache the result
+        mkdir -p "$(dirname "$CACHE_FILE")"
+        local cache_file="${CACHE_FILE}_${cache_key// /_}"
+        echo "$data" > "$cache_file"
+        debug "Weather cached to $cache_file"
+    fi
+
+    # Format and output
+    format_output "$data" "$format"
+}
+
+main "$@"

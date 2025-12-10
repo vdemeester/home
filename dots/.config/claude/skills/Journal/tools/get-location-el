@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# get-location-el - Get location using Emacs Lisp
+# Copyright (C) 2025 Vincent Demeester
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ELISP_FILE="$SCRIPT_DIR/journelly-location-weather.el"
+
+FORMAT="${1:-json}"
+
+exec emacs --batch \
+  --load "$ELISP_FILE" \
+  --eval "(journelly-batch-get-location \"$FORMAT\")" \
+  2>/dev/null

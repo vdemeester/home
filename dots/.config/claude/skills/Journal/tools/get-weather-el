@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# get-weather-el - Get weather using Emacs Lisp
+# Copyright (C) 2025 Vincent Demeester
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ELISP_FILE="$SCRIPT_DIR/journelly-location-weather.el"
+
+LOCATION=""
+FORMAT="json"
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --json) FORMAT="json" ;;
+        --temperature) FORMAT="temperature" ;;
+        --condition) FORMAT="condition" ;;
+        --symbol) FORMAT="symbol" ;;
+        --all) FORMAT="all" ;;
+        *) LOCATION="$1" ;;
+    esac
+    shift
+done
+
+if [[ -n "$LOCATION" ]]; then
+    exec emacs --batch \
+      --load "$ELISP_FILE" \
+      --eval "(journelly-batch-get-weather \"$LOCATION\" \"$FORMAT\")" \
+      2>/dev/null
+else
+    exec emacs --batch \
+      --load "$ELISP_FILE" \
+      --eval "(journelly-batch-get-weather nil \"$FORMAT\")" \
+      2>/dev/null
+fi

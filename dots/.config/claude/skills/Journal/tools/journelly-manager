@@ -1,0 +1,400 @@
+#!/usr/bin/env bash
+# journelly-manager - CLI tool for Journelly journal file manipulation via Emacs batch mode
+# Copyright (C) 2025 Vincent Demeester
+# Part of Claude Code Journal skill
+
+set -euo pipefail
+
+# Configuration
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BATCH_FUNCTIONS="${BATCH_FUNCTIONS:-$SCRIPT_DIR/journelly-batch-functions.el}"
+EMACS="${EMACS:-emacs}"
+
+# Debug mode
+DEBUG="${DEBUG:-0}"
+
+# Colors for output (if not outputting JSON)
+if [[ -t 1 ]] && [[ "${JSON_OUTPUT:-1}" != "1" ]]; then
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[1;33m'
+    BLUE='\033[0;34m'
+    NC='\033[0m' # No Color
+else
+    RED=''
+    GREEN=''
+    YELLOW=''
+    BLUE=''
+    NC=''
+fi
+
+# Error handling
+error() {
+    echo -e "${RED}Error: $*${NC}" >&2
+    exit 1
+}
+
+debug() {
+    if [[ "$DEBUG" == "1" ]]; then
+        echo -e "${YELLOW}Debug: $*${NC}" >&2
+    fi
+}
+
+info() {
+    if [[ "${JSON_OUTPUT:-1}" != "1" ]]; then
+        echo -e "${BLUE}$*${NC}" >&2
+    fi
+}
+
+success() {
+    if [[ "${JSON_OUTPUT:-1}" != "1" ]]; then
+        echo -e "${GREEN}$*${NC}" >&2
+    fi
+}
+
+# Check dependencies
+check_deps() {
+    if ! command -v "$EMACS" &> /dev/null; then
+        error "Emacs not found. Set EMACS environment variable or install emacs."
+    fi
+
+    if [[ ! -f "$BATCH_FUNCTIONS" ]]; then
+        error "journelly-batch-functions.el not found at: $BATCH_FUNCTIONS"
+    fi
+}
+
+# Run Emacs batch command
+run_batch() {
+    local function_call="$1"
+    debug "Running: $EMACS --batch --load \"$BATCH_FUNCTIONS\" --eval \"$function_call\""
+
+    "$EMACS" --batch \
+        --load "$BATCH_FUNCTIONS" \
+        --eval "$function_call" 2>&1
+}
+
+# Usage information
+usage() {
+    cat <<EOF
+journelly-manager - CLI tool for managing Journelly journal files
+
+USAGE:
+    journelly-manager <command> [arguments]
+
+COMMANDS:
+    create FILE LOCATION CONTENT [options]
+        Create new journal entry
+
+        Options:
+            --latitude=LAT         GPS latitude
+            --longitude=LON        GPS longitude
+            --temperature=TEMP     Temperature (e.g., "15,2°C")
+            --condition=COND       Weather condition (e.g., "Cloudy")
+            --symbol=SYM           Weather symbol (e.g., "cloud")
+            --content-file=PATH    Read content from file instead
+
+        Examples:
+            journelly-manager create ~/desktop/org/Journelly.org "Home" "Today was great"
+
+            journelly-manager create ~/desktop/org/Journelly.org "Kyushu" \\
+                "Work session notes" \\
+                --latitude=48.8672 --longitude=2.1851 \\
+                --temperature="15,2°C" --condition="Partly Cloudy" --symbol="cloud.sun"
+
+    append FILE CONTENT [--content-file=PATH]
+        Append to today's journal entry
+
+        Examples:
+            journelly-manager append ~/desktop/org/Journelly.org "Additional thoughts"
+            journelly-manager append ~/desktop/org/Journelly.org --content-file=/tmp/notes.txt
+
+    list FILE [--limit=N]
+        List recent journal entries (default: 10)
+
+        Examples:
+            journelly-manager list ~/desktop/org/Journelly.org
+            journelly-manager list ~/desktop/org/Journelly.org --limit=20
+
+    search FILE QUERY
+        Search journal entries for text
+
+        Examples:
+            journelly-manager search ~/desktop/org/Journelly.org "claude"
+            journelly-manager search ~/desktop/org/Journelly.org "homelab"
+
+    get FILE DATE [TIME]
+        Get specific entry by date and optional time
+
+        Examples:
+            journelly-manager get ~/desktop/org/Journelly.org "2025-12-08"
+            journelly-manager get ~/desktop/org/Journelly.org "2025-12-08" "15:30"
+
+GLOBAL OPTIONS:
+    --help, -h             Show this help message
+    --version              Show version information
+    --debug                Enable debug output
+
+ENVIRONMENT VARIABLES:
+    EMACS                  Path to Emacs binary (default: emacs)
+    BATCH_FUNCTIONS        Path to journelly-batch-functions.el
+    DEBUG                  Enable debug mode (1 or 0)
+    JSON_OUTPUT            Output JSON only (1 or 0)
+
+EXAMPLES:
+    # Create simple entry
+    journelly-manager create ~/desktop/org/Journelly.org "Home" \\
+        "Productive day working on Claude skills."
+
+    # Create entry with weather data
+    journelly-manager create ~/desktop/org/Journelly.org "Rue Jean Bourguignon" \\
+        "Evening reflection" \\
+        --latitude=48.86721 --longitude=2.18509 \\
+        --temperature="8,5°C" --condition="Clear" --symbol="moon.stars"
+
+    # Create entry with content from file
+    echo "My journal thoughts..." > /tmp/entry.txt
+    journelly-manager create ~/desktop/org/Journelly.org "Kyushu" \\
+        --content-file=/tmp/entry.txt
+
+    # Append to today's entry
+    journelly-manager append ~/desktop/org/Journelly.org \\
+        "Update: Made more progress on the project!"
+
+    # List recent entries
+    journelly-manager list ~/desktop/org/Journelly.org --limit=5
+
+    # Search for entries about work
+    journelly-manager search ~/desktop/org/Journelly.org "work"
+
+    # Get specific entry
+    journelly-manager get ~/desktop/org/Journelly.org "2025-12-08" "15:30"
+
+VERSION:
+    1.0.0
+
+AUTHOR:
+    Vincent Demeester <vincent@demeester.fr>
+
+SEE ALSO:
+    Journelly iOS App: https://journelly.com
+    Org-mode: https://orgmode.org
+EOF
+}
+
+# Parse command line arguments
+parse_args() {
+    local cmd="${1:-}"
+    shift || true
+
+    case "$cmd" in
+        create)
+            cmd_create "$@"
+            ;;
+        append)
+            cmd_append "$@"
+            ;;
+        list)
+            cmd_list "$@"
+            ;;
+        search)
+            cmd_search "$@"
+            ;;
+        get)
+            cmd_get "$@"
+            ;;
+        --help|-h|help)
+            usage
+            exit 0
+            ;;
+        --version)
+            echo "journelly-manager 1.0.0"
+            exit 0
+            ;;
+        "")
+            error "No command specified. Use --help for usage."
+            ;;
+        *)
+            error "Unknown command: $cmd. Use --help for usage."
+            ;;
+    esac
+}
+
+# Command: create
+cmd_create() {
+    local file="${1:-}"
+    local location="${2:-}"
+    local content="${3:-}"
+    shift 3 || error "create requires FILE LOCATION CONTENT arguments"
+
+    [[ -z "$file" ]] && error "FILE argument required"
+    [[ -z "$location" ]] && error "LOCATION argument required"
+    [[ ! -f "$file" ]] && error "File not found: $file"
+
+    # Parse optional arguments
+    local latitude=""
+    local longitude=""
+    local temperature=""
+    local condition=""
+    local symbol=""
+    local content_file=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --latitude=*)
+                latitude="${1#*=}"
+                ;;
+            --longitude=*)
+                longitude="${1#*=}"
+                ;;
+            --temperature=*)
+                temperature="${1#*=}"
+                ;;
+            --condition=*)
+                condition="${1#*=}"
+                ;;
+            --symbol=*)
+                symbol="${1#*=}"
+                ;;
+            --content-file=*)
+                content_file="${1#*=}"
+                [[ ! -f "$content_file" ]] && error "Content file not found: $content_file"
+                ;;
+            *)
+                error "Unknown option: $1"
+                ;;
+        esac
+        shift
+    done
+
+    # Build Emacs Lisp call
+    local elisp_call="(journelly-batch-create-entry \"$file\" \"$location\" \"$content\""
+
+    [[ -n "$latitude" ]] && elisp_call="$elisp_call \"$latitude\"" || elisp_call="$elisp_call nil"
+    [[ -n "$longitude" ]] && elisp_call="$elisp_call \"$longitude\"" || elisp_call="$elisp_call nil"
+    [[ -n "$temperature" ]] && elisp_call="$elisp_call \"$temperature\"" || elisp_call="$elisp_call nil"
+    [[ -n "$condition" ]] && elisp_call="$elisp_call \"$condition\"" || elisp_call="$elisp_call nil"
+    [[ -n "$symbol" ]] && elisp_call="$elisp_call \"$symbol\"" || elisp_call="$elisp_call nil"
+    [[ -n "$content_file" ]] && elisp_call="$elisp_call \"$content_file\"" || elisp_call="$elisp_call nil"
+
+    elisp_call="$elisp_call)"
+
+    info "Creating journal entry..."
+    local result
+    result=$(run_batch "$elisp_call")
+    echo "$result"
+
+    if echo "$result" | grep -q '"success":true'; then
+        success "Journal entry created successfully"
+    fi
+}
+
+# Command: append
+cmd_append() {
+    local file="${1:-}"
+    local content="${2:-}"
+    shift 2 || error "append requires FILE CONTENT arguments"
+
+    [[ -z "$file" ]] && error "FILE argument required"
+    [[ ! -f "$file" ]] && error "File not found: $file"
+
+    local content_file=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --content-file=*)
+                content_file="${1#*=}"
+                [[ ! -f "$content_file" ]] && error "Content file not found: $content_file"
+                ;;
+            *)
+                error "Unknown option: $1"
+                ;;
+        esac
+        shift
+    done
+
+    local elisp_call="(journelly-batch-append-to-today \"$file\" \"$content\""
+    [[ -n "$content_file" ]] && elisp_call="$elisp_call \"$content_file\"" || elisp_call="$elisp_call nil"
+    elisp_call="$elisp_call)"
+
+    info "Appending to today's entry..."
+    local result
+    result=$(run_batch "$elisp_call")
+    echo "$result"
+
+    if echo "$result" | grep -q '"success":true'; then
+        success "Content appended successfully"
+    fi
+}
+
+# Command: list
+cmd_list() {
+    local file="${1:-}"
+    shift || error "list requires FILE argument"
+
+    [[ -z "$file" ]] && error "FILE argument required"
+    [[ ! -f "$file" ]] && error "File not found: $file"
+
+    local limit=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --limit=*)
+                limit="${1#*=}"
+                ;;
+            *)
+                error "Unknown option: $1"
+                ;;
+        esac
+        shift
+    done
+
+    local elisp_call="(journelly-batch-list-entries \"$file\""
+    [[ -n "$limit" ]] && elisp_call="$elisp_call \"$limit\"" || elisp_call="$elisp_call nil"
+    elisp_call="$elisp_call)"
+
+    info "Listing recent entries..."
+    run_batch "$elisp_call"
+}
+
+# Command: search
+cmd_search() {
+    local file="${1:-}"
+    local query="${2:-}"
+    shift 2 || error "search requires FILE QUERY arguments"
+
+    [[ -z "$file" ]] && error "FILE argument required"
+    [[ -z "$query" ]] && error "QUERY argument required"
+    [[ ! -f "$file" ]] && error "File not found: $file"
+
+    local elisp_call="(journelly-batch-search \"$file\" \"$query\")"
+
+    info "Searching for: $query"
+    run_batch "$elisp_call"
+}
+
+# Command: get
+cmd_get() {
+    local file="${1:-}"
+    local date="${2:-}"
+    local time="${3:-}"
+    shift 2 || error "get requires FILE DATE arguments"
+
+    [[ -z "$file" ]] && error "FILE argument required"
+    [[ -z "$date" ]] && error "DATE argument required"
+    [[ ! -f "$file" ]] && error "File not found: $file"
+
+    local elisp_call="(journelly-batch-get-entry \"$file\" \"$date\""
+    [[ -n "$time" ]] && elisp_call="$elisp_call \"$time\"" || elisp_call="$elisp_call nil"
+    elisp_call="$elisp_call)"
+
+    info "Getting entry for: $date${time:+ at $time}"
+    run_batch "$elisp_call"
+}
+
+# Main
+main() {
+    check_deps
+    parse_args "$@"
+}
+
+main "$@"
