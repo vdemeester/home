@@ -1,6 +1,8 @@
 {
   buildGoModule,
   lib,
+  makeWrapper,
+  libnotify,
 }:
 
 buildGoModule {
@@ -9,6 +11,8 @@ buildGoModule {
   src = ./.;
 
   vendorHash = "sha256-bdpAteulG3045jPdEpjcT4yGlnxLKDMlK7lk9WVRTKc=";
+
+  nativeBuildInputs = [ makeWrapper ];
 
   # Build all binaries
   subPackages = [
@@ -19,13 +23,17 @@ buildGoModule {
     "cmd/session-stats"
   ];
 
-  # Rename binaries to have consistent prefix
+  # Rename binaries to have consistent prefix and wrap with dependencies
   postInstall = ''
     mv $out/bin/capture-tool-output $out/bin/claude-hooks-capture-tool-output
     mv $out/bin/initialize-session $out/bin/claude-hooks-initialize-session
     mv $out/bin/validate-docs $out/bin/claude-hooks-validate-docs
     mv $out/bin/save-session $out/bin/claude-hooks-save-session
     mv $out/bin/session-stats $out/bin/claude-hooks-session-stats
+
+    # Wrap save-session to include notify-send in PATH
+    wrapProgram $out/bin/claude-hooks-save-session \
+      --prefix PATH : ${lib.makeBinPath [ libnotify ]}
   '';
 
   meta = {

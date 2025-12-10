@@ -25,7 +25,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "claude-hooks-save-session"
+            "command": "/etc/profiles/per-user/vincent/bin/claude-hooks-save-session"
           }
         ]
       }
