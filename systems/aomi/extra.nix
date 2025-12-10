@@ -24,9 +24,13 @@
     # ../common/services/gitea-runner
 
     ../redhat
+
+    # OpenShift port forwarding
+    ./openshift-port-forward.nix
   ];
 
-  networking.firewall.enable = false;
+  # Firewall is enabled in openshift-port-forward.nix
+  # networking.firewall.enable = false;
 
   boot.supportedFilesystems = [ "nfs" ];
 
