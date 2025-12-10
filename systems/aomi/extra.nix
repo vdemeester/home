@@ -12,6 +12,7 @@
     ../common/programs/tmux.nix
     # ../common/services/networkmanager.nix
     # ../common/services/fprint.nix # With yubikey I don't really need this to be honest
+    ../common/services/ansible.nix
     ../common/services/containers.nix
     ../common/services/docker.nix
     ../common/services/libvirt.nix
