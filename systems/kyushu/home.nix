@@ -3,6 +3,7 @@
   imports = [
     ../../home/common/dev/containers.nix
     ../../home/common/dev/tektoncd.nix
+    ../../home/common/services/color-scheme-timer.nix
   ];
   nixpkgs.config.allowUnfree = true;
 
@@ -55,6 +56,16 @@
     gh-restart-failed
     arr
     claude-hooks
+    toggle-color-scheme
   ];
+
+  # Automatic color scheme switching
+  services.color-scheme-timer = {
+    enable = true;
+    latitude = "48.87"; # Paris coordinates
+    longitude = "2.33";
+    lightTime = "07:00"; # Switch to light mode at 7am
+    darkTime = "19:00"; # Switch to dark mode at 7pm
+  };
 
 }

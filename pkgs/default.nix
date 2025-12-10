@@ -24,6 +24,7 @@ in
   gh-restart-failed = pkgs.callPackage ../tools/gh-restart-failed { };
   arr = pkgs.callPackage ../tools/arr { };
   download-kiwix-zim = pkgs.callPackage ../tools/download-kiwix-zim { };
+  toggle-color-scheme = pkgs.callPackage ./toggle-color-scheme { };
   homepage = pkgs.callPackage ./homepage { inherit globals; };
 
   chmouzies-ai = pkgs.callPackage ./chmouzies/ai.nix { };

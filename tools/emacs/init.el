@@ -145,10 +145,64 @@ It is shared with iOS and replace the deprecated `org-journal-file' below.")
 				  (agenda-structure . (variable-pitch light 2.2))
 				  (agenda-date . (variable-pitch regular 1.3))
 				  (t . (regular 1.15))))
-  ;; Default modus-operandi on GUI and modus-vivendi on CLI
+
+  ;; Color scheme management - sync with system dconf settings
+  (defvar vde/themes-plist
+    '(:dark modus-vivendi :light modus-operandi)
+    "Themes to use for dark and light modes.")
+
+  (defun vde/color-scheme-get-system ()
+    "Get current system color scheme from dconf."
+    (when (eq system-type 'gnu/linux)
+      (let* ((raw-scheme (shell-command-to-string
+                          "/run/current-system/sw/bin/dconf read /org/gnome/desktop/interface/color-scheme"))
+             (scheme (string-trim raw-scheme)))
+        (if (string-match-p "prefer-dark" scheme)
+            :dark
+          :light))))
+
+  (defun vde/color-scheme-set-emacs (scheme)
+    "Set Emacs theme based on SCHEME (:dark or :light)."
+    (let ((theme (plist-get vde/themes-plist scheme)))
+      (when theme
+        (mapc #'disable-theme custom-enabled-themes)
+        (load-theme theme :no-confirm))))
+
+  (defun vde/color-scheme-sync ()
+    "Sync Emacs theme with system color scheme."
+    (interactive)
+    (let ((scheme (vde/color-scheme-get-system)))
+      (when scheme
+        (vde/color-scheme-set-emacs scheme))))
+
+  (defun vde/color-scheme-toggle ()
+    "Toggle system color scheme and sync Emacs."
+    (interactive)
+    (when (eq system-type 'gnu/linux)
+      (start-process "toggle-color-scheme" nil "toggle-color-scheme")
+      ;; Wait a bit for the system to update, then sync
+      (run-with-timer 0.5 nil #'vde/color-scheme-sync)))
+
+  ;; Initial theme setup
   (if (display-graphic-p)
-      (load-theme 'modus-operandi :no-confirm)
-    (load-theme 'modus-vivendi :no-confirm)))
+      (vde/color-scheme-sync)
+    (load-theme 'modus-vivendi :no-confirm))
+
+  ;; Watch for dbus signals when color-scheme changes
+  (when (and (eq system-type 'gnu/linux)
+             (require 'dbus nil t))
+    (dbus-register-signal
+     :session
+     "ca.desrt.dconf"
+     "/ca/desrt/dconf/Writer/user"
+     "ca.desrt.dconf.Writer"
+     "Notify"
+     (lambda (&rest args)
+       (when (string-match-p "color-scheme" (format "%s" args))
+         (vde/color-scheme-sync)))))
+
+  ;; Keybinding for toggling color scheme
+  (global-set-key (kbd "C-c t t") #'vde/color-scheme-toggle))
 
 (setopt load-prefer-newer t)              ; Always load newer compiled files
 (setopt ad-redefinition-action 'accept)   ; Silence advice redefinition warnings

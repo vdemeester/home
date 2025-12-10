@@ -197,6 +197,7 @@ binds {
 
     Mod+T { spawn "bash" "-c" "notify-send --icon=clock --category=info --urgency=critical \"$(date +\"%I:%M\")\""; }
     Mod+B { spawn "bash" "-c" "notify-send --icon=battery --category=info --urgency=critical \"$(acpi)\""; }
+    Mod+Shift+T hotkey-overlay-title="Toggle Color Scheme" { spawn "toggle-color-scheme"; }
 
     Mod+Shift+B { spawn "pkill" "-USR1" "waybar"; }
 
