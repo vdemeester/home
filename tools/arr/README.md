@@ -510,6 +510,12 @@ arr lidarr manage-queue http://localhost:8686 your-api-key --filter error
 # Show only completed items
 arr lidarr manage-queue http://localhost:8686 your-api-key --filter completed
 
+# Show completed items where import failed
+arr lidarr manage-queue http://localhost:8686 your-api-key --filter completed --tracked-state importFailed
+
+# Show only items with specific tracked state
+arr lidarr manage-queue http://localhost:8686 your-api-key --tracked-state importing
+
 # Remove items and add to blocklist
 arr lidarr manage-queue http://localhost:8686 your-api-key --blocklist
 
@@ -526,6 +532,15 @@ arr lidarr manage-queue http://localhost:8686 your-api-key --filter manual --dry
 - `warning`: Items with warnings
 - `error`: Items with errors
 - `completed`: Items that have completed downloading
+
+**Tracked states** (use with `--tracked-state`):
+- `importFailed`: Items where import has failed
+- `imported`: Successfully imported items
+- `importing`: Currently importing items
+- `failedPending`: Failed items pending retry
+- And other tracked download states from Lidarr API
+
+You can combine `--filter` and `--tracked-state` to narrow down results (e.g., completed items where import failed).
 
 **Removal options:**
 - `--remove-from-client` (default): Remove the item from your download client

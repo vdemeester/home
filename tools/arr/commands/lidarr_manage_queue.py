@@ -468,46 +468,63 @@ except Exception as e:
 
 
 def filter_queue_items(
-    items: List[Dict[str, Any]], filter_type: str = "all"
+    items: List[Dict[str, Any]],
+    filter_type: str = "all",
+    tracked_state: str = None
 ) -> List[Dict[str, Any]]:
     """
-    Filter queue items by type.
+    Filter queue items by type and tracked state.
 
     Args:
         items: List of queue items
         filter_type: Filter type - 'all', 'manual', 'warning',
                      'error', 'completed'
+        tracked_state: Specific tracked download state to filter by
+                      (e.g., 'importFailed', 'imported', 'importing')
 
     Returns:
         Filtered list of queue items
     """
-    if filter_type == "all":
-        return items
+    filtered = items if filter_type == "all" else []
 
-    filtered = []
-    for item in items:
-        status = item.get("status", "").lower()
-        error_message = item.get("errorMessage", "").lower()
-        tracked_download_status = item.get("trackedDownloadStatus", "")
-        tracked_download_status = tracked_download_status.lower()
+    # First apply the filter_type filter
+    if filter_type != "all":
+        for item in items:
+            status = item.get("status", "").lower()
+            error_message = item.get("errorMessage", "").lower()
+            tracked_download_status = item.get("trackedDownloadStatus", "")
+            tracked_download_status = tracked_download_status.lower()
 
-        if filter_type == "manual":
-            # Items that need manual import
-            if (
-                "warning" in status
-                or "manual" in tracked_download_status
-                or "manual import" in error_message
-            ):
-                filtered.append(item)
-        elif filter_type == "warning":
-            if "warning" in status:
-                filtered.append(item)
-        elif filter_type == "error":
-            if "error" in status or item.get("errorMessage"):
-                filtered.append(item)
-        elif filter_type == "completed":
-            if "completed" in status or "completed" in tracked_download_status:
-                filtered.append(item)
+            if filter_type == "manual":
+                # Items that need manual import
+                if (
+                    "warning" in status
+                    or "manual" in tracked_download_status
+                    or "manual import" in error_message
+                ):
+                    filtered.append(item)
+            elif filter_type == "warning":
+                if "warning" in status:
+                    filtered.append(item)
+            elif filter_type == "error":
+                if "error" in status or item.get("errorMessage"):
+                    filtered.append(item)
+            elif filter_type == "completed":
+                if (
+                    "completed" in status
+                    or "completed" in tracked_download_status
+                ):
+                    filtered.append(item)
+
+    # Then apply the tracked_state filter if specified
+    if tracked_state:
+        tracked_state_lower = tracked_state.lower()
+        filtered = [
+            item
+            for item in filtered
+            if item.get("trackedDownloadState", "").lower()
+            == tracked_state_lower
+        ]
 
     return filtered
 
@@ -516,6 +533,7 @@ def run(
     url: str,
     api_key: str,
     filter_type: str,
+    tracked_state: str,
     remove_from_client: bool,
     blocklist: bool,
     skip_redownload: bool,
@@ -537,17 +555,31 @@ def run(
         print("\nQueue is empty!")
         return
 
-    # Filter items based on filter type
-    filtered_items = filter_queue_items(all_items, filter_type)
+    # Filter items based on filter type and tracked state
+    filtered_items = filter_queue_items(all_items, filter_type, tracked_state)
 
+    # Build filter description
+    filter_desc_parts = []
     if filter_type != "all":
+        filter_desc_parts.append(f"type: {filter_type}")
+    if tracked_state:
+        filter_desc_parts.append(f"tracked state: {tracked_state}")
+
+    if filter_desc_parts:
+        filter_desc = ", ".join(filter_desc_parts)
         print(
             f"Filtered to {len(filtered_items)} items "
-            f"(filter: {filter_type})"
+            f"({filter_desc})"
         )
 
     if not filtered_items:
-        print(f"\nNo items matching filter '{filter_type}'")
+        filter_msg = f"filter '{filter_type}'"
+        if tracked_state:
+            filter_msg = (
+                f"filters (type: {filter_type}, "
+                f"tracked state: {tracked_state})"
+            )
+        print(f"\nNo items matching {filter_msg}")
         return
 
     print_section_header("QUEUE ITEMS")

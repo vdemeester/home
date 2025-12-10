@@ -223,12 +223,13 @@ def lidarr_update_metadata_profile(url, api_key, profile, artist, dry_run, no_co
 @click.argument("url")
 @click.argument("api_key")
 @click.option("--filter", "filter_type", default="all", type=click.Choice(["all", "manual", "warning", "error", "completed"]), help="Filter queue items by type (default: all)")
+@click.option("--tracked-state", default=None, help="Filter by tracked download state (e.g., importFailed, imported, importing)")
 @click.option("--remove-from-client/--keep-in-client", default=True, help="Remove from download client (default: yes)")
 @click.option("--blocklist/--no-blocklist", default=False, help="Add to blocklist (default: no)")
 @click.option("--skip-redownload/--allow-redownload", default=False, help="Skip automatic redownload (default: no)")
 @click.option("--dry-run", is_flag=True, help="Show what would be removed without making changes")
 @click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
-def lidarr_manage_queue(url, api_key, filter_type, remove_from_client, blocklist, skip_redownload, dry_run, no_confirm):
+def lidarr_manage_queue(url, api_key, filter_type, tracked_state, remove_from_client, blocklist, skip_redownload, dry_run, no_confirm):
     """Manage Lidarr queue items with interactive selection.
 
     Browse and remove items from the Lidarr queue, with filtering options
@@ -244,6 +245,13 @@ def lidarr_manage_queue(url, api_key, filter_type, remove_from_client, blocklist
       - error: Items with errors
       - completed: Items that have completed downloading
 
+    Tracked states (use with --tracked-state):
+      - importFailed: Items where import failed
+      - imported: Successfully imported items
+      - importing: Currently importing items
+      - failedPending: Failed items pending retry
+      - (and other tracked download states from Lidarr)
+
     Examples:
         # View and manage all queue items
         arr lidarr manage-queue http://localhost:8686 your-api-key
@@ -251,6 +259,14 @@ def lidarr_manage_queue(url, api_key, filter_type, remove_from_client, blocklist
         # Show only items that need manual import
         arr lidarr manage-queue http://localhost:8686 your-api-key \\
             --filter manual
+
+        # Show completed items where import failed
+        arr lidarr manage-queue http://localhost:8686 your-api-key \\
+            --filter completed --tracked-state importFailed
+
+        # Show only items with specific tracked state
+        arr lidarr manage-queue http://localhost:8686 your-api-key \\
+            --tracked-state importing
 
         # Remove items with errors, add to blocklist
         arr lidarr manage-queue http://localhost:8686 your-api-key \\
@@ -265,6 +281,7 @@ def lidarr_manage_queue(url, api_key, filter_type, remove_from_client, blocklist
         url,
         api_key,
         filter_type,
+        tracked_state,
         remove_from_client,
         blocklist,
         skip_redownload,
