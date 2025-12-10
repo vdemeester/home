@@ -126,7 +126,10 @@
               altHosts = [ "t.sbr.pm" ];
             };
             immich.port = 2283;
-            navidrome.port = 4533;
+            navidrome = {
+              port = 4533;
+              altHosts = [ "music.sbr.pm" ];
+            };
           };
 
           # Generate routers for local services

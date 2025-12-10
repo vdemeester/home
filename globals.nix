@@ -525,6 +525,7 @@ _: {
     };
     # Music streaming on aion (routed through rhea/traefik)
     music.host = "rhea";
+    navidrome.host = "rhea";
     # WebDAV on athena (routed through rhea/traefik)
     dav.host = "rhea";
     # MQTT on demeter (routed through rhea/traefik)
