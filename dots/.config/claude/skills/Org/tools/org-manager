@@ -112,6 +112,9 @@ READ COMMANDS:
   sections <file>
       List all top-level sections
 
+  children <file> <heading>
+      Get direct children of a specific heading
+
 WRITE COMMANDS:
   add <file> <heading> --section=NAME [--scheduled=DATE] [--priority=N] [--tags=TAG1,TAG2]
       Add new TODO item
@@ -174,6 +177,9 @@ EXAMPLES:
 
   # Count by state
   org-manager count ~/desktop/org/todos.org
+
+  # Get children of a heading
+  org-manager children ~/desktop/org/todos.org "Migrate aion"
 
   # Create denote note
   org-manager denote-create "NixOS Refactoring Plan" "nixos,refactoring,plan" \\
@@ -324,6 +330,21 @@ cmd_sections() {
 
     local elisp="(progn
       (let ((result (org-batch-get-sections \"$file\")))
+        (org-batch-output-json t result))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_children() {
+    local file="$1"
+    local heading="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading name required"
+
+    local elisp="(progn
+      (let ((result (org-batch-get-children \"$file\" \"$heading\")))
         (org-batch-output-json t result))
       (kill-emacs 0))"
 
@@ -640,6 +661,9 @@ main() {
             ;;
         sections)
             cmd_sections "$@"
+            ;;
+        children)
+            cmd_children "$@"
             ;;
         add)
             cmd_add "$@"

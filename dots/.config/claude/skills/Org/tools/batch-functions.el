@@ -186,6 +186,32 @@ Returns list of matching headlines with context."
             (push (org-element-property :raw-value hl) sections))))
       (nreverse sections))))
 
+(defun org-batch-get-children (file heading-name)
+  "Get all direct children TODOs of HEADING-NAME in FILE.
+Returns only immediate children (level = parent + 1), not all descendants."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (let ((children '())
+          (parent-level nil)
+          (in-subtree nil))
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (hl)
+          (let ((heading (org-element-property :raw-value hl))
+                (level (org-element-property :level hl)))
+            (cond
+             ;; Found the parent heading
+             ((string= heading heading-name)
+              (setq parent-level level
+                    in-subtree t))
+             ;; We're past the parent's subtree (same or lower level)
+             ((and in-subtree parent-level (<= level parent-level))
+              (setq in-subtree nil))
+             ;; We're in the subtree and this is a direct child
+             ((and in-subtree parent-level (= level (1+ parent-level)))
+              (push (org-batch--element-to-alist hl) children))))))
+      (nreverse children))))
+
 ;;; Write Operations
 
 (defun org-batch-update-state (file heading new-state)
