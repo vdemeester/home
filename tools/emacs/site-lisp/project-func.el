@@ -2,9 +2,26 @@
 ;;; Commentary:
 ;;; Code:
 (require 'project)
-(require 'vterm)
 (require 'json)
 (require 'vc)
+
+;; Declare vterm functions and variables for byte-compiler
+(declare-function vterm "vterm")
+(declare-function vterm-mode "vterm")
+(declare-function vterm-send-string "vterm")
+(declare-function vterm-send-return "vterm")
+(defvar vterm-kill-buffer-on-exit)
+(defvar vterm-shell)
+
+;; Declare eat functions for byte-compiler
+(declare-function eat "eat")
+
+;; Declare magit functions for byte-compiler
+(declare-function magit-status "magit")
+
+;; Project local identifier variable
+(defvar vde/project-local-identifier nil
+  "Identifier for local projects (file name or list of file names).")
 
 (defun in-git-repo-p ()
   "Check if current directory is in a git repository."
@@ -148,10 +165,16 @@ if one already exists."
   (defvar eat-buffer-name)
   (let* ((default-directory (project-root (project-current t)))
 	 (eat-buffer-name (project-prefixed-buffer-name "eat"))
-	 (eat-buffer (get-buffer eat-buffer-name)))
+	 (eat-buffer (get-buffer eat-buffer-name))
+	 (shell (if (file-remote-p default-directory)
+		    ;; For TRAMP, find zsh on remote host or fall back to /bin/zsh
+		    (or (executable-find "zsh" t)
+			"/bin/zsh")
+		  ;; For local, use shell-file-name
+		  shell-file-name)))
     (if (and eat-buffer (not current-prefix-arg))
 	(pop-to-buffer eat-buffer (bound-and-true-p display-comint-buffer-action))
-      (eat shell-file-name))))
+      (eat shell))))
 
 ;;;###autoload
 (defun vde/project-magit-status ()

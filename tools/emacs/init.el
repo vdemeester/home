@@ -66,6 +66,7 @@ It is shared with iOS and replace the deprecated `org-journal-file' below.")
 (setq confirm-kill-emacs #'y-or-n-p)
 
 (setq custom-file (locate-user-emacs-file "custom.el"))
+(require 'cus-edit)
 (setq
  custom-buffer-done-kill nil          ; Kill when existing
  custom-buffer-verbose-help nil       ; Remove redundant help text
@@ -130,6 +131,7 @@ It is shared with iOS and replace the deprecated `org-journal-file' below.")
   (set-fontset-font t 'symbol "Symbola" nil 'append)
 
   (require 'modus-themes)
+  (defvar modus-themes-preset-overrides-cooler)
   (setopt modus-themes-common-palette-overrides
 	  `((border-mode-line-active unspecified)
             (border-mode-line-inactive unspecified)
@@ -731,6 +733,16 @@ minibuffer, even without explicitly focusing it."
   ("C-x p E" . vde/project-eat)
   ("C-x p G" . checkout-github-pr)
   ("C-x p F" . flymake-show-project-diagnostics))
+
+(use-package eat
+  :commands (eat)
+  :init
+  (setq-default explicit-shell-file-name "zsh"
+                shell-file-name "zsh")
+  (setq eat-kill-buffer-on-exit t
+        eat-enable-yank-to-terminal t)
+  :hook ((eshell-mode . eat-eshell-mode)
+         (eshell-mode . eat-eshell-visual-command-mode)))
 
 ;; TODO adapt this to my needs
 ;; (defun tkj/vc-git-grep-current-line ()
