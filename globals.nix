@@ -523,6 +523,8 @@ _: {
       host = "rhea";
       aliases = [ "s" ];
     };
+    # Music streaming on aion (routed through rhea/traefik)
+    music.host = "rhea";
     # MQTT on demeter (routed through rhea/traefik)
     mqtt.host = "rhea";
     # Services on sakhalin (routed through rhea/traefik)
