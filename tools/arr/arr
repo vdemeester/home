@@ -788,4 +788,5 @@ def completion(shell):
 
 
 if __name__ == "__main__":
-    cli()
+    # Fix program name for wrapper and enable shell completion
+    cli(prog_name="arr")
