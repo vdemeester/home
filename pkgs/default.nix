@@ -22,6 +22,7 @@ in
   batzconverter = pkgs.callPackage ./batzconverter { };
   manifest-tool = pkgs.callPackage ./manifest-tool { };
   gh-restart-failed = pkgs.callPackage ../tools/gh-restart-failed { };
+  gh-resolve-conflicts = pkgs.callPackage ../tools/gh-resolve-conflicts { };
   arr = pkgs.callPackage ../tools/arr { };
   download-kiwix-zim = pkgs.callPackage ../tools/download-kiwix-zim { };
   toggle-color-scheme = pkgs.callPackage ./toggle-color-scheme { };

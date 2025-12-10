@@ -54,6 +54,7 @@
 
     go-org-readwise
     gh-restart-failed
+    gh-resolve-conflicts
     arr
     claude-hooks
     toggle-color-scheme
