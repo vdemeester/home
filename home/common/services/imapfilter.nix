@@ -14,9 +14,10 @@
     Service = {
       Type = "oneshot";
       # Use passage to get the password
-      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.imapfilter}/bin/imapfilter -c ${./imapfilter-config.lua} -p <(${pkgs.passage}/bin/passage show mails/icloud/vdemeester)'";
-      # Verbose mode for debugging - uncomment to enable
-      # ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.imapfilter}/bin/imapfilter -v -c ${./imapfilter-config.lua} -p <(${pkgs.passage}/bin/passage show mails/icloud/vdemeester)'";
+      # Verbose mode enabled for testing new filters
+      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.imapfilter}/bin/imapfilter -v -c ${./imapfilter-config.lua} -p <(${pkgs.passage}/bin/passage show mails/icloud/vdemeester)'";
+      # Standard mode (use after testing is complete)
+      # ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.imapfilter}/bin/imapfilter -c ${./imapfilter-config.lua} -p <(${pkgs.passage}/bin/passage show mails/icloud/vdemeester)'";
     };
   };
 
