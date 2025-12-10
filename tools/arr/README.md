@@ -29,6 +29,25 @@ Or install to your profile:
 nix profile install .#arr
 ```
 
+### Shell Completion
+
+Shell completions are automatically installed when using the Nix package. If you need to manually generate completion scripts:
+
+```bash
+# Bash
+arr completion bash > ~/.local/share/bash-completion/completions/arr
+# Or system-wide: arr completion bash | sudo tee /etc/bash_completion.d/arr
+
+# Zsh
+arr completion zsh > ~/.zsh/completions/_arr
+# Then add to .zshrc: fpath=(~/.zsh/completions $fpath)
+
+# Fish
+arr completion fish > ~/.config/fish/completions/arr.fish
+```
+
+After installing, restart your shell or source the completion file.
+
 ## Spotify Playlist Sync
 
 ### Quick Start

@@ -53,9 +53,18 @@ def jellyfin():
 @sonarr.command()
 @click.argument("url")
 @click.argument("api_key")
-@click.option("--dry-run", is_flag=True, help="Show what would be changed without making changes")
-@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
-def rename(url, api_key, dry_run, no_confirm):
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be changed without making changes",
+)
+@click.option(
+    "--no-confirm",
+    "--yolo",
+    is_flag=True,
+    help="Skip interactive confirmation (use with caution)",
+)
+def sonarr_rename(url, api_key, dry_run, no_confirm):
     """Rename series episodes.
 
     Examples:
@@ -69,9 +78,18 @@ def rename(url, api_key, dry_run, no_confirm):
 @radarr.command()
 @click.argument("url")
 @click.argument("api_key")
-@click.option("--dry-run", is_flag=True, help="Show what would be changed without making changes")
-@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
-def rename(url, api_key, dry_run, no_confirm):
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be changed without making changes",
+)
+@click.option(
+    "--no-confirm",
+    "--yolo",
+    is_flag=True,
+    help="Skip interactive confirmation (use with caution)",
+)
+def radarr_rename(url, api_key, dry_run, no_confirm):
     """Rename movies.
 
     Examples:
@@ -85,8 +103,17 @@ def rename(url, api_key, dry_run, no_confirm):
 @lidarr.command("rename-albums")
 @click.argument("url")
 @click.argument("api_key")
-@click.option("--dry-run", is_flag=True, help="Show what would be changed without making changes")
-@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be changed without making changes",
+)
+@click.option(
+    "--no-confirm",
+    "--yolo",
+    is_flag=True,
+    help="Skip interactive confirmation (use with caution)",
+)
 def lidarr_rename_albums(url, api_key, dry_run, no_confirm):
     """Rename albums.
 
@@ -101,8 +128,17 @@ def lidarr_rename_albums(url, api_key, dry_run, no_confirm):
 @lidarr.command("retag-albums")
 @click.argument("url")
 @click.argument("api_key")
-@click.option("--dry-run", is_flag=True, help="Show what would be changed without making changes")
-@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be changed without making changes",
+)
+@click.option(
+    "--no-confirm",
+    "--yolo",
+    is_flag=True,
+    help="Skip interactive confirmation (use with caution)",
+)
 def lidarr_retag_albums(url, api_key, dry_run, no_confirm):
     """Retag albums metadata.
 
@@ -118,13 +154,19 @@ def lidarr_retag_albums(url, api_key, dry_run, no_confirm):
 @click.argument("url")
 @click.argument("api_key")
 @click.argument("music_folder")
-@click.option("--dry-run", is_flag=True, help="Show what would be updated without making changes")
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be updated without making changes",
+)
 def lidarr_update_paths(url, api_key, music_folder, dry_run):
     """Update library paths.
 
     Examples:
-        arr lidarr update-paths http://localhost:8686 your-api-key /data/music
-        arr lidarr update-paths http://localhost:8686 your-api-key /data/music --dry-run
+        arr lidarr update-paths http://localhost:8686 your-api-key \\
+            /data/music
+        arr lidarr update-paths http://localhost:8686 your-api-key \\
+            /data/music --dry-run
     """
     from commands import lidarr_update_paths
     lidarr_update_paths.run(url, api_key, music_folder, dry_run)
@@ -133,12 +175,39 @@ def lidarr_update_paths(url, api_key, music_folder, dry_run):
 @lidarr.command("update-monitoring")
 @click.argument("url")
 @click.argument("api_key")
-@click.option("--monitor", default="future", type=click.Choice(["all", "future", "missing", "existing", "none"]), help="Album monitoring mode (default: future)")
-@click.option("--monitor-new-items", type=click.Choice(["all", "new", "none"]), help="Monitor new items mode - controls automatic monitoring of albums added to MusicBrainz after the artist is in Lidarr")
-@click.option("--artist", "-a", help="Filter by artist name pattern (case-insensitive)")
-@click.option("--dry-run", is_flag=True, help="Show what would be changed without making changes")
-@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
-def lidarr_update_monitoring(url, api_key, monitor, monitor_new_items, artist, dry_run, no_confirm):
+@click.option(
+    "--monitor",
+    default="future",
+    type=click.Choice(["all", "future", "missing", "existing", "none"]),
+    help="Album monitoring mode (default: future)",
+)
+@click.option(
+    "--monitor-new-items",
+    type=click.Choice(["all", "new", "none"]),
+    help=(
+        "Monitor new items mode - controls automatic monitoring "
+        "of albums added to MusicBrainz after the artist is in Lidarr"
+    ),
+)
+@click.option(
+    "--artist",
+    "-a",
+    help="Filter by artist name pattern (case-insensitive)",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be changed without making changes",
+)
+@click.option(
+    "--no-confirm",
+    "--yolo",
+    is_flag=True,
+    help="Skip interactive confirmation (use with caution)",
+)
+def lidarr_update_monitoring(
+    url, api_key, monitor, monitor_new_items, artist, dry_run, no_confirm
+):
     """Update artist monitoring settings.
 
     Changes the monitoring mode for artists in Lidarr. By default updates
@@ -179,17 +248,42 @@ def lidarr_update_monitoring(url, api_key, monitor, monitor_new_items, artist, d
             --dry-run
     """
     from commands import lidarr_update_monitoring
-    lidarr_update_monitoring.run(url, api_key, monitor, monitor_new_items, artist, dry_run, no_confirm)
+
+    lidarr_update_monitoring.run(
+        url, api_key, monitor, monitor_new_items, artist, dry_run, no_confirm
+    )
 
 
 @lidarr.command("update-metadata-profile")
 @click.argument("url")
 @click.argument("api_key")
-@click.option("--profile", "-p", help="Metadata profile name to apply (if not specified, lists available profiles)")
-@click.option("--artist", "-a", help="Filter by artist name pattern (case-insensitive)")
-@click.option("--dry-run", is_flag=True, help="Show what would be changed without making changes")
-@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
-def lidarr_update_metadata_profile(url, api_key, profile, artist, dry_run, no_confirm):
+@click.option(
+    "--profile",
+    "-p",
+    help=(
+        "Metadata profile name to apply "
+        "(if not specified, lists available profiles)"
+    ),
+)
+@click.option(
+    "--artist",
+    "-a",
+    help="Filter by artist name pattern (case-insensitive)",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be changed without making changes",
+)
+@click.option(
+    "--no-confirm",
+    "--yolo",
+    is_flag=True,
+    help="Skip interactive confirmation (use with caution)",
+)
+def lidarr_update_metadata_profile(
+    url, api_key, profile, artist, dry_run, no_confirm
+):
     """Update artist metadata profile settings.
 
     Changes the metadata profile for artists in Lidarr. Metadata profiles
@@ -204,32 +298,79 @@ def lidarr_update_metadata_profile(url, api_key, profile, artist, dry_run, no_co
         arr lidarr update-metadata-profile http://localhost:8686 your-api-key
 
         # Update all artists to a specific metadata profile
-        arr lidarr update-metadata-profile http://localhost:8686 your-api-key \\
-            --profile "Standard"
+        arr lidarr update-metadata-profile http://localhost:8686 \\
+            your-api-key --profile "Standard"
 
         # Update specific artist pattern
-        arr lidarr update-metadata-profile http://localhost:8686 your-api-key \\
-            --profile "Standard" --artist "Taylor Swift"
+        arr lidarr update-metadata-profile http://localhost:8686 \\
+            your-api-key --profile "Standard" --artist "Taylor Swift"
 
         # Dry run to see what would change
-        arr lidarr update-metadata-profile http://localhost:8686 your-api-key \\
-            --profile "Standard" --dry-run
+        arr lidarr update-metadata-profile http://localhost:8686 \\
+            your-api-key --profile "Standard" --dry-run
     """
     from commands import lidarr_update_metadata_profile
-    lidarr_update_metadata_profile.run(url, api_key, profile, artist, dry_run, no_confirm)
+
+    lidarr_update_metadata_profile.run(
+        url, api_key, profile, artist, dry_run, no_confirm
+    )
 
 
 @lidarr.command("manage-queue")
 @click.argument("url")
 @click.argument("api_key")
-@click.option("--filter", "filter_type", default="all", type=click.Choice(["all", "manual", "warning", "error", "completed"]), help="Filter queue items by type (default: all)")
-@click.option("--tracked-state", default=None, help="Filter by tracked download state (e.g., importFailed, imported, importing)")
-@click.option("--remove-from-client/--keep-in-client", default=True, help="Remove from download client (default: yes)")
-@click.option("--blocklist/--no-blocklist", default=False, help="Add to blocklist (default: no)")
-@click.option("--skip-redownload/--allow-redownload", default=False, help="Skip automatic redownload (default: no)")
-@click.option("--dry-run", is_flag=True, help="Show what would be removed without making changes")
-@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
-def lidarr_manage_queue(url, api_key, filter_type, tracked_state, remove_from_client, blocklist, skip_redownload, dry_run, no_confirm):
+@click.option(
+    "--filter",
+    "filter_type",
+    default="all",
+    type=click.Choice(["all", "manual", "warning", "error", "completed"]),
+    help="Filter queue items by type (default: all)",
+)
+@click.option(
+    "--tracked-state",
+    default=None,
+    help=(
+        "Filter by tracked download state "
+        "(e.g., importFailed, imported, importing)"
+    ),
+)
+@click.option(
+    "--remove-from-client/--keep-in-client",
+    default=True,
+    help="Remove from download client (default: yes)",
+)
+@click.option(
+    "--blocklist/--no-blocklist",
+    default=False,
+    help="Add to blocklist (default: no)",
+)
+@click.option(
+    "--skip-redownload/--allow-redownload",
+    default=False,
+    help="Skip automatic redownload (default: no)",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be removed without making changes",
+)
+@click.option(
+    "--no-confirm",
+    "--yolo",
+    is_flag=True,
+    help="Skip interactive confirmation (use with caution)",
+)
+def lidarr_manage_queue(
+    url,
+    api_key,
+    filter_type,
+    tracked_state,
+    remove_from_client,
+    blocklist,
+    skip_redownload,
+    dry_run,
+    no_confirm,
+):
     """Manage Lidarr queue items with interactive selection.
 
     Browse and remove items from the Lidarr queue, with filtering options
@@ -292,18 +433,79 @@ def lidarr_manage_queue(url, api_key, filter_type, tracked_state, remove_from_cl
 
 @lidarr.command("sync-spotify")
 @click.argument("url")
-@click.option("--api-key", "-k", envvar="LIDARR_API_KEY", required=True, help="Lidarr API key")
-@click.option("--spotify-client-id", envvar="SPOTIFY_CLIENT_ID", required=True, help="Spotify application client ID")
-@click.option("--spotify-client-secret", envvar="SPOTIFY_CLIENT_SECRET", required=True, help="Spotify application client secret")
-@click.option("--spotify-username", "-u", envvar="SPOTIFY_USERNAME", help="Spotify username for interactive mode (to list your playlists)")
+@click.option(
+    "--api-key",
+    "-k",
+    envvar="LIDARR_API_KEY",
+    required=True,
+    help="Lidarr API key",
+)
+@click.option(
+    "--spotify-client-id",
+    envvar="SPOTIFY_CLIENT_ID",
+    required=True,
+    help="Spotify application client ID",
+)
+@click.option(
+    "--spotify-client-secret",
+    envvar="SPOTIFY_CLIENT_SECRET",
+    required=True,
+    help="Spotify application client secret",
+)
+@click.option(
+    "--spotify-username",
+    "-u",
+    envvar="SPOTIFY_USERNAME",
+    help="Spotify username for interactive mode (to list your playlists)",
+)
 @click.argument("playlist_ids", nargs=-1, required=False)
-@click.option("--root-folder", default="/music", help="Root folder for music in Lidarr")
-@click.option("--monitor", default="all", type=click.Choice(["all", "future", "missing", "existing", "none"]), help="Album monitoring mode")
-@click.option("--request-delay", default=1.5, type=float, help="Delay between Lidarr API requests (seconds)")
-@click.option("--all-playlists", is_flag=True, help="Select all playlists (skip fzf selection)")
-@click.option("--dry-run", is_flag=True, help="Show what would be added without making changes")
-@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
-def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, spotify_username, playlist_ids, root_folder, monitor, request_delay, all_playlists, dry_run, no_confirm):
+@click.option(
+    "--root-folder",
+    default="/music",
+    help="Root folder for music in Lidarr",
+)
+@click.option(
+    "--monitor",
+    default="all",
+    type=click.Choice(["all", "future", "missing", "existing", "none"]),
+    help="Album monitoring mode",
+)
+@click.option(
+    "--request-delay",
+    default=1.5,
+    type=float,
+    help="Delay between Lidarr API requests (seconds)",
+)
+@click.option(
+    "--all-playlists",
+    is_flag=True,
+    help="Select all playlists (skip fzf selection)",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be added without making changes",
+)
+@click.option(
+    "--no-confirm",
+    "--yolo",
+    is_flag=True,
+    help="Skip interactive confirmation (use with caution)",
+)
+def lidarr_sync_spotify(
+    url,
+    api_key,
+    spotify_client_id,
+    spotify_client_secret,
+    spotify_username,
+    playlist_ids,
+    root_folder,
+    monitor,
+    request_delay,
+    all_playlists,
+    dry_run,
+    no_confirm,
+):
     """Sync Spotify playlists to Lidarr.
 
     Fetches tracks from Spotify playlists and adds missing artists to Lidarr.
@@ -332,7 +534,8 @@ def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, 
         arr lidarr sync-spotify http://localhost:8686
 
         # Select all playlists automatically
-        arr lidarr sync-spotify http://localhost:8686 -u username --all-playlists
+        arr lidarr sync-spotify http://localhost:8686 \\
+            -u username --all-playlists
 
         # Sync specific playlists (no username needed)
         arr lidarr sync-spotify http://localhost:8686 \\
@@ -363,27 +566,114 @@ def lidarr_sync_spotify(url, api_key, spotify_client_id, spotify_client_secret, 
 
 
 @jellyfin.command("sync-spotify")
-@click.option("--url", envvar="JELLYFIN_URL", default="http://localhost:8096", help="Jellyfin server URL")
-@click.option("--api-token", "-t", envvar="JELLYFIN_API_TOKEN", required=True, help="Jellyfin API token")
-@click.option("--user-id", "-i", envvar="JELLYFIN_USER_ID", required=True, help="Jellyfin user ID")
-@click.option("--spotify-client-id", envvar="SPOTIFY_CLIENT_ID", required=True, help="Spotify application client ID")
-@click.option("--spotify-client-secret", envvar="SPOTIFY_CLIENT_SECRET", required=True, help="Spotify application client secret")
-@click.option("--spotify-username", "-u", envvar="SPOTIFY_USERNAME", help="Spotify username for interactive mode (to list your playlists)")
-@click.option("--playlist-id", "-p", "playlist_ids", multiple=True, help="Spotify playlist ID (can be specified multiple times)")
-@click.option("--all", "--all-playlists", "all_playlists", is_flag=True, help="Sync all user playlists (requires --spotify-username)")
-@click.option("--match-threshold", default=0.6, type=float, help="Minimum confidence score for track matching (0.0-1.0)")
-@click.option("--public", is_flag=True, help="Make created playlists public")
-@click.option("--skip-existing", is_flag=True, help="Skip playlists that already exist in Jellyfin")
-@click.option("--dry-run", is_flag=True, help="Show what would be created without making changes")
-@click.option("--no-confirm", "--yolo", is_flag=True, help="Skip interactive confirmation (use with caution)")
-@click.option("--debug", is_flag=True, help="Show debug output for troubleshooting")
-def jellyfin_sync_spotify(url, api_token, user_id, spotify_client_id, spotify_client_secret, spotify_username, playlist_ids, all_playlists, match_threshold, public, skip_existing, dry_run, no_confirm, debug):
+@click.option(
+    "--url",
+    envvar="JELLYFIN_URL",
+    default="http://localhost:8096",
+    help="Jellyfin server URL",
+)
+@click.option(
+    "--api-token",
+    "-t",
+    envvar="JELLYFIN_API_TOKEN",
+    required=True,
+    help="Jellyfin API token",
+)
+@click.option(
+    "--user-id",
+    "-i",
+    envvar="JELLYFIN_USER_ID",
+    required=True,
+    help="Jellyfin user ID",
+)
+@click.option(
+    "--spotify-client-id",
+    envvar="SPOTIFY_CLIENT_ID",
+    required=True,
+    help="Spotify application client ID",
+)
+@click.option(
+    "--spotify-client-secret",
+    envvar="SPOTIFY_CLIENT_SECRET",
+    required=True,
+    help="Spotify application client secret",
+)
+@click.option(
+    "--spotify-username",
+    "-u",
+    envvar="SPOTIFY_USERNAME",
+    help="Spotify username for interactive mode (to list your playlists)",
+)
+@click.option(
+    "--playlist-id",
+    "-p",
+    "playlist_ids",
+    multiple=True,
+    help="Spotify playlist ID (can be specified multiple times)",
+)
+@click.option(
+    "--all",
+    "--all-playlists",
+    "all_playlists",
+    is_flag=True,
+    help="Sync all user playlists (requires --spotify-username)",
+)
+@click.option(
+    "--match-threshold",
+    default=0.6,
+    type=float,
+    help="Minimum confidence score for track matching (0.0-1.0)",
+)
+@click.option(
+    "--public",
+    is_flag=True,
+    help="Make created playlists public",
+)
+@click.option(
+    "--skip-existing",
+    is_flag=True,
+    help="Skip playlists that already exist in Jellyfin",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be created without making changes",
+)
+@click.option(
+    "--no-confirm",
+    "--yolo",
+    is_flag=True,
+    help="Skip interactive confirmation (use with caution)",
+)
+@click.option(
+    "--debug",
+    is_flag=True,
+    help="Show debug output for troubleshooting",
+)
+def jellyfin_sync_spotify(
+    url,
+    api_token,
+    user_id,
+    spotify_client_id,
+    spotify_client_secret,
+    spotify_username,
+    playlist_ids,
+    all_playlists,
+    match_threshold,
+    public,
+    skip_existing,
+    dry_run,
+    no_confirm,
+    debug,
+):
     """Sync Spotify playlists to Jellyfin.
 
-    Fetches tracks from Spotify playlists and creates matching playlists in Jellyfin.
+    Fetches tracks from Spotify playlists and creates matching playlists
+    in Jellyfin.
 
     Three modes of operation:
-    1. Interactive selector (fzf): Use --spotify-username without --playlist-id or --all
+    1. Interactive selector (fzf): Use --spotify-username without
+       --playlist-id or --all
     2. Sync all playlists: Use --spotify-username --all
     3. Sync specific playlists: Use --playlist-id (one or more times)
 
@@ -440,6 +730,61 @@ def jellyfin_sync_spotify(url, api_token, user_id, spotify_client_id, spotify_cl
         no_confirm,
         debug
     )
+
+
+@cli.command()
+@click.argument(
+    "shell",
+    type=click.Choice(["bash", "zsh", "fish"], case_sensitive=False),
+)
+def completion(shell):
+    """Generate shell completion script.
+
+    Install completions by running:
+
+      Bash:
+        arr completion bash > ~/.local/share/bash-completion/completions/arr
+        # Or: arr completion bash | sudo tee /etc/bash_completion.d/arr
+
+      Zsh:
+        arr completion zsh > ~/.zsh/completions/_arr
+        # Then add to .zshrc: fpath=(~/.zsh/completions $fpath)
+
+      Fish:
+        arr completion fish > ~/.config/fish/completions/arr.fish
+
+    After installing, restart your shell or source the completion file.
+    """
+    try:
+        from click.shell_completion import get_completion_class
+    except ImportError:
+        # Fallback for older Click versions
+        click.echo(
+            "Error: Shell completion requires Click 8.0 or higher",
+            err=True
+        )
+        raise click.Abort()
+
+    shell_lower = shell.lower()
+
+    try:
+        # Get the appropriate completion class for the shell
+        completion_class = get_completion_class(shell_lower)
+        if completion_class is None:
+            click.echo(
+                f"Error: Unsupported shell '{shell}'",
+                err=True
+            )
+            raise click.Abort()
+
+        # Create completion instance
+        comp = completion_class(cli, {}, "arr", "_ARR_COMPLETE")
+
+        # Generate and output the completion script
+        click.echo(comp.source())
+    except Exception as e:
+        click.echo(f"Error generating completion: {e}", err=True)
+        raise click.Abort()
 
 
 if __name__ == "__main__":

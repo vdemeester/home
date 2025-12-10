@@ -47,13 +47,13 @@ python3.pkgs.buildPythonApplication {
       --prefix PYTHONPATH : "$out/lib/arr"
   '';
 
-  postInstall = ''
-    # Generate shell completions for click-based CLI
+  postFixup = ''
+    # Generate shell completions using arr's built-in completion command
     export PYTHONPATH="$out/lib/arr:$PYTHONPATH"
     installShellCompletion --cmd arr \
-      --bash <(_ARR_COMPLETE=bash_source $out/bin/arr) \
-      --fish <(_ARR_COMPLETE=fish_source $out/bin/arr) \
-      --zsh <(_ARR_COMPLETE=zsh_source $out/bin/arr)
+      --bash <($out/bin/arr completion bash) \
+      --fish <($out/bin/arr completion fish) \
+      --zsh <($out/bin/arr completion zsh)
   '';
 
   meta = with lib; {
