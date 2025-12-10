@@ -126,6 +126,7 @@
               altHosts = [ "t.sbr.pm" ];
             };
             immich.port = 2283;
+            navidrome.port = 4533;
           };
 
           # Generate routers for local services
@@ -221,6 +222,7 @@
                 n8n = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:5678";
                 paperless = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8000";
                 grafana = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3000";
+                navidrome = mkService "http://${builtins.head globals.machines.aion.net.ips}:4533";
               };
             middlewares =
               syncthingMiddlewares

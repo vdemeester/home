@@ -45,9 +45,33 @@
         };
       };
     };
+
+    navidrome = {
+      enable = true;
+      settings = {
+        MusicFolder = "/neo/music";
+        Address = "0.0.0.0";
+        Port = 4533;
+        BaseURL = "https://music.sbr.pm";
+
+        # Paths
+        DataFolder = "/var/lib/navidrome";
+        CacheFolder = "/var/cache/navidrome";
+
+        # Features
+        EnableTranscodingConfig = true;
+        EnableSubsonic = true;
+
+        # Optional: Scrobbling (can enable later)
+        # LastFM.Enabled = true;
+      };
+    };
   };
 
-  networking.useDHCP = lib.mkDefault true;
+  networking = {
+    useDHCP = lib.mkDefault true;
+    firewall.allowedTCPPorts = [ 4533 ]; # Navidrome
+  };
 
   environment.systemPackages = with pkgs; [
     lm_sensors
