@@ -12,6 +12,7 @@
     master.claude-code
     master.claude-code-acp
     master.gemini-cli
+    master.opencode
     # llm
     # openai-whisper
     # whisper-cpp

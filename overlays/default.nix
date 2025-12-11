@@ -42,6 +42,7 @@ in
         (_final: _prev: {
           claude-code = _prev.claude-code;
           claude-code-acp = _prev.claude-code-acp;
+          opencode = _prev.opencode;
           gemini-cli = _prev.gemini-cli;
           cursor-cli = _prev.cursor-cli;
           code-cursor = _prev.code-cursor;
