@@ -788,6 +788,56 @@ minibuffer, even without explicitly focusing it."
   ("C-x p G" . checkout-github-pr)
   ("C-x p F" . flymake-show-project-diagnostics))
 
+(use-package eshell
+  :commands (eshell eshell-here)
+  :config
+  (add-to-list 'eshell-modules-list 'eshell-rebind)
+
+  (defun eshell-here ()
+    "Open eshell in the directory of the current buffer's file."
+    (interactive)
+    (let* ((parent (if (buffer-file-name)
+                       (file-name-directory (buffer-file-name))
+                     default-directory))
+           (name (car (last (split-string parent "/" t)))))
+      (eshell "new")
+      (rename-buffer (concat "*eshell: " name "*"))))
+
+  ;; Handy aliases
+  (defalias 'ff 'find-file)
+  (defalias 'e 'find-file)
+  (defalias 'd 'dired)
+
+  (defun eshell/cdg ()
+    "Change directory to the project's root."
+    (eshell/cd (locate-dominating-file default-directory ".git")))
+
+  (defun eshell/j (&optional regexp)
+    "Navigate to a previously visited directory in eshell."
+    (let ((eshell-dirs (delete-dups
+                        (mapcar 'abbreviate-file-name
+                                (ring-elements eshell-last-dir-ring)))))
+      (cond
+       ((and (not regexp) (featurep 'consult-dir))
+        (let* ((consult-dir--source-eshell `(:name "Eshell"
+                                                   :narrow ?e
+                                                   :category file
+                                                   :face consult-file
+                                                   :items ,eshell-dirs))
+               (consult-dir-sources (cons consult-dir--source-eshell
+                                          consult-dir-sources)))
+          (eshell/cd (substring-no-properties
+                      (consult-dir--pick "Switch directory: ")))))
+       (t (eshell/cd (if regexp (eshell-find-previous-directory regexp)
+                       (completing-read "cd: " eshell-dirs)))))))
+
+  ;; Use system su/sudo instead of eshell builtins
+  (with-eval-after-load "em-unix"
+    (unintern 'eshell/su nil)
+    (unintern 'eshell/sudo nil))
+
+  :hook (eshell-mode . with-editor-export-editor))
+
 (use-package eat
   :commands (eat)
   :init
@@ -797,6 +847,12 @@ minibuffer, even without explicitly focusing it."
         eat-enable-yank-to-terminal t)
   :hook ((eshell-mode . eat-eshell-mode)
          (eshell-mode . eat-eshell-visual-command-mode)))
+
+(use-package vterm
+  :commands (vterm)
+  :custom
+  (vterm-kill-buffer-on-exit t)
+  (vterm-max-scrollback 100000))
 
 ;; TODO adapt this to my needs
 ;; (defun tkj/vc-git-grep-current-line ()
