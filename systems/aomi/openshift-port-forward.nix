@@ -7,45 +7,92 @@
     "net.ipv6.conf.all.forwarding" = lib.mkForce 1;
   };
 
-  networking.firewall = {
-    enable = true;
+  # Use nftables for better performance and cleaner syntax
+  networking = {
+    nftables = {
+      enable = true;
 
-    # Open ports that will be forwarded to OpenShift
-    allowedTCPPorts = [
-      443 # HTTPS - OpenShift console and apps
-      6443 # Kubernetes API
-    ];
+      # Complete nftables ruleset managing both NAT and filtering
+      ruleset = ''
+        # NAT table for port forwarding
+        table ip nat {
+          chain prerouting {
+            type nat hook prerouting priority dstnat; policy accept;
 
-    # NAT rules to forward traffic to OpenShift VM
-    # Using -i ! virbr1 to match all interfaces except the libvirt bridge
-    extraCommands = ''
-      # Forward HTTPS traffic (443) to OpenShift from any external interface
-      iptables -t nat -A PREROUTING ! -i virbr1 -p tcp --dport 443 -j DNAT --to-destination 192.168.100.7:443
+            # Forward HTTP, HTTPS, and API traffic to OpenShift VM
+            # Only from interfaces that are NOT virbr1 (to avoid loops)
+            iifname != "virbr1" tcp dport 80 dnat to 192.168.100.7:80
+            iifname != "virbr1" tcp dport 443 dnat to 192.168.100.7:443
+            iifname != "virbr1" tcp dport 6443 dnat to 192.168.100.7:6443
+          }
 
-      # Forward Kubernetes API (6443) to OpenShift from any external interface
-      iptables -t nat -A PREROUTING ! -i virbr1 -p tcp --dport 6443 -j DNAT --to-destination 192.168.100.7:6443
+          chain postrouting {
+            type nat hook postrouting priority srcnat; policy accept;
 
-      # Forward from localhost (for commands running on aomi itself)
-      iptables -t nat -A OUTPUT -p tcp --dport 443 -d 192.168.1.23 -j DNAT --to-destination 192.168.100.7:443
-      iptables -t nat -A OUTPUT -p tcp --dport 6443 -d 192.168.1.23 -j DNAT --to-destination 192.168.100.7:6443
+            # Masquerade traffic from libvirt network to external destinations
+            ip saddr 192.168.100.0/24 ip daddr != 192.168.100.0/24 masquerade
+          }
 
-      # Enable masquerading for libvirt network to access internet
-      iptables -t nat -A POSTROUTING -s 192.168.100.0/24 ! -d 192.168.100.0/24 -j MASQUERADE
+          chain output {
+            type nat hook output priority dstnat; policy accept;
 
-      # Allow forwarding to/from the libvirt network
-      iptables -A FORWARD -d 192.168.100.0/24 -j ACCEPT
-      iptables -A FORWARD -s 192.168.100.0/24 -j ACCEPT
-    '';
+            # Forward localhost traffic destined for LAN IP to OpenShift VM
+            ip daddr 192.168.1.23 tcp dport 80 dnat to 192.168.100.7:80
+            ip daddr 192.168.1.23 tcp dport 443 dnat to 192.168.100.7:443
+            ip daddr 192.168.1.23 tcp dport 6443 dnat to 192.168.100.7:6443
+          }
+        }
 
-    extraStopCommands = ''
-      # Clean up forwarding rules
-      iptables -t nat -D PREROUTING ! -i virbr1 -p tcp --dport 443 -j DNAT --to-destination 192.168.100.7:443 2>/dev/null || true
-      iptables -t nat -D PREROUTING ! -i virbr1 -p tcp --dport 6443 -j DNAT --to-destination 192.168.100.7:6443 2>/dev/null || true
-      iptables -t nat -D OUTPUT -p tcp --dport 443 -d 192.168.1.23 -j DNAT --to-destination 192.168.100.7:443 2>/dev/null || true
-      iptables -t nat -D OUTPUT -p tcp --dport 6443 -d 192.168.1.23 -j DNAT --to-destination 192.168.100.7:6443 2>/dev/null || true
-      iptables -t nat -D POSTROUTING -s 192.168.100.0/24 ! -d 192.168.100.0/24 -j MASQUERADE 2>/dev/null || true
-      iptables -D FORWARD -d 192.168.100.0/24 -j ACCEPT 2>/dev/null || true
-      iptables -D FORWARD -s 192.168.100.0/24 -j ACCEPT 2>/dev/null || true
-    '';
+        # Filter table for firewall rules
+        table inet filter {
+          chain input {
+            type filter hook input priority filter; policy drop;
+
+            # Allow established/related connections
+            ct state { established, related } accept
+
+            # Allow loopback
+            iifname "lo" accept
+
+            # Allow trusted interfaces
+            iifname { "wg0", "docker0" } accept
+
+            # Allow ICMP (ping)
+            ip protocol icmp accept
+            ip6 nexthdr ipv6-icmp accept
+
+            # Allow SSH
+            tcp dport 22 accept
+
+            # Allow OpenShift ports
+            tcp dport { 80, 443, 6443 } accept
+
+            # Allow libvirt
+            tcp dport 16509 accept
+
+            # Allow mDNS
+            udp dport 5353 accept
+          }
+
+          chain forward {
+            type filter hook forward priority filter; policy accept;
+
+            # Allow established/related connections
+            ct state { established, related } accept
+
+            # Allow forwarding to/from the libvirt OpenShift network
+            ip daddr 192.168.100.0/24 accept
+            ip saddr 192.168.100.0/24 accept
+          }
+
+          chain output {
+            type filter hook output priority filter; policy accept;
+          }
+        }
+      '';
+    };
+
+    # Disable the default NixOS firewall since we're using custom nftables ruleset
+    firewall.enable = false;
   };
 }
