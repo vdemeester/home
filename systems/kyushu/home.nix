@@ -27,7 +27,8 @@
 
     did
 
-    finamp
+    finamp # jellyfin
+    feishin # navidrome
 
     # Keyboard
     qmk
