@@ -223,12 +223,16 @@ It is shared with iOS and replace the deprecated `org-journal-file' below.")
 
 (require 'info) ;; XXX ensure the var exists even before loading `info.el'.
 
-(use-package init-func)
-;; TODO: do useful stuff with the macro instead
-(vde/run-and-delete-frame my-greet-and-close ()
-			  "Displays a greeting and closes the frame after a short delay."
-			  (message "Hello from a macro-defined function! Closing soon...")
-			  (sit-for 2))
+;; Add site-lisp to load-path for local elisp files
+(add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
+
+;; TODO: Re-enable init-func when needed for custom macros
+;; (use-package init-func)
+;; ;; TODO: do useful stuff with the macro instead
+;; (vde/run-and-delete-frame my-greet-and-close ()
+;; 			  "Displays a greeting and closes the frame after a short delay."
+;; 			  (message "Hello from a macro-defined function! Closing soon...")
+;; 			  (sit-for 2))
 
 (use-package emacs
   :bind
@@ -365,7 +369,9 @@ minibuffer, even without explicitly focusing it."
    '(:application tramp :protocol "scp")
    'remote-direct-async-process)
 
-  (setq magit-tramp-pipe-stty-settings 'pty)
+  (defvar magit-tramp-pipe-stty-settings)
+  (with-eval-after-load 'magit
+    (setq magit-tramp-pipe-stty-settings 'pty))
   (with-eval-after-load 'tramp
     (with-eval-after-load 'compile
       (remove-hook 'compilation-mode-hook #'tramp-compile-disable-ssh-controlmaster-options)))
@@ -388,11 +394,15 @@ minibuffer, even without explicitly focusing it."
   :unless noninteractive
   :hook
   (icomplete-minibuffer-setup
-   . (lambda()(interactive) 
+   . (lambda()(interactive)
        (setq-local completion-styles '(flex partial-completion initials basic))))
   (after-init . fido-vertical-mode)
   :custom
-  (icomplete-compute-delay 0.01))
+  (icomplete-compute-delay 0.01)
+  :config
+  ;; Unbind C-, from icomplete to allow embark-act to work
+  (define-key icomplete-minibuffer-map (kbd "C-,") nil)
+  (define-key icomplete-fido-mode-map (kbd "C-,") nil))
 
 (use-package display-line-numbers
   :unless noninteractive
@@ -876,7 +886,7 @@ minibuffer, even without explicitly focusing it."
 
 (use-package magit
   :unless noninteractive
-  :commands (magit-status magit-clone magit-pull magit-blame magit-log-buffer-file magit-log)
+  :commands (magit-status magit-clone magit-pull magit-blame magit-log-buffer-file magit-log magit-file-dispatch)
   :bind (("C-c v c" . magit-commit)
          ("C-c v C" . magit-checkout)
          ("C-c v b" . magit-branch)
@@ -1160,31 +1170,155 @@ minibuffer, even without explicitly focusing it."
   ("C-c v ." . consult-vc-log-select-files)
   ("C-c v m" . consult-vc-modified-files))
 
+(use-package avy
+  :unless noninteractive
+  :commands (avy-goto-char avy-goto-line avy-goto-word-1 avy-pop-mark avy-goto-char-timer)
+  :bind (("C-c j w" . avy-goto-word-1)
+         ("C-c j b" . avy-pop-mark)
+         ("C-c j t" . avy-goto-char-timer)
+         ("C-c j l" . avy-goto-line)))
+
 (use-package embark
   :unless noninteractive
   :commands (embark-act embark-dwim embark-prefix-help-command)
   :bind
-  ("C-=" . embark-act)
-  ("M-=" . embark-dwim)
+  ("C-," . embark-act)
+  ("M-," . embark-dwim)
   ("C-h b" . embark-bindings)
   ("C-h B" . embark-bindings-at-point)
   ("C-h M" . embark-bindings-in-keymap)
   (:map completion-list-mode-map
-        ("=" . embark-act))
+        ("," . embark-act))
   :custom
   (prefix-help-command #'embark-prefix-help-command)
-  (embark-indicators '(embark-minimal-indicator
-                       embark-highlight-indicator
-                       embark-isearch-highlight-indicator))
   (embark-cycle-key ".")
   (embark-help-key "?")
   :config
+  ;; which-key integration for better discoverability
+  (setq embark-action-indicator
+        (lambda (map _target)
+          (which-key--show-keymap "Embark" map nil nil 'no-paging)
+          #'which-key--hide-popup-ignore-command)
+        embark-become-indicator embark-action-indicator)
+
+  ;; Symbol overlay actions
   (keymap-set embark-symbol-map "S i" #'symbol-overlay-put)
   (keymap-set embark-symbol-map "S c" #'symbol-overlay-remove-all)
   (keymap-set embark-symbol-map "S r" #'symbol-overlay-rename)
-  (defun vde/short-github-link ()
-    "Target a link at point of the for github:owner/repo#number"
-    )
+
+  ;; File management actions
+  (define-key embark-file-map "c" #'copy-file)
+  (define-key embark-file-map "m" #'rename-file)
+  (define-key embark-file-map "D" #'delete-file)
+  (define-key embark-file-map "=" #'ediff-files)
+
+  ;; Open file as root
+  (defun my/sudo-find-file (file)
+    "Open FILE as root."
+    (interactive "fFile: ")
+    (find-file (concat "/sudo::" (expand-file-name file))))
+  (define-key embark-file-map "S" #'my/sudo-find-file)
+
+  ;; Buffer actions
+  (defun my/kill-buffer-and-window ()
+    "Kill current buffer and close its window."
+    (interactive)
+    (kill-buffer-and-window))
+  (define-key embark-buffer-map "K" #'my/kill-buffer-and-window)
+  (define-key embark-buffer-map "r" #'revert-buffer)
+
+  ;; Project/Git actions
+  (define-key embark-file-map "p" #'project-find-file)
+  (define-key embark-file-map "g" #'magit-file-dispatch)
+
+  (defun my/magit-status-from-file ()
+    "Open magit-status for the file's repository."
+    (interactive)
+    (magit-status (vc-root-dir)))
+  (define-key embark-file-map "G" #'my/magit-status-from-file)
+
+  ;; Org-mode heading actions
+  (defvar-keymap embark-org-heading-map
+    :doc "Actions for org headings"
+    :parent embark-general-map
+    "r" #'org-refile
+    "t" #'org-todo
+    "s" #'org-schedule
+    "d" #'org-deadline
+    "a" #'org-archive-subtree
+    "n" #'org-narrow-to-subtree)
+
+  (add-to-list 'embark-keymap-alist '(org-heading . embark-org-heading-map))
+
+  ;; Custom target finders
+  (defun embark-target-github-issue ()
+    "Target GitHub issue numbers like #123 or owner/repo#456."
+    (when (thing-at-point-looking-at
+           "\\(?:\\([a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+\\)?#\\([0-9]+\\)\\)")
+      (let ((repo (match-string 1))
+            (number (match-string 2)))
+        `(github-issue
+          ,(match-string 0)
+          ,(match-beginning 0)
+          . ,(match-end 0)))))
+
+  (defun embark-target-jira-ticket ()
+    "Target Jira tickets like PROJ-123."
+    (when (thing-at-point-looking-at "\\([A-Z]+-[0-9]+\\)")
+      `(jira-ticket
+        ,(match-string 1)
+        ,(match-beginning 0)
+        . ,(match-end 0))))
+
+  (add-to-list 'embark-target-finders 'embark-target-github-issue)
+  (add-to-list 'embark-target-finders 'embark-target-jira-ticket)
+
+  ;; GitHub issue actions
+  (defvar-keymap embark-github-issue-map
+    :doc "Actions for GitHub issues/PRs"
+    :parent embark-general-map
+    "o" #'my/open-github-issue
+    "c" #'my/copy-github-issue-url
+    "b" #'browse-url)
+
+  (defvar-keymap embark-jira-ticket-map
+    :doc "Actions for Jira tickets"
+    :parent embark-general-map
+    "o" #'my/open-jira-ticket
+    "c" #'my/copy-jira-ticket-url
+    "b" #'browse-url)
+
+  (add-to-list 'embark-keymap-alist '(github-issue . embark-github-issue-map))
+  (add-to-list 'embark-keymap-alist '(jira-ticket . embark-jira-ticket-map))
+
+  ;; Helper functions
+  (defun my/open-github-issue (issue)
+    "Open GitHub ISSUE in browser."
+    (let* ((parts (split-string issue "#"))
+           (repo (or (car parts) (vde/gh-get-current-repo)))
+           (number (cadr parts))
+           (url (format "https://github.com/%s/issues/%s" repo number)))
+      (browse-url url)))
+
+  (defun my/copy-github-issue-url (issue)
+    "Copy GitHub ISSUE URL to clipboard."
+    (let* ((parts (split-string issue "#"))
+           (repo (or (car parts) (vde/gh-get-current-repo)))
+           (number (cadr parts))
+           (url (format "https://github.com/%s/issues/%s" repo number)))
+      (kill-new url)
+      (message "Copied: %s" url)))
+
+  (defun my/open-jira-ticket (ticket)
+    "Open Jira TICKET in browser."
+    (let ((url (format "https://issues.redhat.com/browse/%s" ticket)))
+      (browse-url url)))
+
+  (defun my/copy-jira-ticket-url (ticket)
+    "Copy Jira TICKET URL to clipboard."
+    (let ((url (format "https://issues.redhat.com/browse/%s" ticket)))
+      (kill-new url)
+      (message "Copied: %s" url)))
   )
 
 (use-package embark-consult
@@ -1466,6 +1600,9 @@ minibuffer, even without explicitly focusing it."
 	("C-<up>" . org-shiftup)
 	("C-<down>" . org-shiftdown))
   :config
+  ;; Unbind C-, to allow embark-act to work
+  (unbind-key "C-," org-mode-map)
+
   (unbind-key "S-<left>" org-mode-map)
   (unbind-key "S-<right>" org-mode-map)
   (unbind-key "S-<up>" org-mode-map)

@@ -24,3 +24,4 @@ hardware-configuration.nix
 .chatgpt-shell.el
 /keyboards/firmwares/
 /dots/.config/claude/skills/Org/tools/batch-functions.elc
+*.elc
