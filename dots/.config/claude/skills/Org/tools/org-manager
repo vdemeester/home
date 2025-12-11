@@ -343,8 +343,11 @@ cmd_children() {
     [[ -f "$file" ]] || error "File not found: $file"
     [[ -n "$heading" ]] || error "Heading name required"
 
+    # Escape double quotes in heading for elisp string
+    local heading_escaped="${heading//\"/\\\"}"
+
     local elisp="(progn
-      (let ((result (org-batch-get-children \"$file\" \"$heading\")))
+      (let ((result (org-batch-get-children \"$file\" \"$heading_escaped\")))
         (org-batch-output-json t result))
       (kill-emacs 0))"
 
