@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   hostname,
   ...
@@ -102,4 +103,35 @@
     home = "${config.xdg.dataHome}/mu";
   };
   home.packages = with pkgs; [ mblaze ];
+
+  # Override the default mu init activation to prevent it from wiping the index
+  # The default activation runs `mu init` if the addresses don't match, but this
+  # can trigger even when the database is populated if `mu info store` fails.
+  # This override adds a check to skip init if the database has indexed messages.
+  home.activation.runMuInit = lib.mkForce (
+    config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      MUHOME="${config.xdg.dataHome}/mu"
+
+      # Check if the database exists and has indexed messages
+      if [ -d "$MUHOME/xapian" ] && [ -f "$MUHOME/xapian/iamglass" ]; then
+        # Check if there are indexed messages
+        MESSAGE_COUNT=$(${pkgs.mu}/bin/mu info store 2>/dev/null | ${pkgs.gawk}/bin/awk '/messages in store/{print $4}' || echo "0")
+        if [ "$MESSAGE_COUNT" -gt "0" ]; then
+          $VERBOSE_ECHO "Mu database exists with $MESSAGE_COUNT messages, skipping mu init"
+          exit 0
+        fi
+      fi
+
+      # Only run mu init if database doesn't exist or is empty
+      if [ ! -d "$MUHOME" ]; then
+        $VERBOSE_ECHO "Initializing mu database at $MUHOME"
+        ${pkgs.mu}/bin/mu init \
+          --maildir=$HOME/${config.accounts.email.maildirBasePath} \
+          --muhome="$MUHOME" \
+          --my-address=vincent@demeester.fr \
+          ${if hostname == "kyushu" then "--my-address=vdemeest@redhat.com" else ""} \
+          $VERBOSE_ARG
+      fi
+    ''
+  );
 }
