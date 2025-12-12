@@ -24,6 +24,7 @@
             host = "rhea.sbr.pm";
             user = "vincent";
             paths = [
+              "/neo/audiobooks"
               "/neo/documents"
               "/neo/music"
               "/neo/pictures"

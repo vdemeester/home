@@ -21,18 +21,28 @@
 
   age.secrets."exportarr-sonarr-apikey" = {
     file = ../../secrets/rhea/exportarr-sonarr-apikey.age;
+    mode = "440";
+    group = "homepage";
   };
   age.secrets."exportarr-radarr-apikey" = {
     file = ../../secrets/rhea/exportarr-radarr-apikey.age;
+    mode = "440";
+    group = "homepage";
   };
   age.secrets."exportarr-lidarr-apikey" = {
     file = ../../secrets/rhea/exportarr-lidarr-apikey.age;
+    mode = "440";
+    group = "homepage";
   };
   age.secrets."exportarr-prowlarr-apikey" = {
     file = ../../secrets/rhea/exportarr-prowlarr-apikey.age;
+    mode = "440";
+    group = "homepage";
   };
   age.secrets."exportarr-bazarr-apikey" = {
     file = ../../secrets/rhea/exportarr-bazarr-apikey.age;
+    mode = "440";
+    group = "homepage";
   };
 
   users.users.vincent.linger = true;
@@ -134,8 +144,11 @@
               port = 4533;
               altHosts = [ "music.sbr.pm" ];
             };
+            audiobookshelf = {
+              port = 13378;
+              altHosts = [ "podcasts.sbr.pm" ];
+            };
             homepage.port = 3001;
-            healthchecks.port = 8000;
           };
 
           # Generate routers for local services
@@ -222,6 +235,10 @@
                 paperless = mkRouter "paperless" [ "paperless.sbr.pm" ];
                 grafana = mkRouter "grafana" [ "grafana.sbr.pm" ];
                 dav = mkRouter "dav" [ "dav.sbr.pm" ];
+                linkwarden = mkRouter "linkwarden" [
+                  "linkwarden.sbr.pm"
+                  "links.sbr.pm"
+                ];
                 # Traefik dashboard
                 traefik-dashboard = {
                   rule = "Host(`traefik.sbr.pm`)";
@@ -239,6 +256,7 @@
                 n8n = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:5678";
                 paperless = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8000";
                 grafana = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3000";
+                linkwarden = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3002";
                 navidrome = mkService "http://${builtins.head globals.machines.aion.net.ips}:4533";
                 dav = mkService "http://${builtins.head globals.machines.athena.net.ips}:80";
               };
@@ -299,6 +317,19 @@
     # };
     samba.settings = {
       global."server string" = "Rhea";
+      audiobooks = {
+        path = "/neo/audiobooks";
+        public = "yes";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        writable = "yes";
+        comment = "audiobooks";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "vincent";
+        "force group" = "users";
+      };
       backup = {
         path = "/neo/backup";
         public = "yes";
@@ -386,12 +417,13 @@
       statdPort = 4000;
       exports = ''
                 /neo                      192.168.1.0/24(rw,fsid=0,no_subtree_check) 10.100.0.0/24(rw,fsid=0,no_subtree_check)
-                /neo/backup               192.168.1.0/24(rw,fsid=1,no_subtree_check) 10.100.0.0/24(rw,fsid=1,no_subtree_check)
-                /neo/documents            192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
-                /neo/downloads            192.168.1.0/24(rw,fsid=3,no_subtree_check) 10.100.0.0/24(rw,fsid=3,no_subtree_check)
-                /neo/music                192.168.1.0/24(rw,fsid=4,no_subtree_check) 10.100.0.0/24(rw,fsid=4,no_subtree_check)
-                /neo/pictures             192.168.1.0/24(rw,fsid=5,no_subtree_check) 10.100.0.0/24(rw,fsid=5,no_subtree_check)
-                /neo/videos               192.168.1.0/24(rw,fsid=6,no_subtree_check) 10.100.0.0/24(rw,fsid=6,no_subtree_check)
+                /neo/audiobooks           192.168.1.0/24(rw,fsid=1,no_subtree_check) 10.100.0.0/24(rw,fsid=1,no_subtree_check)
+                /neo/backup               192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
+                /neo/documents            192.168.1.0/24(rw,fsid=3,no_subtree_check) 10.100.0.0/24(rw,fsid=3,no_subtree_check)
+                /neo/downloads            192.168.1.0/24(rw,fsid=4,no_subtree_check) 10.100.0.0/24(rw,fsid=4,no_subtree_check)
+                /neo/music                192.168.1.0/24(rw,fsid=5,no_subtree_check) 10.100.0.0/24(rw,fsid=5,no_subtree_check)
+                /neo/pictures             192.168.1.0/24(rw,fsid=6,no_subtree_check) 10.100.0.0/24(rw,fsid=6,no_subtree_check)
+                /neo/videos               192.168.1.0/24(rw,fsid=7,no_subtree_check) 10.100.0.0/24(rw,fsid=7,no_subtree_check)
         			'';
     };
     immich = {
@@ -403,33 +435,12 @@
     postgresql = {
       ensureDatabases = [
         "immich"
-        "healthchecks"
       ];
       ensureUsers = [
         {
           name = "vincent";
         }
-        {
-          name = "healthchecks";
-        }
       ];
-    };
-    healthchecks = {
-      enable = true;
-      user = "healthchecks";
-      group = "healthchecks";
-      listenAddress = "127.0.0.1";
-      port = 8000;
-      settings = {
-        ALLOWED_HOSTS = [ "healthchecks.sbr.pm" ];
-        SITE_ROOT = "https://healthchecks.sbr.pm";
-        SITE_NAME = "Healthchecks";
-        DEBUG = false;
-        DB = "postgres";
-        DB_HOST = "/run/postgresql";
-        DB_NAME = "healthchecks";
-        DB_USER = "healthchecks";
-      };
     };
     jellyfin = {
       enable = true;
@@ -439,6 +450,14 @@
     };
     jellyseerr = {
       enable = true;
+      openFirewall = true;
+    };
+    audiobookshelf = {
+      enable = true;
+      port = 13378;
+      host = "0.0.0.0";
+      user = "vincent";
+      group = "users";
       openFirewall = true;
     };
     aria2 = {
@@ -545,6 +564,7 @@
   };
 
   # Grant vincent ownership and superuser privileges for the immich database
+  # Grant healthchecks user permissions for the healthchecks database
   systemd.services.postgresql.postStart = lib.mkAfter ''
     PSQL="${config.services.postgresql.package}/bin/psql --port=${toString config.services.postgresql.settings.port}"
     $PSQL -tAc "SELECT 1 FROM pg_roles WHERE rolname = 'vincent'" | grep -q 1 || $PSQL -tAc "CREATE ROLE vincent WITH LOGIN SUPERUSER"

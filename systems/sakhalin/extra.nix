@@ -12,6 +12,7 @@
     ../common/services/docker.nix
     ../common/desktop/binfmt.nix # TODO: move to something else than desktop
     ../common/services/prometheus-exporters-node.nix
+    ../common/services/linkwarden.nix
   ];
 
   # TODO make it an option ? (otherwise I'll add it for all)

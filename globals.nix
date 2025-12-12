@@ -524,13 +524,19 @@ _: {
       aliases = [ "s" ];
     };
     homepage.host = "rhea";
+    # Linkwarden bookmark manager (runs on sakhalin, proxied via rhea/Traefik)
+    linkwarden = {
+      host = "rhea";
+      aliases = [ "links" ];
+    };
     # Traefik dashboard
     traefik.host = "rhea";
-    # Healthchecks monitoring
-    healthchecks.host = "rhea";
     # Music streaming on aion (routed through rhea/traefik)
     music.host = "rhea";
     navidrome.host = "rhea";
+    # Podcast and audiobook management on aion (routed through rhea/traefik)
+    audiobookshelf.host = "rhea";
+    podcasts.host = "rhea";
     # WebDAV on athena (routed through rhea/traefik)
     dav.host = "rhea";
     # MQTT on demeter (routed through rhea/traefik)
