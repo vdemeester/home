@@ -197,15 +197,6 @@ in
             };
           }
           {
-            Healthchecks = {
-              description = "Uptime Monitoring";
-              href = "https://healthchecks.sbr.pm";
-              icon = "healthchecks.png";
-              ping = "https://healthchecks.sbr.pm";
-              statusStyle = "dot";
-            };
-          }
-          {
             "Home Assistant" = {
               description = "Home Automation";
               href = "https://home.sbr.pm";
