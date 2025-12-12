@@ -10,7 +10,7 @@ buildGoModule {
   version = "0.1.0";
   src = ./.;
 
-  vendorHash = "sha256-hocnLCzWN8srQcO3BMNkd2lt0m54Qe7sqAhUxVZlz1k=";
+  vendorHash = "sha256-hocnLCzWN8srQcO3BMNkd2lt0m54Qe7sqAhUxVZlz1k="; # No external dependencies
 
   nativeBuildInputs = [ makeWrapper ];
 

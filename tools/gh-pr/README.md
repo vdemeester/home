@@ -5,9 +5,10 @@ A comprehensive GitHub Pull Request management tool written in Go, consolidating
 ## Features
 
 - **PR Creation with Templates**: Create pull requests with automatic template discovery and caching
-- **Template Management**: List and preview available PR templates
+- **Template Management**: List and preview templates from local or remote repositories
+- **Remote Template Discovery**: Browse templates from any GitHub repository
 - **Workflow Restart**: Automatically restart failed GitHub Actions workflows
-- **Conflict Resolution**: (Placeholder) Will support interactive merge conflict resolution
+- **Conflict Resolution**: Interactive merge conflict resolution with worktree support
 - **Template Caching**: Templates are cached for one week to speed up operations
 
 ## Installation
@@ -73,22 +74,42 @@ Templates are automatically discovered from:
 
 ### `gh-pr list-templates`
 
-List all available PR templates in the repository.
+List all available PR templates in the current or a remote repository.
 
 ```bash
-# List templates
+# List templates in current repository
 gh-pr list-templates
+
+# List templates from a remote repository
+gh-pr list-templates tektoncd/pipeline
 
 # Show template content preview
 gh-pr list-templates --verbose
 
 # Refresh cache and list templates
 gh-pr list-templates --refresh
+
+# Browse templates from any repo
+gh-pr list-templates kubernetes/kubernetes --verbose
 ```
 
 **Options:**
+- `[REPOSITORY]`: Optional repository in "owner/repo" format to search
 - `--refresh`: Refresh template cache
 - `-v, --verbose`: Show template content preview
+
+**Remote Repository Support:**
+
+You can now browse templates from any GitHub repository without cloning it first! The tool will:
+1. Shallow clone the repository to a temporary directory
+2. Search for PR templates
+3. Cache the results for one week
+4. Clean up the temporary clone
+
+This is especially useful for:
+- Exploring templates from organizations you contribute to
+- Finding good template examples from popular projects
+- Quickly checking if a repository uses PR templates
 
 ### `gh-pr restart-failed`
 
@@ -125,15 +146,61 @@ gh-pr restart-failed owner/repo
 
 ### `gh-pr resolve-conflicts`
 
-Resolve merge conflicts in pull requests (placeholder - not yet implemented).
+Resolve merge conflicts in pull requests interactively with full worktree support.
 
 ```bash
-# This command is not yet fully implemented
+# Search for your conflicting PRs
 gh-pr resolve-conflicts
 
-# For now, use the existing shell script:
-gh-resolve-conflicts
+# Resolve a specific PR
+gh-pr resolve-conflicts owner/repo#123
+
+# Filter by organization
+gh-pr resolve-conflicts -o tektoncd
+
+# Use existing repo instead of creating worktree
+gh-pr resolve-conflicts -n
+
+# Don't auto-push after resolving
+gh-pr resolve-conflicts -N
+
+# Specify custom worktree directory
+gh-pr resolve-conflicts -w /tmp/my-worktrees
 ```
+
+**Options:**
+- `-w, --worktree DIR`: Create worktrees in specified directory (default: `/tmp/gh-resolve-conflicts-worktrees`)
+- `-n, --no-worktree`: Use existing repo instead of creating worktrees
+- `-N, --no-push`: Don't automatically force-push after resolution
+- `-o, --org ORG`: Filter PRs by organization
+- `-a, --author USER`: Filter PRs by author (default: `@me`)
+
+**How It Works:**
+
+1. **Find Conflicting PRs**: Searches for open PRs with merge conflicts
+2. **Setup Worktree**: Creates an isolated worktree for each PR (or uses existing repo)
+3. **Fetch Branches**: Fetches both the PR branch and upstream base branch
+4. **Rebase**: Attempts to rebase the PR onto the base branch
+5. **Resolve Conflicts**: Launches conflict resolution tool:
+   - Tries `emacs` with ediff mode first
+   - Falls back to `git mergetool` if emacs is unavailable
+6. **Force Push**: Optionally force-pushes the resolved changes
+
+**Fork Support:**
+
+The tool automatically handles forked repositories:
+- Detects cross-repository PRs
+- Adds upstream remote when needed
+- Fetches from both fork and upstream
+- Pushes to the correct fork after resolution
+
+**Worktree Benefits:**
+
+Using worktrees (default behavior) allows you to:
+- Resolve conflicts in isolated environments
+- Work on multiple PRs simultaneously
+- Keep your main repository clean
+- Easily discard worktrees after resolution
 
 ## Template Caching
 
@@ -203,12 +270,12 @@ gh-pr restart-failed --ignore "e2e-tests"
 
 ## Integration with Existing Tools
 
-This tool is designed to consolidate and replace:
+This tool consolidates and replaces:
 
-- `gh-restart-failed`: Shell script for restarting failed workflows
-- `gh-resolve-conflicts`: Shell script for resolving merge conflicts (not yet migrated)
+- `gh-restart-failed`: Now integrated as `gh-pr restart-failed`
+- `gh-resolve-conflicts`: Now integrated as `gh-pr resolve-conflicts`
 
-The old tools remain available during the transition period.
+The old shell scripts are now deprecated in favor of this unified Go tool.
 
 ## Development
 
@@ -238,9 +305,11 @@ MIT
 
 ## Future Enhancements
 
-- [ ] Full implementation of `resolve-conflicts` command
-- [ ] Interactive PR selection with `fzf` integration
+- [x] Full implementation of `resolve-conflicts` command
+- [x] Remote repository template discovery
+- [ ] Interactive PR selection with `fzf` integration for conflict resolution
 - [ ] Support for PR templates in multiple formats (YAML, JSON)
 - [ ] Batch operations on multiple PRs
 - [ ] Custom cache TTL configuration
 - [ ] Integration with review tools
+- [ ] Template validation and linting

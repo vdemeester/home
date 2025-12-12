@@ -15,14 +15,24 @@ func listTemplatesCmd(out *output.Writer) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "list-templates",
+		Use:   "list-templates [REPOSITORY]",
 		Short: "List available pull request templates",
 		Long: `List all pull request templates found in the repository.
 
 Templates are cached for one week by default. Use --refresh to bypass
-the cache and search for templates again.`,
+the cache and search for templates again.
+
+Examples:
+  gh-pr list-templates                    # List templates in current repo
+  gh-pr list-templates tektoncd/pipeline  # List templates from remote repo
+  gh-pr list-templates --verbose          # Show template previews
+  gh-pr list-templates --refresh          # Bypass cache`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return runListTemplates(out, refresh, verbose)
+			var repo string
+			if len(args) > 0 {
+				repo = args[0]
+			}
+			return runListTemplates(out, repo, refresh, verbose)
 		},
 	}
 
@@ -32,23 +42,44 @@ the cache and search for templates again.`,
 	return cmd
 }
 
-func runListTemplates(out *output.Writer, refresh, verbose bool) error {
+func runListTemplates(out *output.Writer, repo string, refresh, verbose bool) error {
 	finder, err := templates.NewFinder()
 	if err != nil {
 		return fmt.Errorf("failed to create template finder: %w", err)
 	}
 
-	if refresh {
-		out.Info("Refreshing template cache...")
-	}
+	var tmplList []templates.Template
 
-	tmplList, err := finder.Find(refresh)
-	if err != nil {
-		return fmt.Errorf("failed to find templates: %w", err)
+	if repo != "" {
+		// Search in remote repository
+		if refresh {
+			out.Info("Fetching templates from %s (bypassing cache)...", repo)
+		} else {
+			out.Info("Searching for templates in %s...", repo)
+		}
+
+		tmplList, err = finder.FindInRepo(repo, refresh)
+		if err != nil {
+			return fmt.Errorf("failed to find templates in %s: %w", repo, err)
+		}
+	} else {
+		// Search in current repository
+		if refresh {
+			out.Info("Refreshing template cache...")
+		}
+
+		tmplList, err = finder.Find(refresh)
+		if err != nil {
+			return fmt.Errorf("failed to find templates: %w", err)
+		}
 	}
 
 	if len(tmplList) == 0 {
-		out.Warning("No pull request templates found.")
+		if repo != "" {
+			out.Warning("No pull request templates found in %s.", repo)
+		} else {
+			out.Warning("No pull request templates found.")
+		}
 		out.Println("")
 		out.Println("Templates are typically located in:")
 		out.Println("  - .github/PULL_REQUEST_TEMPLATE.md")
@@ -57,7 +88,11 @@ func runListTemplates(out *output.Writer, refresh, verbose bool) error {
 		return nil
 	}
 
-	out.Success("Found %d pull request template(s):", len(tmplList))
+	if repo != "" {
+		out.Success("Found %d pull request template(s) in %s:", len(tmplList), repo)
+	} else {
+		out.Success("Found %d pull request template(s):", len(tmplList))
+	}
 	out.Println("")
 
 	for i, tmpl := range tmplList {

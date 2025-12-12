@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"time"
@@ -35,7 +36,7 @@ func NewFinder() (*Finder, error) {
 	}, nil
 }
 
-// Find locates all PR templates in the repository
+// Find locates all PR templates in the current repository
 // If refresh is true, bypasses cache and performs fresh search
 func (f *Finder) Find(refresh bool) ([]Template, error) {
 	// Generate cache key based on current directory
@@ -55,9 +56,57 @@ func (f *Finder) Find(refresh bool) ([]Template, error) {
 	}
 
 	// Search for templates
-	templates, err := f.searchTemplates()
+	templates, err := f.searchTemplates(".")
 	if err != nil {
 		return nil, err
+	}
+
+	// Cache the results
+	if err := f.cache.Set(cacheKey, templates); err != nil {
+		// Don't fail if caching fails, just log and continue
+		fmt.Fprintf(os.Stderr, "Warning: failed to cache templates: %v\n", err)
+	}
+
+	return templates, nil
+}
+
+// FindInRepo locates all PR templates in a remote repository
+// The repo parameter should be in "owner/repo" format
+// If refresh is true, bypasses cache and performs fresh search
+func (f *Finder) FindInRepo(repo string, refresh bool) ([]Template, error) {
+	cacheKey := f.generateCacheKey(fmt.Sprintf("remote:%s", repo))
+
+	// Try cache first unless refresh is requested
+	if !refresh {
+		var cached []Template
+		if err := f.cache.Get(cacheKey, &cached); err == nil && cached != nil {
+			return cached, nil
+		}
+	}
+
+	// Create temporary directory for cloning
+	tmpDir, err := os.MkdirTemp("", "gh-pr-templates-*")
+	if err != nil {
+		return nil, fmt.Errorf("failed to create temp directory: %w", err)
+	}
+	defer os.RemoveAll(tmpDir)
+
+	// Clone repository using gh (shallow clone for speed)
+	cloneDir := filepath.Join(tmpDir, "repo")
+	cmd := exec.Command("gh", "repo", "clone", repo, cloneDir, "--", "--depth", "1")
+	if output, err := cmd.CombinedOutput(); err != nil {
+		return nil, fmt.Errorf("failed to clone repository %s: %w\nOutput: %s", repo, err, string(output))
+	}
+
+	// Search for templates in the cloned repository
+	templates, err := f.searchTemplates(cloneDir)
+	if err != nil {
+		return nil, err
+	}
+
+	// Update template paths to indicate they're from a remote repo
+	for i := range templates {
+		templates[i].Path = fmt.Sprintf("%s:%s", repo, templates[i].Path)
 	}
 
 	// Cache the results
@@ -82,8 +131,8 @@ func (f *Finder) generateCacheKey(dir string) string {
 	return fmt.Sprintf("templates-%x", h.Sum(nil))
 }
 
-// searchTemplates performs the actual search for PR templates
-func (f *Finder) searchTemplates() ([]Template, error) {
+// searchTemplates performs the actual search for PR templates in a given base directory
+func (f *Finder) searchTemplates(baseDir string) ([]Template, error) {
 	var templates []Template
 
 	// Common locations for PR templates
@@ -96,14 +145,15 @@ func (f *Finder) searchTemplates() ([]Template, error) {
 	}
 
 	for _, loc := range locations {
-		info, err := os.Stat(loc)
+		fullPath := filepath.Join(baseDir, loc)
+		info, err := os.Stat(fullPath)
 		if err != nil {
 			continue
 		}
 
 		if info.IsDir() {
 			// List all markdown files in the directory
-			entries, err := os.ReadDir(loc)
+			entries, err := os.ReadDir(fullPath)
 			if err != nil {
 				continue
 			}
@@ -118,20 +168,22 @@ func (f *Finder) searchTemplates() ([]Template, error) {
 					continue
 				}
 
-				path := filepath.Join(loc, name)
+				path := filepath.Join(fullPath, name)
 				content, err := os.ReadFile(path)
 				if err != nil {
 					continue
 				}
 
+				// Use relative path for display
+				relPath := filepath.Join(loc, name)
 				templates = append(templates, Template{
-					Path:    path,
+					Path:    relPath,
 					Name:    strings.TrimSuffix(name, ".md"),
 					Content: string(content),
 				})
 			}
 		} else {
-			content, err := os.ReadFile(loc)
+			content, err := os.ReadFile(fullPath)
 			if err != nil {
 				continue
 			}
