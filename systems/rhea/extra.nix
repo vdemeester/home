@@ -31,9 +31,6 @@
   age.secrets."exportarr-prowlarr-apikey" = {
     file = ../../secrets/rhea/exportarr-prowlarr-apikey.age;
   };
-  age.secrets."exportarr-readarr-apikey" = {
-    file = ../../secrets/rhea/exportarr-readarr-apikey.age;
-  };
   age.secrets."exportarr-bazarr-apikey" = {
     file = ../../secrets/rhea/exportarr-bazarr-apikey.age;
   };
@@ -465,12 +462,6 @@
       enable = true;
       openFirewall = true;
     };
-    readarr = {
-      enable = true;
-      user = "vincent";
-      group = "users";
-      openFirewall = true;
-    };
     lidarr = {
       enable = true;
       user = "vincent";
@@ -501,12 +492,6 @@
         port = 9710;
         url = "http://localhost:9696";
         apiKeyFile = config.age.secrets."exportarr-prowlarr-apikey".path;
-      };
-      exportarr-readarr = {
-        enable = true;
-        port = 9711;
-        url = "http://localhost:8787";
-        apiKeyFile = config.age.secrets."exportarr-readarr-apikey".path;
       };
       exportarr-bazarr = {
         enable = true;

@@ -114,13 +114,6 @@ in
             };
           }
           {
-            Readarr = {
-              description = "Books";
-              href = "https://readarr.sbr.pm";
-              icon = "readarr.png";
-            };
-          }
-          {
             Bazarr = {
               description = "Subtitles";
               href = "https://bazarr.sbr.pm";
