@@ -526,6 +526,8 @@ _: {
     homepage.host = "rhea";
     # Traefik dashboard
     traefik.host = "rhea";
+    # Healthchecks monitoring
+    healthchecks.host = "rhea";
     # Music streaming on aion (routed through rhea/traefik)
     music.host = "rhea";
     navidrome.host = "rhea";

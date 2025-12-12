@@ -146,6 +146,13 @@ in
             };
           }
           {
+            Healthchecks = {
+              description = "Uptime Monitoring";
+              href = "https://healthchecks.sbr.pm";
+              icon = "healthchecks.png";
+            };
+          }
+          {
             "Home Assistant" = {
               description = "Home Automation";
               href = "https://home.sbr.pm";

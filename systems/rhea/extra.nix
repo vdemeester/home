@@ -135,6 +135,7 @@
               altHosts = [ "music.sbr.pm" ];
             };
             homepage.port = 3001;
+            healthchecks.port = 8000;
           };
 
           # Generate routers for local services
@@ -400,12 +401,35 @@
       mediaLocation = "/neo/pictures/photos";
     };
     postgresql = {
-      ensureDatabases = [ "immich" ];
+      ensureDatabases = [
+        "immich"
+        "healthchecks"
+      ];
       ensureUsers = [
         {
           name = "vincent";
         }
+        {
+          name = "healthchecks";
+        }
       ];
+    };
+    healthchecks = {
+      enable = true;
+      user = "healthchecks";
+      group = "healthchecks";
+      listenAddress = "127.0.0.1";
+      port = 8000;
+      settings = {
+        ALLOWED_HOSTS = [ "healthchecks.sbr.pm" ];
+        SITE_ROOT = "https://healthchecks.sbr.pm";
+        SITE_NAME = "Healthchecks";
+        DEBUG = false;
+        DB = "postgres";
+        DB_HOST = "/run/postgresql";
+        DB_NAME = "healthchecks";
+        DB_USER = "healthchecks";
+      };
     };
     jellyfin = {
       enable = true;
