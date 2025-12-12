@@ -524,6 +524,8 @@ _: {
       aliases = [ "s" ];
     };
     homepage.host = "rhea";
+    # Traefik dashboard
+    traefik.host = "rhea";
     # Music streaming on aion (routed through rhea/traefik)
     music.host = "rhea";
     navidrome.host = "rhea";
@@ -531,6 +533,8 @@ _: {
     dav.host = "rhea";
     # MQTT on demeter (routed through rhea/traefik)
     mqtt.host = "rhea";
+    # Home Assistant on hass (routed through rhea/traefik)
+    home.host = "rhea";
     # Services on sakhalin (routed through rhea/traefik)
     kiwix.host = "rhea";
     n8n.host = "rhea";

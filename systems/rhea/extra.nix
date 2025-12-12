@@ -42,6 +42,12 @@
       enable = true;
 
       staticConfigOptions = {
+        # API and Dashboard
+        api = {
+          dashboard = true;
+          insecure = false;
+        };
+
         # Entry points
         entryPoints = {
           web = {
@@ -215,12 +221,19 @@
                 paperless = mkRouter "paperless" [ "paperless.sbr.pm" ];
                 grafana = mkRouter "grafana" [ "grafana.sbr.pm" ];
                 dav = mkRouter "dav" [ "dav.sbr.pm" ];
+                # Traefik dashboard
+                traefik-dashboard = {
+                  rule = "Host(`traefik.sbr.pm`)";
+                  service = "api@internal";
+                  entryPoints = [ "websecure" ];
+                  tls.certResolver = "letsencrypt";
+                };
               };
             services =
               syncthingServices
               // localHttpServices
               // {
-                home = mkService "http://${builtins.head globals.machines.athena.net.ips}:8080";
+                home = mkService "http://${builtins.head globals.machines.hass.net.ips}:8123";
                 kiwix = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8080";
                 n8n = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:5678";
                 paperless = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:8000";
