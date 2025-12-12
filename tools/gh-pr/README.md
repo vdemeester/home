@@ -7,6 +7,7 @@ A comprehensive GitHub Pull Request management tool written in Go, consolidating
 - **PR Creation with Templates**: Create pull requests with automatic template discovery and caching
 - **Template Management**: List and preview templates from local or remote repositories
 - **Remote Template Discovery**: Browse templates from any GitHub repository
+- **Batch Commenting**: Comment on multiple pull requests at once using fzf multi-select
 - **Workflow Restart**: Automatically restart failed GitHub Actions workflows
 - **Conflict Resolution**: Interactive merge conflict resolution with worktree support
 - **Template Caching**: Templates are cached for one week to speed up operations
@@ -72,6 +73,53 @@ Templates are automatically discovered from:
 - `.github/PULL_REQUEST_TEMPLATE/`
 - `docs/PULL_REQUEST_TEMPLATE.md`
 
+### `gh-pr comment`
+
+Comment on multiple pull requests at once using interactive selection.
+
+```bash
+# Interactive mode - select PRs and enter comment
+gh-pr comment
+
+# Pre-specify the comment body
+gh-pr comment --body "LGTM! Approving this change."
+
+# Filter by label before selecting
+gh-pr comment --label bug --label urgent
+
+# Work with a specific repository
+gh-pr comment --repo owner/repo
+
+# Include closed PRs in the selection
+gh-pr comment --state all
+
+# Filter by author
+gh-pr comment --author username
+```
+
+**Options:**
+- `-b, --body`: Comment body (will prompt if not provided)
+- `-R, --repo`: Repository in "owner/repo" format
+- `-l, --label`: Filter PRs by label (can be used multiple times)
+- `-a, --author`: Filter PRs by author
+- `-s, --state`: Filter by state: open, closed, merged, all (default: open)
+
+**How It Works:**
+
+1. **List PRs**: Fetches pull requests matching your filters using `gh pr list`
+2. **Select**: Uses fzf for multi-select with preview pane showing:
+   - PR title and author
+   - CI check status with visual indicators (✓/✗/●/○)
+   - Tab to select, Enter to confirm
+3. **Comment**: Prompts for comment body if not provided via `--body`
+4. **Post**: Posts the same comment to all selected PRs
+
+**Use Cases:**
+- Notify multiple PRs about a related change
+- Request updates across multiple related PRs
+- Add acknowledgments to a batch of PRs
+- Communicate breaking changes to affected PRs
+
 ### `gh-pr list-templates`
 
 List all available PR templates in the current or a remote repository.
@@ -113,16 +161,16 @@ This is especially useful for:
 
 ### `gh-pr restart-failed`
 
-Restart failed workflow runs on pull requests.
+Restart failed workflow runs on pull requests with interactive selection.
 
 ```bash
-# Interactive mode - list all PRs with failed checks
+# Interactive mode - select PRs with failed checks using fzf
 gh-pr restart-failed
 
-# Restart workflows for a specific PR
+# Restart workflows for a specific PR (no selection needed)
 gh-pr restart-failed owner/repo#123
 
-# Filter by label
+# Filter by label before selecting
 gh-pr restart-failed --label bug
 
 # Ignore specific workflows
@@ -136,6 +184,15 @@ gh-pr restart-failed owner/repo
 - `-i, --ignore`: Ignore workflows matching pattern (can be used multiple times)
 - `-l, --label`: Filter PRs by label (can be used multiple times)
 
+**How It Works:**
+
+1. **Find Failed PRs**: Fetches all PRs and filters those with failed checks
+2. **Select**: Uses fzf for multi-select with preview pane showing:
+   - All CI check statuses with visual indicators (✓/✗/●/○)
+   - Author information
+   - Tab to select, Enter to confirm
+3. **Restart**: Restarts failed workflows for all selected PRs
+
 **Default Behavior:**
 - "Label Checker" workflows are ignored by default
 - Only restarts workflows that failed due to:
@@ -143,19 +200,20 @@ gh-pr restart-failed owner/repo
   - `timed_out`
   - `startup_failure`
   - `action_required`
+- Shows failed count for each PR in the selection interface
 
 ### `gh-pr resolve-conflicts`
 
-Resolve merge conflicts in pull requests interactively with full worktree support.
+Resolve merge conflicts in pull requests interactively with full worktree support and fzf selection.
 
 ```bash
-# Search for your conflicting PRs
+# Search for your conflicting PRs and select with fzf
 gh-pr resolve-conflicts
 
-# Resolve a specific PR
+# Resolve a specific PR (no selection)
 gh-pr resolve-conflicts owner/repo#123
 
-# Filter by organization
+# Filter by organization before selecting
 gh-pr resolve-conflicts -o tektoncd
 
 # Use existing repo instead of creating worktree
@@ -178,13 +236,18 @@ gh-pr resolve-conflicts -w /tmp/my-worktrees
 **How It Works:**
 
 1. **Find Conflicting PRs**: Searches for open PRs with merge conflicts
-2. **Setup Worktree**: Creates an isolated worktree for each PR (or uses existing repo)
-3. **Fetch Branches**: Fetches both the PR branch and upstream base branch
-4. **Rebase**: Attempts to rebase the PR onto the base branch
-5. **Resolve Conflicts**: Launches conflict resolution tool:
+2. **Select**: Uses fzf for multi-select with preview pane showing:
+   - Branch information (head → base)
+   - Merge status
+   - CI check status with visual indicators (✓/✗/●/○)
+   - Tab to select, Enter to confirm
+3. **Setup Worktree**: Creates an isolated worktree for each PR (or uses existing repo)
+4. **Fetch Branches**: Fetches both the PR branch and upstream base branch
+5. **Rebase**: Attempts to rebase the PR onto the base branch
+6. **Resolve Conflicts**: Launches conflict resolution tool:
    - Tries `emacs` with ediff mode first
    - Falls back to `git mergetool` if emacs is unavailable
-6. **Force Push**: Optionally force-pushes the resolved changes
+7. **Force Push**: Optionally force-pushes the resolved changes
 
 **Fork Support:**
 
@@ -255,14 +318,30 @@ gh-pr create \
   --reviewer team-lead
 ```
 
+### Commenting on Multiple PRs
+
+```bash
+# Select and comment on multiple PRs interactively
+gh-pr comment
+
+# Comment on all PRs with a specific label
+gh-pr comment --label needs-rebase --body "Please rebase on main"
+
+# Notify all your open PRs about a breaking change
+gh-pr comment --author @me --body "Note: This depends on #1234"
+```
+
 ### Restarting Failed Workflows
 
 ```bash
-# See all PRs with failures and restart them
+# Select PRs with failures and restart workflows
 gh-pr restart-failed
 
-# Restart specific PR in another repo
+# Restart specific PR in another repo (no selection)
 gh-pr restart-failed tektoncd/pipeline#1234
+
+# Filter and select PRs with specific label
+gh-pr restart-failed --label bug
 
 # Ignore flaky tests
 gh-pr restart-failed --ignore "e2e-tests"
@@ -296,7 +375,8 @@ nix build .#gh-pr
 ## Dependencies
 
 - `gh` (GitHub CLI) - Required for all GitHub operations
-- `jq` - Used for JSON parsing in workflow operations
+- `fzf` - Required for interactive PR selection with preview
+- `jq` - Required for formatting preview pane and JSON parsing
 - Go 1.23+ - For building from source
 
 ## License
@@ -307,9 +387,9 @@ MIT
 
 - [x] Full implementation of `resolve-conflicts` command
 - [x] Remote repository template discovery
+- [x] Batch operations on multiple PRs (comment command)
 - [ ] Interactive PR selection with `fzf` integration for conflict resolution
 - [ ] Support for PR templates in multiple formats (YAML, JSON)
-- [ ] Batch operations on multiple PRs
 - [ ] Custom cache TTL configuration
 - [ ] Integration with review tools
 - [ ] Template validation and linting

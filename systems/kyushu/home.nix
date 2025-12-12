@@ -56,8 +56,7 @@
     sbcl
 
     go-org-readwise
-    gh-restart-failed
-    gh-resolve-conflicts
+    gh-pr
     arr
     claude-hooks
     toggle-color-scheme

@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -128,6 +130,11 @@ func restartSpecificPR(out *output.Writer, opts restartFailedOpts) error {
 }
 
 func restartInteractive(out *output.Writer, opts restartFailedOpts) error {
+	// Check if fzf is available
+	if _, err := exec.LookPath("fzf"); err != nil {
+		return fmt.Errorf("fzf is required but not found in PATH: %w", err)
+	}
+
 	out.Info("Fetching pull requests...")
 
 	// Build gh pr list command
@@ -152,18 +159,31 @@ func restartInteractive(out *output.Writer, opts restartFailedOpts) error {
 	}
 
 	// Filter PRs with failed checks
-	failedPRs := []prInfo{}
+	type failedPRInfo struct {
+		pr          prInfo
+		failedCount int
+		author      string
+	}
+
+	failedPRs := []failedPRInfo{}
 	for _, pr := range prs {
-		hasFailed := false
+		failedCount := 0
 		for _, check := range pr.StatusCheckRollup {
 			if check.Conclusion == "FAILURE" || check.Conclusion == "TIMED_OUT" ||
 				check.Conclusion == "STARTUP_FAILURE" || check.Conclusion == "ACTION_REQUIRED" {
-				hasFailed = true
-				break
+				failedCount++
 			}
 		}
-		if hasFailed {
-			failedPRs = append(failedPRs, pr)
+		if failedCount > 0 {
+			author := "unknown"
+			if login, ok := pr.Author["login"].(string); ok {
+				author = login
+			}
+			failedPRs = append(failedPRs, failedPRInfo{
+				pr:          pr,
+				failedCount: failedCount,
+				author:      author,
+			})
 		}
 	}
 
@@ -172,35 +192,103 @@ func restartInteractive(out *output.Writer, opts restartFailedOpts) error {
 		return nil
 	}
 
-	out.Warning("Found %d pull request(s) with failed checks:", len(failedPRs))
-	out.Println("")
+	out.Success("Found %d pull request(s) with failed checks", len(failedPRs))
 
-	// Display PRs for user
-	for i, pr := range failedPRs {
-		failedCount := 0
-		for _, check := range pr.StatusCheckRollup {
-			if check.Conclusion == "FAILURE" || check.Conclusion == "TIMED_OUT" ||
-				check.Conclusion == "STARTUP_FAILURE" || check.Conclusion == "ACTION_REQUIRED" {
-				failedCount++
-			}
-		}
+	// Build fzf input with formatted PR information
+	var fzfInput strings.Builder
+	prMap := make(map[int]failedPRInfo) // Map PR number to info for later lookup
 
-		author := "unknown"
-		if login, ok := pr.Author["login"].(string); ok {
-			author = login
-		}
-
-		out.Println("%d. PR #%d: %s (@%s) - %d failed", i+1, pr.Number, pr.Title, author, failedCount)
+	for _, fpr := range failedPRs {
+		prMap[fpr.pr.Number] = fpr
+		// Format: "#123  Title here (@author) - 2 failed"
+		fzfInput.WriteString(fmt.Sprintf("#%-6d %s (@%s) - %d failed\n",
+			fpr.pr.Number, fpr.pr.Title, fpr.author, fpr.failedCount))
 	}
 
-	out.Println("")
-	out.Info("Processing all PRs with failed workflows...")
+	// Build preview command for fzf
+	repoFlag := ""
+	if opts.repo != "" {
+		repoFlag = fmt.Sprintf("-R %s", opts.repo)
+	}
+
+	previewCmd := fmt.Sprintf(`gh pr view {1} %s --json number,title,author,statusCheckRollup | \
+		jq -r '"# PR " + (.number | tostring) + ": " + .title,
+		       "",
+		       "Author: @" + .author.login,
+		       "",
+		       "## Status Checks:",
+		       "",
+		       (.statusCheckRollup // [] | map(
+		         "  " + (
+		           if .conclusion == "SUCCESS" then "✓"
+		           elif .conclusion == "FAILURE" then "✗"
+		           elif .conclusion == "PENDING" then "●"
+		           elif .conclusion == "SKIPPED" then "○"
+		           else "?"
+		           end
+		         ) + " " + .name + " (" + (.conclusion // "unknown") + ")"
+		       ) | join("\n"))'`, repoFlag)
+
+	// Use fzf for multi-select with preview
+	out.Info("Select pull requests to restart (use Tab to select multiple, Enter to confirm)...")
+	fzfCmd := exec.Command("fzf",
+		"--multi",
+		"--ansi",
+		"--header", "Select PRs to restart workflows (Tab: select, Enter: confirm)",
+		"--preview", previewCmd,
+		"--preview-window", "right:60%:wrap",
+	)
+	fzfCmd.Stdin = strings.NewReader(fzfInput.String())
+	fzfCmd.Stderr = os.Stderr
+
+	selectedOutput, err := fzfCmd.Output()
+	if err != nil {
+		if exitErr, ok := err.(*exec.ExitError); ok && exitErr.ExitCode() == 130 {
+			// User cancelled with Ctrl+C
+			out.Info("Selection cancelled.")
+			return nil
+		}
+		return fmt.Errorf("fzf selection failed: %w", err)
+	}
+
+	selectedPRs := strings.TrimSpace(string(selectedOutput))
+	if selectedPRs == "" {
+		out.Info("No pull requests selected.")
+		return nil
+	}
+
+	// Extract PR numbers from selected lines
+	selectedPRNumbers := []int{}
+	scanner := bufio.NewScanner(strings.NewReader(selectedPRs))
+	for scanner.Scan() {
+		line := scanner.Text()
+		// Extract PR number from format "#123  Title..."
+		if strings.HasPrefix(line, "#") {
+			var prNum int
+			if _, err := fmt.Sscanf(line, "#%d", &prNum); err == nil {
+				selectedPRNumbers = append(selectedPRNumbers, prNum)
+			}
+		}
+	}
+
+	if len(selectedPRNumbers) == 0 {
+		out.Warning("No valid PR numbers found in selection.")
+		return nil
+	}
+
+	out.Success("Selected %d pull request(s)", len(selectedPRNumbers))
 	out.Println("")
 
-	// Restart workflows for each PR
-	for _, pr := range failedPRs {
-		out.Info("PR #%d: %s", pr.Number, pr.Title)
-		if err := restartPRWorkflows(out, opts, pr.Number, pr.HeadRefName); err != nil {
+	// Restart workflows for selected PRs
+	for _, prNum := range selectedPRNumbers {
+		fpr, ok := prMap[prNum]
+		if !ok {
+			out.Warning("PR #%d not found in the list, skipping...", prNum)
+			continue
+		}
+
+		out.Info("PR #%d: %s", fpr.pr.Number, fpr.pr.Title)
+		if err := restartPRWorkflows(out, opts, fpr.pr.Number, fpr.pr.HeadRefName); err != nil {
 			out.Error("Failed to restart workflows: %v", err)
 		}
 		out.Println("")
