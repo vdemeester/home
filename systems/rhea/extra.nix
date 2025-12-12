@@ -9,6 +9,7 @@
 {
   imports = [
     ../common/services/samba.nix
+    ../common/services/homepage.nix
   ];
 
   age.secrets."gandi.env" = {
@@ -130,6 +131,7 @@
               port = 4533;
               altHosts = [ "music.sbr.pm" ];
             };
+            homepage.port = 3001;
           };
 
           # Generate routers for local services

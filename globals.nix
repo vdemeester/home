@@ -523,6 +523,7 @@ _: {
       host = "rhea";
       aliases = [ "s" ];
     };
+    homepage.host = "rhea";
     # Music streaming on aion (routed through rhea/traefik)
     music.host = "rhea";
     navidrome.host = "rhea";
