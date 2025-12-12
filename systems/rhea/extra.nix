@@ -229,7 +229,8 @@
               // {
                 # Override immich router to add large file upload middleware
                 immich = mkRouterWithMiddlewares "immich" [ "immich.sbr.pm" ] [ "immich-buffering" ];
-                home = mkRouter "home" [ "home.sbr.pm" ];
+                # Override home router to add Home Assistant headers
+                home = mkRouterWithMiddlewares "home" [ "home.sbr.pm" ] [ "home-headers" ];
                 kiwix = mkRouter "kiwix" [ "kiwix.sbr.pm" ];
                 n8n = mkRouter "n8n" [ "n8n.sbr.pm" ];
                 paperless = mkRouter "paperless" [ "paperless.sbr.pm" ];
@@ -272,6 +273,14 @@
                     maxResponseBodyBytes = 0; # No limit
                     memResponseBodyBytes = 104857600; # 100MB in memory
                     retryExpression = "IsNetworkError() && Attempts() < 2";
+                  };
+                };
+                # Middleware for Home Assistant reverse proxy headers
+                home-headers = {
+                  headers = {
+                    customRequestHeaders = {
+                      X-Forwarded-Proto = "https";
+                    };
                   };
                 };
               };
