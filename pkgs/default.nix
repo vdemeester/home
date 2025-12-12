@@ -26,6 +26,7 @@ in
   gh-resolve-conflicts = pkgs.callPackage ../tools/gh-resolve-conflicts { };
   arr = pkgs.callPackage ../tools/arr { };
   download-kiwix-zim = pkgs.callPackage ../tools/download-kiwix-zim { };
+  cliphist-cleanup = pkgs.callPackage ../tools/cliphist-cleanup { };
   toggle-color-scheme = pkgs.callPackage ./toggle-color-scheme { };
   homepage = pkgs.callPackage ./homepage { inherit globals; };
 

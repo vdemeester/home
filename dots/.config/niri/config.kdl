@@ -186,6 +186,8 @@ binds {
     Mod+Shift+D hotkey-overlay-title="Run Raffi" { spawn "raffi" "-I"; }
     // FIXME do not use nix run, but needs niri configuration
     Mod+Control+D hotkey-overlay-title="Emoji picker" { spawn "rofimoji" "--selector" "fuzzel" "--clipboarder" "wl-copy" "--typer" "wtype" "--action" "type" "copy"; }
+    Mod+Control+V hotkey-overlay-title="Clipboard History" { spawn "bash" "-c" "cliphist list | fuzzel --dmenu --width=100 --lines=20 | cliphist decode | wl-copy"; }
+    Mod+Control+Shift+V hotkey-overlay-title="Delete Clipboard Entry" { spawn "bash" "-c" "cliphist list | fuzzel --dmenu --width=100 --lines=20 | cliphist delete"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "swaylock" "-m" "fill" "-i" "/home/vincent/desktop/pictures/lockscreen"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.

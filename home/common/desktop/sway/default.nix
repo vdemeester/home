@@ -45,6 +45,12 @@ in
     cliphist = {
       enable = true;
       package = pkgs.cliphist;
+      extraOptions = [
+        "-max-dedupe-search"
+        "100"
+        "-max-items"
+        "1000"
+      ];
     };
   };
 
