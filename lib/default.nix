@@ -224,7 +224,9 @@
     inputs.system-manager.lib.makeSystemConfig {
       inherit extraSpecialArgs;
       modules = [
-        # self.nixosModules.wireguard-client
+        ../modules/system-manager-firewall-stub.nix
+        ../modules/system-manager-syncthing.nix
+        ../modules/system-manager-wireguard.nix
         # inputs.agenix.nixosModules.default
         homeInput.nixosModules.home-manager
         {
