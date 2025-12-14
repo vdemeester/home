@@ -27,6 +27,7 @@ in
   cliphist-cleanup = pkgs.callPackage ../tools/cliphist-cleanup { };
   toggle-color-scheme = pkgs.callPackage ./toggle-color-scheme { };
   homepage = pkgs.callPackage ./homepage { inherit globals; };
+  audible-converter = pkgs.callPackage ./audible-converter { };
 
   chmouzies-ai = pkgs.callPackage ./chmouzies/ai.nix { };
   chmouzies-git = pkgs.callPackage ./chmouzies/git.nix { };
