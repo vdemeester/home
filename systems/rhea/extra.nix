@@ -469,16 +469,6 @@
       group = "users";
       openFirewall = true;
     };
-    aria2 = {
-      # FIXME: make sure aria2 runs as user vincent
-      enable = true;
-      openPorts = true;
-      settings = {
-        max-concurrent-downloads = 20;
-        dir = "/neo/downloads";
-      };
-      rpcSecretFile = "${pkgs.writeText "aria" "aria2rpc\n"}"; # FIXME: use secrets for this somehow
-    };
     transmission = {
       enable = true;
       user = "vincent";
@@ -622,6 +612,7 @@
   environment.systemPackages = with pkgs; [
     lm_sensors
     gnumake
+    audible-converter
   ];
 
 }

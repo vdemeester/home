@@ -30,8 +30,6 @@
     ];
   };
 
-  boot.supportedFilesystems = [ "nfs" ];
-
   services = {
     getty = {
       autologinOnce = true;

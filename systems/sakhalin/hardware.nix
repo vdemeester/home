@@ -4,6 +4,7 @@
 {
   imports = [
     ../common/hardware/acpid.nix
+    ../common/services/nfs-rhea-mounts.nix
   ];
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/92ce650d-873e-41c1-a44e-71c2b9191b9d";
@@ -46,6 +47,18 @@
   };
 
   swapDevices = [ { device = "/dev/disk/by-uuid/9eb067d1-b329-4fbb-ae27-38abfbe7c108"; } ];
+
+  # NFS mounts from rhea
+  services.nfs-rhea-mounts = {
+    enable = true;
+    folders = [
+      "audiobooks"
+      "downloads"
+      "music"
+      "pictures"
+      "videos"
+    ];
+  };
 
   networking = {
     firewall.enable = false; # we are in safe territory :D

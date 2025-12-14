@@ -21,6 +21,8 @@
     gmailctl
     gcalcli
 
+    calibre
+
     ntfy-sh
 
     monolith # TODO: move into =desktop= ?
