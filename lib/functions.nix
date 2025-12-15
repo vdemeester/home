@@ -286,6 +286,58 @@ let
         lib.attrsets.filterAttrs (_name: _value: true) machines
       )
     );
+
+  /**
+    Create service defaults for media/homelab services.
+
+    Common pattern for services that run as a specific user/group with firewall access.
+
+    @param user The user to run the service as (default: "vincent")
+    @param group The group to run the service as (default: "users")
+    @param openFirewall Whether to open firewall for the service (default: true)
+    @return Attribute set with user, group, and openFirewall settings
+  */
+  mkServiceDefaults =
+    {
+      user ? "vincent",
+      group ? "users",
+      openFirewall ? true,
+    }:
+    {
+      inherit user group openFirewall;
+    };
+
+  /**
+    Create a Samba share configuration with common defaults.
+
+    Standard configuration for public, writable shares with guest access.
+
+    @param name The name of the share
+    @param path The filesystem path to share
+    @param user The user for force user/group (default: "vincent")
+    @param group The group for force user/group (default: "users")
+    @return Attribute set with complete Samba share configuration
+  */
+  mkSambaShare =
+    {
+      name,
+      path,
+      user ? "vincent",
+      group ? "users",
+    }:
+    {
+      inherit path;
+      public = "yes";
+      browseable = "yes";
+      "read only" = "no";
+      "guest ok" = "yes";
+      writable = "yes";
+      comment = name;
+      "create mask" = "0644";
+      "directory mask" = "0755";
+      "force user" = user;
+      "force group" = group;
+    };
 in
 {
   inherit
@@ -309,5 +361,7 @@ in
     sshKnownHosts
     hostConfigs
     sshConfigs
+    mkServiceDefaults
+    mkSambaShare
     ;
 }

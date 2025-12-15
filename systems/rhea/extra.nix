@@ -8,6 +8,21 @@
 }:
 
 let
+  # Service defaults for media/homelab services
+  serviceDefaults = libx.mkServiceDefaults { };
+
+  # Samba shares configuration (data-driven approach)
+  sambaShares = [
+    "audiobooks"
+    "ebooks"
+    "backup"
+    "documents"
+    "downloads"
+    "music"
+    "pictures"
+    "videos"
+  ];
+
   # Exportarr services configuration (data-driven approach)
   exportarrServices = {
     sonarr = {
@@ -340,111 +355,18 @@ in
     # };
     samba.settings = {
       global."server string" = "Rhea";
-      audiobooks = {
-        path = "/neo/audiobooks";
-        public = "yes";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        writable = "yes";
-        comment = "audiobooks";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "vincent";
-        "force group" = "users";
-      };
-      ebooks = {
-        path = "/neo/ebooks";
-        public = "yes";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        writable = "yes";
-        comment = "ebooks";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "vincent";
-        "force group" = "users";
-      };
-      backup = {
-        path = "/neo/backup";
-        public = "yes";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        writable = "yes";
-        comment = "backup";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "vincent";
-        "force group" = "users";
-      };
-      documents = {
-        path = "/neo/documents";
-        public = "yes";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        writable = "yes";
-        comment = "documents";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "vincent";
-        "force group" = "users";
-      };
-      downloads = {
-        path = "/neo/downloads";
-        public = "yes";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        writable = "yes";
-        comment = "downloads";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "vincent";
-        "force group" = "users";
-      };
-      music = {
-        path = "/neo/music";
-        public = "yes";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        writable = "yes";
-        comment = "music";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "vincent";
-        "force group" = "users";
-      };
-      pictures = {
-        path = "/neo/pictures";
-        public = "yes";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        writable = "yes";
-        comment = "pictures";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "vincent";
-        "force group" = "users";
-      };
-      videos = {
-        path = "/neo/videos";
-        public = "yes";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        writable = "yes";
-        comment = "videos";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "vincent";
-        "force group" = "users";
-      };
-    };
+    }
+    // builtins.listToAttrs (
+      map (
+        name:
+        lib.nameValuePair name (
+          libx.mkSambaShare {
+            inherit name;
+            path = "/neo/${name}";
+          }
+        )
+      ) sambaShares
+    );
     nfs.server = {
       enable = true;
       # Fixed ports for firewall configuration
@@ -463,10 +385,8 @@ in
                 /neo/videos               192.168.1.0/24(rw,fsid=8,no_subtree_check) 10.100.0.0/24(rw,fsid=8,no_subtree_check)
         			'';
     };
-    immich = {
+    immich = serviceDefaults // {
       enable = true;
-      user = "vincent";
-      group = "users";
       mediaLocation = "/neo/pictures/photos";
     };
     postgresql = {
@@ -479,23 +399,17 @@ in
         }
       ];
     };
-    jellyfin = {
+    jellyfin = serviceDefaults // {
       enable = true;
-      user = "vincent";
-      group = "users";
-      openFirewall = true;
     };
     jellyseerr = {
       enable = true;
       openFirewall = true;
     };
-    audiobookshelf = {
+    audiobookshelf = serviceDefaults // {
       enable = true;
       port = 13378;
       host = "0.0.0.0";
-      user = "vincent";
-      group = "users";
-      openFirewall = true;
     };
     audible-sync = {
       enable = true;
@@ -511,11 +425,8 @@ in
         topic = "homelab";
       };
     };
-    transmission = {
+    transmission = serviceDefaults // {
       enable = true;
-      user = "vincent";
-      group = "users";
-      openFirewall = true;
       package = pkgs.transmission_4;
       openRPCPort = true; # Open firewall for RPC
       home = "/neo/torrents";
@@ -538,25 +449,16 @@ in
       };
     };
     # *arr services - ports configured via exportarrServices
-    sonarr = {
+    sonarr = serviceDefaults // {
       enable = true;
-      user = "vincent";
-      group = "users";
-      openFirewall = true;
       settings.server.port = exportarrServices.sonarr.servicePort;
     };
-    radarr = {
+    radarr = serviceDefaults // {
       enable = true;
-      user = "vincent";
-      group = "users";
-      openFirewall = true;
       settings.server.port = exportarrServices.radarr.servicePort;
     };
-    bazarr = {
+    bazarr = serviceDefaults // {
       enable = true;
-      user = "vincent";
-      group = "users";
-      openFirewall = true;
       listenPort = exportarrServices.bazarr.servicePort;
     };
     prowlarr = {
@@ -564,11 +466,8 @@ in
       openFirewall = true;
       settings.server.port = exportarrServices.prowlarr.servicePort;
     };
-    lidarr = {
+    lidarr = serviceDefaults // {
       enable = true;
-      user = "vincent";
-      group = "users";
-      openFirewall = true;
       settings.server.port = exportarrServices.lidarr.servicePort;
     };
     # Generate prometheus exporters for all exportarr services
