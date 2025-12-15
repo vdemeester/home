@@ -1,0 +1,215 @@
+# Infrastructure Dashboard
+# Servers, monitoring, automation tools
+
+title: Infrastructure
+path: infrastructure
+icon: mdi:server-network
+badges: []
+
+cards:
+  # Infrastructure header
+  - type: markdown
+    content: |
+      ## Infrastructure & Monitoring
+      System status, automation, and services
+
+  # Primary Servers
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+      # Rhea - Main Media Server
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ### Rhea
+              **Media & Downloads**
+              192.168.1.50
+          - type: glance
+            entities:
+              # Add actual system sensors:
+              # - entity: sensor.rhea_cpu_usage
+              - entity: binary_sensor.rhea_status
+                name: Status
+            show_name: true
+            columns: 1
+
+      # Sakhalin - Services
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ### Sakhalin
+              **Services & Tools**
+              192.168.1.70
+          - type: glance
+            entities:
+              - entity: binary_sensor.sakhalin_status
+                name: Status
+            columns: 1
+
+      # Aion - Music Server
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ### Aion
+              **Music Streaming**
+              192.168.1.49
+          - type: glance
+            entities:
+              - entity: binary_sensor.aion_status
+                name: Status
+            columns: 1
+
+  # Monitoring & Management
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      # Grafana - Monitoring
+      - type: entities
+        title: Grafana (Monitoring)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.grafana_status
+            name: Status
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.grafana_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://grafana.sbr.pm
+
+      # Traefik - Reverse Proxy
+      - type: entities
+        title: Traefik (Reverse Proxy)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.traefik_status
+            name: Status
+          # Add Traefik sensors:
+          # - entity: sensor.traefik_routers_count
+          #   name: Active Routers
+          # - entity: sensor.traefik_services_count
+          #   name: Services
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.traefik_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://traefik.sbr.pm
+
+  # Productivity & Automation
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      # Paperless - Document Management
+      - type: entities
+        title: Paperless (Documents)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.paperless_status
+            name: Status
+          # Add Paperless sensors:
+          # - entity: sensor.paperless_document_count
+          #   name: Documents
+          # - entity: sensor.paperless_inbox_count
+          #   name: Inbox
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.paperless_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://paperless.sbr.pm
+
+      # N8N - Workflow Automation
+      - type: entities
+        title: N8N (Workflows)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.n8n_status
+            name: Status
+          # Add N8N sensors:
+          # - entity: sensor.n8n_active_workflows
+          #   name: Active Workflows
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.n8n_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://n8n.sbr.pm
+
+      # Kiwix - Offline Wikipedia
+      - type: entities
+        title: Kiwix (Offline Content)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.kiwix_status
+            name: Status
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.kiwix_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://kiwix.sbr.pm
+
+      # Linkwarden - Bookmarks
+      - type: entities
+        title: Linkwarden (Bookmarks)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.linkwarden_status
+            name: Status
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.linkwarden_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://links.sbr.pm
+
+  # Network & Storage
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      # Athena - WebDAV
+      - type: entities
+        title: Athena (WebDAV Storage)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.athena_status
+            name: Status
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.athena_status
+              name: Open WebDAV
+              tap_action:
+                action: url
+                url_path: https://dav.sbr.pm
+
+      # Demeter - MQTT Broker
+      - type: entities
+        title: Demeter (MQTT Broker)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.demeter_status
+            name: Status
+          # Add MQTT sensors:
+          # - entity: sensor.mqtt_connected_clients
+          #   name: Connected Clients

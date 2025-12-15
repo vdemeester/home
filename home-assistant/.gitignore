@@ -1,0 +1,43 @@
+# Gitignore for Home Assistant Dashboard Config
+
+# Secrets file (NEVER commit this!)
+secrets.yaml
+
+# Home Assistant database and logs
+home-assistant.log
+home-assistant_v2.db*
+*.db-shm
+*.db-wal
+
+# Backup files
+*.backup
+
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# macOS
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# UUID cache
+.uuid
+
+# Storage
+.storage/
+.cloud/
+
+# Dependencies
+deps/
+
+# Test files
+*.test
+
+# Temporary files
+*.tmp

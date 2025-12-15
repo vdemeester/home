@@ -1,0 +1,19 @@
+# Home Assistant Dashboard - Main Configuration
+# Entry point for the declarative Lovelace UI
+
+# Resources (custom cards from HACS)
+resources: []
+  # Example custom cards:
+  # - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+  #   type: module
+
+# Dashboard title
+title: Homelab
+
+# Views (pages)
+views:
+  - !include views/overview.yaml
+  - !include views/media.yaml
+  - !include views/downloads.yaml
+  - !include views/infrastructure.yaml
+  - !include views/automation.yaml

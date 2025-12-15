@@ -1,0 +1,162 @@
+# Download Management Dashboard
+# Sonarr, Radarr, Lidarr, Bazarr, Prowlarr, Transmission
+
+title: Downloads
+path: downloads
+icon: mdi:download-circle
+badges: []
+
+cards:
+  # Downloads header
+  - type: markdown
+    content: |
+      ## Download Management
+      *arr suite for media automation and torrents
+
+  # Transmission - Torrent Client
+  - type: entities
+    title: Transmission (Torrent Client)
+    show_header_toggle: false
+    entities:
+      - entity: binary_sensor.transmission_status
+        name: Status
+      # Add actual transmission sensors:
+      # - entity: sensor.transmission_active_torrents
+      #   name: Active Torrents
+      # - entity: sensor.transmission_download_speed
+      #   name: Download Speed
+      # - entity: sensor.transmission_upload_speed
+      #   name: Upload Speed
+      # - entity: sensor.transmission_paused_torrents
+      #   name: Paused
+      # - entity: switch.transmission_turtle_mode
+      #   name: Speed Limit Mode
+    footer:
+      type: buttons
+      entities:
+        - entity: binary_sensor.transmission_status
+          name: Open
+          tap_action:
+            action: url
+            url_path: https://transmission.sbr.pm
+
+  # *arr Services Grid
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      # Sonarr - TV Shows
+      - type: entities
+        title: Sonarr (TV Shows)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonarr_status
+            name: Status
+          # Add Sonarr sensors:
+          # - entity: sensor.sonarr_wanted
+          #   name: Wanted
+          # - entity: sensor.sonarr_queue
+          #   name: Queue
+          # - entity: sensor.sonarr_series
+          #   name: Series Count
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.sonarr_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://sonarr.sbr.pm
+
+      # Radarr - Movies
+      - type: entities
+        title: Radarr (Movies)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.radarr_status
+            name: Status
+          # Add Radarr sensors:
+          # - entity: sensor.radarr_wanted
+          #   name: Wanted
+          # - entity: sensor.radarr_queue
+          #   name: Queue
+          # - entity: sensor.radarr_movies
+          #   name: Movie Count
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.radarr_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://radarr.sbr.pm
+
+      # Lidarr - Music
+      - type: entities
+        title: Lidarr (Music)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.lidarr_status
+            name: Status
+          # Add Lidarr sensors:
+          # - entity: sensor.lidarr_wanted
+          #   name: Wanted
+          # - entity: sensor.lidarr_queue
+          #   name: Queue
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.lidarr_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://lidarr.sbr.pm
+
+      # Bazarr - Subtitles
+      - type: entities
+        title: Bazarr (Subtitles)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.bazarr_status
+            name: Status
+          # Add Bazarr sensors:
+          # - entity: sensor.bazarr_missing_subtitles
+          #   name: Missing Subtitles
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.bazarr_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://bazarr.sbr.pm
+
+  # Prowlarr - Indexer Manager
+  - type: entities
+    title: Prowlarr (Indexer Manager)
+    show_header_toggle: false
+    entities:
+      - entity: binary_sensor.prowlarr_status
+        name: Status
+      # Add Prowlarr sensors:
+      # - entity: sensor.prowlarr_indexers
+      #   name: Active Indexers
+      # - entity: sensor.prowlarr_health_issues
+      #   name: Health Issues
+    footer:
+      type: buttons
+      entities:
+        - entity: binary_sensor.prowlarr_status
+          name: Open
+          tap_action:
+            action: url
+            url_path: https://prowlarr.sbr.pm
+
+  # Download queue overview
+  - type: markdown
+    content: |
+      ### Queue Summary
+      Configure automation to track:
+      - Total items downloading
+      - Download completion notifications
+      - Failed download alerts

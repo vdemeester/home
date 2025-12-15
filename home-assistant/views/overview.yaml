@@ -1,0 +1,152 @@
+# Overview - Home Dashboard
+# Default view showing high-level status of all services
+
+title: Overview
+path: overview
+icon: mdi:view-dashboard
+badges: []
+
+cards:
+  # Welcome header
+  - type: markdown
+    content: |
+      # Homelab Dashboard
+      Welcome to your self-hosted infrastructure.
+
+  # Quick status overview
+  - type: vertical-stack
+    cards:
+      - type: glance
+        title: Core Infrastructure
+        entities:
+          # Add your actual entities here
+          # Examples:
+          - entity: binary_sensor.rhea_status
+            name: Rhea (Media)
+          - entity: binary_sensor.sakhalin_status
+            name: Sakhalin (Services)
+          - entity: binary_sensor.aion_status
+            name: Aion (Music)
+          - entity: binary_sensor.athena_status
+            name: Athena (Storage)
+          - entity: binary_sensor.demeter_status
+            name: Demeter (MQTT)
+        show_name: true
+        show_state: true
+        columns: 5
+
+      - type: glance
+        title: Network
+        entities:
+          # Add actual network entities
+          - entity: binary_sensor.traefik_status
+            name: Traefik
+          - entity: binary_sensor.wireguard_status
+            name: VPN
+        columns: 2
+
+  # Service status grid
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+      # Media Services
+      - type: button
+        name: Jellyfin
+        icon: mdi:movie-open
+        tap_action:
+          action: url
+          url_path: https://jellyfin.sbr.pm
+        hold_action:
+          action: none
+        entity: binary_sensor.jellyfin_status
+        show_state: true
+
+      - type: button
+        name: Immich
+        icon: mdi:image-multiple
+        tap_action:
+          action: url
+          url_path: https://immich.sbr.pm
+        entity: binary_sensor.immich_status
+        show_state: true
+
+      - type: button
+        name: Navidrome
+        icon: mdi:music
+        tap_action:
+          action: url
+          url_path: https://music.sbr.pm
+        entity: binary_sensor.navidrome_status
+        show_state: true
+
+      # Download Management
+      - type: button
+        name: Transmission
+        icon: mdi:download
+        tap_action:
+          action: url
+          url_path: https://transmission.sbr.pm
+        entity: binary_sensor.transmission_status
+        show_state: true
+
+      - type: button
+        name: Sonarr
+        icon: mdi:television
+        tap_action:
+          action: url
+          url_path: https://sonarr.sbr.pm
+        entity: binary_sensor.sonarr_status
+        show_state: true
+
+      - type: button
+        name: Radarr
+        icon: mdi:filmstrip
+        tap_action:
+          action: url
+          url_path: https://radarr.sbr.pm
+        entity: binary_sensor.radarr_status
+        show_state: true
+
+  # System resources
+  - type: horizontal-stack
+    cards:
+      - type: gauge
+        name: Rhea CPU
+        entity: sensor.rhea_cpu_usage
+        min: 0
+        max: 100
+        severity:
+          green: 0
+          yellow: 60
+          red: 85
+
+      - type: gauge
+        name: Rhea Memory
+        entity: sensor.rhea_memory_usage
+        min: 0
+        max: 100
+        severity:
+          green: 0
+          yellow: 70
+          red: 90
+
+      - type: gauge
+        name: Rhea Disk
+        entity: sensor.rhea_disk_usage
+        min: 0
+        max: 100
+        severity:
+          green: 0
+          yellow: 75
+          red: 90
+
+  # Quick actions
+  - type: entities
+    title: Quick Actions
+    entities:
+      # Add your automation entities
+      - entity: script.restart_jellyfin
+        name: Restart Jellyfin
+      - entity: script.restart_transmission
+        name: Restart Transmission

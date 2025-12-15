@@ -1,0 +1,157 @@
+# Example Home Assistant configuration.yaml additions
+# Copy relevant sections to your actual Home Assistant configuration
+
+# Enable YAML dashboard mode
+lovelace:
+  mode: yaml
+  # Optionally add custom resources (HACS cards)
+  resources:
+    # Uncomment and install via HACS:
+    # - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+    #   type: module
+    # - url: /hacsfiles/button-card/button-card.js
+    #   type: module
+
+# RESTful sensors for service status monitoring
+# These use HTTP ping to check if services are available
+
+rest:
+  # Jellyfin
+  - resource: https://jellyfin.sbr.pm/health
+    scan_interval: 60
+    binary_sensor:
+      - name: "Jellyfin Status"
+        value_template: "{{ value_json.status == 'Healthy' or value == 'OK' }}"
+        device_class: connectivity
+
+  # Immich
+  - resource: https://immich.sbr.pm/api/server-info/ping
+    scan_interval: 60
+    binary_sensor:
+      - name: "Immich Status"
+        value_template: "{{ value_json.res == 'pong' or is_state('binary_sensor.immich_status', 'on') }}"
+        device_class: connectivity
+
+  # Transmission
+  - resource: https://transmission.sbr.pm
+    scan_interval: 60
+    binary_sensor:
+      - name: "Transmission Status"
+        value_template: "{{ true if value else false }}"
+        device_class: connectivity
+
+  # Sonarr
+  - resource: https://sonarr.sbr.pm/api/v3/health
+    scan_interval: 60
+    headers:
+      X-Api-Key: !secret sonarr_api_key
+    binary_sensor:
+      - name: "Sonarr Status"
+        value_template: "{{ is_state('binary_sensor.sonarr_status', 'on') or value }}"
+        device_class: connectivity
+
+  # Radarr
+  - resource: https://radarr.sbr.pm/api/v3/health
+    scan_interval: 60
+    headers:
+      X-Api-Key: !secret radarr_api_key
+    binary_sensor:
+      - name: "Radarr Status"
+        value_template: "{{ is_state('binary_sensor.radarr_status', 'on') or value }}"
+        device_class: connectivity
+
+  # Prowlarr
+  - resource: https://prowlarr.sbr.pm/api/v1/health
+    scan_interval: 60
+    headers:
+      X-Api-Key: !secret prowlarr_api_key
+    binary_sensor:
+      - name: "Prowlarr Status"
+        value_template: "{{ is_state('binary_sensor.prowlarr_status', 'on') or value }}"
+        device_class: connectivity
+
+  # Grafana
+  - resource: https://grafana.sbr.pm/api/health
+    scan_interval: 120
+    binary_sensor:
+      - name: "Grafana Status"
+        value_template: "{{ value_json.database == 'ok' or is_state('binary_sensor.grafana_status', 'on') }}"
+        device_class: connectivity
+
+  # Traefik
+  - resource: https://traefik.sbr.pm/api/overview
+    scan_interval: 60
+    binary_sensor:
+      - name: "Traefik Status"
+        value_template: "{{ value or is_state('binary_sensor.traefik_status', 'on') }}"
+        device_class: connectivity
+
+# Alternative: Use the ping integration for simple connectivity checks
+# This is simpler but only checks if the host responds to ping
+binary_sensor:
+  - platform: ping
+    name: "Rhea Server"
+    host: rhea.home
+    count: 2
+    scan_interval: 60
+
+  - platform: ping
+    name: "Sakhalin Server"
+    host: sakhalin.home
+    count: 2
+    scan_interval: 60
+
+  - platform: ping
+    name: "Aion Server"
+    host: aion.home
+    count: 2
+    scan_interval: 60
+
+  - platform: ping
+    name: "Athena Server"
+    host: athena.home
+    count: 2
+    scan_interval: 60
+
+  - platform: ping
+    name: "Demeter Server"
+    host: demeter.home
+    count: 2
+    scan_interval: 60
+
+# Notifications via ntfy.sh
+notify:
+  - name: ntfy_homelab
+    platform: rest
+    resource: https://ntfy.sbr.pm/homelab
+    method: POST_JSON
+    headers:
+      Title: "Home Assistant"
+    message_param_name: message
+
+# Optional: Sonarr/Radarr integrations via HACS
+# Install "Sonarr Upcoming Media" and "Radarr Upcoming Media" from HACS
+# Then configure:
+# sonarr_upcoming_media:
+#   api_key: !secret sonarr_api_key
+#   host: sonarr.sbr.pm
+#   port: 443
+#   ssl: true
+#   days: 7
+
+# radarr_upcoming_media:
+#   api_key: !secret radarr_api_key
+#   host: radarr.sbr.pm
+#   port: 443
+#   ssl: true
+#   days: 7
+
+# Optional: System monitor for local HA server
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: memory_use_percent
+      - type: processor_use
+      - type: last_boot

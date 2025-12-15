@@ -1,0 +1,148 @@
+# Media Services Dashboard
+# Jellyfin, Immich, Navidrome, Audiobookshelf, Jellyseerr
+
+title: Media
+path: media
+icon: mdi:play-circle
+badges: []
+
+cards:
+  # Media header
+  - type: markdown
+    content: |
+      ## Media Services
+      Streaming, photos, music, and audiobooks
+
+  # Media service status
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      # Jellyfin - Media Server
+      - type: entities
+        title: Jellyfin (Media Server)
+        show_header_toggle: false
+        entities:
+          - type: attribute
+            entity: binary_sensor.jellyfin_status
+            attribute: url
+            name: URL
+          - entity: binary_sensor.jellyfin_status
+            name: Status
+          # Add actual sensors when available:
+          # - entity: sensor.jellyfin_active_streams
+          #   name: Active Streams
+          # - entity: sensor.jellyfin_movie_count
+          #   name: Movies
+          # - entity: sensor.jellyfin_series_count
+          #   name: TV Shows
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.jellyfin_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://jellyfin.sbr.pm
+
+      # Immich - Photo Management
+      - type: entities
+        title: Immich (Photos)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.immich_status
+            name: Status
+          # Add actual sensors:
+          # - entity: sensor.immich_photo_count
+          #   name: Photos
+          # - entity: sensor.immich_video_count
+          #   name: Videos
+          # - entity: sensor.immich_storage_usage
+          #   name: Storage Used
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.immich_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://immich.sbr.pm
+
+  # Music and Audiobooks
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      # Navidrome - Music Streaming
+      - type: entities
+        title: Navidrome (Music)
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.navidrome_status
+            name: Status
+          # Add actual sensors:
+          # - entity: sensor.navidrome_artist_count
+          #   name: Artists
+          # - entity: sensor.navidrome_album_count
+          #   name: Albums
+          # - entity: sensor.navidrome_track_count
+          #   name: Tracks
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.navidrome_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://music.sbr.pm
+
+      # Audiobookshelf - Podcasts & Audiobooks
+      - type: entities
+        title: Audiobookshelf
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.audiobookshelf_status
+            name: Status
+          # Add actual sensors:
+          # - entity: sensor.audiobookshelf_audiobook_count
+          #   name: Audiobooks
+          # - entity: sensor.audiobookshelf_podcast_count
+          #   name: Podcasts
+        footer:
+          type: buttons
+          entities:
+            - entity: binary_sensor.audiobookshelf_status
+              name: Open
+              tap_action:
+                action: url
+                url_path: https://podcasts.sbr.pm
+
+  # Jellyseerr - Media Requests
+  - type: entities
+    title: Jellyseerr (Requests)
+    show_header_toggle: false
+    entities:
+      - entity: binary_sensor.jellyseerr_status
+        name: Status
+      # Add actual sensors:
+      # - entity: sensor.jellyseerr_pending_requests
+      #   name: Pending Requests
+      # - entity: sensor.jellyseerr_total_requests
+      #   name: Total Requests
+    footer:
+      type: buttons
+      entities:
+        - entity: binary_sensor.jellyseerr_status
+          name: Open
+          tap_action:
+            action: url
+            url_path: https://jellyseerr.sbr.pm
+
+  # Recent activity (if available)
+  - type: markdown
+    content: |
+      ### Recent Activity
+      Configure sensors for:
+      - Recently added movies/shows (Jellyfin)
+      - Latest photo uploads (Immich)
+      - New audiobooks (Audiobookshelf)

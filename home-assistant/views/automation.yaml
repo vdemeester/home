@@ -1,0 +1,120 @@
+# Automation & Devices Dashboard
+# Smart home devices, automations, and integrations
+
+title: Automation
+path: automation
+icon: mdi:home-automation
+badges: []
+
+cards:
+  # Automation header
+  - type: markdown
+    content: |
+      ## Home Automation
+      Smart devices, automations, and integrations
+
+  # Smart Devices
+  - type: entities
+    title: Smart Devices
+    show_header_toggle: false
+    entities:
+      # Add your actual smart home devices here
+      # Examples based on common integrations:
+      # Shield TV (if integrated via Android TV integration)
+      # - entity: media_player.shield_tv
+      #   name: Shield TV
+      #
+      # Lights
+      # - entity: light.living_room
+      #   name: Living Room
+      #
+      # Switches
+      # - entity: switch.office_lamp
+      #   name: Office Lamp
+
+  # Active Automations
+  - type: entities
+    title: Automations
+    show_header_toggle: false
+    entities:
+      # Add your automations here
+      # - entity: automation.morning_routine
+      #   name: Morning Routine
+      # - entity: automation.media_server_health_check
+      #   name: Media Server Health Check
+      # - entity: automation.backup_notification
+      #   name: Backup Notifications
+
+  # Syncthing Status
+  - type: markdown
+    content: |
+      ### Syncthing Sync Status
+      Monitor folder synchronization across devices
+
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      # Main sync folders
+      - type: entities
+        title: Sync Folders
+        entities:
+          # Add Syncthing folder sensors if available
+          # - entity: sensor.syncthing_org_sync_status
+          #   name: Org Files
+          # - entity: sensor.syncthing_documents_sync_status
+          #   name: Documents
+          # - entity: sensor.syncthing_sync_sync_status
+          #   name: General Sync
+          - type: section
+            label: Placeholder
+
+      # Device sync status
+      - type: entities
+        title: Connected Devices
+        entities:
+          # Add Syncthing device sensors
+          # - entity: binary_sensor.syncthing_kyushu
+          #   name: Kyushu (Laptop)
+          # - entity: binary_sensor.syncthing_aomi
+          #   name: Aomi (Desktop)
+          # - entity: binary_sensor.syncthing_hokkaido
+          #   name: Hokkaido (iPhone)
+          - type: section
+            label: Placeholder
+
+  # System Health
+  - type: markdown
+    content: |
+      ### System Health Checks
+      Configure automation for:
+      - Service availability monitoring
+      - Disk space alerts
+      - Backup completion notifications
+      - Certificate expiration warnings
+      - VPN connection status
+
+  # Quick Actions
+  - type: entities
+    title: Quick Actions
+    entities:
+      # Add useful scripts and scenes
+      # - entity: script.restart_media_services
+      #   name: Restart Media Services
+      # - entity: script.run_backup
+      #   name: Run Backup
+      # - entity: scene.movie_time
+      #   name: Movie Mode
+      - type: section
+        label: Configure scripts and scenes
+
+  # Notifications
+  - type: markdown
+    content: |
+      ### Notifications
+      Configure ntfy.sh notifications for:
+      - Download completions (Sonarr/Radarr)
+      - Media requests (Jellyseerr)
+      - System alerts (disk space, health checks)
+      - Backup status (audible-sync, PostgreSQL)
+      - Certificate renewals
