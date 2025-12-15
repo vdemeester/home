@@ -243,16 +243,22 @@ stdenv.mkDerivation {
   version = "1.0.0";
 
   dontUnpack = true;
+  dontBuild = true;
 
-  buildPhase = ''
+  installPhase = ''
+    runHook preInstall
+
     mkdir -p $out
     cat > $out/index.html << 'EOF'
     ${htmlContent}
     EOF
+
+    runHook postInstall
   '';
 
   meta = {
     description = "Simple HTML homepage listing all services from globals.nix";
+    license = lib.licenses.mit;
     platforms = lib.platforms.all;
   };
 }

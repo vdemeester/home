@@ -27,6 +27,8 @@ python3.pkgs.buildPythonApplication {
   dontUsePythonImportsCheck = true;
 
   installPhase = ''
+    runHook preInstall
+
     mkdir -p $out/bin $out/lib/arr
 
     # Install the main CLI
@@ -45,6 +47,8 @@ python3.pkgs.buildPythonApplication {
     # Wrap the main script to set PYTHONPATH
     wrapProgram $out/bin/arr \
       --prefix PYTHONPATH : "$out/lib/arr"
+
+    runHook postInstall
   '';
 
   postFixup = ''
@@ -56,13 +60,15 @@ python3.pkgs.buildPythonApplication {
       --zsh <($out/bin/arr completion zsh)
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Unified CLI for managing *arr services (Sonarr, Radarr, Lidarr)";
     longDescription = ''
       arr provides a consistent interface for common operations across
       the *arr media management stack, including renaming, retagging,
       path updates, and Spotify playlist syncing.
     '';
-    platforms = platforms.unix;
+    license = lib.licenses.mit;
+    platforms = lib.platforms.unix;
+    mainProgram = "arr";
   };
 }

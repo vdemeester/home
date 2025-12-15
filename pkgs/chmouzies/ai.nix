@@ -39,9 +39,9 @@ stdenv.mkDerivation {
       runHook postInstall
     '';
 
-  meta = with lib; {
+  meta = {
     description = "Chmouel's AI-assisted git tools";
     homepage = "https://gitlab.com/chmouel/chmouzies";
-    platforms = platforms.unix;
+    platforms = lib.platforms.unix;
   };
 }

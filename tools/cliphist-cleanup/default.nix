@@ -1,4 +1,7 @@
-{ buildGoModule }:
+{
+  lib,
+  buildGoModule,
+}:
 
 buildGoModule {
   pname = "cliphist-cleanup";
@@ -9,6 +12,8 @@ buildGoModule {
 
   meta = {
     description = "Clean up cliphist clipboard history by pattern matching";
+    license = lib.licenses.mit;
+    platforms = lib.platforms.linux;
     mainProgram = "cliphist-cleanup";
   };
 }

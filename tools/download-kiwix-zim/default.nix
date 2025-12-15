@@ -24,6 +24,8 @@ python3.pkgs.buildPythonApplication {
   ];
 
   installPhase = ''
+    runHook preInstall
+
     mkdir -p $out/bin
 
     # Install the script
@@ -39,9 +41,11 @@ python3.pkgs.buildPythonApplication {
           wget
         ]
       }
+
+    runHook postInstall
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Browse and download ZIM files from the Kiwix library using fzf";
     longDescription = ''
       Interactive tool to browse the Kiwix catalog and download offline
@@ -49,6 +53,8 @@ python3.pkgs.buildPythonApplication {
       resources. Features multi-select with fzf and parallel downloads
       with aria2c.
     '';
-    platforms = platforms.unix;
+    license = lib.licenses.mit;
+    platforms = lib.platforms.unix;
+    mainProgram = "download-kiwix-zim";
   };
 }

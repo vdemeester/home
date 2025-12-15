@@ -47,9 +47,9 @@ stdenv.mkDerivation {
       runHook postInstall
     '';
 
-  meta = with lib; {
+  meta = {
     description = "Chmouel's Kubernetes and OpenShift helper scripts";
     homepage = "https://gitlab.com/chmouel/chmouzies";
-    platforms = platforms.unix;
+    platforms = lib.platforms.unix;
   };
 }

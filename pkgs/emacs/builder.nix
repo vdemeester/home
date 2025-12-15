@@ -16,20 +16,29 @@ stdenv.mkDerivation {
   '';
   buildInputs = [ emacs ] ++ buildInputs;
   buildPhase = ''
+    runHook preBuild
+
     ${preBuild}
     ARGS=$(find ${lib.concatStrings (builtins.map (arg: arg + "/share/emacs/site-lisp ") buildInputs)} \
                  -type d -exec echo -L {} \;)
     mkdir $out
     export HOME=$out
     ${emacs}/bin/emacs -Q -nw -L . $ARGS --batch -f batch-byte-compile *.el
+
+    runHook postBuild
   '';
   installPhase = ''
+    runHook preInstall
+
     mkdir -p $out/share/emacs/site-lisp
     install *.el* $out/share/emacs/site-lisp
+
+    runHook postInstall
   '';
   meta = {
     description = "Emacs projects from the Internet that just compile .el files";
     homepage = "http://www.emacswiki.org";
+    license = lib.licenses.gpl3Plus; # Emacs packages are typically GPL
     platforms = lib.platforms.all;
   };
 }
