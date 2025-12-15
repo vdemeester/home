@@ -14,7 +14,7 @@
     gnumake
 
     go-org-readwise
-    gh-restart-failed
+    gh-pr
     claude-hooks
   ];
 
