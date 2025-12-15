@@ -6,6 +6,32 @@
   config,
   ...
 }:
+
+let
+  # Exportarr services configuration (data-driven approach)
+  exportarrServices = {
+    sonarr = {
+      port = 9707;
+      servicePort = 8989;
+    };
+    radarr = {
+      port = 9708;
+      servicePort = 7878;
+    };
+    lidarr = {
+      port = 9709;
+      servicePort = 8686;
+    };
+    prowlarr = {
+      port = 9710;
+      servicePort = 9696;
+    };
+    bazarr = {
+      port = 9712;
+      servicePort = 6767;
+    };
+  };
+in
 {
   imports = [
     ../common/services/samba.nix
@@ -13,38 +39,23 @@
     ../../modules/audible-sync.nix
   ];
 
-  age.secrets."gandi.env" = {
-    file = ../../secrets/rhea/gandi.env.age;
-    mode = "400";
-    owner = "traefik";
-    group = "traefik";
-  };
-
-  age.secrets."exportarr-sonarr-apikey" = {
-    file = ../../secrets/rhea/exportarr-sonarr-apikey.age;
-    mode = "440";
-    group = "homepage";
-  };
-  age.secrets."exportarr-radarr-apikey" = {
-    file = ../../secrets/rhea/exportarr-radarr-apikey.age;
-    mode = "440";
-    group = "homepage";
-  };
-  age.secrets."exportarr-lidarr-apikey" = {
-    file = ../../secrets/rhea/exportarr-lidarr-apikey.age;
-    mode = "440";
-    group = "homepage";
-  };
-  age.secrets."exportarr-prowlarr-apikey" = {
-    file = ../../secrets/rhea/exportarr-prowlarr-apikey.age;
-    mode = "440";
-    group = "homepage";
-  };
-  age.secrets."exportarr-bazarr-apikey" = {
-    file = ../../secrets/rhea/exportarr-bazarr-apikey.age;
-    mode = "440";
-    group = "homepage";
-  };
+  # Age secrets: gandi.env + generated exportarr secrets
+  age.secrets = {
+    "gandi.env" = {
+      file = ../../secrets/rhea/gandi.env.age;
+      mode = "400";
+      owner = "traefik";
+      group = "traefik";
+    };
+  }
+  // lib.mapAttrs' (
+    name: _cfg:
+    lib.nameValuePair "exportarr-${name}-apikey" {
+      file = ../../secrets/rhea/exportarr-${name}-apikey.age;
+      mode = "440";
+      group = "homepage";
+    }
+  ) exportarrServices;
 
   users.users.vincent.linger = true;
 
@@ -132,10 +143,12 @@
           localServices = {
             jellyfin.port = 8096;
             jellyseerr.port = 5055;
-            sonarr.port = 8989;
-            radarr.port = 7878;
-            lidarr.port = 8686;
-            bazarr.port = 6767;
+            # *arr services - ports from exportarrServices
+            sonarr.port = exportarrServices.sonarr.servicePort;
+            radarr.port = exportarrServices.radarr.servicePort;
+            lidarr.port = exportarrServices.lidarr.servicePort;
+            bazarr.port = exportarrServices.bazarr.servicePort;
+            prowlarr.port = exportarrServices.prowlarr.servicePort;
             transmission = {
               port = 9091;
               altHosts = [ "t.sbr.pm" ];
@@ -510,66 +523,50 @@
         ratio-limit-enabled = true;
       };
     };
+    # *arr services - ports configured via exportarrServices
     sonarr = {
       enable = true;
       user = "vincent";
       group = "users";
       openFirewall = true;
+      settings.server.port = exportarrServices.sonarr.servicePort;
     };
     radarr = {
       enable = true;
       user = "vincent";
       group = "users";
       openFirewall = true;
+      settings.server.port = exportarrServices.radarr.servicePort;
     };
     bazarr = {
       enable = true;
       user = "vincent";
       group = "users";
       openFirewall = true;
+      listenPort = exportarrServices.bazarr.servicePort;
     };
     prowlarr = {
       enable = true;
       openFirewall = true;
+      settings.server.port = exportarrServices.prowlarr.servicePort;
     };
     lidarr = {
       enable = true;
       user = "vincent";
       group = "users";
       openFirewall = true;
+      settings.server.port = exportarrServices.lidarr.servicePort;
     };
-    prometheus.exporters = {
-      exportarr-sonarr = {
+    # Generate prometheus exporters for all exportarr services
+    prometheus.exporters = lib.mapAttrs' (
+      name: cfg:
+      lib.nameValuePair "exportarr-${name}" {
         enable = true;
-        port = 9707;
-        url = "http://localhost:8989";
-        apiKeyFile = config.age.secrets."exportarr-sonarr-apikey".path;
-      };
-      exportarr-radarr = {
-        enable = true;
-        port = 9708;
-        url = "http://localhost:7878";
-        apiKeyFile = config.age.secrets."exportarr-radarr-apikey".path;
-      };
-      exportarr-lidarr = {
-        enable = true;
-        port = 9709;
-        url = "http://localhost:8686";
-        apiKeyFile = config.age.secrets."exportarr-lidarr-apikey".path;
-      };
-      exportarr-prowlarr = {
-        enable = true;
-        port = 9710;
-        url = "http://localhost:9696";
-        apiKeyFile = config.age.secrets."exportarr-prowlarr-apikey".path;
-      };
-      exportarr-bazarr = {
-        enable = true;
-        port = 9712;
-        url = "http://localhost:6767";
-        apiKeyFile = config.age.secrets."exportarr-bazarr-apikey".path;
-      };
-    };
+        port = cfg.port;
+        url = "http://localhost:${toString cfg.servicePort}";
+        apiKeyFile = config.age.secrets."exportarr-${name}-apikey".path;
+      }
+    ) exportarrServices;
   };
 
   security.acme = {
