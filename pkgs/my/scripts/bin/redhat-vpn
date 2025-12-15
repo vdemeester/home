@@ -4,8 +4,12 @@
 # do some magic
 set -e
 
+# Detect desktop environment and available tools
+DESKTOP="${XDG_CURRENT_DESKTOP:-}"
 GRAPHICS=1
-if ! [ "${XDG_CURRENT_DESKTOP}" == "sway" ]; then
+
+# Check if running in a graphical environment
+if [[ "$DESKTOP" != "sway" && "$DESKTOP" != "niri" ]]; then
 	if ! command -v xset &>/dev/null; then
 		GRAPHICS=0
 	elif ! timeout 1s xset q &>/dev/null; then
@@ -13,9 +17,15 @@ if ! [ "${XDG_CURRENT_DESKTOP}" == "sway" ]; then
 	fi
 fi
 
+# Select VPN connection based on environment
 if [[ GRAPHICS -eq 0 ]]; then
+	# Terminal: use fzf
 	connection="$(nmcli connection show | grep vpn | fzf)"
+elif [[ "$DESKTOP" == "sway" || "$DESKTOP" == "niri" ]]; then
+	# Wayland compositors (Sway/Niri): use fuzzel
+	connection="$(nmcli connection show | grep vpn | awk '{print $1, $2, $3, $4}' | fuzzel --dmenu --prompt "VPN: ")"
 else
+	# X11: use zenity
 	connection="$(nmcli connection show | grep vpn | zenity --list --title "Red Hat VPNs" --text "Choose your VPN.." --column "Name" --width=600 --height=450)"
 fi
 NOTIFY_CMD="notify-send"
@@ -23,20 +33,20 @@ if [[ GRAPHICS -eq 0 ]]; then
 	NOTIFY_CMD="echo"
 fi
 
-uuid=$(echo ${connection} | awk '{print $4}')
-name=$(echo ${connection} | awk '{print $1 $2 $3}')
-VPNSTATUS=$(nmcli connection show --active $uuid | wc -l)
+uuid=$(echo "${connection}" | awk '{print $4}')
+name=$(echo "${connection}" | awk '{print $1 $2 $3}')
+VPNSTATUS=$(nmcli connection show --active "$uuid" | wc -l)
 if [ "$VPNSTATUS" == "0" ]; then
 	key=$(authkey)
 	passfile=$(mktemp)
 
-	echo -n "vpn.secrets.password:" >$passfile
-	passage show redhat/vpn/pass | tr -d '\r\n' 2>/dev/null >>$passfile
-	# gpg --decrypt $HOME/sync/naruhodo.pass.gpg 2>/dev/null >>$passfile
-	echo -n "${key}" >>$passfile
+	echo -n "vpn.secrets.password:" >"$passfile"
+	passage show redhat/vpn/pass | tr -d '\r\n' 2>/dev/null >>"$passfile"
+	# gpg --decrypt $HOME/sync/naruhodo.pass.gpg 2>/dev/null >>"$passfile"
+	echo -n "${key}" >>"$passfile"
 
-	nmcli connection up ${uuid} passwd-file $passfile
-	rm $passfile
+	nmcli connection up "${uuid}" passwd-file "$passfile"
+	rm "$passfile"
 	$NOTIFY_CMD "VPN ${name} is connected." "You are now connected to the Red Hat VPN, let's work !"
 else
 	$NOTIFY_CMD "VPN ${name} is already connected." "You are already connected to the Red Hat VPN, let's work !"
