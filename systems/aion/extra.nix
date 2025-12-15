@@ -26,6 +26,7 @@
             paths = [
               "/neo/audiobooks"
               "/neo/documents"
+              "/neo/ebooks"
               "/neo/music"
               "/neo/pictures"
               "/neo/videos"
