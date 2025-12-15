@@ -353,6 +353,19 @@ in
         "force user" = "vincent";
         "force group" = "users";
       };
+      ebooks = {
+        path = "/neo/ebooks";
+        public = "yes";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        writable = "yes";
+        comment = "ebooks";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "vincent";
+        "force group" = "users";
+      };
       backup = {
         path = "/neo/backup";
         public = "yes";
@@ -444,9 +457,10 @@ in
                 /neo/backup               192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
                 /neo/documents            192.168.1.0/24(rw,fsid=3,no_subtree_check) 10.100.0.0/24(rw,fsid=3,no_subtree_check)
                 /neo/downloads            192.168.1.0/24(rw,fsid=4,no_subtree_check) 10.100.0.0/24(rw,fsid=4,no_subtree_check)
-                /neo/music                192.168.1.0/24(rw,fsid=5,no_subtree_check) 10.100.0.0/24(rw,fsid=5,no_subtree_check)
-                /neo/pictures             192.168.1.0/24(rw,fsid=6,no_subtree_check) 10.100.0.0/24(rw,fsid=6,no_subtree_check)
-                /neo/videos               192.168.1.0/24(rw,fsid=7,no_subtree_check) 10.100.0.0/24(rw,fsid=7,no_subtree_check)
+                /neo/ebooks               192.168.1.0/24(rw,fsid=5,no_subtree_check) 10.100.0.0/24(rw,fsid=5,no_subtree_check)
+                /neo/music                192.168.1.0/24(rw,fsid=6,no_subtree_check) 10.100.0.0/24(rw,fsid=6,no_subtree_check)
+                /neo/pictures             192.168.1.0/24(rw,fsid=7,no_subtree_check) 10.100.0.0/24(rw,fsid=7,no_subtree_check)
+                /neo/videos               192.168.1.0/24(rw,fsid=8,no_subtree_check) 10.100.0.0/24(rw,fsid=8,no_subtree_check)
         			'';
     };
     immich = {

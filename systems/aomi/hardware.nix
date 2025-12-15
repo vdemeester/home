@@ -52,6 +52,7 @@
     folders = [
       "audiobooks"
       "downloads"
+      "ebooks"
       "music"
       "pictures"
       "videos"
