@@ -144,6 +144,7 @@ download_all() {
 			--pdf \
 			--cover \
 			--quality "$QUALITY" \
+			--ignore-podcasts \
 			--output-dir "$TEMP_DIR" 2>&1; then
 			log_warn "Failed to download ASIN: $asin (may already be downloaded)"
 		fi
@@ -159,6 +160,7 @@ download_book() {
 		--asin "$asin" \
 		--aax \
 		--quality "$QUALITY" \
+		--ignore-podcasts \
 		--output-dir "$TEMP_DIR"
 }
 
