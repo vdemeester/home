@@ -4,14 +4,12 @@
   lib,
   stateVersion,
   username,
-  inputs,
   globals,
   libx,
   ...
 }:
 {
   imports = [
-    inputs.niri.homeModules.niri
     ./common/shell
   ]
   ++ lib.optional (builtins.isString desktop) ./common/desktop

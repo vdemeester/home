@@ -324,14 +324,6 @@
       inputs.nixpkgs.follows = "nixpkgs-25_11";
     };
 
-    niri = {
-      type = "github";
-      owner = "sodiboo";
-      repo = "niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-25_11";
-    };
-
     dagger = {
       type = "github";
       owner = "dagger";

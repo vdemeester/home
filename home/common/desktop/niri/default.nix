@@ -39,9 +39,4 @@
       ];
     };
   };
-  programs.niri = {
-    enable = true;
-    package = pkgs.niri-stable;
-    config = null; # FIXME I will need to migrate this
-  };
 }

@@ -29,7 +29,6 @@
 
       # And from other flakes
       inputs.emacs-overlay.overlay
-      inputs.niri.overlays.niri
       inputs.chapeau-rouge.overlays.openshift
       inputs.chick-group.overlays.default
       inputs.go-org-readwise.overlays.default
