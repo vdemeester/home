@@ -32,6 +32,14 @@
   # Firewall is enabled in openshift-port-forward.nix
   # networking.firewall.enable = false;
 
+  # OpenShift SNO endpoints
+  networking.extraHosts = ''
+    192.168.100.7 api.ocp4.lab.home
+    192.168.100.7 api-int.ocp4.lab.home
+    192.168.100.7 console-openshift-console.apps.ocp4.lab.home
+    192.168.100.7 oauth-openshift.apps.ocp4.lab.home
+  '';
+
   # TODO make it an option ? (otherwise I'll add it for all)
   users.users.vincent.linger = true;
 

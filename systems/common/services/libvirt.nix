@@ -8,6 +8,7 @@
   virtualisation.libvirtd = {
     enable = true;
     allowedBridges = [ "br1" ]; # Could be different dependinng on the host ?
+    firewallBackend = "nftables";
     extraConfig = ''
       listen_tls = 0
       listen_tcp = 1
