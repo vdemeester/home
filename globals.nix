@@ -537,6 +537,9 @@ _: {
     # Podcast and audiobook management on aion (routed through rhea/traefik)
     audiobookshelf.host = "rhea";
     podcasts.host = "rhea";
+    # Ebook library management on rhea
+    calibre.host = "rhea";
+    books.host = "rhea";
     # WebDAV on athena (routed through rhea/traefik)
     dav.host = "rhea";
     # MQTT on demeter (routed through rhea/traefik)

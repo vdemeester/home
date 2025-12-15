@@ -177,6 +177,10 @@ in
               port = 13378;
               altHosts = [ "podcasts.sbr.pm" ];
             };
+            calibre = {
+              port = 8083;
+              altHosts = [ "books.sbr.pm" ];
+            };
             homepage.port = 3001;
           };
 
@@ -500,6 +504,21 @@ in
     $PSQL immich -tAc "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO vincent"
     $PSQL immich -tAc "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO vincent"
   '';
+
+  # Calibre Content Server for ebook library
+  systemd.services.calibre-server = {
+    description = "Calibre Content Server";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.calibre}/bin/calibre-server --port=8083 /neo/ebooks";
+      Restart = "on-failure";
+      User = "vincent";
+      Group = "users";
+    };
+  };
 
   networking.useDHCP = lib.mkDefault true;
 
