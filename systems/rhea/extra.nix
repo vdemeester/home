@@ -10,6 +10,7 @@
   imports = [
     ../common/services/samba.nix
     ../common/services/homepage.nix
+    ../../modules/audible-sync.nix
   ];
 
   age.secrets."gandi.env" = {
@@ -469,6 +470,20 @@
       group = "users";
       openFirewall = true;
     };
+    audible-sync = {
+      enable = true;
+      user = "vincent";
+      outputDir = "/neo/audiobooks";
+      tempDir = "/neo/audiobooks/zz_import"; # Keep AAX files for reuse
+      quality = "best";
+      format = "m4b";
+      onCalendar = "*-*-* 03:00:00"; # Daily at 3 AM
+      notification = {
+        enable = true;
+        ntfyUrl = "https://ntfy.sbr.pm";
+        topic = "homelab";
+      };
+    };
     transmission = {
       enable = true;
       user = "vincent";
@@ -613,6 +628,7 @@
     lm_sensors
     gnumake
     audible-converter
+    audible-cli
   ];
 
 }

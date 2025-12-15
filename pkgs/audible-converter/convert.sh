@@ -10,6 +10,7 @@ OUTPUT_DIR="${AUDIBLE_OUTPUT_DIR:-$HOME/audiobooks}"
 QUALITY="${AUDIBLE_QUALITY:-best}"
 FORMAT="${AUDIBLE_FORMAT:-m4b}"
 AUTHCODE="${AUDIBLE_AUTHCODE:-}"
+CLEANUP_ON_EXIT="${AUDIBLE_CLEANUP_ON_EXIT:-false}"  # Set to 'true' to auto-cleanup temp files
 
 # Colors for output
 RED='\033[0;31m'
@@ -53,11 +54,12 @@ OPTIONS:
     -h, --help           Show this help message
 
 ENVIRONMENT VARIABLES:
-    AUDIBLE_OUTPUT_DIR   Output directory for converted books
-    AUDIBLE_TEMP_DIR     Temporary directory for downloads
-    AUDIBLE_QUALITY      Audio quality setting
-    AUDIBLE_FORMAT       Output format
-    AUDIBLE_AUTHCODE     Activation bytes for AAX DRM removal
+    AUDIBLE_OUTPUT_DIR      Output directory for converted books
+    AUDIBLE_TEMP_DIR        Temporary directory for downloads (kept by default)
+    AUDIBLE_QUALITY         Audio quality setting
+    AUDIBLE_FORMAT          Output format
+    AUDIBLE_AUTHCODE        Activation bytes for AAX DRM removal
+    AUDIBLE_CLEANUP_ON_EXIT Set to 'true' to auto-delete temp files on exit
 
 EXAMPLES:
     # Sync library (download and convert new books)
@@ -108,11 +110,13 @@ setup_dirs() {
     mkdir -p "$OUTPUT_DIR"
 }
 
-# Cleanup temporary files
+# Cleanup temporary files (manual or via AUDIBLE_CLEANUP_ON_EXIT=true)
+# By default, we keep temp files to reuse downloaded AAX files on subsequent runs
 cleanup() {
     if [ -d "$TEMP_DIR" ]; then
-        log_info "Cleaning up temporary files..."
+        log_info "Cleaning up temporary files in: $TEMP_DIR"
         rm -rf "$TEMP_DIR"
+        log_info "Cleanup complete"
     fi
 }
 
@@ -121,7 +125,7 @@ download_all() {
     log_info "Exporting library metadata..."
     local library_json="$TEMP_DIR/library.json"
 
-    audible library export --output "$library_json"
+    audible library export --format json --output "$library_json"
 
     local total_books
     total_books=$(jq length "$library_json")
@@ -347,8 +351,13 @@ main() {
         esac
     done
 
-    # Trap cleanup on exit
-    trap cleanup EXIT
+    # Optionally cleanup on exit (default: keep files for reuse)
+    if [ "$CLEANUP_ON_EXIT" = "true" ]; then
+        log_info "Auto-cleanup enabled (AUDIBLE_CLEANUP_ON_EXIT=true)"
+        trap cleanup EXIT
+    else
+        log_info "Keeping temp files in $TEMP_DIR for reuse (set AUDIBLE_CLEANUP_ON_EXIT=true to auto-delete)"
+    fi
 
     # Check dependencies
     check_dependencies

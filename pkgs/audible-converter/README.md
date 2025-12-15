@@ -107,9 +107,10 @@ audible-converter --output ~/audiobooks convert book.aax
 Configure defaults using environment variables:
 
 - `AUDIBLE_OUTPUT_DIR` - Output directory for converted books
-- `AUDIBLE_TEMP_DIR` - Temporary directory for downloads
+- `AUDIBLE_TEMP_DIR` - Temporary directory for downloads (kept by default for reuse)
 - `AUDIBLE_QUALITY` - Audio quality setting (best, high, normal)
 - `AUDIBLE_FORMAT` - Output format (m4b, mp3, m4a)
+- `AUDIBLE_CLEANUP_ON_EXIT` - Set to `true` to auto-delete temp files on exit (default: false)
 
 Example:
 
@@ -123,8 +124,11 @@ On rhea (with NFS-mounted storage):
 
 ```bash
 export AUDIBLE_OUTPUT_DIR="/neo/audiobooks"
+export AUDIBLE_TEMP_DIR="/neo/audiobooks/zz_import"  # Persistent for reuse
 audible-converter sync
 ```
+
+**Note**: By default, downloaded AAX files in `AUDIBLE_TEMP_DIR` are **kept** between runs to save bandwidth and time. Only new books will be downloaded on subsequent syncs. Set `AUDIBLE_CLEANUP_ON_EXIT=true` if you want to auto-delete temp files after each run.
 
 ## Output Structure
 
