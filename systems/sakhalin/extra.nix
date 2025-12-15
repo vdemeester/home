@@ -39,13 +39,13 @@
       enable = true;
       address = "${builtins.head globals.machines.sakhalin.net.vpn.ips}";
     };
-    # services.postgresql.enable = true;
-    # services.postgresql.package = pkgs.postgresql_15;
-    # services.postgresql.dataDir = "/var/lib/postgresql/15";
-    # services.postgresqlBackup.databases = [ "atuin" "homepage_production" "nextcloud" ];
-    # services.postgresqlBackup.enable = true;
-    # services.postgresqlBackup.location = "/var/backup/postgresql";
-    # services.postgresqlBackup.startAt = "*-*-* 02:15:00";
+    # PostgreSQL backups
+    postgresqlBackup = {
+      enable = true;
+      databases = [ "linkwarden" ];
+      location = "/var/backup/postgresql";
+      startAt = "*-*-* 02:15:00"; # Daily at 2:15 AM
+    };
 
     grafana = {
       enable = true;
