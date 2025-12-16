@@ -25,6 +25,10 @@ in
 
   # TODO make it an option ? (otherwise I'll add it for all)
   users.users.vincent.linger = true;
+
+  # Disable TPM2 (VPS has no TPM hardware)
+  security.tpm2.enable = lib.mkForce false;
+
   services.openssh = {
     listenAddresses = [
       {
