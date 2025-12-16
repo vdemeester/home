@@ -16,7 +16,7 @@ in
   warnings = [ "Home syncthing for ${hostname} with folders: ${folderList}" ];
   services.syncthing = {
     enable = true;
-    overrideFolders = false; # Just in case, will probably set to true later
+    overrideFolders = false; # TODO Just in case, will probably set to true later
     guiAddress = libx.syncthingGuiAddress globals.machines."${hostname}";
     settings = {
       # FIXME this doesn't work, I wish it did.

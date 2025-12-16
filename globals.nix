@@ -348,7 +348,7 @@ _: {
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFH3Lk4bRgNyFRK/Hzg1PvVbL/dpyI1SmLJFkb6VQDw";
       };
       syncthing = {
-        id = "YORNSGU-UC4IAG5-IWJCD7T-MVPIU7O-AYM36UK-LEHF7AP-CBC4L6C-ZWKUYQF";
+        id = "73YP3XV-X3YLVBD-4KL77TS-DCFFXJ7-AYJDF3R-CJDRZNP-7YFPQNT-FKHJ7QW";
         folders = {
           org = { };
           documents = { };
