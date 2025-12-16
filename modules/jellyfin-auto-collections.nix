@@ -72,12 +72,21 @@ in
     };
 
     interval = mkOption {
-      type = types.str;
+      type = types.enum [
+        "hourly"
+        "daily"
+        "weekly"
+        "monthly"
+      ];
       default = "daily";
-      description = ''
-        How often to run the collection update.
-        Uses systemd.time format (e.g., "hourly", "daily", "weekly", "*:0/30" for every 30 minutes).
-      '';
+      description = "How often to run the collection update";
+    };
+
+    onCalendar = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "Custom OnCalendar specification for systemd timer (overrides interval)";
+      example = "*-*-* 04:00:00";
     };
 
     jellyfinUrl = mkOption {
@@ -225,7 +234,19 @@ in
       wantedBy = [ "timers.target" ];
 
       timerConfig = {
-        OnCalendar = cfg.interval;
+        OnCalendar =
+          if cfg.onCalendar != null then
+            cfg.onCalendar
+          else
+            (
+              {
+                hourly = "*-*-* *:00:00";
+                daily = "*-*-* 00:00:00";
+                weekly = "Sun *-*-* 00:00:00";
+                monthly = "*-*-01 00:00:00";
+              }
+              .${cfg.interval}
+            );
         Persistent = true;
         RandomizedDelaySec = "5m";
       };

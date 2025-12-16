@@ -434,7 +434,7 @@ in
       tempDir = "/neo/audiobooks/zz_import"; # Keep AAX files for reuse
       quality = "best";
       format = "m4b";
-      onCalendar = "*-*-* 03:00:00"; # Daily at 3 AM
+      interval = "daily"; # Run daily at 3 AM
       notification = {
         enable = true;
         ntfyUrl = "https://ntfy.sbr.pm";
@@ -542,8 +542,7 @@ in
       user = "vincent";
       configFile = "/neo/music/music-playlist-dl.yaml";
       baseDir = "/neo/music";
-      interval = "weekly"; # Run weekly on Sundays
-      onCalendar = "Sun *-*-* 02:00:00"; # Sunday at 2 AM
+      interval = "weekly"; # Run weekly on Sundays at 2 AM
       notification = {
         enable = true;
         ntfyUrl = "https://ntfy.sbr.pm";

@@ -52,22 +52,22 @@ in
       description = "Output format for converted audiobooks";
     };
 
-    schedule = mkOption {
-      type = types.str;
+    interval = mkOption {
+      type = types.enum [
+        "hourly"
+        "daily"
+        "weekly"
+        "monthly"
+      ];
       default = "daily";
-      description = "Systemd timer schedule (daily, weekly, etc.)";
-    };
-
-    time = mkOption {
-      type = types.str;
-      default = "03:00";
-      description = "Time of day to run sync (24-hour format)";
+      description = "How often to run the sync";
     };
 
     onCalendar = mkOption {
-      type = types.str;
-      default = "*-*-* 03:00:00";
-      description = "Full OnCalendar specification for systemd timer";
+      type = types.nullOr types.str;
+      default = null;
+      description = "Custom OnCalendar specification for systemd timer (overrides interval)";
+      example = "*-*-* 04:00:00";
     };
 
     notification = {
@@ -97,7 +97,19 @@ in
     systemd.timers.audible-sync = {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = cfg.onCalendar;
+        OnCalendar =
+          if cfg.onCalendar != null then
+            cfg.onCalendar
+          else
+            (
+              {
+                hourly = "*-*-* *:00:00";
+                daily = "*-*-* 03:00:00";
+                weekly = "Sun *-*-* 03:00:00";
+                monthly = "*-*-01 03:00:00";
+              }
+              .${cfg.interval}
+            );
         Persistent = true;
         RandomizedDelaySec = "10m";
       };
