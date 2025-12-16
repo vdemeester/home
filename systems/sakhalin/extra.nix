@@ -91,10 +91,10 @@
           ];
         }
         {
-          job_name = "nginx";
+          job_name = "caddy";
           static_configs = [
             {
-              targets = [ "kerkouane.sbr.pm:9001" ];
+              targets = [ "kerkouane.sbr.pm:2019" ];
             }
           ];
         }

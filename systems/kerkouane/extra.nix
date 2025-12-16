@@ -2,54 +2,20 @@
   globals,
   lib,
   libx,
-  pkgs,
   ...
 }:
 let
-  # TODO: migrate this out of here
-  nginxExtraConfig = ''
-    expires 31d;
-    add_header Cache-Control "public, max-age=604800, immutable";
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
-    add_header X-Content-Type-Options "nosniff";
-    add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-Content-Security-Policy "default-src 'self' *.sbr.pm *.sbr.systems *.demeester.fr";
-    add_header X-XSS-Protection "1; mode=block";
+  # Common security headers for Caddy
+  securityHeaders = ''
+    header {
+      Strict-Transport-Security "max-age=31536000; includeSubDomains"
+      X-Content-Type-Options "nosniff"
+      X-Frame-Options "SAMEORIGIN"
+      Content-Security-Policy "default-src 'self' *.sbr.pm *.demeester.fr"
+      X-XSS-Protection "1; mode=block"
+      Cache-Control "public, max-age=604800, immutable"
+    }
   '';
-
-  nginx = pkgs.nginxMainline.override (_old: {
-    modules = with pkgs.nginxModules; [
-      fancyindex
-    ];
-  });
-
-  filesWWW = {
-    enableACME = true;
-    forceSSL = true;
-    root = "/var/www/dl.sbr.pm";
-    locations."/" = {
-      index = "index.html";
-      extraConfig = ''
-        fancyindex on;
-        fancyindex_localtime on;
-        fancyindex_exact_size off;
-        fancyindex_header "/.fancyindex/header.html";
-        fancyindex_footer "/.fancyindex/footer.html";
-        # fancyindex_ignore "examplefile.html";
-        fancyindex_ignore "README.md";
-        fancyindex_ignore "HEADER.md";
-        fancyindex_ignore ".fancyindex";
-        fancyindex_name_length 255;
-      '';
-    };
-    locations."/private" = {
-      extraConfig = ''
-        auth_basic "Restricted";
-        auth_basic_user_file /var/www/dl.sbr.pm/private/.htpasswd;
-      '';
-    };
-    extraConfig = nginxExtraConfig;
-  };
 in
 {
   imports = [
@@ -102,118 +68,93 @@ in
     80
     443
   ];
-  services.nginx = {
+  services.caddy = {
     enable = true;
-    statusPage = true;
-    package = nginx;
-    recommendedGzipSettings = true;
-    recommendedTlsSettings = true;
-    recommendedOptimisation = true;
-    virtualHosts."dl.sbr.pm" = filesWWW;
-    virtualHosts."files.sbr.pm" = filesWWW;
-    virtualHosts."ntfy.sbr.pm" = {
-      enableACME = true;
-      forceSSL = true;
+    email = "vincent@sbr.pm";
 
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8111";
-        proxyWebsockets = true;
-        # basicAuthFile = config.secrets.ntfy_password.decrypted;
-      };
-    };
-    virtualHosts."paste.sbr.pm" = {
-      enableACME = true;
-      forceSSL = true;
-      root = "/var/www/paste.sbr.pm";
-      locations."/" = {
-        index = "index.html";
-      };
-      extraConfig = nginxExtraConfig;
-    };
-    virtualHosts."go.sbr.pm" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8080";
-      };
-      extraConfig = nginxExtraConfig;
-    };
-    virtualHosts."whoami.sbr.pm" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.100.0.8:80";
-        extraConfig = ''
-          proxy_set_header Host            $host;
-          proxy_set_header X-Forwarded-For $remote_addr;
-        '';
-      };
-    };
-    virtualHosts."webhook.sbr.pm" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:3333";
-        extraConfig = ''
-          proxy_buffering off;
-          proxy_cache off;
-          proxy_set_header Host            $host;
-          proxy_set_header X-Forwarded-For $remote_addr;
-          proxy_set_header Connection "";
-          proxy_http_version 1.1;
-          chunked_transfer_encoding off;
-        '';
-      };
-    };
-    virtualHosts."sbr.pm" = {
-      enableACME = true;
-      forceSSL = true;
-      root = "/var/www/sbr.pm";
-      locations."/" = {
-        index = "index.html";
-      };
-      extraConfig = nginxExtraConfig;
-    };
-    virtualHosts."sbr.systems" = {
-      enableACME = true;
-      forceSSL = true;
-      root = "/var/www/sbr.systems";
-      locations."/" = {
-        index = "index.html";
-      };
-      extraConfig = nginxExtraConfig;
-    };
-    virtualHosts."vincent.demeester.fr" = {
-      enableACME = true;
-      forceSSL = true;
-      root = "/var/www/vincent.demeester.fr";
-      locations."/" = {
-        index = "index.html";
-        extraConfig = ''
-          default_type text/html;
-          try_files $uri $uri.html $uri/ = 404;
-          fancyindex on;
-          fancyindex_localtime on;
-          fancyindex_exact_size off;
-          fancyindex_header "/assets/.fancyindex/header.html";
-          fancyindex_footer "/assets/.fancyindex/footer.html";
-          # fancyindex_ignore "examplefile.html";
-          fancyindex_ignore "README.md";
-          fancyindex_ignore "HEADER.md";
-          fancyindex_ignore ".fancyindex";
-          fancyindex_name_length 255;
-        '';
-      };
-      extraConfig = nginxExtraConfig;
+    # Enable Prometheus metrics on VPN interface
+    globalConfig = ''
+      admin ${builtins.head globals.machines.kerkouane.net.vpn.ips}:2019
+
+      servers {
+        metrics
+      }
+    '';
+
+    virtualHosts = {
+      # File server with directory browsing (replaces fancyindex)
+      "dl.sbr.pm".extraConfig = ''
+        root * /var/www/dl.sbr.pm
+        file_server browse {
+          hide .fancyindex README.md HEADER.md
+        }
+
+        ${securityHeaders}
+      '';
+
+      # Alias for dl.sbr.pm
+      "files.sbr.pm".extraConfig = ''
+        redir https://dl.sbr.pm{uri} permanent
+      '';
+
+      # ntfy - reverse proxy with websockets
+      "ntfy.sbr.pm".extraConfig = ''
+        reverse_proxy localhost:8111
+      '';
+
+      # Static sites
+      "paste.sbr.pm".extraConfig = ''
+        root * /var/www/paste.sbr.pm
+        file_server
+        ${securityHeaders}
+      '';
+
+      "sbr.pm".extraConfig = ''
+        root * /var/www/sbr.pm
+        file_server
+        ${securityHeaders}
+      '';
+
+      # Go vanity URL service
+      "go.sbr.pm".extraConfig = ''
+        reverse_proxy localhost:8080
+        ${securityHeaders}
+      '';
+
+      # Whoami service (remote)
+      "whoami.sbr.pm".extraConfig = ''
+        reverse_proxy 10.100.0.8:80 {
+          header_up Host {host}
+          header_up X-Forwarded-For {remote_host}
+        }
+      '';
+
+      # Webhook/gosmee service with SSE support
+      "webhook.sbr.pm".extraConfig = ''
+        reverse_proxy localhost:3333 {
+          flush_interval -1
+        }
+      '';
+
+      # Personal website with directory browsing
+      "vincent.demeester.fr".extraConfig = ''
+        root * /var/www/vincent.demeester.fr
+
+        # Try files with .html extension
+        try_files {path} {path}.html {path}/ /index.html
+
+        file_server browse {
+          hide .fancyindex README.md HEADER.md
+        }
+
+        ${securityHeaders}
+      '';
     };
   };
-  services.prometheus.exporters.nginx = {
-    enable = true;
-    port = 9001;
-  };
+
   services.govanityurl = {
     enable = true;
-    user = "nginx";
+    user = "caddy";
     host = "go.sbr.pm";
     config = ''
       paths:
