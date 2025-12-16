@@ -1,0 +1,107 @@
+# Music Playlist Downloader Configuration
+# Copy this file to /neo/music/music-playlist-dl.yaml and customize
+
+# Base directory for downloads
+# - Downloads go to: {base_dir}/library/{artist}/{show}/
+# - Playlists go to: {base_dir}/playlist/{artist} - {show}.m3u
+base_dir: /neo/music
+
+# Mixcloud shows to download
+# Format: Mixcloud handle, artist name, and show name
+mixcloud_shows:
+  - handle: aboveandbeyond
+    artist: Above & Beyond
+    show: Group Therapy
+  - handle: ArminvanBuuren
+    artist: Armin van Buuren
+    show: A State of Trance
+  - handle: CosmicGate
+    artist: Cosmic Gate
+    show: Wake Your Mind Radio
+  - handle: FerryCorsten
+    artist: Ferry Corsten
+    show: Resonation Radio
+  - handle: paulvandyk
+    artist: Paul van Dyk
+    show: VONYC Sessions
+  - handle: sandervandoornofficial
+    artist: Sander van Doorn
+    show: Identity
+  - handle: victordinaire
+    artist: Dinaire+Bissen
+    show: This Is HalfwayHaus
+
+# SoundCloud shows to download
+# Format: Full URL, artist name, and show name
+soundcloud_shows:
+  - url: https://soundcloud.com/garethemery/sets/the-gareth-emery-podcast
+    artist: Gareth Emery
+    show: The Gareth Emery Podcast
+  - url: https://soundcloud.com/clublifebytiesto
+    artist: Tiësto
+    show: CLUBLIFE
+
+# yt-dlp options
+yt_dlp_options:
+  format: best             # Audio quality: best, bestaudio, etc.
+  add_metadata: true       # Add metadata (artist, album) to files
+  embed_thumbnail: true    # Embed artwork in audio files
+  continue: true           # Resume partial downloads
+  ignore_errors: true      # Continue on errors
+
+# Directory Structure
+# After running, your directory structure will look like:
+#
+# /neo/music/
+# ├── library/
+# │   ├── Above & Beyond/
+# │   │   └── Group Therapy/
+# │   │       ├── Group Therapy 657-abc123.m4a
+# │   │       └── Group Therapy 658-def456.m4a
+# │   ├── Armin van Buuren/
+# │   │   └── A State of Trance/
+# │   │       └── ASOT Episode 1255-xyz789.m4a
+# │   └── Tiësto/
+# │       └── CLUBLIFE/
+# │           └── CLUBLIFE Podcast 908-ghi012.m4a
+# └── playlist/
+#     ├── Above & Beyond - Group Therapy.m3u
+#     ├── Armin van Buuren - A State of Trance.m3u
+#     └── Tiësto - CLUBLIFE.m3u
+
+# Playlist Format
+# Playlists are standard M3U format with relative paths:
+#
+# #EXTM3U
+# ../library/Above & Beyond/Group Therapy/Group Therapy 657-abc123.m4a
+# ../library/Above & Beyond/Group Therapy/Group Therapy 658-def456.m4a
+
+# Podcast Information & Sources
+#
+# Above & Beyond - Group Therapy
+#   Weekly trance podcast (ABGT)
+#   https://podcasts.apple.com/us/podcast/above-beyond-group-therapy
+#
+# Armin van Buuren - A State of Trance
+#   Longest-running trance show (since 2001)
+#   https://www.astateoftrance.com/
+#
+# Cosmic Gate - Wake Your Mind Radio
+#   Weekly progressive/trance show
+#   https://podcasts.apple.com/us/podcast/cosmic-gate-wym-radio
+#
+# Ferry Corsten - Resonation Radio
+#   Weekly electronic music show
+#   https://www.ferrycorsten.com/radio
+#
+# Paul van Dyk - VONYC Sessions
+#   Grammy winner's weekly show
+#   https://podcasts.apple.com/us/podcast/paul-van-dyks-vonyc-sessions-podcast
+#
+# Gareth Emery - The Gareth Emery Podcast
+#   Original podcast (ended 2016)
+#   https://soundcloud.com/garethemery/sets/the-gareth-emery-podcast
+#
+# Tiësto - CLUBLIFE
+#   Weekly club tracks since 2007
+#   https://podcasts.apple.com/us/podcast/clublife

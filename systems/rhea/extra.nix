@@ -53,6 +53,7 @@ in
     ../common/services/homepage.nix
     ../../modules/audible-sync.nix
     ../../modules/jellyfin-auto-collections.nix
+    ../../modules/music-playlist-dl.nix
   ];
 
   # Age secrets: gandi.env + generated exportarr secrets
@@ -534,6 +535,19 @@ in
             ];
           };
         };
+      };
+    };
+    music-playlist-dl = {
+      enable = true;
+      user = "vincent";
+      configFile = "/neo/music/music-playlist-dl.yaml";
+      baseDir = "/neo/music";
+      interval = "weekly"; # Run weekly on Sundays
+      onCalendar = "Sun *-*-* 02:00:00"; # Sunday at 2 AM
+      notification = {
+        enable = true;
+        ntfyUrl = "https://ntfy.sbr.pm";
+        topic = "homelab";
       };
     };
     transmission = serviceDefaults // {

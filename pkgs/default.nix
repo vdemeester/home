@@ -29,6 +29,7 @@ in
   homepage = pkgs.callPackage ./homepage { inherit globals; };
   audible-converter = pkgs.callPackage ./audible-converter { };
   jellyfin-auto-collections = pkgs.callPackage ./jellyfin-auto-collections { };
+  music-playlist-dl = pkgs.callPackage ../tools/music-playlist-dl { };
 
   chmouzies-ai = pkgs.callPackage ./chmouzies/ai.nix { };
   chmouzies-git = pkgs.callPackage ./chmouzies/git.nix { };
