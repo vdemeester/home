@@ -120,14 +120,14 @@ _: {
       ssh = {
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIfep1SkMsAPHggXFLfEJNzZb7eoihtkqDeQruG+TbhF";
       };
-      syncthing = {
-        id = "HZDLS5A-LKCEIYQ-DDMDYDF-DBTSRYH-HUNQSII-TVCDACT-DIYIO7V-G4K2EQV";
-        folders = {
-          sync = {
-            type = "receiveonly";
-          };
-        };
-      };
+      # syncthing = {
+      #   id = "HZDLS5A-LKCEIYQ-DDMDYDF-DBTSRYH-HUNQSII-TVCDACT-DIYIO7V-G4K2EQV";
+      #   folders = {
+      #     sync = {
+      #       type = "receiveonly";
+      #     };
+      #   };
+      # };
     };
     aix = {
       net = {
@@ -240,16 +240,16 @@ _: {
       ssh = {
         hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm";
       };
-      syncthing = {
-        id = "ZKUNKBI-N2K2LTG-AWLDAEX-NE6NALQ-DLFO6YV-FU4A7IE-KCF5ZCD-IEYSKAH";
-        folders = {
-          org = { };
-          documents = { };
-          sync = { };
-          screenshots = { };
-          wallpapers = { };
-        };
-      };
+      # syncthing = {
+      #   id = "ZKUNKBI-N2K2LTG-AWLDAEX-NE6NALQ-DLFO6YV-FU4A7IE-KCF5ZCD-IEYSKAH";
+      #   folders = {
+      #     org = { };
+      #     documents = { };
+      #     sync = { };
+      #     screenshots = { };
+      #     wallpapers = { };
+      #   };
+      # };
       ssh = {
         vincent = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGxstR3xEf87leVVDS3GVPx8Ap9+eP+OfkSvM26V54XP vincent@shikoku";
       };
@@ -322,14 +322,14 @@ _: {
       ssh = {
         # hostKey = "";
       };
-      syncthing = {
-        id = "";
-        folders = {
-          org = { };
-          documents = { };
-          sync = { };
-        };
-      };
+      # syncthing = {
+      #   id = "";
+      #   folders = {
+      #     org = { };
+      #     documents = { };
+      #     sync = { };
+      #   };
+      # };
     };
     rhea = {
       net = {
@@ -408,16 +408,16 @@ _: {
           "wakasu.sbr.pm"
         ];
       };
-      syncthing = {
-        id = "WM23THJ-ECXRLXA-HE5TIKO-VPLSMRY-Y2EWZI7-Q7JMLPX-5Q5UNEN-QMB7ZQJ";
-        folders = {
-          org = { };
-          documents = { };
-          sync = { };
-          screenshots = { };
-          wallpapers = { };
-        };
-      };
+      # syncthing = {
+      #   id = "WM23THJ-ECXRLXA-HE5TIKO-VPLSMRY-Y2EWZI7-Q7JMLPX-5Q5UNEN-QMB7ZQJ";
+      #   folders = {
+      #     org = { };
+      #     documents = { };
+      #     sync = { };
+      #     screenshots = { };
+      #     wallpapers = { };
+      #   };
+      # };
     };
     # Home Assistant
     hass = {
@@ -446,13 +446,13 @@ _: {
           "okinawa.sbr.pm"
         ];
       };
-      syncthing = {
-        id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
-        folders = {
-          sync = { };
-          org = { };
-        };
-      };
+      # syncthing = {
+      #   id = "2RWT47Z-UGSH4QO-G4W6XN7-3XY722R-ZKGDN5U-4MDGHMA-6SM26QM-7VCQIAZ";
+      #   folders = {
+      #     sync = { };
+      #     org = { };
+      #   };
+      # };
     };
     # iPhone
     hokkaido = {

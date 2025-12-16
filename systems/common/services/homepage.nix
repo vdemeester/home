@@ -20,6 +20,22 @@ let
       "homepage.sbr.pm"
     ]
   );
+
+  # Extract syncthing machines from globals
+  syncthingMachines = lib.filterAttrs (
+    _name: machine: machine ? syncthing && machine.syncthing ? folders
+  ) globals.machines;
+
+  # Generate syncthing service entries
+  syncthingServices = lib.mapAttrsToList (name: _machine: {
+    "Syncthing (${name})" = {
+      description = "Syncthing on ${name}";
+      href = "https://syncthing.sbr.pm/${name}/";
+      icon = "syncthing.png";
+      ping = "https://syncthing.sbr.pm/${name}/";
+      statusStyle = "dot";
+    };
+  }) syncthingMachines;
 in
 {
   # Homepage Dashboard - Homelab Services Overview
@@ -51,6 +67,12 @@ in
           "Download Management" = {
             style = "row";
             columns = 3;
+          };
+        }
+        {
+          Synchronization = {
+            style = "row";
+            columns = 4;
           };
         }
         {
@@ -184,6 +206,9 @@ in
             };
           }
         ];
+      }
+      {
+        Synchronization = syncthingServices;
       }
       {
         Infrastructure = [
