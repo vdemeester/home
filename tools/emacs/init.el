@@ -1594,6 +1594,7 @@ minibuffer, even without explicitly focusing it."
   (org-goto-max-level 2)
   :hook
   (org-mode . auto-fill-mode)
+  (org-mode . auto-revert-mode)
   :bind
   (:map org-mode-map
 	("C-<left>" . org-shiftleft)
