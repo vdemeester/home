@@ -911,6 +911,7 @@ minibuffer, even without explicitly focusing it."
   (magit-commit-show-diff nil "don't show the diff by default in the commit buffer. Use `C-c C-d' to display it")
   (magit-branch-direct-configure nil "don't show git variables in magit branch")
   :config
+  (add-hook 'magit-status-sections-hook #'magit-insert-worktrees t)
   ;; cargo-culted from https://github.com/magit/magit/issues/3717#issuecomment-734798341
   ;; valid gitlab options are defined in https://docs.gitlab.com/ee/user/project/push_options.html
   ;;
