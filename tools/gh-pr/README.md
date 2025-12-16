@@ -120,6 +120,98 @@ gh-pr comment --author username
 - Add acknowledgments to a batch of PRs
 - Communicate breaking changes to affected PRs
 
+### `gh-pr approve`
+
+Approve and optionally merge pull requests interactively.
+
+```bash
+# Approve PRs from default projects (Tekton)
+gh-pr approve
+
+# Approve PRs from specific projects
+gh-pr approve tektoncd/pipeline tektoncd/cli
+
+# Approve with Prow comment (/lgtm)
+gh-pr approve -p tektoncd/pipeline
+
+# Approve and merge
+gh-pr approve -m tektoncd/pipeline
+
+# Approve with custom comment
+gh-pr approve -c "LGTM! Great work" tektoncd/pipeline
+
+# Approve with editor for multi-line comment
+gh-pr approve -C tektoncd/pipeline
+
+# Force merge (requires admin rights)
+gh-pr approve -m -f tektoncd/pipeline
+
+# Interactive comment prompt
+gh-pr approve -i tektoncd/pipeline
+```
+
+**Options:**
+- `-p, --prow`: Add Prow `/lgtm` comment (for Prow-based repos)
+- `-m, --merge`: Merge PR after approval (uses `--rebase` and `--delete-branch`)
+- `-f, --force`: Force merge with `--admin` flag (requires admin rights)
+- `-c, --comment`: Custom approval comment
+- `-C, --editor`: Open editor for multi-line comment
+- `-i, --interactive`: Prompt for comment interactively
+
+**Positional Arguments:**
+- `projects`: GitHub repositories in `owner/repo` format (optional)
+  - If not provided, uses default Tekton projects:
+    - `tektoncd/pipeline`
+    - `tektoncd/plumbing`
+    - `tektoncd/cli`
+    - `tektoncd/mcp-server`
+
+**How It Works:**
+
+1. **List PRs**: Fetches pull requests from each specified project
+2. **Select**: Uses fzf for multi-select with preview pane showing:
+   - PR number, author, and title
+   - CI check status (Tab to select, Enter to confirm)
+3. **Approve**: Approves all selected PRs with optional comment
+4. **Merge** (optional): If `-m` is set, merges approved PRs
+   - Uses `--rebase` to maintain linear history
+   - Uses `--delete-branch` to clean up after merge
+   - Uses `--admin` if `-f` is set (force merge)
+
+**Comment Handling:**
+
+The tool provides three ways to add approval comments:
+
+1. **Inline comment** (`-c`): Quick one-line comment
+   ```bash
+   gh-pr approve -c "LGTM! Nice work" tektoncd/pipeline
+   ```
+
+2. **Editor comment** (`-C`): Multi-line comment using your `$EDITOR`
+   ```bash
+   gh-pr approve -C tektoncd/pipeline
+   ```
+
+3. **Interactive prompt** (`-i`): Prompt for comment at runtime
+   ```bash
+   gh-pr approve -i tektoncd/pipeline
+   ```
+
+**Prow Integration:**
+
+For repositories using Prow (like Tekton projects), use the `-p` flag to automatically add the `/lgtm` command:
+
+```bash
+# This will approve with comment: "/lgtm\n\nLooks good!"
+gh-pr approve -p -c "Looks good!" tektoncd/pipeline
+```
+
+**Use Cases:**
+- Batch approve multiple related PRs
+- Approve and merge PRs in one workflow
+- Add consistent comments across multiple PRs
+- Work with multiple projects efficiently
+
 ### `gh-pr list-templates`
 
 List all available PR templates in the current or a remote repository.
@@ -351,6 +443,7 @@ gh-pr restart-failed --ignore "e2e-tests"
 
 This tool consolidates and replaces:
 
+- `gh-approve`: Now integrated as `gh-pr approve`
 - `gh-restart-failed`: Now integrated as `gh-pr restart-failed`
 - `gh-resolve-conflicts`: Now integrated as `gh-pr resolve-conflicts`
 
