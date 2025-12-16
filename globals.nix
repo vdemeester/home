@@ -31,10 +31,6 @@ _: {
       id = "wpiah-ydwwx";
       path = "/home/vincent/desktop/pictures/wallpapers";
     };
-    music = {
-      id = "kcyrf-mugzt";
-      path = "/home/vincent/desktop/music";
-    };
     claude-history = {
       id = "j5zdn-6kq4t";
       path = "/home/vincent/.claude/history";
