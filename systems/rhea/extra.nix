@@ -52,6 +52,7 @@ in
     ../common/services/samba.nix
     ../common/services/homepage.nix
     ../../modules/audible-sync.nix
+    ../../modules/jellyfin-auto-collections.nix
   ];
 
   # Age secrets: gandi.env + generated exportarr secrets
@@ -61,6 +62,16 @@ in
       mode = "400";
       owner = "traefik";
       group = "traefik";
+    };
+    "jellyfin-auto-collections-api-key" = {
+      file = ../../secrets/rhea/jellyfin-auto-collections-api-key.age;
+      mode = "400";
+      owner = "jellyfin-auto-collections";
+    };
+    "jellyfin-auto-collections-jellyseerr-password" = {
+      file = ../../secrets/rhea/jellyfin-auto-collections-jellyseerr-password.age;
+      mode = "400";
+      owner = "jellyfin-auto-collections";
     };
   }
   // lib.mapAttrs' (
@@ -427,6 +438,102 @@ in
         enable = true;
         ntfyUrl = "https://ntfy.sbr.pm";
         topic = "homelab";
+      };
+    };
+    jellyfin-auto-collections = {
+      enable = true;
+      jellyfinUrl = "http://localhost:8096";
+      userId = "400fef4e0ab2448cb8a2bc8ca2facc4f";
+      apiKeyFile = config.age.secrets."jellyfin-auto-collections-api-key".path;
+      interval = "daily"; # Run daily at midnight
+
+      jellyseerr = {
+        enable = false; # Enable when password secret is created
+        serverUrl = "http://localhost:5055";
+        email = "vincent@sbr.pm";
+        # Uncomment when jellyseerr password secret is created
+        # passwordFile = config.age.secrets."jellyfin-auto-collections-jellyseerr-password".path;
+        userType = "local";
+      };
+
+      settings = {
+        plugins = {
+          imdb_chart = {
+            enabled = true;
+            list_ids = [
+              "top"
+              "moviemeter"
+            ];
+            clear_collection = true;
+          };
+          imdb_list = {
+            enabled = true;
+            list_ids = [
+              "ls055592025" # IMDb Top 250
+            ];
+          };
+          jellyfin_api = {
+            enabled = true;
+            list_ids = [
+              # Marvel Cinematic Universe
+              {
+                studios = [
+                  "Marvel Studios"
+                  "Marvel Entertainment"
+                ];
+                list_name = "Marvel Cinematic Universe";
+                includeItemTypes = [ "Movie" ];
+              }
+              # Pixar Animation
+              {
+                studios = [ "Pixar" ];
+                list_name = "Pixar Collection";
+                includeItemTypes = [ "Movie" ];
+              }
+              # Studio Ghibli
+              {
+                studios = [ "Studio Ghibli" ];
+                list_name = "Studio Ghibli Collection";
+                includeItemTypes = [ "Movie" ];
+              }
+              # Sing Movies (Illumination)
+              {
+                searchTerm = "Sing";
+                studios = [ "Illumination Entertainment" ];
+                list_name = "Sing Movies";
+                includeItemTypes = [ "Movie" ];
+              }
+              # Christopher Nolan Films
+              {
+                person = [ "Christopher Nolan" ];
+                list_name = "Christopher Nolan Collection";
+                includeItemTypes = [ "Movie" ];
+              }
+              # Highly Rated Sci-Fi
+              {
+                genres = [ "Science Fiction" ];
+                minCriticRating = [ "8" ];
+                list_name = "Top Sci-Fi Movies";
+                includeItemTypes = [ "Movie" ];
+              }
+              # Recent Movies (2024-2025)
+              {
+                years = [
+                  2024
+                  2025
+                ];
+                list_name = "Recent Releases";
+                includeItemTypes = [ "Movie" ];
+              }
+              # Award Winners
+              {
+                tags = [ "Oscar Winner" ];
+                list_name = "Oscar Winners";
+                includeItemTypes = [ "Movie" ];
+              }
+            ];
+          };
+        };
       };
     };
     transmission = serviceDefaults // {

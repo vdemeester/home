@@ -99,5 +99,7 @@ in
   "secrets/rhea/exportarr-prowlarr-apikey.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/exportarr-readarr-apikey.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/exportarr-bazarr-apikey.age".publicKeys = users ++ [ rhea ];
+  "secrets/rhea/jellyfin-auto-collections-api-key.age".publicKeys = users ++ [ rhea ];
+  "secrets/rhea/jellyfin-auto-collections-jellyseerr-password.age".publicKeys = users ++ [ rhea ];
   "secrets/demeter/mosquitto-homeassistant-password.age".publicKeys = users ++ [ demeter ];
 }
