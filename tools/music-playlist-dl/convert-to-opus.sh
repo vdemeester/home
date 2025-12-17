@@ -83,6 +83,14 @@ human_readable_size() {
 
 convert_file() {
     local input_file="$1"
+
+    # Skip empty filenames
+    if [ -z "$input_file" ]; then
+        log_warn "Skipping empty filename"
+        SKIPPED=$((SKIPPED + 1))
+        return 0
+    fi
+
     local output_file="${input_file%.*}.opus"
 
     # Skip if output already exists
@@ -111,6 +119,7 @@ convert_file() {
         -map_metadata 0 \
         -map 0:a \
         -id3v2_version 3 \
+        -f opus \
         "$output_file.tmp" \
         -loglevel error -stats 2>&1; then
 
@@ -191,15 +200,17 @@ with open(config_file, 'r') as f:
 
 # Extract paths from mixcloud shows
 for show in config.get('mixcloud_shows', []):
-    artist = show['artist']
-    show_name = show['show']
-    print(f"{artist}/{show_name}")
+    artist = show.get('artist', '').strip()
+    show_name = show.get('show', '').strip()
+    if artist and show_name:
+        print(f"{artist}/{show_name}")
 
 # Extract paths from soundcloud shows
 for show in config.get('soundcloud_shows', []):
-    artist = show['artist']
-    show_name = show['show']
-    print(f"{artist}/{show_name}")
+    artist = show.get('artist', '').strip()
+    show_name = show.get('show', '').strip()
+    if artist and show_name:
+        print(f"{artist}/{show_name}")
 EOF
 }
 
@@ -216,7 +227,10 @@ scan_files_from_config() {
     # Get show paths from config
     local show_paths=()
     while IFS= read -r path; do
-        show_paths+=("$path")
+        # Skip empty paths
+        if [ -n "$path" ]; then
+            show_paths+=("$path")
+        fi
     done < <(parse_config "$config_file")
 
     if [ ${#show_paths[@]} -eq 0 ]; then
@@ -232,6 +246,10 @@ scan_files_from_config() {
 
     # Find audio files only in configured show directories
     for show_path in "${show_paths[@]}"; do
+        # Skip empty paths (defensive check)
+        if [ -z "$show_path" ]; then
+            continue
+        fi
         local show_dir="$LIBRARY_DIR/$show_path"
         if [ -d "$show_dir" ]; then
             find "$show_dir" -type f \( \
@@ -299,7 +317,16 @@ main() {
     check_dependencies
 
     # Scan for files
-    mapfile -t files < <(scan_files)
+    mapfile -t all_files < <(scan_files)
+
+    # Filter out empty entries
+    files=()
+    for file in "${all_files[@]}"; do
+        if [ -n "$file" ]; then
+            files+=("$file")
+        fi
+    done
+
     TOTAL_FILES=${#files[@]}
 
     if [ "$TOTAL_FILES" -eq 0 ]; then
