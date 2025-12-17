@@ -52,7 +52,7 @@ in
       settings = {
         # Listen on local network interface
         interface = "end0";
-        bind-interfaces = true;
+        bind-dynamic = true;
 
         # DNS settings
         domain-needed = true;
