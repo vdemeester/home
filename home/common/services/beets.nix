@@ -1,15 +1,29 @@
 { config, pkgs, ... }:
+let
+  # Override beets with our custom plugins using the official pluginOverrides mechanism
+  beetsWithPlugins = pkgs.beets.override {
+    python3 = pkgs.python3.override {
+      packageOverrides = _self: super: {
+        beets = super.beets.override {
+          pluginOverrides = {
+            lidarrfields = {
+              enable = true;
+              propagatedBuildInputs = [ pkgs.beets-lidarr-fields ];
+            };
+            filetote = {
+              enable = true;
+              propagatedBuildInputs = [ pkgs.beets-filetote ];
+            };
+          };
+        };
+      };
+    };
+  };
+in
 {
   programs.beets = {
     enable = true;
-
-    # Add extra Python packages to beets' environment
-    package = pkgs.beets.override {
-      extraPackages = [
-        pkgs.beets-lidarr-fields
-        pkgs.python3Packages.beets-filetote
-      ];
-    };
+    package = beetsWithPlugins;
 
     settings = {
       # Library paths
@@ -35,6 +49,7 @@
         "discogs"
         "fromfilename"
         "edit"
+        "musicbrainz"
         "smartplaylist"
         "lidarrfields" # Nix-packaged plugin for Lidarr-compatible paths
         "filetote" # Manage non-music files (art, cue, logs, lyrics)
@@ -42,25 +57,30 @@
 
       # Path formats using Lidarr-compatible fields
       paths = {
-        # Regular albums - using Lidarr fields for compatibility
-        default = "library/$lidarr_albumartist/$lidarr_album_title/$lidarr_track_title";
+        # Regular albums - using lidarr fields plugin format
+        # Format: Artist/Album (Year)/[Disc-]Track.Title
+        default = "library/$releasegroupartist/$lidarralbum%aunique{}/%if{$audiodisctotal,$disc-}$track.$title";
 
-        # Soundtracks - using Lidarr fields
-        "albumtype:soundtrack" = "soundtrack/$lidarr_album_title/$lidarr_track_title";
+        # Soundtracks - using lidarr fields
+        "albumtype:soundtrack" =
+          "soundtrack/$lidarralbum%aunique{}/%if{$audiodisctotal,$disc-}$track.$title";
 
         # Singletons (podcasts, DJ sets, etc)
-        singleton = "single/$lidarr_artist - $lidarr_title";
+        singleton = "single/$artist - $title";
 
-        # Compilations - using Lidarr fields
-        comp = "compilation/$lidarr_album_title/$lidarr_track_title";
+        # Compilations - using lidarr fields
+        comp = "compilation/$lidarralbum%aunique{}/%if{$audiodisctotal,$disc-}$track.$title";
 
         # Podcasts get their own path (not using Lidarr fields since not from Lidarr)
         "albumtype:podcast" = "podcasts/$album/$track - $title";
       };
 
+      # Enable per-disc track numbering for multi-disc albums
+      per_disc_numbering = true;
+
       # Alternative metadata sources
-      discogs.source_weight = 0.0;
-      musicbrainz.source_weight = 0.5;
+      discogs.data_source_mismatch_penalty = 0.5;
+      musicbrainz.data_source_mismatch_penalty = 0.0;
 
       # Artwork
       fetchart = {
@@ -71,6 +91,20 @@
       embedart = {
         auto = true;
         maxwidth = 1000;
+      };
+
+      # Lyrics fetching
+      lyrics = {
+        auto = true;
+        sources = [
+          "lrclib"
+          "genius"
+          "musixmatch"
+        ];
+        # Prefer synced lyrics from lrclib
+        synced = true;
+        # Fall back to plain text if synced not available
+        fallback = "";
       };
 
       # ReplayGain for volume normalization
@@ -101,13 +135,30 @@
         # Covers: album art, scans, booklets
         # Audio related: cue sheets, ripping logs, accuracy logs
         # Text: lyrics, metadata files
-        extensions = ".cue .log .txt .jpg .jpeg .png .webp .gif .pdf .nfo .m3u .sfv .md5";
+        extensions = [
+          ".cue"
+          ".log"
+          ".txt"
+          ".jpg"
+          ".jpeg"
+          ".png"
+          ".webp"
+          ".gif"
+          ".pdf"
+          ".nfo"
+          ".m3u"
+          ".sfv"
+          ".md5"
+        ];
 
         # Pairing configuration - for lyrics files
         pairing = {
           enabled = true;
           pairing_only = false; # Also process non-paired files
-          extensions = ".lrc .txt"; # Paired lyrics files
+          extensions = [
+            ".lrc"
+            ".txt"
+          ]; # Paired lyrics files
         };
 
         # Exclude unwanted files
@@ -119,7 +170,13 @@
             "desktop.ini"
             ".directory"
           ];
-          extensions = ".torrent .url .htm .html"; # Download artifacts
+          # Download artifacts
+          extensions = [
+            ".torrent"
+            ".url"
+            ".htm"
+            ".html"
+          ];
         };
 
         # Path configuration for different file types
@@ -133,20 +190,20 @@
           "ext:.webp" = "$albumpath/cover";
 
           # Cue sheets and logs in album directory (using lidarr fields)
-          "ext:.cue" = "$albumpath/$lidarr_albumartist - $lidarr_album_title";
-          "ext:.log" = "$albumpath/$lidarr_albumartist - $lidarr_album_title";
-          "ext:.txt" = "$albumpath/$lidarr_albumartist - $lidarr_album_title";
+          "ext:.cue" = "$albumpath/$releasegroupartist - $lidarralbum";
+          "ext:.log" = "$albumpath/$releasegroupartist - $lidarralbum";
+          "ext:.txt" = "$albumpath/$releasegroupartist - $lidarralbum";
 
           # PDFs (booklets/scans) in album directory (using lidarr fields)
-          "ext:.pdf" = "$albumpath/$lidarr_albumartist - $lidarr_album_title";
+          "ext:.pdf" = "$albumpath/$releasegroupartist - $lidarralbum";
 
           # Paired lyrics files next to tracks
-          # $medianame_new is the new filename of the paired track (already using lidarr fields)
+          # $medianame_new is the new filename of the paired track
           "paired_ext:.lrc" = "$albumpath/$medianame_new";
           "paired_ext:.txt" = "$albumpath/$medianame_new";
 
           # NFO files in album directory (using lidarr fields)
-          "ext:.nfo" = "$albumpath/$lidarr_albumartist - $lidarr_album_title";
+          "ext:.nfo" = "$albumpath/$releasegroupartist - $lidarralbum";
         };
 
         # Print ignored files for debugging

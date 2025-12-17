@@ -53,6 +53,7 @@
     transmission_4-gtk
 
     forgejo-cli
+    jira-cli-go
 
     # lisp
     roswell
