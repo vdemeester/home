@@ -126,6 +126,218 @@ in
             name = "podcasts.m3u";
             query = "albumtype:podcast";
           }
+          # Language-based playlists
+          {
+            name = "english.m3u";
+            query = "language:eng";
+          }
+          {
+            name = "french.m3u";
+            query = "language:fra";
+          }
+          {
+            name = "japanese.m3u";
+            query = "language:jpn";
+          }
+          {
+            name = "korean.m3u";
+            query = "language:kor";
+          }
+          {
+            name = "spanish.m3u";
+            query = "language:spa";
+          }
+          {
+            name = "german.m3u";
+            query = "language:deu";
+          }
+          {
+            name = "italian.m3u";
+            query = "language:ita";
+          }
+          {
+            name = "instrumental.m3u";
+            query = "language:zxx";
+          }
+          # Genre-based playlists
+          {
+            name = "rock.m3u";
+            query = "genre:Rock";
+          }
+          {
+            name = "electronic.m3u";
+            query = "genre:Electronic";
+          }
+          {
+            name = "jazz.m3u";
+            query = "genre:Jazz";
+          }
+          {
+            name = "classical.m3u";
+            query = "genre:Classical";
+          }
+          {
+            name = "hiphop.m3u";
+            query = "genre:'Hip Hop'";
+          }
+          {
+            name = "metal.m3u";
+            query = "genre:Metal";
+          }
+          {
+            name = "pop.m3u";
+            query = "genre:Pop";
+          }
+          {
+            name = "ambient.m3u";
+            query = "genre:Ambient";
+          }
+          {
+            name = "folk.m3u";
+            query = "genre:Folk";
+          }
+          # Time-based playlists - Decades
+          {
+            name = "1960s.m3u";
+            query = "year:1960..1969";
+          }
+          {
+            name = "1970s.m3u";
+            query = "year:1970..1979";
+          }
+          {
+            name = "1980s.m3u";
+            query = "year:1980..1989";
+          }
+          {
+            name = "1990s.m3u";
+            query = "year:1990..1999";
+          }
+          {
+            name = "2000s.m3u";
+            query = "year:2000..2009";
+          }
+          {
+            name = "2010s.m3u";
+            query = "year:2010..2019";
+          }
+          {
+            name = "2020s.m3u";
+            query = "year:2020..2029";
+          }
+          # Time-based - Recent additions
+          {
+            name = "last-week.m3u";
+            query = "added:-1w..";
+          }
+          {
+            name = "this-year.m3u";
+            query = "added:-1y..";
+          }
+          # Discovery & Rediscovery
+          {
+            name = "unplayed.m3u";
+            query = "play_count:0";
+          }
+          {
+            name = "rarely-played.m3u";
+            query = "play_count:..3 added:..2024-01-01";
+          }
+          # Album types
+          {
+            name = "compilations.m3u";
+            query = "albumtype:compilation";
+          }
+          {
+            name = "live-albums.m3u";
+            query = "albumtype:live";
+          }
+          {
+            name = "eps.m3u";
+            query = "albumtype:ep";
+          }
+          {
+            name = "singles.m3u";
+            query = "albumtype:single";
+          }
+          {
+            name = "remixes.m3u";
+            query = "albumtype:remix";
+          }
+          # Multi-language cultural groups
+          {
+            name = "asian.m3u";
+            query = "language:jpn,kor,cmn,zho";
+          }
+          {
+            name = "european.m3u";
+            query = "language:fra,deu,ita,spa";
+          }
+          # Energy & Mood
+          {
+            name = "workout.m3u";
+            query = "genre:Electronic,Rock,'Hip Hop' bpm:120..";
+          }
+          {
+            name = "chill.m3u";
+            query = "genre:Ambient,Jazz,Folk bpm:..100";
+          }
+          # Length-based playlists
+          {
+            name = "short-tracks.m3u";
+            query = "length:..3:00";
+          }
+          {
+            name = "interludes.m3u";
+            query = "length:..1:30";
+          }
+          {
+            name = "long-tracks.m3u";
+            query = "length:6:00..";
+          }
+          {
+            name = "epics.m3u";
+            query = "length:10:00..";
+          }
+          {
+            name = "standard-length.m3u";
+            query = "length:3:00..5:00";
+          }
+          # Seasonal & Special Occasions
+          {
+            name = "christmas.m3u";
+            query = "genre:Christmas,Holiday";
+          }
+          {
+            name = "summer.m3u";
+            query = "genre:Reggae,Ska,'Surf Rock'";
+          }
+          # Specific use cases
+          {
+            name = "focus.m3u";
+            query = "genre:Classical,Ambient,'Post-Rock' bpm:..90";
+          }
+          {
+            name = "party.m3u";
+            query = "genre:Pop,Dance,Electronic,'Hip Hop' bpm:110..140 year:2015..";
+          }
+          {
+            name = "driving.m3u";
+            query = "genre:Rock,Electronic,'Indie Rock' bpm:100..130";
+          }
+          # Favorites & Ratings
+          {
+            name = "5-stars.m3u";
+            query = "rating:5";
+          }
+          {
+            name = "favorites.m3u";
+            query = "rating:4..";
+          }
+          {
+            name = "hidden-gems.m3u";
+            query = "rating:4.. play_count:..5";
+          }
         ];
       };
 
