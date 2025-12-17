@@ -678,6 +678,7 @@ in
     gnumake
     audible-converter
     audible-cli
+    ffmpeg-full
   ];
 
 }

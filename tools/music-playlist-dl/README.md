@@ -149,6 +149,77 @@ Popular shows include:
 
 All dependencies are automatically handled by the Nix package.
 
+## Converting Existing Files to Opus
+
+If you already have downloads in other formats (M4A, MP3, WebM) and want to switch to Opus without re-downloading, use the conversion script.
+
+**No installation required!** The script uses `nix-shell` to automatically provide all dependencies (ffmpeg with opus support and Python YAML parser).
+
+### Convert Only Podcast Downloads (Recommended)
+
+Convert only the shows configured in your `music-playlist-dl.yaml`:
+
+```bash
+# Preview what would be converted from config
+./tools/music-playlist-dl/convert-to-opus.sh \
+    --config /net/rhea/music/music-playlist-dl.yaml \
+    --dry-run
+
+# Convert only configured podcast shows
+./tools/music-playlist-dl/convert-to-opus.sh \
+    --config /net/rhea/music/music-playlist-dl.yaml \
+    --jobs 8
+```
+
+This will:
+- Read your config file to find all configured shows (Above & Beyond, Armin van Buuren, etc.)
+- Convert **only** files in those show directories
+- Leave the rest of your music library untouched
+
+### Convert Entire Music Library
+
+Convert everything in your library directory:
+
+```bash
+# Preview entire library conversion
+./tools/music-playlist-dl/convert-to-opus.sh --all --dry-run
+
+# Convert entire library with higher quality
+./tools/music-playlist-dl/convert-to-opus.sh --all --bitrate 192k --jobs 8
+```
+
+### What the Script Does
+
+- Automatically fetches ffmpeg with opus support via Nix
+- Parses YAML config to identify podcast directories (with `--config`)
+- Finds M4A, MP3, and WebM files in target directories
+- Converts to Opus format preserving metadata and artwork
+- Removes original files after successful conversion
+- Updates M3U playlists to reference new .opus files
+- Shows space savings and statistics
+- Supports parallel processing for faster conversion
+
+### Options
+
+- `--config FILE` / `-c FILE` - Only convert shows from config file
+- `--all` - Convert entire library (default if no `--config`)
+- `--dry-run` - Preview without making changes
+- `--bitrate RATE` - Opus bitrate (default: 128k)
+- `--jobs N` / `-j N` - Number of parallel conversion jobs (default: 4)
+- `--music-dir DIR` - Music directory (default: /neo/music)
+
+### Performance Notes
+
+**Config mode** (4 podcast shows, ~2,000 files):
+- Conversion time: ~30-60 minutes (8 parallel jobs)
+- Space savings: 30-40% reduction
+
+**Full library** (~8,000 files):
+- Conversion time: 2-4 hours (8 parallel jobs)
+- Space savings: Varies by source format
+
+**First run:** The script will download dependencies via Nix (one-time setup, ~30 seconds). Subsequent runs start immediately.
+
 ## Migration from Old Script
 
 If you have files in the old structure (directly under artist name instead of `library/artist/show/`):

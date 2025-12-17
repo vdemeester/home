@@ -43,11 +43,18 @@ soundcloud_shows:
 
 # yt-dlp options
 yt_dlp_options:
-  format: best             # Audio quality: best, bestaudio, etc.
+  format: bestaudio        # Download best audio quality
+  audio_format: opus       # Convert to Opus (smaller, better quality than MP3)
+  audio_quality: 128K      # 128kbps Opus is excellent for podcasts/DJ mixes
   add_metadata: true       # Add metadata (artist, album) to files
   embed_thumbnail: true    # Embed artwork in audio files
   continue: true           # Resume partial downloads
   ignore_errors: true      # Continue on errors
+
+  # Alternative formats:
+  # audio_format: mp3      # Use MP3 for broader compatibility (car stereos, etc.)
+  # audio_format: m4a      # Use M4A/AAC for Apple devices
+  # audio_quality: 192K    # Higher quality (larger files)
 
 # Directory Structure
 # After running, your directory structure will look like:
