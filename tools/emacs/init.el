@@ -1766,6 +1766,77 @@ Use this function via a hook."
   (org-habit-show-habits-only-for-today nil)
   (org-habit-graph-column 80))
 
+(use-package ox-tufte
+  :after org
+  :ensure t
+  :commands (org-tufte-export-to-html
+             org-tufte-export-as-html
+             vde/org-add-tufte-headers
+             vde/org-add-tufte-headers-to-file
+             vde/org-export-notes-with-export-tag)
+  :custom
+  ;; Path to tufte.css relative to website root
+  (org-tufte-htmlize-output-type 'css)
+  :config
+  ;; Default HTML head includes for Tufte CSS
+  (setq org-html-head-include-default-style nil)
+  (setq org-html-head-include-scripts nil)
+
+  (defun vde/org-add-tufte-headers ()
+    "Add Tufte CSS export headers to current org-mode buffer.
+Inserts the headers after the frontmatter (#+title, #+date, etc.) if they don't already exist."
+    (interactive)
+    (unless (derived-mode-p 'org-mode)
+      (user-error "Not in an org-mode buffer"))
+    (save-excursion
+      ;; Check if headers already exist
+      (goto-char (point-min))
+      (if (re-search-forward "^#\\+HTML_HEAD:.*tufte\\.css" nil t)
+          (message "Tufte headers already present")
+        ;; Find insertion point after frontmatter
+        (goto-char (point-min))
+        ;; Skip past all the #+KEYWORD: lines at the top
+        (while (and (not (eobp))
+                    (looking-at "^#\\+\\(title\\|date\\|filetags\\|identifier\\|category\\|author\\|email\\|description\\):"))
+          (forward-line 1))
+        ;; Insert headers
+        (insert "#+HTML_HEAD: <link rel=\"stylesheet\" href=\"tufte.css\" type=\"text/css\" />\n")
+        (insert "#+HTML_HEAD: <link rel=\"stylesheet\" href=\"ox-tufte.css\" type=\"text/css\" />\n")
+        (insert "#+OPTIONS: toc:nil num:nil html-style:nil html-scripts:nil\n")
+        (message "Tufte headers added"))))
+
+  (defun vde/org-add-tufte-headers-to-file (file)
+    "Add Tufte CSS export headers to an org-mode FILE."
+    (interactive "fOrg file: ")
+    (with-current-buffer (find-file-noselect file)
+      (vde/org-add-tufte-headers)
+      (save-buffer)))
+
+  (defun vde/org-export-notes-with-export-tag (notes-dir output-dir)
+    "Export all org files in NOTES-DIR with _export tag to OUTPUT-DIR using ox-tufte.
+Creates OUTPUT-DIR if it doesn't exist."
+    (interactive "DNotes directory: \nDOutput directory: ")
+    (unless (file-directory-p output-dir)
+      (make-directory output-dir t))
+    (let ((files (directory-files notes-dir t "\\.org$"))
+          (exported 0))
+      (dolist (file files)
+        (with-temp-buffer
+          (insert-file-contents file)
+          (when (re-search-forward ":_export:" nil t)
+            (let* ((basename (file-name-base file))
+                   (output-file (expand-file-name
+                                (concat basename ".html")
+                                output-dir)))
+              (with-current-buffer (find-file-noselect file)
+                (org-tufte-export-to-html)
+                (when (file-exists-p (concat (file-name-sans-extension file) ".html"))
+                  (rename-file (concat (file-name-sans-extension file) ".html")
+                             output-file t)
+                  (message "Exported: %s -> %s" (file-name-nondirectory file) output-file)
+                  (setq exported (1+ exported))))))))
+      (message "Exported %d file(s) with _export tag" exported))))
+
 (use-package ob-ditaa
   :after org
   :commands (org-babel-execute:ditaa)
