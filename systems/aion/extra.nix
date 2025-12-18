@@ -33,7 +33,7 @@
             ];
           };
           destination = "/neo";
-          schedule = "daily";
+          schedule = "hourly";
           delete = true; # Mirror mode: delete files in destination that don't exist in source
           user = "vincent";
           group = "users";
