@@ -66,7 +66,11 @@ def load_config(config_path: Path) -> Config:
 
 
 def build_yt_dlp_command(
-    url: str, output_template: str, artist: str, yt_dlp_options: dict
+    url: str,
+    output_template: str,
+    artist: str,
+    archive_file: Path,
+    yt_dlp_options: dict,
 ) -> List[str]:
     """Build yt-dlp command with options."""
     cmd = ["yt-dlp"]
@@ -84,6 +88,9 @@ def build_yt_dlp_command(
         cmd.append("--add-metadata")
     if yt_dlp_options.get("embed_thumbnail", True):
         cmd.append("--embed-thumbnail")
+
+    # Download archive for deduplication
+    cmd.extend(["--download-archive", str(archive_file)])
 
     # Parse metadata
     cmd.extend(
@@ -110,10 +117,11 @@ def download_mixcloud_show(
     output_dir.mkdir(parents=True, exist_ok=True)
 
     output_template = str(output_dir / "%(title)s-%(id)s.%(ext)s")
+    archive_file = output_dir / ".downloaded.txt"
 
     logging.info(f"Downloading {show.show} by {show.artist}...")
     cmd = build_yt_dlp_command(
-        url, output_template, show.artist, yt_dlp_options
+        url, output_template, show.artist, archive_file, yt_dlp_options
     )
 
     try:
@@ -132,10 +140,11 @@ def download_soundcloud_show(
     output_dir.mkdir(parents=True, exist_ok=True)
 
     output_template = str(output_dir / "%(title)s-%(id)s.%(ext)s")
+    archive_file = output_dir / ".downloaded.txt"
 
     logging.info(f"Downloading {show.show} by {show.artist}...")
     cmd = build_yt_dlp_command(
-        show.url, output_template, show.artist, yt_dlp_options
+        show.url, output_template, show.artist, archive_file, yt_dlp_options
     )
 
     try:
@@ -155,13 +164,15 @@ def generate_playlist(
         logging.warning(f"Show directory does not exist: {show_dir}")
         return
 
-    # Find all audio files
+    # Find all audio files (exclude archive file)
     audio_extensions = {".m4a", ".mp3", ".opus", ".ogg", ".flac"}
     audio_files = sorted(
         [
             f
             for f in show_dir.iterdir()
-            if f.is_file() and f.suffix.lower() in audio_extensions
+            if f.is_file()
+            and f.suffix.lower() in audio_extensions
+            and not f.name.startswith(".")  # Exclude hidden files
         ]
     )
 

@@ -63,18 +63,26 @@ yt_dlp_options:
 # ├── library/
 # │   ├── Above & Beyond/
 # │   │   └── Group Therapy/
+# │   │       ├── .downloaded.txt              # Archive file (tracks downloaded IDs)
 # │   │       ├── Group Therapy 657-abc123.m4a
 # │   │       └── Group Therapy 658-def456.m4a
 # │   ├── Armin van Buuren/
 # │   │   └── A State of Trance/
+# │   │       ├── .downloaded.txt
 # │   │       └── ASOT Episode 1255-xyz789.m4a
 # │   └── Tiësto/
 # │       └── CLUBLIFE/
+# │           ├── .downloaded.txt
 # │           └── CLUBLIFE Podcast 908-ghi012.m4a
 # └── playlist/
 #     ├── Above & Beyond - Group Therapy.m3u
 #     ├── Armin van Buuren - A State of Trance.m3u
 #     └── Tiësto - CLUBLIFE.m3u
+#
+# Download Archive Files:
+# Each show directory contains a .downloaded.txt file that tracks episode IDs.
+# This prevents re-downloading episodes even if files are renamed or moved.
+# Do not delete these files - they ensure efficient incremental downloads.
 
 # Playlist Format
 # Playlists are standard M3U format with relative paths:

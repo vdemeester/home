@@ -9,6 +9,7 @@ This tool downloads episodic DJ podcasts/radio shows and organizes them by Artis
 ## Features
 
 - **Automated Downloads**: Download from Mixcloud and SoundCloud
+- **Smart Deduplication**: Track downloaded episodes to avoid re-downloading
 - **Organized Storage**: Files organized as `library/{artist}/{show}/`
 - **Playlist Generation**: Automatic M3U playlists in `playlist/` directory
 - **Metadata Support**: Proper artist and album tags
@@ -72,19 +73,28 @@ After running, your directory structure will look like:
 ├── library/
 │   ├── Above & Beyond/
 │   │   └── Group Therapy/
+│   │       ├── .downloaded.txt           # Download archive (tracks downloaded episodes)
 │   │       ├── Group Therapy 657-abc123.m4a
 │   │       └── Group Therapy 658-def456.m4a
 │   ├── Armin van Buuren/
 │   │   └── A State of Trance/
+│   │       ├── .downloaded.txt
 │   │       └── ASOT Episode 1255-xyz789.m4a
 │   └── Tiësto/
 │       └── CLUBLIFE/
+│           ├── .downloaded.txt
 │           └── CLUBLIFE Podcast 908-ghi012.m4a
 └── playlist/
     ├── Above & Beyond - Group Therapy.m3u
     ├── Armin van Buuren - A State of Trance.m3u
     └── Tiësto - CLUBLIFE.m3u
 ```
+
+### Download Archive Files
+
+Each show directory contains a `.downloaded.txt` file that tracks which episodes have been downloaded. This prevents re-downloading existing episodes even if files are renamed or moved. The archive file contains episode IDs from Mixcloud/SoundCloud and is automatically managed by yt-dlp.
+
+**Do not delete these files** - they ensure efficient incremental downloads.
 
 ## Playlist Format
 
@@ -232,6 +242,8 @@ mv /neo/music/mixes/"Above & Beyond"/*.m4a "/neo/music/library/Above & Beyond/Gr
 
 ## Notes
 
+- Downloads are tracked via `.downloaded.txt` archive files per show
+- Episodes are only downloaded once, even if files are renamed or moved
 - Downloads continue from where they left off (uses `-c` flag)
 - Failed downloads for individual shows don't stop the entire script
 - Playlists are regenerated on each run to include new episodes

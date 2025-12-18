@@ -177,30 +177,57 @@ Rename movies in Radarr with interactive confirmation.
 - Interactive confirmation before applying changes
 - Dry-run and auto-confirm (--yolo/--no-confirm) modes
 
+* Go Tools
+
+** arr
+
+Unified CLI for managing *arr services (Sonarr, Radarr, Lidarr) and Jellyfin with Spotify playlist sync.
+
+See [[file:arr/README.md][arr/README.md]] for detailed documentation.
+
+** battery-monitor
+
+Battery monitoring daemon and notification system for laptops.
+
+** cliphist-cleanup
+
+Clipboard history cleanup utility for cliphist.
+
+** gh-pr
+
+GitHub pull request management tool for approving and managing PRs.
+
+* Python Tools
+
+** music-playlist-dl
+
+Automated downloader for electronic music podcasts from Mixcloud/SoundCloud with M3U playlist generation.
+
+See [[file:music-playlist-dl/README.md][music-playlist-dl/README.md]] for detailed documentation.
+
+** download-kiwix-zim
+
+Browse and download ZIM files from the Kiwix library using fzf.
+
+* Other Tools
+
+** claude-hooks
+
+Claude Code hooks for session management and tool output capture.
+
+** org-manager
+
+Org-mode management utilities for programmatic org file manipulation.
+
 * Directories
-
-** battery-monitor/
-
-Battery monitoring daemon and notification system.
-
-Go-based tool that monitors laptop battery levels and sends notifications
-when battery is low or charging state changes.
-
-*Building:*
-#+begin_src shell
-cd battery-monitor
-go build
-#+end_src
 
 ** emacs/
 
 Emacs configuration and custom packages.
 
-Personal Emacs setup including:
-- Custom themes
-- Package configurations
-- Org-mode settings
-- Development environment customizations
+** fedora-vm/
+
+Fedora VM setup and configuration scripts.
 
 * Notes
 
