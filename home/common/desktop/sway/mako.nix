@@ -8,7 +8,7 @@ _: {
       width = 400;
       on-button-left = "dismiss";
       on-button-middle = "invoke-default-action";
-      on-button-right = "dismiss";
+      on-button-right = "invoke-action=ack";
       border-radius = 6;
       border-size = 3;
       border-color = "#db7508";
@@ -41,6 +41,14 @@ _: {
       "category=\"info\"" = {
         anchor = "center";
         format = "<b>%s</b>\\n%b";
+      };
+      # ntfy notifications - distinct blue theme
+      "app-name=\"ntfy\"" = {
+        background-color = "#1a2332";
+        text-color = "#e0e0e0";
+        border-color = "#4a90e2";
+        border-size = 3;
+        default-timeout = 10000;
       };
       "mode=do-not-disturb" = {
         invisible = 1;

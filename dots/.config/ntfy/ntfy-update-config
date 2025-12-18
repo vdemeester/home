@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# Script to update the ntfy configuration from client.yml.in
+# Based on aichat-update-config pattern
+
+export PATH=$PATH:/run/current-system/sw/bin
+export PASSAGE_DIR=/home/vincent/.local/share/passage
+export PASSAGE_IDENTITIES_FILE=/home/vincent/.local/share/passage/identities
+
+# Define the input and output file names
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+INPUT_FILE="${SCRIPT_DIR}/client.yml.in"
+OUTPUT_FILE="${HOME}/.config/ntfy/client.yml"
+
+# Check if the input file exists
+if [ ! -f "$INPUT_FILE" ]; then
+	echo "Error: Input file '$INPUT_FILE' not found."
+	exit 1
+fi
+
+# Create the output directory if it doesn't exist
+mkdir -p "$(dirname "$OUTPUT_FILE")"
+
+# Create an empty output file
+: >"$OUTPUT_FILE"
+
+# Read the input file line by line
+while IFS= read -r line; do
+	# Regex to find "passage::" followed by characters that are NOT a double quote or whitespace,
+	# until a double quote or whitespace is encountered.
+	if [[ "$line" =~ passage::([^\"]+) ]]; then
+		# The full string that needs to be replaced in the line (including "passage::")
+		passage_full_string="passage::${BASH_REMATCH[1]}"
+
+		# The string to pass to the 'passage show' command (without "passage::" or quotes)
+		passage_string_for_command=$(echo "${BASH_REMATCH[1]%\"}" | xargs)
+
+		echo "Found passage key in line: $passage_full_string"
+		echo "Executing command: passage show \"$passage_string_for_command\""
+
+		# Execute the passage command and capture its output
+		if passage_output=$(passage show "$passage_string_for_command" 2>/dev/null | tr -d '\n\r' | xargs) && [ -n "$passage_output" ]; then
+			# Replace the passage placeholder with the actual value
+			modified_line="${line//"$passage_full_string"/"$passage_output"}"
+
+			echo "Modified line: $modified_line"
+			echo "$modified_line" >>"$OUTPUT_FILE"
+		else
+			echo "Warning: 'passage show $passage_string_for_command' failed or returned empty. Keeping original line."
+			echo "$line" >>"$OUTPUT_FILE"
+		fi
+	else
+		# If no "passage::" found, write the original line
+		echo "$line" >>"$OUTPUT_FILE"
+	fi
+done <"$INPUT_FILE"
+
+echo "Processing complete. ntfy client configuration written to '$OUTPUT_FILE'."

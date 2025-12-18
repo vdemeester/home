@@ -1,0 +1,15 @@
+# ntfy client configuration for self-hosted instance
+# This is a template file - use ntfy-update-config to generate the actual client.yml
+
+# Default server for all commands
+default-host: https://ntfy.sbr.pm
+
+# Default authentication token (injected from passage)
+default-token: "passage::home/ntfy/token"
+
+# Subscribe configuration
+subscribe:
+  - topic: homelab
+    command: ~/.config/ntfy/handle-notification.sh
+    if:
+      priority: high,urgent

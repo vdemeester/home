@@ -32,6 +32,7 @@ in
     calibre
 
     ntfy-sh
+    libnotify
 
     monolith # TODO: move into =desktop= ?
 
@@ -80,6 +81,35 @@ in
     longitude = "2.33";
     lightTime = "07:00"; # Switch to light mode at 7am
     darkTime = "19:00"; # Switch to dark mode at 7pm
+  };
+
+  # ntfy notification subscriber
+  systemd.user.services.ntfy-subscriber = {
+    Unit = {
+      Description = "ntfy notification subscriber";
+      Documentation = "https://ntfy.sh";
+      After = [
+        "graphical-session.target"
+        "network-online.target"
+      ];
+      Wants = [ "network-online.target" ];
+    };
+
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe --from-config";
+      Restart = "on-failure";
+      RestartSec = 10;
+      Environment = [
+        "PATH=${pkgs.bash}/bin:${pkgs.libnotify}/bin:${pkgs.ntfy-sh}/bin:${pkgs.xdg-utils}/bin:${pkgs.curl}/bin:${pkgs.passage}/bin"
+        "PASSAGE_DIR=/home/vincent/.local/share/passage"
+        "PASSAGE_IDENTITIES_FILE=/home/vincent/.local/share/passage/identities"
+      ];
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
   };
 
 }

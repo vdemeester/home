@@ -29,21 +29,19 @@ claude-plugins : ~/.config/claude/plugins/session-manager
 claude-statusline : ~/.config/claude/statusline.sh
 claude-compat : ~/.claude
 
+all += ntfy-config
+ntfy-config : ~/.config/ntfy/client.yml
+
 # Backward compatibility: symlink ~/.claude to ~/.config/claude
 ~/.claude : force
 	@echo "🔗 Creating backward compatibility symlink: ~/.claude -> ~/.config/claude"
 	@mkdir -p ~/.config
 	@ln -snf ~/.config/claude ~/.claude
 
-# Example: Override default rule to generate content instead of copying
-# Uncomment and customize this pattern for files that should be generated:
-#
-# ~/.config/example/generated.conf : force
-# 	@echo "⚙️  Generating $$@"
-# 	@mkdir -p $(@D)
-# 	@echo "# Generated on $$(date)" > $@
-# 	@echo "setting1=value1" >> $@
-# 	@echo "setting2=value2" >> $@
+# Generate ntfy client.yml from template with passage secrets injected
+~/.config/ntfy/client.yml : $(dotfiles)/.config/ntfy/client.yml.in $(dotfiles)/.config/ntfy/ntfy-update-config force
+	@echo "⚙️  Generating $$@ from template with passage secrets"
+	@$(dotfiles)/.config/ntfy/ntfy-update-config
 
 all : $(all)
 	@echo "✅ All dotfiles installed!"
