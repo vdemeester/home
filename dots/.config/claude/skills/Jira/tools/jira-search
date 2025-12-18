@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+# Jira search helper with common query patterns
+
+set -euo pipefail
+
+usage() {
+    cat <<EOF
+Usage: jira-search <pattern> [options]
+
+Common search patterns:
+  my-open          My open issues
+  my-progress      My in-progress issues
+  my-week          My issues updated this week
+  my-blocked       My blocked issues
+  team-bugs        Unassigned team bugs
+  team-blocked     All blocked team issues
+  stale            Stale issues (>30 days no update)
+  high-priority    High priority open issues
+  needs-review     Issues in code/QE review
+
+Options:
+  --project PROJECT   Filter by project (default: SRVKP)
+  --plain             Plain text output
+  --paginate N        Limit results (default: 20)
+
+Examples:
+  jira-search my-open
+  jira-search team-bugs --project SRVCOM
+  jira-search stale --plain
+EOF
+    exit 1
+}
+
+# Default options
+PROJECT="SRVKP"
+PLAIN=""
+PAGINATE=20
+
+# Parse pattern
+PATTERN="${1:-}"
+shift || true
+
+# Parse options
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --project)
+            PROJECT="$2"
+            shift 2
+            ;;
+        --plain)
+            PLAIN="--plain"
+            shift
+            ;;
+        --paginate)
+            PAGINATE="$2"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            ;;
+        *)
+            echo "Unknown option: $1"
+            usage
+            ;;
+    esac
+done
+
+# Build JQL based on pattern
+ORDER_BY=""
+REVERSE=""
+
+case "$PATTERN" in
+    my-open)
+        JQL="assignee = currentUser() AND status NOT IN (Done, Closed)"
+        ORDER_BY="--order-by priority"
+        REVERSE="--reverse"
+        ;;
+    my-progress)
+        JQL="assignee = currentUser() AND status IN ('In Progress', 'Code Review', 'QE Review')"
+        ORDER_BY="--order-by priority"
+        REVERSE="--reverse"
+        ;;
+    my-week)
+        JQL="assignee = currentUser() AND updated >= startOfWeek()"
+        ORDER_BY="--order-by updated"
+        REVERSE="--reverse"
+        ;;
+    my-blocked)
+        JQL="assignee = currentUser() AND status = Blocked"
+        ORDER_BY="--order-by priority"
+        REVERSE="--reverse"
+        ;;
+    team-bugs)
+        JQL="project = $PROJECT AND type = Bug AND assignee is EMPTY"
+        ORDER_BY="--order-by priority"
+        REVERSE="--reverse"
+        ;;
+    team-blocked)
+        JQL="project = $PROJECT AND status = Blocked"
+        ORDER_BY="--order-by priority"
+        REVERSE="--reverse"
+        ;;
+    stale)
+        JQL="project = $PROJECT AND status NOT IN (Done, Closed) AND updated <= -30d"
+        ORDER_BY="--order-by updated"
+        ;;
+    high-priority)
+        JQL="project = $PROJECT AND priority IN (Critical, Blocker, High) AND status NOT IN (Done, Closed)"
+        ORDER_BY="--order-by priority"
+        REVERSE="--reverse"
+        ;;
+    needs-review)
+        JQL="project = $PROJECT AND status IN ('Code Review', 'QE Review')"
+        ORDER_BY="--order-by created"
+        ;;
+    "")
+        echo "Error: Pattern required"
+        usage
+        ;;
+    *)
+        echo "Error: Unknown pattern: $PATTERN"
+        usage
+        ;;
+esac
+
+# Execute search
+# shellcheck disable=SC2086
+exec jira issue list --jql "$JQL" $PLAIN --paginate "$PAGINATE" $ORDER_BY $REVERSE

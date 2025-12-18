@@ -1,0 +1,308 @@
+#!/usr/bin/env bash
+# Generate sprint summary for standup, planning, or retrospective
+
+set -euo pipefail
+
+usage() {
+    cat <<EOF
+Usage: jira-sprint-summary [options]
+
+Generate sprint summaries and reports.
+
+Options:
+  --current          Current sprint summary (default)
+  --prev             Previous sprint summary
+  --next             Next sprint summary
+  --standup          Daily standup format
+  --retro            Retrospective format
+  --planning         Planning format
+  --format FORMAT    Output format: text, org, md (default: text)
+  --output FILE      Output to file (default: stdout)
+  -h, --help         Show this help
+
+Examples:
+  # Current sprint summary
+  jira-sprint-summary --current
+
+  # Daily standup notes
+  jira-sprint-summary --standup
+
+  # Retrospective data
+  jira-sprint-summary --prev --retro --format org
+EOF
+    exit 1
+}
+
+# Default options
+SPRINT_TYPE="current"
+REPORT_TYPE="summary"
+FORMAT="text"
+OUTPUT=""
+
+# Parse options
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --current) SPRINT_TYPE="current"; shift ;;
+        --prev) SPRINT_TYPE="prev"; shift ;;
+        --next) SPRINT_TYPE="next"; shift ;;
+        --standup) REPORT_TYPE="standup"; shift ;;
+        --retro) REPORT_TYPE="retro"; shift ;;
+        --planning) REPORT_TYPE="planning"; shift ;;
+        --format) FORMAT="$2"; shift 2 ;;
+        --output) OUTPUT="$2"; shift 2 ;;
+        -h|--help) usage ;;
+        *) echo "Unknown option: $1"; usage ;;
+    esac
+done
+
+# Get sprint list based on type
+case "$SPRINT_TYPE" in
+    current) SPRINT_FLAG="--current" ;;
+    prev) SPRINT_FLAG="--prev" ;;
+    next) SPRINT_FLAG="--next" ;;
+esac
+
+# Get sprint info
+SPRINT_INFO=$(jira sprint list "$SPRINT_FLAG" 2>/dev/null) || {
+    echo "Error: Could not fetch sprint"
+    exit 1
+}
+
+SPRINT_NAME=$(echo "$SPRINT_INFO" | head -1)
+
+# Get sprint ID for queries (try to extract from first field)
+SPRINT_ID=$(jira sprint list "$SPRINT_FLAG" --plain 2>/dev/null | head -1 | awk '{print $1}' || echo "")
+
+# Generate JQL for sprint
+if [[ "$SPRINT_TYPE" == "current" ]]; then
+    SPRINT_JQL="sprint in openSprints()"
+elif [[ -n "$SPRINT_ID" ]]; then
+    SPRINT_JQL="sprint = $SPRINT_ID"
+else
+    echo "Warning: Could not determine sprint ID, using openSprints()" >&2
+    SPRINT_JQL="sprint in openSprints()"
+fi
+
+# Fetch sprint issues
+ISSUES=$(jira issue list --jql "$SPRINT_JQL" --plain 2>/dev/null || echo "")
+TOTAL_COUNT=$(echo "$ISSUES" | grep -c "^" || echo "0")
+
+# Count by status
+DONE_COUNT=$(jira issue list --jql "$SPRINT_JQL AND status = Done" --plain 2>/dev/null | grep -c "^" || echo "0")
+IN_PROGRESS_COUNT=$(jira issue list --jql "$SPRINT_JQL AND status = 'In Progress'" --plain 2>/dev/null | grep -c "^" || echo "0")
+CODE_REVIEW_COUNT=$(jira issue list --jql "$SPRINT_JQL AND status = 'Code Review'" --plain 2>/dev/null | grep -c "^" || echo "0")
+QE_REVIEW_COUNT=$(jira issue list --jql "$SPRINT_JQL AND status = 'QE Review'" --plain 2>/dev/null | grep -c "^" || echo "0")
+TODO_COUNT=$(jira issue list --jql "$SPRINT_JQL AND status = 'To Do'" --plain 2>/dev/null | grep -c "^" || echo "0")
+BLOCKED_COUNT=$(jira issue list --jql "$SPRINT_JQL AND status = Blocked" --plain 2>/dev/null | grep -c "^" || echo "0")
+
+# Calculate completion rate
+if [[ $TOTAL_COUNT -gt 0 ]]; then
+    COMPLETION_RATE=$((DONE_COUNT * 100 / TOTAL_COUNT))
+else
+    COMPLETION_RATE=0
+fi
+
+# Count by type
+BUG_COUNT=$(jira issue list --jql "$SPRINT_JQL AND type = Bug" --plain 2>/dev/null | grep -c "^" || echo "0")
+TASK_COUNT=$(jira issue list --jql "$SPRINT_JQL AND type = Task" --plain 2>/dev/null | grep -c "^" || echo "0")
+STORY_COUNT=$(jira issue list --jql "$SPRINT_JQL AND type = Story" --plain 2>/dev/null | grep -c "^" || echo "0")
+
+# Generate output based on report type and format
+generate_output() {
+    case "$REPORT_TYPE" in
+        standup)
+            case "$FORMAT" in
+                org)
+                    cat <<EOF
+* Daily Standup - $(date +'%Y-%m-%d')
+** Sprint: $SPRINT_NAME
+
+** Yesterday
+$(jira issue list --jql "$SPRINT_JQL AND assignee = currentUser() AND updated >= -1d" --plain 2>/dev/null | head -5 | sed 's/^/- /')
+
+** Today
+$(jira issue list --jql "$SPRINT_JQL AND assignee = currentUser() AND status IN ('In Progress', 'Code Review')" --plain 2>/dev/null | sed 's/^/- /')
+
+** Blockers
+$(jira issue list --jql "$SPRINT_JQL AND assignee = currentUser() AND status = Blocked" --plain 2>/dev/null | sed 's/^/- /' || echo "- None")
+
+** Sprint Progress
+- Total: $TOTAL_COUNT issues
+- Done: $DONE_COUNT ($COMPLETION_RATE%)
+- In Progress: $IN_PROGRESS_COUNT
+- To Do: $TODO_COUNT
+- Blocked: $BLOCKED_COUNT
+EOF
+                    ;;
+                md)
+                    cat <<EOF
+# Daily Standup - $(date +'%Y-%m-%d')
+
+## Sprint: $SPRINT_NAME
+
+### Yesterday
+$(jira issue list --jql "$SPRINT_JQL AND assignee = currentUser() AND updated >= -1d" --plain 2>/dev/null | head -5 | sed 's/^/- /')
+
+### Today
+$(jira issue list --jql "$SPRINT_JQL AND assignee = currentUser() AND status IN ('In Progress', 'Code Review')" --plain 2>/dev/null | sed 's/^/- /')
+
+### Blockers
+$(jira issue list --jql "$SPRINT_JQL AND assignee = currentUser() AND status = Blocked" --plain 2>/dev/null | sed 's/^/- /' || echo "- None")
+
+### Sprint Progress
+- Total: $TOTAL_COUNT issues
+- Done: $DONE_COUNT ($COMPLETION_RATE%)
+- In Progress: $IN_PROGRESS_COUNT
+- To Do: $TODO_COUNT
+- Blocked: $BLOCKED_COUNT
+EOF
+                    ;;
+                *)
+                    cat <<EOF
+=== Daily Standup - $(date +'%Y-%m-%d') ===
+Sprint: $SPRINT_NAME
+
+Yesterday:
+$(jira issue list --jql "$SPRINT_JQL AND assignee = currentUser() AND updated >= -1d" --plain 2>/dev/null | head -5)
+
+Today:
+$(jira issue list --jql "$SPRINT_JQL AND assignee = currentUser() AND status IN ('In Progress', 'Code Review')" --plain 2>/dev/null)
+
+Blockers:
+$(jira issue list --jql "$SPRINT_JQL AND assignee = currentUser() AND status = Blocked" --plain 2>/dev/null || echo "None")
+
+Sprint Progress:
+  Total: $TOTAL_COUNT issues
+  Done: $DONE_COUNT ($COMPLETION_RATE%)
+  In Progress: $IN_PROGRESS_COUNT
+  To Do: $TODO_COUNT
+  Blocked: $BLOCKED_COUNT
+EOF
+                    ;;
+            esac
+            ;;
+
+        retro)
+            case "$FORMAT" in
+                org)
+                    cat <<EOF
+* Sprint Retrospective - $SPRINT_NAME
+
+** Metrics
+- Total Issues: $TOTAL_COUNT
+- Completed: $DONE_COUNT
+- Incomplete: $((TOTAL_COUNT - DONE_COUNT))
+- Completion Rate: $COMPLETION_RATE%
+
+** Issue Breakdown
+- Bugs: $BUG_COUNT
+- Tasks: $TASK_COUNT
+- Stories: $STORY_COUNT
+
+** Status Distribution
+- Done: $DONE_COUNT
+- In Progress: $IN_PROGRESS_COUNT
+- Code Review: $CODE_REVIEW_COUNT
+- QE Review: $QE_REVIEW_COUNT
+- To Do: $TODO_COUNT
+- Blocked: $BLOCKED_COUNT
+
+** Completed Issues
+$(jira issue list --jql "$SPRINT_JQL AND status = Done" --columns KEY,SUMMARY --plain 2>/dev/null | sed 's/^/- /')
+
+** Incomplete Issues
+$(jira issue list --jql "$SPRINT_JQL AND status != Done" --columns KEY,SUMMARY --plain 2>/dev/null | sed 's/^/- /')
+
+** What Went Well
+
+
+** What Could Be Improved
+
+
+** Action Items
+- [ ]
+
+EOF
+                    ;;
+                *)
+                    cat <<EOF
+=== Sprint Retrospective - $SPRINT_NAME ===
+
+Metrics:
+  Total Issues: $TOTAL_COUNT
+  Completed: $DONE_COUNT
+  Incomplete: $((TOTAL_COUNT - DONE_COUNT))
+  Completion Rate: $COMPLETION_RATE%
+
+Issue Breakdown:
+  Bugs: $BUG_COUNT
+  Tasks: $TASK_COUNT
+  Stories: $STORY_COUNT
+
+Status Distribution:
+  Done: $DONE_COUNT
+  In Progress: $IN_PROGRESS_COUNT
+  Code Review: $CODE_REVIEW_COUNT
+  QE Review: $QE_REVIEW_COUNT
+  To Do: $TODO_COUNT
+  Blocked: $BLOCKED_COUNT
+
+Completed Issues:
+$(jira issue list --jql "$SPRINT_JQL AND status = Done" --columns KEY,SUMMARY --plain 2>/dev/null)
+
+Incomplete Issues:
+$(jira issue list --jql "$SPRINT_JQL AND status != Done" --columns KEY,SUMMARY --plain 2>/dev/null)
+EOF
+                    ;;
+            esac
+            ;;
+
+        planning)
+            cat <<EOF
+=== Sprint Planning - $SPRINT_NAME ===
+
+Current Sprint Summary:
+  Total: $TOTAL_COUNT issues
+  Done: $DONE_COUNT
+  Remaining: $((TOTAL_COUNT - DONE_COUNT))
+
+High Priority Backlog Items:
+$(jira issue list --jql "priority IN (Critical, High) AND status = 'To Do' AND sprint is EMPTY ORDER BY priority DESC" --limit 10 --plain 2>/dev/null)
+
+Unassigned Bugs:
+$(jira issue list --jql "type = Bug AND assignee is EMPTY AND status = 'To Do' ORDER BY priority DESC" --limit 5 --plain 2>/dev/null)
+EOF
+            ;;
+
+        *)
+            # Default summary
+            cat <<EOF
+=== Sprint Summary - $SPRINT_NAME ===
+
+Total Issues: $TOTAL_COUNT
+Completion: $DONE_COUNT/$TOTAL_COUNT ($COMPLETION_RATE%)
+
+Status Breakdown:
+  Done:        $DONE_COUNT
+  In Progress: $IN_PROGRESS_COUNT
+  Code Review: $CODE_REVIEW_COUNT
+  QE Review:   $QE_REVIEW_COUNT
+  To Do:       $TODO_COUNT
+  Blocked:     $BLOCKED_COUNT
+
+Type Breakdown:
+  Bugs:    $BUG_COUNT
+  Tasks:   $TASK_COUNT
+  Stories: $STORY_COUNT
+EOF
+            ;;
+    esac
+}
+
+# Output to file or stdout
+if [[ -n "$OUTPUT" ]]; then
+    generate_output > "$OUTPUT"
+    echo "Summary written to: $OUTPUT"
+else
+    generate_output
+fi

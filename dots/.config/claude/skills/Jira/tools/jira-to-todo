@@ -1,0 +1,213 @@
+#!/usr/bin/env bash
+# Convert Jira issues to org-mode TODOs
+
+set -euo pipefail
+
+usage() {
+    cat <<EOF
+Usage: jira-to-todo [options] [ISSUE-KEY...]
+
+Convert Jira issues to org-mode TODO format and optionally add to todos.org.
+
+Options:
+  --jql QUERY        Use JQL query to find issues
+  --output FILE      Output file (default: stdout)
+  --section SECTION  Section in todos.org (Work, Projects, Systems, Personal)
+  --add              Add to ~/desktop/org/todos.org
+  --state STATE      TODO state (TODO, NEXT, STRT) (default: TODO)
+  --priority N       Org priority [#1] through [#5]
+  -h, --help         Show this help
+
+Examples:
+  # Convert single issue
+  jira-to-todo SRVKP-1234
+
+  # Convert my sprint issues and add to Work section
+  jira-to-todo --jql "sprint in openSprints() AND assignee = currentUser()" --add --section Work
+
+  # Convert and save to file
+  jira-to-todo SRVKP-1234 SRVKP-5678 --output /tmp/todos.org
+EOF
+    exit 1
+}
+
+# Default options
+JQL=""
+OUTPUT=""
+SECTION=""
+ADD_TO_FILE=false
+STATE="TODO"
+PRIORITY=""
+ISSUES=()
+
+# Parse options
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --jql)
+            JQL="$2"
+            shift 2
+            ;;
+        --output)
+            OUTPUT="$2"
+            shift 2
+            ;;
+        --section)
+            SECTION="$2"
+            shift 2
+            ;;
+        --add)
+            ADD_TO_FILE=true
+            shift
+            ;;
+        --state)
+            STATE="$2"
+            shift 2
+            ;;
+        --priority)
+            PRIORITY="[#$2]"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            ;;
+        -*)
+            echo "Unknown option: $1"
+            usage
+            ;;
+        *)
+            ISSUES+=("$1")
+            shift
+            ;;
+    esac
+done
+
+# Get issues from JQL or arguments
+if [[ -n "$JQL" ]]; then
+    mapfile -t ISSUE_KEYS < <(jira issue list --jql "$JQL" --plain 2>/dev/null | awk '{print $1}')
+elif [[ ${#ISSUES[@]} -gt 0 ]]; then
+    ISSUE_KEYS=("${ISSUES[@]}")
+else
+    echo "Error: Provide ISSUE-KEY or --jql QUERY"
+    usage
+fi
+
+if [[ ${#ISSUE_KEYS[@]} -eq 0 ]]; then
+    echo "No issues found"
+    exit 1
+fi
+
+# Convert priority from Jira to org (if not specified)
+jira_to_org_priority() {
+    local jira_priority="$1"
+    case "$jira_priority" in
+        Blocker|Critical) echo "[#1]" ;;
+        Major|High) echo "[#2]" ;;
+        Medium) echo "[#3]" ;;
+        Minor) echo "[#4]" ;;
+        Trivial) echo "[#5]" ;;
+        *) echo "[#3]" ;;  # Default to medium
+    esac
+}
+
+# Generate TODO entry for an issue
+generate_todo() {
+    local issue_key="$1"
+
+    # Fetch issue details
+    local issue_data
+    issue_data=$(jira issue view "$issue_key" --plain 2>/dev/null) || {
+        echo "Warning: Could not fetch $issue_key" >&2
+        return 1
+    }
+
+    # Parse fields (basic extraction - adjust based on actual format)
+    local summary status jira_priority type
+    summary=$(echo "$issue_data" | grep -i "summary" | head -1 | sed 's/.*:[[:space:]]*//' || echo "Unknown")
+    status=$(echo "$issue_data" | grep -i "status" | head -1 | sed 's/.*:[[:space:]]*//' | awk '{print $1}' || echo "Unknown")
+    jira_priority=$(echo "$issue_data" | grep -i "priority" | head -1 | sed 's/.*:[[:space:]]*//' | awk '{print $1}' || echo "Medium")
+    type=$(echo "$issue_data" | grep -i "type" | head -1 | sed 's/.*:[[:space:]]*//' | awk '{print $1}' || echo "Task")
+
+    # Determine org priority
+    local org_priority
+    if [[ -n "$PRIORITY" ]]; then
+        org_priority="$PRIORITY"
+    else
+        org_priority=$(jira_to_org_priority "$jira_priority")
+    fi
+
+    # Determine TODO state based on Jira status
+    local todo_state="$STATE"
+    if [[ "$STATE" == "TODO" ]]; then
+        case "$status" in
+            "In Progress"|"Code Review"|"QE Review") todo_state="STRT" ;;
+            "To Do") todo_state="TODO" ;;
+            "Done") todo_state="DONE" ;;
+            *) todo_state="TODO" ;;
+        esac
+    fi
+
+    # Generate TODO entry
+    cat <<EOF
+** $todo_state $org_priority $issue_key: $summary
+:PROPERTIES:
+:CREATED:       [$(date +'%Y-%m-%d %a %H:%M')]
+:JIRA:          https://issues.redhat.com/browse/$issue_key
+:JIRA_KEY:      $issue_key
+:JIRA_STATUS:   $status
+:JIRA_PRIORITY: $jira_priority
+:JIRA_TYPE:     $type
+:CATEGORY:      work
+:END:
+
+Jira: [[https://issues.redhat.com/browse/$issue_key][$issue_key]]
+Type: $type | Status: $status | Priority: $jira_priority
+
+EOF
+}
+
+# Generate all TODOs
+generate_all() {
+    for issue_key in "${ISSUE_KEYS[@]}"; do
+        generate_todo "$issue_key"
+    done
+}
+
+# Output to file or stdout
+if [[ "$ADD_TO_FILE" == true ]]; then
+    TODOS_FILE="$HOME/desktop/org/todos.org"
+
+    if [[ ! -f "$TODOS_FILE" ]]; then
+        echo "Error: $TODOS_FILE not found"
+        exit 1
+    fi
+
+    if [[ -z "$SECTION" ]]; then
+        echo "Error: --section required when using --add"
+        exit 1
+    fi
+
+    # Create temporary file with new TODOs
+    TMPFILE=$(mktemp)
+    generate_all > "$TMPFILE"
+
+    # Use org-manager to add to section (if available)
+    if command -v ~/.config/claude/skills/Org/tools/org-manager &>/dev/null; then
+        # TODO: Implement adding to specific section
+        # For now, just append to file and let user refile
+        echo "Adding ${#ISSUE_KEYS[@]} TODOs to inbox..."
+        cat "$TMPFILE" >> "$HOME/desktop/org/inbox.org"
+        echo "TODOs added to inbox.org. Please refile to appropriate sections."
+    else
+        # Fallback: just show the TODOs
+        echo "Generated TODOs (add manually to $SECTION section):"
+        cat "$TMPFILE"
+    fi
+
+    rm "$TMPFILE"
+
+elif [[ -n "$OUTPUT" ]]; then
+    generate_all > "$OUTPUT"
+    echo "TODOs written to: $OUTPUT"
+else
+    generate_all
+fi

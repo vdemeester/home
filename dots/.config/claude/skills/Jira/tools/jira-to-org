@@ -1,0 +1,201 @@
+#!/usr/bin/env bash
+# Convert Jira issue to org-mode format
+
+set -euo pipefail
+
+usage() {
+    cat <<EOF
+Usage: jira-to-org ISSUE-KEY [options]
+
+Convert Jira issue to org-mode format for denote notes.
+
+Options:
+  --template TYPE    Template type: investigation, planning, discussion
+  --output FILE      Output file (default: stdout)
+  -h, --help         Show this help
+
+Examples:
+  jira-to-org SRVKP-1234
+  jira-to-org SRVKP-1234 --template investigation
+  jira-to-org SRVKP-1234 --output ~/notes/issue.org
+EOF
+    exit 1
+}
+
+ISSUE_KEY="${1:-}"
+TEMPLATE="basic"
+OUTPUT=""
+
+shift || true
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --template)
+            TEMPLATE="$2"
+            shift 2
+            ;;
+        --output)
+            OUTPUT="$2"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            ;;
+        *)
+            echo "Unknown option: $1"
+            usage
+            ;;
+    esac
+done
+
+if [[ -z "$ISSUE_KEY" ]]; then
+    echo "Error: ISSUE-KEY required"
+    usage
+fi
+
+# Fetch issue details
+ISSUE_DATA=$(jira issue view "$ISSUE_KEY" --plain 2>/dev/null || {
+    echo "Error: Failed to fetch issue $ISSUE_KEY"
+    exit 1
+})
+
+# Extract fields (basic parsing - adjust based on actual output format)
+SUMMARY=$(echo "$ISSUE_DATA" | grep -A1 "^Summary:" | tail -1 | sed 's/^[[:space:]]*//')
+STATUS=$(echo "$ISSUE_DATA" | grep "Status:" | sed 's/.*Status:[[:space:]]*//' | awk '{print $1}')
+PRIORITY=$(echo "$ISSUE_DATA" | grep "Priority:" | sed 's/.*Priority:[[:space:]]*//' | awk '{print $1}')
+ASSIGNEE=$(echo "$ISSUE_DATA" | grep "Assignee:" | sed 's/.*Assignee:[[:space:]]*//')
+TYPE=$(echo "$ISSUE_DATA" | grep "Type:" | sed 's/.*Type:[[:space:]]*//' | awk '{print $1}')
+
+# Generate org-mode content based on template
+generate_org() {
+    cat <<EOF
+* $ISSUE_KEY: $SUMMARY
+
+:PROPERTIES:
+:JIRA: https://issues.redhat.com/browse/$ISSUE_KEY
+:JIRA_KEY: $ISSUE_KEY
+:JIRA_STATUS: $STATUS
+:JIRA_PRIORITY: $PRIORITY
+:JIRA_TYPE: $TYPE
+:CREATED: $(date '+[%Y-%m-%d %a %H:%M]')
+:END:
+
+[[https://issues.redhat.com/browse/$ISSUE_KEY][View in Jira]]
+
+** Issue Details
+- Status: $STATUS
+- Priority: $PRIORITY
+- Assignee: $ASSIGNEE
+- Type: $TYPE
+
+** Description
+EOF
+
+    # Add template-specific sections
+    case "$TEMPLATE" in
+        investigation)
+            cat <<'EOF'
+
+** Investigation
+*** Hypothesis
+
+
+*** Findings
+
+
+*** Root Cause
+
+
+** Solution
+*** Proposed Fix
+
+
+*** Testing Plan
+- [ ] Test case 1
+- [ ] Test case 2
+
+*** Implementation Notes
+
+
+** Related
+- Related issues:
+- PRs:
+- Documentation:
+EOF
+            ;;
+        planning)
+            cat <<'EOF'
+
+** Goals
+
+
+** Requirements
+*** Functional Requirements
+
+
+*** Non-Functional Requirements
+
+
+** Design
+*** Architecture
+
+
+*** Components
+
+
+** Implementation Plan
+*** Phase 1
+- [ ] Task 1
+- [ ] Task 2
+
+** Testing Strategy
+
+
+** Timeline
+| Phase | Start | End | Status |
+|-------+-------+-----+--------|
+|       |       |     |        |
+EOF
+            ;;
+        discussion)
+            cat <<'EOF'
+
+** Context
+
+
+** Discussion Points
+
+
+** Decisions
+
+
+** Action Items
+- [ ] Action 1
+- [ ] Action 2
+
+** Next Steps
+
+EOF
+            ;;
+        basic)
+            cat <<'EOF'
+
+** Notes
+
+
+** Tasks
+- [ ] Task 1
+
+** Related
+EOF
+            ;;
+    esac
+}
+
+# Output to file or stdout
+if [[ -n "$OUTPUT" ]]; then
+    generate_org > "$OUTPUT"
+    echo "Created org-mode note: $OUTPUT"
+else
+    generate_org
+fi

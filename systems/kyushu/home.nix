@@ -1,4 +1,11 @@
 { pkgs, ... }:
+let
+  # Wrapper for jira-cli that injects API token from passage
+  jira-wrapped = pkgs.writeShellScriptBin "jira" ''
+    export JIRA_API_TOKEN=$(${pkgs.passage}/bin/passage show redhat/issues/token/kyushu)
+    exec ${pkgs.jira-cli-go}/bin/jira "$@"
+  '';
+in
 {
   imports = [
     ../../home/common/dev/containers.nix
@@ -53,7 +60,7 @@
     transmission_4-gtk
 
     forgejo-cli
-    jira-cli-go
+    jira-wrapped
 
     # lisp
     roswell
