@@ -24,6 +24,11 @@ class MixcloudShow:
     handle: str
     artist: str
     show: str
+    beets_tags: dict = None  # Optional per-show metadata
+
+    def __post_init__(self):
+        if self.beets_tags is None:
+            self.beets_tags = {}
 
 
 @dataclass
@@ -33,6 +38,25 @@ class SoundcloudShow:
     url: str
     artist: str
     show: str
+    beets_tags: dict = None  # Optional per-show metadata
+
+    def __post_init__(self):
+        if self.beets_tags is None:
+            self.beets_tags = {}
+
+
+@dataclass
+class BeetsConfig:
+    """Beets integration configuration."""
+
+    enable: bool = False
+    import_after_download: bool = True
+    write_tags: bool = True
+    default_tags: dict = None
+
+    def __post_init__(self):
+        if self.default_tags is None:
+            self.default_tags = {}
 
 
 @dataclass
@@ -43,6 +67,7 @@ class Config:
     mixcloud_shows: List[MixcloudShow]
     soundcloud_shows: List[SoundcloudShow]
     yt_dlp_options: dict
+    beets: BeetsConfig
 
 
 def load_config(config_path: Path) -> Config:
@@ -57,11 +82,21 @@ def load_config(config_path: Path) -> Config:
         SoundcloudShow(**show) for show in data.get("soundcloud_shows", [])
     ]
 
+    # Load beets config if present
+    beets_data = data.get("beets", {})
+    beets_config = BeetsConfig(
+        enable=beets_data.get("enable", False),
+        import_after_download=beets_data.get("import_after_download", True),
+        write_tags=beets_data.get("write_tags", True),
+        default_tags=beets_data.get("default_tags", {}),
+    )
+
     return Config(
         base_dir=Path(data.get("base_dir", "/neo/music")),
         mixcloud_shows=mixcloud_shows,
         soundcloud_shows=soundcloud_shows,
         yt_dlp_options=data.get("yt_dlp_options", {}),
+        beets=beets_config,
     )
 
 
@@ -197,6 +232,62 @@ def generate_playlist(
             f.write(f"{relative_path}\n")
 
 
+def import_to_beets(
+    library_dir: Path,
+    artist: str,
+    show: str,
+    show_beets_tags: dict,
+    beets_config: BeetsConfig,
+) -> bool:
+    """Import show to beets database with merged metadata."""
+    if not beets_config.enable:
+        return True  # Skip if disabled
+
+    show_dir = library_dir / artist / show
+    if not show_dir.exists():
+        logging.warning(f"Show directory does not exist: {show_dir}")
+        return False
+
+    # Merge tags: default_tags < show_beets_tags
+    merged_tags = {**beets_config.default_tags, **show_beets_tags}
+
+    # Always set artist and album from show config
+    merged_tags["artist"] = artist
+    merged_tags["album"] = show
+
+    # Build beets import command
+    cmd = [
+        "beet",
+        "import",
+        "-C",  # Don't move files (keep in place)
+        "-A",  # Don't autotag (skip MusicBrainz)
+        "-q",  # Quiet mode
+    ]
+
+    # Add all merged tags
+    for key, value in merged_tags.items():
+        cmd.extend(["--set", f"{key}={value}"])
+
+    cmd.append(str(show_dir))
+
+    try:
+        result = subprocess.run(
+            cmd, check=True, capture_output=True, text=True
+        )
+        logging.debug(f"Beets import output: {result.stdout}")
+
+        # Write metadata to file tags if enabled
+        if beets_config.write_tags:
+            write_cmd = ["beet", "write", "-q", f"album:{show}"]
+            subprocess.run(write_cmd, check=False, capture_output=True)
+
+        logging.info(f"✓ Imported {show} to beets")
+        return True
+    except subprocess.CalledProcessError as e:
+        logging.warning(f"Failed to import {show} to beets: {e.stderr}")
+        return False
+
+
 def main():
     """Main entry point."""
     parser = argparse.ArgumentParser(
@@ -210,6 +301,11 @@ def main():
     )
     parser.add_argument(
         "--verbose", "-v", action="store_true", help="Enable verbose logging"
+    )
+    parser.add_argument(
+        "--import-existing",
+        action="store_true",
+        help="Import all existing files to beets (run once after enabling)",
     )
     args = parser.parse_args()
 
@@ -254,6 +350,50 @@ def main():
 
     for show in config.soundcloud_shows:
         generate_playlist(show.artist, show.show, library_dir, playlist_dir)
+
+    # Import to beets if enabled
+    if config.beets.enable:
+        if args.import_existing:
+            logging.info("=" * 60)
+            logging.info("Importing all existing files to beets...")
+            for show in config.mixcloud_shows:
+                import_to_beets(
+                    library_dir,
+                    show.artist,
+                    show.show,
+                    show.beets_tags,
+                    config.beets,
+                )
+            for show in config.soundcloud_shows:
+                import_to_beets(
+                    library_dir,
+                    show.artist,
+                    show.show,
+                    show.beets_tags,
+                    config.beets,
+                )
+            logging.info("Beets import complete!")
+            sys.exit(0)
+
+        elif config.beets.import_after_download:
+            logging.info("=" * 60)
+            logging.info("Importing new downloads to beets...")
+            for show in config.mixcloud_shows:
+                import_to_beets(
+                    library_dir,
+                    show.artist,
+                    show.show,
+                    show.beets_tags,
+                    config.beets,
+                )
+            for show in config.soundcloud_shows:
+                import_to_beets(
+                    library_dir,
+                    show.artist,
+                    show.show,
+                    show.beets_tags,
+                    config.beets,
+                )
 
     logging.info("=" * 60)
     logging.info("Download complete!")

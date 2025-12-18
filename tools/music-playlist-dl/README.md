@@ -12,7 +12,8 @@ This tool downloads episodic DJ podcasts/radio shows and organizes them by Artis
 - **Smart Deduplication**: Track downloaded episodes to avoid re-downloading
 - **Organized Storage**: Files organized as `library/{artist}/{show}/`
 - **Playlist Generation**: Automatic M3U playlists in `playlist/` directory
-- **Metadata Support**: Proper artist and album tags
+- **Beets Integration**: Optional integration with beets music library manager for rich metadata and smart playlists
+- **Metadata Support**: Proper artist and album tags with hierarchical customization
 - **Resume Support**: Continue interrupted downloads
 - **Notification Support**: ntfy notifications on success/failure
 - **NixOS Integration**: Systemd timer for scheduled execution
@@ -108,6 +109,116 @@ Playlists are standard M3U format with relative paths from the playlist director
 
 This allows music players to correctly resolve the file paths regardless of where they're accessed from.
 
+## Beets Integration
+
+**Optional** integration with [beets](https://beets.io/) music library manager for enhanced metadata management and smart playlists.
+
+### What is Beets?
+
+Beets is a powerful music library manager that provides:
+- Database-driven organization and querying
+- Rich metadata management
+- Smart playlists based on queries
+- Tag-based searching and filtering
+- Automatic metadata writing to files
+
+### Configuration
+
+Enable beets integration in your config file:
+
+```yaml
+beets:
+  enable: true  # Enable beets integration
+  import_after_download: true  # Auto-import new downloads
+  write_tags: true  # Write metadata to file tags
+
+  # Default tags applied to ALL shows
+  default_tags:
+    albumtype: podcast
+    genre: Electronic
+    language: eng
+
+# Per-show metadata overrides
+mixcloud_shows:
+  - handle: ArminvanBuuren
+    artist: Armin van Buuren
+    show: A State of Trance
+    beets_tags:  # Override/extend default_tags
+      genre: Trance
+      comments: "Longest-running trance show (since 2001)"
+```
+
+### Tag Hierarchy
+
+Tags are merged in priority order (highest to lowest):
+1. **Always set**: `artist`, `album` (from show config)
+2. **Per-show**: `beets_tags` (overrides defaults)
+3. **Global**: `default_tags`
+
+**Example:**
+```yaml
+default_tags:
+  genre: Electronic
+
+show:
+  artist: Armin van Buuren
+  beets_tags:
+    genre: Trance  # Overrides "Electronic"
+```
+
+Result: `genre: Trance`, `albumtype: podcast`, `language: eng`, `artist: Armin van Buuren`
+
+### Migration Workflow
+
+When enabling beets for the first time with existing downloads:
+
+```bash
+# 1. Enable beets in config
+vim /neo/music/music-playlist-dl.yaml  # Set beets.enable: true
+
+# 2. Import all existing files once
+music-playlist-dl --import-existing
+
+# 3. Future runs automatically import new downloads
+music-playlist-dl
+```
+
+### How It Works
+
+- **Files stay in place**: Beets imports files without moving them (`-C` flag)
+- **No re-downloads**: Download archives (`.downloaded.txt`) remain valid
+- **Incremental imports**: New downloads are automatically imported
+- **Tag writing**: Metadata is embedded in file tags if `write_tags: true`
+
+### Querying Your Library
+
+After import, use beets to query and manage your podcast library:
+
+```bash
+# List all podcasts
+beet ls albumtype:podcast
+
+# List by genre
+beet ls genre:Trance
+
+# List specific show
+beet ls artist:"Armin van Buuren"
+
+# Count episodes
+beet stats albumtype:podcast
+
+# Update file tags from database
+beet write albumtype:podcast
+```
+
+### Benefits
+
+✅ **Rich metadata**: Genre, language, comments, custom fields
+✅ **Smart playlists**: Query-based dynamic playlists
+✅ **Database queries**: Fast searching and filtering
+✅ **No file movement**: Works with yt-dlp deduplication
+✅ **Optional**: Disabled by default, no breaking changes
+
 ## Usage
 
 ### Manual Execution
@@ -121,6 +232,9 @@ music-playlist-dl --config /path/to/config.yaml
 
 # Verbose output
 music-playlist-dl --verbose
+
+# Import existing files to beets (run once after enabling beets)
+music-playlist-dl --import-existing
 ```
 
 ### Systemd Service

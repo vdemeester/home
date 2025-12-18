@@ -6,18 +6,44 @@
 # - Playlists go to: {base_dir}/playlist/{artist} - {show}.m3u
 base_dir: /neo/music
 
+# Beets integration (optional, disabled by default)
+# Enable this to automatically import podcasts to beets music library manager
+# for enhanced metadata management, smart playlists, and database queries
+beets:
+  enable: false  # Set to true to enable beets integration
+
+  # Import new downloads automatically after each run
+  import_after_download: true
+
+  # Write beets metadata to file tags (recommended)
+  write_tags: true
+
+  # Default tags applied to ALL shows
+  # These can be overridden per-show using beets_tags
+  default_tags:
+    albumtype: podcast
+    genre: Electronic
+    language: eng
+
 # Mixcloud shows to download
-# Format: Mixcloud handle, artist name, and show name
+# Format: Mixcloud handle, artist name, show name, and optional beets_tags
 mixcloud_shows:
   - handle: aboveandbeyond
     artist: Above & Beyond
     show: Group Therapy
+    beets_tags:  # Optional: override/extend default_tags
+      genre: Progressive Trance
+      comments: "Weekly trance radio show"
   - handle: ArminvanBuuren
     artist: Armin van Buuren
     show: A State of Trance
+    beets_tags:
+      genre: Trance
+      comments: "Longest-running trance show (since 2001)"
   - handle: CosmicGate
     artist: Cosmic Gate
     show: Wake Your Mind Radio
+    # No beets_tags - uses default_tags only
   - handle: FerryCorsten
     artist: Ferry Corsten
     show: Resonation Radio
@@ -120,3 +146,30 @@ yt_dlp_options:
 # Tiësto - CLUBLIFE
 #   Weekly club tracks since 2007
 #   https://podcasts.apple.com/us/podcast/clublife
+
+# Beets Integration Workflow
+#
+# Beets (https://beets.io/) is a music library manager that provides:
+# - Rich metadata management and tagging
+# - Smart playlists based on queries
+# - Database-driven music organization
+# - MusicBrainz integration (not used for podcasts)
+#
+# Setup:
+# 1. Enable beets integration by setting beets.enable: true above
+# 2. Run music-playlist-dl --import-existing to import all existing files once
+# 3. Future runs will automatically import new downloads
+#
+# Files stay in library/{artist}/{show}/ - beets imports in-place (doesn't move)
+# This preserves yt-dlp's download archive (.downloaded.txt) for deduplication
+#
+# Tag Hierarchy:
+# - default_tags: Applied to ALL shows (albumtype, genre, language, etc.)
+# - beets_tags: Per-show overrides/extensions (genre, comments, year, etc.)
+# - Always set: artist and album (from show configuration)
+#
+# Example queries after import:
+#   beet ls albumtype:podcast          # List all podcasts
+#   beet ls genre:Trance                # List all trance shows
+#   beet ls artist:"Armin van Buuren"  # List ASOT episodes
+#   beet write albumtype:podcast        # Write tags to files
