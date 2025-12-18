@@ -688,6 +688,13 @@ in
       8883 # MQTTS
       8080 # Traefik metrics
       9000 # Node exporter
+      9187 # PostgreSQL exporter
+      # Exportarr exporters
+      9707 # Sonarr
+      9708 # Radarr
+      9709 # Lidarr
+      9710 # Prowlarr
+      9712 # Bazarr
       # NFS ports
       111 # rpcbind
       2049 # NFS daemon

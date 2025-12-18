@@ -103,5 +103,7 @@ in
   "secrets/rhea/jellyfin-auto-collections-jellyseerr-password.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/webdav-password.age".publicKeys = users ++ [ rhea ];
   "secrets/sakhalin/grafana-admin-password.age".publicKeys = users ++ [ sakhalin ];
+  "secrets/sakhalin/ntfy-token.age".publicKeys = users ++ [ sakhalin ];
+  "secrets/sakhalin/homeassistant-prometheus-token.age".publicKeys = users ++ [ sakhalin ];
   "secrets/demeter/mosquitto-homeassistant-password.age".publicKeys = users ++ [ demeter ];
 }

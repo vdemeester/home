@@ -9,7 +9,15 @@
 }:
 let
   # Get machines that should be monitored
-  nodeExporterMachines = monitoring.machinesWithNodeExporter globals.machines;
+  # Exclude: kyushu (laptop), shikoku (temporarily stopped), nagoya (not yet configured)
+  nodeExporterMachines = lib.filterAttrs (
+    name: _machine:
+    !builtins.elem name [
+      "kyushu"
+      "shikoku"
+      "nagoya"
+    ]
+  ) (monitoring.machinesWithNodeExporter globals.machines);
 
   # Generate node exporter targets
   nodeExporterTargets = monitoring.mkPrometheusTargets {
@@ -74,6 +82,17 @@ in
     file = ../../secrets/sakhalin/grafana-admin-password.age;
     mode = "400";
     owner = "grafana";
+  };
+  age.secrets."ntfy-token" = {
+    file = ../../secrets/sakhalin/ntfy-token.age;
+    mode = "440";
+    owner = "root";
+    group = "root";
+  };
+  age.secrets."homeassistant-prometheus-token" = {
+    file = ../../secrets/sakhalin/homeassistant-prometheus-token.age;
+    mode = "400";
+    owner = "prometheus";
   };
 
   # TODO make it an option ? (otherwise I'll add it for all)
@@ -154,6 +173,24 @@ in
     prometheus = {
       enable = true;
       port = 9001;
+      checkConfig = false; # Disable config check due to agenix secrets not available at build time
+
+      # Alert rules
+      ruleFiles = [
+        (pkgs.writeText "prometheus-alerts.yml" (builtins.toJSON (import ./prometheus-alerts.nix)))
+      ];
+
+      # Alertmanager configuration
+      alertmanagers = [
+        {
+          static_configs = [
+            {
+              targets = [ "localhost:9093" ];
+            }
+          ];
+        }
+      ];
+
       scrapeConfigs = [
         {
           job_name = "node";
@@ -203,25 +240,64 @@ in
             }
           ];
         }
-        {
-          job_name = "mosquitto";
-          static_configs = [
-            {
-              targets = [ "demeter.sbr.pm:9234" ];
-            }
-          ];
-        }
+        # Mosquitto MQTT exporter disabled - package broken in nixpkgs
+        # {
+        #   job_name = "mosquitto";
+        #   static_configs = [
+        #     {
+        #       targets = [ "demeter.sbr.pm:9234" ];
+        #     }
+        #   ];
+        # }
         {
           job_name = "homeassistant";
           static_configs = [
             {
-              targets = [ "home.sbr.pm:8123" ];
+              targets = [ "${builtins.head globals.machines.hass.net.ips}:8123" ];
             }
           ];
           metrics_path = "/api/prometheus";
+          bearer_token_file = config.age.secrets."homeassistant-prometheus-token".path;
         }
       ];
     };
+
+    # Alertmanager for routing alerts
+    prometheus.alertmanager = {
+      enable = true;
+      port = 9093;
+      webExternalUrl = "http://localhost:9093";
+
+      configuration = {
+        global = {
+          resolve_timeout = "5m";
+        };
+
+        route = {
+          group_by = [
+            "alertname"
+            "instance"
+          ];
+          group_wait = "30s";
+          group_interval = "5m";
+          repeat_interval = "12h";
+          receiver = "ntfy";
+        };
+
+        receivers = [
+          {
+            name = "ntfy";
+            webhook_configs = [
+              {
+                url = "http://localhost:8081/hook"; # alertmanager-ntfy bridge
+                send_resolved = true;
+              }
+            ];
+          }
+        ];
+      };
+    };
+
     tarsnap = {
       enable = true;
       archives = {
@@ -279,6 +355,57 @@ in
         echo "Failed to update password or admin user doesn't exist yet"
       fi
     '';
+  };
+
+  # ntfy-alertmanager bridge - manual service configuration with token support
+  systemd.services.alertmanager-ntfy = {
+    description = "Alertmanager to ntfy bridge";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig = {
+      Type = "simple";
+      DynamicUser = true;
+      StateDirectory = "alertmanager-ntfy";
+      Restart = "on-failure";
+      RestartSec = "5s";
+      ExecStart = "${pkgs.alertmanager-ntfy}/bin/alertmanager-ntfy --configs /var/lib/alertmanager-ntfy/config.yml";
+      # Run config preparation as root (+ prefix) before starting the main process
+      ExecStartPre =
+        "+"
+        + pkgs.writeShellScript "prepare-alertmanager-ntfy-config" ''
+                  # Read the token from the secret file
+                  TOKEN=$(cat ${config.age.secrets."ntfy-token".path})
+
+                  # Generate config with the actual token
+                  cat > /var/lib/alertmanager-ntfy/config.yml <<'EOF'
+          http:
+            addr: 127.0.0.1:8081
+
+          ntfy:
+            baseurl: https://ntfy.sbr.pm
+            auth:
+              token: TOKEN_PLACEHOLDER
+            notification:
+              topic: homelab
+              priority: 'status == "firing" ? "urgent" : "default"'
+              tags:
+                - tag: rotating_light
+                  condition: 'status == "firing" && labels.severity == "critical"'
+                - tag: warning
+                  condition: 'status == "firing" && labels.severity == "warning"'
+                - tag: "+1"
+                  condition: 'status == "resolved"'
+              templates:
+                title: '{{ if eq .Status "resolved" }}✅ Resolved: {{ end }}{{ if eq .Status "firing" }}🔥 {{ end }}{{ index .Annotations "summary" }}'
+                description: '{{ index .Annotations "description" }}'
+          EOF
+                  # Replace placeholder with actual token
+                  ${pkgs.gnused}/bin/sed -i "s/TOKEN_PLACEHOLDER/$TOKEN/" /var/lib/alertmanager-ntfy/config.yml
+                  # Make config readable by the dynamic user
+                  chmod 644 /var/lib/alertmanager-ntfy/config.yml
+        '';
+    };
   };
 
   environment.systemPackages = with pkgs; [ yt-dlp ]; # -----------------------------------

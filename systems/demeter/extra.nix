@@ -37,16 +37,18 @@
       ];
     };
 
-    prometheus.exporters.mqtt = {
-      enable = true;
-      port = 9234;
-      mqttAddress = "127.0.0.1";
-      mqttPort = 1883;
-      mqttTopic = "#"; # Subscribe to all topics
-      mqttUsername = "homeassistant";
-      environmentFile = config.age.secrets."mosquitto-homeassistant-password".path;
-      logLevel = "INFO";
-    };
+    # MQTT exporter disabled due to broken package in nixpkgs
+    # ImportError: cannot import name 'main' from 'mqtt_exporter.main'
+    # prometheus.exporters.mqtt = {
+    #   enable = true;
+    #   port = 9234;
+    #   mqttAddress = "127.0.0.1";
+    #   mqttPort = 1883;
+    #   mqttTopic = "#"; # Subscribe to all topics
+    #   mqttUsername = "homeassistant";
+    #   environmentFile = config.age.secrets."mosquitto-homeassistant-password".path;
+    #   logLevel = "INFO";
+    # };
 
     wireguard = {
       enable = true;
