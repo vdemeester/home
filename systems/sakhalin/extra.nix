@@ -3,8 +3,61 @@
   globals,
   lib,
   pkgs,
+  monitoring,
+  config,
   ...
 }:
+let
+  # Get machines that should be monitored
+  nodeExporterMachines = monitoring.machinesWithNodeExporter globals.machines;
+
+  # Generate node exporter targets
+  nodeExporterTargets = monitoring.mkPrometheusTargets {
+    machines = nodeExporterMachines;
+    port = 9000;
+  };
+
+  # Machines with BIND DNS
+  bindMachines = lib.filterAttrs (
+    _name: _machine:
+    builtins.elem _name [
+      "demeter"
+      "athena"
+    ]
+  ) globals.machines;
+  bindTargets = monitoring.mkPrometheusTargets {
+    machines = bindMachines;
+    port = 9009;
+  };
+
+  # PostgreSQL hosts
+  postgresTargets = map (host: "${host}.sbr.pm:9187") [
+    "rhea"
+    "sakhalin"
+  ];
+
+  # Exportarr services configuration
+  exportarrServices = {
+    sonarr = {
+      port = 9707;
+    };
+    radarr = {
+      port = 9708;
+    };
+    lidarr = {
+      port = 9709;
+    };
+    prowlarr = {
+      port = 9710;
+    };
+    bazarr = {
+      port = 9712;
+    };
+  };
+  exportarrTargets = lib.mapAttrsToList (
+    _name: cfg: "rhea.sbr.pm:${toString cfg.port}"
+  ) exportarrServices;
+in
 {
 
   imports = [
@@ -12,8 +65,16 @@
     ../common/services/docker.nix
     ../common/desktop/binfmt.nix # TODO: move to something else than desktop
     ../common/services/prometheus-exporters-node.nix
+    ../common/services/prometheus-exporters-postgres.nix
     ../common/services/linkwarden.nix
   ];
+
+  # Age secrets
+  age.secrets."grafana-admin-password" = {
+    file = ../../secrets/sakhalin/grafana-admin-password.age;
+    mode = "400";
+    owner = "grafana";
+  };
 
   # TODO make it an option ? (otherwise I'll add it for all)
   users.users.vincent.linger = true;
@@ -53,7 +114,40 @@
         server = {
           http_addr = "0.0.0.0";
           http_port = 3000;
-          domain = "graphana.sbr.pm";
+          domain = "grafana.sbr.pm";
+          root_url = "https://grafana.sbr.pm";
+        };
+      };
+
+      provision = {
+        enable = true;
+        datasources.settings = {
+          apiVersion = 1;
+          datasources = [
+            {
+              name = "Prometheus";
+              type = "prometheus";
+              access = "proxy";
+              url = "http://localhost:9001";
+              isDefault = true;
+              jsonData = {
+                timeInterval = "30s";
+              };
+            }
+          ];
+        };
+
+        dashboards.settings = {
+          apiVersion = 1;
+          providers = [
+            {
+              name = "Default";
+              type = "file";
+              disableDeletion = false;
+              allowUiUpdates = true;
+              options.path = "/var/lib/grafana/dashboards";
+            }
+          ];
         };
       };
     };
@@ -65,17 +159,7 @@
           job_name = "node";
           static_configs = [
             {
-              # TODO: make this dynamic
-              targets = [
-                "aion.sbr.pm:9100"
-                "aix.sbr.pm:9000"
-                "aomi.sbr.pm:9000"
-                "athena.sbr.pm:9000"
-                "demeter.sbr.pm:9000"
-                "kerkouane.sbr.pm:9000"
-                "sakhalin.sbr.pm:9000"
-                "shikoku.sbr.pm:9000"
-              ];
+              targets = nodeExporterTargets;
             }
           ];
         }
@@ -83,10 +167,23 @@
           job_name = "bind";
           static_configs = [
             {
-              targets = [
-                "demeter.sbr.pm:9009"
-                "athena.sbr.pm:9009"
-              ];
+              targets = bindTargets;
+            }
+          ];
+        }
+        {
+          job_name = "postgres";
+          static_configs = [
+            {
+              targets = postgresTargets;
+            }
+          ];
+        }
+        {
+          job_name = "traefik";
+          static_configs = [
+            {
+              targets = [ "rhea.sbr.pm:8080" ];
             }
           ];
         }
@@ -94,7 +191,7 @@
           job_name = "caddy";
           static_configs = [
             {
-              targets = [ "kerkouane.sbr.pm:2019" ];
+              targets = [ "${builtins.head globals.machines.kerkouane.net.vpn.ips}:2019" ];
             }
           ];
         }
@@ -102,31 +199,28 @@
           job_name = "exportarr";
           static_configs = [
             {
-              targets = [
-                "rhea.sbr.pm:9707" # sonarr
-                "rhea.sbr.pm:9708" # radarr
-                "rhea.sbr.pm:9709" # lidarr
-                "rhea.sbr.pm:9710" # prowlarr
-                "rhea.sbr.pm:9711" # readarr
-                "rhea.sbr.pm:9712" # bazarr
-              ];
+              targets = exportarrTargets;
             }
           ];
         }
+        {
+          job_name = "mosquitto";
+          static_configs = [
+            {
+              targets = [ "demeter.sbr.pm:9234" ];
+            }
+          ];
+        }
+        {
+          job_name = "homeassistant";
+          static_configs = [
+            {
+              targets = [ "home.sbr.pm:8123" ];
+            }
+          ];
+          metrics_path = "/api/prometheus";
+        }
       ];
-      exporters.node = {
-        enable = true;
-        port = 9000;
-        enabledCollectors = [
-          "systemd"
-          "processes"
-        ];
-        extraFlags = [
-          "--collector.ethtool"
-          "--collector.softirqs"
-          "--collector.tcpstat"
-        ];
-      };
     };
     tarsnap = {
       enable = true;
@@ -159,6 +253,34 @@
       endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
     };
   };
+
+  # Create Grafana dashboard directory
+  systemd.tmpfiles.rules = [
+    "d /var/lib/grafana/dashboards 0755 grafana grafana -"
+  ];
+
+  # Set Grafana admin password from secret file
+  systemd.services.grafana-set-admin-password = {
+    description = "Set Grafana admin password from secret file";
+    after = [ "grafana.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "grafana";
+      RemainAfterExit = true;
+    };
+    script = ''
+      # Only set password if admin user exists (database initialized)
+      if ${pkgs.grafana}/bin/grafana-cli --homepath /var/lib/grafana admin reset-admin-password --password-from-stdin < ${
+        config.age.secrets."grafana-admin-password".path
+      } 2>/dev/null; then
+        echo "Admin password updated successfully"
+      else
+        echo "Failed to update password or admin user doesn't exist yet"
+      fi
+    '';
+  };
+
   environment.systemPackages = with pkgs; [ yt-dlp ]; # -----------------------------------
   environment.etc."vrsync".text = ''
     /home/vincent/desktop/pictures/screenshots/ vincent@synodine.home:/volumeUSB2/usbshare/pictures/screenshots/

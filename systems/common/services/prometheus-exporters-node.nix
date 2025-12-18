@@ -6,6 +6,8 @@
       default = [
         "systemd"
         "processes"
+        "hwmon" # Hardware sensors (lm_sensors)
+        "thermal_zone" # CPU thermal zones
       ];
     };
     prometheus-exporters-node.extraFlags = lib.mkOption {

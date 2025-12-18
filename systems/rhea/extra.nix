@@ -51,6 +51,8 @@ in
   imports = [
     ../common/services/samba.nix
     ../common/services/homepage.nix
+    ../common/services/prometheus-exporters-node.nix
+    ../common/services/prometheus-exporters-postgres.nix
     ../../modules/audible-sync
     ../../modules/jellyfin-auto-collections
     ../../modules/music-playlist-dl
@@ -95,6 +97,13 @@ in
         api = {
           dashboard = true;
           insecure = false;
+        };
+
+        # Prometheus metrics
+        metrics.prometheus = {
+          addEntryPointsLabels = true;
+          addRoutersLabels = true;
+          addServicesLabels = true;
         };
 
         # Entry points
@@ -649,6 +658,8 @@ in
       443
       1883 # MQTT
       8883 # MQTTS
+      8080 # Traefik metrics
+      9000 # Node exporter
       # NFS ports
       111 # rpcbind
       2049 # NFS daemon

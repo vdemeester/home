@@ -37,6 +37,17 @@
       ];
     };
 
+    prometheus.exporters.mqtt = {
+      enable = true;
+      port = 9234;
+      mqttAddress = "127.0.0.1";
+      mqttPort = 1883;
+      mqttTopic = "#"; # Subscribe to all topics
+      mqttUsername = "homeassistant";
+      environmentFile = config.age.secrets."mosquitto-homeassistant-password".path;
+      logLevel = "INFO";
+    };
+
     wireguard = {
       enable = true;
       ips = libx.wg-ips globals.machines.demeter.net.vpn.ips;

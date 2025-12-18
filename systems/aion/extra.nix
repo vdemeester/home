@@ -26,6 +26,10 @@ let
   };
 in
 {
+  imports = [
+    ../common/services/prometheus-exporters-node.nix
+  ];
+
   users.users.vincent.linger = true;
 
   services = {
@@ -86,7 +90,10 @@ in
 
   networking = {
     useDHCP = lib.mkDefault true;
-    firewall.allowedTCPPorts = [ 4533 ]; # Navidrome
+    firewall.allowedTCPPorts = [
+      4533 # Navidrome
+      9000 # Node exporter
+    ];
   };
 
   environment.systemPackages = with pkgs; [

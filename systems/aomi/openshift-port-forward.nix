@@ -70,6 +70,9 @@
               # Allow OpenShift ports
               tcp dport { 80, 443, 6443 } accept
 
+              # Allow Prometheus node exporter
+              tcp dport 9000 accept
+
               # Allow libvirt
               tcp dport 16509 accept
 

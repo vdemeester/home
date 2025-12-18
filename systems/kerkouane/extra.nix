@@ -76,7 +76,7 @@ in
     enable = true;
     email = "vincent@sbr.pm";
 
-    # Enable Prometheus metrics on VPN interface
+    # Enable Prometheus metrics on VPN interface only
     globalConfig = ''
       admin ${builtins.head globals.machines.kerkouane.net.vpn.ips}:2019
 

@@ -24,6 +24,11 @@ in
     extraOptions = ''
       dnssec-validation no;
     '';
+    extraConfig = ''
+      statistics-channels {
+        inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+      };
+    '';
     cacheNetworks = [ "127.0.0.0/8" ] ++ globals.net.dns.cacheNetworks;
 
     zones = [

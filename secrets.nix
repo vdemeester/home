@@ -101,5 +101,6 @@ in
   "secrets/rhea/exportarr-bazarr-apikey.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/jellyfin-auto-collections-api-key.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/jellyfin-auto-collections-jellyseerr-password.age".publicKeys = users ++ [ rhea ];
+  "secrets/sakhalin/grafana-admin-password.age".publicKeys = users ++ [ sakhalin ];
   "secrets/demeter/mosquitto-homeassistant-password.age".publicKeys = users ++ [ demeter ];
 }

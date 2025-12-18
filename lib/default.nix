@@ -7,6 +7,7 @@
 }:
 {
   libx = import ./functions.nix { inherit (inputs.nixpkgs) lib; };
+  monitoring = import ./monitoring.nix { inherit (inputs.nixpkgs) lib; };
   # Function for generating home-manage configs
   mkHome =
     {
@@ -63,6 +64,7 @@
           system
           ;
         libx = import ./functions.nix { inherit (pkgsInput) lib; };
+        monitoring = import ./monitoring.nix { inherit (pkgsInput) lib; };
       };
     in
     pkgsInput.lib.nixosSystem {
@@ -107,6 +109,7 @@
           globals
           ;
         libx = import ./functions.nix { inherit (pkgsInput) lib; };
+        monitoring = import ./monitoring.nix { inherit (pkgsInput) lib; };
       };
     in
     pkgsInput.lib.nixosSystem {
@@ -160,6 +163,7 @@
           nixos-raspberrypi
           ;
         libx = import ./functions.nix { inherit (pkgsInput) lib; };
+        monitoring = import ./monitoring.nix { inherit (pkgsInput) lib; };
       };
     in
     inputs.nixos-raspberrypi.lib.nixosSystemFull {
@@ -219,6 +223,7 @@
           globals
           ;
         libx = import ./functions.nix { inherit (pkgsInput) lib; };
+        monitoring = import ./monitoring.nix { inherit (pkgsInput) lib; };
       };
     in
     inputs.system-manager.lib.makeSystemConfig {
