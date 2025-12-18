@@ -214,6 +214,14 @@ When both apply, prefer:
 3. **Review locally when possible**: Use `gh pr checkout` to test changes
 4. **Automate repetitive tasks**: Use custom tools for complex workflows
 5. **Monitor CI/CD actively**: Don't wait for email notifications
+6. **Amend commits when addressing reviews**: When fixing issues from code review feedback, amend the existing commit rather than creating new commits to keep PR history clean:
+   ```bash
+   # Make your changes based on review feedback
+   git add <files>
+   git commit --amend --no-edit
+   git push --force-with-lease
+   ```
+   **IMPORTANT**: Always ask the user whether to commit or amend before executing git commit operations. Never commit or amend without explicit confirmation.
 
 ## Examples
 
@@ -242,6 +250,17 @@ User: "Restart the failed checks on my PR"
 → Identifies current PR branch
 → Finds failed workflow runs
 → Reruns only failed jobs
+```
+
+**Example 4: Address code review feedback**
+```
+User: "Look at the review comments on PR #9197 and address them"
+→ Fetches review comments with gh CLI
+→ Identifies unresolved feedback
+→ Makes requested changes to code
+→ Amends the existing commit (not creating new ones)
+→ Force pushes to update the PR
+→ Maintains clean PR history
 ```
 
 ## Resources
