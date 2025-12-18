@@ -172,6 +172,50 @@ def lidarr_update_paths(url, api_key, music_folder, dry_run):
     lidarr_update_paths.run(url, api_key, music_folder, dry_run)
 
 
+@lidarr.command("fix-duplicate-paths")
+@click.argument("url")
+@click.option(
+    "--api-key",
+    "-k",
+    envvar="LIDARR_API_KEY",
+    required=True,
+    help="Lidarr API key",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be fixed without making changes",
+)
+@click.option(
+    "--no-confirm",
+    "--yolo",
+    is_flag=True,
+    help="Skip interactive confirmation (use with caution)",
+)
+def lidarr_fix_duplicate_paths(url, api_key, dry_run, no_confirm):
+    """Fix duplicate path segments in artist paths.
+
+    Detects and fixes paths like /music/library/library/Artist
+    to /music/library/Artist.
+
+    API key can be provided via --api-key flag or LIDARR_API_KEY environment variable.
+
+    Examples:
+        # With API key flag
+        arr lidarr fix-duplicate-paths http://localhost:8686 -k your-api-key
+
+        # With environment variable
+        export LIDARR_API_KEY=your-api-key
+        arr lidarr fix-duplicate-paths http://localhost:8686
+
+        # Dry run to preview changes
+        arr lidarr fix-duplicate-paths http://localhost:8686 -k your-api-key \\
+            --dry-run
+    """
+    from commands import lidarr_fix_duplicate_paths
+    lidarr_fix_duplicate_paths.run(url, api_key, dry_run, no_confirm)
+
+
 @lidarr.command("update-monitoring")
 @click.argument("url")
 @click.argument("api_key")
@@ -492,6 +536,11 @@ def lidarr_manage_queue(
     is_flag=True,
     help="Skip interactive confirmation (use with caution)",
 )
+@click.option(
+    "--debug",
+    is_flag=True,
+    help="Enable debug output",
+)
 def lidarr_sync_spotify(
     url,
     api_key,
@@ -505,6 +554,7 @@ def lidarr_sync_spotify(
     all_playlists,
     dry_run,
     no_confirm,
+    debug,
 ):
     """Sync Spotify playlists to Lidarr.
 
@@ -561,7 +611,8 @@ def lidarr_sync_spotify(
         request_delay,
         dry_run,
         no_confirm,
-        all_playlists
+        all_playlists,
+        debug
     )
 
 

@@ -160,19 +160,32 @@ class ArrClient:
                         time.sleep(wait_time)
                         continue
 
-                print(
-                    f"Error posting to {endpoint}: HTTP {status_code}",
-                    file=sys.stderr,
-                )
-                if e.response:
+                # Better error reporting
+                if status_code:
+                    print(
+                        f"Error posting to {endpoint}: HTTP {status_code}",
+                        file=sys.stderr,
+                    )
+                else:
+                    print(
+                        f"Error posting to {endpoint}: {type(e).__name__} - {str(e)}",
+                        file=sys.stderr,
+                    )
+
+                # Print payload for debugging
+                print(f"  Payload: {payload}", file=sys.stderr)
+
+                # Always try to get response details
+                if e.response is not None:
+                    print(f"  Response status: {e.response.status_code}", file=sys.stderr)
+                    print(f"  Response headers: {dict(e.response.headers)}", file=sys.stderr)
                     try:
                         error_detail = e.response.json()
-                        print(f"  Detail: {error_detail}", file=sys.stderr)
+                        print(f"  Response JSON: {error_detail}", file=sys.stderr)
                     except Exception:
-                        print(
-                            f"  Response: {e.response.text[:200]}",
-                            file=sys.stderr,
-                        )
+                        print(f"  Response text: {e.response.text}", file=sys.stderr)
+                else:
+                    print("  No response object available", file=sys.stderr)
                 return {}
             except requests.exceptions.Timeout:
                 if attempt < max_retries - 1:
