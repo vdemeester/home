@@ -536,7 +536,7 @@ _: {
     # Ebook library management on rhea
     calibre.host = "rhea";
     books.host = "rhea";
-    # WebDAV on athena (routed through rhea/traefik)
+    # WebDAV on rhea
     dav.host = "rhea";
     # MQTT on demeter (routed through rhea/traefik)
     mqtt.host = "rhea";

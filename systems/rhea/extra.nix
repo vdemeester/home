@@ -58,13 +58,17 @@ in
     ../../modules/music-playlist-dl
   ];
 
-  # Age secrets: gandi.env + generated exportarr secrets
+  # Age secrets: gandi.env + webdav + jellyfin + generated exportarr secrets
   age.secrets = {
     "gandi.env" = {
       file = ../../secrets/rhea/gandi.env.age;
       mode = "400";
       owner = "traefik";
       group = "traefik";
+    };
+    "webdav-password" = {
+      file = ../../secrets/rhea/webdav-password.age;
+      mode = "400";
     };
     "jellyfin-auto-collections-api-key" = {
       file = ../../secrets/rhea/jellyfin-auto-collections-api-key.age;
@@ -190,10 +194,6 @@ in
               altHosts = [ "t.sbr.pm" ];
             };
             immich.port = 2283;
-            navidrome = {
-              port = 4533;
-              altHosts = [ "music.sbr.pm" ];
-            };
             audiobookshelf = {
               port = 13378;
               altHosts = [ "podcasts.sbr.pm" ];
@@ -202,6 +202,7 @@ in
               port = 8083;
               altHosts = [ "books.sbr.pm" ];
             };
+            dav.port = 6065;
             homepage.port = 3001;
           };
 
@@ -289,7 +290,10 @@ in
                 n8n = mkRouter "n8n" [ "n8n.sbr.pm" ];
                 paperless = mkRouter "paperless" [ "paperless.sbr.pm" ];
                 grafana = mkRouter "grafana" [ "grafana.sbr.pm" ];
-                dav = mkRouter "dav" [ "dav.sbr.pm" ];
+                navidrome = mkRouter "navidrome" [
+                  "navidrome.sbr.pm"
+                  "music.sbr.pm"
+                ];
                 linkwarden = mkRouter "linkwarden" [
                   "linkwarden.sbr.pm"
                   "links.sbr.pm"
@@ -313,7 +317,6 @@ in
                 grafana = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3000";
                 linkwarden = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3002";
                 navidrome = mkService "http://${builtins.head globals.machines.aion.net.ips}:4533";
-                dav = mkService "http://${builtins.head globals.machines.athena.net.ips}:80";
               };
             middlewares =
               syncthingMiddlewares
@@ -435,6 +438,31 @@ in
       enable = true;
       port = 13378;
       host = "0.0.0.0";
+    };
+    webdav = {
+      enable = true;
+      user = "vincent";
+      group = "users";
+      environmentFile = config.age.secrets."webdav-password".path;
+      settings = {
+        address = "127.0.0.1";
+        port = 6065;
+        scope = "/neo/documents/boox";
+        modify = true;
+        users = [
+          {
+            username = "vincent";
+            password = "{env}WEBDAV_PASSWORD_HASH";
+          }
+        ];
+        rules = [
+          {
+            regex = true;
+            allow = false;
+            path = "/(\\..*|.*\\.tmp)$"; # Block hidden files and .tmp files
+          }
+        ];
+      };
     };
     audible-sync = {
       enable = true;
