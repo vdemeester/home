@@ -83,6 +83,15 @@ It is shared with iOS and replace the deprecated `org-journal-file' below.")
 (global-unset-key (kbd "C-x C-z"))
 (global-unset-key (kbd "C-h h"))
 
+;; Make C-w behave like in terminal: delete word when no region is selected
+(defun kill-region-or-backward-word ()
+  "If the region is active and non-empty, call `kill-region'.
+Otherwise, call `backward-kill-word'."
+  (interactive)
+  (call-interactively
+   (if (use-region-p) 'kill-region 'backward-kill-word)))
+(global-set-key (kbd "C-w") 'kill-region-or-backward-word)
+
 ;; Disable owerwrite-mode, iconify-frame and diary
 (mapc
  (lambda (command)
@@ -443,9 +452,10 @@ minibuffer, even without explicitly focusing it."
 (use-package treesit-fold
   :hook
   (after-init . global-treesit-fold-mode)
+  :custom
+  (treesit-fold-line-count-show t)  ; Show line count in folded regions
+  (treesit-fold-line-count-format " <%d lines> ")
   :config
-  (setq treesit-fold-line-count-show t)  ; Show line count in folded regions
-  (setq treesit-fold-line-count-format " <%d lines> ")
   (global-set-key (kbd "C-c f f") 'treesit-fold-close)
   (global-set-key (kbd "C-c f o") 'treesit-fold-open))
 
