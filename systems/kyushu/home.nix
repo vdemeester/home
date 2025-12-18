@@ -11,7 +11,7 @@ in
     ../../home/common/dev/containers.nix
     ../../home/common/dev/tektoncd.nix
     ../../home/common/services/color-scheme-timer.nix
-    ../../home/common/services/beets.nix
+    (import ../../home/common/services/beets.nix { }) # Use default baseDir
   ];
   nixpkgs.config.allowUnfree = true;
 

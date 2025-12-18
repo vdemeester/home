@@ -1,5 +1,17 @@
-{ config, pkgs, ... }:
+{
+  baseDir ? null,
+}:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
+  # Use provided baseDir or default to ~/desktop/music/test
+  actualBaseDir =
+    if baseDir != null then baseDir else "${config.home.homeDirectory}/desktop/music/test";
+
   # Override beets with our custom plugins using the official pluginOverrides mechanism
   beetsWithPlugins = pkgs.beets.override {
     python3 = pkgs.python3.override {
@@ -19,6 +31,34 @@ let
       };
     };
   };
+
+  # Check if baseDir is within home directory
+  isRelativeToHome = lib.hasPrefix config.home.homeDirectory actualBaseDir;
+
+  # Get relative path from home directory if applicable
+  relativePath =
+    if isRelativeToHome then lib.removePrefix "${config.home.homeDirectory}/" actualBaseDir else null;
+
+  # Directories to create .keep files for (only if baseDir is in home)
+  musicDirs = [
+    "library"
+    "soundtrack"
+    "compilation"
+    "single"
+    "podcasts"
+    "mixes"
+    "playlists"
+  ];
+
+  # Generate .keep file declarations
+  keepFiles = lib.optionalAttrs isRelativeToHome (
+    builtins.listToAttrs (
+      map (dir: {
+        name = "${relativePath}/${dir}/.keep";
+        value.text = "";
+      }) musicDirs
+    )
+  );
 in
 {
   programs.beets = {
@@ -27,15 +67,15 @@ in
 
     settings = {
       # Library paths
-      directory = "${config.home.homeDirectory}/desktop/music/test";
-      library = "${config.home.homeDirectory}/desktop/music/test/musiclibrary.db";
+      directory = actualBaseDir;
+      library = "${actualBaseDir}/musiclibrary.db";
 
       # Import settings
       import = {
         move = true;
         incremental = true;
         quiet_fallback = "asis"; # Handle non-MusicBrainz content
-        log = "${config.home.homeDirectory}/desktop/music/import.log";
+        log = "${actualBaseDir}/import.log";
       };
 
       # Essential plugins
@@ -73,6 +113,9 @@ in
 
         # Podcasts get their own path (not using Lidarr fields since not from Lidarr)
         "albumtype:podcast" = "podcasts/$album/$track - $title";
+
+        # DJ mixes and mixtapes
+        "albumtype:mixtape" = "mixes/$artist - $album";
       };
 
       # Enable per-disc track numbering for multi-disc albums
@@ -115,8 +158,8 @@ in
 
       # Smart playlists
       smartplaylist = {
-        relative_to = "${config.home.homeDirectory}/desktop/music/test";
-        playlist_dir = "${config.home.homeDirectory}/desktop/music/test/playlists";
+        relative_to = actualBaseDir;
+        playlist_dir = "${actualBaseDir}/playlists";
         playlists = [
           {
             name = "recent.m3u";
@@ -424,11 +467,6 @@ in
     };
   };
 
-  # Create music directories
-  home.file."desktop/music/test/library/.keep".text = "";
-  home.file."desktop/music/test/soundtrack/.keep".text = "";
-  home.file."desktop/music/test/compilation/.keep".text = "";
-  home.file."desktop/music/test/single/.keep".text = "";
-  home.file."desktop/music/test/podcasts/.keep".text = "";
-  home.file."desktop/music/test/playlists/.keep".text = "";
+  # Create music directories with .keep files (only if baseDir is within home)
+  home.file = keepFiles;
 }
