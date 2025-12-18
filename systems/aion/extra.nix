@@ -5,6 +5,26 @@
   pkgs,
   ...
 }:
+let
+  # Common rsync configuration for rhea backups
+  rheaBackupDefaults = {
+    source = {
+      host = "rhea.sbr.pm";
+      user = "vincent";
+    };
+    destination = "/neo";
+    delete = true; # Mirror mode: delete files in destination that don't exist in source
+    user = "vincent";
+    group = "users";
+    rsyncArgs = [
+      "--exclude=.Trash-*"
+      "--exclude=lost+found"
+    ];
+    sshArgs = [
+      "-o StrictHostKeyChecking=accept-new"
+    ];
+  };
+in
 {
   users.users.vincent.linger = true;
 
@@ -19,31 +39,25 @@
     rsync-replica = {
       enable = true;
       jobs = {
-        rhea-backup = {
-          source = {
-            host = "rhea.sbr.pm";
-            user = "vincent";
+        rhea-daily = rheaBackupDefaults // {
+          source = rheaBackupDefaults.source // {
             paths = [
               "/neo/audiobooks"
               "/neo/documents"
               "/neo/ebooks"
+            ];
+          };
+          schedule = "daily";
+        };
+        rhea-hourly = rheaBackupDefaults // {
+          source = rheaBackupDefaults.source // {
+            paths = [
               "/neo/music"
               "/neo/pictures"
               "/neo/videos"
             ];
           };
-          destination = "/neo";
           schedule = "hourly";
-          delete = true; # Mirror mode: delete files in destination that don't exist in source
-          user = "vincent";
-          group = "users";
-          rsyncArgs = [
-            "--exclude=.Trash-*"
-            "--exclude=lost+found"
-          ];
-          sshArgs = [
-            "-o StrictHostKeyChecking=accept-new"
-          ];
         };
       };
     };
