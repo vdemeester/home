@@ -612,3 +612,40 @@ nix-instantiate --parse default.nix
 - [Reviewing Contributions](https://ryantm.github.io/nixpkgs/contributing/reviewing-contributions/)
 - [Nixpkgs Manual](https://nixos.org/manual/nixpkgs/stable/)
 - [Package Naming Conventions](https://nixos.org/manual/nixpkgs/stable/#sec-package-naming)
+
+## Examples
+
+**Example 1: Updating a package in nixpkgs**
+```
+User: "Update tektoncd-cli to the latest version"
+→ Finds package in nixpkgs repository
+→ Updates version and hash in default.nix
+→ Runs nix-build to test the update
+→ Checks for breaking changes or new dependencies
+→ Creates commit following nixpkgs standards
+→ Opens pull request to nixpkgs
+→ Result: Package updated and PR submitted
+```
+
+**Example 2: Reviewing a nixpkgs PR**
+```
+User: "Review nixpkgs PR #12345"
+→ Checks out PR branch locally
+→ Reviews code changes for correctness
+→ Tests build with nix-build
+→ Verifies meta attributes are correct
+→ Checks commit message follows standards
+→ Leaves review comments or approval
+→ Result: Thorough PR review completed
+```
+
+**Example 3: Adding a new package**
+```
+User: "Add this new tool to nixpkgs"
+→ Creates package directory structure
+→ Writes derivation with proper builder (buildGoModule, etc.)
+→ Adds to all-packages.nix
+→ Tests on multiple platforms
+→ Follows nixpkgs contribution guidelines
+→ Result: New package ready for nixpkgs
+```

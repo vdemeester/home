@@ -668,3 +668,38 @@ git add config/credentials.json  # NO!
 11. ✅ **Test before committing** - run pre-commit checks
 
 **Remember**: Future you will thank present you for clear, descriptive commit messages that explain WHY changes were made!
+
+## Examples
+
+**Example 1: Making a clean commit**
+```
+User: "Commit the authentication changes"
+→ Reviews git diff to understand changes
+→ Adds files explicitly: git add src/auth/ tests/auth.test.ts
+→ Creates commit with HEREDOC format
+→ Includes --signoff and Co-Authored-By: Claude
+→ Uses 2-3 bullet points explaining WHY changes were made
+→ Result: Clean, well-documented commit ready to push
+```
+
+**Example 2: Rebasing a feature branch**
+```
+User: "Update my feature branch with latest main"
+→ Checks current branch status
+→ Fetches latest changes: git fetch origin main
+→ Rebases instead of merging: git rebase origin/main
+→ Resolves any conflicts interactively
+→ Force-pushes with lease: git push --force-with-lease
+→ Result: Clean linear history without merge commits
+```
+
+**Example 3: Avoiding common mistakes**
+```
+User: "Add all changes and commit"
+→ STOPS user from using git add -A or git add .
+→ Reviews git status to see what changed
+→ Adds files explicitly by directory/path
+→ Warns if .env or credentials files are staged
+→ Creates proper commit message without emojis
+→ Result: Safe, intentional commit with no secrets
+```

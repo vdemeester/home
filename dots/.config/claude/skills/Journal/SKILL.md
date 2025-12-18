@@ -560,3 +560,35 @@ Tracking house options:
 - Backup with your regular backup strategy
 
 Remember: Your journal is for you. Write what helps you think, remember, and grow.
+
+## Examples
+
+**Example 1: Creating a daily journal entry**
+```
+User: "Create my journal entry for today"
+→ Uses Journelly format with date heading
+→ Prompts for reflections and highlights
+→ Adds structured sections (work, personal, learnings)
+→ Saves to ~/desktop/org/notes/Journelly.org
+→ Result: Well-structured journal entry for the day
+```
+
+**Example 2: Reviewing past entries**
+```
+User: "What did I write about last week?"
+→ Searches Journelly.org for date range
+→ Extracts entries from the past 7 days
+→ Summarizes key themes and activities
+→ Highlights important decisions or learnings
+→ Result: Quick recap of the week's journal
+```
+
+**Example 3: Adding a reflection**
+```
+User: "Add a reflection about the Tekton work we just did"
+→ Appends to today's journal entry
+→ Captures what was accomplished
+→ Notes lessons learned and insights
+→ Links to relevant history or notes
+→ Result: Reflection recorded for future reference
+```

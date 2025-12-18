@@ -253,3 +253,38 @@ nixos-rebuild dry-build --flake .#<hostname>
 - nixos-raspberrypi.cachix.org
 
 Remember: This is a production infrastructure. Always prioritize safety and ask for confirmation before making changes to remote systems.
+
+## Examples
+
+**Example 1: Deploying NixOS configuration**
+```
+User: "Deploy the updated config to kyushu"
+→ Checks current configuration in home repository
+→ Reviews changes with git diff
+→ Builds configuration with nixos-rebuild build
+→ Confirms target host is correct (kyushu)
+→ Deploys with nixos-rebuild switch --target-host
+→ Result: Configuration safely deployed to homelab server
+```
+
+**Example 2: Managing services**
+```
+User: "Restart the wireguard service on all hosts"
+→ Checks which hosts run wireguard in globals.nix
+→ SSHs to each host
+→ Restarts systemd service: systemctl restart wg-quick-wg0
+→ Verifies service is running
+→ Checks VPN connectivity
+→ Result: All wireguard tunnels restored
+```
+
+**Example 3: Troubleshooting DNS issues**
+```
+User: "Why can't I reach home.example.com?"
+→ Checks DNS configuration in globals.nix
+→ Verifies Pi-hole is running
+→ Tests DNS resolution: dig home.example.com
+→ Checks firewall rules and port forwarding
+→ Reviews service logs for errors
+→ Result: DNS issue identified and resolved
+```

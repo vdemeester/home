@@ -47,10 +47,11 @@ Traditional dotfiles managed outside of home-manager:
 ** =/tools=
 Custom tools and utilities:
 - DNS management scripts (show-dns.sh, update-gandi-dns.sh)
-- Media management scripts (*arr stack automation)
-- Battery monitor
-- Emacs configuration
-- Various Go-based utilities
+- Media management (arr CLI for *arr services, music-playlist-dl for podcasts)
+- GitHub tools (gh-pr for pull request management, claude-hooks for Claude Code)
+- System utilities (battery-monitor, cliphist-cleanup, toggle-color-scheme)
+- Content tools (download-kiwix-zim for offline Wikipedia)
+- Emacs configuration and org-mode utilities (org-manager)
 
 See [[file:tools/README.org][tools/README.org]] for detailed tool documentation.
 
@@ -326,19 +327,24 @@ All packages are defined in the =/pkgs= directory and are available for both =x8
 
 **** Claude Code Tools
 - =claude-hooks= - Claude Code hooks for session management, tool output capture, and documentation validation
-- =gh-restart-failed= - List and restart failed GitHub workflow checks on pull requests
+- =gh-pr= - GitHub PR management tool for approving, reviewing, and managing pull requests
 
 **** Media and Content Management
-- =arr= - Unified CLI for managing *arr services (Sonarr, Radarr, Lidarr)
+- =arr= - Unified CLI for managing *arr services (Sonarr, Radarr, Lidarr) with Spotify sync support
+- =audible-converter= - Convert Audible AAX files to MP3
 - =download-kiwix-zim= - Browse and download ZIM files from the Kiwix library using fzf
 - =homepage= - Simple HTML homepage listing all services from globals.nix
+- =jellyfin-auto-collections= - Automated collection management for Jellyfin from external lists
+- =music-playlist-dl= - Automated downloader for electronic music podcasts with playlist generation
 
 **** System Utilities
+- =cliphist-cleanup= - Clipboard history cleanup utility
 - =vrsync= - Custom rsync utility
 - =vde-thinkpad= - ThinkPad-specific utilities
 - =systemd-email= - Email notifications for systemd
 - =nixfmt-plus= - Enhanced Nix formatter
 - =batzconverter= - Custom conversion utility
+- =toggle-color-scheme= - Toggle between light and dark color schemes
 
 **** Documentation and Organization
 - =scripts= - Collection of utility scripts for various tasks

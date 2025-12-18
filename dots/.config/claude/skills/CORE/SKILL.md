@@ -264,6 +264,36 @@ When specialized knowledge is needed, invoke specific skills:
 
 This ensures focused, expert assistance while maintaining consistent core behaviors.
 
+## Examples
+
+**Example 1: Session initialization**
+```
+[Session starts]
+→ CORE skill auto-loads
+→ Establishes core principles and behaviors
+→ Makes history system available
+→ Sets stack preferences (uv for Python, etc.)
+→ Ready to assist with proper context
+```
+
+**Example 2: User asks about past work**
+```
+User: "What did we do last week with the Tekton pipeline?"
+→ CORE reminds to check history system first
+→ Searches ~/.config/claude/history/sessions/2025-12/
+→ Finds session file with Tekton backport work
+→ Returns summary of what was accomplished
+```
+
+**Example 3: User asks about identity or capabilities**
+```
+User: "What can you help me with?"
+→ CORE skill provides overview of capabilities
+→ Explains operating principles and workflows
+→ Lists available specialized skills
+→ Shows integration with notes, TODOs, and tools
+```
+
 ---
 
 **This completes the CORE skill quick reference. All additional context is available in the documentation files listed above.**

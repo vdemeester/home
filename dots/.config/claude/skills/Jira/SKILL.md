@@ -1,17 +1,11 @@
-# Jira Issue Management
+---
+name: Jira
+description: Jira issue management for Red Hat issues.redhat.com. USE WHEN user mentions jira, ticket, issue, epic, sprint OR references Jira issue keys (SRVKP-1234, SRVCOM-456) OR wants to manage issue workflows, assignments, tracking OR needs to integrate Jira with org-mode notes and TODOs.
+---
 
-## Purpose
+# Jira
+
 Interactive command-line management of Jira issues, epics, and sprints for Red Hat's issues.redhat.com. Minimizes reliance on the web interface while providing comprehensive issue tracking, workflow automation, and integration with org-mode notes.
-
-### Context Detection
-
-**This skill activates when:**
-- User mentions "jira", "ticket", "issue", "epic", or "sprint"
-- User references specific Jira issue keys (e.g., SRVKP-1234)
-- Working with Red Hat Jira issues
-- Need to manage issue workflows, assignments, or tracking
-- User wants to automate Jira operations
-- Integrating Jira issues with org-mode notes or TODOs
 
 ## Workflow Routing
 
@@ -27,7 +21,6 @@ When the user's request matches specific Jira operations, route to the appropria
 | **Search** | "search for", "find issues", "JQL query", complex filtering | `workflows/Search.md` |
 | **LinkToNote** | "link to note", "create note for issue", "document issue" | `workflows/LinkToNote.md` |
 | **Sprint** | "sprint", "current sprint", "add to sprint" | `workflows/Sprint.md` |
-| **Epic** | "epic", "epic issues", "add to epic" | `workflows/Epic.md` |
 | **Transition** | "transition", "workflow", "move issue to", state changes | `workflows/Transition.md` |
 
 ## Key Features
@@ -217,6 +210,46 @@ jira sprint list --current
 
 # Add issue to sprint
 jira sprint add SPRINT-123 SRVKP-1234
+```
+
+## Examples
+
+**Example 1: View a specific Jira issue**
+```
+User: "Show me SRVKP-9243"
+→ Invokes View workflow
+→ Displays issue details (title, status, assignee, description)
+→ Shows recent comments and attachments
+→ Provides issue URL for web access
+```
+
+**Example 2: List my open issues**
+```
+User: "What are my open Jira tickets?"
+→ Invokes List workflow
+→ Filters by current user and excludes Done status
+→ Shows table of open issues with priority and status
+→ Sorted by priority (highest first)
+```
+
+**Example 3: Create a bug report**
+```
+User: "Create a bug for the failing CI tests"
+→ Invokes Create workflow
+→ Prompts for project (defaults to SRVKP)
+→ Sets type to Bug
+→ Asks for summary and description
+→ Creates issue and returns issue key (e.g., SRVKP-9999)
+```
+
+**Example 4: Link Jira issue to org-mode note**
+```
+User: "Create a note for SRVKP-9243"
+→ Invokes LinkToNote workflow
+→ Fetches issue details from Jira
+→ Creates denote note with issue info
+→ Adds Jira URL to note
+→ Links note back in Jira comment (optional)
 ```
 
 ## Tips

@@ -468,3 +468,38 @@ async fn do_stuff_concurrently() {
 ### Best Practices
 - [Rust Project Structure Guide](https://www.djamware.com/post/68b2c7c451ce620c6f5efc56/rust-project-structure-and-best-practices-for-clean-scalable-code)
 - [Large Rust Workspaces](https://matklad.github.io/2021/08/22/large-rust-workspaces.html)
+
+## Examples
+
+**Example 1: Creating a Rust CLI application**
+```
+User: "Build a CLI tool to process logs"
+→ Initializes project with cargo new
+→ Adds clap for argument parsing
+→ Implements error handling with anyhow
+→ Writes unit tests and integration tests
+→ Builds optimized binary with cargo build --release
+→ Result: Fast, safe Rust CLI tool
+```
+
+**Example 2: Fixing ownership and borrowing issues**
+```
+User: "Help me fix these borrow checker errors"
+→ Analyzes ownership flow in code
+→ Identifies unnecessary clones or moves
+→ Suggests lifetime annotations where needed
+→ Refactors to use references appropriately
+→ Explains Rust's ownership rules
+→ Result: Clean code that satisfies the borrow checker
+```
+
+**Example 3: Optimizing Rust performance**
+```
+User: "This Rust code is slower than expected"
+→ Uses cargo flamegraph to profile
+→ Identifies allocations and hot paths
+→ Optimizes with iterators and zero-copy operations
+→ Adds benchmark tests with criterion
+→ Measures improvement
+→ Result: Performant Rust code with benchmarks
+```

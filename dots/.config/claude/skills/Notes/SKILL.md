@@ -577,3 +577,36 @@ See the `history-system` skill for complete integration details.
 8. Link related notes
 
 Remember: Notes are living documents. It's okay to update, refine, and reorganize as understanding deepens.
+
+## Examples
+
+**Example 1: Creating a new note**
+```
+User: "Create a note about NixOS flakes best practices"
+→ Generates timestamp identifier
+→ Creates denote-formatted filename with tags
+→ Adds org-mode frontmatter (title, date, filetags)
+→ Structures content with headings
+→ Saves to ~/desktop/org/notes/
+→ Result: Well-organized note ready for future reference
+```
+
+**Example 2: Finding related notes**
+```
+User: "Show me notes about Tekton"
+→ Searches denote notes by tag: :tekton:
+→ Also searches by title and content
+→ Returns list of matching notes with timestamps
+→ Shows snippets of relevant content
+→ Result: Quick access to all Tekton-related knowledge
+```
+
+**Example 3: Linking notes together**
+```
+User: "Link this note to my CI/CD planning note"
+→ Finds target note by search
+→ Adds denote link using org-mode format
+→ Creates bidirectional reference
+→ Updates related notes section
+→ Result: Knowledge graph connections established
+```

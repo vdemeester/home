@@ -146,3 +146,36 @@ Tested on 354-item todos.org:
 
 - [[file:~/desktop/org/notes/20251205T092927--emacs-batch-mode-for-org-automation__emacs_orgmode_automation_elisp_reference.org][Research Note]]
 - See `README.md` for full documentation
+
+## Examples
+
+**Example 1: Reading and parsing org file**
+```
+User: "What TODOs are in my project.org file?"
+→ Uses Emacs batch mode to parse org file
+→ Extracts TODO items with org-element-map
+→ Returns formatted list with priorities and tags
+→ Shows deadlines and scheduled dates
+→ Result: Complete overview of project TODOs
+```
+
+**Example 2: Updating org file programmatically**
+```
+User: "Mark all DONE items as archived"
+→ Reads org file with Emacs batch mode
+→ Finds all DONE entries
+→ Moves them to archive section
+→ Preserves timestamps and properties
+→ Saves updated file
+→ Result: Clean org file with archived history
+```
+
+**Example 3: Extracting information from org**
+```
+User: "Get all meeting notes from last month"
+→ Parses org files for date range
+→ Filters entries with :meeting: tag
+→ Extracts content and metadata
+→ Formats as summary report
+→ Result: Month's meeting notes compiled
+```

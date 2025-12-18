@@ -516,3 +516,36 @@ See TODO: [[file:~/desktop/org/todos.org::*Implement feature X][Implement featur
 - Has SCHEDULED date
 - Has DEADLINE
 - Otherwise considered dormant (TODO, WAIT)
+
+## Examples
+
+**Example 1: Listing today's TODOs**
+```
+User: "What do I need to do today?"
+→ Searches org files for TODO and NEXT states
+→ Filters by today's date and SCHEDULED items
+→ Shows high-priority items first
+→ Includes deadlines and time estimates
+→ Result: Prioritized list of today's tasks
+```
+
+**Example 2: Creating TODO from conversation**
+```
+User: "Remind me to review the Tekton PRs tomorrow"
+→ Creates TODO in appropriate org file
+→ Sets SCHEDULED date for tomorrow
+→ Adds context and links
+→ Tags appropriately (:tekton:review:)
+→ Result: TODO captured for tomorrow
+```
+
+**Example 3: Completing and archiving TODOs**
+```
+User: "Mark all backport tasks as done"
+→ Finds TODOs matching "backport"
+→ Changes state to DONE
+→ Adds CLOSED timestamp
+→ Archives completed items
+→ Updates project status
+→ Result: Clean TODO list with completed work archived
+```

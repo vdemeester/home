@@ -587,3 +587,38 @@ See `workflows/Security.md` for comprehensive hardening guidance.
 - Deploy: `make host/<hostname>/switch` (ask first!)
 
 Remember: Nix is about reproducibility and declarative configuration. When in doubt, consult the manuals and follow the patterns established in the repository.
+
+## Examples
+
+**Example 1: Creating a Nix package**
+```
+User: "Package this Go application for Nix"
+→ Creates derivation with buildGoModule
+→ Adds proper vendorHash for dependencies
+→ Includes meta attributes (description, license, etc.)
+→ Tests build with nix-build
+→ Adds to home-manager or NixOS configuration
+→ Result: Application properly packaged for Nix
+```
+
+**Example 2: Debugging Nix build issues**
+```
+User: "My Nix build is failing, can you help?"
+→ Reviews error message from nix-build
+→ Checks for common issues (missing dependencies, wrong hash)
+→ Uses nix-shell for interactive debugging
+→ Tests fix incrementally
+→ Updates derivation with correct values
+→ Result: Build succeeds, issue resolved
+```
+
+**Example 3: Using Nix flakes**
+```
+User: "Convert this to use flakes"
+→ Creates flake.nix with inputs and outputs
+→ Migrates configuration to flake structure
+→ Updates flake.lock with nix flake update
+→ Tests with nix build or nix develop
+→ Documents flake usage in README
+→ Result: Modern Nix flake structure
+```

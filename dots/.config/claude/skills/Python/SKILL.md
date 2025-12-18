@@ -526,3 +526,38 @@ mypy --version
 - Google Python Style Guide
 - Type Hints Best Practices
 - pytest Good Integration Practices
+
+## Examples
+
+**Example 1: Creating a Python script with uv**
+```
+User: "Create a script to parse CSV files"
+→ Uses uv for dependency management (NOT pip)
+→ Adds PEP 723 inline script metadata
+→ Includes dependencies (pandas, click)
+→ Writes clean, type-annotated code
+→ Makes script executable with proper shebang
+→ Result: Self-contained Python script with uv
+```
+
+**Example 2: Setting up a Python project**
+```
+User: "Initialize a new Python project"
+→ Creates project with uv init
+→ Sets up pyproject.toml with uv
+→ Adds dependencies with uv add
+→ Configures ruff for linting
+→ Sets up pytest for testing
+→ Result: Modern Python project ready for development
+```
+
+**Example 3: Adding type hints and validation**
+```
+User: "Add type hints to this Python code"
+→ Analyzes existing code structure
+→ Adds proper type annotations with typing module
+→ Uses Pydantic for data validation
+→ Runs mypy for type checking
+→ Documents types in docstrings
+→ Result: Type-safe, well-documented Python code
+```

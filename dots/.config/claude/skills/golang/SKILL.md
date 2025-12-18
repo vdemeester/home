@@ -866,3 +866,38 @@ Quick check for Nix:
 - [Google Go Style Guide](https://google.github.io/styleguide/go/)
 - [Go Best Practices 2025](https://www.bacancytechnology.com/blog/go-best-practices)
 - [Go Coding Standards](https://leapcell.medium.com/go-coding-official-standards-and-best-practices-5e84f4dbc8ad)
+
+## Examples
+
+**Example 1: Creating a new Go CLI tool**
+```
+User: "Create a CLI tool to parse JSON logs"
+→ Sets up project with go mod init
+→ Creates main.go with cobra for CLI structure
+→ Adds JSON parsing with encoding/json
+→ Writes table-driven tests
+→ Builds with proper flags and versioning
+→ Result: Production-ready Go CLI tool
+```
+
+**Example 2: Writing idiomatic Go code**
+```
+User: "Add error handling to this function"
+→ Reviews existing code for patterns
+→ Adds proper error wrapping with fmt.Errorf
+→ Uses early returns for error cases
+→ Adds context.Context for cancellation
+→ Writes tests for error paths
+→ Result: Idiomatic Go with robust error handling
+```
+
+**Example 3: Optimizing Go performance**
+```
+User: "This function is slow, can you optimize it?"
+→ Profiles with pprof to identify bottlenecks
+→ Reduces allocations with sync.Pool
+→ Uses appropriate data structures (map vs slice)
+→ Adds benchmarks to measure improvement
+→ Documents performance characteristics
+→ Result: Measurably faster code with evidence
+```
