@@ -9,6 +9,20 @@ with lib;
 
 let
   cfg = config.services.music-playlist-dl;
+
+  # Convert schedule shortcuts to systemd OnCalendar format
+  scheduleToCalendar =
+    schedule:
+    if schedule == "hourly" then
+      "hourly"
+    else if schedule == "daily" then
+      "daily"
+    else if schedule == "weekly" then
+      "weekly"
+    else if schedule == "monthly" then
+      "monthly"
+    else
+      schedule;
 in
 {
   options.services.music-playlist-dl = {
@@ -38,22 +52,14 @@ in
       description = "Base directory for downloads (library and playlists subdirectories)";
     };
 
-    interval = mkOption {
-      type = types.enum [
-        "hourly"
-        "daily"
-        "weekly"
-        "monthly"
-      ];
+    schedule = mkOption {
+      type = types.str;
       default = "weekly";
-      description = "How often to run the downloader";
-    };
-
-    onCalendar = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Custom OnCalendar specification for systemd timer (overrides interval)";
-      example = "Sun *-*-* 02:00:00";
+      description = ''
+        When to run the downloader. Can be "hourly", "daily", "weekly", "monthly", or a systemd OnCalendar format.
+        See systemd.time(7) for OnCalendar format details.
+      '';
+      example = "weekly";
     };
 
     notification = {
@@ -84,19 +90,7 @@ in
     systemd.timers.music-playlist-dl = {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar =
-          if cfg.onCalendar != null then
-            cfg.onCalendar
-          else
-            (
-              {
-                hourly = "*-*-* *:00:00";
-                daily = "*-*-* 02:00:00";
-                weekly = "Sun *-*-* 02:00:00";
-                monthly = "*-*-01 02:00:00";
-              }
-              .${cfg.interval}
-            );
+        OnCalendar = scheduleToCalendar cfg.schedule;
         Persistent = true;
         RandomizedDelaySec = "15m";
       };

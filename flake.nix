@@ -134,10 +134,10 @@
 
       nixosModules = {
         # provided modules (to be upstreamed)
-        wireguard-client = ./modules/wireguard-client.nix;
-        wireguard-server = ./modules/wireguard-server.nix;
-        govanityurl = ./modules/govanityurl.nix;
-        gosmee = ./modules/gosmee.nix;
+        wireguard-client = ./modules/wireguard/client.nix;
+        wireguard-server = ./modules/wireguard/server.nix;
+        govanityurl = ./modules/govanityurl;
+        gosmee = ./modules/gosmee;
         rsync-replica = ./modules/rsync-replica;
       };
 

@@ -51,9 +51,9 @@ in
   imports = [
     ../common/services/samba.nix
     ../common/services/homepage.nix
-    ../../modules/audible-sync.nix
-    ../../modules/jellyfin-auto-collections.nix
-    ../../modules/music-playlist-dl.nix
+    ../../modules/audible-sync
+    ../../modules/jellyfin-auto-collections
+    ../../modules/music-playlist-dl
   ];
 
   # Age secrets: gandi.env + generated exportarr secrets
@@ -434,7 +434,7 @@ in
       tempDir = "/neo/audiobooks/zz_import"; # Keep AAX files for reuse
       quality = "best";
       format = "m4b";
-      interval = "daily"; # Run daily at 3 AM
+      schedule = "daily"; # Run daily at 3 AM
       notification = {
         enable = true;
         ntfyUrl = "https://ntfy.sbr.pm";
@@ -446,7 +446,7 @@ in
       jellyfinUrl = "http://localhost:8096";
       userId = "400fef4e0ab2448cb8a2bc8ca2facc4f";
       apiKeyFile = config.age.secrets."jellyfin-auto-collections-api-key".path;
-      interval = "daily"; # Run daily at midnight
+      schedule = "daily"; # Run daily at midnight
 
       jellyseerr = {
         enable = false; # Enable when password secret is created
@@ -542,7 +542,7 @@ in
       user = "vincent";
       configFile = "/neo/music/music-playlist-dl.yaml";
       baseDir = "/neo/music";
-      interval = "weekly"; # Run weekly on Sundays at 2 AM
+      schedule = "weekly"; # Run weekly on Sundays at 2 AM
       notification = {
         enable = true;
         ntfyUrl = "https://ntfy.sbr.pm";
