@@ -45,12 +45,6 @@ in
     qmk
     qmk_hid
 
-    beancount
-    beancount-language-server
-    beanquery
-    beanhub-cli
-    fava
-
     startpaac
 
     batzconverter

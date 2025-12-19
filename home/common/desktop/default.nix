@@ -9,6 +9,7 @@
     # FIXME why the infinite recusion
     (./. + "/${desktop}/default.nix")
 
+    ./finance.nix
     ./firefox.nix
     ./gtk.nix
     ./kitty.nix
