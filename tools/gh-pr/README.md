@@ -357,6 +357,84 @@ Using worktrees (default behavior) allows you to:
 - Keep your main repository clean
 - Easily discard worktrees after resolution
 
+### `gh-pr cleanup`
+
+Clean up git worktrees that were created during conflict resolution or other operations.
+
+```bash
+# Dry run - see what would be removed
+gh-pr cleanup --dry-run
+
+# Clean up worktrees in default directory
+gh-pr cleanup
+
+# Clean up worktrees in custom directory
+gh-pr cleanup ~/my-worktrees
+
+# Only remove worktrees where commits are merged upstream
+gh-pr cleanup --check-upstream
+
+# Only remove worktrees for merged/closed PRs
+gh-pr cleanup --check-merged
+
+# Check both upstream merge status and PR status
+gh-pr cleanup --check-upstream --check-merged
+
+# Use custom upstream branch for merge check
+gh-pr cleanup --check-upstream --upstream-branch master
+
+# Force remove even with uncommitted changes (dangerous!)
+gh-pr cleanup --force
+```
+
+**Options:**
+- `-w, --worktree`: Directory containing worktrees (default: `/tmp/gh-resolve-conflicts-worktrees`)
+- `-n, --dry-run`: Show what would be removed without actually removing
+- `-u, --check-upstream`: Check if commits from the branch are merged upstream
+- `-b, --upstream-branch`: Upstream branch to check against (default: `main`)
+- `-m, --check-merged`: Only remove worktrees for merged or closed PRs
+- `-f, --force`: Force remove even if there are uncommitted changes (use with caution!)
+- `[DIRECTORY]`: Positional argument to specify the worktree base directory
+
+**How It Works:**
+
+1. **Scan**: Searches for git repositories with worktrees in the specified directory
+2. **Analyze**: For each worktree:
+   - Checks for uncommitted changes
+   - Optionally checks if commits are merged upstream (with `--check-upstream`)
+   - Optionally checks if the associated PR is merged/closed (with `--check-merged`)
+3. **Clean**: Removes worktrees based on merge status:
+   - **Without checks**: Removes all clean worktrees
+   - **With checks**: Only removes worktrees where commits are merged upstream or PR is merged
+4. **Report**: Shows summary with color-coded status:
+   - ✅ Green checkmark: Merged upstream or PR merged (safe to remove)
+   - 🗑️ Trash can: Clean worktree (standard removal)
+   - ⚠️ Warning: Has uncommitted changes (keeping)
+   - ℹ️ Info: Not merged or still open (keeping)
+
+**Merge Detection:**
+
+The `--check-upstream` flag uses `git cherry` to detect if all commits from a branch have been merged upstream:
+- Compares commits between the worktree branch and the upstream branch (default: `main`)
+- Considers a branch merged if all its commits exist in upstream
+- Works even if the PR was squash-merged or rebased
+- Different from PR status - detects actual commit presence in upstream
+
+**Use Cases:**
+- Clean up after resolving multiple PR conflicts
+- Remove stale worktrees from failed resolution attempts
+- Reclaim disk space from old PR worktrees
+- Batch cleanup of merged PR worktrees
+- Safely remove worktrees only when changes are actually merged
+- Clean up squash-merged PRs that may still show as "open"
+
+**Safety:**
+- By default, keeps worktrees with uncommitted changes
+- Use `--dry-run` first to preview what will be removed
+- Use `--check-upstream` to only remove when commits are safely merged
+- Use `--check-merged` to only remove worktrees for PRs that are already merged/closed
+- Combine both checks for maximum safety
+
 ## Template Caching
 
 Templates are cached for **7 days** (one week) by default. This significantly speeds up operations when working with the same repository.
@@ -379,7 +457,10 @@ tools/gh-pr/
 │   ├── create.go          # PR creation
 │   ├── list_templates.go  # Template listing
 │   ├── restart_failed.go  # Workflow restart
-│   └── resolve_conflicts.go # Conflict resolution (stub)
+│   ├── resolve_conflicts.go # Conflict resolution
+│   ├── cleanup.go         # Worktree cleanup
+│   ├── comment.go         # Batch commenting
+│   └── approve.go         # Batch approval
 ├── internal/
 │   ├── cache/             # Caching with TTL support
 │   ├── output/            # Colored terminal output
@@ -437,6 +518,28 @@ gh-pr restart-failed --label bug
 
 # Ignore flaky tests
 gh-pr restart-failed --ignore "e2e-tests"
+```
+
+### Cleaning Up Worktrees
+
+```bash
+# Preview what would be cleaned (dry run)
+gh-pr cleanup --dry-run
+
+# Clean up all clean worktrees
+gh-pr cleanup
+
+# Only remove worktrees where commits are merged upstream
+gh-pr cleanup --check-upstream
+
+# Only remove worktrees for merged PRs
+gh-pr cleanup --check-merged
+
+# Maximum safety: check both upstream and PR status
+gh-pr cleanup --check-upstream --check-merged --dry-run
+
+# Clean up a specific directory
+gh-pr cleanup ~/tekton-worktrees
 ```
 
 ## Integration with Existing Tools

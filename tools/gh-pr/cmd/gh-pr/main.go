@@ -38,6 +38,7 @@ and conflict resolution in a single command-line interface.`,
 	cmd.AddCommand(resolveConflictsCmd(out))
 	cmd.AddCommand(commentCmd(out))
 	cmd.AddCommand(approveCmd(out))
+	cmd.AddCommand(cleanupCmd(out))
 
 	return cmd
 }
