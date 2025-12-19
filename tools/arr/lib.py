@@ -111,9 +111,7 @@ class ArrClient:
                 sys.exit(1)
 
         # Should not reach here, but just in case
-        print(
-            f"Error: Failed after {max_retries} attempts", file=sys.stderr
-        )
+        print(f"Error: Failed after {max_retries} attempts", file=sys.stderr)
         sys.exit(1)
 
     def post(
@@ -177,13 +175,24 @@ class ArrClient:
 
                 # Always try to get response details
                 if e.response is not None:
-                    print(f"  Response status: {e.response.status_code}", file=sys.stderr)
-                    print(f"  Response headers: {dict(e.response.headers)}", file=sys.stderr)
+                    print(
+                        f"  Response status: {e.response.status_code}",
+                        file=sys.stderr,
+                    )
+                    print(
+                        f"  Response headers: {dict(e.response.headers)}",
+                        file=sys.stderr,
+                    )
                     try:
                         error_detail = e.response.json()
-                        print(f"  Response JSON: {error_detail}", file=sys.stderr)
+                        print(
+                            f"  Response JSON: {error_detail}", file=sys.stderr
+                        )
                     except Exception:
-                        print(f"  Response text: {e.response.text}", file=sys.stderr)
+                        print(
+                            f"  Response text: {e.response.text}",
+                            file=sys.stderr,
+                        )
                 else:
                     print("  No response object available", file=sys.stderr)
                 return {}
@@ -350,9 +359,7 @@ def print_item_list(
         print(f"  ... and {remaining} more")
 
 
-def get_confirmation_decision(
-    ctx: CommandContext, prompt: str
-) -> bool:
+def get_confirmation_decision(ctx: CommandContext, prompt: str) -> bool:
     """
     Determine whether to proceed based on dry-run, no-confirm, or user input.
 
@@ -451,12 +458,8 @@ def select_with_fzf(
         # User cancelled or fzf not found
         return []
     except FileNotFoundError:
-        print(
-            "Error: fzf not found. Please install fzf:", file=sys.stderr
-        )
-        print(
-            "  On NixOS: nix-env -iA nixpkgs.fzf", file=sys.stderr
-        )
+        print("Error: fzf not found. Please install fzf:", file=sys.stderr)
+        print("  On NixOS: nix-env -iA nixpkgs.fzf", file=sys.stderr)
         print("  On other systems: see https://github.com/junegunn/fzf")
         sys.exit(1)
 
@@ -465,8 +468,7 @@ class JellyfinClient:
     """Client for Jellyfin API interactions."""
 
     def __init__(
-        self, base_url: str, api_token: str, user_id: str,
-        debug: bool = False
+        self, base_url: str, api_token: str, user_id: str, debug: bool = False
     ):
         """
         Initialize the Jellyfin API client.
@@ -504,7 +506,7 @@ class JellyfinClient:
         """
         # Check if it's already a GUID (basic check for 8-4-4-4-12 format)
         if len(user_identifier) == 32 or (
-            len(user_identifier) == 36 and user_identifier.count('-') == 4
+            len(user_identifier) == 36 and user_identifier.count("-") == 4
         ):
             return user_identifier
 
@@ -554,9 +556,7 @@ class JellyfinClient:
             )
             sys.exit(1)
 
-    def post(
-        self, endpoint: str, payload: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def post(self, endpoint: str, payload: Dict[str, Any]) -> Dict[str, Any]:
         """
         Make a POST request to the Jellyfin API.
 
@@ -594,8 +594,11 @@ class JellyfinClient:
             sys.exit(1)
 
     def search_tracks(
-        self, query: str, limit: int = 50, artist_name: str = None,
-        track_name: str = None
+        self,
+        query: str,
+        limit: int = 50,
+        artist_name: str = None,
+        track_name: str = None,
     ) -> List[Dict[str, Any]]:
         """
         Search for tracks in Jellyfin library.
@@ -644,7 +647,7 @@ class JellyfinClient:
                 matched_artist = None
 
                 for artist in artists:
-                    if artist.get('Name', '').lower() == artist_name_lower:
+                    if artist.get("Name", "").lower() == artist_name_lower:
                         matched_artist = artist
                         break
 
@@ -655,7 +658,7 @@ class JellyfinClient:
                 artist_id = matched_artist.get("Id")
 
                 if self.debug:
-                    artist_name_str = matched_artist.get('Name')
+                    artist_name_str = matched_artist.get("Name")
                     print(
                         f"DEBUG: Using artist: {artist_name_str} "
                         f"(ID: {artist_id})"
@@ -667,8 +670,7 @@ class JellyfinClient:
                     "Recursive": True,
                     "Limit": limit,
                     "Fields": (
-                        "Artists,Album,AlbumArtist,"
-                        "AlbumArtists,ArtistItems"
+                        "Artists,Album,AlbumArtist,AlbumArtists,ArtistItems"
                     ),
                 }
                 result = self.get(
@@ -691,31 +693,26 @@ class JellyfinClient:
             "IncludeItemTypes": "Audio",
             "Recursive": True,
             "Limit": 200,  # Larger limit: filtering client-side
-            "Fields": (
-                "Artists,Album,AlbumArtist,"
-                "AlbumArtists,ArtistItems"
-            ),
+            "Fields": ("Artists,Album,AlbumArtist,AlbumArtists,ArtistItems"),
             "EnableUserData": False,  # Skip user data for speed
         }
 
-        result = self.get(
-            f"/Users/{self.user_id}/Items", params=params
-        )
+        result = self.get(f"/Users/{self.user_id}/Items", params=params)
 
         items = result.get("Items", [])
 
         # Enrich items with album artist data if track artists are missing
         for item in items:
-            if not item.get('Artists') and item.get('AlbumId'):
+            if not item.get("Artists") and item.get("AlbumId"):
                 try:
-                    album_id = item['AlbumId']
+                    album_id = item["AlbumId"]
                     album = self.get(
                         f"/Users/{self.user_id}/Items/{album_id}",
-                        params={"Fields": "Artists,AlbumArtists"}
+                        params={"Fields": "Artists,AlbumArtists"},
                     )
                     # Use album artists as track artists
-                    item['Artists'] = album.get('AlbumArtists', [])
-                    item['Album'] = album.get('Name', '')
+                    item["Artists"] = album.get("AlbumArtists", [])
+                    item["Album"] = album.get("Name", "")
                 except Exception:
                     pass  # Continue even if album fetch fails
 
@@ -825,9 +822,7 @@ class JellyfinClient:
                 f"{self.base_url}/Playlists/{playlist_id}/Items"
                 f"?EntryIds={','.join(item_ids)}"
             )
-            response = requests.delete(
-                url, headers=self.headers, timeout=30
-            )
+            response = requests.delete(url, headers=self.headers, timeout=30)
             response.raise_for_status()
             return True
         except requests.exceptions.RequestException as e:
@@ -886,6 +881,7 @@ class SpotifyClient:
             for item in results.get("items", []):
                 if item and item.get("track"):
                     track = item["track"]
+                    album_obj = track.get("album", {})
                     tracks.append(
                         {
                             "name": track.get("name"),
@@ -896,8 +892,17 @@ class SpotifyClient:
                                 }
                                 for artist in track.get("artists", [])
                             ],
-                            "album": track.get("album", {}).get("name"),
-                            "album_id": track.get("album", {}).get("id"),
+                            "album": {
+                                "name": album_obj.get("name"),
+                                "id": album_obj.get("id"),
+                                "artists": [
+                                    {
+                                        "name": artist.get("name"),
+                                        "id": artist.get("id"),
+                                    }
+                                    for artist in album_obj.get("artists", [])
+                                ],
+                            },
                         }
                     )
 
