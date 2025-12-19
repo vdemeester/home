@@ -5,7 +5,9 @@ Build container images with best practices for Docker or Podman.
 ## Process
 
 1. **Detect Runtime**
-   - Run `DetectRuntime.sh` to determine Docker/Podman
+   - Parse user prompt for explicit runtime mention ("use Docker", "with Podman")
+   - If explicit runtime mentioned: Use `DetectRuntime.sh --runtime <docker|podman>`
+   - If auto-detect: Run `DetectRuntime.sh` (prefers Podman, falls back to Docker)
    - Identify available build tools (buildx, buildah)
 
 2. **Analyze Context**

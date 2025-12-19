@@ -51,6 +51,27 @@ This skill works seamlessly with both runtimes:
 
 The skill automatically detects which runtime is available and adjusts commands accordingly.
 
+## Runtime Selection
+
+By default, the skill auto-detects available runtimes (prefers Podman for rootless). You can explicitly choose a runtime in your prompts:
+
+**Explicit mentions** (natural language):
+- "**Use Docker to** build this image"
+- "Build this image **with Podman**"
+- "**Using Docker**, start the container"
+- "**With Podman**, create a volume"
+
+When you mention a specific runtime, the skill will use that runtime exclusively for the operation.
+
+**Auto-detection behavior**:
+1. Checks for Podman first (rootless preference)
+2. Falls back to Docker if Podman not found
+3. Errors if neither is available
+
+**When both are installed**: You have both runtimes available, so you can choose based on your needs:
+- **Podman**: Rootless, daemonless, pods support
+- **Docker**: Mature ecosystem, wider adoption, better tooling
+
 ## Examples
 
 **Example 1: Build a container image**
@@ -85,6 +106,19 @@ User: "Build this image for both AMD64 and ARM64"
 → Sets up buildx/buildah
 → Builds for multiple platforms
 → Pushes to registry with manifest
+```
+
+**Example 5: Explicit runtime selection**
+```
+User: "Use Docker to build this image"
+→ Invokes BuildImage workflow
+→ Forces Docker runtime (--runtime docker)
+→ Uses Docker-specific features if needed
+
+User: "With Podman, start a rootless container"
+→ Invokes ManageContainers workflow
+→ Forces Podman runtime (--runtime podman)
+→ Uses Podman rootless mode
 ```
 
 ## Best Practices
