@@ -439,7 +439,7 @@ def monitor_artist_albums(
     playlist_album_names: Set[str],
     search_albums: bool = False,
     debug: bool = False,
-) -> tuple[int, int]:
+) -> tuple[int, int, int]:
     """
     Monitor specific albums for an artist in Lidarr.
 
@@ -451,14 +451,14 @@ def monitor_artist_albums(
         debug: Enable debug output
 
     Returns:
-        Tuple of (matched_count, monitored_count)
+        Tuple of (matched_count, monitored_count, searched_count)
     """
     # Get artist info
     artist = client.get(f"/api/v1/artist/{artist_id}")
     if not artist:
         if debug:
             print(f"    DEBUG: Could not fetch artist {artist_id}")
-        return (0, 0)
+        return (0, 0, 0)
 
     artist_name = artist.get("artistName", "Unknown")
 
@@ -479,16 +479,23 @@ def monitor_artist_albums(
     if not albums:
         if debug:
             print(f"    DEBUG: No albums found for {artist_name}")
-        return (0, 0)
+        return (0, 0, 0)
 
     matched_count = 0
     monitored_count = 0
+    searched_count = 0
 
     # Match playlist albums to Lidarr albums
     for album in albums:
         album_title = album.get("title", "")
         album_id = album.get("id")
         already_monitored = album.get("monitored", False)
+
+        # Check if album has any downloaded tracks
+        statistics = album.get("statistics", {})
+        track_file_count = statistics.get("trackFileCount", 0)
+        total_track_count = statistics.get("totalTrackCount", 0)
+        is_downloaded = track_file_count > 0
 
         # Check if this album matches any in the playlists
         for playlist_album in playlist_album_names:
@@ -499,6 +506,7 @@ def monitor_artist_albums(
             ):
                 matched_count += 1
 
+                # Monitor album if not already monitored
                 if not already_monitored:
                     if debug:
                         print(f"    Monitoring album: {album_title}")
@@ -508,16 +516,6 @@ def monitor_artist_albums(
                     try:
                         client.put(f"/api/v1/album/{album_id}", album)
                         monitored_count += 1
-
-                        # Optionally trigger search
-                        if search_albums:
-                            client.post(
-                                "/api/v1/command",
-                                {
-                                    "name": "AlbumSearch",
-                                    "albumIds": [album_id],
-                                },
-                            )
                     except Exception as e:
                         if debug:
                             print(
@@ -527,9 +525,36 @@ def monitor_artist_albums(
                     if debug:
                         print(f"    Album already monitored: {album_title}")
 
+                # Trigger search if album is not downloaded
+                if not is_downloaded:
+                    if debug:
+                        print(
+                            f"    Searching for album: {album_title} "
+                            f"({track_file_count}/{total_track_count} tracks)"
+                        )
+                    try:
+                        client.post(
+                            "/api/v1/command",
+                            {
+                                "name": "AlbumSearch",
+                                "albumIds": [album_id],
+                            },
+                        )
+                        searched_count += 1
+                    except Exception as e:
+                        if debug:
+                            print(
+                                f"    DEBUG: Failed to search album {album_title}: {e}"
+                            )
+                elif debug:
+                    print(
+                        f"    Album already downloaded: {album_title} "
+                        f"({track_file_count}/{total_track_count} tracks)"
+                    )
+
                 break  # Found match, move to next album
 
-    return (matched_count, monitored_count)
+    return (matched_count, monitored_count, searched_count)
 
 
 def get_existing_artists(
@@ -1140,11 +1165,12 @@ def run(
             print(f"Processing {len(artists_to_monitor)} artists...")
             total_matched = 0
             total_monitored = 0
+            total_searched = 0
             artists_needing_refresh = []
 
             for artist_name, lidarr_id, playlist_albums in artists_to_monitor:
                 print(f"\n  {artist_name}:")
-                matched, monitored = monitor_artist_albums(
+                matched, monitored, searched = monitor_artist_albums(
                     lidarr,
                     lidarr_id,
                     playlist_albums,
@@ -1153,6 +1179,7 @@ def run(
                 )
                 total_matched += matched
                 total_monitored += monitored
+                total_searched += searched
 
                 if matched == 0:
                     # Check if artist has no albums at all (might need refresh)
@@ -1192,6 +1219,7 @@ def run(
 
             print(f"\n  Total albums matched: {total_matched}")
             print(f"  Total albums newly monitored: {total_monitored}")
+            print(f"  Total album searches triggered: {total_searched}")
 
             # Offer to refresh artists with no albums
             if artists_needing_refresh:
