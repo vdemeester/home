@@ -73,6 +73,9 @@
               # Allow Prometheus node exporter
               tcp dport 9000 accept
 
+              # Allow Docker Prometheus metrics
+              tcp dport 9323 accept
+
               # Allow libvirt
               tcp dport 16509 accept
 

@@ -65,6 +65,19 @@ let
   exportarrTargets = lib.mapAttrsToList (
     _name: cfg: "rhea.sbr.pm:${toString cfg.port}"
   ) exportarrServices;
+
+  # Docker hosts with metrics enabled
+  dockerMachines = lib.filterAttrs (
+    _name: _machine:
+    builtins.elem _name [
+      "sakhalin"
+      "aomi"
+    ]
+  ) globals.machines;
+  dockerTargets = monitoring.mkPrometheusTargets {
+    machines = dockerMachines;
+    port = 9323;
+  };
 in
 {
 
@@ -258,6 +271,14 @@ in
           ];
           metrics_path = "/api/prometheus";
           bearer_token_file = config.age.secrets."homeassistant-prometheus-token".path;
+        }
+        {
+          job_name = "docker";
+          static_configs = [
+            {
+              targets = dockerTargets;
+            }
+          ];
         }
       ];
     };

@@ -10,6 +10,7 @@
         userland-proxy = true;
         experimental = true;
         bip = "172.26.0.1/16";
+        metrics-addr = "0.0.0.0:9323";
         features = {
           buildkit = true;
         };
@@ -28,4 +29,5 @@
   environment.systemPackages = with pkgs; [ docker-buildx ];
   networking.firewall.trustedInterfaces = [ "docker0" ];
   networking.firewall.checkReversePath = false;
+  networking.firewall.allowedTCPPorts = [ 9323 ]; # Docker Prometheus metrics
 }
