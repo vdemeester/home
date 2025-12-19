@@ -10,6 +10,26 @@ let
 
   # Aix's local IP for DNS resolution
   aixLocalIP = "192.168.1.75";
+
+  # Common rsync configuration for aion sync
+  aionSyncDefaults = {
+    source = {
+      host = "aion.sbr.pm";
+      user = "vincent";
+    };
+    destination = "/data";
+    delete = true; # Mirror mode: delete files in destination that don't exist in source
+    user = "vincent";
+    group = "users";
+    rsyncArgs = [
+      "--exclude=.Trash-*"
+      "--exclude=lost+found"
+      "--exclude=.stfolder"
+    ];
+    sshArgs = [
+      "-o StrictHostKeyChecking=accept-new"
+    ];
+  };
 in
 {
   imports = [
@@ -23,6 +43,25 @@ in
   users.users.vincent.linger = true;
 
   services = {
+    # Rsync data from aion to aix for local network access
+    rsync-replica = {
+      enable = true;
+      jobs = {
+        # Sync all data daily
+        aion-daily = aionSyncDefaults // {
+          source = aionSyncDefaults.source // {
+            paths = [
+              "/neo/music"
+              "/neo/pictures"
+              "/neo/ebooks"
+              "/neo/audiobooks"
+            ];
+          };
+          schedule = "daily";
+        };
+      };
+    };
+
     samba.settings = {
       global."server string" = "Aix";
       vincent = {

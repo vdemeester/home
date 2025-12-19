@@ -90,6 +90,9 @@ in
     ../common/services/linkwarden.nix
   ];
 
+  # Disable TPM2 (hardware has no TPM chip)
+  security.tpm2.enable = lib.mkForce false;
+
   # Age secrets
   age.secrets."grafana-admin-password" = {
     file = ../../secrets/sakhalin/grafana-admin-password.age;
