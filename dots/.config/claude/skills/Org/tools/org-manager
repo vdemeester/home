@@ -6,7 +6,9 @@
 set -euo pipefail
 
 # Configuration
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Resolve symlinks to get actual script location
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 BATCH_FUNCTIONS="${BATCH_FUNCTIONS:-$SCRIPT_DIR/batch-functions.el}"
 DENOTE_FUNCTIONS="${DENOTE_FUNCTIONS:-$SCRIPT_DIR/denote-batch-functions.el}"
 EMACS="${EMACS:-emacs}"
