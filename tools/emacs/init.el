@@ -894,6 +894,13 @@ minibuffer, even without explicitly focusing it."
 ;;       (vc-git-grep symbol "*" (vc-git-root default-directory)))))
 ;; (global-set-key (kbd "C-c p s") 'tkj/vc-git-grep-symbol)
 
+(use-package vc-dir
+  :bind (("C-x v D" . project-vc-dir)
+         :map vc-dir-mode-map
+         ("=" . vc-diff)
+         ("v" . vc-next-action)
+         ("C-c C-c" . vc-next-action)))
+
 (use-package magit
   :unless noninteractive
   :commands (magit-status magit-clone magit-pull magit-blame magit-log-buffer-file magit-log magit-file-dispatch)
