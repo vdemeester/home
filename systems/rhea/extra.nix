@@ -457,9 +457,8 @@ in
         ];
         rules = [
           {
-            regex = true;
+            regex = "(\\..*|.*\\.tmp)$"; # Block hidden files and .tmp files
             allow = false;
-            path = "/(\\..*|.*\\.tmp)$"; # Block hidden files and .tmp files
           }
         ];
       };
