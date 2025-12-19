@@ -76,6 +76,7 @@ in
         incremental = true;
         quiet_fallback = "asis"; # Handle non-MusicBrainz content
         log = "${actualBaseDir}/import.log";
+        write = true; # Always write tags to files during import
       };
 
       # Essential plugins
@@ -137,8 +138,11 @@ in
       };
 
       # Lyrics fetching
+      # NOTE: auto=false prevents lyrics from being removed during 'beet update'
+      # Use 'beet lyrics' manually to fetch lyrics when needed
       lyrics = {
-        auto = true;
+        auto = false;
+        force = false; # Don't overwrite existing lyrics
         sources = [
           "lrclib"
           "genius"
