@@ -158,7 +158,7 @@ in
 
       # Smart playlists
       smartplaylist = {
-        relative_to = actualBaseDir;
+        relative_to = "${actualBaseDir}/playlists";
         playlist_dir = "${actualBaseDir}/playlists";
         playlists = [
           {
