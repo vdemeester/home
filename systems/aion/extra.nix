@@ -6,6 +6,9 @@
   ...
 }:
 let
+  # Service defaults for media/homelab services
+  serviceDefaults = libx.mkServiceDefaults { };
+
   # Common rsync configuration for rhea backups
   rheaBackupDefaults = {
     source = {
@@ -23,6 +26,14 @@ let
     sshArgs = [
       "-o StrictHostKeyChecking=accept-new"
     ];
+  };
+
+  # Exportarr services configuration (data-driven approach)
+  exportarrServices = {
+    lidarr = {
+      port = 9709;
+      servicePort = 8686;
+    };
   };
 in
 {
@@ -55,6 +66,17 @@ in
         ntfyUrl = "https://ntfy.sbr.pm";
         topic = "homelab";
       };
+    };
+
+    audiobookshelf = serviceDefaults // {
+      enable = false;
+      port = 13378;
+      host = "0.0.0.0";
+    };
+
+    lidarr = serviceDefaults // {
+      enable = false;
+      settings.server.port = exportarrServices.lidarr.servicePort;
     };
 
     rsync-replica = {
