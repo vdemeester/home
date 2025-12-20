@@ -49,7 +49,7 @@ in
     baseDir = mkOption {
       type = types.str;
       default = "/neo/music";
-      description = "Base directory for downloads (library and playlists subdirectories)";
+      description = "Base directory for downloads (shows and playlists subdirectories)";
     };
 
     schedule = mkOption {
@@ -120,10 +120,9 @@ in
           ''
         );
 
-        # Ensure directories exist
+        # Ensure base directory exists (playlists dir created by script)
         ExecStartPre = pkgs.writeShellScript "music-playlist-dl-prepare" ''
-          mkdir -p "${cfg.baseDir}/library"
-          mkdir -p "${cfg.baseDir}/playlist"
+          mkdir -p "${cfg.baseDir}"
         '';
 
         # Resource limits

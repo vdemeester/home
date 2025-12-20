@@ -2,9 +2,11 @@
 # Copy this file to /neo/music/music-playlist-dl.yaml and customize
 
 # Base directory for downloads
-# - Downloads go to: {base_dir}/library/{artist}/{show}/
-# - Playlists go to: {base_dir}/playlist/{artist} - {show}.m3u
-base_dir: /neo/music
+# - Downloads go to: {base_dir}/{show}/
+# - Playlists go to: {base_dir}/../playlists/{artist} - {show}.m3u
+# Example base_dir: /neo/music/mixes or /neo/music/podcasts
+# Playlists will be in: /neo/music/playlists/
+base_dir: /neo/music/mixes
 
 # Beets integration (optional, disabled by default)
 # Enable this to automatically import podcasts to beets music library manager
@@ -86,21 +88,18 @@ yt_dlp_options:
 # After running, your directory structure will look like:
 #
 # /neo/music/
-# ├── library/
-# │   ├── Above & Beyond/
-# │   │   └── Group Therapy/
-# │   │       ├── .downloaded.txt              # Archive file (tracks downloaded IDs)
-# │   │       ├── Group Therapy 657-abc123.m4a
-# │   │       └── Group Therapy 658-def456.m4a
-# │   ├── Armin van Buuren/
-# │   │   └── A State of Trance/
-# │   │       ├── .downloaded.txt
-# │   │       └── ASOT Episode 1255-xyz789.m4a
-# │   └── Tiësto/
-# │       └── CLUBLIFE/
-# │           ├── .downloaded.txt
-# │           └── CLUBLIFE Podcast 908-ghi012.m4a
-# └── playlist/
+# ├── mixes/                     # base_dir (or podcasts/)
+# │   ├── Group Therapy/
+# │   │   ├── .downloaded.txt              # Archive file (tracks downloaded IDs)
+# │   │   ├── Group Therapy 657-abc123.m4a
+# │   │   └── Group Therapy 658-def456.m4a
+# │   ├── A State of Trance/
+# │   │   ├── .downloaded.txt
+# │   │   └── ASOT Episode 1255-xyz789.m4a
+# │   └── CLUBLIFE/
+# │       ├── .downloaded.txt
+# │       └── CLUBLIFE Podcast 908-ghi012.m4a
+# └── playlists/                 # Shared playlists directory
 #     ├── Above & Beyond - Group Therapy.m3u
 #     ├── Armin van Buuren - A State of Trance.m3u
 #     └── Tiësto - CLUBLIFE.m3u
@@ -114,8 +113,8 @@ yt_dlp_options:
 # Playlists are standard M3U format with relative paths:
 #
 # #EXTM3U
-# ../library/Above & Beyond/Group Therapy/Group Therapy 657-abc123.m4a
-# ../library/Above & Beyond/Group Therapy/Group Therapy 658-def456.m4a
+# ../Group Therapy/Group Therapy 657-abc123.m4a
+# ../Group Therapy/Group Therapy 658-def456.m4a
 
 # Podcast Information & Sources
 #
@@ -160,7 +159,7 @@ yt_dlp_options:
 # 2. Run music-playlist-dl --import-existing to import all existing files once
 # 3. Future runs will automatically import new downloads
 #
-# Files stay in library/{artist}/{show}/ - beets imports in-place (doesn't move)
+# Files stay in {base_dir}/{show}/ - beets imports in-place (doesn't move)
 # This preserves yt-dlp's download archive (.downloaded.txt) for deduplication
 #
 # Tag Hierarchy:

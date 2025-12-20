@@ -144,11 +144,11 @@ def build_yt_dlp_command(
 
 
 def download_mixcloud_show(
-    show: MixcloudShow, library_dir: Path, yt_dlp_options: dict
+    show: MixcloudShow, base_dir: Path, yt_dlp_options: dict
 ) -> bool:
     """Download a Mixcloud show."""
     url = f"https://www.mixcloud.com/{show.handle}/"
-    output_dir = library_dir / show.artist / show.show
+    output_dir = base_dir / show.show
     output_dir.mkdir(parents=True, exist_ok=True)
 
     output_template = str(output_dir / "%(title)s-%(id)s.%(ext)s")
@@ -168,10 +168,10 @@ def download_mixcloud_show(
 
 
 def download_soundcloud_show(
-    show: SoundcloudShow, library_dir: Path, yt_dlp_options: dict
+    show: SoundcloudShow, base_dir: Path, yt_dlp_options: dict
 ) -> bool:
     """Download a SoundCloud show."""
-    output_dir = library_dir / show.artist / show.show
+    output_dir = base_dir / show.show
     output_dir.mkdir(parents=True, exist_ok=True)
 
     output_template = str(output_dir / "%(title)s-%(id)s.%(ext)s")
@@ -191,10 +191,10 @@ def download_soundcloud_show(
 
 
 def generate_playlist(
-    artist: str, show: str, library_dir: Path, playlist_dir: Path
+    artist: str, show: str, base_dir: Path, playlist_dir: Path
 ):
     """Generate M3U playlist for a show."""
-    show_dir = library_dir / artist / show
+    show_dir = base_dir / show
     if not show_dir.exists():
         logging.warning(f"Show directory does not exist: {show_dir}")
         return
@@ -233,7 +233,7 @@ def generate_playlist(
 
 
 def import_to_beets(
-    library_dir: Path,
+    base_dir: Path,
     artist: str,
     show: str,
     show_beets_tags: dict,
@@ -243,7 +243,7 @@ def import_to_beets(
     if not beets_config.enable:
         return True  # Skip if disabled
 
-    show_dir = library_dir / artist / show
+    show_dir = base_dir / show
     if not show_dir.exists():
         logging.warning(f"Show directory does not exist: {show_dir}")
         return False
@@ -323,33 +323,33 @@ def main():
         sys.exit(1)
 
     # Setup directories
-    library_dir = config.base_dir / "library"
-    playlist_dir = config.base_dir / "playlist"
-    library_dir.mkdir(parents=True, exist_ok=True)
+    base_dir = config.base_dir
+    playlist_dir = base_dir.parent / "playlists"
+    base_dir.mkdir(parents=True, exist_ok=True)
     playlist_dir.mkdir(parents=True, exist_ok=True)
 
     logging.info(
-        f"Starting music podcast downloads to: {library_dir}"
+        f"Starting music podcast downloads to: {base_dir}"
     )
     logging.info("=" * 60)
 
     # Download Mixcloud shows
     for show in config.mixcloud_shows:
-        download_mixcloud_show(show, library_dir, config.yt_dlp_options)
+        download_mixcloud_show(show, base_dir, config.yt_dlp_options)
 
     # Download SoundCloud shows
     for show in config.soundcloud_shows:
-        download_soundcloud_show(show, library_dir, config.yt_dlp_options)
+        download_soundcloud_show(show, base_dir, config.yt_dlp_options)
 
     logging.info("=" * 60)
     logging.info("Generating playlists...")
 
     # Generate playlists for all shows
     for show in config.mixcloud_shows:
-        generate_playlist(show.artist, show.show, library_dir, playlist_dir)
+        generate_playlist(show.artist, show.show, base_dir, playlist_dir)
 
     for show in config.soundcloud_shows:
-        generate_playlist(show.artist, show.show, library_dir, playlist_dir)
+        generate_playlist(show.artist, show.show, base_dir, playlist_dir)
 
     # Import to beets if enabled
     if config.beets.enable:
@@ -358,7 +358,7 @@ def main():
             logging.info("Importing all existing files to beets...")
             for show in config.mixcloud_shows:
                 import_to_beets(
-                    library_dir,
+                    base_dir,
                     show.artist,
                     show.show,
                     show.beets_tags,
@@ -366,7 +366,7 @@ def main():
                 )
             for show in config.soundcloud_shows:
                 import_to_beets(
-                    library_dir,
+                    base_dir,
                     show.artist,
                     show.show,
                     show.beets_tags,
@@ -380,7 +380,7 @@ def main():
             logging.info("Importing new downloads to beets...")
             for show in config.mixcloud_shows:
                 import_to_beets(
-                    library_dir,
+                    base_dir,
                     show.artist,
                     show.show,
                     show.beets_tags,
@@ -388,7 +388,7 @@ def main():
                 )
             for show in config.soundcloud_shows:
                 import_to_beets(
-                    library_dir,
+                    base_dir,
                     show.artist,
                     show.show,
                     show.beets_tags,
