@@ -53,9 +53,7 @@ in
     ../common/services/homepage.nix
     ../common/services/prometheus-exporters-node.nix
     ../common/services/prometheus-exporters-postgres.nix
-    ../../modules/audible-sync
     ../../modules/jellyfin-auto-collections
-    ../../modules/music-playlist-dl
   ];
 
   # Age secrets: gandi.env + webdav + jellyfin + generated exportarr secrets
@@ -294,6 +292,10 @@ in
                   "navidrome.sbr.pm"
                   "music.sbr.pm"
                 ];
+                transmission-music = mkRouter "transmission-music" [
+                  "transmission-music.sbr.pm"
+                  "tm.sbr.pm"
+                ];
                 linkwarden = mkRouter "linkwarden" [
                   "linkwarden.sbr.pm"
                   "links.sbr.pm"
@@ -317,6 +319,7 @@ in
                 grafana = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3000";
                 linkwarden = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3002";
                 navidrome = mkService "http://${builtins.head globals.machines.aion.net.ips}:4533";
+                transmission-music = mkService "http://${builtins.head globals.machines.aion.net.ips}:9091";
               };
             middlewares =
               syncthingMiddlewares
@@ -463,20 +466,6 @@ in
         ];
       };
     };
-    audible-sync = {
-      enable = true;
-      user = "vincent";
-      outputDir = "/neo/audiobooks";
-      tempDir = "/neo/audiobooks/zz_import"; # Keep AAX files for reuse
-      quality = "best";
-      format = "m4b";
-      schedule = "daily"; # Run daily at 3 AM
-      notification = {
-        enable = true;
-        ntfyUrl = "https://ntfy.sbr.pm";
-        topic = "homelab";
-      };
-    };
     jellyfin-auto-collections = {
       enable = true;
       jellyfinUrl = "http://localhost:8096";
@@ -571,18 +560,6 @@ in
             ];
           };
         };
-      };
-    };
-    music-playlist-dl = {
-      enable = true;
-      user = "vincent";
-      configFile = "/neo/music/music-playlist-dl.yaml";
-      baseDir = "/neo/music";
-      schedule = "weekly"; # Run weekly on Sundays at 2 AM
-      notification = {
-        enable = true;
-        ntfyUrl = "https://ntfy.sbr.pm";
-        topic = "homelab";
       };
     };
     transmission = serviceDefaults // {
@@ -721,8 +698,6 @@ in
   environment.systemPackages = with pkgs; [
     lm_sensors
     gnumake
-    audible-converter
-    audible-cli
     ffmpeg-full
   ];
 

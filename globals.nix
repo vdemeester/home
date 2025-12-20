@@ -515,6 +515,10 @@ _: {
       host = "rhea";
       aliases = [ "t" ];
     };
+    transmission-music = {
+      host = "rhea";
+      aliases = [ "tm" ];
+    };
     syncthing = {
       host = "rhea";
       aliases = [ "s" ];

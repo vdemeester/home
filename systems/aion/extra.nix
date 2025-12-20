@@ -28,6 +28,8 @@ in
 {
   imports = [
     ../common/services/prometheus-exporters-node.nix
+    ../../modules/audible-sync
+    ../../modules/music-playlist-dl
   ];
 
   users.users.vincent.linger = true;
@@ -38,6 +40,21 @@ in
       ips = libx.wg-ips globals.machines.aion.net.vpn.ips;
       endpoint = "${globals.net.vpn.endpoint}";
       endpointPublicKey = "${globals.machines.kerkouane.net.vpn.pubkey}";
+    };
+
+    audible-sync = {
+      enable = false; # enable one migration dayrs
+      user = "vincent";
+      outputDir = "/neo/audiobooks";
+      tempDir = "/neo/audiobooks/zz_import"; # Keep AAX files for reuse
+      quality = "best";
+      format = "m4b";
+      schedule = "daily"; # Run daily at 3 AM
+      notification = {
+        enable = true;
+        ntfyUrl = "https://ntfy.sbr.pm";
+        topic = "homelab";
+      };
     };
 
     rsync-replica = {
@@ -66,6 +83,19 @@ in
       };
     };
 
+    music-playlist-dl = {
+      enable = false; # Enable on music migration day
+      user = "vincent";
+      configFile = "/neo/music/music-playlist-dl.yaml";
+      baseDir = "/neo/music/mixes"; # Downloads to /neo/music/mixes/{show}, playlists to /neo/music/playlists
+      schedule = "weekly"; # Run weekly on Sundays at 2 AM
+      notification = {
+        enable = true;
+        ntfyUrl = "https://ntfy.sbr.pm";
+        topic = "homelab";
+      };
+    };
+
     navidrome = {
       enable = true;
       settings = {
@@ -86,6 +116,30 @@ in
         # LastFM.Enabled = true;
       };
     };
+
+    transmission = {
+      enable = false; # Enable on music migration day
+      package = pkgs.transmission_4;
+      openRPCPort = true; # Open firewall for RPC (port 9091)
+      home = "/neo/torrents";
+      settings = {
+        # Override default settings
+        incomplete-dir-enabled = true;
+        rpc-bind-address = "0.0.0.0"; # Bind to all interfaces
+        rpc-host-whitelist = "localhost,tm.sbr.pm,transmission-music.sbr.pm,aion.home,aion.vpn,aion.sbr.pm,192.168.1.51,10.100.0.51";
+        rpc-host-whitelist-enabled = true;
+        rpc-whitelist-enabled = true;
+        rpc-whitelist = "127.0.0.1,192.168.1.*,10.100.0.*"; # Allow local network access
+        rpc-username = "transmission";
+        rpc-password = "transmission";
+        download-queue-enabled = true;
+        download-queue-size = 15;
+        queue-stalled-enabled = true;
+        queue-stalled-minutes = 30;
+        ratio-limit = 0.1;
+        ratio-limit-enabled = true;
+      };
+    };
   };
 
   networking = {
@@ -93,12 +147,16 @@ in
     firewall.allowedTCPPorts = [
       4533 # Navidrome
       9000 # Node exporter
+      9091 # Transmission (music torrents)
     ];
   };
 
   environment.systemPackages = with pkgs; [
     lm_sensors
     gnumake
+    audible-converter
+    audible-cli
+    ffmpeg-full
   ];
 
 }
