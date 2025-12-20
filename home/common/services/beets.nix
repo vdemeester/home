@@ -166,10 +166,6 @@ in
         playlist_dir = "${actualBaseDir}/playlists";
         playlists = [
           {
-            name = "recent.m3u";
-            query = "added:-1m..";
-          }
-          {
             name = "podcasts.m3u";
             query = "albumtype:podcast";
           }
@@ -214,6 +210,10 @@ in
           {
             name = "electronic.m3u";
             query = "genre:Electronic";
+          }
+          {
+            name = "electronic.m3u";
+            query = "genre:Trance";
           }
           {
             name = "jazz.m3u";
