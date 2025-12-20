@@ -46,6 +46,25 @@ let
       servicePort = 6767;
     };
   };
+
+  # Common rsync configuration for aion backups (reverse sync after migration)
+  aionBackupDefaults = {
+    source = {
+      host = "aion.sbr.pm";
+      user = "vincent";
+    };
+    destination = "/neo";
+    delete = true; # Mirror mode: delete files in destination that don't exist in source
+    user = "vincent";
+    group = "users";
+    rsyncArgs = [
+      "--exclude=.Trash-*"
+      "--exclude=lost+found"
+    ];
+    sshArgs = [
+      "-o StrictHostKeyChecking=accept-new"
+    ];
+  };
 in
 {
   imports = [
@@ -607,6 +626,26 @@ in
       enable = true;
       settings.server.port = exportarrServices.lidarr.servicePort;
     };
+
+    # Rsync replica jobs to backup FROM aion (disabled until migration)
+    rsync-replica = {
+      enable = false; # Enable after audio services migration to aion
+      jobs = {
+        aion-music-hourly = aionBackupDefaults // {
+          source = aionBackupDefaults.source // {
+            paths = [ "/neo/music" ];
+          };
+          schedule = "hourly";
+        };
+        aion-audiobooks-daily = aionBackupDefaults // {
+          source = aionBackupDefaults.source // {
+            paths = [ "/neo/audiobooks" ];
+          };
+          schedule = "daily";
+        };
+      };
+    };
+
     # Generate prometheus exporters for all exportarr services
     prometheus.exporters = lib.mapAttrs' (
       name: cfg:
