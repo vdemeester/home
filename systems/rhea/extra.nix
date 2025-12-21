@@ -69,7 +69,6 @@ in
 {
   imports = [
     ../common/services/samba.nix
-    ../common/services/homepage.nix
     ../common/services/prometheus-exporters-node.nix
     ../common/services/prometheus-exporters-postgres.nix
     ../../modules/jellyfin-auto-collections
@@ -220,7 +219,6 @@ in
               altHosts = [ "books.sbr.pm" ];
             };
             dav.port = 6065;
-            homepage.port = 3001;
           };
 
           # Generate routers for local services
@@ -319,6 +317,7 @@ in
                   "linkwarden.sbr.pm"
                   "links.sbr.pm"
                 ];
+                homepage = mkRouter "homepage" [ "homepage.sbr.pm" ];
                 # Traefik dashboard
                 traefik-dashboard = {
                   rule = "Host(`traefik.sbr.pm`)";
@@ -339,6 +338,7 @@ in
                 linkwarden = mkService "http://${builtins.head globals.machines.sakhalin.net.ips}:3002";
                 navidrome = mkService "http://${builtins.head globals.machines.aion.net.ips}:4533";
                 transmission-music = mkService "http://${builtins.head globals.machines.aion.net.ips}:9091";
+                homepage = mkService "http://${builtins.head globals.machines.aion.net.ips}:3001";
               };
             middlewares =
               syncthingMiddlewares
@@ -629,7 +629,7 @@ in
 
     # Rsync replica jobs to backup FROM aion (disabled until migration)
     rsync-replica = {
-      enable = false; # Enable after audio services migration to aion
+      enable = true; # Enable after audio services migration to aion
       jobs = {
         aion-music-hourly = aionBackupDefaults // {
           source = aionBackupDefaults.source // {

@@ -38,12 +38,33 @@ let
 in
 {
   imports = [
+    ../common/services/samba.nix
+    ../common/services/homepage.nix
     ../common/services/prometheus-exporters-node.nix
     ../../modules/audible-sync
     ../../modules/music-playlist-dl
   ];
 
   users.users.vincent.linger = true;
+
+  # Age secrets for homepage widgets (API keys for *arr services on rhea)
+  age.secrets = {
+    "exportarr-sonarr-apikey" = {
+      file = ../../secrets/rhea/exportarr-sonarr-apikey.age;
+      mode = "440";
+      group = "homepage";
+    };
+    "exportarr-radarr-apikey" = {
+      file = ../../secrets/rhea/exportarr-radarr-apikey.age;
+      mode = "440";
+      group = "homepage";
+    };
+    "exportarr-lidarr-apikey" = {
+      file = ../../secrets/rhea/exportarr-lidarr-apikey.age;
+      mode = "440";
+      group = "homepage";
+    };
+  };
 
   services = {
     wireguard = {
@@ -54,7 +75,7 @@ in
     };
 
     audible-sync = {
-      enable = false; # enable one migration dayrs
+      enable = true; # enable one migration dayrs
       user = "vincent";
       outputDir = "/neo/audiobooks";
       tempDir = "/neo/audiobooks/zz_import"; # Keep AAX files for reuse
@@ -85,7 +106,6 @@ in
         rhea-daily = rheaBackupDefaults // {
           source = rheaBackupDefaults.source // {
             paths = [
-              "/neo/audiobooks"
               "/neo/documents"
               "/neo/ebooks"
             ];
@@ -95,7 +115,6 @@ in
         rhea-hourly = rheaBackupDefaults // {
           source = rheaBackupDefaults.source // {
             paths = [
-              "/neo/music"
               "/neo/pictures"
               "/neo/videos"
             ];
@@ -106,7 +125,7 @@ in
     };
 
     music-playlist-dl = {
-      enable = false; # Enable on music migration day
+      enable = true; # Enable on music migration day
       user = "vincent";
       configFile = "/neo/music/music-playlist-dl.yaml";
       baseDir = "/neo/music/mixes"; # Downloads to /neo/music/mixes/{show}, playlists to /neo/music/playlists
@@ -140,7 +159,7 @@ in
     };
 
     transmission = {
-      enable = false; # Enable on music migration day
+      enable = true; # Enable on music migration day
       package = pkgs.transmission_4;
       openRPCPort = true; # Open firewall for RPC (port 9091)
       home = "/neo/torrents";
@@ -162,15 +181,61 @@ in
         ratio-limit-enabled = true;
       };
     };
+
+    # Samba shares for music and audiobooks
+    samba.settings = {
+      global."server string" = "Aion";
+      music = libx.mkSambaShare {
+        name = "music";
+        path = "/neo/music";
+      };
+      audiobooks = libx.mkSambaShare {
+        name = "audiobooks";
+        path = "/neo/audiobooks";
+      };
+    };
+
+    # NFS server for music and audiobooks
+    nfs.server = {
+      enable = true;
+      # Fixed ports for firewall configuration
+      lockdPort = 4001;
+      mountdPort = 4002;
+      statdPort = 4000;
+      exports = ''
+        /neo/music              192.168.1.0/24(rw,fsid=0,no_subtree_check) 10.100.0.0/24(rw,fsid=0,no_subtree_check)
+        /neo/audiobooks         192.168.1.0/24(rw,fsid=1,no_subtree_check) 10.100.0.0/24(rw,fsid=1,no_subtree_check)
+      '';
+    };
   };
 
   networking = {
     useDHCP = lib.mkDefault true;
-    firewall.allowedTCPPorts = [
-      4533 # Navidrome
-      9000 # Node exporter
-      9091 # Transmission (music torrents)
-    ];
+    firewall = {
+      allowedTCPPorts = [
+        3001 # Homepage dashboard
+        4533 # Navidrome
+        9000 # Node exporter
+        9709 # Lidarr
+        9091 # Transmission (music torrents)
+        # NFS ports
+        111 # rpcbind
+        2049 # NFS daemon
+        4000 # statd
+        4001 # lockd
+        4002 # mountd
+        20048 # mountd (NFSv4)
+      ];
+      allowedUDPPorts = [
+        # NFS ports
+        111 # rpcbind
+        2049 # NFS daemon
+        4000 # statd
+        4001 # lockd
+        4002 # mountd
+        20048 # mountd (NFSv4)
+      ];
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -182,3 +247,4 @@ in
   ];
 
 }
+  a

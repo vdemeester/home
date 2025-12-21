@@ -70,6 +70,12 @@ in
           };
         }
         {
+          "Torrent Clients" = {
+            style = "row";
+            columns = 2;
+          };
+        }
+        {
           Synchronization = {
             style = "row";
             columns = 4;
@@ -196,12 +202,25 @@ in
               statusStyle = "dot";
             };
           }
+        ];
+      }
+      {
+        "Torrent Clients" = [
           {
             Transmission = {
-              description = "Torrent Client";
+              description = "General Downloads";
               href = "https://transmission.sbr.pm";
               icon = "transmission.png";
               ping = "https://transmission.sbr.pm";
+              statusStyle = "dot";
+            };
+          }
+          {
+            "Transmission Music" = {
+              description = "Music Downloads";
+              href = "https://transmission-music.sbr.pm";
+              icon = "transmission.png";
+              ping = "https://transmission-music.sbr.pm";
               statusStyle = "dot";
             };
           }
