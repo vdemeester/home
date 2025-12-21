@@ -64,20 +64,27 @@ in
 
     samba.settings = {
       global."server string" = "Aix";
-      vincent = {
+      vincent = libx.mkSambaShare {
+        name = "vincent";
         path = "/data/share";
-        public = "yes";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        writable = "yes";
-        comment = "Vincent's share";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "vincent";
-        "force group" = "users";
+      };
+      music = libx.mkSambaShare {
+        name = "music";
+        path = "/data/music";
+        readOnly = true;
+      };
+      ebooks = libx.mkSambaShare {
+        name = "ebooks";
+        path = "/data/ebooks";
+        readOnly = true;
+      };
+      audiobooks = libx.mkSambaShare {
+        name = "audiobooks";
+        path = "/data/audiobooks";
+        readOnly = true;
       };
     };
+
     wireguard = {
       enable = true;
       ips = libx.wg-ips globals.machines.aix.net.vpn.ips;
@@ -105,6 +112,10 @@ in
           "/podcasts.sbr.pm/${aixLocalIP}"
           "/audiobookshelf.sbr.pm/${aixLocalIP}"
           "/immich.sbr.pm/${aixLocalIP}"
+          "/transmission.sbr.pm/${aixLocalIP}"
+          "/transmission-music.sbr.pm/${aixLocalIP}"
+          "/t.sbr.pm/${aixLocalIP}"
+          "/tm.sbr.pm/${aixLocalIP}"
         ];
 
         # Use upstream DNS for other queries
@@ -127,13 +138,17 @@ in
         # Map SNI hostname to backend
         # All services go to rhea's Traefik, which routes internally
         map $ssl_preread_server_name $backend {
-          navidrome.sbr.pm      ${rheaVpnIP}:443;
-          music.sbr.pm          ${rheaVpnIP}:443;
-          jellyfin.sbr.pm       ${rheaVpnIP}:443;
-          audiobookshelf.sbr.pm ${rheaVpnIP}:443;
-          podcasts.sbr.pm       ${rheaVpnIP}:443;
-          immich.sbr.pm         ${rheaVpnIP}:443;
-          default               ${rheaVpnIP}:443;
+          navidrome.sbr.pm            ${rheaVpnIP}:443;
+          music.sbr.pm                ${rheaVpnIP}:443;
+          jellyfin.sbr.pm             ${rheaVpnIP}:443;
+          audiobookshelf.sbr.pm       ${rheaVpnIP}:443;
+          podcasts.sbr.pm             ${rheaVpnIP}:443;
+          immich.sbr.pm               ${rheaVpnIP}:443;
+          transmission.sbr.pm         ${rheaVpnIP}:443;
+          transmission-music.sbr.pm   ${rheaVpnIP}:443;
+          t.sbr.pm                    ${rheaVpnIP}:443;
+          tm.sbr.pm                   ${rheaVpnIP}:443;
+          default                    ${rheaVpnIP}:443;
         }
 
         # HTTPS proxy server

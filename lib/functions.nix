@@ -316,6 +316,7 @@ let
     @param path The filesystem path to share
     @param user The user for force user/group (default: "vincent")
     @param group The group for force user/group (default: "users")
+    @param readOnly Make the share read-only (default: false)
     @return Attribute set with complete Samba share configuration
   */
   mkSambaShare =
@@ -324,15 +325,16 @@ let
       path,
       user ? "vincent",
       group ? "users",
+      readOnly ? false,
     }:
     {
       inherit path;
       public = "yes";
       browseable = "yes";
-      "read only" = "no";
+      "read only" = if readOnly then "yes" else "no";
       "guest ok" = "yes";
-      writable = "yes";
-      comment = name;
+      writable = if readOnly then "no" else "yes";
+      comment = if readOnly then "${name} (read-only)" else name;
       "create mask" = "0644";
       "directory mask" = "0755";
       "force user" = user;
