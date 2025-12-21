@@ -17,13 +17,14 @@ let
   shikoku = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH18c6kcorVbK2TwCgdewL6nQf29Cd5BVTeq8nRYUigm"; # ssh-keyscan -q -t ed25519 shikoku.sbr.pm
   # wakasu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrAh07USjRnAdS3mMNGdKee1KumjYDLzgXaiZ5LYi2D"; # ssh-keyscan -q -t ed25519 wakasu.sbr.pm
   kyushu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINd795m+P54GlGJdMaGci9pQ9N942VUz8ri2F14+LWxg"; # ssh-keyscan -q -t ed25519 kyushu.sbr.pm
+  aion = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAXDNi2KtoRU83y/V5OWnMbFWmxwBknPmrNWV4RChE7R"; # ssh-keyscan -q -t ed25519 aion.sbr.pm
   # TODO: kobe
-  # TODO: aion
   # TODO: aix
   desktops = [
     kyushu
   ];
   servers = [
+    aion
     aomi
     athena
     demeter
@@ -93,12 +94,30 @@ in
   "secrets/minica.pem.age".publicKeys = users ++ systems;
   "secrets/shikoku/aria2rpcsecret.age".publicKeys = users ++ [ shikoku ];
   "secrets/rhea/gandi.env.age".publicKeys = users ++ [ rhea ];
-  "secrets/rhea/exportarr-sonarr-apikey.age".publicKeys = users ++ [ rhea ];
-  "secrets/rhea/exportarr-radarr-apikey.age".publicKeys = users ++ [ rhea ];
-  "secrets/rhea/exportarr-lidarr-apikey.age".publicKeys = users ++ [ rhea ];
-  "secrets/rhea/exportarr-prowlarr-apikey.age".publicKeys = users ++ [ rhea ];
-  "secrets/rhea/exportarr-readarr-apikey.age".publicKeys = users ++ [ rhea ];
-  "secrets/rhea/exportarr-bazarr-apikey.age".publicKeys = users ++ [ rhea ];
+  "secrets/rhea/exportarr-sonarr-apikey.age".publicKeys = users ++ [
+    rhea
+    aion
+  ];
+  "secrets/rhea/exportarr-radarr-apikey.age".publicKeys = users ++ [
+    rhea
+    aion
+  ];
+  "secrets/rhea/exportarr-lidarr-apikey.age".publicKeys = users ++ [
+    rhea
+    aion
+  ];
+  "secrets/rhea/exportarr-prowlarr-apikey.age".publicKeys = users ++ [
+    rhea
+    aion
+  ];
+  "secrets/rhea/exportarr-readarr-apikey.age".publicKeys = users ++ [
+    rhea
+    aion
+  ];
+  "secrets/rhea/exportarr-bazarr-apikey.age".publicKeys = users ++ [
+    rhea
+    aion
+  ];
   "secrets/rhea/jellyfin-auto-collections-api-key.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/jellyfin-auto-collections-jellyseerr-password.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/webdav-password.age".publicKeys = users ++ [ rhea ];
