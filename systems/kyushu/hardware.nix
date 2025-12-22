@@ -8,24 +8,33 @@
 
     ../common/hardware/acpid.nix
     ../common/hardware/bluetooth.nix
-    ../common/services/nfs-rhea-mounts.nix
+    ../common/services/nfs-mounts.nix
   ];
 
   hardware = {
     # opengl.extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau intel-ocl intel-media-driver ];
   };
 
-  # NFS mounts from rhea
-  services.nfs-rhea-mounts = {
-    enable = true;
-    folders = [
-      "audiobooks"
-      "downloads"
-      "ebooks"
-      "music"
-      "pictures"
-      "videos"
-    ];
+  # NFS mounts from rhea and aion
+  services.nfs-mounts.hosts = {
+    rhea = {
+      server = "rhea.sbr.pm";
+      folders = [
+        "audiobooks"
+        "downloads"
+        "ebooks"
+        "music"
+        "pictures"
+        "videos"
+      ];
+    };
+    aion = {
+      server = "aion.sbr.pm";
+      folders = [
+        "audiobooks"
+        "music"
+      ];
+    };
   };
 
   # NFS mounts from synodine (NFSv3)

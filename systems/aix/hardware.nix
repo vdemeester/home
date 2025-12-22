@@ -1,6 +1,6 @@
 _: {
   imports = [
-    ../common/services/nfs-rhea-mounts.nix
+    ../common/services/nfs-mounts.nix
   ];
 
   fileSystems = {
@@ -16,16 +16,25 @@ _: {
     };
   };
 
-  # NFS mounts from rhea
-  services.nfs-rhea-mounts = {
-    enable = true;
-    folders = [
-      "audiobooks"
-      "downloads"
-      "ebooks"
-      "music"
-      "pictures"
-      "videos"
-    ];
+  # NFS mounts from rhea and aion
+  services.nfs-mounts.hosts = {
+    rhea = {
+      server = "rhea.sbr.pm";
+      folders = [
+        "audiobooks"
+        "downloads"
+        "ebooks"
+        "music"
+        "pictures"
+        "videos"
+      ];
+    };
+    aion = {
+      server = "aion.sbr.pm";
+      folders = [
+        "audiobooks"
+        "music"
+      ];
+    };
   };
 }

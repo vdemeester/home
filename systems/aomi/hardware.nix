@@ -11,7 +11,7 @@
 
     ../common/hardware/acpid.nix
     # ../common/hardware/bluetooth.nix
-    ../common/services/nfs-rhea-mounts.nix
+    ../common/services/nfs-mounts.nix
   ];
 
   hardware = {
@@ -46,16 +46,25 @@
 
   swapDevices = [ { device = "/dev/disk/by-uuid/24da6a46-cd28-4bff-9220-6f449e3bd8b5"; } ];
 
-  # NFS mounts from rhea
-  services.nfs-rhea-mounts = {
-    enable = true;
-    folders = [
-      "audiobooks"
-      "downloads"
-      "ebooks"
-      "music"
-      "pictures"
-      "videos"
-    ];
+  # NFS mounts from rhea and aion
+  services.nfs-mounts.hosts = {
+    rhea = {
+      server = "rhea.sbr.pm";
+      folders = [
+        "audiobooks"
+        "downloads"
+        "ebooks"
+        "music"
+        "pictures"
+        "videos"
+      ];
+    };
+    aion = {
+      server = "aion.sbr.pm";
+      folders = [
+        "audiobooks"
+        "music"
+      ];
+    };
   };
 }

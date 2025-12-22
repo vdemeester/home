@@ -4,7 +4,7 @@
 {
   imports = [
     ../common/hardware/acpid.nix
-    ../common/services/nfs-rhea-mounts.nix
+    ../common/services/nfs-mounts.nix
   ];
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/92ce650d-873e-41c1-a44e-71c2b9191b9d";
@@ -48,17 +48,26 @@
 
   swapDevices = [ { device = "/dev/disk/by-uuid/9eb067d1-b329-4fbb-ae27-38abfbe7c108"; } ];
 
-  # NFS mounts from rhea
-  services.nfs-rhea-mounts = {
-    enable = true;
-    folders = [
-      "audiobooks"
-      "downloads"
-      "ebooks"
-      "music"
-      "pictures"
-      "videos"
-    ];
+  # NFS mounts from rhea and aion
+  services.nfs-mounts.hosts = {
+    rhea = {
+      server = "rhea.sbr.pm";
+      folders = [
+        "audiobooks"
+        "downloads"
+        "ebooks"
+        "music"
+        "pictures"
+        "videos"
+      ];
+    };
+    aion = {
+      server = "aion.sbr.pm";
+      folders = [
+        "audiobooks"
+        "music"
+      ];
+    };
   };
 
   networking = {
