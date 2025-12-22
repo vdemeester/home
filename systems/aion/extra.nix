@@ -3,6 +3,7 @@
   globals,
   lib,
   pkgs,
+  config,
   ...
 }:
 let
@@ -64,6 +65,18 @@ in
       mode = "440";
       group = "homepage";
     };
+    "restic-aix-password" = {
+      file = ../../secrets/aion/restic-aix-password.age;
+      mode = "400";
+      owner = "vincent";
+      group = "users";
+    };
+    "ntfy-token" = {
+      file = ../../secrets/sakhalin/ntfy-token.age;
+      mode = "400";
+      owner = "vincent";
+      group = "users";
+    };
   };
 
   services = {
@@ -124,6 +137,85 @@ in
       };
     };
 
+    # Restic backup to aix (off-site backup)
+    # Note: Photos are already rsync'd to aix daily via aix's pull job
+    # This backup focuses on critical versioned data only
+    restic.backups.aix-critical = {
+      user = "vincent";
+      repository = "sftp:vincent@aix.sbr.pm:/data/backup/restic/aion";
+
+      # Use password-based encryption
+      passwordFile = config.age.secrets."restic-aix-password".path;
+
+      paths = [
+        "/neo/pictures/photos/backups" # Immich database dumps only (~100MB, versioned)
+        "/home/vincent/desktop/org" # Org files (<1GB)
+        "/home/vincent/desktop/documents" # Personal docs (~113GB)
+        "/var/lib/lidarr" # Lidarr database and config (~4.6GB)
+        "/var/lib/audiobookshelf" # Audiobookshelf database and config (~30MB)
+      ];
+
+      # Backup schedule - weekly for large dataset
+      timerConfig = {
+        OnCalendar = "weekly";
+        Persistent = true;
+        RandomizedDelaySec = "1h"; # Avoid VPN congestion
+      };
+
+      # Retention policy
+      pruneOpts = [
+        "--keep-daily 7" # Last 7 days
+        "--keep-weekly 4" # Last 4 weeks
+        "--keep-monthly 12" # Last 12 months
+        "--keep-yearly 3" # Last 3 years
+      ];
+
+      # Backup options
+      extraBackupArgs = [
+        "--exclude-caches"
+        "--exclude='*.Trash-*'"
+        "--exclude='lost+found'"
+        "--exclude='.sync-conflict-*'" # Syncthing conflicts
+        "--verbose"
+      ];
+
+      # Check repository integrity after backup
+      checkOpts = [
+        "--read-data-subset=5%" # Verify 5% of data each run
+      ];
+
+      # Backup monitoring with ntfy.sh
+      backupPrepareCommand = ''
+        ${pkgs.curl}/bin/curl \
+          -H "Authorization: Bearer $(${pkgs.coreutils}/bin/tr -d '\n' < ${
+            config.age.secrets."ntfy-token".path
+          })" \
+          -H "Title: Restic Backup Starting (aion)" \
+          -d "Starting backup to aix (critical data only)" \
+          https://ntfy.sbr.pm/backups
+      '';
+
+      backupCleanupCommand = ''
+        ${pkgs.curl}/bin/curl \
+          -H "Authorization: Bearer $(${pkgs.coreutils}/bin/tr -d '\n' < ${
+            config.age.secrets."ntfy-token".path
+          })" \
+          -H "Title: Restic Backup Complete (aion)" \
+          -H "Tags: white_check_mark" \
+          -d "Backup to aix completed successfully" \
+          https://ntfy.sbr.pm/backups || \
+        ${pkgs.curl}/bin/curl \
+          -H "Authorization: Bearer $(${pkgs.coreutils}/bin/tr -d '\n' < ${
+            config.age.secrets."ntfy-token".path
+          })" \
+          -H "Title: Restic Backup Failed (aion)" \
+          -H "Tags: x,warning" \
+          -H "Priority: high" \
+          -d "Backup to aix failed! Check logs: journalctl -u restic-backups-aix-critical.service" \
+          https://ntfy.sbr.pm/backups
+      '';
+    };
+
     music-playlist-dl = {
       enable = true; # Enable on music migration day
       user = "vincent";
@@ -158,7 +250,7 @@ in
       };
     };
 
-    transmission = {
+    transmission = serviceDefaults // {
       enable = true; # Enable on music migration day
       package = pkgs.transmission_4;
       openRPCPort = true; # Open firewall for RPC (port 9091)

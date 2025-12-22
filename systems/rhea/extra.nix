@@ -100,6 +100,18 @@ in
       mode = "400";
       owner = "jellyfin-auto-collections";
     };
+    "restic-aix-password" = {
+      file = ../../secrets/rhea/restic-aix-password.age;
+      mode = "400";
+      owner = "vincent";
+      group = "users";
+    };
+    "ntfy-token" = {
+      file = ../../secrets/sakhalin/ntfy-token.age;
+      mode = "400";
+      owner = "vincent";
+      group = "users";
+    };
   }
   // lib.mapAttrs' (
     name: _cfg:
@@ -652,6 +664,88 @@ in
         apiKeyFile = config.age.secrets."exportarr-${name}-apikey".path;
       }
     ) exportarrServices;
+
+    # Restic backup to aix (off-site backup)
+    # Note: Media files are rsync'd (rhea → aion → aix)
+    # This backup focuses on arr service databases and configs
+    restic.backups.aix-critical = {
+      user = "vincent";
+      repository = "sftp:vincent@aix.sbr.pm:/data/backup/restic/rhea";
+
+      # Use password-based encryption
+      passwordFile = config.age.secrets."restic-aix-password".path;
+
+      paths = [
+        "/var/lib/sonarr" # Sonarr database and config (~501MB)
+        "/var/lib/radarr" # Radarr database and config (~729MB)
+        "/var/lib/bazarr" # Bazarr database and config (~25MB)
+        "/var/lib/readarr" # Readarr database and config (~6MB)
+        "/var/lib/prowlarr" # Prowlarr database and config
+        "/var/lib/jellyfin" # Jellyfin database and config
+        # "/var/lib/immich" # Immich app data # Already handled in aion
+        # "/var/lib/traefik" # Traefik acme.json (Let's Encrypt certs)
+      ];
+
+      # Backup schedule - weekly for moderate dataset
+      timerConfig = {
+        OnCalendar = "weekly";
+        Persistent = true;
+        RandomizedDelaySec = "2h"; # Avoid conflict with aion backup
+      };
+
+      # Retention policy
+      pruneOpts = [
+        "--keep-daily 7" # Last 7 days
+        "--keep-weekly 4" # Last 4 weeks
+        "--keep-monthly 12" # Last 12 months
+        "--keep-yearly 3" # Last 3 years
+      ];
+
+      # Backup options
+      extraBackupArgs = [
+        "--exclude-caches"
+        "--exclude='*.Trash-*'"
+        "--exclude='lost+found'"
+        "--exclude='logs.db'" # Exclude log databases (large, not critical)
+        "--verbose"
+      ];
+
+      # Check repository integrity after backup
+      checkOpts = [
+        "--read-data-subset=5%" # Verify 5% of data each run
+      ];
+
+      # Backup monitoring with ntfy.sh
+      backupPrepareCommand = ''
+        ${pkgs.curl}/bin/curl \
+          -H "Authorization: Bearer $(${pkgs.coreutils}/bin/tr -d '\n' < ${
+            config.age.secrets."ntfy-token".path
+          })" \
+          -H "Title: Restic Backup Starting (rhea)" \
+          -d "Starting backup to aix (arr services + configs)" \
+          https://ntfy.sbr.pm/backups
+      '';
+
+      backupCleanupCommand = ''
+        ${pkgs.curl}/bin/curl \
+          -H "Authorization: Bearer $(${pkgs.coreutils}/bin/tr -d '\n' < ${
+            config.age.secrets."ntfy-token".path
+          })" \
+          -H "Title: Restic Backup Complete (rhea)" \
+          -H "Tags: white_check_mark" \
+          -d "Backup to aix completed successfully" \
+          https://ntfy.sbr.pm/backups || \
+        ${pkgs.curl}/bin/curl \
+          -H "Authorization: Bearer $(${pkgs.coreutils}/bin/tr -d '\n' < ${
+            config.age.secrets."ntfy-token".path
+          })" \
+          -H "Title: Restic Backup Failed (rhea)" \
+          -H "Tags: x,warning" \
+          -H "Priority: high" \
+          -d "Backup to aix failed! Check logs: journalctl -u restic-backups-aix-critical.service" \
+          https://ntfy.sbr.pm/backups
+      '';
+    };
   };
 
   security.acme = {

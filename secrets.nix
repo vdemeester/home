@@ -18,13 +18,14 @@ let
   # wakasu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrAh07USjRnAdS3mMNGdKee1KumjYDLzgXaiZ5LYi2D"; # ssh-keyscan -q -t ed25519 wakasu.sbr.pm
   kyushu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINd795m+P54GlGJdMaGci9pQ9N942VUz8ri2F14+LWxg"; # ssh-keyscan -q -t ed25519 kyushu.sbr.pm
   aion = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAXDNi2KtoRU83y/V5OWnMbFWmxwBknPmrNWV4RChE7R"; # ssh-keyscan -q -t ed25519 aion.sbr.pm
+  aix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoUicDySCGETPAgmI0P3UrgZEXXw3zNsyCIylUP0bML"; # ssh-keyscan -q -t ed25519 aix.sbr.pm
   # TODO: kobe
-  # TODO: aix
   desktops = [
     kyushu
   ];
   servers = [
     aion
+    aix
     aomi
     athena
     demeter
@@ -122,7 +123,13 @@ in
   "secrets/rhea/jellyfin-auto-collections-jellyseerr-password.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/webdav-password.age".publicKeys = users ++ [ rhea ];
   "secrets/sakhalin/grafana-admin-password.age".publicKeys = users ++ [ sakhalin ];
-  "secrets/sakhalin/ntfy-token.age".publicKeys = users ++ [ sakhalin ];
+  "secrets/sakhalin/ntfy-token.age".publicKeys = users ++ [
+    sakhalin
+    aion
+    rhea
+  ];
   "secrets/sakhalin/homeassistant-prometheus-token.age".publicKeys = users ++ [ sakhalin ];
   "secrets/demeter/mosquitto-homeassistant-password.age".publicKeys = users ++ [ demeter ];
+  "secrets/aion/restic-aix-password.age".publicKeys = users ++ [ aion ];
+  "secrets/rhea/restic-aix-password.age".publicKeys = users ++ [ rhea ];
 }
