@@ -12,16 +12,20 @@ let
   serviceDefaults = libx.mkServiceDefaults { };
 
   # Samba shares configuration (data-driven approach)
-  sambaShares = [
-    "audiobooks"
-    "ebooks"
-    "backup"
-    "documents"
-    "downloads"
-    "music"
-    "pictures"
-    "videos"
-  ];
+  sambaShares = {
+    audiobooks = {
+      readOnly = true;
+    };
+    ebooks = { };
+    backup = { };
+    documents = { };
+    downloads = { };
+    music = {
+      readOnly = true;
+    };
+    pictures = { };
+    videos = { };
+  };
 
   # Exportarr services configuration (data-driven approach)
   exportarrServices = {
@@ -406,17 +410,16 @@ in
     samba.settings = {
       global."server string" = "Rhea";
     }
-    // builtins.listToAttrs (
-      map (
-        name:
-        lib.nameValuePair name (
-          libx.mkSambaShare {
-            inherit name;
-            path = "/neo/${name}";
-          }
-        )
-      ) sambaShares
-    );
+    // builtins.mapAttrs (
+      name: cfg:
+      libx.mkSambaShare (
+        {
+          inherit name;
+          path = "/neo/${name}";
+        }
+        // cfg
+      )
+    ) sambaShares;
     nfs.server = {
       enable = true;
       # Fixed ports for firewall configuration
@@ -425,12 +428,12 @@ in
       statdPort = 4000;
       exports = ''
                 /neo                      192.168.1.0/24(rw,fsid=0,no_subtree_check) 10.100.0.0/24(rw,fsid=0,no_subtree_check)
-                /neo/audiobooks           192.168.1.0/24(rw,fsid=1,no_subtree_check) 10.100.0.0/24(rw,fsid=1,no_subtree_check)
+                /neo/audiobooks           192.168.1.0/24(ro,fsid=1,no_subtree_check) 10.100.0.0/24(ro,fsid=1,no_subtree_check)
                 /neo/backup               192.168.1.0/24(rw,fsid=2,no_subtree_check) 10.100.0.0/24(rw,fsid=2,no_subtree_check)
                 /neo/documents            192.168.1.0/24(rw,fsid=3,no_subtree_check) 10.100.0.0/24(rw,fsid=3,no_subtree_check)
                 /neo/downloads            192.168.1.0/24(rw,fsid=4,no_subtree_check) 10.100.0.0/24(rw,fsid=4,no_subtree_check)
                 /neo/ebooks               192.168.1.0/24(rw,fsid=5,no_subtree_check) 10.100.0.0/24(rw,fsid=5,no_subtree_check)
-                /neo/music                192.168.1.0/24(rw,fsid=6,no_subtree_check) 10.100.0.0/24(rw,fsid=6,no_subtree_check)
+                /neo/music                192.168.1.0/24(ro,fsid=6,no_subtree_check) 10.100.0.0/24(ro,fsid=6,no_subtree_check)
                 /neo/pictures             192.168.1.0/24(rw,fsid=7,no_subtree_check) 10.100.0.0/24(rw,fsid=7,no_subtree_check)
                 /neo/videos               192.168.1.0/24(rw,fsid=8,no_subtree_check) 10.100.0.0/24(rw,fsid=8,no_subtree_check)
         			'';
