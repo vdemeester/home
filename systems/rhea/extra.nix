@@ -206,7 +206,6 @@ in
             # *arr services - ports from exportarrServices
             sonarr.port = exportarrServices.sonarr.servicePort;
             radarr.port = exportarrServices.radarr.servicePort;
-            lidarr.port = exportarrServices.lidarr.servicePort;
             bazarr.port = exportarrServices.bazarr.servicePort;
             prowlarr.port = exportarrServices.prowlarr.servicePort;
             transmission = {
@@ -214,10 +213,6 @@ in
               altHosts = [ "t.sbr.pm" ];
             };
             immich.port = 2283;
-            audiobookshelf = {
-              port = 13378;
-              altHosts = [ "podcasts.sbr.pm" ];
-            };
             calibre = {
               port = 8083;
               altHosts = [ "books.sbr.pm" ];
@@ -317,6 +312,11 @@ in
                   "transmission-music.sbr.pm"
                   "tm.sbr.pm"
                 ];
+                audiobookshelf = mkRouter "audiobookshelf" [
+                  "audiobookshelf.sbr.pm"
+                  "podcasts.sbr.pm"
+                ];
+                lidarr = mkRouter "lidarr" [ "lidarr.sbr.pm" ];
                 linkwarden = mkRouter "linkwarden" [
                   "linkwarden.sbr.pm"
                   "links.sbr.pm"
@@ -343,6 +343,8 @@ in
                 navidrome = mkService "http://${builtins.head globals.machines.aion.net.ips}:4533";
                 transmission-music = mkService "http://${builtins.head globals.machines.aion.net.ips}:9091";
                 homepage = mkService "http://${builtins.head globals.machines.aion.net.ips}:3001";
+                audiobookshelf = mkService "http://${builtins.head globals.machines.aion.net.ips}:13378";
+                lidarr = mkService "http://${builtins.head globals.machines.aion.net.ips}:8686";
               };
             middlewares =
               syncthingMiddlewares

@@ -216,8 +216,9 @@ in
         3001 # Homepage dashboard
         4533 # Navidrome
         13378 # Audiobookshelf
+        8686 # Lidarr
         9000 # Node exporter
-        9709 # Lidarr
+        9709 # Lidarr exportarr (prometheus)
         9091 # Transmission (music torrents)
         # NFS ports
         111 # rpcbind
