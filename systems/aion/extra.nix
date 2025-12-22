@@ -215,6 +215,7 @@ in
       allowedTCPPorts = [
         3001 # Homepage dashboard
         4533 # Navidrome
+        13378 # Audiobookshelf
         9000 # Node exporter
         9709 # Lidarr
         9091 # Transmission (music torrents)

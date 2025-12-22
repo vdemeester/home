@@ -456,11 +456,6 @@ in
       enable = true;
       openFirewall = true;
     };
-    audiobookshelf = serviceDefaults // {
-      enable = true;
-      port = 13378;
-      host = "0.0.0.0";
-    };
     webdav = {
       enable = true;
       user = "vincent";
@@ -622,10 +617,6 @@ in
       openFirewall = true;
       settings.server.port = exportarrServices.prowlarr.servicePort;
     };
-    lidarr = serviceDefaults // {
-      enable = true;
-      settings.server.port = exportarrServices.lidarr.servicePort;
-    };
 
     # Rsync replica jobs to backup FROM aion (disabled until migration)
     rsync-replica = {
@@ -707,7 +698,6 @@ in
       # Exportarr exporters
       9707 # Sonarr
       9708 # Radarr
-      9709 # Lidarr
       9710 # Prowlarr
       9712 # Bazarr
       # NFS ports
