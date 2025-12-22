@@ -90,13 +90,13 @@ in
     };
 
     audiobookshelf = serviceDefaults // {
-      enable = false;
+      enable = true;
       port = 13378;
       host = "0.0.0.0";
     };
 
     lidarr = serviceDefaults // {
-      enable = false;
+      enable = true;
       settings.server.port = exportarrServices.lidarr.servicePort;
     };
 
