@@ -117,8 +117,8 @@ in
     name: _cfg:
     lib.nameValuePair "exportarr-${name}-apikey" {
       file = ../../secrets/rhea/exportarr-${name}-apikey.age;
-      mode = "440";
-      group = "homepage";
+      mode = "400";
+      owner = "root";
     }
   ) exportarrServices;
 

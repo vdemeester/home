@@ -511,6 +511,7 @@ _: {
     radarr.host = "rhea";
     lidarr.host = "rhea";
     bazarr.host = "rhea";
+    prowlarr.host = "rhea";
     transmission = {
       host = "rhea";
       aliases = [ "t" ];
