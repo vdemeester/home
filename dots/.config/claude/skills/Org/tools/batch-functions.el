@@ -627,6 +627,73 @@ Returns count of archived items."
       (write-region (point-min) (point-max) file))
     count))
 
+;;; Bulk Operations
+
+(defun org-batch-bulk-update-state (file filter-state new-state &optional filter-tags)
+  "Update all tasks matching FILTER-STATE in FILE to NEW-STATE.
+FILTER-TAGS: Optional list of tags to further filter tasks.
+Returns count of updated tasks."
+  (let ((count 0))
+    (with-temp-buffer
+      (insert-file-contents file)
+      (org-mode)
+      (goto-char (point-min))
+      (while (re-search-forward org-heading-regexp nil t)
+        (org-back-to-heading t)
+        (let ((todo (org-get-todo-state))
+              (tags (org-get-tags)))
+          (when (and todo
+                     (string= todo filter-state)
+                     ;; Tag filter (match any)
+                     (or (null filter-tags)
+                         (and tags (seq-intersection filter-tags tags))))
+            (let ((org-log-done (if (string= new-state "DONE") 'time nil)))
+              (org-todo new-state))
+            (setq count (1+ count))))
+        (forward-line 1))
+      (write-region (point-min) (point-max) file))
+    count))
+
+(defun org-batch-bulk-add-tags (file filter-state new-tags)
+  "Add NEW-TAGS to all tasks with FILTER-STATE in FILE.
+Returns count of updated tasks."
+  (let ((count 0))
+    (with-temp-buffer
+      (insert-file-contents file)
+      (org-mode)
+      (goto-char (point-min))
+      (while (re-search-forward org-heading-regexp nil t)
+        (org-back-to-heading t)
+        (let ((todo (org-get-todo-state)))
+          (when (and todo (string= todo filter-state))
+            (let* ((current-tags (org-get-tags))
+                   (combined-tags (delete-dups (append current-tags new-tags))))
+              (org-set-tags combined-tags))
+            (setq count (1+ count))))
+        (forward-line 1))
+      (write-region (point-min) (point-max) file))
+    count))
+
+(defun org-batch-bulk-set-priority (file filter-state priority)
+  "Set PRIORITY for all tasks with FILTER-STATE in FILE.
+Returns count of updated tasks."
+  (let ((count 0)
+        (priority-cookie (format " [#%d]" priority)))
+    (with-temp-buffer
+      (insert-file-contents file)
+      (org-mode)
+      (goto-char (point-min))
+      (while (re-search-forward (concat "^\\(\\*+ " (regexp-quote filter-state) "\\) \\(?:\\[#[1-5]\\] \\)?") nil t)
+        (goto-char (match-end 1))
+        ;; Remove existing priority if present
+        (when (looking-at " \\[#[1-5]\\]")
+          (delete-region (point) (+ (point) 5)))
+        ;; Insert new priority
+        (insert priority-cookie)
+        (setq count (1+ count)))
+      (write-region (point-min) (point-max) file))
+    count))
+
 ;;; Output Functions
 
 (defun org-batch-output-json (success data &optional error)

@@ -171,6 +171,22 @@ PROPERTY OPERATIONS:
   list-properties <file> <heading>
       List all properties of a heading
 
+BULK OPERATIONS:
+  bulk-update-state <file> <filter-state> <new-state> [filter-tags]
+      Update all tasks matching filter-state to new-state
+      Optional: filter by tags (comma-separated)
+      Example: org-manager bulk-update-state todos.org TODO DONE work,urgent
+
+  bulk-add-tags <file> <filter-state> <tags>
+      Add tags to all tasks with filter-state
+      Tags: comma-separated list
+      Example: org-manager bulk-add-tags todos.org NEXT urgent,review
+
+  bulk-set-priority <file> <filter-state> <priority>
+      Set priority for all tasks with filter-state
+      Priority: 1-5 (1=highest, 5=lowest)
+      Example: org-manager bulk-set-priority todos.org TODO 1
+
 DENOTE COMMANDS:
   denote-create <title> <tags> [--signature=SIG] [--category=CAT] [--directory=DIR] [--content=FILE]
       Create a denote-formatted note with proper naming and frontmatter
@@ -731,6 +747,70 @@ cmd_list_properties() {
     run_elisp "$elisp"
 }
 
+# Bulk operations
+
+cmd_bulk_update_state() {
+    local file="$1"
+    local filter_state="$2"
+    local new_state="$3"
+    local filter_tags="$4"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$filter_state" ]] || error "Filter state required (TODO, NEXT, etc.)"
+    [[ -n "$new_state" ]] || error "New state required (DONE, NEXT, etc.)"
+
+    local tags_list="nil"
+    if [[ -n "$filter_tags" ]]; then
+        tags_list="'($(echo "$filter_tags" | sed 's/,/ /g' | sed 's/\([^ ]*\)/"\1"/g'))"
+    fi
+
+    local elisp="(progn
+      (let ((count (org-batch-bulk-update-state \"$file\" \"$filter_state\" \"$new_state\" $tags_list)))
+        (org-batch-output-json t (list :updated count :filter_state \"$filter_state\" :new_state \"$new_state\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_bulk_add_tags() {
+    local file="$1"
+    local filter_state="$2"
+    local tags="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$filter_state" ]] || error "Filter state required (TODO, NEXT, etc.)"
+    [[ -n "$tags" ]] || error "Tags required (comma-separated)"
+
+    local tags_list
+    tags_list="'($(echo "$tags" | sed 's/,/ /g' | sed 's/\([^ ]*\)/"\1"/g'))"
+
+    local elisp="(progn
+      (let ((count (org-batch-bulk-add-tags \"$file\" \"$filter_state\" $tags_list)))
+        (org-batch-output-json t (list :updated count :filter_state \"$filter_state\" :tags_added t)))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_bulk_set_priority() {
+    local file="$1"
+    local filter_state="$2"
+    local priority="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$filter_state" ]] || error "Filter state required (TODO, NEXT, etc.)"
+    [[ -n "$priority" ]] || error "Priority required (1-5)"
+
+    [[ "$priority" =~ ^[1-5]$ ]] || error "Priority must be 1-5"
+
+    local elisp="(progn
+      (let ((count (org-batch-bulk-set-priority \"$file\" \"$filter_state\" $priority)))
+        (org-batch-output-json t (list :updated count :filter_state \"$filter_state\" :priority $priority)))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
 # Denote commands
 
 cmd_denote_create() {
@@ -955,6 +1035,15 @@ main() {
             ;;
         list-properties)
             cmd_list_properties "$@"
+            ;;
+        bulk-update-state)
+            cmd_bulk_update_state "$@"
+            ;;
+        bulk-add-tags)
+            cmd_bulk_add_tags "$@"
+            ;;
+        bulk-set-priority)
+            cmd_bulk_set_priority "$@"
             ;;
         denote-create)
             cmd_denote_create "$@"

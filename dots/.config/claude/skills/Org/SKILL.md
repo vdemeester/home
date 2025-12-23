@@ -82,6 +82,21 @@ Provide reliable, programmatic access to org-mode files using Emacs batch mode a
 ./tools/org-manager set-property ~/desktop/org/todos.org "Task name" "STATUS" "In Progress"
 ```
 
+#### Bulk Operations
+```bash
+# Update all tasks matching a state to a new state
+./tools/org-manager bulk-update-state ~/desktop/org/todos.org "TODO" "DONE"
+
+# Update with tag filter (only tasks with specific tags)
+./tools/org-manager bulk-update-state ~/desktop/org/todos.org "TODO" "DONE" "work,urgent"
+
+# Add tags to all tasks with a specific state
+./tools/org-manager bulk-add-tags ~/desktop/org/todos.org "NEXT" "urgent,review"
+
+# Set priority for all tasks with a specific state
+./tools/org-manager bulk-set-priority ~/desktop/org/todos.org "TODO" 1
+```
+
 #### Denote Operations
 ```bash
 # Create denote-formatted note

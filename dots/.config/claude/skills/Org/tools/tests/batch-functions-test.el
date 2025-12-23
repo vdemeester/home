@@ -322,5 +322,69 @@ Priority mapping: '1'=1, '2'=2, '3'=3, '4'=4, '5'=5."
          (should value)
          (should (string= value "test-value")))))))
 
+;;; Tests for Bulk Operations
+
+(ert-deftest test-org-batch-bulk-update-state ()
+  "Test bulk updating state of multiple tasks."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Task 1\n** TODO Task 2 :urgent:\n** NEXT Task 3\n"
+   (lambda (temp-file)
+     (let ((count (org-batch-bulk-update-state temp-file "TODO" "DONE")))
+       (should (= count 2))
+       ;; Verify states were updated
+       (let ((todos (org-batch-list-todos temp-file)))
+         (let ((task1 (batch-test--find-item-by-heading todos "Task 1"))
+               (task2 (batch-test--find-item-by-heading todos "Task 2")))
+           (should (string= (alist-get 'todo task1) "DONE"))
+           (should (string= (alist-get 'todo task2) "DONE"))))))))
+
+(ert-deftest test-org-batch-bulk-update-state-with-tag-filter ()
+  "Test bulk updating state with tag filter."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Task 1 :urgent:\n** TODO Task 2\n** TODO Task 3 :urgent:\n"
+   (lambda (temp-file)
+     (let ((count (org-batch-bulk-update-state temp-file "TODO" "NEXT" '("urgent"))))
+       (should (= count 2))
+       ;; Verify only urgent tasks were updated
+       (let ((todos (org-batch-list-todos temp-file)))
+         (let ((task1 (batch-test--find-item-by-heading todos "Task 1"))
+               (task2 (batch-test--find-item-by-heading todos "Task 2"))
+               (task3 (batch-test--find-item-by-heading todos "Task 3")))
+           (should (string= (alist-get 'todo task1) "NEXT"))
+           (should (string= (alist-get 'todo task2) "TODO"))
+           (should (string= (alist-get 'todo task3) "NEXT"))))))))
+
+(ert-deftest test-org-batch-bulk-add-tags ()
+  "Test bulk adding tags to multiple tasks."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Task 1\n** TODO Task 2\n** NEXT Task 3\n"
+   (lambda (temp-file)
+     (let ((count (org-batch-bulk-add-tags temp-file "TODO" '("review" "urgent"))))
+       (should (= count 2))
+       ;; Verify tags were added
+       (let ((todos (org-batch-list-todos temp-file)))
+         (let ((task1 (batch-test--find-item-by-heading todos "Task 1"))
+               (task2 (batch-test--find-item-by-heading todos "Task 2")))
+           (should (member "review" (alist-get 'tags task1)))
+           (should (member "urgent" (alist-get 'tags task1)))
+           (should (member "review" (alist-get 'tags task2)))
+           (should (member "urgent" (alist-get 'tags task2)))))))))
+
+(ert-deftest test-org-batch-bulk-set-priority ()
+  "Test bulk setting priority for multiple tasks."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Task 1\n** TODO Task 2\n** NEXT Task 3\n"
+   (lambda (temp-file)
+     (let ((count (org-batch-bulk-set-priority temp-file "TODO" 1)))
+       (should (= count 2))
+       ;; Verify priorities were set
+       (let ((todos (org-batch-list-todos temp-file)))
+         (let ((task1 (batch-test--find-item-by-heading todos "Task 1"))
+               (task2 (batch-test--find-item-by-heading todos "Task 2"))
+               (task3 (batch-test--find-item-by-heading todos "Task 3")))
+           (should (= (alist-get 'priority task1) 1))
+           (should (= (alist-get 'priority task2) 1))
+           (should-not (alist-get 'priority task3))))))))
+
 (provide 'batch-functions-test)
 ;;; batch-functions-test.el ends here
