@@ -209,7 +209,8 @@
 ;;; Tests for Utility Functions
 
 (ert-deftest test-org-batch--priority-conversion ()
-  "Test priority number/character conversion."
+  "Test priority number/character conversion.
+Priority mapping: '1'=1, '2'=2, '3'=3, '4'=4, '5'=5."
   (should (= (org-batch--priority-to-number ?1) 1))
   (should (= (org-batch--priority-to-number ?5) 5))
   (should (= (org-batch--number-to-priority 1) ?1))
@@ -243,39 +244,83 @@
     (should-not result)))
 
 (ert-deftest test-org-batch-add-tags ()
-  "Test adding tags to existing TODO (to be implemented)."
-  :expected-result :failed
-  (should nil))
+  "Test adding tags to existing TODO."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Test Task :existing:\n"
+   (lambda (temp-file)
+     (let ((result (org-batch-add-tags temp-file "Test Task" '("new" "tags"))))
+       (should result)
+       ;; Verify tags were added
+       (let ((todos (org-batch-list-todos temp-file)))
+         (let ((task (batch-test--find-item-by-heading todos "Test Task")))
+           (should task)
+           (should (member "existing" (alist-get 'tags task)))
+           (should (member "new" (alist-get 'tags task)))
+           (should (member "tags" (alist-get 'tags task)))))))))
 
 (ert-deftest test-org-batch-remove-tags ()
-  "Test removing tags from TODO (to be implemented)."
-  :expected-result :failed
-  (should nil))
+  "Test removing tags from TODO."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Test Task :tag1:tag2:tag3:\n"
+   (lambda (temp-file)
+     (let ((result (org-batch-remove-tags temp-file "Test Task" '("tag2"))))
+       (should result)
+       ;; Verify tag was removed
+       (let ((todos (org-batch-list-todos temp-file)))
+         (let ((task (batch-test--find-item-by-heading todos "Test Task")))
+           (should task)
+           (should (member "tag1" (alist-get 'tags task)))
+           (should-not (member "tag2" (alist-get 'tags task)))
+           (should (member "tag3" (alist-get 'tags task)))))))))
 
 (ert-deftest test-org-batch-list-all-tags ()
-  "Test listing all unique tags (to be implemented)."
-  :expected-result :failed
-  (should nil))
+  "Test listing all unique tags."
+  (let ((tags (org-batch-list-all-tags batch-test-fixture-file)))
+    (should (> (length tags) 0))
+    (should (member "work" tags))
+    (should (member "code" tags))
+    (should (member "personal" tags))
+    ;; Tags should be sorted and unique
+    (should (equal tags (sort (delete-dups tags) #'string<)))))
 
 (ert-deftest test-org-batch-get-overdue ()
-  "Test getting overdue tasks (to be implemented)."
-  :expected-result :failed
-  (should nil))
+  "Test getting overdue tasks."
+  ;; Create a file with overdue task
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Overdue Task\nDEADLINE: <2020-01-01>\n"
+   (lambda (temp-file)
+     (let ((overdue (org-batch-get-overdue temp-file)))
+       (should (> (batch-test--count-items overdue) 0))
+       (should (batch-test--find-item-by-heading overdue "Overdue Task"))))))
 
 (ert-deftest test-org-batch-get-upcoming ()
-  "Test getting upcoming tasks (to be implemented)."
-  :expected-result :failed
-  (should nil))
+  "Test getting upcoming tasks."
+  ;; Create a file with upcoming task
+  (let ((future-date (format-time-string "%Y-%m-%d" (time-add (current-time) (days-to-time 3)))))
+    (batch-test--with-temp-org-file
+     (format "* Work\n** TODO Upcoming Task\nSCHEDULED: <%s>\n" future-date)
+     (lambda (temp-file)
+       (let ((upcoming (org-batch-get-upcoming temp-file 7)))
+         (should (> (batch-test--count-items upcoming) 0))
+         (should (batch-test--find-item-by-heading upcoming "Upcoming Task")))))))
 
 (ert-deftest test-org-batch-get-property ()
-  "Test getting property value (to be implemented)."
-  :expected-result :failed
-  (should nil))
+  "Test getting property value."
+  (let ((prop-value (org-batch-get-property batch-test-fixture-file "Review PR #123" "PR_URL")))
+    (should prop-value)
+    (should (string-match "github.com" prop-value))))
 
 (ert-deftest test-org-batch-set-property ()
-  "Test setting property value (to be implemented)."
-  :expected-result :failed
-  (should nil))
+  "Test setting property value."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Test Task\n:PROPERTIES:\n:CREATED: [2025-12-23]\n:END:\n"
+   (lambda (temp-file)
+     (let ((result (org-batch-set-property temp-file "Test Task" "CUSTOM_PROP" "test-value")))
+       (should result)
+       ;; Verify property was set
+       (let ((value (org-batch-get-property temp-file "Test Task" "CUSTOM_PROP")))
+         (should value)
+         (should (string= value "test-value")))))))
 
 (provide 'batch-functions-test)
 ;;; batch-functions-test.el ends here

@@ -23,9 +23,9 @@
 (setq org-todo-keywords
       '((sequence "STRT(s)" "NEXT(n)" "TODO(t)" "WAIT(w)" "|" "DONE(d!)" "CANX(c@/!)")))
 
-(setq org-priority-highest 1
-      org-priority-lowest 5
-      org-priority-default 4)
+(setq org-priority-highest ?1  ; Highest priority (character '1' = ASCII 49)
+      org-priority-lowest ?5   ; Lowest priority (character '5' = ASCII 53)
+      org-priority-default ?4) ; Default priority (character '4' = ASCII 52)
 
 ;; Silence interactive prompts
 (setq org-use-fast-todo-selection nil
@@ -40,14 +40,16 @@
     (org-element-property :raw-value timestamp)))
 
 (defun org-batch--priority-to-number (priority-char)
-  "Convert PRIORITY-CHAR to number (1-5)."
+  "Convert PRIORITY-CHAR to number (1-5).
+Priority '1'=1, '2'=2, '3'=3, '4'=4, '5'=5."
   (when priority-char
-    (- priority-char 48)))  ; ASCII '1' = 49
+    (- priority-char 48)))  ; '1'(49) → 1, '2'(50) → 2, ..., '5'(53) → 5
 
 (defun org-batch--number-to-priority (num)
-  "Convert NUM (1-5) to priority character."
+  "Convert NUM (1-5) to priority character.
+1='1', 2='2', 3='3', 4='4', 5='5'."
   (when (and num (>= num 1) (<= num 5))
-    (+ num 48)))  ; Convert to ASCII
+    (+ num 48)))  ; 1 → '1'(49), 2 → '2'(50), ..., 5 → '5'(53)
 
 (defun org-batch--element-to-alist (element)
   "Convert org ELEMENT to JSON-friendly alist."
@@ -391,12 +393,16 @@ Returns t on success, nil if heading not found."
     (org-mode)
     (goto-char (point-min))
     (let ((found nil)
-          (heading-regexp (concat "^\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\) \\(?:\\[#[1-5]\\] \\)?"
+          (heading-regexp (concat "^\\(\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\)\\) \\(?:\\[#[1-5]\\] \\)?"
                                   (regexp-quote heading)))
-          (priority-char (org-batch--number-to-priority priority)))
-      (when (and priority-char (re-search-forward heading-regexp nil t))
-        (org-back-to-heading)
-        (org-priority priority-char)
+          (priority-cookie (format " [#%d]" priority)))
+      (when (re-search-forward heading-regexp nil t)
+        (goto-char (match-end 1))  ; Move to end of TODO keyword
+        ;; Remove existing priority if present
+        (when (looking-at " \\[#[1-5]\\]")
+          (delete-region (point) (+ (point) 5)))
+        ;; Insert new priority (note: priority-cookie already has leading space)
+        (insert priority-cookie)
         (write-region (point-min) (point-max) file)
         (setq found t))
       found)))
