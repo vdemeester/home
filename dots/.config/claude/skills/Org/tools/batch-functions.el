@@ -774,6 +774,135 @@ Returns minutes as integer."
           (setq total-minutes (get-text-property (point) :org-clock-minutes))))
       (or total-minutes 0))))
 
+;;; Statistics & Analytics
+
+(defun org-batch-get-statistics (file)
+  "Get comprehensive statistics about TODOs in FILE.
+Returns alist with counts, priorities, tags, and time data."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (let ((total 0)
+          (by-state '())
+          (by-priority '())
+          (by-tag '())
+          (scheduled-count 0)
+          (deadline-count 0)
+          (overdue-count 0))
+      ;; Count all TODOs and gather stats
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (hl)
+          (let ((todo (org-element-property :todo-keyword hl))
+                (priority (org-batch--priority-to-number
+                          (org-element-property :priority hl)))
+                (tags (org-element-property :tags hl))
+                (scheduled (org-element-property :scheduled hl))
+                (deadline (org-element-property :deadline hl)))
+            (when todo
+              (setq total (1+ total))
+              ;; Count by state
+              (let ((state-sym (intern todo)))
+                (if (assoc state-sym by-state)
+                    (setcdr (assoc state-sym by-state)
+                           (1+ (cdr (assoc state-sym by-state))))
+                  (push (cons state-sym 1) by-state)))
+              ;; Count by priority
+              (when priority
+                (if (assoc priority by-priority)
+                    (setcdr (assoc priority by-priority)
+                           (1+ (cdr (assoc priority by-priority))))
+                  (push (cons priority 1) by-priority)))
+              ;; Count by tag
+              (dolist (tag tags)
+                (if (assoc tag by-tag #'string=)
+                    (setcdr (assoc tag by-tag #'string=)
+                           (1+ (cdr (assoc tag by-tag #'string=))))
+                  (push (cons tag 1) by-tag)))
+              ;; Count scheduled/deadline
+              (when scheduled (setq scheduled-count (1+ scheduled-count)))
+              (when deadline (setq deadline-count (1+ deadline-count)))
+              ;; Count overdue
+              (when (and deadline (not (member todo '("DONE" "CANX"))))
+                (let ((deadline-date (org-element-property :raw-value deadline))
+                      (today (format-time-string "%Y-%m-%d")))
+                  (when (string-match "\\([0-9]\\{4\\}\\)-\\([0-9]\\{2\\}\\)-\\([0-9]\\{2\\}\\)" deadline-date)
+                    (let ((dl-str (match-string 0 deadline-date)))
+                      (when (string< dl-str today)
+                        (setq overdue-count (1+ overdue-count)))))))))))
+      ;; Return comprehensive stats
+      `((total . ,total)
+        (by_state . ,by-state)
+        (by_priority . ,by-priority)
+        (by_tag . ,by-tag)
+        (scheduled_count . ,scheduled-count)
+        (deadline_count . ,deadline-count)
+        (overdue_count . ,overdue-count)))))
+
+(defun org-batch-get-priority-distribution (file)
+  "Get distribution of tasks by priority in FILE.
+Returns alist mapping priority (1-5) to count."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (let ((distribution '((1 . 0) (2 . 0) (3 . 0) (4 . 0) (5 . 0))))
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (hl)
+          (let ((todo (org-element-property :todo-keyword hl))
+                (priority (org-batch--priority-to-number
+                          (org-element-property :priority hl))))
+            (when (and todo priority)
+              (let ((entry (assoc priority distribution)))
+                (when entry
+                  (setcdr entry (1+ (cdr entry)))))))))
+      distribution)))
+
+(defun org-batch-get-tag-statistics (file)
+  "Get statistics about tag usage in FILE.
+Returns sorted list of (tag . count) pairs."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (let ((tag-counts '()))
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (hl)
+          (let ((tags (org-element-property :tags hl)))
+            (dolist (tag tags)
+              (if (assoc tag tag-counts #'string=)
+                  (setcdr (assoc tag tag-counts #'string=)
+                         (1+ (cdr (assoc tag tag-counts #'string=))))
+                (push (cons tag 1) tag-counts))))))
+      ;; Sort by count descending
+      (sort tag-counts (lambda (a b) (> (cdr a) (cdr b)))))))
+
+;;; Export & Reporting
+
+(defun org-batch-export-csv (file output-file)
+  "Export TODOs from FILE to CSV format in OUTPUT-FILE.
+Returns t on success."
+  (let ((todos (org-batch-list-todos file)))
+    (with-temp-file output-file
+      ;; CSV header
+      (insert "heading,state,priority,tags,level,scheduled,deadline\n")
+      ;; CSV rows
+      (dolist (todo todos)
+        (insert (format "\"%s\",\"%s\",%s,\"%s\",%s,\"%s\",\"%s\"\n"
+                       (or (alist-get 'heading todo) "")
+                       (or (alist-get 'todo todo) "")
+                       (or (alist-get 'priority todo) "")
+                       (or (string-join (alist-get 'tags todo) ";") "")
+                       (or (alist-get 'level todo) "")
+                       (or (alist-get 'scheduled todo) "")
+                       (or (alist-get 'deadline todo) "")))))
+    t))
+
+(defun org-batch-export-json (file output-file)
+  "Export TODOs from FILE to JSON format in OUTPUT-FILE.
+Returns t on success."
+  (let ((todos (org-batch-list-todos file)))
+    (with-temp-file output-file
+      (insert (json-encode todos)))
+    t))
+
 ;;; Output Functions
 
 (defun org-batch-output-json (success data &optional error)

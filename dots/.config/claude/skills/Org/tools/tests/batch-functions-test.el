@@ -439,5 +439,76 @@ Priority mapping: '1'=1, '2'=2, '3'=3, '4'=4, '5'=5."
        (should (> minutes 0))
        (should (= minutes 90))))))  ; 1:30 = 90 minutes
 
+;;; Tests for Statistics & Analytics
+
+(ert-deftest test-org-batch-get-statistics ()
+  "Test getting comprehensive statistics."
+  (let ((stats (org-batch-get-statistics batch-test-fixture-file)))
+    (should stats)
+    (should (> (alist-get 'total stats) 0))
+    (should (alist-get 'by_state stats))
+    (should (alist-get 'by_priority stats))
+    (should (alist-get 'by_tag stats))
+    ;; Verify we have state counts
+    (let ((by-state (alist-get 'by_state stats)))
+      (should (assoc 'TODO by-state))
+      (should (assoc 'NEXT by-state)))))
+
+(ert-deftest test-org-batch-get-priority-distribution ()
+  "Test getting priority distribution."
+  (let ((distribution (org-batch-get-priority-distribution batch-test-fixture-file)))
+    (should distribution)
+    ;; Should have entries for priorities 1-5
+    (should (assoc 1 distribution))
+    (should (assoc 2 distribution))
+    (should (assoc 3 distribution))
+    (should (assoc 4 distribution))
+    (should (assoc 5 distribution))))
+
+(ert-deftest test-org-batch-get-tag-statistics ()
+  "Test getting tag statistics."
+  (let ((tag-stats (org-batch-get-tag-statistics batch-test-fixture-file)))
+    (should tag-stats)
+    (should (> (length tag-stats) 0))
+    ;; Should be sorted by count (descending)
+    (when (>= (length tag-stats) 2)
+      (should (>= (cdr (nth 0 tag-stats)) (cdr (nth 1 tag-stats)))))))
+
+;;; Tests for Export & Reporting
+
+(ert-deftest test-org-batch-export-csv ()
+  "Test exporting TODOs to CSV."
+  (let ((output-file (make-temp-file "org-export-" nil ".csv")))
+    (unwind-protect
+        (progn
+          (should (org-batch-export-csv batch-test-fixture-file output-file))
+          ;; Verify file was created
+          (should (file-exists-p output-file))
+          ;; Verify it has content
+          (with-temp-buffer
+            (insert-file-contents output-file)
+            (should (> (buffer-size) 0))
+            ;; Should have CSV header
+            (should (string-match-p "heading,state,priority" (buffer-string)))))
+      (when (file-exists-p output-file)
+        (delete-file output-file)))))
+
+(ert-deftest test-org-batch-export-json ()
+  "Test exporting TODOs to JSON."
+  (let ((output-file (make-temp-file "org-export-" nil ".json")))
+    (unwind-protect
+        (progn
+          (should (org-batch-export-json batch-test-fixture-file output-file))
+          ;; Verify file was created
+          (should (file-exists-p output-file))
+          ;; Verify it has valid JSON
+          (with-temp-buffer
+            (insert-file-contents output-file)
+            (should (> (buffer-size) 0))
+            ;; Should be valid JSON (starts with [)
+            (should (string-match-p "^\\[" (buffer-string)))))
+      (when (file-exists-p output-file)
+        (delete-file output-file)))))
+
 (provide 'batch-functions-test)
 ;;; batch-functions-test.el ends here

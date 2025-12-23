@@ -204,6 +204,28 @@ TIME TRACKING:
       Get total time spent on a task (in minutes)
       Sums all CLOCK entries for the task
 
+STATISTICS & ANALYTICS:
+  get-statistics <file>
+      Get comprehensive statistics about all TODOs
+      Returns counts by state, priority, tags, scheduled, overdue
+
+  get-priority-distribution <file>
+      Get distribution of tasks across priorities (1-5)
+      Shows how many tasks at each priority level
+
+  get-tag-statistics <file>
+      Get tag usage statistics
+      Returns list of tags with usage counts, sorted by frequency
+
+EXPORT & REPORTING:
+  export-csv <file> <output-file>
+      Export all TODOs to CSV format
+      Creates spreadsheet-compatible file
+
+  export-json <file> <output-file>
+      Export all TODOs to JSON format
+      Creates machine-readable structured export
+
 DENOTE COMMANDS:
   denote-create <title> <tags> [--signature=SIG] [--category=CAT] [--directory=DIR] [--content=FILE]
       Create a denote-formatted note with proper naming and frontmatter
@@ -892,6 +914,83 @@ cmd_get_clocked_time() {
     run_elisp "$elisp"
 }
 
+# Statistics & Analytics commands
+
+cmd_get_statistics() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((stats (org-batch-get-statistics \"$file\")))
+        (org-batch-output-json t stats))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_get_priority_distribution() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((distribution (org-batch-get-priority-distribution \"$file\")))
+        (org-batch-output-json t (list :distribution distribution)))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_get_tag_statistics() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((stats (org-batch-get-tag-statistics \"$file\")))
+        (org-batch-output-json t (list :tag_stats stats)))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+# Export commands
+
+cmd_export_csv() {
+    local file="$1"
+    local output="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$output" ]] || error "Output file required"
+
+    local elisp="(progn
+      (let ((result (org-batch-export-csv \"$file\" \"$output\")))
+        (if result
+            (org-batch-output-json t (list :exported t :output \"$output\"))
+          (org-batch-output-error \"Export failed\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_export_json() {
+    local file="$1"
+    local output="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$output" ]] || error "Output file required"
+
+    local elisp="(progn
+      (let ((result (org-batch-export-json \"$file\" \"$output\")))
+        (if result
+            (org-batch-output-json t (list :exported t :output \"$output\"))
+          (org-batch-output-error \"Export failed\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
 # Denote commands
 
 cmd_denote_create() {
@@ -1137,6 +1236,21 @@ main() {
             ;;
         get-clocked-time)
             cmd_get_clocked_time "$@"
+            ;;
+        get-statistics)
+            cmd_get_statistics "$@"
+            ;;
+        get-priority-distribution)
+            cmd_get_priority_distribution "$@"
+            ;;
+        get-tag-statistics)
+            cmd_get_tag_statistics "$@"
+            ;;
+        export-csv)
+            cmd_export_csv "$@"
+            ;;
+        export-json)
+            cmd_export_json "$@"
             ;;
         denote-create)
             cmd_denote_create "$@"

@@ -112,6 +112,27 @@ Provide reliable, programmatic access to org-mode files using Emacs batch mode a
 ./tools/org-manager get-clocked-time ~/desktop/org/todos.org "Implement feature X"
 ```
 
+#### Statistics & Analytics
+```bash
+# Get comprehensive statistics (counts by state, priority, tags, overdue, etc.)
+./tools/org-manager get-statistics ~/desktop/org/todos.org
+
+# Get priority distribution across all tasks
+./tools/org-manager get-priority-distribution ~/desktop/org/todos.org
+
+# Get tag usage statistics (sorted by frequency)
+./tools/org-manager get-tag-statistics ~/desktop/org/todos.org
+```
+
+#### Export & Reporting
+```bash
+# Export to CSV for spreadsheet analysis
+./tools/org-manager export-csv ~/desktop/org/todos.org /tmp/todos.csv
+
+# Export to JSON for programmatic processing
+./tools/org-manager export-json ~/desktop/org/todos.org /tmp/todos.json
+```
+
 #### Denote Operations
 ```bash
 # Create denote-formatted note
