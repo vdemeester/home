@@ -28,6 +28,55 @@
       "shift+up" = "neighboring_window up";
       "shift+down" = "neighboring_window down";
     };
+
+    # Bépo-optimized tmux conditional bindings (Alt-based, context-aware)
+    # These only activate when tmux is running (title contains "tmux")
+    # Using Alt key to avoid conflicts with Niri window manager
+    # Compatible with Emacs workflow (using Ctrl-B prefix instead of Ctrl-Space)
+    extraConfig = ''
+      # ============================================================================
+      # BÉPO-OPTIMIZED KITTY TMUX BINDINGS (Alt-based, Emacs-compatible)
+      # ============================================================================
+      # Escape sequence: \x02 = Ctrl-B (default tmux prefix, Emacs-friendly)
+
+      # Pane navigation - Alt+CTSR (bépo home row)
+      map --when-focus-on title:tmux alt+c send_text all \x02c
+      map --when-focus-on title:tmux alt+t send_text all \x02t
+      map --when-focus-on title:tmux alt+s send_text all \x02s
+      map --when-focus-on title:tmux alt+r send_text all \x02r
+
+      # Pane resizing - Alt+Shift+CTSR
+      map --when-focus-on title:tmux alt+shift+c send_text all \x02C
+      map --when-focus-on title:tmux alt+shift+t send_text all \x02T
+      map --when-focus-on title:tmux alt+shift+s send_text all \x02S
+      map --when-focus-on title:tmux alt+shift+r send_text all \x02R
+
+      # Window navigation - Alt+N/P (next/prev)
+      map --when-focus-on title:tmux alt+n send_text all \x02p
+      map --when-focus-on title:tmux alt+p send_text all \x02é
+
+      # Move windows - Alt+Shift+N/P
+      map --when-focus-on title:tmux alt+shift+n send_text all \x02P
+      map --when-focus-on title:tmux alt+shift+p send_text all \x02É
+
+      # Window/Pane creation & management
+      map --when-focus-on title:tmux alt+enter send_text all \x02b
+      map --when-focus-on title:tmux alt+w send_text all \x02w
+      map --when-focus-on title:tmux alt+x send_text all \x02x
+
+      # Splits
+      map --when-focus-on title:tmux alt+minus send_text all \x02-
+      map --when-focus-on title:tmux alt+backslash send_text all \x02|
+
+      # Other actions
+      map --when-focus-on title:tmux alt+z send_text all \x02z
+      map --when-focus-on title:tmux alt+[ send_text all \x02[
+      map --when-focus-on title:tmux alt+] send_text all \x02]
+      map --when-focus-on title:tmux alt+a send_text all \x02a
+      map --when-focus-on title:tmux alt+d send_text all \x02d
+      map --when-focus-on title:tmux alt+shift+r send_text all \x02R
+    '';
+
     # Automatic theme switching enabled via xdg.configFile below
     # Removed hardcoded themeFile to allow dark/light auto-switching
     # action_alias mkh kitten hints --alphabet asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM
