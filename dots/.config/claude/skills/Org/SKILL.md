@@ -97,6 +97,21 @@ Provide reliable, programmatic access to org-mode files using Emacs batch mode a
 ./tools/org-manager bulk-set-priority ~/desktop/org/todos.org "TODO" 1
 ```
 
+#### Time Tracking
+```bash
+# Start time tracking on a task
+./tools/org-manager clock-in ~/desktop/org/todos.org "Implement feature X"
+
+# Stop time tracking (clocks out of currently active task)
+./tools/org-manager clock-out ~/desktop/org/todos.org
+
+# Check what task is currently being tracked
+./tools/org-manager get-active-clock ~/desktop/org/todos.org
+
+# Get total time spent on a task (returns minutes)
+./tools/org-manager get-clocked-time ~/desktop/org/todos.org "Implement feature X"
+```
+
 #### Denote Operations
 ```bash
 # Create denote-formatted note

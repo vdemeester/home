@@ -187,6 +187,23 @@ BULK OPERATIONS:
       Priority: 1-5 (1=highest, 5=lowest)
       Example: org-manager bulk-set-priority todos.org TODO 1
 
+TIME TRACKING:
+  clock-in <file> <heading>
+      Start time tracking on a task
+      Creates CLOCK entry in :LOGBOOK: drawer
+
+  clock-out <file>
+      Stop time tracking on currently clocked task
+      Records total time spent
+
+  get-active-clock <file>
+      Get currently clocked task (if any)
+      Returns heading and clock-in time
+
+  get-clocked-time <file> <heading>
+      Get total time spent on a task (in minutes)
+      Sums all CLOCK entries for the task
+
 DENOTE COMMANDS:
   denote-create <title> <tags> [--signature=SIG] [--category=CAT] [--directory=DIR] [--content=FILE]
       Create a denote-formatted note with proper naming and frontmatter
@@ -811,6 +828,70 @@ cmd_bulk_set_priority() {
     run_elisp "$elisp"
 }
 
+# Time tracking commands
+
+cmd_clock_in() {
+    local file="$1"
+    local heading="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+
+    local elisp="(progn
+      (let ((result (org-batch-clock-in \"$file\" \"$heading\")))
+        (if result
+            (org-batch-output-json t (list :clocked_in t :heading \"$heading\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_clock_out() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((result (org-batch-clock-out \"$file\")))
+        (if result
+            (org-batch-output-json t (list :clocked_out t))
+          (org-batch-output-error \"No active clock found\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_get_active_clock() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((result (org-batch-get-active-clock \"$file\")))
+        (if result
+            (org-batch-output-json t result)
+          (org-batch-output-json t nil)))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_get_clocked_time() {
+    local file="$1"
+    local heading="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+
+    local elisp="(progn
+      (let ((minutes (org-batch-get-clocked-time \"$file\" \"$heading\")))
+        (org-batch-output-json t (list :heading \"$heading\" :minutes minutes)))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
 # Denote commands
 
 cmd_denote_create() {
@@ -1044,6 +1125,18 @@ main() {
             ;;
         bulk-set-priority)
             cmd_bulk_set_priority "$@"
+            ;;
+        clock-in)
+            cmd_clock_in "$@"
+            ;;
+        clock-out)
+            cmd_clock_out "$@"
+            ;;
+        get-active-clock)
+            cmd_get_active_clock "$@"
+            ;;
+        get-clocked-time)
+            cmd_get_clocked_time "$@"
             ;;
         denote-create)
             cmd_denote_create "$@"

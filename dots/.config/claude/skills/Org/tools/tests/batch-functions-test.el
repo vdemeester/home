@@ -386,5 +386,58 @@ Priority mapping: '1'=1, '2'=2, '3'=3, '4'=4, '5'=5."
            (should (= (alist-get 'priority task2) 1))
            (should-not (alist-get 'priority task3))))))))
 
+;;; Tests for Time Tracking
+
+(ert-deftest test-org-batch-clock-in ()
+  "Test clocking in to a task."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Test Task\n"
+   (lambda (temp-file)
+     (let ((result (org-batch-clock-in temp-file "Test Task")))
+       (should result)
+       ;; Verify clock entry was added
+       (with-temp-buffer
+         (insert-file-contents temp-file)
+         (should (string-match-p "CLOCK: \\[" (buffer-string))))))))
+
+(ert-deftest test-org-batch-clock-out ()
+  "Test clocking out of a task."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Test Task\n:LOGBOOK:\nCLOCK: [2025-12-23 Mon 10:00]\n:END:\n"
+   (lambda (temp-file)
+     (let ((result (org-batch-clock-out temp-file)))
+       (should result)
+       ;; Verify clock was closed with end time
+       (with-temp-buffer
+         (insert-file-contents temp-file)
+         (should (string-match-p "CLOCK: \\[.*?\\]--\\[.*?\\] =>" (buffer-string))))))))
+
+(ert-deftest test-org-batch-get-active-clock ()
+  "Test getting active clock."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Test Task\n:LOGBOOK:\nCLOCK: [2025-12-23 Mon 10:00]\n:END:\n"
+   (lambda (temp-file)
+     (let ((result (org-batch-get-active-clock temp-file)))
+       (should result)
+       (should (string= (alist-get 'heading result) "Test Task"))
+       (should (alist-get 'clock_start result))))))
+
+(ert-deftest test-org-batch-get-active-clock-none ()
+  "Test getting active clock when none exists."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Test Task\n"
+   (lambda (temp-file)
+     (let ((result (org-batch-get-active-clock temp-file)))
+       (should-not result)))))
+
+(ert-deftest test-org-batch-get-clocked-time ()
+  "Test getting total clocked time for a task."
+  (batch-test--with-temp-org-file
+   "* Work\n** TODO Test Task\n:LOGBOOK:\nCLOCK: [2025-12-23 Mon 10:00]--[2025-12-23 Mon 11:30] =>  1:30\n:END:\n"
+   (lambda (temp-file)
+     (let ((minutes (org-batch-get-clocked-time temp-file "Test Task")))
+       (should (> minutes 0))
+       (should (= minutes 90))))))  ; 1:30 = 90 minutes
+
 (provide 'batch-functions-test)
 ;;; batch-functions-test.el ends here

@@ -694,6 +694,86 @@ Returns count of updated tasks."
       (write-region (point-min) (point-max) file))
     count))
 
+;;; Time Tracking
+
+(defun org-batch-clock-in (file heading)
+  "Clock in to task with HEADING in FILE.
+Returns t on success, nil if heading not found."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((found nil)
+          (heading-regexp (concat "^\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\|DONE\\|CANX\\)? ?\\(?:\\[#[1-5]\\] \\)?"
+                                  (regexp-quote heading))))
+      (when (re-search-forward heading-regexp nil t)
+        (org-back-to-heading)
+        (org-clock-in)
+        (write-region (point-min) (point-max) file)
+        (setq found t))
+      found)))
+
+(defun org-batch-clock-out (file)
+  "Clock out of currently clocked task in FILE.
+Returns t on success, nil if no active clock found."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((found nil))
+      ;; Find active clock line (has start time but no end time)
+      (when (re-search-forward "^\\([ \t]*CLOCK: \\)\\(\\[.*?\\]\\)$" nil t)
+        (let ((indent (match-string 1))
+              (start-time (match-string 2))
+              (end-time (format-time-string "[%Y-%m-%d %a %H:%M]")))
+          ;; Calculate duration
+          (let* ((start-ts (org-parse-time-string start-time))
+                 (start-encoded (apply #'encode-time start-ts))
+                 (end-encoded (current-time))
+                 (duration-seconds (float-time (time-subtract end-encoded start-encoded)))
+                 (hours (floor (/ duration-seconds 3600)))
+                 (minutes (floor (/ (mod duration-seconds 3600) 60))))
+            ;; Replace the line with closed clock entry
+            (replace-match (format "%s%s--%s => %2d:%02d" indent start-time end-time hours minutes))
+            (write-region (point-min) (point-max) file)
+            (setq found t))))
+      found)))
+
+(defun org-batch-get-active-clock (file)
+  "Get currently active clock in FILE.
+Returns alist with heading and clock-in time, or nil if no active clock."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((result nil))
+      ;; Find active clock line (no end time)
+      (when (re-search-forward "^[ \t]*CLOCK: \\(\\[.*?\\]\\)$" nil t)
+        (let ((clock-start (match-string 1)))
+          (org-back-to-heading)
+          (let ((heading (org-element-property :raw-value (org-element-at-point))))
+            (setq result `((heading . ,heading)
+                          (clock_start . ,clock-start))))))
+      result)))
+
+(defun org-batch-get-clocked-time (file heading)
+  "Get total clocked time for HEADING in FILE.
+Returns minutes as integer."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((heading-regexp (concat "^\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\|DONE\\|CANX\\)? ?\\(?:\\[#[1-5]\\] \\)?"
+                                  (regexp-quote heading)))
+          (total-minutes 0))
+      (when (re-search-forward heading-regexp nil t)
+        (org-back-to-heading)
+        (save-restriction
+          (org-narrow-to-subtree)
+          (org-clock-sum)
+          (setq total-minutes (get-text-property (point) :org-clock-minutes))))
+      (or total-minutes 0))))
+
 ;;; Output Functions
 
 (defun org-batch-output-json (success data &optional error)
