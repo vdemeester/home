@@ -162,6 +162,7 @@ in
 
       # Smart playlists
       smartplaylist = {
+        auto = false; # Disable auto-updates during import to avoid concurrency issues
         relative_to = "${actualBaseDir}/playlists";
         playlist_dir = "${actualBaseDir}/playlists";
         playlists = [
@@ -212,7 +213,7 @@ in
             query = "genre:Electronic";
           }
           {
-            name = "electronic.m3u";
+            name = "trance.m3u";
             query = "genre:Trance";
           }
           {
