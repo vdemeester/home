@@ -1,0 +1,232 @@
+// Leader key configuration for eyelash_corne
+// Port of Moonlander leader sequences to ZMK
+// Using zmk-leader-key module syntax
+
+/ {
+    behaviors {
+        leader: leader {
+            compatible = "zmk,behavior-leader-key";
+            #binding-cells = <0>;
+
+            // ====== LAYOUT SWITCHING ======
+            // Leader + l + <key> for layout changes
+
+            bepo { sequence = <L B>; bindings = <&to 0>; };
+            ergol { sequence = <L E>; bindings = <&to 1>; };
+            qwerty { sequence = <L Q>; bindings = <&to 2>; };
+
+            // ====== DEVELOPMENT PATTERNS - GENERAL ======
+            // Leader + c + <key> for code snippets
+
+            nil { sequence = <C N>; bindings = <&kp N &kp I &kp L>; };
+
+            // Note: Complex macros need to be defined as ZMK macros
+            // For now, keeping simpler sequences
+
+            // ====== PERSONAL MACROS ======
+            // Leader + m + <key> for personal macros
+
+            // These would need macro definitions for complex sequences
+            // Keeping placeholders for now
+
+            // ====== APPLICATION SHORTCUTS ======
+            // Leader + a + <key> for application launches (using niri keybindings)
+
+            fuzzel { sequence = <A D>; bindings = <&kp LG(D)>; };
+            emacs { sequence = <A E>; bindings = <&kp LG(LS(RET))>; };
+            terminal { sequence = <A T>; bindings = <&kp LG(RET)>; };
+            emoji { sequence = <A J>; bindings = <&kp LG(LC(D))>; };
+            clipboard { sequence = <A V>; bindings = <&kp LG(LC(V))>; };
+            raffi { sequence = <A R>; bindings = <&kp LG(LS(D))>; };
+        };
+    };
+
+    // Macros for complex leader sequences
+    macros {
+        // Development patterns - General
+        macro_go_err: macro_go_err {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp I &kp F &kp SPACE &kp E &kp R &kp R &kp SPACE &kp EXCL &kp EQUAL &kp SPACE &kp N &kp I &kp L &kp SPACE &kp LBRC &kp RET &kp TAB>;
+        };
+
+        macro_console_log: macro_console_log {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp C &kp O &kp N &kp S &kp O &kp L &kp E &kp DOT &kp L &kp O &kp G &kp LPAR &kp RPAR &kp LEFT>;
+        };
+
+        macro_fmt_println: macro_fmt_println {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp F &kp M &kp T &kp DOT &kp P &kp R &kp I &kp N &kp T &kp L &kp N &kp LPAR &kp RPAR &kp LEFT>;
+        };
+
+        macro_function: macro_function {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp F &kp U &kp N &kp C &kp T &kp I &kp O &kp N &kp LPAR &kp RPAR &kp SPACE &kp LBRC &kp RBRC &kp LEFT &kp LEFT>;
+        };
+
+        macro_arrow_fn: macro_arrow_fn {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR &kp RPAR &kp SPACE &kp EQUAL &kp GT &kp SPACE &kp LBRC &kp RBRC &kp LEFT &kp LEFT>;
+        };
+
+        // Python patterns
+        macro_py_main: macro_py_main {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp I &kp F &kp SPACE &kp UNDER &kp UNDER &kp N &kp A &kp M &kp E &kp UNDER &kp UNDER &kp SPACE &kp EQUAL &kp EQUAL &kp SPACE &kp DQT &kp UNDER &kp UNDER &kp M &kp A &kp I &kp N &kp UNDER &kp UNDER &kp DQT &kp COLON &kp RET &kp TAB>;
+        };
+
+        macro_py_def: macro_py_def {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp D &kp E &kp F &kp SPACE &kp LPAR &kp RPAR &kp COLON &kp RET &kp TAB>;
+        };
+
+        macro_py_class: macro_py_class {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp C &kp L &kp A &kp S &kp S &kp SPACE &kp COLON &kp RET &kp TAB>;
+        };
+
+        macro_py_print: macro_py_print {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp P &kp R &kp I &kp N &kp T &kp LPAR &kp F &kp DQT &kp DQT &kp RPAR &kp LEFT &kp LEFT>;
+        };
+
+        macro_py_try: macro_py_try {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp T &kp R &kp Y &kp COLON &kp RET &kp TAB &kp RET &kp E &kp X &kp C &kp E &kp P &kp T &kp SPACE &kp E &kp X &kp C &kp E &kp P &kp T &kp I &kp O &kp N &kp SPACE &kp A &kp S &kp SPACE &kp E &kp COLON &kp RET &kp TAB>;
+        };
+
+        macro_py_with: macro_py_with {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp W &kp I &kp T &kp H &kp SPACE &kp O &kp P &kp E &kp N &kp LPAR &kp DQT &kp DQT &kp COMMA &kp SPACE &kp DQT &kp R &kp DQT &kp RPAR &kp SPACE &kp A &kp S &kp SPACE &kp F &kp COLON &kp RET &kp TAB>;
+        };
+
+        // Emacs Lisp patterns
+        macro_el_defun: macro_el_defun {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR &kp D &kp E &kp F &kp U &kp N &kp SPACE &kp SPACE &kp LPAR &kp RPAR &kp RET>;
+        };
+
+        macro_el_interactive: macro_el_interactive {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR &kp I &kp N &kp T &kp E &kp R &kp A &kp C &kp T &kp I &kp V &kp E &kp RPAR>;
+        };
+
+        macro_el_let: macro_el_let {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR &kp L &kp E &kp T &kp SPACE &kp LPAR &kp LPAR>;
+        };
+
+        macro_el_setq: macro_el_setq {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR &kp S &kp E &kp T &kp Q &kp SPACE &kp SPACE &kp RPAR &kp LEFT &kp LEFT>;
+        };
+
+        macro_el_message: macro_el_message {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR &kp M &kp E &kp S &kp S &kp A &kp G &kp E &kp SPACE &kp DQT &kp DQT &kp RPAR &kp LEFT &kp LEFT>;
+        };
+
+        macro_el_require: macro_el_require {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR &kp R &kp E &kp Q &kp U &kp I &kp R &kp E &kp SPACE &kp SQT &kp RPAR &kp LEFT>;
+        };
+
+        // Nix patterns
+        macro_nix_fn: macro_nix_fn {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LBRC &kp SPACE &kp P &kp K &kp G &kp S &kp COMMA &kp SPACE &kp DOT &kp DOT &kp DOT &kp SPACE &kp RBRC &kp COLON>;
+        };
+
+        macro_nix_let: macro_nix_let {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp L &kp E &kp T &kp RET &kp TAB &kp RET &kp I &kp N &kp RET>;
+        };
+
+        macro_nix_with: macro_nix_with {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp W &kp I &kp T &kp H &kp SPACE &kp P &kp K &kp G &kp S &kp SEMI &kp SPACE &kp LBKT &kp RET &kp TAB &kp RET &kp RBKT>;
+        };
+
+        macro_nix_inherit: macro_nix_inherit {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp I &kp N &kp H &kp E &kp R &kp I &kp T &kp SPACE &kp SEMI &kp LEFT &kp LEFT>;
+        };
+
+        macro_nix_build: macro_nix_build {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp B &kp U &kp I &kp L &kp D &kp I &kp N &kp P &kp U &kp T &kp S &kp SPACE &kp EQUAL &kp SPACE &kp LBKT &kp SPACE &kp RBKT &kp SEMI>;
+        };
+
+        macro_nix_script: macro_nix_script {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp P &kp K &kp G &kp S &kp DOT &kp W &kp R &kp I &kp T &kp E &kp S &kp H &kp E &kp L &kp L &kp S &kp C &kp R &kp I &kp P &kp T &kp B &kp I &kp N &kp SPACE &kp DQT &kp DQT &kp SPACE &kp SQT &kp SQT &kp RET &kp TAB &kp RET &kp SQT &kp SQT>;
+        };
+
+        // Import patterns
+        macro_import: macro_import {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp I &kp M &kp P &kp O &kp R &kp T &kp SPACE>;
+        };
+
+        macro_from_import: macro_from_import {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp F &kp R &kp O &kp M &kp SPACE &kp SPACE &kp I &kp M &kp P &kp O &kp R &kp T &kp SPACE>;
+        };
+
+        macro_nix_module: macro_nix_module {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LBRC &kp SPACE &kp P &kp K &kp G &kp S &kp SPACE &kp RBRC &kp COLON &kp SPACE &kp LBRC &kp RET &kp TAB &kp RET &kp RBRC>;
+        };
+
+        macro_use_package: macro_use_package {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR &kp U &kp S &kp E &kp MINUS &kp P &kp A &kp C &kp K &kp A &kp G &kp E &kp SPACE &kp RET &kp TAB>;
+        };
+
+        // Personal macros
+        macro_email: macro_email {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp V &kp I &kp N &kp C &kp E &kp N &kp T &kp AT &kp S &kp B &kp R &kp DOT &kp P &kp M>;
+        };
+
+        macro_git_sig: macro_git_sig {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp V &kp I &kp N &kp C &kp E &kp N &kp T &kp SPACE &kp D &kp E &kp M &kp E &kp E &kp S &kp T &kp E &kp R &kp SPACE &kp LT &kp V &kp I &kp N &kp C &kp E &kp N &kp T &kp AT &kp S &kp B &kp R &kp DOT &kp P &kp M &kp GT>;
+        };
+
+        macro_email_sig: macro_email_sig {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp MINUS &kp MINUS &kp RET &kp V &kp I &kp N &kp C &kp E &kp N &kp T &kp SPACE &kp D &kp E &kp M &kp E &kp E &kp S &kp T &kp E &kp R &kp RET &kp V &kp I &kp N &kp C &kp E &kp N &kp T &kp AT &kp S &kp B &kp R &kp DOT &kp P &kp M>;
+        };
+    };
+};

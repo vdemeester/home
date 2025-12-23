@@ -26,6 +26,9 @@ ZMK_COMBO(to_qwerty, &to QWE, LH2 RH2, BEP ERG)
 // Switch mouse layer
 ZMK_COMBO(toggle_mouse, &tog MOU, LT1 LT4, BEP ERG QWE MOU)
 
+// Leader key - Right thumb cluster (similar to Moonlander Del+RAlt)
+ZMK_COMBO(leader, &leader, RH0 RH2, BEP ERG QWE)
+
 // underscore
 ZMK_COMBO(capsword, &caps_word, LB4 RB4, BEP ERG QWE)
 

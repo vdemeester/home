@@ -20,7 +20,7 @@ manifest:
       revision: main
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: v0.3.0  # Last stable version before Zephyr 4.1
       # revision: rgb-layer-25.04
       import: app/west.yml
     - name: zmk-helpers
@@ -28,7 +28,10 @@ manifest:
       revision: main
     - name: zmk-auto-layer
       remote: urob
-      revision: next
+      revision: main  # Using main branch for v0.3.0 compatibility
+    - name: zmk-leader-key
+      remote: urob
+      revision: main
     - name: nice-view-gem #new entry
       remote: m165437 #new entry
       revision: main #new entry
