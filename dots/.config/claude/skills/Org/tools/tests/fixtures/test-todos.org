@@ -1,0 +1,65 @@
+* Work
+** TODO Review PR #123                                             :work:code:
+SCHEDULED: <2025-12-23>
+:PROPERTIES:
+:CREATED: [2025-12-20 Fri 10:00]
+:PR_URL: https://github.com/example/repo/pull/123
+:END:
+
+- [ ] Check for security issues
+- [ ] Verify tests pass
+- [ ] Review commit messages
+
+Focus on error handling in auth module.
+
+** NEXT [#2] Implement authentication                              :work:auth:
+SCHEDULED: <2025-12-24> DEADLINE: <2025-12-30>
+:PROPERTIES:
+:CREATED: [2025-12-21 Sat 14:30]
+:END:
+
+Using OAuth2 flow.
+
+** DONE Fix bug in parser                                          :work:bug:
+CLOSED: [2025-12-22 Sun 16:45]
+:PROPERTIES:
+:CREATED: [2025-12-22 Sun 10:00]
+:END:
+
+Parser was failing on multi-line strings.
+
+* Personal
+** TODO [#1] Buy groceries                                     :personal:life:
+:PROPERTIES:
+:CREATED: [2025-12-23 Mon 09:00]
+:END:
+SCHEDULED: <2025-12-23>
+
+- Milk
+- Bread
+- Eggs
+
+** WAIT Call dentist                                           :personal:health:
+:PROPERTIES:
+:CREATED: [2025-12-20 Fri 08:00]
+:PHONE: 555-1234
+:END:
+
+Waiting for office to open after holidays.
+
+** TODO Organize photos                                        :personal:media:
+DEADLINE: <2025-12-20>
+:PROPERTIES:
+:CREATED: [2025-12-15 Mon 10:00]
+:END:
+
+This task is overdue!
+
+* Archive
+** CANX [#3] Old project                                           :work:old:
+:PROPERTIES:
+:CREATED: [2025-11-01 Fri 10:00]
+:ARCHIVE: archive.org::* Cancelled Projects
+:END:
+
+Project was cancelled due to budget constraints.

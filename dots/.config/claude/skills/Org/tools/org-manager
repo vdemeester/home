@@ -117,6 +117,18 @@ READ COMMANDS:
   children <file> <heading>
       Get direct children of a specific heading
 
+  get <file> <heading>
+      Get full content and metadata of a specific TODO
+      Returns heading, state, priority, tags, scheduled, deadline, properties, and body content
+
+  overdue <file>
+      Get all tasks with deadlines before today
+      Only shows active TODOs (excludes DONE/CANX)
+
+  upcoming <file> [--days=N]
+      Get tasks scheduled or due in next N days (default: 7)
+      Shows tasks with SCHEDULED or DEADLINE dates in range
+
 WRITE COMMANDS:
   add <file> <heading> --section=NAME [--scheduled=DATE] [--priority=N] [--tags=TAG1,TAG2]
       Add new TODO item
@@ -135,6 +147,29 @@ WRITE COMMANDS:
 
   archive <file>
       Archive all DONE and CANX items
+
+TAG MANAGEMENT:
+  add-tags <file> <heading> <tags>
+      Add tags to existing TODO (comma-separated, e.g., work,urgent)
+
+  remove-tags <file> <heading> <tags>
+      Remove specific tags from TODO (comma-separated)
+
+  replace-tags <file> <heading> <tags>
+      Replace all tags on TODO with new set (comma-separated)
+
+  list-tags <file>
+      List all unique tags used in file
+
+PROPERTY OPERATIONS:
+  get-property <file> <heading> <property>
+      Get value of a specific property
+
+  set-property <file> <heading> <property> <value>
+      Set property value
+
+  list-properties <file> <heading>
+      List all properties of a heading
 
 DENOTE COMMANDS:
   denote-create <title> <tags> [--signature=SIG] [--category=CAT] [--directory=DIR] [--content=FILE]
@@ -182,6 +217,9 @@ EXAMPLES:
 
   # Get children of a heading
   org-manager children ~/desktop/org/todos.org "Migrate aion"
+
+  # Get full content of a TODO
+  org-manager get ~/desktop/org/todos.org "Review PR"
 
   # Create denote note
   org-manager denote-create "NixOS Refactoring Plan" "nixos,refactoring,plan" \\
@@ -356,6 +394,65 @@ cmd_children() {
     run_elisp "$elisp"
 }
 
+cmd_get() {
+    local file="$1"
+    local heading="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading name required"
+
+    # Escape double quotes in heading for elisp string
+    local heading_escaped="${heading//\"/\\\"}"
+
+    local elisp="(progn
+      (let ((result (org-batch-get-todo-content \"$file\" \"$heading_escaped\")))
+        (if result
+            (org-batch-output-json t result)
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_overdue() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((result (org-batch-get-overdue \"$file\")))
+        (org-batch-output-json t result))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_upcoming() {
+    local file="$1"; shift
+    local days=7
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --days=*)
+                days=$(parse_option "$1" "--days=")
+                shift
+                ;;
+            *)
+                error "Unknown option: $1"
+                ;;
+        esac
+    done
+
+    local elisp="(progn
+      (let ((result (org-batch-get-upcoming \"$file\" $days)))
+        (org-batch-output-json t result))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
 cmd_add() {
     local file="$1"
     local heading="$2"; shift 2
@@ -488,6 +585,147 @@ cmd_archive() {
     local elisp="(progn
       (let ((count (org-batch-archive-done \"$file\")))
         (org-batch-output-json t (list :archived count)))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+# Tag management commands
+
+cmd_add_tags() {
+    local file="$1"
+    local heading="$2"
+    local tags="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$tags" ]] || error "Tags required (comma-separated)"
+
+    # Convert comma-separated tags to quoted elisp list
+    local tags_list
+    tags_list="'($(echo "$tags" | sed 's/,/ /g' | sed 's/\([^ ]*\)/"\1"/g'))"
+
+    local elisp="(progn
+      (let ((result (org-batch-add-tags \"$file\" \"$heading\" $tags_list)))
+        (if result
+            (org-batch-output-json t (list :tags-added t :heading \"$heading\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_remove_tags() {
+    local file="$1"
+    local heading="$2"
+    local tags="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$tags" ]] || error "Tags required (comma-separated)"
+
+    # Convert comma-separated tags to quoted elisp list
+    local tags_list
+    tags_list="'($(echo "$tags" | sed 's/,/ /g' | sed 's/\([^ ]*\)/"\1"/g'))"
+
+    local elisp="(progn
+      (let ((result (org-batch-remove-tags \"$file\" \"$heading\" $tags_list)))
+        (if result
+            (org-batch-output-json t (list :tags-removed t :heading \"$heading\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_replace_tags() {
+    local file="$1"
+    local heading="$2"
+    local tags="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$tags" ]] || error "Tags required (comma-separated)"
+
+    # Convert comma-separated tags to quoted elisp list
+    local tags_list
+    tags_list="'($(echo "$tags" | sed 's/,/ /g' | sed 's/\([^ ]*\)/"\1"/g'))"
+
+    local elisp="(progn
+      (let ((result (org-batch-replace-tags \"$file\" \"$heading\" $tags_list)))
+        (if result
+            (org-batch-output-json t (list :tags-replaced t :heading \"$heading\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_list_tags() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((tags (org-batch-list-all-tags \"$file\")))
+        (org-batch-output-json t tags))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+# Property operations commands
+
+cmd_get_property() {
+    local file="$1"
+    local heading="$2"
+    local property="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$property" ]] || error "Property name required"
+
+    local elisp="(progn
+      (let ((value (org-batch-get-property \"$file\" \"$heading\" \"$property\")))
+        (if value
+            (org-batch-output-json t (list :property \"$property\" :value value))
+          (org-batch-output-error \"Property not found or heading not found\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_set_property() {
+    local file="$1"
+    local heading="$2"
+    local property="$3"
+    local value="$4"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$property" ]] || error "Property name required"
+    [[ -n "$value" ]] || error "Property value required"
+
+    local elisp="(progn
+      (let ((result (org-batch-set-property \"$file\" \"$heading\" \"$property\" \"$value\")))
+        (if result
+            (org-batch-output-json t (list :property-set t :property \"$property\" :value \"$value\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_list_properties() {
+    local file="$1"
+    local heading="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+
+    local elisp="(progn
+      (let ((props (org-batch-list-properties \"$file\" \"$heading\")))
+        (org-batch-output-json t props))
       (kill-emacs 0))"
 
     run_elisp "$elisp"
@@ -670,6 +908,15 @@ main() {
         children)
             cmd_children "$@"
             ;;
+        get)
+            cmd_get "$@"
+            ;;
+        overdue)
+            cmd_overdue "$@"
+            ;;
+        upcoming)
+            cmd_upcoming "$@"
+            ;;
         add)
             cmd_add "$@"
             ;;
@@ -687,6 +934,27 @@ main() {
             ;;
         archive)
             cmd_archive "$@"
+            ;;
+        add-tags)
+            cmd_add_tags "$@"
+            ;;
+        remove-tags)
+            cmd_remove_tags "$@"
+            ;;
+        replace-tags)
+            cmd_replace_tags "$@"
+            ;;
+        list-tags)
+            cmd_list_tags "$@"
+            ;;
+        get-property)
+            cmd_get_property "$@"
+            ;;
+        set-property)
+            cmd_set_property "$@"
+            ;;
+        list-properties)
+            cmd_list_properties "$@"
             ;;
         denote-create)
             cmd_denote_create "$@"

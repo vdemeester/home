@@ -212,6 +212,88 @@ Returns only immediate children (level = parent + 1), not all descendants."
               (push (org-batch--element-to-alist hl) children))))))
       (nreverse children))))
 
+(defun org-batch-get-todo-content (file heading-name)
+  "Get full content of TODO with HEADING-NAME in FILE.
+Returns alist with metadata, properties, and body content.
+Returns nil if heading not found."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (let ((found nil)
+          (result nil))
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (hl)
+          (when (and (not found)
+                     (string= (org-element-property :raw-value hl) heading-name))
+            (setq found t)
+            ;; Build result with metadata
+            (let* ((basic-data (org-batch--element-to-alist hl))
+                   (properties (org-batch--extract-properties hl))
+                   (content (org-batch--extract-content hl)))
+              (setq result (append basic-data
+                                   (list (cons 'properties properties)
+                                         (cons 'content content))))))))
+      result)))
+
+(defun org-batch--extract-properties (element)
+  "Extract properties drawer from ELEMENT as alist."
+  (let ((properties '())
+        (begin (org-element-property :begin element))
+        (end (org-element-property :contents-end element)))
+    (when (and begin end)
+      (save-excursion
+        (goto-char begin)
+        (forward-line 1)  ; Skip heading line
+        ;; Look for :PROPERTIES: drawer
+        (when (re-search-forward "^[ \t]*:PROPERTIES:[ \t]*$" end t)
+          (let ((drawer-start (point)))
+            (when (re-search-forward "^[ \t]*:END:[ \t]*$" end t)
+              (let ((drawer-end (match-beginning 0)))
+                (goto-char drawer-start)
+                ;; Extract each property
+                (while (re-search-forward "^[ \t]*:\\([^:\n]+\\):[ \t]*\\(.*\\)$" drawer-end t)
+                  (let ((key (match-string 1))
+                        (value (match-string 2)))
+                    (push (cons key value) properties)))))))))
+    (nreverse properties)))
+
+(defun org-batch--extract-content (element)
+  "Extract body content from ELEMENT (excluding properties drawer).
+Returns the text content without the heading line or properties."
+  (let ((end (org-element-property :contents-end element))
+        (contents-begin (org-element-property :contents-begin element)))
+    (if (and contents-begin end)
+        (save-excursion
+          (let ((content-text (buffer-substring-no-properties contents-begin end)))
+            ;; Remove properties drawer if present
+            (with-temp-buffer
+              (insert content-text)
+              (goto-char (point-min))
+              ;; Remove SCHEDULED/DEADLINE lines (they're in metadata)
+              (while (re-search-forward "^[ \t]*\\(?:SCHEDULED\\|DEADLINE\\|CLOSED\\):.*$" nil t)
+                (replace-match ""))
+              ;; Remove properties drawer
+              (goto-char (point-min))
+              (when (re-search-forward "^[ \t]*:PROPERTIES:[ \t]*$" nil t)
+                (let ((drawer-start (match-beginning 0)))
+                  (when (re-search-forward "^[ \t]*:END:[ \t]*$" nil t)
+                    (delete-region drawer-start (point))
+                    ;; Remove trailing newline
+                    (when (looking-at "\n")
+                      (delete-char 1)))))
+              ;; Trim whitespace
+              (goto-char (point-min))
+              (while (re-search-forward "^[ \t]+$" nil t)
+                (replace-match ""))
+              (goto-char (point-min))
+              (skip-chars-forward "\n")
+              (delete-region (point-min) (point))
+              (goto-char (point-max))
+              (skip-chars-backward "\n")
+              (delete-region (point) (point-max))
+              (buffer-string))))
+      "")))
+
 ;;; Write Operations
 
 (defun org-batch-update-state (file heading new-state)
@@ -318,6 +400,196 @@ Returns t on success, nil if heading not found."
         (write-region (point-min) (point-max) file)
         (setq found t))
       found)))
+
+(defun org-batch-add-tags (file heading new-tags)
+  "Add NEW-TAGS to task with HEADING in FILE.
+NEW-TAGS is a list of tag strings to add (existing tags are preserved).
+Returns t on success, nil if heading not found."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((found nil)
+          (heading-regexp (concat "^\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\|DONE\\|CANX\\) \\(?:\\[#[1-5]\\] \\)?"
+                                  (regexp-quote heading))))
+      (when (re-search-forward heading-regexp nil t)
+        (org-back-to-heading)
+        (let* ((current-tags (org-get-tags))
+               (combined-tags (delete-dups (append current-tags new-tags))))
+          (org-set-tags combined-tags)
+          (write-region (point-min) (point-max) file)
+          (setq found t)))
+      found)))
+
+(defun org-batch-remove-tags (file heading tags-to-remove)
+  "Remove TAGS-TO-REMOVE from task with HEADING in FILE.
+TAGS-TO-REMOVE is a list of tag strings to remove.
+Returns t on success, nil if heading not found."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((found nil)
+          (heading-regexp (concat "^\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\|DONE\\|CANX\\) \\(?:\\[#[1-5]\\] \\)?"
+                                  (regexp-quote heading))))
+      (when (re-search-forward heading-regexp nil t)
+        (org-back-to-heading)
+        (let* ((current-tags (org-get-tags))
+               (remaining-tags (seq-difference current-tags tags-to-remove)))
+          (org-set-tags remaining-tags)
+          (write-region (point-min) (point-max) file)
+          (setq found t)))
+      found)))
+
+(defun org-batch-replace-tags (file heading new-tags)
+  "Replace all tags on task with HEADING in FILE with NEW-TAGS.
+NEW-TAGS is a list of tag strings.
+Returns t on success, nil if heading not found."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((found nil)
+          (heading-regexp (concat "^\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\|DONE\\|CANX\\) \\(?:\\[#[1-5]\\] \\)?"
+                                  (regexp-quote heading))))
+      (when (re-search-forward heading-regexp nil t)
+        (org-back-to-heading)
+        (org-set-tags new-tags)
+        (write-region (point-min) (point-max) file)
+        (setq found t))
+      found)))
+
+(defun org-batch-list-all-tags (file)
+  "List all unique tags used in FILE.
+Returns sorted list of tag strings."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (let ((all-tags '()))
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (hl)
+          (let ((tags (org-element-property :tags hl)))
+            (when tags
+              (setq all-tags (append all-tags tags))))))
+      (sort (delete-dups all-tags) #'string<))))
+
+(defun org-batch-get-overdue (file)
+  "Get all tasks with DEADLINE before today from FILE.
+Returns list of overdue tasks with their metadata."
+  (let ((today (format-time-string "%Y-%m-%d"))
+        (overdue-items '()))
+    (with-temp-buffer
+      (insert-file-contents file)
+      (org-mode)
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (hl)
+          (let ((todo (org-element-property :todo-keyword hl))
+                (deadline (org-element-property :deadline hl)))
+            ;; Only include active TODOs with deadlines
+            (when (and todo
+                       (not (member todo '("DONE" "CANX")))
+                       deadline)
+              (let ((deadline-date (org-element-property :raw-value deadline)))
+                ;; Extract YYYY-MM-DD from deadline
+                (when (string-match "\\([0-9]\\{4\\}\\)-\\([0-9]\\{2\\}\\)-\\([0-9]\\{2\\}\\)" deadline-date)
+                  (let ((dl-str (match-string 0 deadline-date)))
+                    ;; Compare dates (string comparison works for YYYY-MM-DD)
+                    (when (string< dl-str today)
+                      (push (org-batch--element-to-alist hl) overdue-items)))))))))
+      (nreverse overdue-items))))
+
+(defun org-batch-get-upcoming (file &optional days)
+  "Get tasks with DEADLINE or SCHEDULED in next DAYS from FILE.
+DAYS defaults to 7. Returns list of upcoming tasks."
+  (let* ((days-count (or days 7))
+         (today (current-time))
+         (future-date (time-add today (days-to-time days-count)))
+         (today-str (format-time-string "%Y-%m-%d" today))
+         (future-str (format-time-string "%Y-%m-%d" future-date))
+         (upcoming-items '()))
+    (with-temp-buffer
+      (insert-file-contents file)
+      (org-mode)
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (hl)
+          (let ((todo (org-element-property :todo-keyword hl))
+                (scheduled (org-element-property :scheduled hl))
+                (deadline (org-element-property :deadline hl)))
+            ;; Only include active TODOs
+            (when (and todo (not (member todo '("DONE" "CANX"))))
+              (let ((dates-to-check '()))
+                ;; Collect scheduled and deadline dates
+                (when scheduled
+                  (push (org-element-property :raw-value scheduled) dates-to-check))
+                (when deadline
+                  (push (org-element-property :raw-value deadline) dates-to-check))
+                ;; Check if any date is in range
+                (dolist (date-str dates-to-check)
+                  (when (string-match "\\([0-9]\\{4\\}\\)-\\([0-9]\\{2\\}\\)-\\([0-9]\\{2\\}\\)" date-str)
+                    (let ((task-date (match-string 0 date-str)))
+                      ;; Date is upcoming if: today <= date <= future
+                      (when (and (not (string< task-date today-str))
+                                 (not (string< future-str task-date)))
+                        (push (org-batch--element-to-alist hl) upcoming-items)
+                        ;; Stop checking other dates for this task
+                        (setq dates-to-check nil))))))))))
+      ;; Remove duplicates and reverse
+      (delete-dups (nreverse upcoming-items)))))
+
+(defun org-batch-get-property (file heading property-name)
+  "Get value of PROPERTY-NAME for task with HEADING in FILE.
+Returns property value string or nil if not found."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((found nil)
+          (heading-regexp (concat "^\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\|DONE\\|CANX\\)? ?\\(?:\\[#[1-5]\\] \\)?"
+                                  (regexp-quote heading))))
+      (when (re-search-forward heading-regexp nil t)
+        (org-back-to-heading)
+        (setq found (org-entry-get nil property-name)))
+      found)))
+
+(defun org-batch-set-property (file heading property-name value)
+  "Set PROPERTY-NAME to VALUE for task with HEADING in FILE.
+Returns t on success, nil if heading not found."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((found nil)
+          (heading-regexp (concat "^\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\|DONE\\|CANX\\)? ?\\(?:\\[#[1-5]\\] \\)?"
+                                  (regexp-quote heading))))
+      (when (re-search-forward heading-regexp nil t)
+        (org-back-to-heading)
+        (org-set-property property-name value)
+        (write-region (point-min) (point-max) file)
+        (setq found t))
+      found)))
+
+(defun org-batch-list-properties (file heading)
+  "List all properties for task with HEADING in FILE.
+Returns alist of (property . value) pairs."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((properties '())
+          (heading-regexp (concat "^\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\|DONE\\|CANX\\)? ?\\(?:\\[#[1-5]\\] \\)?"
+                                  (regexp-quote heading))))
+      (when (re-search-forward heading-regexp nil t)
+        (org-back-to-heading)
+        ;; Get all properties using org-entry-properties
+        (let ((props (org-entry-properties nil 'standard)))
+          (dolist (prop props)
+            (let ((key (car prop))
+                  (val (cdr prop)))
+              ;; Filter out special properties we don't want to show
+              (unless (member key '("CATEGORY" "BLOCKED" "ALLTAGS" "FILE" "PRIORITY_COOKIE"
+                                   "TODO" "TAGS" "ITEM"))
+                (push (cons key val) properties))))))
+      (nreverse properties))))
 
 (defun org-batch-archive-done (file)
   "Archive all DONE and CANX items in FILE.

@@ -44,6 +44,42 @@ Provide reliable, programmatic access to org-mode files using Emacs batch mode a
 
 # Search
 ./tools/org-manager search ~/desktop/org/todos.org "term"
+
+# Get full TODO content (metadata + body)
+./tools/org-manager get ~/desktop/org/todos.org "Task name"
+
+# Get overdue tasks (deadline before today)
+./tools/org-manager overdue ~/desktop/org/todos.org
+
+# Get upcoming tasks (scheduled/deadline in next N days)
+./tools/org-manager upcoming ~/desktop/org/todos.org --days=7
+```
+
+#### Tag Management
+```bash
+# List all unique tags in file
+./tools/org-manager list-tags ~/desktop/org/todos.org
+
+# Add tags to existing TODO
+./tools/org-manager add-tags ~/desktop/org/todos.org "Task name" "urgent,review"
+
+# Remove specific tags
+./tools/org-manager remove-tags ~/desktop/org/todos.org "Task name" "urgent"
+
+# Replace all tags with new set
+./tools/org-manager replace-tags ~/desktop/org/todos.org "Task name" "done,archived"
+```
+
+#### Property Operations
+```bash
+# List all properties of a heading
+./tools/org-manager list-properties ~/desktop/org/todos.org "Task name"
+
+# Get specific property value
+./tools/org-manager get-property ~/desktop/org/todos.org "Task name" "PR_URL"
+
+# Set property value
+./tools/org-manager set-property ~/desktop/org/todos.org "Task name" "STATUS" "In Progress"
 ```
 
 #### Denote Operations
@@ -99,12 +135,28 @@ All commands return JSON:
 - `org-batch-by-section` - Filter by section
 - `org-batch-count-by-state` - Count statistics
 - `org-batch-search` - Full-text search
+- `org-batch-get-children` - Get direct children of a heading
+- `org-batch-get-sections` - List all top-level sections
+- `org-batch-get-todo-content` - Get full TODO content (metadata + body + properties)
+- `org-batch-get-overdue` - Get tasks with deadline before today
+- `org-batch-get-upcoming` - Get tasks scheduled/due in next N days
 - `org-batch-add-todo` - Add new TODO
 - `org-batch-update-state` - Change states
 - `org-batch-schedule-task` - Set SCHEDULED
 - `org-batch-set-deadline` - Set DEADLINE
 - `org-batch-set-priority` - Set priority
 - `org-batch-archive-done` - Archive items
+
+**Tag Operations:**
+- `org-batch-add-tags` - Add tags while preserving existing
+- `org-batch-remove-tags` - Remove specific tags
+- `org-batch-replace-tags` - Replace all tags with new set
+- `org-batch-list-all-tags` - Get all unique tags in file
+
+**Property Operations:**
+- `org-batch-get-property` - Get specific property value
+- `org-batch-set-property` - Set property value
+- `org-batch-list-properties` - List all properties of a heading
 
 ### Denote Functions (denote-batch-functions.el)
 
