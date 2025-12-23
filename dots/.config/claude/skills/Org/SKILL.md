@@ -133,6 +133,33 @@ Provide reliable, programmatic access to org-mode files using Emacs batch mode a
 ./tools/org-manager export-json ~/desktop/org/todos.org /tmp/todos.json
 ```
 
+#### Recurring Tasks
+```bash
+# Set repeater for a task (+1w = weekly, .+2d = 2 days after completion)
+./tools/org-manager set-repeater ~/desktop/org/todos.org "Weekly Review" "+1w"
+
+# Get all recurring tasks
+./tools/org-manager get-recurring-tasks ~/desktop/org/todos.org
+```
+
+#### Dependencies & Relationships
+```bash
+# Set a blocker for a task
+./tools/org-manager set-blocker ~/desktop/org/todos.org "Deploy to production" "Complete testing"
+
+# Get blocker for a specific task
+./tools/org-manager get-blocker ~/desktop/org/todos.org "Deploy to production"
+
+# List all blocked tasks
+./tools/org-manager get-blocked-tasks ~/desktop/org/todos.org
+
+# Create task relationship (child/parent/related/depends-on)
+./tools/org-manager set-related ~/desktop/org/todos.org "Implement feature" "Design review" "depends-on"
+
+# Get all relationships for a task
+./tools/org-manager get-related ~/desktop/org/todos.org "Implement feature"
+```
+
 #### Denote Operations
 ```bash
 # Create denote-formatted note
@@ -208,6 +235,37 @@ All commands return JSON:
 - `org-batch-get-property` - Get specific property value
 - `org-batch-set-property` - Set property value
 - `org-batch-list-properties` - List all properties of a heading
+
+**Bulk Operations:**
+- `org-batch-bulk-update-state` - Update all tasks matching a state
+- `org-batch-bulk-add-tags` - Add tags to all tasks with specific state
+- `org-batch-bulk-set-priority` - Set priority for all tasks with specific state
+
+**Time Tracking:**
+- `org-batch-clock-in` - Start time tracking on a task
+- `org-batch-clock-out` - Stop time tracking
+- `org-batch-get-active-clock` - Get currently clocked task
+- `org-batch-get-clocked-time` - Get total time spent on a task
+
+**Statistics & Analytics:**
+- `org-batch-get-statistics` - Comprehensive statistics (counts, priorities, tags, overdue)
+- `org-batch-get-priority-distribution` - Priority distribution across tasks
+- `org-batch-get-tag-statistics` - Tag usage statistics
+
+**Export & Reporting:**
+- `org-batch-export-csv` - Export TODOs to CSV format
+- `org-batch-export-json` - Export TODOs to JSON format
+
+**Recurring Tasks:**
+- `org-batch-set-repeater` - Set repeater specification for a task
+- `org-batch-get-recurring-tasks` - List all tasks with repeaters
+
+**Dependencies & Relationships:**
+- `org-batch-set-blocker` - Set task blocker
+- `org-batch-get-blocker` - Get blocker for a task
+- `org-batch-get-blocked-tasks` - List all blocked tasks
+- `org-batch-set-related` - Create task relationships (child/parent/related/depends-on)
+- `org-batch-get-related` - Get all relationships for a task
 
 ### Denote Functions (denote-batch-functions.el)
 

@@ -226,6 +226,37 @@ EXPORT & REPORTING:
       Export all TODOs to JSON format
       Creates machine-readable structured export
 
+RECURRING TASKS:
+  set-repeater <file> <heading> <repeater-spec>
+      Set repeater for a task (e.g., +1w for weekly, .+2d for 2 days after completion)
+      Adds or updates SCHEDULED timestamp with repeater syntax
+
+  get-recurring-tasks <file>
+      List all tasks with repeater specifications
+      Shows tasks that recur automatically
+
+DEPENDENCIES & RELATIONSHIPS:
+  set-blocker <file> <heading> <blocker-heading>
+      Set a blocker for a task (task that must be completed first)
+      Uses BLOCKER property to track dependency
+
+  get-blocker <file> <heading>
+      Get the blocker for a specific task
+      Returns the blocking task heading if set
+
+  get-blocked-tasks <file>
+      List all tasks that have blockers set
+      Shows tasks waiting on other tasks
+
+  set-related <file> <heading> <related-heading> <relation-type>
+      Create relationship between tasks
+      Relation types: child, parent, related, depends-on
+      Uses RELATED_* properties
+
+  get-related <file> <heading>
+      Get all relationships for a task
+      Returns all RELATED_* properties
+
 DENOTE COMMANDS:
   denote-create <title> <tags> [--signature=SIG] [--category=CAT] [--directory=DIR] [--content=FILE]
       Create a denote-formatted note with proper naming and frontmatter
@@ -991,6 +1022,127 @@ cmd_export_json() {
     run_elisp "$elisp"
 }
 
+# Recurring tasks commands
+
+cmd_set_repeater() {
+    local file="$1"
+    local heading="$2"
+    local repeater="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$repeater" ]] || error "Repeater specification required (e.g., +1w, .+2d)"
+
+    local elisp="(progn
+      (let ((result (org-batch-set-repeater \"$file\" \"$heading\" \"$repeater\")))
+        (if result
+            (org-batch-output-json t (list :repeater-set t :heading \"$heading\" :repeater \"$repeater\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_get_recurring_tasks() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((tasks (org-batch-get-recurring-tasks \"$file\")))
+        (org-batch-output-json t tasks))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+# Dependencies & relationships commands
+
+cmd_set_blocker() {
+    local file="$1"
+    local heading="$2"
+    local blocker="$3"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$blocker" ]] || error "Blocker heading required"
+
+    local elisp="(progn
+      (let ((result (org-batch-set-blocker \"$file\" \"$heading\" \"$blocker\")))
+        (if result
+            (org-batch-output-json t (list :blocker-set t :heading \"$heading\" :blocker \"$blocker\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_get_blocker() {
+    local file="$1"
+    local heading="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+
+    local elisp="(progn
+      (let ((blocker (org-batch-get-blocker \"$file\" \"$heading\")))
+        (if blocker
+            (org-batch-output-json t (list :heading \"$heading\" :blocker blocker))
+          (org-batch-output-json t nil)))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_get_blocked_tasks() {
+    local file="$1"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+
+    local elisp="(progn
+      (let ((tasks (org-batch-get-blocked-tasks \"$file\")))
+        (org-batch-output-json t tasks))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_set_related() {
+    local file="$1"
+    local heading="$2"
+    local related="$3"
+    local relation_type="$4"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+    [[ -n "$related" ]] || error "Related heading required"
+    [[ -n "$relation_type" ]] || error "Relation type required (child/parent/related/depends-on)"
+
+    local elisp="(progn
+      (let ((result (org-batch-set-related \"$file\" \"$heading\" \"$related\" \"$relation_type\")))
+        (if result
+            (org-batch-output-json t (list :related-set t :heading \"$heading\" :related \"$related\" :type \"$relation_type\"))
+          (org-batch-output-error \"Heading not found: $heading\")))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
+cmd_get_related() {
+    local file="$1"
+    local heading="$2"
+
+    [[ -f "$file" ]] || error "File not found: $file"
+    [[ -n "$heading" ]] || error "Heading required"
+
+    local elisp="(progn
+      (let ((related (org-batch-get-related \"$file\" \"$heading\")))
+        (org-batch-output-json t (list :heading \"$heading\" :related related)))
+      (kill-emacs 0))"
+
+    run_elisp "$elisp"
+}
+
 # Denote commands
 
 cmd_denote_create() {
@@ -1251,6 +1403,27 @@ main() {
             ;;
         export-json)
             cmd_export_json "$@"
+            ;;
+        set-repeater)
+            cmd_set_repeater "$@"
+            ;;
+        get-recurring-tasks)
+            cmd_get_recurring_tasks "$@"
+            ;;
+        set-blocker)
+            cmd_set_blocker "$@"
+            ;;
+        get-blocker)
+            cmd_get_blocker "$@"
+            ;;
+        get-blocked-tasks)
+            cmd_get_blocked_tasks "$@"
+            ;;
+        set-related)
+            cmd_set_related "$@"
+            ;;
+        get-related)
+            cmd_get_related "$@"
             ;;
         denote-create)
             cmd_denote_create "$@"
