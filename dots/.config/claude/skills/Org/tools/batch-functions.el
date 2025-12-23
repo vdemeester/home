@@ -903,6 +903,127 @@ Returns t on success."
       (insert (json-encode todos)))
     t))
 
+;;; Recurring Tasks
+
+(defun org-batch-set-repeater (file heading repeater-spec)
+  "Set repeater REPEATER-SPEC for HEADING in FILE.
+REPEATER-SPEC should be like '+1w' or '.+2d' for org-mode repeaters.
+Returns t on success, nil if heading not found."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (goto-char (point-min))
+    (let ((found nil)
+          (heading-regexp (concat "^\\*+ \\(?:TODO\\|NEXT\\|STRT\\|WAIT\\)? ?\\(?:\\[#[1-5]\\] \\)?"
+                                  (regexp-quote heading))))
+      (when (re-search-forward heading-regexp nil t)
+        (org-back-to-heading)
+        ;; Look for existing SCHEDULED line
+        (if (re-search-forward "^[ \t]*SCHEDULED:" (save-excursion (outline-next-heading) (point)) t)
+            ;; Update existing scheduled with repeater
+            (progn
+              (beginning-of-line)
+              (when (re-search-forward "<\\([^>]+\\)>" (line-end-position) t)
+                (let ((timestamp (match-string 1)))
+                  ;; Remove existing repeater if any
+                  (setq timestamp (replace-regexp-in-string " [.+]?\\+[0-9]+[dwmy]" "" timestamp))
+                  ;; Add new repeater
+                  (replace-match (format "<%s %s>" timestamp repeater-spec)))))
+          ;; No scheduled, add one with today's date + repeater
+          (org-back-to-heading)
+          (forward-line 1)
+          (insert (format "SCHEDULED: <%s %s>\n"
+                         (format-time-string "%Y-%m-%d %a")
+                         repeater-spec)))
+        (write-region (point-min) (point-max) file)
+        (setq found t))
+      found)))
+
+(defun org-batch-get-recurring-tasks (file)
+  "Get all tasks with repeaters in FILE.
+Returns list of tasks with their repeater specifications."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (let ((recurring '()))
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (hl)
+          (let ((todo (org-element-property :todo-keyword hl))
+                (scheduled (org-element-property :scheduled hl))
+                (deadline (org-element-property :deadline hl)))
+            (when todo
+              (let ((repeater nil))
+                ;; Check for repeater in scheduled
+                (when scheduled
+                  (let ((sched-val (org-element-property :raw-value scheduled)))
+                    (when (string-match "[.+]?\\+[0-9]+[dwmy]" sched-val)
+                      (setq repeater (match-string 0 sched-val)))))
+                ;; Check for repeater in deadline
+                (when (and (not repeater) deadline)
+                  (let ((dead-val (org-element-property :raw-value deadline)))
+                    (when (string-match "[.+]?\\+[0-9]+[dwmy]" dead-val)
+                      (setq repeater (match-string 0 dead-val)))))
+                (when repeater
+                  (push (cons (cons 'repeater repeater)
+                             (org-batch--element-to-alist hl))
+                        recurring)))))))
+      (nreverse recurring))))
+
+;;; Dependencies & Relationships
+
+(defun org-batch-set-blocker (file heading blocker-heading)
+  "Set BLOCKER-HEADING as a blocker for HEADING in FILE.
+Creates or updates BLOCKER property.
+Returns t on success, nil if heading not found."
+  (org-batch-set-property file heading "BLOCKER" blocker-heading))
+
+(defun org-batch-get-blocker (file heading)
+  "Get blocker for HEADING in FILE.
+Returns blocker heading name or nil if no blocker set."
+  (org-batch-get-property file heading "BLOCKER"))
+
+(defun org-batch-get-blocked-tasks (file)
+  "Get all tasks that have blockers in FILE.
+Returns list of tasks with their blocker information."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (org-mode)
+    (let ((blocked '()))
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (hl)
+          (let ((todo (org-element-property :todo-keyword hl)))
+            (when todo
+              (let ((blocker-prop nil))
+                (save-excursion
+                  (goto-char (org-element-property :begin hl))
+                  (setq blocker-prop (org-entry-get nil "BLOCKER")))
+                (when blocker-prop
+                  (push (cons (cons 'blocker blocker-prop)
+                             (org-batch--element-to-alist hl))
+                        blocked)))))))
+      (nreverse blocked))))
+
+(defun org-batch-set-related (file heading related-heading relation-type)
+  "Set relationship between HEADING and RELATED-HEADING in FILE.
+RELATION-TYPE can be `child', `parent', `related', or `depends-on'.
+Uses org properties to track relationships.
+Returns t on success."
+  (org-batch-set-property file heading
+                         (upcase (format "RELATED_%s" relation-type))
+                         related-heading))
+
+(defun org-batch-get-related (file heading)
+  "Get all related tasks for HEADING in FILE.
+Returns alist of relationship types and related task names."
+  (let ((props (org-batch-list-properties file heading))
+        (related '()))
+    (dolist (prop props)
+      (when (string-match "^RELATED_\\(.*\\)$" (car prop))
+        (let ((rel-type (downcase (match-string 1 (car prop))))
+              (rel-value (cdr prop)))
+          (push (cons (intern rel-type) rel-value) related))))
+    related))
+
 ;;; Output Functions
 
 (defun org-batch-output-json (success data &optional error)
