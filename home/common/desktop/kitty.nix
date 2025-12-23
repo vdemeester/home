@@ -1,4 +1,5 @@
-_: {
+{ pkgs, ... }:
+{
   programs.kitty = {
     enable = true;
     shellIntegration.enableZshIntegration = true;
@@ -27,10 +28,24 @@ _: {
       "shift+up" = "neighboring_window up";
       "shift+down" = "neighboring_window down";
     };
-    # themeFile = "Modus_Operandi"; # Light
-    themeFile = "Modus_Vivendi"; # Dark
+    # Automatic theme switching enabled via xdg.configFile below
+    # Removed hardcoded themeFile to allow dark/light auto-switching
     # action_alias mkh kitten hints --alphabet asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM
     # map kitty_mod+n    mkh --type=linenum emacsclient -c -nw +{line} {path}
+  };
+
+  # Create automatic theme files for dark/light mode switching
+  # Kitty will automatically use these based on GNOME's color-scheme setting
+  xdg.configFile = {
+    "kitty/dark-theme.auto.conf".source =
+      "${pkgs.kitty-themes}/share/kitty-themes/themes/Modus_Vivendi.conf";
+
+    "kitty/light-theme.auto.conf".source =
+      "${pkgs.kitty-themes}/share/kitty-themes/themes/Modus_Operandi.conf";
+
+    # Fallback for when no preference is set (use dark theme)
+    "kitty/no-preference-theme.auto.conf".source =
+      "${pkgs.kitty-themes}/share/kitty-themes/themes/Modus_Vivendi.conf";
   };
 
   programs.zsh.shellAliases = {
