@@ -31,6 +31,10 @@
 // Numword configuration
 #define NUMWORD_TIMEOUT 5000  // Time in ms before numword auto-disables (optional)
 
+// Leader key configuration
+#define LEADER_TIMEOUT 300  // Time in ms to wait for next key in leader sequence
+#define LEADER_PER_KEY_TIMING  // Each key in sequence gets its own timeout
+
 /* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD 1 */
 /* #define CAPS_WORD_INVERT_ON_SHIFT 1 */
 

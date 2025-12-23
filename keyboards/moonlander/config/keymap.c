@@ -71,12 +71,146 @@ const key_override_t *key_overrides[] = {
 };
 
 void leader_start_user(void) {
+    // Visual feedback when leader mode activates (optional)
 }
 
 void leader_end_user(void) {
-    if (leader_sequence_one_key(KC_F)) {
-        // Leader, f => Types the below string
-        SEND_STRING("QMK is awesome.");
+    // ====== LAYOUT SWITCHING ======
+    // Leader + l + <key> for layout changes
+    if (leader_sequence_two_keys(KC_L, KC_B)) {
+        layer_move(BEPO);
+    } else if (leader_sequence_two_keys(KC_L, KC_E)) {
+        layer_move(ERGL);
+    } else if (leader_sequence_two_keys(KC_L, KC_Q)) {
+        layer_move(QWER);
+    }
+
+    // ====== DEVELOPMENT PATTERNS ======
+    // Leader + c + <key> for code snippets
+    else if (leader_sequence_two_keys(KC_C, KC_N)) {
+        SEND_STRING("nil");
+    } else if (leader_sequence_two_keys(KC_C, KC_E)) {
+        SEND_STRING("if err != nil {" SS_TAP(X_ENT) SS_TAP(X_TAB));
+    } else if (leader_sequence_two_keys(KC_C, KC_L)) {
+        SEND_STRING("console.log()");
+        SEND_STRING(SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_C, KC_P)) {
+        SEND_STRING("fmt.Println()");
+        SEND_STRING(SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_C, KC_F)) {
+        SEND_STRING("function() {}");
+        SEND_STRING(SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_C, KC_A)) {
+        SEND_STRING("() => {}");
+        SEND_STRING(SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    }
+
+    // ====== PERSONAL MACROS ======
+    // Leader + m + <key> for personal macros
+    else if (leader_sequence_two_keys(KC_M, KC_E)) {
+        SEND_STRING("vincent@sbr.pm"); // TODO: Update with your email
+    } else if (leader_sequence_two_keys(KC_M, KC_G)) {
+        SEND_STRING("Vincent Demeester <vincent@sbr.pm>"); // Git signature
+    } else if (leader_sequence_two_keys(KC_M, KC_S)) {
+        SEND_STRING("--" SS_TAP(X_ENT) "Vincent Demeester" SS_TAP(X_ENT) "vincent@sbr.pm");
+    } else if (leader_sequence_two_keys(KC_M, KC_T)) {
+        // ISO 8601 timestamp - you might want to use a more dynamic approach
+        SEND_STRING(SS_LCTL("u")); // This is a placeholder - QMK can't generate current date
+    }
+
+    // ====== PYTHON PATTERNS ======
+    // Leader + p + <key> for Python code snippets
+    else if (leader_sequence_two_keys(KC_P, KC_I)) {
+        SEND_STRING("if __name__ == \"__main__\":" SS_TAP(X_ENT) SS_TAP(X_TAB));
+    } else if (leader_sequence_two_keys(KC_P, KC_D)) {
+        SEND_STRING("def ():" SS_TAP(X_ENT) SS_TAP(X_TAB));
+        SEND_STRING(SS_TAP(X_UP) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_P, KC_C)) {
+        SEND_STRING("class :" SS_TAP(X_ENT) SS_TAP(X_TAB));
+        SEND_STRING(SS_TAP(X_UP) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_P, KC_P)) {
+        SEND_STRING("print(f\"\")");
+        SEND_STRING(SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_P, KC_T)) {
+        SEND_STRING("try:" SS_TAP(X_ENT) SS_TAP(X_TAB));
+        SEND_STRING(SS_TAP(X_ENT) SS_LSFT(SS_TAP(X_TAB)) "except Exception as e:" SS_TAP(X_ENT) SS_TAP(X_TAB));
+    } else if (leader_sequence_two_keys(KC_P, KC_W)) {
+        SEND_STRING("with open(\"\", \"r\") as f:" SS_TAP(X_ENT) SS_TAP(X_TAB));
+        SEND_STRING(SS_TAP(X_UP) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    }
+
+    // ====== EMACS LISP PATTERNS ======
+    // Leader + e + <key> for Emacs Lisp snippets
+    else if (leader_sequence_two_keys(KC_E, KC_D)) {
+        SEND_STRING("(defun  ()" SS_TAP(X_ENT));
+        SEND_STRING(SS_TAP(X_UP) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_E, KC_I)) {
+        SEND_STRING("(interactive)");
+    } else if (leader_sequence_two_keys(KC_E, KC_L)) {
+        SEND_STRING("(let ((");
+    } else if (leader_sequence_two_keys(KC_E, KC_S)) {
+        SEND_STRING("(setq  )");
+        SEND_STRING(SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_E, KC_M)) {
+        SEND_STRING("(message \"\")");
+        SEND_STRING(SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_E, KC_R)) {
+        SEND_STRING("(require ')");
+        SEND_STRING(SS_TAP(X_LEFT));
+    }
+
+    // ====== NIX PATTERNS ======
+    // Leader + n + <key> for Nix snippets
+    else if (leader_sequence_two_keys(KC_N, KC_F)) {
+        SEND_STRING("{ pkgs, ... }:");
+    } else if (leader_sequence_two_keys(KC_N, KC_L)) {
+        SEND_STRING("let" SS_TAP(X_ENT) SS_TAP(X_TAB) SS_TAP(X_ENT) "in" SS_TAP(X_ENT));
+        SEND_STRING(SS_TAP(X_UP) SS_TAP(X_UP));
+    } else if (leader_sequence_two_keys(KC_N, KC_W)) {
+        SEND_STRING("with pkgs; [" SS_TAP(X_ENT) SS_TAP(X_TAB) SS_TAP(X_ENT) "]");
+        SEND_STRING(SS_TAP(X_UP));
+    } else if (leader_sequence_two_keys(KC_N, KC_I)) {
+        SEND_STRING("inherit ;");
+        SEND_STRING(SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_N, KC_B)) {
+        SEND_STRING("buildInputs = [ ];");
+        SEND_STRING(SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_N, KC_P)) {
+        SEND_STRING("pkgs.writeShellScriptBin \"\" ''");
+        SEND_STRING(SS_TAP(X_ENT) SS_TAP(X_TAB) SS_TAP(X_ENT) "''");
+        SEND_STRING(SS_TAP(X_UP) SS_TAP(X_UP) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    }
+
+    // ====== IMPORT PATTERNS ======
+    // Leader + i + <key> for common imports
+    else if (leader_sequence_two_keys(KC_I, KC_P)) {
+        SEND_STRING("import ");
+    } else if (leader_sequence_two_keys(KC_I, KC_F)) {
+        SEND_STRING("from  import ");
+        SEND_STRING(SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    } else if (leader_sequence_two_keys(KC_I, KC_N)) {
+        SEND_STRING("{ pkgs }: {" SS_TAP(X_ENT) SS_TAP(X_TAB) SS_TAP(X_ENT) "}");
+        SEND_STRING(SS_TAP(X_UP));
+    } else if (leader_sequence_two_keys(KC_I, KC_E)) {
+        SEND_STRING("(use-package " SS_TAP(X_ENT) SS_TAP(X_TAB));
+        SEND_STRING(SS_TAP(X_UP) SS_TAP(X_END));
+    }
+
+    // ====== APPLICATION SHORTCUTS ======
+    // Leader + a + <key> for application launches
+    // These use the configured niri keybindings
+    else if (leader_sequence_two_keys(KC_A, KC_D)) {
+        SEND_STRING(SS_LGUI("d")); // Mod+D for fuzzel (app launcher)
+    } else if (leader_sequence_two_keys(KC_A, KC_E)) {
+        SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_ENT)))); // Mod+Shift+Enter for Emacs client
+    } else if (leader_sequence_two_keys(KC_A, KC_T)) {
+        SEND_STRING(SS_LGUI(SS_TAP(X_ENT))); // Mod+Enter for Terminal (kitty)
+    } else if (leader_sequence_two_keys(KC_A, KC_J)) {
+        SEND_STRING(SS_LGUI(SS_LCTL("d"))); // Mod+Control+D for emoji picker (rofimoji)
+    } else if (leader_sequence_two_keys(KC_A, KC_V)) {
+        SEND_STRING(SS_LGUI(SS_LCTL("v"))); // Mod+Control+V for clipboard history (cliphist)
+    } else if (leader_sequence_two_keys(KC_A, KC_R)) {
+        SEND_STRING(SS_LGUI(SS_LSFT("d"))); // Mod+Shift+D for raffi launcher
     }
 }
 
@@ -101,8 +235,8 @@ enum combos {
 };
 
 const uint16_t PROGMEM combo_to_bepo[] = {LT(NAVI,KC_BSPC), OS_LSFT, COMBO_END};
-const uint16_t PROGMEM combo_to_ergol[] = {LT(NUMB,KC_SPC), LT(SYMB, KC_ENT), COMBO_END};
-const uint16_t PROGMEM combo_to_qwerty[] = {KC_DEL, KC_RALT, COMBO_END};
+const uint16_t PROGMEM combo_to_ergol[] = {KC_Q, KC_P, COMBO_END};  // Q+P opposite corners
+const uint16_t PROGMEM combo_to_qwerty[] = {LT(NUMB,KC_SPC), LT(SYMB, KC_ENT), COMBO_END};  // Numb+Symb
 const uint16_t PROGMEM combo_toggle_mouse[] = {KC_Q, KC_R, COMBO_END};
 
 const uint16_t PROGMEM combo_bepo_escape[] = {HM_ALT_R, HM_GUI_N, COMBO_END};
@@ -119,7 +253,7 @@ const uint16_t PROGMEM combo_qwe_minus[] = {KC_W, HM_ALT_S, COMBO_END};  // -
 const uint16_t PROGMEM combo_qwe_unds[] = {HM_CTL_F, KC_V, COMBO_END};   // _
 const uint16_t PROGMEM combo_qwe_equal[] = {HM_ALT_S, KC_X, COMBO_END};  // = 
 
-const uint16_t PROGMEM combo_qwe_leader[] = {HM_SFT_D, HM_CTL_F, COMBO_END}; // FIXME: change this most likely.
+const uint16_t PROGMEM combo_qwe_leader[] = {KC_DEL, KC_RALT, COMBO_END}; // Del+RAlt - right side thumb cluster, very deliberate
 
 const uint16_t PROGMEM combo_qwe_lprn[] = {KC_I, HM_SFT_K, COMBO_END};    // (
 const uint16_t PROGMEM combo_qwe_rprn[] = {HM_SFT_K, KC_COMM, COMBO_END}; // )

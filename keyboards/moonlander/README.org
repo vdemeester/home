@@ -57,10 +57,89 @@ Custom QMK firmware for the ZSA Moonlander split keyboard (72 keys, STM32 MCU, R
 
 * Usage
 
-- *Layout switching*: Bépo (Nav+Shift), ErgoL (Num+Sym), QWERTY (Del+RAlt)
+- *Layout switching*: Bépo (Nav+Shift), ErgoL (Q+P), QWERTY (Numb+Symb), or via leader sequences
 - *Numword*: Hold Space on Bépo layer (auto-disable after 5s)
-- *Leader*: Combo D+F on QWERTY
+- *Leader key*: Combo Del+RAlt (right thumb cluster, 300ms timeout per key)
 - *Mouse toggle*: Combo Q+R
+
+** Leader Key Sequences
+
+The leader key is activated by pressing Del+RAlt simultaneously (right thumb cluster). After activation, you have 300ms to press each subsequent key in the sequence.
+
+*** Layout Switching (Leader + L + key)
+| Sequence | Action         |
+|----------+----------------|
+| l b      | Switch to Bépo |
+| l e      | Switch to ErgoL|
+| l q      | Switch to QWERTY|
+
+*** Development Patterns - General (Leader + C + key)
+| Sequence | Output                    | Notes                          |
+|----------+---------------------------+--------------------------------|
+| c n      | nil                       | Go/common nil keyword          |
+| c e      | if err != nil {<enter><tab>| Go error handling pattern      |
+| c l      | console.log()             | Cursor positioned inside ()    |
+| c p      | fmt.Println()             | Cursor positioned inside ()    |
+| c f      | function() {}             | Cursor positioned inside {}    |
+| c a      | () => {}                  | Arrow function, cursor inside {}|
+
+*** Development Patterns - Python (Leader + P + key)
+| Sequence | Output                    | Notes                          |
+|----------+---------------------------+--------------------------------|
+| p i      | if __name__ == "__main__":| Python main block              |
+| p d      | def ():                   | Function definition, cursor at name |
+| p c      | class :                   | Class definition, cursor at name |
+| p p      | print(f"")                | f-string print, cursor inside quotes |
+| p t      | try:...except Exception as e: | Try-except block           |
+| p w      | with open("", "r") as f:  | File context manager, cursor at path |
+
+*** Development Patterns - Emacs Lisp (Leader + E + key)
+| Sequence | Output                    | Notes                          |
+|----------+---------------------------+--------------------------------|
+| e d      | (defun  ()                | Function definition, cursor at name |
+| e i      | (interactive)             | Interactive declaration        |
+| e l      | (let ((                   | Let binding                    |
+| e s      | (setq  )                  | Set variable, cursor at name   |
+| e m      | (message "")              | Message output, cursor inside quotes |
+| e r      | (require ')               | Require package, cursor after quote |
+
+*** Development Patterns - Nix (Leader + N + key)
+| Sequence | Output                    | Notes                          |
+|----------+---------------------------+--------------------------------|
+| n f      | { pkgs, ... }:            | Nix function signature         |
+| n l      | let...in                  | Let expression, cursor in body |
+| n w      | with pkgs; [...]          | With statement, cursor in list |
+| n i      | inherit ;                 | Inherit, cursor before semicolon |
+| n b      | buildInputs = [ ];        | buildInputs, cursor in list    |
+| n p      | pkgs.writeShellScriptBin ""| Shell script, cursor at name   |
+
+*** Import Patterns (Leader + I + key)
+| Sequence | Output                    | Notes                          |
+|----------+---------------------------+--------------------------------|
+| i p      | import                    | Python simple import           |
+| i f      | from  import              | Python from import, cursor at module |
+| i n      | { pkgs }: {...}           | Nix module definition          |
+| i e      | (use-package              | Emacs use-package declaration  |
+
+*** Personal Macros (Leader + M + key)
+| Sequence | Output                              | Notes                  |
+|----------+-------------------------------------+------------------------|
+| m e      | vincent@sbr.pm                      | Email address          |
+| m g      | Vincent Demeester <vincent@sbr.pm>  | Git signature format   |
+| m s      | --<enter>Vincent Demeester<enter>...| Email signature        |
+| m t      | <Ctrl+U>                            | Timestamp placeholder  |
+
+*** Application Shortcuts (Leader + A + key)
+| Sequence | Keybind           | Action                         |
+|----------+-------------------+--------------------------------|
+| a d      | Mod+D             | Launch fuzzel app launcher     |
+| a e      | Mod+Shift+Enter   | Launch Emacs client            |
+| a t      | Mod+Enter         | Launch Terminal (kitty)        |
+| a j      | Mod+Control+D     | Emoji picker (rofimoji)        |
+| a v      | Mod+Control+V     | Clipboard history (cliphist)   |
+| a r      | Mod+Shift+D       | Raffi launcher                 |
+
+*Note*: These shortcuts match your niri window manager configuration.
 
 * Development
 
