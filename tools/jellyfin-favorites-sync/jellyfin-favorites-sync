@@ -1,0 +1,408 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "requests>=2.31.0",
+#     "click>=8.1.0",
+# ]
+# ///
+
+"""
+Sync Jellyfin favorites to remote host via rsync.
+
+This script queries Jellyfin for favorited movies and series,
+expands series to individual episodes, discovers parent directories
+containing media files and metadata, and syncs them to a remote host using rsync.
+"""
+
+import os
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+from typing import Dict, Any, List, Set
+
+import click
+
+# Import from shared arr library
+# Try packaged import first (PYTHONPATH set by wrapper), fall back to development import
+try:
+    from lib import JellyfinClient
+except ImportError:
+    # Development mode: add arr directory to path
+    sys.path.insert(0, str(Path(__file__).parent.parent / "arr"))
+    from lib import JellyfinClient
+
+
+def expand_favorites(client: JellyfinClient, items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Expand series items into individual episodes.
+
+    Args:
+        client: Jellyfin client instance
+        items: List of favorite items (may include series)
+
+    Returns:
+        List of items with series expanded to episodes
+    """
+    expanded = []
+    for item in items:
+        if item.get("Type") == "Series":
+            series_id = item.get("Id")
+            series_name = item.get("Name")
+            click.echo(f"  Expanding series: {series_name}")
+            episodes = client.get_series_episodes(series_id, fields=["Path", "MediaSources"])
+            click.echo(f"    Found {len(episodes)} episodes")
+            expanded.extend(episodes)
+        else:
+            expanded.append(item)
+    return expanded
+
+
+def discover_sync_paths(items: List[Dict[str, Any]], source_root: Path, verbose: bool = False) -> Set[Path]:
+    """
+    Convert Jellyfin items to parent directories for rsync.
+
+    For movies: Parent directory (contains .mkv, .srt, .nfo, poster.jpg)
+    For episodes: Season directory (contains all episodes + metadata)
+
+    Args:
+        items: List of Jellyfin items (movies and episodes)
+        source_root: Root path of Jellyfin library (e.g., /neo/videos)
+        verbose: Enable verbose logging
+
+    Returns:
+        Set of parent directories to sync
+    """
+    paths = set()
+    skipped = []
+
+    for item in items:
+        item_type = item.get("Type")
+        item_name = item.get("Name", "Unknown")
+
+        # Get file path from item
+        file_path_str = item.get("Path")
+        if not file_path_str:
+            media_sources = item.get("MediaSources", [])
+            if media_sources and len(media_sources) > 0:
+                file_path_str = media_sources[0].get("Path")
+
+        if not file_path_str:
+            skipped.append(f"{item_name} ({item_type}): No path found")
+            continue
+
+        file_path = Path(file_path_str)
+
+        # Validate path is within source root
+        try:
+            file_path.resolve().relative_to(source_root.resolve())
+        except ValueError:
+            skipped.append(f"{item_name} ({item_type}): Path outside source root")
+            continue
+
+        # Add parent directory
+        if item_type == "Movie":
+            paths.add(file_path.parent)
+            if verbose:
+                click.echo(f"    Movie: {item_name} -> {file_path.parent}")
+        elif item_type == "Episode":
+            paths.add(file_path.parent)
+            if verbose:
+                click.echo(f"    Episode: {item_name} -> {file_path.parent}")
+        else:
+            if verbose:
+                click.echo(f"    Skipping unknown type: {item_type}")
+
+    if skipped:
+        click.echo(f"\n⚠ Skipped {len(skipped)} items:")
+        for skip_reason in skipped[:10]:  # Show first 10
+            click.echo(f"  - {skip_reason}")
+        if len(skipped) > 10:
+            click.echo(f"  ... and {len(skipped) - 10} more")
+
+    return paths
+
+
+def execute_rsync(
+    sync_paths: Set[Path],
+    source_root: Path,
+    dest_user: str,
+    dest_host: str,
+    dest_root: str,
+    ssh_args: List[str],
+    dry_run: bool = False,
+    verbose: bool = False,
+) -> bool:
+    """
+    Execute rsync to sync directories to remote host.
+
+    Args:
+        sync_paths: Set of parent directories to sync
+        source_root: Root path of Jellyfin library
+        dest_user: SSH user for remote connection
+        dest_host: SSH hostname
+        dest_root: Destination path on remote host
+        ssh_args: Additional SSH arguments
+        dry_run: Show operations without executing
+        verbose: Enable verbose rsync output
+
+    Returns:
+        True if successful, False otherwise
+    """
+    if not sync_paths:
+        click.echo("⚠ No paths to sync!")
+        return False
+
+    # Generate temporary file list for rsync
+    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as f:
+        file_list_path = f.name
+        for path in sorted(sync_paths):
+            try:
+                relative_path = path.relative_to(source_root)
+                f.write(f"{relative_path}/\n")
+            except ValueError:
+                click.echo(f"⚠ Skipping path outside source root: {path}")
+
+    try:
+        # Build rsync command
+        rsync_cmd = [
+            "rsync",
+            "-aAX",  # Archive mode with ACLs and xattrs
+            "--delete",  # Mirror mode
+            "--delete-excluded",
+            f"--files-from={file_list_path}",
+            "--partial",  # Resume interrupted transfers
+            "--append-verify",  # Resume with verification
+            "--compress",  # SSH compression
+            "--info=progress2" if verbose else "--info=name1",
+            "--human-readable",
+        ]
+
+        # Add SSH command with custom args
+        if ssh_args:
+            ssh_cmd = "ssh " + " ".join(ssh_args)
+            rsync_cmd.append(f"-e")
+            rsync_cmd.append(ssh_cmd)
+
+        # Add dry-run flag if requested
+        if dry_run:
+            rsync_cmd.append("--dry-run")
+
+        # Add source and destination
+        rsync_cmd.append(f"{dest_user}@{dest_host}:{source_root}/")
+        rsync_cmd.append(f"{dest_root}/")
+
+        # Show command if verbose
+        if verbose:
+            click.echo(f"\nExecuting rsync command:")
+            click.echo(f"  {' '.join(rsync_cmd)}")
+            click.echo(f"\nFile list ({len(sync_paths)} directories):")
+            with open(file_list_path, "r") as f:
+                for line in f.read().splitlines()[:20]:
+                    click.echo(f"  {line}")
+                if len(sync_paths) > 20:
+                    click.echo(f"  ... and {len(sync_paths) - 20} more")
+            click.echo()
+
+        # Execute rsync
+        result = subprocess.run(rsync_cmd, check=False)
+
+        if result.returncode == 0:
+            return True
+        else:
+            click.echo(f"✗ Rsync failed with exit code {result.returncode}", err=True)
+            return False
+
+    finally:
+        # Clean up temporary file
+        try:
+            os.unlink(file_list_path)
+        except Exception:
+            pass
+
+
+@click.command(context_settings=dict(help_option_names=['-h', '--help']))
+@click.option(
+    "--jellyfin-url",
+    required=True,
+    help="Jellyfin server URL (e.g., https://jellyfin.sbr.pm)",
+)
+@click.option(
+    "--api-key",
+    help="Jellyfin API key (use --api-key-file for secrets)",
+)
+@click.option(
+    "--api-key-file",
+    type=click.Path(exists=True),
+    help="Path to file containing Jellyfin API key",
+)
+@click.option(
+    "--user-id",
+    required=True,
+    help="Jellyfin user ID or username",
+)
+@click.option(
+    "--source-root",
+    type=click.Path(exists=True, file_okay=False),
+    default="/neo/videos",
+    help="Root path of Jellyfin library (default: /neo/videos)",
+)
+@click.option(
+    "--dest-host",
+    required=True,
+    help="Destination SSH host (e.g., aix.sbr.pm)",
+)
+@click.option(
+    "--dest-user",
+    default="vincent",
+    help="SSH user for remote connection (default: vincent)",
+)
+@click.option(
+    "--dest-root",
+    default="/data/favorites",
+    help="Destination path on remote host (default: /data/favorites)",
+)
+@click.option(
+    "--ssh-arg",
+    "ssh_args",
+    multiple=True,
+    help="Additional SSH arguments (can be specified multiple times)",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show operations without executing",
+)
+@click.option(
+    "--verbose",
+    is_flag=True,
+    help="Enable verbose output",
+)
+def main(
+    jellyfin_url: str,
+    api_key: str,
+    api_key_file: str,
+    user_id: str,
+    source_root: str,
+    dest_host: str,
+    dest_user: str,
+    dest_root: str,
+    ssh_args: tuple,
+    dry_run: bool,
+    verbose: bool,
+):
+    """
+    Sync Jellyfin favorites to remote host via rsync.
+
+    This tool queries Jellyfin for favorited movies and series, expands series to
+    individual episodes, discovers parent directories containing media files and
+    metadata, and syncs them to a remote host using rsync in mirror mode.
+
+    \b
+    Example:
+      jellyfin-favorites-sync \\
+        --jellyfin-url https://jellyfin.sbr.pm \\
+        --api-key-file /run/agenix/jellyfin-api-key \\
+        --user-id vincent \\
+        --dest-host aix.sbr.pm \\
+        --dry-run \\
+        --verbose
+    """
+    # Resolve API key
+    if api_key_file:
+        with open(api_key_file, "r") as f:
+            api_key = f.read().strip()
+    elif not api_key:
+        click.echo("Error: Either --api-key or --api-key-file must be provided", err=True)
+        sys.exit(1)
+
+    # Convert paths
+    source_root_path = Path(source_root).resolve()
+
+    # Print header
+    click.echo("=" * 80)
+    click.echo("Jellyfin Favorites Sync")
+    click.echo("=" * 80)
+    click.echo(f"Jellyfin URL: {jellyfin_url}")
+    click.echo(f"User ID: {user_id}")
+    click.echo(f"Source root: {source_root_path}")
+    click.echo(f"Destination: {dest_user}@{dest_host}:{dest_root}")
+    if dry_run:
+        click.echo("Mode: DRY RUN (no changes will be made)")
+    click.echo()
+
+    # Initialize Jellyfin client
+    click.echo("Connecting to Jellyfin...")
+    try:
+        client = JellyfinClient(jellyfin_url, api_key, user_id, debug=verbose)
+    except Exception as e:
+        click.echo(f"✗ Failed to connect to Jellyfin: {e}", err=True)
+        sys.exit(1)
+
+    # Query favorites
+    click.echo("Querying favorites...")
+    try:
+        favorites = client.get_favorites(
+            include_types=["Movie", "Series"],
+            fields=["Path", "MediaSources"],
+        )
+        click.echo(f"Found {len(favorites)} favorite items")
+    except Exception as e:
+        click.echo(f"✗ Failed to query favorites: {e}", err=True)
+        sys.exit(1)
+
+    if not favorites:
+        click.echo("⚠ No favorites found. Nothing to sync.")
+        return
+
+    # Expand series to episodes
+    click.echo("\nExpanding series to episodes...")
+    try:
+        expanded = expand_favorites(client, favorites)
+        click.echo(f"Total items after expansion: {len(expanded)}")
+    except Exception as e:
+        click.echo(f"✗ Failed to expand series: {e}", err=True)
+        sys.exit(1)
+
+    # Discover sync paths
+    click.echo("\nDiscovering parent directories to sync...")
+    sync_paths = discover_sync_paths(expanded, source_root_path, verbose=verbose)
+    click.echo(f"Found {len(sync_paths)} directories to sync")
+
+    if not sync_paths:
+        click.echo("⚠ No valid paths to sync. Exiting.")
+        return
+
+    # Execute rsync
+    click.echo("\nSyncing to remote host...")
+    ssh_args_list = list(ssh_args) if ssh_args else []
+    success = execute_rsync(
+        sync_paths,
+        source_root_path,
+        dest_user,
+        dest_host,
+        dest_root,
+        ssh_args_list,
+        dry_run=dry_run,
+        verbose=verbose,
+    )
+
+    # Print summary
+    click.echo("\n" + "=" * 80)
+    if success:
+        if dry_run:
+            click.echo("✓ Dry-run completed successfully")
+        else:
+            click.echo("✓ Sync completed successfully")
+        click.echo(f"  Favorites: {len(favorites)}")
+        click.echo(f"  Items (after series expansion): {len(expanded)}")
+        click.echo(f"  Directories synced: {len(sync_paths)}")
+    else:
+        click.echo("✗ Sync failed", err=True)
+        sys.exit(1)
+    click.echo("=" * 80)
+
+
+if __name__ == "__main__":
+    main(prog_name="jellyfin-favorites-sync")

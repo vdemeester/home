@@ -165,10 +165,11 @@ class ArrClient:
                         file=sys.stderr,
                     )
                 else:
-                    print(
-                        f"Error posting to {endpoint}: {type(e).__name__} - {str(e)}",
-                        file=sys.stderr,
+                    error_msg = (
+                        f"Error posting to {endpoint}: "
+                        f"{type(e).__name__} - {str(e)}"
                     )
+                    print(error_msg, file=sys.stderr)
 
                 # Print payload for debugging
                 print(f"  Payload: {payload}", file=sys.stderr)
@@ -831,6 +832,63 @@ class JellyfinClient:
                 file=sys.stderr,
             )
             return False
+
+    def get_favorites(
+        self,
+        include_types: Optional[List[str]] = None,
+        fields: Optional[List[str]] = None,
+    ) -> List[Dict[str, Any]]:
+        """
+        Get all favorite items for the user.
+
+        Args:
+            include_types: List of item types to include
+                          (e.g., ["Movie", "Series"])
+                          Defaults to ["Movie", "Series"]
+            fields: Additional fields to include in response
+                   Defaults to ["Path", "MediaSources"]
+
+        Returns:
+            List of favorite items
+        """
+        if include_types is None:
+            include_types = ["Movie", "Series"]
+        if fields is None:
+            fields = ["Path", "MediaSources"]
+
+        params = {
+            "IsFavorite": "true",
+            "Recursive": "true",
+            "IncludeItemTypes": ",".join(include_types),
+            "Fields": ",".join(fields),
+        }
+
+        result = self.get(f"/Users/{self.user_id}/Items", params=params)
+        return result.get("Items", [])
+
+    def get_series_episodes(
+        self,
+        series_id: str,
+        fields: Optional[List[str]] = None,
+    ) -> List[Dict[str, Any]]:
+        """
+        Get all episodes for a series.
+
+        Args:
+            series_id: Jellyfin series ID
+            fields: Additional fields to include in response
+                   Defaults to ["Path", "MediaSources"]
+
+        Returns:
+            List of episode items
+        """
+        if fields is None:
+            fields = ["Path", "MediaSources"]
+
+        params = {"Fields": ",".join(fields)}
+
+        result = self.get(f"/Shows/{series_id}/Episodes", params=params)
+        return result.get("Items", [])
 
 
 class SpotifyClient:

@@ -121,6 +121,7 @@ in
   ];
   "secrets/rhea/jellyfin-auto-collections-api-key.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/jellyfin-auto-collections-jellyseerr-password.age".publicKeys = users ++ [ rhea ];
+  "secrets/rhea/jellyfin-favorites-sync-api-key.age".publicKeys = users ++ [ rhea ];
   "secrets/rhea/webdav-password.age".publicKeys = users ++ [ rhea ];
   "secrets/sakhalin/grafana-admin-password.age".publicKeys = users ++ [ sakhalin ];
   "secrets/sakhalin/ntfy-token.age".publicKeys = users ++ [

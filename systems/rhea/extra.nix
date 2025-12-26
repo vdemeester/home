@@ -76,6 +76,7 @@ in
     ../common/services/prometheus-exporters-node.nix
     ../common/services/prometheus-exporters-postgres.nix
     ../../modules/jellyfin-auto-collections
+    ../../modules/jellyfin-favorites-sync
   ];
 
   # Age secrets: gandi.env + webdav + jellyfin + generated exportarr secrets
@@ -99,6 +100,11 @@ in
       file = ../../secrets/rhea/jellyfin-auto-collections-jellyseerr-password.age;
       mode = "400";
       owner = "jellyfin-auto-collections";
+    };
+    "jellyfin-favorites-sync-api-key" = {
+      file = ../../secrets/rhea/jellyfin-favorites-sync-api-key.age;
+      mode = "400";
+      owner = "jellyfin-favorites-sync";
     };
     "restic-aix-password" = {
       file = ../../secrets/rhea/restic-aix-password.age;
@@ -592,6 +598,26 @@ in
           };
         };
       };
+    };
+    jellyfin-favorites-sync = {
+      enable = false;
+      schedule = "daily"; # Run daily at midnight
+
+      jellyfinUrl = "http://localhost:8096";
+      apiKeyFile = config.age.secrets."jellyfin-favorites-sync-api-key".path;
+      userId = "400fef4e0ab2448cb8a2bc8ca2facc4f"; # vincent user ID
+
+      sourceRoot = "/neo/videos";
+
+      destination = {
+        host = "aix.sbr.pm";
+        user = "vincent";
+        root = "/data/favorites";
+      };
+
+      sshArgs = [
+        "-o StrictHostKeyChecking=accept-new"
+      ];
     };
     transmission = serviceDefaults // {
       enable = true;
