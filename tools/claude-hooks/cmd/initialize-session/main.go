@@ -86,6 +86,27 @@ func logSessionStart() error {
 	return err
 }
 
+// loadCoreSkill outputs the CORE skill content so Claude receives it at session start
+func loadCoreSkill() error {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+
+	coreSkillPath := filepath.Join(homeDir, ".config/claude/skills/CORE/SKILL.md")
+	content, err := os.ReadFile(coreSkillPath)
+	if err != nil {
+		return err
+	}
+
+	// Output to stdout so Claude receives it
+	fmt.Println("\n<!-- CORE Skill Auto-Loaded at Session Start -->")
+	fmt.Println(string(content))
+	fmt.Println("<!-- End CORE Skill -->")
+
+	return nil
+}
+
 func main() {
 	// Check if this is a subagent session
 	if isSubagentSession() {
@@ -103,6 +124,12 @@ func main() {
 	tabTitle := "Claude Ready"
 	setTerminalTitle(tabTitle)
 	fmt.Fprintf(os.Stderr, "📍 Session initialized: \"%s\"\n", tabTitle)
+
+	// Load CORE skill at session start
+	if err := loadCoreSkill(); err != nil {
+		// Warn but don't break session start
+		fmt.Fprintf(os.Stderr, "[initialize-session] Warning: Could not load CORE skill: %v\n", err)
+	}
 
 	// Send desktop notification
 	cmd := exec.Command("notify-send", "-u", "low", "Claude Code", "Session started")
