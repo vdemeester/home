@@ -13,7 +13,8 @@
         global = {
           security = "user";
           workgroup = "WORKGROUP";
-          "server smb encrypt" = "required";
+          "server smb encrypt" = "desired";
+          "server signing" = "auto";
           "server min protocol" = "SMB3_00";
           "hosts allow" = "192.168. 10.100. 127.0.0.1 localhost";
           "hosts deny" = "0.0.0.0/0";

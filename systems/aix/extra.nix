@@ -64,25 +64,45 @@ in
 
     samba.settings = {
       global."server string" = "Aix";
-      vincent = libx.mkSambaShare {
-        name = "vincent";
-        path = "/data/share";
-      };
-      music = libx.mkSambaShare {
-        name = "music";
-        path = "/data/music";
-        readOnly = true;
-      };
-      ebooks = libx.mkSambaShare {
-        name = "ebooks";
-        path = "/data/ebooks";
-        readOnly = true;
-      };
-      audiobooks = libx.mkSambaShare {
-        name = "audiobooks";
-        path = "/data/audiobooks";
-        readOnly = true;
-      };
+      vincent =
+        (libx.mkSambaShare {
+          name = "vincent";
+          path = "/data/share";
+        })
+        // {
+          "guest ok" = "no";
+          public = "no";
+        };
+      music =
+        (libx.mkSambaShare {
+          name = "music";
+          path = "/data/music";
+          readOnly = true;
+        })
+        // {
+          "guest ok" = "no";
+          public = "no";
+        };
+      ebooks =
+        (libx.mkSambaShare {
+          name = "ebooks";
+          path = "/data/ebooks";
+          readOnly = true;
+        })
+        // {
+          "guest ok" = "no";
+          public = "no";
+        };
+      audiobooks =
+        (libx.mkSambaShare {
+          name = "audiobooks";
+          path = "/data/audiobooks";
+          readOnly = true;
+        })
+        // {
+          "guest ok" = "no";
+          public = "no";
+        };
     };
 
     wireguard = {
