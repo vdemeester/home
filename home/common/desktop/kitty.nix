@@ -95,6 +95,15 @@
     # Fallback for when no preference is set (use dark theme)
     "kitty/no-preference-theme.auto.conf".source =
       "${pkgs.kitty-themes}/share/kitty-themes/themes/Modus_Vivendi.conf";
+
+    # SSH kitten configuration - delegate to standard SSH for shpool sessions
+    # Hosts with / pattern (e.g., host.domain/session) use RemoteCommand which conflicts with the kitten
+    "kitty/ssh.conf".text = ''
+      # Delegate to standard SSH for shpool session patterns (host/session)
+      # This allows RemoteCommand to work without Kitty's SSH kitten interference
+      hostname */*
+      delegate ssh
+    '';
   };
 
   programs.zsh.shellAliases = {

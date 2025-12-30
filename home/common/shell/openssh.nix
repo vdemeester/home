@@ -13,16 +13,55 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    # controlMaster = "auto";
-    # controlPersist = "10m"; # FIXME: issue with OpenSSH 10p1, can re-enable in a few weeks.
-    # controlPath = "${config.home.homeDirectory}/.ssh/master-%C";
     matchBlocks = {
       "*" = {
         serverAliveInterval = 60;
         hashKnownHosts = true;
         userKnownHostsFile = "${config.home.homeDirectory}/.ssh/known_hosts";
         addKeysToAgent = "confirm";
+        controlMaster = "auto";
+        controlPersist = "10m";
+        controlPath = "${config.home.homeDirectory}/.ssh/master-%C";
       };
+      # Shpool session aliases (https://bower.sh/you-might-not-need-tmux)
+      # Usage: ssh <host>/<session-name>
+      # Example: ssh rhea.home/music, ssh aomi.home/dev
+    }
+    // (
+      # Generate shpool session aliases for each machine dynamically
+      let
+        lib = pkgs.lib;
+        mkShpoolAliases =
+          _: machine:
+          let
+            # Get hostname identifiers (e.g., "rhea.home", "rhea.vpn", "rhea.sbr.pm")
+            identifiers = builtins.filter (
+              x: (lib.hasSuffix ".home" x) || (lib.hasSuffix ".vpn" x) || (lib.hasSuffix ".sbr.pm" x)
+            ) (libx.sshHostIdentifier machine);
+            # For each identifier, create a Host block with /* wildcard
+            mkSessionBlock = id: {
+              name = "${id}/*";
+              value = {
+                hostname =
+                  if (lib.hasSuffix ".vpn" id) then
+                    builtins.head machine.net.vpn.ips
+                  else if (lib.hasSuffix ".home" id) then
+                    builtins.head machine.net.ips
+                  else
+                    id;
+                extraOptions = {
+                  RemoteCommand = "shpool attach -f $(echo '%k' | cut -d/ -f2-)";
+                  RequestTTY = "yes";
+                };
+              };
+            };
+          in
+          builtins.listToAttrs (map mkSessionBlock identifiers);
+      in
+      # Merge all shpool aliases for all machines
+      lib.attrsets.mergeAttrsList (lib.attrsets.mapAttrsToList mkShpoolAliases globals.machines)
+    )
+    // {
       "github.com" = {
         hostname = "github.com";
         user = "git";
