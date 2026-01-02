@@ -11,6 +11,7 @@ GIT_REMOTE="${GIT_REMOTE:-origin}"
 BRANCH_PREFIX="${BRANCH_PREFIX:-flake-update-}"
 NTFY_TOPIC="${NTFY_TOPIC:-nix-updates}"
 NTFY_SERVER="${NTFY_SERVER:-https://ntfy.sh}"
+NTFY_TOKEN_FILE="${NTFY_TOKEN_FILE:-}"
 BUILD_SYSTEMS="${BUILD_SYSTEMS:-}"
 DRY_RUN="${DRY_RUN:-false}"
 
@@ -27,12 +28,24 @@ notify() {
   local message="$3"
   local tags="$4"
 
-  curl -s \
-    -H "Title: $title" \
-    -H "Priority: $priority" \
-    -H "Tags: $tags" \
-    -d "$message" \
-    "$NTFY_SERVER/$NTFY_TOPIC" || true
+  if [ -n "$NTFY_TOKEN_FILE" ] && [ -f "$NTFY_TOKEN_FILE" ]; then
+    # Use authentication token
+    curl -s \
+      -H "Authorization: Bearer $(tr -d '\n' < "$NTFY_TOKEN_FILE")" \
+      -H "Title: $title" \
+      -H "Priority: $priority" \
+      -H "Tags: $tags" \
+      -d "$message" \
+      "$NTFY_SERVER/$NTFY_TOPIC" || true
+  else
+    # No authentication
+    curl -s \
+      -H "Title: $title" \
+      -H "Priority: $priority" \
+      -H "Tags: $tags" \
+      -d "$message" \
+      "$NTFY_SERVER/$NTFY_TOPIC" || true
+  fi
 }
 
 cleanup() {

@@ -99,6 +99,7 @@ in
         enable = true;
         ntfyUrl = "https://ntfy.sbr.pm";
         topic = "homelab";
+        tokenFile = config.age.secrets."ntfy-token".path;
       };
     };
 
@@ -226,6 +227,7 @@ in
         enable = true;
         ntfyUrl = "https://ntfy.sbr.pm";
         topic = "homelab";
+        tokenFile = config.age.secrets."ntfy-token".path;
       };
     };
 

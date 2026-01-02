@@ -90,6 +90,12 @@ in
         default = "audible-sync";
         description = "ntfy topic for notifications";
       };
+
+      tokenFile = mkOption {
+        type = types.nullOr types.path;
+        default = null;
+        description = "Path to file containing ntfy authentication token (optional)";
+      };
     };
   };
 
@@ -134,10 +140,25 @@ in
         # Notifications on success (if enabled)
         ExecStartPost = mkIf cfg.notification.enable (
           pkgs.writeShellScript "audible-sync-notify-success" ''
-            ${pkgs.curl}/bin/curl -H "Title: Audible Sync Complete" \
-              -H "Tags: white_check_mark,books" \
-              -d "Successfully synced Audible library to ${cfg.outputDir}" \
-              ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+            ${
+              if cfg.notification.tokenFile != null then
+                ''
+                  ${pkgs.curl}/bin/curl \
+                    -H "Authorization: Bearer $(${pkgs.coreutils}/bin/tr -d '\n' < ${cfg.notification.tokenFile})" \
+                    -H "Title: Audible Sync Complete" \
+                    -H "Tags: white_check_mark,books" \
+                    -d "Successfully synced Audible library to ${cfg.outputDir}" \
+                    ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+                ''
+              else
+                ''
+                  ${pkgs.curl}/bin/curl \
+                    -H "Title: Audible Sync Complete" \
+                    -H "Tags: white_check_mark,books" \
+                    -d "Successfully synced Audible library to ${cfg.outputDir}" \
+                    ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+                ''
+            }
           ''
         );
 
@@ -164,6 +185,10 @@ in
           cfg.outputDir
           cfg.tempDir
         ];
+        # Allow access to token file if configured
+        BindReadOnlyPaths = mkIf (cfg.notification.enable && cfg.notification.tokenFile != null) [
+          cfg.notification.tokenFile
+        ];
       };
 
       # Notify on failure (if enabled)
@@ -176,12 +201,32 @@ in
       serviceConfig = {
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "audible-sync-notify-failure" ''
-          ${pkgs.curl}/bin/curl -H "Title: Audible Sync Failed" \
-            -H "Priority: high" \
-            -H "Tags: warning,books" \
-            -d "Audible sync failed. Check logs: journalctl -u audible-sync" \
-            ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+          ${
+            if cfg.notification.tokenFile != null then
+              ''
+                ${pkgs.curl}/bin/curl \
+                  -H "Authorization: Bearer $(${pkgs.coreutils}/bin/tr -d '\n' < ${cfg.notification.tokenFile})" \
+                  -H "Title: Audible Sync Failed" \
+                  -H "Priority: high" \
+                  -H "Tags: warning,books" \
+                  -d "Audible sync failed. Check logs: journalctl -u audible-sync" \
+                  ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+              ''
+            else
+              ''
+                ${pkgs.curl}/bin/curl \
+                  -H "Title: Audible Sync Failed" \
+                  -H "Priority: high" \
+                  -H "Tags: warning,books" \
+                  -d "Audible sync failed. Check logs: journalctl -u audible-sync" \
+                  ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+              ''
+          }
         '';
+        # Allow access to token file if configured
+        BindReadOnlyPaths = mkIf (cfg.notification.tokenFile != null) [
+          cfg.notification.tokenFile
+        ];
       };
     };
   };

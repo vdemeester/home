@@ -76,6 +76,12 @@ in
         default = "homelab";
         description = "ntfy topic for notifications";
       };
+
+      tokenFile = mkOption {
+        type = types.nullOr types.path;
+        default = null;
+        description = "Path to file containing ntfy authentication token (optional)";
+      };
     };
   };
 
@@ -113,10 +119,25 @@ in
         # Notifications on success (if enabled)
         ExecStartPost = mkIf cfg.notification.enable (
           pkgs.writeShellScript "music-playlist-dl-notify-success" ''
-            ${pkgs.curl}/bin/curl -H "Title: Music Playlist Download Complete" \
-              -H "Tags: musical_note,headphones" \
-              -d "Successfully downloaded music podcasts and updated playlists" \
-              ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+            ${
+              if cfg.notification.tokenFile != null then
+                ''
+                  ${pkgs.curl}/bin/curl \
+                    -H "Authorization: Bearer $(${pkgs.coreutils}/bin/tr -d '\n' < ${cfg.notification.tokenFile})" \
+                    -H "Title: Music Playlist Download Complete" \
+                    -H "Tags: musical_note,headphones" \
+                    -d "Successfully downloaded music podcasts and updated playlists" \
+                    ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+                ''
+              else
+                ''
+                  ${pkgs.curl}/bin/curl \
+                    -H "Title: Music Playlist Download Complete" \
+                    -H "Tags: musical_note,headphones" \
+                    -d "Successfully downloaded music podcasts and updated playlists" \
+                    ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+                ''
+            }
           ''
         );
 
@@ -148,11 +169,27 @@ in
       serviceConfig = {
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "music-playlist-dl-notify-failure" ''
-          ${pkgs.curl}/bin/curl -H "Title: Music Playlist Download Failed" \
-            -H "Priority: high" \
-            -H "Tags: warning,musical_note" \
-            -d "Music playlist download failed. Check logs: journalctl -u music-playlist-dl" \
-            ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+          ${
+            if cfg.notification.tokenFile != null then
+              ''
+                ${pkgs.curl}/bin/curl \
+                  -H "Authorization: Bearer $(${pkgs.coreutils}/bin/tr -d '\n' < ${cfg.notification.tokenFile})" \
+                  -H "Title: Music Playlist Download Failed" \
+                  -H "Priority: high" \
+                  -H "Tags: warning,musical_note" \
+                  -d "Music playlist download failed. Check logs: journalctl -u music-playlist-dl" \
+                  ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+              ''
+            else
+              ''
+                ${pkgs.curl}/bin/curl \
+                  -H "Title: Music Playlist Download Failed" \
+                  -H "Priority: high" \
+                  -H "Tags: warning,musical_note" \
+                  -d "Music playlist download failed. Check logs: journalctl -u music-playlist-dl" \
+                  ${cfg.notification.ntfyUrl}/${cfg.notification.topic}
+              ''
+          }
         '';
       };
     };

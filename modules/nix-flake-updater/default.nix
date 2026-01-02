@@ -20,6 +20,7 @@ let
     export NTFY_SERVER="${cfg.ntfyServer}"
     export BUILD_SYSTEMS="${toString cfg.buildSystems}"
     export DRY_RUN="${toString cfg.dryRun}"
+    ${optionalString (cfg.ntfyTokenFile != null) ''export NTFY_TOKEN_FILE="${cfg.ntfyTokenFile}"''}
 
     # Execute the packaged update script (already has tools in PATH)
     exec ${pkgs.nix-flake-update}/bin/nix-flake-update
@@ -83,6 +84,12 @@ in
       default = "https://ntfy.sh";
       example = "http://ntfy.sbr.pm";
       description = "ntfy server URL";
+    };
+
+    ntfyTokenFile = mkOption {
+      type = types.nullOr types.path;
+      default = null;
+      description = "Path to file containing ntfy authentication token (optional)";
     };
 
     dryRun = mkOption {
