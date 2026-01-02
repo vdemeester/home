@@ -2,6 +2,7 @@
   globals,
   lib,
   libx,
+  pkgs,
   ...
 }:
 let
@@ -91,6 +92,12 @@ in
     enable = true;
     email = "vincent@sbr.pm";
 
+    # Use Caddy with rate-limit plugin
+    package = pkgs.caddy.withPlugins {
+      plugins = [ "github.com/mholt/caddy-ratelimit@v0.1.1-0.20250915152450-04ea34edc0c4" ];
+      hash = "sha256-U4kx1A6UtA/VjqFWMD/hliH8QCeOqUsr9Y/X4xWggbQ=";
+    };
+
     # Enable Prometheus metrics on VPN interface only
     globalConfig = ''
       admin ${builtins.head globals.machines.kerkouane.net.vpn.ips}:2019
@@ -118,6 +125,15 @@ in
 
       # ntfy - reverse proxy with websockets
       "ntfy.sbr.pm".extraConfig = ''
+        # Rate limiting for notification service
+        rate_limit {
+          zone ntfy_publish {
+            key {remote_host}
+            events 50
+            window 1m
+          }
+        }
+
         reverse_proxy localhost:8111
       '';
 
@@ -144,7 +160,6 @@ in
       "whoami.sbr.pm".extraConfig = ''
         reverse_proxy 10.100.0.8:80 {
           header_up Host {host}
-          header_up X-Forwarded-For {remote_host}
         }
       '';
 
@@ -155,11 +170,54 @@ in
           max_size 50GB
         }
 
+        # Strict rate limiting for authentication endpoints
+        @auth {
+          path /auth/* /api/auth/*
+        }
+        route @auth {
+          rate_limit {
+            zone immich_auth {
+              key {remote_host}
+              events 10
+              window 1m
+            }
+          }
+          reverse_proxy 10.100.0.50:2283 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+          }
+        }
+
+        # Moderate rate limiting for API endpoints
+        @api {
+          path /api/*
+        }
+        route @api {
+          rate_limit {
+            zone immich_api {
+              key {remote_host}
+              events 100
+              window 1m
+            }
+          }
+          reverse_proxy 10.100.0.50:2283 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+          }
+        }
+
+        # Permissive rate limiting for media/general requests
+        rate_limit {
+          zone immich_media {
+            key {remote_host}
+            events 1000
+            window 1m
+          }
+        }
+
         reverse_proxy 10.100.0.50:2283 {
           header_up Host {host}
-          header_up X-Forwarded-For {remote_host}
           header_up X-Real-IP {remote_host}
-          header_up X-Forwarded-Proto {scheme}
         }
 
         ${mediaSecurityHeaders}
@@ -167,11 +225,18 @@ in
 
       # Navidrome music streaming (proxied to aion)
       "navidrome.sbr.pm".extraConfig = ''
+        # Rate limiting for music streaming
+        rate_limit {
+          zone navidrome_general {
+            key {remote_host}
+            events 500
+            window 1m
+          }
+        }
+
         reverse_proxy 10.100.0.49:4533 {
           header_up Host {host}
-          header_up X-Forwarded-For {remote_host}
           header_up X-Real-IP {remote_host}
-          header_up X-Forwarded-Proto {scheme}
         }
 
         ${mediaSecurityHeaders}
@@ -179,11 +244,18 @@ in
 
       # Jellyfin media server (proxied to rhea)
       "jellyfin.sbr.pm".extraConfig = ''
+        # Rate limiting for media server
+        rate_limit {
+          zone jellyfin_general {
+            key {remote_host}
+            events 500
+            window 1m
+          }
+        }
+
         reverse_proxy 10.100.0.50:8096 {
           header_up Host {host}
-          header_up X-Forwarded-For {remote_host}
           header_up X-Real-IP {remote_host}
-          header_up X-Forwarded-Proto {scheme}
         }
 
         ${mediaSecurityHeaders}
@@ -191,11 +263,18 @@ in
 
       # Audiobookshelf audiobook server (proxied to aion)
       "audiobookshelf.sbr.pm".extraConfig = ''
+        # Rate limiting for audiobook streaming
+        rate_limit {
+          zone audiobookshelf_general {
+            key {remote_host}
+            events 500
+            window 1m
+          }
+        }
+
         reverse_proxy 10.100.0.49:13378 {
           header_up Host {host}
-          header_up X-Forwarded-For {remote_host}
           header_up X-Real-IP {remote_host}
-          header_up X-Forwarded-Proto {scheme}
         }
 
         ${mediaSecurityHeaders}
