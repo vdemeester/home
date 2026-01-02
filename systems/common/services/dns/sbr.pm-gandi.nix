@@ -18,5 +18,10 @@ baseZone
     navidrome.A = [ "167.99.17.238" ];
     jellyfin.A = [ "167.99.17.238" ];
     audiobookshelf.A = [ "167.99.17.238" ];
+
+    # Service aliases
+    music.A = [ "167.99.17.238" ]; # navidrome
+    photos.A = [ "167.99.17.238" ]; # immich
+    podcasts.A = [ "167.99.17.238" ]; # audiobookshelf
   };
 }

@@ -504,7 +504,10 @@ _: {
   };
   services = {
     # Media services on rhea
-    immich.host = "rhea";
+    immich = {
+      host = "rhea";
+      aliases = [ "photos" ];
+    };
     jellyfin.host = "rhea";
     jellyseerr.host = "rhea";
     sonarr.host = "rhea";
