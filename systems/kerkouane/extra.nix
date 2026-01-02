@@ -280,6 +280,102 @@ in
         ${mediaSecurityHeaders}
       '';
 
+      # Service aliases (user-friendly URLs - transparent proxy)
+      "music.sbr.pm".extraConfig = ''
+        # Rate limiting for music streaming
+        rate_limit {
+          zone music_general {
+            key {remote_host}
+            events 500
+            window 1m
+          }
+        }
+
+        reverse_proxy 10.100.0.49:4533 {
+          header_up Host {host}
+          header_up X-Real-IP {remote_host}
+        }
+
+        ${mediaSecurityHeaders}
+      '';
+
+      "photos.sbr.pm".extraConfig = ''
+        # Allow large photo/video uploads (50GB limit)
+        request_body {
+          max_size 50GB
+        }
+
+        # Strict rate limiting for authentication endpoints
+        @auth {
+          path /auth/* /api/auth/*
+        }
+        route @auth {
+          rate_limit {
+            zone photos_auth {
+              key {remote_host}
+              events 10
+              window 1m
+            }
+          }
+          reverse_proxy 10.100.0.50:2283 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+          }
+        }
+
+        # Moderate rate limiting for API endpoints
+        @api {
+          path /api/*
+        }
+        route @api {
+          rate_limit {
+            zone photos_api {
+              key {remote_host}
+              events 100
+              window 1m
+            }
+          }
+          reverse_proxy 10.100.0.50:2283 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+          }
+        }
+
+        # Permissive rate limiting for media/general requests
+        rate_limit {
+          zone photos_media {
+            key {remote_host}
+            events 1000
+            window 1m
+          }
+        }
+
+        reverse_proxy 10.100.0.50:2283 {
+          header_up Host {host}
+          header_up X-Real-IP {remote_host}
+        }
+
+        ${mediaSecurityHeaders}
+      '';
+
+      "podcasts.sbr.pm".extraConfig = ''
+        # Rate limiting for audiobook streaming
+        rate_limit {
+          zone podcasts_general {
+            key {remote_host}
+            events 500
+            window 1m
+          }
+        }
+
+        reverse_proxy 10.100.0.49:13378 {
+          header_up Host {host}
+          header_up X-Real-IP {remote_host}
+        }
+
+        ${mediaSecurityHeaders}
+      '';
+
       # Webhook/gosmee service with SSE support
       "webhook.sbr.pm".extraConfig = ''
         reverse_proxy localhost:3333 {
