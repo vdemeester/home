@@ -244,7 +244,7 @@ in
         CacheFolder = "/var/cache/navidrome";
 
         # Features
-        EnableTranscodingConfig = true;
+        EnableTranscodingConfig = false; # Disabled for security - transcoding still works, UI editing disabled
         EnableSubsonic = true;
 
         # Optional: Scrobbling (can enable later)
