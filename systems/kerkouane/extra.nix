@@ -133,6 +133,16 @@ in
         }
       '';
 
+      # Immich photo management (proxied to rhea)
+      "immich.sbr.pm".extraConfig = ''
+        reverse_proxy 10.100.0.50:2283 {
+          header_up Host {host}
+          header_up X-Forwarded-For {remote_host}
+          header_up X-Real-IP {remote_host}
+          header_up X-Forwarded-Proto {scheme}
+        }
+      '';
+
       # Webhook/gosmee service with SSE support
       "webhook.sbr.pm".extraConfig = ''
         reverse_proxy localhost:3333 {
