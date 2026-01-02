@@ -8,12 +8,27 @@ let
   # Common security headers for Caddy
   securityHeaders = ''
     header {
-      Strict-Transport-Security "max-age=31536000; includeSubDomains"
+      Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
       X-Content-Type-Options "nosniff"
       X-Frame-Options "SAMEORIGIN"
+      Referrer-Policy "strict-origin-when-cross-origin"
+      Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
       Content-Security-Policy "default-src 'self' *.sbr.pm *.demeester.fr"
       X-XSS-Protection "1; mode=block"
       Cache-Control "public, max-age=604800, immutable"
+      -Server
+    }
+  '';
+
+  # Security headers for media services (more permissive CSP for multimedia)
+  mediaSecurityHeaders = ''
+    header {
+      Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+      X-Content-Type-Options "nosniff"
+      X-Frame-Options "SAMEORIGIN"
+      Referrer-Policy "strict-origin-when-cross-origin"
+      Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=()"
+      -Server
     }
   '';
 in
@@ -135,12 +150,19 @@ in
 
       # Immich photo management (proxied to rhea)
       "immich.sbr.pm".extraConfig = ''
+        # Allow large photo/video uploads (50GB limit)
+        request_body {
+          max_size 50GB
+        }
+
         reverse_proxy 10.100.0.50:2283 {
           header_up Host {host}
           header_up X-Forwarded-For {remote_host}
           header_up X-Real-IP {remote_host}
           header_up X-Forwarded-Proto {scheme}
         }
+
+        ${mediaSecurityHeaders}
       '';
 
       # Navidrome music streaming (proxied to aion)
@@ -151,6 +173,8 @@ in
           header_up X-Real-IP {remote_host}
           header_up X-Forwarded-Proto {scheme}
         }
+
+        ${mediaSecurityHeaders}
       '';
 
       # Jellyfin media server (proxied to rhea)
@@ -161,6 +185,8 @@ in
           header_up X-Real-IP {remote_host}
           header_up X-Forwarded-Proto {scheme}
         }
+
+        ${mediaSecurityHeaders}
       '';
 
       # Audiobookshelf audiobook server (proxied to aion)
@@ -171,6 +197,8 @@ in
           header_up X-Real-IP {remote_host}
           header_up X-Forwarded-Proto {scheme}
         }
+
+        ${mediaSecurityHeaders}
       '';
 
       # Webhook/gosmee service with SSE support
