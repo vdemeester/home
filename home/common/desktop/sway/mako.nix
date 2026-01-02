@@ -8,7 +8,6 @@ _: {
       width = 400;
       on-button-left = "dismiss";
       on-button-middle = "invoke-default-action";
-      on-button-right = "invoke-action=ack";
       border-radius = 6;
       border-size = 3;
       border-color = "#db7508";
