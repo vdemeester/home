@@ -460,6 +460,7 @@ in
     };
     immich = serviceDefaults // {
       enable = true;
+      host = "0.0.0.0"; # Listen on all interfaces for VPN access
       mediaLocation = "/neo/pictures/photos";
     };
     postgresql = {
