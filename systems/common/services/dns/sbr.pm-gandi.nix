@@ -13,7 +13,10 @@ in
 baseZone
 // {
   subdomains = baseZone.subdomains // {
-    # Override immich to point to kerkouane's public IP (reverse proxy entry point)
+    # Override services to point to kerkouane's public IP (reverse proxy entry point)
     immich.A = [ "167.99.17.238" ];
+    navidrome.A = [ "167.99.17.238" ];
+    jellyfin.A = [ "167.99.17.238" ];
+    audiobookshelf.A = [ "167.99.17.238" ];
   };
 }

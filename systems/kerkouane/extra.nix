@@ -143,6 +143,36 @@ in
         }
       '';
 
+      # Navidrome music streaming (proxied to aion)
+      "navidrome.sbr.pm".extraConfig = ''
+        reverse_proxy 10.100.0.49:4533 {
+          header_up Host {host}
+          header_up X-Forwarded-For {remote_host}
+          header_up X-Real-IP {remote_host}
+          header_up X-Forwarded-Proto {scheme}
+        }
+      '';
+
+      # Jellyfin media server (proxied to rhea)
+      "jellyfin.sbr.pm".extraConfig = ''
+        reverse_proxy 10.100.0.50:8096 {
+          header_up Host {host}
+          header_up X-Forwarded-For {remote_host}
+          header_up X-Real-IP {remote_host}
+          header_up X-Forwarded-Proto {scheme}
+        }
+      '';
+
+      # Audiobookshelf audiobook server (proxied to aion)
+      "audiobookshelf.sbr.pm".extraConfig = ''
+        reverse_proxy 10.100.0.49:13378 {
+          header_up Host {host}
+          header_up X-Forwarded-For {remote_host}
+          header_up X-Real-IP {remote_host}
+          header_up X-Forwarded-Proto {scheme}
+        }
+      '';
+
       # Webhook/gosmee service with SSE support
       "webhook.sbr.pm".extraConfig = ''
         reverse_proxy localhost:3333 {
