@@ -104,7 +104,7 @@ in
     "jellyfin-favorites-sync-api-key" = {
       file = ../../secrets/rhea/jellyfin-favorites-sync-api-key.age;
       mode = "400";
-      owner = "jellyfin-favorites-sync";
+      owner = "root";
     };
     "restic-aix-password" = {
       file = ../../secrets/rhea/restic-aix-password.age;
