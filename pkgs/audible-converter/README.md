@@ -7,18 +7,20 @@ Download and convert Audible audiobooks to Audiobookshelf-compatible formats.
 `audible-converter` is a wrapper tool that combines [audible-cli](https://github.com/mkb79/audible-cli) and [aaxtomp3](https://github.com/KrumpetPirate/AAXtoMP3) to:
 
 - Download audiobooks from your Audible library
-- Convert AAX files to M4B/MP3/M4A formats
+- Convert AAX and AAXC files to M4B/MP3/M4A formats
 - Preserve chapter markers and metadata
 - Organize output for Audiobookshelf
 
 ## Features
 
 - **Download from Audible**: Sync your entire library or download specific books
+- **AAX & AAXC format support**: Converts both AAX (older) and AAXC (newer) formats
 - **Multiple output formats**: M4B (recommended), MP3, or M4A
 - **Chapter preservation**: Maintains chapter markers and navigation
 - **Metadata embedding**: Preserves title, author, narrator, cover art
 - **Batch processing**: Handle multiple books at once
 - **Quality options**: Choose between best, high, or normal audio quality
+- **Automatic voucher handling**: AAXC files are decrypted using voucher files downloaded alongside
 
 ## Installation
 
@@ -215,19 +217,60 @@ audible-converter convert file.aax
 
 ### Download Failures
 
-Some books may fail to download (already purchased, region restrictions):
+Some books may fail to download for various reasons:
 
-- The tool will warn about failed downloads and continue
+**Non-downloadable books**: Some items in your Audible library cannot be downloaded:
+- Podcasts (excluded via `--ignore-podcasts` flag)
+- Plus Catalog books that have been removed
+- Region-restricted content
+- Books returned or removed from your library
+- Special content types (guided meditations, sleep sounds, etc.)
+
+The tool will skip these automatically and continue processing. Example error:
+```
+error: The Manager's Path is not downloadable.
+```
+
+**Other download issues**:
 - Check the ASIN is correct: `audible library list`
 - Verify the book is in your library for your region
+- Check network connectivity
+
+### AAXC Format Support
+
+**AAXC files (newer Audible format) are fully supported** by aaxtomp3!
+
+**How it works:**
+- AAXC is a newer encryption format introduced by Audible
+- When downloading with `--aaxc` flag, audible-cli downloads both the `.aaxc` file and a `.voucher` file
+- The voucher file contains the decryption key and IV (initialization vector)
+- `aaxtomp3` reads the voucher file and uses the key/IV to decrypt the AAXC file
+- Conversion proceeds normally after decryption
+
+**Download strategy:**
+- The script uses `--aax-fallback` flag: tries AAX first, falls back to AAXC if AAX is unavailable
+- Older books: typically available as AAX
+- Newer books: may only be available as AAXC
+- Both formats convert successfully ✓
+
+**Requirements:**
+- Voucher file must be present alongside the AAXC file
+- Naming convention: `bookname.aaxc` and `bookname.voucher`
+- audible-cli downloads both automatically when using `--aaxc` or `--aax-fallback`
 
 ### Conversion Issues
 
-If AAX conversion fails:
-
+**For AAX files:**
 1. Ensure you have the required dependencies (included in the package)
-2. Check the AAX file is not corrupted
-3. Try downloading the book again
+2. Verify activation bytes are available: `audible activation-bytes`
+3. Check the AAX file is not corrupted
+4. Try downloading the book again
+
+**For AAXC files:**
+1. Ensure the `.voucher` file exists alongside the `.aaxc` file
+2. Check voucher file contains valid JSON with `key` and `iv` fields
+3. Verify the voucher file was downloaded at the same time as the AAXC file
+4. If voucher is missing, re-download the book with `--aaxc` flag
 
 ### Permission Errors
 

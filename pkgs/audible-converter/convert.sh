@@ -164,7 +164,7 @@ download_book() {
 		--output-dir "$TEMP_DIR"
 }
 
-# Convert AAX files to M4B
+# Convert AAX/AAXC files to M4B
 # Usage: convert_books [directory|file]
 convert_books() {
 	local source_path="${1:-$TEMP_DIR}"
@@ -172,17 +172,17 @@ convert_books() {
 
 	# Determine if we're converting a directory or a single file
 	if [ -d "$source_path" ]; then
-		# Find all AAX files in directory using find
-		log_info "Searching for AAX files in: $source_path"
-		mapfile -t aax_files < <(find "$source_path" -maxdepth 1 -type f -name "*.aax" -o -name "*.AAX")
+		# Find all AAX and AAXC files in directory
+		log_info "Searching for AAX/AAXC files in: $source_path"
+		mapfile -t aax_files < <(find "$source_path" -maxdepth 1 -type f \( -name "*.aax" -o -name "*.AAX" -o -name "*.aaxc" -o -name "*.AAXC" \))
 
 		if [ ${#aax_files[@]} -eq 0 ]; then
-			log_warn "No AAX files found in $source_path"
+			log_warn "No AAX/AAXC files found in $source_path"
 			return 0
 		fi
-		log_info "Found ${#aax_files[@]} AAX file(s)"
+		log_info "Found ${#aax_files[@]} AAX/AAXC file(s)"
 	elif [ -f "$source_path" ]; then
-		# Single file
+		# Single file (both AAX and AAXC supported)
 		aax_files=("$source_path")
 	else
 		log_error "Invalid path: $source_path"
@@ -190,7 +190,7 @@ convert_books() {
 	fi
 
 	local total_files=${#aax_files[@]}
-	log_info "Converting $total_files AAX file(s) to $FORMAT format..."
+	log_info "Converting $total_files AAX/AAXC file(s) to $FORMAT format..."
 
 	# Get authcode (either provided or from audible-cli)
 	local authcode="$AUTHCODE"
